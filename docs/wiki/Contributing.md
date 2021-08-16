@@ -90,7 +90,7 @@ For all Bicep files created as part of this project they will follow the structu
 
 > Parameters, Variables, Resources, Modules & Outputs are all types of elements.
 
-#### Bicep File Structure Example
+### Bicep File Structure Example
 
 Below is an example of Bicep file complying with the structure and styling guidelines specified above:
 
