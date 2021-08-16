@@ -10,6 +10,8 @@ Please review the [Wiki](https://github.com/Azure/ALZ-Bicep/wiki) in this repo f
 
 Any questions please reach out to any of the @alz-bicep-core-team
 
+Also this internal only DL, including Bicep PG, can be used to keep everyone in the loop: BicepLZ@microsoft.com - **Only use when required to avoid noise**
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a

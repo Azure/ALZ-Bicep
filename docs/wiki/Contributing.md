@@ -47,8 +47,11 @@ Throughout the development of Bicep code you should follow the [Bicep Best Pract
     - Resource
     - Modules
     - Outputs
+- Use [parameter decorators](https://docs.microsoft.com/azure/azure-resource-manager/bicep/parameters#decorators) to ensure integrity of user inputs are complete and therefore enable successful deployment
+  - Only use the [`@secure()` parameter decorator](https://docs.microsoft.com/azure/azure-resource-manager/bicep/parameters#secure-parameters) for inputs. Never for outputs as this is not stored securely and will be stored/shown as plain-text!
 - Comments should be provided where additional information/description of what is happening is required, except when a decorator like `@description('Example description')` is providing adequate coverage
   - Single-line `// <comment here>` and multi-line `/* <comment here> */` comments are both welcomed
+  - Provide contextual public Microsoft documentation recommendation references/URLs in comments to help user understanding of code implementation
 - All expressions, used in conditionals and loops, should be stored in a variable to simplify code readability
 - Specify default values for all parameters where possible - this improves deployment success
   - The default value should be called out in the description of the parameter for ease of visibility
@@ -116,14 +119,12 @@ param parExampleResourceGroupNamePrefix string = 'TEST'
 var varExampleResourceGroupName = 'rsg-${parExampleResourceGroupNamePrefix}' // Create name for the example resource group
 
 
-// RESOURCES
+// RESOURCE DEPLOYMENTS 
 resource resExampleResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: varExampleResourceGroupName
   location: 'uksouth' // Hardcoded as an example of commenting inside a resource
 }
 
-
-// MODULES
 /* 
 No modules being deployed in this example
 */
@@ -133,3 +134,9 @@ No modules being deployed in this example
 output outResourceGroupExampleID string = resExampleResourceGroup.id
 
 ```
+
+## Constructing a Bicep Module
+
+To author Bicep modules that are in-line with the requirements for this project, the following must be true:
+
+- `README.md` for each module in the root of the folder with the Bicep code.
