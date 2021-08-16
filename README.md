@@ -1,14 +1,14 @@
-# Project
+# Azure Landing Zones - Bicep - Staging Repo
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+Welcome to the Azure Landing Zones Bicep Staging repo.
 
-As the maintainer of this project, please make a few updates:
+This repo will be used only for the development, testing and MVP build of the Azure Landing Zones Bicep implementation. When ready, the code will be migrated into the [Azure/Enterprise-Scale repo](https://github.com/Azure/Enterprise-Scale).
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+> All work item and tracking will be done in [Azure DevOps](https://dev.azure.com/unifiedactiontracker/Solution%20Engineering/_queries/query/4e77ab8a-78b3-447c-87b6-237ad590219f/)
+
+Please review the [Wiki](https://github.com/Azure/ALZ-Bicep/wiki) in this repo for contribution guidance and other useful documentation relating to the Azure Landing Zones Bicep MVP.
+
+Any questions please reach out to any of the @alz-bicep-core-team
 
 ## Contributing
 
