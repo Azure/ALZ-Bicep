@@ -8,7 +8,9 @@ This repo will be used only for the development, testing and MVP build of the Az
 
 Please review the [Wiki](https://github.com/Azure/ALZ-Bicep/wiki) in this repo for contribution guidance and other useful documentation relating to the Azure Landing Zones Bicep MVP.
 
-Any questions please reach out to any of the @alz-bicep-core-team
+Any questions please reach out to any of the [@alz-bicep-core-team](https://github.com/orgs/Azure/teams/alz-bicep-core-team)
+
+Also this internal only DL, including Bicep PG, can be used to keep everyone in the loop: BicepLZ@microsoft.com - **Only use when required to avoid noise**
 
 ## Contributing
 
