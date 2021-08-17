@@ -3,6 +3,9 @@
 - [Recommended Learning](#recommended-learning)
   - [Bicep](#bicep)
   - [Git](#git)
+- [Tooling](#tooling)
+  - [Required Tooling](#required-tooling)
+  - [Recommended Tooling](#recommended-tooling)
 - [Bicep Formatting Guidelines](#bicep-formatting-guidelines)
   - [Bicep Best Practices](#bicep-best-practices)
   - [Bicep Code Styling](#bicep-code-styling)
@@ -28,6 +31,28 @@ Before you start contributing to the ALZ Bicep code, it is **highly recommended*
 
 - [Introduction to version control with Git](https://docs.microsoft.com/learn/paths/intro-to-vc-git/)
 
+## Tooling
+
+### Required Tooling
+
+To contribute to this project the following tooling is required:
+
+- [Git](https://git-scm.com/downloads)
+- [Bicep](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install#install-manually)
+- [Visual Studio Code](https://code.visualstudio.com/download)
+  - [Bicep extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep)
+
+![](media/bicep-vs-code.png)
+
+### Recommended Tooling
+
+The following tooling/extensions are recommended to assist you developing for the project:
+
+- [CodeTour extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour)
+- [ARM Tools extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools)
+- [ARM Template Viewer extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bencoleman.armview)
+- [Bracket Pair Colorizer 2 extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)
+- [Bracket Pair Colorizer 2 extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)
 
 ## Bicep Formatting Guidelines
 

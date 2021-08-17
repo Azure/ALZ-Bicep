@@ -1,5 +1,7 @@
 # Azure Landing Zones - Bicep - Staging Repo
 
+![](docs/wiki/media/bicep-logo.png)
+
 Welcome to the Azure Landing Zones Bicep Staging repo.
 
 This repo will be used only for the development, testing and MVP build of the Azure Landing Zones Bicep implementation. When ready, the code will be migrated into the [Azure/Enterprise-Scale repo](https://github.com/Azure/Enterprise-Scale).
