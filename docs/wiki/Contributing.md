@@ -140,6 +140,7 @@ output outResourceGroupExampleID string = resExampleResourceGroup.id
 
 To author Bicep modules that are in-line with the requirements for this project, the following must be true:
 
+- Follows the [Bicep Formatting Guidelines](#bicep-formatting-guidelines) as detailed above
 - A new folder per module in the following directory: `infra-as-code/bicep/modules/...`
   - Choosing the correct folder, beneath the above path, based on whether the module is:
     - A reusable resource (e.g. a Resource Group) - If so, the path would be: `infra-as-code/bicep/modules/reusable/<module name>`
