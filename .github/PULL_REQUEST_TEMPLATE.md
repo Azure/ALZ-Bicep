@@ -21,7 +21,7 @@ Please provide any testing evidence to show that your Pull Request works/fixes a
 ## As part of this Pull Request I have
 
 - [ ] Checked for duplicate [Pull Requests](https://github.com/Azure/ALZ-Bicep/pulls)
-- [ ] Associated it with relevant [issues](https://github.com/Azure/ALZ-Bicep/issues), for tracking and closure. Also check [ADO](https://dev.azure.com/unifiedactiontracker/Solution%20Engineering/_queries/query/4e77ab8a-78b3-447c-87b6-237ad590219f/)
+- [ ] Associated it with relevant [ADO items](https://dev.azure.com/unifiedactiontracker/Solution%20Engineering/_queries/query/4e77ab8a-78b3-447c-87b6-237ad590219f/)
 - [ ] Ensured my code/branch is up-to-date with the latest changes in the `main` [branch](https://github.com/Azure/ALZ-Bicep/tree/main)
 - [ ] Performed testing and provided evidence.
 - [ ] Updated relevant and associated documentation.
