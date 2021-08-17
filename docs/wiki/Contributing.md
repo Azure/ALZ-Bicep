@@ -8,6 +8,7 @@
   - [Bicep Code Styling](#bicep-code-styling)
   - [Bicep Elements Naming Standards](#bicep-elements-naming-standards)
   - [Bicep File Structure](#bicep-file-structure)
+- [Constructing a Bicep Module](#constructing-a-bicep-module)
 
 ---
 
@@ -139,4 +140,13 @@ output outResourceGroupExampleID string = resExampleResourceGroup.id
 
 To author Bicep modules that are in-line with the requirements for this project, the following must be true:
 
-- `README.md` for each module in the root of the folder with the Bicep code.
+- A new folder per module in the following directory: `infra-as-code/bicep/modules/...`
+  - Choosing the correct folder, beneath the above path, based on whether the module is:
+    - A reusable resource (e.g. a Resource Group) - If so, the path would be: `infra-as-code/bicep/modules/reusable/<module name>`
+    - Or whether the module is constructing an ALZ component aligning to the ALZ conceptual architecture - If so, the path would be: `infra-as-code/bicep/modules/alz/<module name>`
+- Each new module folder must contain:
+  - A `media` folder that will contain images used in the `README.md`
+  - A `README.md` for each module in the root of its own folder, as above, detailing the module, what it deploys, parameters and any other useful information for consumers.
+    - The `README.md` must also contain a Bicep visualizer image of the complete module
+  - The Bicep module file & parameters file, complete with default values.
+  
