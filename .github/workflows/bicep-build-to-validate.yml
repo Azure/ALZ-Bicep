@@ -9,31 +9,13 @@ on:
 
 jobs:
   get_changed_files:
-    name: Get changed Bicep files
+    name: Test Bicep Files
     runs-on: ubuntu-latest
-    outputs:
-      bicep_files: ${{ steps.pr_changed_bicep_files.outputs.bicep_files }}
 
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
 
-      - name: Get changed Bicep files in PR
-        id: pr_changed_bicep_files
+      - name: Bicep Build to Test 
         run: |
-          echo "::set-output name=bicep_files::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep .bicep$ | xargs)"
-
-  bicep-build-test:
-    name: Bicep Build
-    runs-on: ubuntu-latest
-    needs: get_changed_files
-    if: ${{ needs.get_changed_files.outputs.bicep_files }}
-
-    steps:
-      - name: Output changed Bicep files in PR
-        run: |
-          echo ${{ needs.get_changed_files.outputs.bicep_files }}
-
-      - name: Bicep Build Test
-        run: |
-          bicep build ${{ needs.get_changed_files.outputs.bicep_files }}
+          find . -type f -name '*.bicep' | xargs -tn1 bicep build
