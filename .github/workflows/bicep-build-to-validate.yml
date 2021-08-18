@@ -21,7 +21,7 @@ jobs:
       - name: Get changed Bicep files in PR
         id: pr_changed_bicep_files
         run: |
-          echo "::set-output name=BICEP_FILES::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .bicep$ | xargs)"
+          echo "::set-output name=bicep_files::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep .bicep$ | xargs)"
 
   bicep-build-test:
     name: Bicep Build
