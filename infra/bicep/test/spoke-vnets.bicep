@@ -20,4 +20,4 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   }
 }
 
-output vnetRID string = vnet.id
+output vnetRID string = vnet.idfdfsf
