@@ -52,7 +52,6 @@ The following tooling/extensions are recommended to assist you developing for th
 - [ARM Tools extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools)
 - [ARM Template Viewer extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bencoleman.armview)
 - [Bracket Pair Colorizer 2 extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)
-- [Bracket Pair Colorizer 2 extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)
 
 ## Bicep Formatting Guidelines
 
