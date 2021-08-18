@@ -18,4 +18,4 @@ jobs:
 
       - name: Bicep Build to Test 
         run: |
-          find . -type f -name '*.bicep' | xargs -tn1 bicep build --stdout
+          find . -type f -name '*.bicep' | xargs -tn1 bicep build
