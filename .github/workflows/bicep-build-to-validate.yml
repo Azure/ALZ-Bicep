@@ -26,7 +26,8 @@ jobs:
       - name: ARM-TTK Bicep Files
         uses: github/super-linter@v4
         env:
-          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ARM: true
+          VALIDATE_JSON: true
