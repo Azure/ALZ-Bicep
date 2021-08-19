@@ -16,6 +16,8 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
 
-      - name: Bicep Build to Test 
+      - name: Bicep Build to Test
+        shell: pwsh
         run: |
-          find . -type f -name '*.bicep' | xargs -tn1 bicep build
+          Get-ChildItem -Recurse -Filter '*.bicep' | ForEach-Object {$_.FullName} | bicep build 
+          
