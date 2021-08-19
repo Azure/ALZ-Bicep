@@ -8,7 +8,7 @@ on:
       - "**.bicep"
 
 jobs:
-  get_changed_files:
+  bicep_unit_tests:
     name: Test Bicep Files
     runs-on: ubuntu-latest
 
@@ -20,4 +20,11 @@ jobs:
         shell: pwsh
         run: |
           Get-ChildItem -Recurse -Filter '*.bicep' | ForEach-Object {$_.FullName} | bicep build 
-          
+
+      - name: ARM-TTK Bicep Files
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ARM: true
