@@ -1,6 +1,6 @@
 # Module:  Management Groups
 
-Management Groups module defines defines the management group structure that will be deployed in a customer's environment.  It will deploy:
+Management Groups module defines the management group structure that will be deployed in a customer's environment.  It will deploy:
 
   1. Platform management group with child management groups:
       * management
