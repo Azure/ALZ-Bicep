@@ -28,7 +28,7 @@ parTopLevelManagementGroupDisplayName | Display name for top level management gr
 
 **Example Deployment**
 
-In this example, the management group structure is being deployed to the `Tenant Root Group` based on the Azure Active Directory Tenant Id `343ddfdb-bef5-46d9-99cf-ed67d5948783`.  This value should be replaced with that of your organization.  The parameters file provies an example of all required parameters.
+In this example, the management group structure is being deployed to the `Tenant Root Group` based on the Azure Active Directory Tenant Id `343ddfdb-bef5-46d9-99cf-ed67d5948783`.  This value should be replaced with that of your organization.  The parameters file provides an example of all required parameters.
 
 ### Azure CLI
 ```bash
