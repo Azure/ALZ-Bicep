@@ -10,12 +10,9 @@ AUTHOR/S: SenthuranSivananthan
 VERSION: 1.0.0
 */
 
-targetScope = 'managementGroup'
+targetScope = 'tenant'
 
-@description('The management group that will be used to create all management groups.  Specific the management group id.')
-param parParentManagementGroupId string
-
-@description('Prefix for the management structure.  This management group will be created as part of the deployment.')
+@description('Prefix for the management group structure.  This management group will be created as part of the deployment.')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
@@ -78,11 +75,6 @@ resource resTopLevelMG 'Microsoft.Management/managementGroups@2021-04-01' = {
   scope: tenant()
   properties: {
     displayName: parTopLevelManagementGroupDisplayName
-    details: {
-      parent: {
-        id: tenantResourceId('Microsoft.Management/managementGroups', parParentManagementGroupId)
-      }
-    }
   }
 }
 
@@ -171,4 +163,4 @@ output outTopLevelManagementGroupPrefix string = parTopLevelManagementGroupPrefi
 output outPlatformManagement object = varPlatformManagementGroup
 output outLandingZoneManagementGroups object = varLandingZoneManagementGroup
 output outSandboxManagementGroup object = varSandboxesManagementGroup
-output outDecommissioned object = varDecommissionedManagementGroup 
+output outDecommissioned object = varDecommissionedManagementGroup

@@ -19,7 +19,6 @@ The module requires the following required input parameters.
 
  Paramenter | Description | Requirement | Example
 ----------- | ----------- | ----------- | -------
-parParentManagementGroupId | The management group that will be used to create all management groups.  Specific the management group id. | Must existing in Azure. | When deployed to **Tenant Root Group**: `Azure Active Directory Tenant Id`, or when deployed to **another management group**: `Management Group ID`
 parTopLevelManagementGroupPrefix | Prefix for the management structure.  This management group will be created as part of the deployment. | Minimum two characters | `alz` |
 parTopLevelManagementGroupDisplayName | Display name for top level management group prefix.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter. | Minimum two characters | `Azure Landing Zones` |
 
@@ -28,25 +27,23 @@ parTopLevelManagementGroupDisplayName | Display name for top level management gr
 
 **Example Deployment**
 
-In this example, the management group structure is being deployed to the `Tenant Root Group` based on the Azure Active Directory Tenant Id `343ddfdb-bef5-46d9-99cf-ed67d5948783`.  This value should be replaced with that of your organization.  The parameters file provides an example of all required parameters.
+In this example, the management groups are created at the `Tenant Root Group` through a tenant-scoped deployment.
 
 ### Azure CLI
 ```bash
-az deployment mg create \
+az deployment tenant create \
   --template-file infra-as-code/bicep/modules/management-groups/mgmtGroups.bicep \
   --parameters @infra-as-code/bicep/modules/management-groups/mgmtGroups.parameters.example.json \
-  --location eastus \
-  --management-group-id 343ddfdb-bef5-46d9-99cf-ed67d5948783
+  --location eastus
 ```
 
 ### PowerShell
 
 ```powershell
-New-AzManagementGroupDeployment `
+New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/modules/management-groups/mgmtGroups.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/management-groups/mgmtGroups.parameters.example.json `
-  -Location eastus `
-  -ManagementGroupId 343ddfdb-bef5-46d9-99cf-ed67d5948783
+  -Location eastus
 ```
 
 ![Example Deployment Output](media/example-deployment-output.png "Example Deployment Output")
