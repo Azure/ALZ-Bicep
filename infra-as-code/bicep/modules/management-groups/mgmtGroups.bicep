@@ -166,3 +166,9 @@ resource resLandingZoneChildMG 'Microsoft.Management/managementGroups@2021-04-01
     }
   }
 }]
+
+output outTopLevelManagementGroupPrefix string = parTopLevelManagementGroupPrefix
+output outPlatformManagement object = varPlatformManagementGroup
+output outLandingZoneManagementGroups object = varLandingZoneManagementGroup
+output outSandboxManagementGroup object = varSandboxesManagementGroup
+output outDecommissioned object = varDecommissionedManagementGroup 
