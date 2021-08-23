@@ -2,8 +2,13 @@
 
 Management Groups module defines defines the management group structure that will be deployed in a customer's environment.  It will deploy:
 
-  1. Platform management group with management, connectivity, and identity child management groups; and
-  2. Landing Zones management group with corp and online child management groups.
+  1. Platform management group with child management groups:
+      * management
+      * connectivity
+      * identity
+  2. Landing Zones management group with child management groups:
+      * corp
+      * online
   3. Sandbox management group
   4. Decommissioned management group
 
