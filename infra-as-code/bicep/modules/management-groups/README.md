@@ -15,12 +15,29 @@ Management Groups module defines the management group structure that will be dep
 
 ## Parameters
 
-The module requires the following required input parameters.
+The module requires the following input parameters:
 
- Paramenter | Description | Requirement | Example
------------ | ----------- | ----------- | -------
-parTopLevelManagementGroupPrefix | Prefix for the management structure.  This management group will be created as part of the deployment. | Minimum two characters | `alz` |
-parTopLevelManagementGroupDisplayName | Display name for top level management group prefix.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter. | Minimum two characters | `Azure Landing Zones` |
+ Paramenter | Type | Description | Requirements | Example
+----------- | ---- | ----------- | ------------ | -------
+parTopLevelManagementGroupPrefix | string | Prefix for the management structure.  This management group will be created as part of the deployment. | Minimum two characters | `alz` |
+parTopLevelManagementGroupDisplayName | string | Display name for top level management group prefix.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter. | Minimum two characters | `Azure Landing Zones` |
+
+## Outputs
+
+The moduel will generate the following outputs:
+
+Otuput | Type | Example
+------ | ---- | --------
+outTopLevelMGId | string | /providers/Microsoft.Management/managementGroups/alz
+outPlatformMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform
+outPlatformManagementMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform-management
+outPlatformConnectivityMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform-connectivity
+outPlatformIdentityMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform-identity
+outLandingZonesMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones
+outLandingZonesCorpMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-corp
+outLandingZonesOnlineMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-online
+outSandboxesManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-sandboxes
+outDecommissionedManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-decommissioned
 
 
 ## Deployment

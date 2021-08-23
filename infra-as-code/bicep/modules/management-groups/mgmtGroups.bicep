@@ -21,49 +21,50 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @minLength(2)
 param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
 
-// Management Group definition for Platform
-var varPlatformManagementGroup = {
+// Platform and Child Management Groups
+var varPlatformMG = {
   name: '${parTopLevelManagementGroupPrefix}-platform'
   displayName: 'Platform'
-  childManagementGroups: [
-    {
-      name: '${parTopLevelManagementGroupPrefix}-platform-management'
-      displayName: 'Management'
-    }
-    {
-      name: '${parTopLevelManagementGroupPrefix}-platform-connectivity'
-      displayName: 'Connectivity'
-    }
-    {
-      name: '${parTopLevelManagementGroupPrefix}-platform-identity'
-      displayName: 'Identity'
-    }
-  ]
 }
 
-// Management Group definition for Landing Zones
-var varLandingZoneManagementGroup = {
+var varPlatformManagementMG = {
+  name: '${parTopLevelManagementGroupPrefix}-platform-management'
+  displayName: 'Management'
+}
+
+var varPlatformConnectivityMG = {
+  name: '${parTopLevelManagementGroupPrefix}-platform-connectivity'
+  displayName: 'Connectivity'
+}
+
+var varPlatformIdentityMG = {
+  name: '${parTopLevelManagementGroupPrefix}-platform-identity'
+  displayName: 'Identity'
+}
+
+// Landing Zones & Child Management Groups
+var varLandingZoneMG = {
   name: '${parTopLevelManagementGroupPrefix}-landingzones'
   displayName: 'Landing Zones'
-  childManagementGroups: [
-    {
-      name: '${parTopLevelManagementGroupPrefix}-landingzones-corp'
-      displayName: 'Corp'
-    }
-    {
-      name: '${parTopLevelManagementGroupPrefix}-landingzones-online'
-      displayName: 'Online'
-    }
-  ]
 }
 
-// Management Group definition for Sandboxes
+var varLandingZoneCorpMG = {
+  name: '${parTopLevelManagementGroupPrefix}-landingzones-corp'
+  displayName: 'Corp'
+}
+
+var varLandingZoneOnlineMG = {
+  name: '${parTopLevelManagementGroupPrefix}-landingzones-online'
+  displayName: 'Online'
+}
+
+// Sandboxes Management Group
 var varSandboxesManagementGroup = {
   name: '${parTopLevelManagementGroupPrefix}-sandboxes'
   displayName: 'Sandboxes'
 }
 
-// Management Group definition for Decomissioned
+// Decomissioned Management Group
 var varDecommissionedManagementGroup = {
   name: '${parTopLevelManagementGroupPrefix}-decommissioned'
   displayName: 'Decommissioned'
@@ -80,10 +81,10 @@ resource resTopLevelMG 'Microsoft.Management/managementGroups@2021-04-01' = {
 
 // Level 2
 resource resPlatformMG 'Microsoft.Management/managementGroups@2021-04-01' = {
-  name: varPlatformManagementGroup.name
+  name: varPlatformMG.name
   scope: tenant()
   properties: {
-    displayName: varPlatformManagementGroup.displayName
+    displayName: varPlatformMG.displayName
     details: {
       parent: {
         id: resTopLevelMG.id
@@ -93,10 +94,10 @@ resource resPlatformMG 'Microsoft.Management/managementGroups@2021-04-01' = {
 }
 
 resource resLandingZonesMG 'Microsoft.Management/managementGroups@2021-04-01' = {
-  name: varLandingZoneManagementGroup.name
+  name: varLandingZoneMG.name
   scope: tenant()
   properties: {
-    displayName: varLandingZoneManagementGroup.displayName
+    displayName: varLandingZoneMG.displayName
     details: {
       parent: {
         id: resTopLevelMG.id
@@ -132,35 +133,84 @@ resource resDecommissionedMG 'Microsoft.Management/managementGroups@2021-04-01' 
 }
 
 // Level 3 - Child Management Groups under Platform MG
-resource resPlatformChildMG 'Microsoft.Management/managementGroups@2021-04-01' = [for childMG in varPlatformManagementGroup.childManagementGroups: {
-  name: childMG.name
+resource resPlatformManagementMG 'Microsoft.Management/managementGroups@2021-04-01' = {
+  name: varPlatformManagementMG.name
   scope: tenant()
   properties: {
-    displayName: childMG.displayName
+    displayName: varPlatformManagementMG.displayName
     details: {
       parent: {
         id: resPlatformMG.id
       }
     }
   }
-}]
+}
 
-// Level 3 - Child Management Groups under Landing Zones MG
-resource resLandingZoneChildMG 'Microsoft.Management/managementGroups@2021-04-01' = [for childMG in varLandingZoneManagementGroup.childManagementGroups: {
-  name: childMG.name
+resource resPlatformConnectivityMG 'Microsoft.Management/managementGroups@2021-04-01' = {
+  name: varPlatformConnectivityMG.name
   scope: tenant()
   properties: {
-    displayName: childMG.displayName
+    displayName: varPlatformConnectivityMG.displayName
+    details: {
+      parent: {
+        id: resPlatformMG.id
+      }
+    }
+  }
+}
+
+resource resPlatformIdentityMG 'Microsoft.Management/managementGroups@2021-04-01' = {
+  name: varPlatformIdentityMG.name
+  scope: tenant()
+  properties: {
+    displayName: varPlatformIdentityMG.displayName
+    details: {
+      parent: {
+        id: resPlatformMG.id
+      }
+    }
+  }
+}
+
+// Level 3 - Child Management Groups under Landing Zones MG
+resource resLandingZonesCorpMG 'Microsoft.Management/managementGroups@2021-04-01' = {
+  name: varLandingZoneCorpMG.name
+  scope: tenant()
+  properties: {
+    displayName: varLandingZoneCorpMG.displayName
     details: {
       parent: {
         id: resLandingZonesMG.id
       }
     }
   }
-}]
+}
 
-output outTopLevelManagementGroupPrefix string = parTopLevelManagementGroupPrefix
-output outPlatformManagement object = varPlatformManagementGroup
-output outLandingZoneManagementGroups object = varLandingZoneManagementGroup
-output outSandboxManagementGroup object = varSandboxesManagementGroup
-output outDecommissioned object = varDecommissionedManagementGroup
+resource resLandingZonesOnlineMG 'Microsoft.Management/managementGroups@2021-04-01' = {
+  name: varLandingZoneOnlineMG.name
+  scope: tenant()
+  properties: {
+    displayName: varLandingZoneOnlineMG.displayName
+    details: {
+      parent: {
+        id: resLandingZonesMG.id
+      }
+    }
+  }
+}
+
+
+output outTopLevelMGId string = resTopLevelMG.id
+
+output outPlatformMGId string = resPlatformMG.id
+output outPlatformManagementMGId string = resPlatformManagementMG.id
+output outPlatformConnectivityMGId string = resPlatformConnectivityMG.id
+output outPlatformIdentityMGId string = resPlatformIdentityMG.id
+
+output outLandingZonesMGId string = resLandingZonesMG.id
+output outLandingZonesCorpMGId string = resLandingZonesCorpMG.id
+output outLandingZonesOnlineMGId string = resLandingZonesOnlineMG.id
+
+output outSandboxesManagementGroupId string = resSandboxesMG.id
+
+output outDecommissionedManagementGroupId string = resDecommissionedMG.id
