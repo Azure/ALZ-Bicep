@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parParentManagementGroupId": {
+      "value": "343ddfdb-bef5-46d9-99cf-ed67d5948783"
+    },
+    "parTopLevelManagementGroupPrefix": {
+      "value": "advworks"
+    }
+  }
+}
