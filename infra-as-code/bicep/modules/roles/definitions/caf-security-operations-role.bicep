@@ -1,0 +1,44 @@
+targetScope = 'managementGroup'
+
+@description('The management group scope to which the role can be assigned.')
+param parAssignableScopeManagementGroupId string
+
+var varRole = {
+  name: 'Security operations (SecOps)'
+  description: 'Security administrator role with a horizontal view across the entire Azure estate and the Azure Key Vault purge policy'
+}
+
+resource resRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' = {
+  name: guid(varRole.name)
+  scope: managementGroup()
+  properties: {
+    roleName: varRole.name
+    description: varRole.description
+    permissions: [
+      {
+        actions: [
+          '*/read'
+          '*/register/action'
+          'Microsoft.KeyVault/locations/deletedVaults/purge/action'
+          'Microsoft.PolicyInsights/*'
+          'Microsoft.Authorization/policyAssignments/*'
+          'Microsoft.Authorization/policyDefinitions/*'
+          'Microsoft.Authorization/policyExemptions/*'
+          'Microsoft.Authorization/policySetDefinitions/*'
+          'Microsoft.Insights/alertRules/*'
+          'Microsoft.Resources/deployments/*'
+          'Microsoft.Security/*'
+          'Microsoft.Support/*'
+        ]
+        notActions: []
+        dataActions: []
+        notDataActions: []
+      }
+    ]
+    assignableScopes: [
+      tenantResourceId('Microsoft.Management/managementGroups', parAssignableScopeManagementGroupId)
+    ]
+  }
+}
+
+output outRoleDefinitionId string = resRoleDefinition.id
