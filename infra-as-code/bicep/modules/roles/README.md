@@ -21,7 +21,7 @@ parAssignableScopeManagementGroupId | The management group scope to which the ro
 
 **Example Deployment**
 
-In this example, the custom roles will be defined at the `alz` management group.
+In this example, the custom roles will be defined at the `alz` management group.  The parameters file provides an example of all required parameters.
 
 ### Azure CLI
 ```bash
