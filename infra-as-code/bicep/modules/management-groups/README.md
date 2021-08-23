@@ -23,7 +23,7 @@ parParentManagementGroupId | The management group that will be used to create al
 parTopLevelManagementGroupPrefix | Prefix for the management structure.  This management group will be created as part of the deployment. | Minimum two characters | `advworks` |
 
 
-## Azure CLI Deployment
+## Deployment
 
 Module can be deployed through Azure CLI using `az deployment mg create` command.
 
@@ -31,12 +31,23 @@ Module can be deployed through Azure CLI using `az deployment mg create` command
 
 In this example, the management group structure is being deployed to the Tenant Root Group based on the Azure Active Directory Id `343ddfdb-bef5-46d9-99cf-ed67d5948783`.  This value should be replaced with that of your organization.  The parameters file provies an example of all required parameters.
 
+### Azure CLI
 ```bash
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/management-groups/mgmtGroups.bicep \
   --parameters @infra-as-code/bicep/modules/management-groups/mgmtGroups.parameters.example.json \
   --location eastus \
   --management-group-id 343ddfdb-bef5-46d9-99cf-ed67d5948783
+```
+
+### PowerShell
+
+```powershell
+New-AzManagementGroupDeployment `
+  -TemplateFile infra-as-code/bicep/modules/management-groups/mgmtGroups.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/management-groups/mgmtGroups.parameters.example.json `
+  -Location eastus `
+  -ManagementGroupId 343ddfdb-bef5-46d9-99cf-ed67d5948783
 ```
 
 ![Example Deployment Output](media/example-deployment-output.png "Example Deployment Output")
