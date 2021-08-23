@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "**.bicep"
+  workflow_dispatch: {}
 
 jobs:
   bicep_unit_tests:
