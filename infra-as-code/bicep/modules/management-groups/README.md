@@ -28,8 +28,8 @@ In this example, the management group structure is being deployed to the Tenant 
 
 ```bash
 az deployment mg create \
-  --template-file infra-as-code/bicep/modules/mgmtGroups.bicep \
-  --parameters @infra-as-code/bicep/modules/mgmtGroups.parameters.example.json \
+  --template-file infra-as-code/bicep/modules/management-groups/mgmtGroups.bicep \
+  --parameters @infra-as-code/bicep/modules/management-groups/mgmtGroups.parameters.example.json \
   --location eastus \
   --management-group-id 343ddfdb-bef5-46d9-99cf-ed67d5948783
 ```
