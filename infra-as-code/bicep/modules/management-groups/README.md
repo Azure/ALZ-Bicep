@@ -20,16 +20,15 @@ The module requires the following required input parameters.
  Paramenter | Description | Requirement | Example
 ----------- | ----------- | ----------- | -------
 parParentManagementGroupId | The management group that will be used to create all management groups.  Specific the management group id. | Must existing in Azure. | When deployed to **Tenant Root Group**: `Azure Active Directory Tenant Id`, or when deployed to **another management group**: `Management Group ID`
-parTopLevelManagementGroupPrefix | Prefix for the management structure.  This management group will be created as part of the deployment. | Minimum two characters | `advworks` |
+parTopLevelManagementGroupPrefix | Prefix for the management structure.  This management group will be created as part of the deployment. | Minimum two characters | `alz` |
+parTopLevelManagementGroupDisplayName | Display name for top level management group prefix.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter. | Minimum two characters | `Azure Landing Zones` |
 
 
 ## Deployment
 
-Module can be deployed through Azure CLI using `az deployment mg create` command.
+**Example Deployment**
 
-**Example Deployment through Azure CLI**
-
-In this example, the management group structure is being deployed to the Tenant Root Group based on the Azure Active Directory Id `343ddfdb-bef5-46d9-99cf-ed67d5948783`.  This value should be replaced with that of your organization.  The parameters file provies an example of all required parameters.
+In this example, the management group structure is being deployed to the `Tenant Root Group` based on the Azure Active Directory Tenant Id `343ddfdb-bef5-46d9-99cf-ed67d5948783`.  This value should be replaced with that of your organization.  The parameters file provies an example of all required parameters.
 
 ### Azure CLI
 ```bash

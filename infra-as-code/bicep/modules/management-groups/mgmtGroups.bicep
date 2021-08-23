@@ -10,7 +10,6 @@ AUTHOR/S: SenthuranSivananthan
 VERSION: 1.0.0
 */
 
-
 targetScope = 'managementGroup'
 
 @description('The management group that will be used to create all management groups.  Specific the management group id.')
@@ -19,24 +18,66 @@ param parParentManagementGroupId string
 @description('Prefix for the management structure.  This management group will be created as part of the deployment.')
 @minLength(2)
 @maxLength(10)
-param parTopLevelManagementGroupPrefix string
+param parTopLevelManagementGroupPrefix string = 'alz'
 
-var varPlatformManagementGroups = [
-  'management'
-  'connectivity'
-  'identity'
-]
+@description('Display name for top level management group prefix.  This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter.')
+@minLength(2)
+param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
 
-var varLandingZoneManagementGroups = [
-  'corp'
-  'online'
-]
+// Management Group definition for Platform
+var varPlatformManagementGroup = {
+  name: '${parTopLevelManagementGroupPrefix}-platform'
+  displayName: 'Platform'
+  childManagementGroups: [
+    {
+      name: '${parTopLevelManagementGroupPrefix}-platform-management'
+      displayName: 'Management'
+    }
+    {
+      name: '${parTopLevelManagementGroupPrefix}-platform-connectivity'
+      displayName: 'Connectivity'
+    }
+    {
+      name: '${parTopLevelManagementGroupPrefix}-platform-identity'
+      displayName: 'Identity'
+    }
+  ]
+}
+
+// Management Group definition for Landing Zones
+var varLandingZoneManagementGroup = {
+  name: '${parTopLevelManagementGroupPrefix}-landingzones'
+  displayName: 'Landing Zones'
+  childManagementGroups: [
+    {
+      name: '${parTopLevelManagementGroupPrefix}-landingzones-corp'
+      displayName: 'Corp'
+    }
+    {
+      name: '${parTopLevelManagementGroupPrefix}-landingzones-online'
+      displayName: 'Online'
+    }
+  ]
+}
+
+// Management Group definition for Sandboxes
+var varSandboxesManagementGroup = {
+  name: '${parTopLevelManagementGroupPrefix}-sandboxes'
+  displayName: 'Sandboxes'
+}
+
+// Management Group definition for Decomissioned
+var varDecommissionedManagementGroup = {
+  name: '${parTopLevelManagementGroupPrefix}-decommissioned'
+  displayName: 'Decommissioned'
+}
 
 // Level 1
 resource resTopLevelMG 'Microsoft.Management/managementGroups@2021-04-01' = {
   name: parTopLevelManagementGroupPrefix
   scope: tenant()
   properties: {
+    displayName: parTopLevelManagementGroupDisplayName
     details: {
       parent: {
         id: tenantResourceId('Microsoft.Management/managementGroups', parParentManagementGroupId)
@@ -47,9 +88,10 @@ resource resTopLevelMG 'Microsoft.Management/managementGroups@2021-04-01' = {
 
 // Level 2
 resource resPlatformMG 'Microsoft.Management/managementGroups@2021-04-01' = {
-  name: '${parTopLevelManagementGroupPrefix}-platform'
+  name: varPlatformManagementGroup.name
   scope: tenant()
   properties: {
+    displayName: varPlatformManagementGroup.displayName
     details: {
       parent: {
         id: resTopLevelMG.id
@@ -58,11 +100,11 @@ resource resPlatformMG 'Microsoft.Management/managementGroups@2021-04-01' = {
   }
 }
 
-
 resource resLandingZonesMG 'Microsoft.Management/managementGroups@2021-04-01' = {
-  name: '${parTopLevelManagementGroupPrefix}-landingzones'
+  name: varLandingZoneManagementGroup.name
   scope: tenant()
   properties: {
+    displayName: varLandingZoneManagementGroup.displayName
     details: {
       parent: {
         id: resTopLevelMG.id
@@ -72,9 +114,10 @@ resource resLandingZonesMG 'Microsoft.Management/managementGroups@2021-04-01' = 
 }
 
 resource resSandboxesMG 'Microsoft.Management/managementGroups@2021-04-01' = {
-  name: '${parTopLevelManagementGroupPrefix}-sandboxes'
+  name: varSandboxesManagementGroup.name
   scope: tenant()
   properties: {
+    displayName: varSandboxesManagementGroup.displayName
     details: {
       parent: {
         id: resTopLevelMG.id
@@ -84,9 +127,10 @@ resource resSandboxesMG 'Microsoft.Management/managementGroups@2021-04-01' = {
 }
 
 resource resDecommissionedMG 'Microsoft.Management/managementGroups@2021-04-01' = {
-  name: '${parTopLevelManagementGroupPrefix}-decommissioned'
+  name: varDecommissionedManagementGroup.name
   scope: tenant()
   properties: {
+    displayName: varDecommissionedManagementGroup.displayName
     details: {
       parent: {
         id: resTopLevelMG.id
@@ -95,12 +139,12 @@ resource resDecommissionedMG 'Microsoft.Management/managementGroups@2021-04-01' 
   }
 }
 
-
 // Level 3 - Child Management Groups under Platform MG
-resource resPlatformChildMG 'Microsoft.Management/managementGroups@2021-04-01' = [for childMG in varPlatformManagementGroups: {
-  name: '${resPlatformMG.name}-${childMG}'
+resource resPlatformChildMG 'Microsoft.Management/managementGroups@2021-04-01' = [for childMG in varPlatformManagementGroup.childManagementGroups: {
+  name: childMG.name
   scope: tenant()
   properties: {
+    displayName: childMG.displayName
     details: {
       parent: {
         id: resPlatformMG.id
@@ -110,10 +154,11 @@ resource resPlatformChildMG 'Microsoft.Management/managementGroups@2021-04-01' =
 }]
 
 // Level 3 - Child Management Groups under Landing Zones MG
-resource resLandingZoneChildMG 'Microsoft.Management/managementGroups@2021-04-01' = [for childMG in varLandingZoneManagementGroups: {
-  name: '${resLandingZonesMG.name}-${childMG}'
+resource resLandingZoneChildMG 'Microsoft.Management/managementGroups@2021-04-01' = [for childMG in varLandingZoneManagementGroup.childManagementGroups: {
+  name: childMG.name
   scope: tenant()
   properties: {
+    displayName: childMG.displayName
     details: {
       parent: {
         id: resLandingZonesMG.id
