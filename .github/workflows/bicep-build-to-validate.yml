@@ -21,7 +21,10 @@ jobs:
       - name: Bicep Build to Test
         shell: pwsh
         run: |
-          Get-ChildItem -Recurse -Filter '*.bicep' | ForEach-Object {bicep build $_.FullName}
+          Get-ChildItem -Recurse -Filter '*.bicep' | ForEach-Object {
+              Write-Information "==> Attempting Bicep Build For File: $_.FullName" -InformationAction Continue
+              bicep build $_.FullName
+          }
 
       - name: ARM-TTK Bicep Files
         uses: github/super-linter@v4
