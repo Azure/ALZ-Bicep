@@ -16,7 +16,7 @@ The module requires the following inputs:
 
  Paramenter | Description | Requirement | Example
 ----------- | ----------- | ----------- | -------
-parAssignableScopeManagementGroupId | The management group scope to which the role can be assigned.  This management group id will be used for the [assignableScopes](https://docs.microsoft.com/azure/role-based-access-control/role-definitions#assignablescopes) property in the role definition. | Mandatory input | `alz`
+parAssignableScopeManagementGroupId | The management group scope to which the role can be assigned.  This management group ID will be used for the [assignableScopes](https://docs.microsoft.com/azure/role-based-access-control/role-definitions#assignablescopes) property in the role definition. | Mandatory input | `alz`
 
 ## Outputs
 
