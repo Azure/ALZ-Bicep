@@ -28,10 +28,12 @@ In this example, an Automation Account will be deployed to the resource group `a
 
 ### Azure CLI
 ```bash
+# Create Resource Group
 az group create \
   --name alz-automation \
   --location eastus
 
+# Deploy Module
 az deployment group create \
   --template-file infra-as-code/bicep/modules/reusable/automation-account/automation-account.bicep \
   --parameters @infra-as-code/bicep/modules/reusable/automation-account/automation-account.parameters.example.json \
@@ -41,10 +43,12 @@ az deployment group create \
 ### PowerShell
 
 ```powershell
+# Create Resource Group
 New-AzResourceGroup `
   -Name alz-automation `
   -Location eastus
 
+# Deploy Module
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/reusable/automation-account/automation-account.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/reusable/automation-account/automation-account.parameters.example.json `
