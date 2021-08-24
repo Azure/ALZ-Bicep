@@ -6,15 +6,17 @@ Move a subscription from it's original management group to a new management grou
 
 The module requires the following required input parameters.
 
- Paramenter | Description | Requirement | Example
------------ | ----------- | ----------- | -------
-parSubscriptionId | Subscription Id that should be moved to a new management group. | Mandatory input | `34b63c8f-1782-42e6-8fb9-ba6ee8b99735`
-parTargetManagementGroupId | Target management group for the subscription. | Mandatory input | `alz-platform-connectivity` |
+ Paramenter | Type | Description | Requirement | Example
+----------- | ---- | ----------- | ----------- | -------
+parSubscriptionId | string | Subscription Id that should be moved to a new management group. | Mandatory input | `34b63c8f-1782-42e6-8fb9-ba6ee8b99735`
+parTargetManagementGroupId | string | Target management group for the subscription. | Mandatory input, management group must exist | `alz-platform-connectivity` |
+
+## Outputs
+
+*This module does not produce any outputs.*
 
 
 ## Deployment
-
-**Example Deployment**
 
 In this example, the subscription `34b63c8f-1782-42e6-8fb9-ba6ee8b99735` will be moved to `alz-platform-connectivity` management group.  The parameters are defined in `subscription-move.parameters.example.json`.
 

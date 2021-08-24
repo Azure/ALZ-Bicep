@@ -9,7 +9,7 @@ targetScope = 'managementGroup'
 @description('Subscription Id that should be moved to a new management group.')
 param parSubscriptionId string
 
-@description('Target management group for the subscription.')
+@description('Target management group for the subscription.  This management group must exist.')
 param parTargetManagementGroupId string
 
 resource resSubscriptionMove 'Microsoft.Management/managementGroups/subscriptions@2021-04-01' = {
