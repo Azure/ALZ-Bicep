@@ -10,8 +10,8 @@ DESCRIPTION:  Management Group hierarchy is created through a tenant-scoped Azur
       * Landing Zones
           * Corp
           * Online
-      * Sandbox management group
-      * Decommissioned management group
+      * Sandbox
+      * Decommissioned
 AUTHOR/S: SenthuranSivananthan
 VERSION: 1.0.0
 */
@@ -64,10 +64,10 @@ var varLandingZoneOnlineMG = {
   displayName: 'Online'
 }
 
-// Sandboxes Management Group
-var varSandboxesManagementGroup = {
-  name: '${parTopLevelManagementGroupPrefix}-sandboxes'
-  displayName: 'Sandboxes'
+// Sandbox Management Group
+var varSandboxManagementGroup = {
+  name: '${parTopLevelManagementGroupPrefix}-sandbox'
+  displayName: 'Sandbox'
 }
 
 // Decomissioned Management Group
@@ -79,7 +79,6 @@ var varDecommissionedManagementGroup = {
 // Level 1
 resource resTopLevelMG 'Microsoft.Management/managementGroups@2021-04-01' = {
   name: parTopLevelManagementGroupPrefix
-  scope: tenant()
   properties: {
     displayName: parTopLevelManagementGroupDisplayName
   }
@@ -88,7 +87,6 @@ resource resTopLevelMG 'Microsoft.Management/managementGroups@2021-04-01' = {
 // Level 2
 resource resPlatformMG 'Microsoft.Management/managementGroups@2021-04-01' = {
   name: varPlatformMG.name
-  scope: tenant()
   properties: {
     displayName: varPlatformMG.displayName
     details: {
@@ -101,7 +99,6 @@ resource resPlatformMG 'Microsoft.Management/managementGroups@2021-04-01' = {
 
 resource resLandingZonesMG 'Microsoft.Management/managementGroups@2021-04-01' = {
   name: varLandingZoneMG.name
-  scope: tenant()
   properties: {
     displayName: varLandingZoneMG.displayName
     details: {
@@ -112,11 +109,10 @@ resource resLandingZonesMG 'Microsoft.Management/managementGroups@2021-04-01' = 
   }
 }
 
-resource resSandboxesMG 'Microsoft.Management/managementGroups@2021-04-01' = {
-  name: varSandboxesManagementGroup.name
-  scope: tenant()
+resource resSandboxMG 'Microsoft.Management/managementGroups@2021-04-01' = {
+  name: varSandboxManagementGroup.name
   properties: {
-    displayName: varSandboxesManagementGroup.displayName
+    displayName: varSandboxManagementGroup.displayName
     details: {
       parent: {
         id: resTopLevelMG.id
@@ -127,7 +123,6 @@ resource resSandboxesMG 'Microsoft.Management/managementGroups@2021-04-01' = {
 
 resource resDecommissionedMG 'Microsoft.Management/managementGroups@2021-04-01' = {
   name: varDecommissionedManagementGroup.name
-  scope: tenant()
   properties: {
     displayName: varDecommissionedManagementGroup.displayName
     details: {
@@ -141,7 +136,6 @@ resource resDecommissionedMG 'Microsoft.Management/managementGroups@2021-04-01' 
 // Level 3 - Child Management Groups under Platform MG
 resource resPlatformManagementMG 'Microsoft.Management/managementGroups@2021-04-01' = {
   name: varPlatformManagementMG.name
-  scope: tenant()
   properties: {
     displayName: varPlatformManagementMG.displayName
     details: {
@@ -154,7 +148,6 @@ resource resPlatformManagementMG 'Microsoft.Management/managementGroups@2021-04-
 
 resource resPlatformConnectivityMG 'Microsoft.Management/managementGroups@2021-04-01' = {
   name: varPlatformConnectivityMG.name
-  scope: tenant()
   properties: {
     displayName: varPlatformConnectivityMG.displayName
     details: {
@@ -167,7 +160,6 @@ resource resPlatformConnectivityMG 'Microsoft.Management/managementGroups@2021-0
 
 resource resPlatformIdentityMG 'Microsoft.Management/managementGroups@2021-04-01' = {
   name: varPlatformIdentityMG.name
-  scope: tenant()
   properties: {
     displayName: varPlatformIdentityMG.displayName
     details: {
@@ -181,7 +173,6 @@ resource resPlatformIdentityMG 'Microsoft.Management/managementGroups@2021-04-01
 // Level 3 - Child Management Groups under Landing Zones MG
 resource resLandingZonesCorpMG 'Microsoft.Management/managementGroups@2021-04-01' = {
   name: varLandingZoneCorpMG.name
-  scope: tenant()
   properties: {
     displayName: varLandingZoneCorpMG.displayName
     details: {
@@ -194,7 +185,6 @@ resource resLandingZonesCorpMG 'Microsoft.Management/managementGroups@2021-04-01
 
 resource resLandingZonesOnlineMG 'Microsoft.Management/managementGroups@2021-04-01' = {
   name: varLandingZoneOnlineMG.name
-  scope: tenant()
   properties: {
     displayName: varLandingZoneOnlineMG.displayName
     details: {
@@ -217,6 +207,6 @@ output outLandingZonesMGId string = resLandingZonesMG.id
 output outLandingZonesCorpMGId string = resLandingZonesCorpMG.id
 output outLandingZonesOnlineMGId string = resLandingZonesOnlineMG.id
 
-output outSandboxesManagementGroupId string = resSandboxesMG.id
+output outSandboxManagementGroupId string = resSandboxMG.id
 
 output outDecommissionedManagementGroupId string = resDecommissionedMG.id

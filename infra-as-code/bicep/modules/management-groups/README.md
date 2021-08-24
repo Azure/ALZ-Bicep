@@ -38,13 +38,15 @@ outPlatformIdentityMGId | string | /providers/Microsoft.Management/managementGro
 outLandingZonesMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones
 outLandingZonesCorpMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-corp
 outLandingZonesOnlineMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-online
-outSandboxesManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-sandboxes
+outSandboxManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-sandbox
 outDecommissionedManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-decommissioned
 
 
 ## Deployment
 
 In this example, the management groups are created at the `Tenant Root Group` through a tenant-scoped deployment.
+
+> For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
 ```bash
