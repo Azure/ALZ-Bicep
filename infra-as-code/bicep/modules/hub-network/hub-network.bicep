@@ -7,7 +7,7 @@ DESCRIPTION: The following components will be options in this deployment
               ExpressRoute Gateway
               Azure Firewall or 3rd Party NVA
               NSG
-              DDOS Plan
+              Ddos Plan
               Bastion
 AUTHOR/S: Troy Ault
 VERSION: 1.0.0
@@ -19,19 +19,29 @@ VERSION: 1.0.0
 //]
 
 @description('Switch which allows Bastion deployment to be disabled')
-param parBastionEnabled bool = true
+param parBastionEnabled bool = false
 
 @description('Switch which allows DDOS deployment to be disabled')
-param parDDOSEnabled bool = true
+param parDdosEnabled bool = false
 
 @description('Switch which allows Azure Firewall deployment to be disabled')
 param parAzureFirewallEnabled bool = true
 
 @description('Switch which allows Virtual Network Gateway deployment to be disabled')
-param parGatewayEnabled bool = true
+param parGatewayEnabled bool = false
+
+@description('DDOS Plan Name')
+param parDDOSPlanName string = 'MyDDosPlan'
 
 @description('Azure SKU or Tier to deploy.  Currently two options exist Basic and Standard')
 param parBastionSku string = 'Standard'
+
+@description('Public Ip Address SKU')
+@allowed([
+  'Basic'
+  'Standard'
+])
+param parPublicIPSku string = 'Standard'
 
 @description('Tags you would like to be applied to all resources in this module')
 param parTags object = {}
@@ -100,7 +110,13 @@ var varSubnetProperties = [for subnet in parSubnets: {
 
 var varBastionName = 'bastion-${resourceGroup().location}'
 
-var varBastionSubnetRef = '${resVirtualNetworks.id}/subnets/AzureBastionSubnet}'
+
+resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDdosEnabled) {
+  name: parDDOSPlanName
+  location: resourceGroup().location
+  tags: parTags 
+}
+
 
 resource resVirtualNetworks 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: '${parHubNetworkPrefix}-${resourceGroup().location}'
@@ -112,15 +128,20 @@ resource resVirtualNetworks 'Microsoft.Network/virtualNetworks@2021-02-01' = {
       ]
     }
     subnets: varSubnetProperties
+    enableDdosProtection:parDdosEnabled
+    ddosProtectionPlan: (parDdosEnabled) ? {
+      id: resDdosProtectionPlan.id
+      } : null
   }
 }
+
 
 resource resBastionPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = if(parBastionEnabled){
   location: resourceGroup().location
   name: '${varBastionName}-PublicIp'
   tags: parTags
   sku: {
-      name: parBastionSku
+      name: parPublicIPSku
   }
   properties: {
       publicIPAddressVersion: 'IPv4'
@@ -128,10 +149,20 @@ resource resBastionPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = i
   }
 }
 
+
+resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
+  parent: resVirtualNetworks
+  name: 'AzureBastionSubnet'
+} 
+
+
 resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if(parBastionEnabled){
   location: resourceGroup().location
   name: varBastionName
   tags: parTags
+  sku:{
+    name: parBastionSku
+  }
   properties: {
       dnsName: uniqueString(resourceGroup().id)
       ipConfigurations: [
@@ -139,7 +170,7 @@ resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if(parBastionE
               name: 'IpConf'
               properties: {
                   subnet: {
-                      id: varBastionSubnetRef
+                    id: resBastionSubnetRef.id
                   }
                   publicIPAddress: {
                       id: resBastionPublicIP.id
@@ -150,9 +181,17 @@ resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if(parBastionE
   }
 }
 
-/*
-resource resExpressRouteGateway 'Microsoft.Network/expressRouteGateways@2021-02-01' = if(parHybridDeploymentOption == 'Express_Route_Gateway'){
-
+resource resGatewayPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = if(parGatewayEnabled){
+  location: resourceGroup().location
+  name: '${parGatewayName}-PublicIp'
+  tags: parTags
+  sku: {
+      name: parPublicIPSku
+  }
+  properties: {
+      publicIPAddressVersion: 'IPv4'
+      publicIPAllocationMethod: 'Static'
+  }
 }
 
 resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = if(parGatewayEnabled){
@@ -168,17 +207,22 @@ resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = i
       name: parVpnSku
       tier: parVpnSku
     }
-      id: resVirtualNetworks.id
-      name: 'vnetGatewayConfig'
-      properties:{
-        publicIpAddress:{
-          id: ''
-        }
-        subnet:{
-          id: varBastionSubnetRef
+    ipConfigurations:[
+      {
+        id: resVirtualNetworks.id
+        name: 'vnetGatewayConfig'
+        properties:{
+          privateIPAllocationMethod: 'Static'
+          publicIPAddress:{
+            id: resGatewayPublicIP.id
+          }
+          subnet:{
+            id: resBastionSubnetRef.id
+          }
         }
       }
-    }
+    ]
   }
 }
-*/
+
+
