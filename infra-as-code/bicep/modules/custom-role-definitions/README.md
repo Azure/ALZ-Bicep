@@ -40,8 +40,8 @@ Input parameter file `roles.parameters.example.json` defines the assignable scop
 ### Azure CLI
 ```bash
 az deployment mg create \
-  --template-file infra-as-code/bicep/modules/roles/roles.bicep \
-  --parameters @infra-as-code/bicep/modules/roles/roles.parameters.example.json \
+  --template-file infra-as-code/bicep/modules/custom-role-definitions/custom-role-definitions.bicep \
+  --parameters @infra-as-code/bicep/modules/custom-role-definitions/custom-role-definitions.parameters.example.json \
   --location eastus \
   --management-group-id alz
 ```
@@ -50,8 +50,8 @@ az deployment mg create \
 
 ```powershell
 New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/roles/roles.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/roles/roles.parameters.example.json `
+  -TemplateFile infra-as-code/bicep/modules/custom-role-definitions/custom-role-definitions.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/custom-role-definitions/custom-role-definitions.parameters.example.json `
   -Location eastus `
   -ManagementGroupId alz
 ```
