@@ -46,10 +46,12 @@ In this example, a Log Analytics Workspace will be deployed to the resource grou
 
 ### Azure CLI
 ```bash
+# Create Resource Group
 az group create \
   --name alz-log-analytics \
   --location eastus
 
+# Deploy Module
 az deployment group create \
   --template-file infra-as-code/bicep/modules/reusable/log-analytics-workspace/log-analytics-workspace.bicep \
   --parameters @infra-as-code/bicep/modules/reusable/log-analytics-workspace/log-analytics-workspace.parameters.example.json \
@@ -59,10 +61,12 @@ az deployment group create \
 ### PowerShell
 
 ```powershell
+# Create Resource Group
 New-AzResourceGroup `
   -Name alz-log-analytics `
   -Location eastus
 
+# Deploy Module
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/reusable/log-analytics-workspace/log-analytics-workspace.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/reusable/log-analytics-workspace/log-analytics-workspace.parameters.example.json `
