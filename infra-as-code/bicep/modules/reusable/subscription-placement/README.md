@@ -1,6 +1,6 @@
 Module:  Subscription Placement
 
-Move a subscription to a new management group.  Once the subscription is moved, Azure Policies assigned to the new management group or it's parent management group(s) will begin to govern the subscription.
+Move one or more subscriptions to a new management group.  Once the subscription(s) are moved, Azure Policies assigned to the new management group or it's parent management group(s) will begin to govern the subscription(s).
 
 ## Parameters
 
@@ -8,12 +8,12 @@ The module requires the following required input parameters.
 
  Paramenter | Type | Description | Requirement | Example
 ----------- | ---- | ----------- | ----------- | -------
-parSubscriptionId | string | Subscription Id that should be moved to a new management group. | Mandatory input | `34b63c8f-1782-42e6-8fb9-ba6ee8b99735`
+parSubscriptionIds | Array of string | Array of Subscription Ids that should be moved to the new management group. | Mandatory input | Empty: `[]` or <br />1 Subscription: `["4f9f8765-911a-4a6d-af60-4bc0473268c0"]` or<br />Many Subscriptions: `["34b63c8f-1782-42e6-8fb9-ba6ee8b99735", "4f9f8765-911a-4a6d-af60-4bc0473268c0"]`
 parTargetManagementGroupId | string | Target management group for the subscription. | Mandatory input, management group must exist | `alz-platform-connectivity` |
 
 ## Deployment
 
-In this example, the subscription `34b63c8f-1782-42e6-8fb9-ba6ee8b99735` will be moved to `alz-platform-connectivity` management group.  The inputs for this module are defined in `subscription-placement.parameters.example.json`.
+In this example, the subscriptions `34b63c8f-1782-42e6-8fb9-ba6ee8b99735` and `4f9f8765-911a-4a6d-af60-4bc0473268c0` will be moved to `alz-platform-connectivity` management group.  The inputs for this module are defined in `subscription-placement.parameters.example.json`.
 
 > For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
