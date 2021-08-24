@@ -1,6 +1,6 @@
 targetScope = 'managementGroup'
 
-@description('The management group scope to which the role can be assigned.  This management group id will be used for the assignableScopes property in the role definition.')
+@description('The management group scope to which the role can be assigned.  This management group ID will be used for the assignableScopes property in the role definition.')
 param parAssignableScopeManagementGroupId string
 
 var varRole = {
@@ -10,7 +10,6 @@ var varRole = {
 
 resource resRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' = {
   name: guid(varRole.name)
-  scope: managementGroup()
   properties: {
     roleName: varRole.name
     description: varRole.description
