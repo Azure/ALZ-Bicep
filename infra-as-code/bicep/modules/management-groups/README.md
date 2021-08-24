@@ -1,52 +1,66 @@
 # Module:  Management Groups
 
-Management Groups module defines the management group structure that will be deployed in a customer's environment.  It will deploy:
+The Management Groups module deploys a management group hierarchy in a customer's tenant under the `Tenant Root Group`.  This is accomplished through a tenant-scoped Azure Resource Manager (ARM) deployment.  The heirarchy can be modifed by editing `mgmtGroups.bicep`.  The hierarchy created by the deployment is:
 
-  1. Platform management group with child management groups:
-      * management
-      * connectivity
-      * identity
-  2. Landing Zones management group with child management groups:
-      * corp
-      * online
-  3. Sandbox management group
-  4. Decommissioned management group
+  * Tenant Root Group
+    * Top Level Management Group (defined by parameter `parTopLevelManagementGroupPrefix`)
+      * Platform
+          * Management
+          * Connectivity
+          * Identity
+      * Landing Zones
+          * Corp
+          * Online
+      * Sandbox
+      * Decommissioned
 
 
 ## Parameters
 
-The module requires the following required input parameters.
+The module requires the following inputs:
 
- Paramenter | Description | Requirement | Example
------------ | ----------- | ----------- | -------
-parParentManagementGroupId | The management group that will be used to create all management groups.  Specific the management group id. | Must existing in Azure. | When deployed to **Tenant Root Group**: `Azure Active Directory Tenant Id`, or when deployed to **another management group**: `Management Group ID`
-parTopLevelManagementGroupPrefix | Prefix for the management structure.  This management group will be created as part of the deployment. | Minimum two characters | `alz` |
-parTopLevelManagementGroupDisplayName | Display name for top level management group prefix.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter. | Minimum two characters | `Azure Landing Zones` |
+ Paramenter | Type | Description | Requirements | Example
+----------- | ---- | ----------- | ------------ | -------
+parTopLevelManagementGroupPrefix | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment. | 2-10 characters | `alz` |
+parTopLevelManagementGroupDisplayName | string | Display name for top level management group.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter. | Minimum two characters | `Azure Landing Zones` |
+
+## Outputs
+
+The module will generate the following outputs:
+
+Output | Type | Example
+------ | ---- | --------
+outTopLevelMGId | string | /providers/Microsoft.Management/managementGroups/alz
+outPlatformMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform
+outPlatformManagementMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform-management
+outPlatformConnectivityMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform-connectivity
+outPlatformIdentityMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform-identity
+outLandingZonesMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones
+outLandingZonesCorpMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-corp
+outLandingZonesOnlineMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-online
+outSandboxesManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-sandboxes
+outDecommissionedManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-decommissioned
 
 
 ## Deployment
 
-**Example Deployment**
-
-In this example, the management group structure is being deployed to the `Tenant Root Group` based on the Azure Active Directory Tenant Id `343ddfdb-bef5-46d9-99cf-ed67d5948783`.  This value should be replaced with that of your organization.  The parameters file provies an example of all required parameters.
+In this example, the management groups are created at the `Tenant Root Group` through a tenant-scoped deployment.
 
 ### Azure CLI
 ```bash
-az deployment mg create \
+az deployment tenant create \
   --template-file infra-as-code/bicep/modules/management-groups/mgmtGroups.bicep \
   --parameters @infra-as-code/bicep/modules/management-groups/mgmtGroups.parameters.example.json \
-  --location eastus \
-  --management-group-id 343ddfdb-bef5-46d9-99cf-ed67d5948783
+  --location eastus
 ```
 
 ### PowerShell
 
 ```powershell
-New-AzManagementGroupDeployment `
+New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/modules/management-groups/mgmtGroups.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/management-groups/mgmtGroups.parameters.example.json `
-  -Location eastus `
-  -ManagementGroupId 343ddfdb-bef5-46d9-99cf-ed67d5948783
+  -Location eastus
 ```
 
 ![Example Deployment Output](media/example-deployment-output.png "Example Deployment Output")
