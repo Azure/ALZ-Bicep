@@ -1,6 +1,6 @@
 Module:  Move Subscription
 
-Move a subscription from it's original management group to a new management group.  Once the subscription is moved, Azure Policies assigned to the new management group or it's parent management group(s) will begin to govern the subscription.
+Move a subscription to a new management group.  Once the subscription is moved, Azure Policies assigned to the new management group or it's parent management group(s) will begin to govern the subscription.
 
 ## Parameters
 
@@ -18,25 +18,25 @@ parTargetManagementGroupId | string | Target management group for the subscripti
 
 ## Deployment
 
-In this example, the subscription `34b63c8f-1782-42e6-8fb9-ba6ee8b99735` will be moved to `alz-platform-connectivity` management group.  The parameters are defined in `subscription-move.parameters.example.json`.
+In this example, the subscription `34b63c8f-1782-42e6-8fb9-ba6ee8b99735` will be moved to `alz-platform-connectivity` management group.  The inputs for this module are defined in `subscription-move.parameters.example.json`.
+
+> For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
 ```bash
-az deployment mg create \
+az deployment tenant create \
   --template-file infra-as-code/bicep/modules/reusable/subscription-move/subscription-move.bicep \
   --parameters @infra-as-code/bicep/modules/reusable/subscription-move/subscription-move.parameters.example.json \
-  --location eastus \
-  --management-group-id alz
+  --location eastus
 ```
 
 ### PowerShell
 
 ```powershell
-New-AzManagementGroupDeployment `
+New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/modules/reusable/subscription-move/subscription-move.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/reusable/subscription-move/subscription-move.parameters.example.json `
-  -Location eastus `
-  -ManagementGroupId alz
+  -Location eastus
 ```
 
 ## Bicep Visualizer
