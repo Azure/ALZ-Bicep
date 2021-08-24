@@ -16,7 +16,7 @@ param parSubscriptionIds array = []
 @description('Target management group for the subscription.  This management group must exist.')
 param parTargetManagementGroupId string
 
-resource resSubscriptionMove 'Microsoft.Management/managementGroups/subscriptions@2021-04-01' = [for parSubscriptionId in parSubscriptionIds: {
+resource resSubscriptionPlacement 'Microsoft.Management/managementGroups/subscriptions@2021-04-01' = [for parSubscriptionId in parSubscriptionIds: {
   scope: tenant()
   name: '${parTargetManagementGroupId}/${parSubscriptionId}'
 }]
