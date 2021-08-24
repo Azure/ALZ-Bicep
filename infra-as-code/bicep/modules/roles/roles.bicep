@@ -1,7 +1,7 @@
 /*
 SUMMARY: Defines Custom Roles based on Cloud Adoption Framework for Azure guidance. 
 DESCRIPTION:
-  Defines the custom roles based on the following personas:
+  Custom roles are based on the following personas:
     * Subscription owner
     * Application owners (DevOps/AppOps)
     * Network management (NetOps)
