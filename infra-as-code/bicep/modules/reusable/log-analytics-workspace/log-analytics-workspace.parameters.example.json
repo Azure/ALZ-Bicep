@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parName": {
+      "value": "alz-la"
+    },
+    "parLogRetentionInDays": {
+      "value": 365
+    },
+    "parLogAnalyticsSolutions": {
+      "value": [
+        "AgentHealthAssessment",
+        "AntiMalware",
+        "AzureActivity",
+        "ChangeTracking",
+        "Security",
+        "SecurityInsights",
+        "ServiceMap",
+        "SQLAssessment",
+        "Updates",
+        "VMInsights"
+      ]
+    }
+  }
+}
