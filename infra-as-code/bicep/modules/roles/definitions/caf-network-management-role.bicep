@@ -1,6 +1,6 @@
 targetScope = 'managementGroup'
 
-@description('The management group scope to which the role can be assigned.')
+@description('The management group scope to which the role can be assigned.  This management group id will be used for the assignableScopes property in the role definition.')
 param parAssignableScopeManagementGroupId string
 
 var varRole = {

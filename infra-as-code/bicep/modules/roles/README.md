@@ -1,6 +1,6 @@
 # Module:  Custom Role Definitions
 
-This module defines custom Roles based on the recommendations from the Azure Landing Zone Conceptual Architecture.  The role definitions are defined in [Identity and access management](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management) recommendations.
+This module defines custom roles based on the recommendations from the Azure Landing Zone Conceptual Architecture.  The role definitions are defined in [Identity and access management](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management) recommendations.
 
 Module supports the following custom roles:
 
@@ -16,7 +16,7 @@ The module requires the following inputs:
 
  Paramenter | Description | Requirement | Example
 ----------- | ----------- | ----------- | -------
-parAssignableScopeManagementGroupId | The management group scope to which the role can be assigned. | Mandatory input | `alz`
+parAssignableScopeManagementGroupId | The management group scope to which the role can be assigned.  This management group id will be used for the [assignableScopes](https://docs.microsoft.com/azure/role-based-access-control/role-definitions#assignablescopes) property in the role definition. | Mandatory input | `alz`
 
 ## Outputs
 
