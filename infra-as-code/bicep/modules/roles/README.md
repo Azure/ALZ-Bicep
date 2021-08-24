@@ -32,6 +32,8 @@ outSecurityOperationsRoleId | string | Microsoft.Authorization/roleDefinitions/b
 
 In this example, the custom roles will be deployed at the `alz` management group.  The parameters file provides an example of all required parameters.
 
+> For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
+
 ### Azure CLI
 ```bash
 az deployment mg create \
