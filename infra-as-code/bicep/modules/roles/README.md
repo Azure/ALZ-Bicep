@@ -1,6 +1,6 @@
-# Module:  Roles
+# Module:  Custom Role Definitions
 
-This module defines custom Roles based on Cloud Adoption Framework for Azure.  The role definitions are defined in [Identity and access management](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management) recommendations.
+This module defines custom Roles based on the recommendations from the Azure Landing Zone Conceptual Architecture.  The role definitions are defined in [Identity and access management](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management) recommendations.
 
 Module supports the following custom roles:
 
@@ -31,7 +31,7 @@ outSecurityOperationsRoleId | string | Microsoft.Authorization/roleDefinitions/b
 
 ## Deployment
 
-In this example, the custom roles will be deployed to the `alz` management group.
+In this example, the custom roles will be deployed to the `alz` management group (the intermediate root management group).
 
 Input parameter file `roles.parameters.example.json` defines the assignable scope for the roles.  In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation.
 

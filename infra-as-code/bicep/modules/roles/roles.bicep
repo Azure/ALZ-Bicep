@@ -1,5 +1,5 @@
 /*
-SUMMARY: This module defines custom Roles based on Cloud Adoption Framework for Azure. 
+SUMMARY: This module defines custom Roles based on the recommendations from the Azure Landing Zone Conceptual Architecture.
 DESCRIPTION:
   The role definitions are defined in Identity and access management recommendations.    Reference:  https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management
 
@@ -19,35 +19,35 @@ targetScope = 'managementGroup'
 @description('The management group scope to which the role can be assigned.')
 param parAssignableScopeManagementGroupId string = 'alz'
 
-module modSubscriptionOwnerRole 'definitions/caf-subscription-owner-role.bicep' = {
+module modRolesSubscriptionOwnerRole 'definitions/caf-subscription-owner-role.bicep' = {
   name: 'deploy-subscription-owner-role'
   params: {
     parAssignableScopeManagementGroupId: parAssignableScopeManagementGroupId
   }
 }
 
-module modApplicationOwnerRole 'definitions/caf-application-owner-role.bicep' = {
+module modRolesApplicationOwnerRole 'definitions/caf-application-owner-role.bicep' = {
   name: 'deploy-application-owner-role'
   params: {
     parAssignableScopeManagementGroupId: parAssignableScopeManagementGroupId
   }
 }
 
-module modNetworkManagementRole 'definitions/caf-network-management-role.bicep' = {
+module modRolesNetworkManagementRole 'definitions/caf-network-management-role.bicep' = {
   name: 'deploy-network-management-role'
   params: {
     parAssignableScopeManagementGroupId: parAssignableScopeManagementGroupId
   }
 }
 
-module modSecurityOperationsRole 'definitions/caf-security-operations-role.bicep' = {
+module modRolesSecurityOperationsRole 'definitions/caf-security-operations-role.bicep' = {
   name: 'deploy-security-operations-role'
   params: {
     parAssignableScopeManagementGroupId: parAssignableScopeManagementGroupId
   }
 }
 
-output outSubscriptionOwnerRoleId string = modSubscriptionOwnerRole.outputs.outRoleDefinitionId
-output outApplicationOwnerRoleId string = modApplicationOwnerRole.outputs.outRoleDefinitionId
-output outNetworkManagementRoleId string = modNetworkManagementRole.outputs.outRoleDefinitionId
-output outSecurityOperationsRoleId string = modSecurityOperationsRole.outputs.outRoleDefinitionId
+output outRolesSubscriptionOwnerRoleId string = modRolesSubscriptionOwnerRole.outputs.outRoleDefinitionId
+output outRolesApplicationOwnerRoleId string = modRolesApplicationOwnerRole.outputs.outRoleDefinitionId
+output outRolesNetworkManagementRoleId string = modRolesNetworkManagementRole.outputs.outRoleDefinitionId
+output outRolesSecurityOperationsRoleId string = modRolesSecurityOperationsRole.outputs.outRoleDefinitionId
