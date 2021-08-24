@@ -6,7 +6,7 @@ VERSION: 1.0.0
 */
 
 @description('Automation account name')
-param parName string
+param parName string = 'alz-automation-account'
 
 resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-01' = {
   name: parName
