@@ -30,7 +30,9 @@ outSecurityOperationsRoleId | string | Microsoft.Authorization/roleDefinitions/b
 
 ## Deployment
 
-In this example, the custom roles will be deployed at the `alz` management group.  The parameters file provides an example of all required parameters.
+In this example, the custom roles will be deployed to the `alz` management group.
+
+Input parameter file `roles.parameters.example.json` defines the assignable scope for the roles.  In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation.
 
 > For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
