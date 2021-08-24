@@ -1,13 +1,14 @@
 # Module:  Roles
 
-Defines Custom Roles based on Cloud Adoption Framework for Azure guidance. Custom roles are based on the following personas:
+This module defines custom Roles based on Cloud Adoption Framework for Azure.  The role definitions are defined in [Identity and access management](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management) recommendations.
+
+Module supports the following custom roles:
 
   * Subscription owner
   * Application owners (DevOps/AppOps)
   * Network management (NetOps)
   * Security operations (SecOps)
 
-The role definitions are defined in [Identity and access management](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management) recommendations.
 
 ## Parameters
 
