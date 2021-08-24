@@ -1,23 +1,29 @@
 /*
-SUMMARY: Defines Management Group structure that will be used to organize platform and landing zone subscriptions.
-DESCRIPTION:
-  This Bicep deployment template defines the management group structure that will be deployed in a customer's environment.  It will deploy:
-    1. Platform management group with management, connectivity, and identity child management groups; and
-    2. Landing Zones management group with corp and online child management groups.
-    3. Sandbox management group
-    4. Decommissioned management group
+SUMMARY: The Management Groups module deploys a management group hierarchy in a customer's tenant under the 'Tenant Root Group'.
+DESCRIPTION:  Management Group hierarchy is created through a tenant-scoped Azure Resource Manager (ARM) deployment.  The hierarchy is:
+  * Tenant Root Group
+    * Top Level Management Group (defined by parameter `parTopLevelManagementGroupPrefix`)
+      * Platform
+          * Management
+          * Connectivity
+          * Identity
+      * Landing Zones
+          * Corp
+          * Online
+      * Sandbox management group
+      * Decommissioned management group
 AUTHOR/S: SenthuranSivananthan
 VERSION: 1.0.0
 */
 
 targetScope = 'tenant'
 
-@description('Prefix for the management group structure.  This management group will be created as part of the deployment.')
+@description('Prefix for the management group hierarchy.  This management group will be created as part of the deployment.')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@description('Display name for top level management group prefix.  This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter.')
+@description('Display name for top level management group.  This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter.')
 @minLength(2)
 param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
 

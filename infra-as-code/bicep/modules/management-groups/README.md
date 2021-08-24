@@ -1,30 +1,32 @@
 # Module:  Management Groups
 
-Management Groups module defines the management group structure that will be deployed in a customer's environment.  It will deploy:
+The Management Groups module deploys a management group hierarchy in a customer's tenant under the `Tenant Root Group`.  This is accomplished through a tenant-scoped Azure Resource Manager (ARM) deployment.  The heirarchy can be modifed by editing `mgmtGroups.bicep`.  The hierarchy created by the deployment is:
 
-  1. Platform management group with child management groups:
-      * management
-      * connectivity
-      * identity
-  2. Landing Zones management group with child management groups:
-      * corp
-      * online
-  3. Sandbox management group
-  4. Decommissioned management group
+  * Tenant Root Group
+    * Top Level Management Group (defined by parameter `parTopLevelManagementGroupPrefix`)
+      * Platform
+          * Management
+          * Connectivity
+          * Identity
+      * Landing Zones
+          * Corp
+          * Online
+      * Sandbox
+      * Decommissioned
 
 
 ## Parameters
 
-The module requires the following input parameters:
+The module requires the following inputs:
 
  Paramenter | Type | Description | Requirements | Example
 ----------- | ---- | ----------- | ------------ | -------
-parTopLevelManagementGroupPrefix | string | Prefix for the management structure.  This management group will be created as part of the deployment. | Minimum two characters | `alz` |
-parTopLevelManagementGroupDisplayName | string | Display name for top level management group prefix.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter. | Minimum two characters | `Azure Landing Zones` |
+parTopLevelManagementGroupPrefix | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment. | 2-10 characters | `alz` |
+parTopLevelManagementGroupDisplayName | string | Display name for top level management group.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter. | Minimum two characters | `Azure Landing Zones` |
 
 ## Outputs
 
-The moduel will generate the following outputs:
+The module will generate the following outputs:
 
 Otuput | Type | Example
 ------ | ---- | --------
@@ -41,8 +43,6 @@ outDecommissionedManagementGroupId | string | /providers/Microsoft.Management/ma
 
 
 ## Deployment
-
-**Example Deployment**
 
 In this example, the management groups are created at the `Tenant Root Group` through a tenant-scoped deployment.
 
