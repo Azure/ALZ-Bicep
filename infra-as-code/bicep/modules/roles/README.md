@@ -24,10 +24,10 @@ The module will generate the following outputs:
 
 Output | Type | Example
 ------ | ---- | --------
-outSubscriptionOwnerRoleId | string | Microsoft.Authorization/roleDefinitions/8736d87d-8d31-53be-b952-a04c8d470f69
-outApplicationOwnerRoleId | string | Microsoft.Authorization/roleDefinitions/4308c4e6-07d5-534f-9e18-32769872a3f4
-outNetworkManagementRoleId | string | Microsoft.Authorization/roleDefinitions/4a200286-e2a0-5239-aa8f-fe0a90dd2eb5
-outSecurityOperationsRoleId | string | Microsoft.Authorization/roleDefinitions/b2960c40-d3db-5190-94c1-5b07c9547956
+outRolesSubscriptionOwnerRoleId | string | Microsoft.Authorization/roleDefinitions/8736d87d-8d31-53be-b952-a04c8d470f69
+outRolesApplicationOwnerRoleId | string | Microsoft.Authorization/roleDefinitions/4308c4e6-07d5-534f-9e18-32769872a3f4
+outRolesNetworkManagementRoleId | string | Microsoft.Authorization/roleDefinitions/4a200286-e2a0-5239-aa8f-fe0a90dd2eb5
+outRolesSecurityOperationsRoleId | string | Microsoft.Authorization/roleDefinitions/b2960c40-d3db-5190-94c1-5b07c9547956
 
 ## Deployment
 
