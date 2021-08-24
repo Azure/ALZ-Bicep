@@ -28,7 +28,7 @@ parTopLevelManagementGroupDisplayName | string | Display name for top level mana
 
 The module will generate the following outputs:
 
-Otuput | Type | Example
+Output | Type | Example
 ------ | ---- | --------
 outTopLevelMGId | string | /providers/Microsoft.Management/managementGroups/alz
 outPlatformMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform
