@@ -3,7 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "parName": {
-      "value": "alz-la"
+      "value": "alz-log-analytics"
+    },
+    "parRegion": {
+      "value": "eastus"
     },
     "parLogRetentionInDays": {
       "value": 365

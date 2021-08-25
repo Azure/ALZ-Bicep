@@ -21,7 +21,10 @@ VERSION: 1.0.0
 */
 
 @description('Log Analytics Workspace name')
-param parName string = 'la-alz'
+param parName string = 'alz-log-analytics'
+
+@description('Region name')
+param parRegion string = resourceGroup().location
 
 @minValue(30)
 @maxValue(730)
@@ -56,7 +59,7 @@ param parLogAnalyticsSolutions array = [
 
 resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
   name: parName
-  location: resourceGroup().location
+  location: parRegion
   properties: {
     sku: {
       name: 'PerNode'
@@ -67,7 +70,7 @@ resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020
 
 resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solutions@2015-11-01-preview' = [for solution in parLogAnalyticsSolutions: {
   name: '${solution}(${resLogAnalyticsWorkspace.name})'
-  location: resourceGroup().location
+  location: parRegion
   properties: {
     workspaceResourceId: resLogAnalyticsWorkspace.id
   }

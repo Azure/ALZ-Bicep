@@ -21,7 +21,8 @@ The module requires the following required input parameters.
 
  Paramenter | Type | Description | Requirement | Example
 ----------- | ---- | ----------- | ----------- | -------
-parName | string | Log Analytics Workspace name | Mandatory input | `alz-la`
+parName | string | Log Analytics Workspace name | Mandatory input | `alz-log-analytics`
+parRegion | string | Region name | Mandatory input, defaults to `resourceGroup().location` | `eastus`
 parLogRetentionInDays | int | Number of days of log retention for Log Analytics Workspace.  1 year (365 days) of log retention by default. | 30-730 | `365`
 parLogAnalyticsSolutions | Array of string | Solutions that will be added to the Log Analytics Workspace | 1 or more of `AgentHealthAssessment`, `AntiMalware`, `AzureActivity`, `ChangeTracking`, `Security`, `SecurityInsights`, `ServiceMap`, `SQLAssessment`, `Updates`, `VMInsights` | Empty: `[]`<br />1 Solution: `["SecurityInsights"]`<br />Many Solutions: `["SecurityInsights","VMInsights"]`
 
