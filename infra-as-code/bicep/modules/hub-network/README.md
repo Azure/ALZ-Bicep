@@ -38,7 +38,7 @@ Input parameter file `custom-role-definitions.parameters.example.json` defines t
 
 ### Azure CLI
 ```bash
-az deployment hubnet create --resource-group HUB --template-file hub-network.bicep
+az deployment group hubnet create --resource-group HUB --template-file hub-network.bicep
 ```
 
 ![Example Deployment Output](media/example-deployment-output.png "Example Deployment Output")

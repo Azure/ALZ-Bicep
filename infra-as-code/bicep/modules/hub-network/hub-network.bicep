@@ -19,16 +19,16 @@ VERSION: 1.0.0
 //]
 
 @description('Switch which allows Bastion deployment to be disabled')
-param parBastionEnabled bool = false
+param parBastionEnabled bool = true
 
 @description('Switch which allows DDOS deployment to be disabled')
-param parDdosEnabled bool = false
+param parDdosEnabled bool = true
 
 @description('Switch which allows Azure Firewall deployment to be disabled')
 param parAzureFirewallEnabled bool = true
 
 @description('Switch which allows Virtual Network Gateway deployment to be disabled')
-param parGatewayEnabled bool = false
+param parGatewayEnabled bool = true
 
 @description('DDOS Plan Name')
 param parDDOSPlanName string = 'MyDDosPlan'
@@ -57,14 +57,6 @@ param parGatewayType string = 'Vpn'
 @description('Name of the Express Route/VPN Gateway which will be created')
 param parGatewayName string = 'MyGateway'
 
-@description('Virtual Network Gateway Generation to deploy')
-@allowed([
-  'Generation1'
-  'Generation2'
-  'None'
-])
-param parVpnGateGatewayGeneration string = 'Generation2'
-
 @description('Type of virtual Network Gateway')
 @allowed([
   'PolicyBased'
@@ -73,13 +65,16 @@ param parVpnGateGatewayGeneration string = 'Generation2'
 param parVpnType string ='RouteBased'
 
 @description('Sku/Tier of Virtual Network Gateway to deploy')
-param parVpnSku string = 'Basic'
+param parVpnSku string = 'VpnGw1'
 
 @description('The IP address range for all virtual networks to use.')
 param parVirtualNetworkAddressPrefix string = '10.10.0.0/16'
 
 @description('Prefix Used for Hub Network')
 param parHubNetworkPrefix string = 'Hub'
+
+@description('Azure Firewall Name')
+param parAzureFirewallName string ='MyAzureFirewall'
 
 @description('The name and IP address range for each subnet in the virtual networks.')
 param parSubnets array = [
@@ -98,6 +93,10 @@ param parSubnets array = [
   {
     name: 'GatewaySubnet'
     ipAddressRange: '10.10.252.0/24'
+  }
+  {
+    name: 'AzureFirewallSubnet'
+    ipAddressRange: '10.10.254.0/24'
   }
 ]
 
@@ -181,6 +180,13 @@ resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if(parBastionE
   }
 }
 
+
+resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
+  parent: resVirtualNetworks
+  name: 'GatewaySubnet'
+} 
+
+
 resource resGatewayPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = if(parGatewayEnabled){
   location: resourceGroup().location
   name: '${parGatewayName}-PublicIp'
@@ -193,6 +199,7 @@ resource resGatewayPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = i
       publicIPAllocationMethod: 'Static'
   }
 }
+
 
 resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = if(parGatewayEnabled){
   name: parGatewayName
@@ -212,12 +219,11 @@ resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = i
         id: resVirtualNetworks.id
         name: 'vnetGatewayConfig'
         properties:{
-          privateIPAllocationMethod: 'Static'
           publicIPAddress:{
             id: resGatewayPublicIP.id
           }
           subnet:{
-            id: resBastionSubnetRef.id
+            id: resGatewaySubnetRef.id
           }
         }
       }
@@ -225,4 +231,83 @@ resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = i
   }
 }
 
+
+resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
+  parent: resVirtualNetworks
+  name: 'AzureFirewallSubnet'
+} 
+
+
+resource resAzureFirewallPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = if(parAzureFirewallEnabled){
+  location: resourceGroup().location
+  name: '${parAzureFirewallName}-PublicIp'
+  tags: parTags
+  sku: {
+      name: parPublicIPSku
+  }
+  properties: {
+      publicIPAddressVersion: 'IPv4'
+      publicIPAllocationMethod: 'Static'
+  }
+}
+
+
+resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(parAzureFirewallEnabled){
+  name: parAzureFirewallName
+  location: resourceGroup().location
+  tags: parTags
+  properties:{
+    networkRuleCollections: [
+      {
+        name: 'VmInternetAccess'
+        properties: {
+          priority: 101
+          action: {
+            type: 'Allow'
+          }
+          rules: [
+            {
+              name: 'AllowVMAppAccess'
+              description: 'Allows VM access to the web'
+              protocols: [
+                'TCP'
+              ]
+              sourceAddresses: [
+                parVirtualNetworkAddressPrefix
+              ]
+              destinationAddresses: [
+                '*'
+              ]
+              destinationPorts: [
+                '80'
+                '443'
+              ]
+            }
+          ]
+        }
+      }
+    ]
+    ipConfigurations: [
+      {
+        name: 'ipconfig1'
+        properties: {
+          subnet: {
+            id: resAzureFirewallSubnetRef.id
+          }
+          publicIPAddress: {
+            id: resAzureFirewallPublicIP.id
+          }
+        }
+      }
+    ]
+    threatIntelMode: 'Alert'
+    sku: {
+      name: 'AZFW_VNet'
+      tier: 'Standard'
+    }
+    additionalProperties: {
+       'Network.DNS.EnableProxy': 'true'
+    }
+  }
+}
 
