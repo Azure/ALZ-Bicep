@@ -1,6 +1,6 @@
 # Module:  Log Analytics Workspace & Solutions
 
-Deploys an Azure Log Analytics Workspace & Solutions to a Resource Group.
+Deploys an Azure Log Analytics Workspace & Solutions to an existing Resource Group.
 
 The module will deploy the following solutions by default.  Solutions can be customized as required:
 

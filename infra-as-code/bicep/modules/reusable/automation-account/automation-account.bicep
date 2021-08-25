@@ -1,6 +1,6 @@
 /*
-SUMMARY: Deploys an Azure Automation Account to a Resource Group.
-DESCRIPTION: Deploys an Azure Automation Account to a Resource Group.
+SUMMARY: Deploys an Azure Automation Account.
+DESCRIPTION: Deploys an Azure Automation Account to an existing Resource Group.
 AUTHOR/S: SenthuranSivananthan
 VERSION: 1.0.0
 */
