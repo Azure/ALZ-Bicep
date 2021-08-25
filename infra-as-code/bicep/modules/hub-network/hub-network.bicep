@@ -31,9 +31,9 @@ param parAzureFirewallEnabled bool = true
 param parGatewayEnabled bool = true
 
 @description('DDOS Plan Name')
-param parDDOSPlanName string = 'MyDDosPlan'
+param parDdosPlanName string = 'MyDDosPlan'
 
-@description('Azure SKU or Tier to deploy.  Currently two options exist Basic and Standard')
+@description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard')
 param parBastionSku string = 'Standard'
 
 @description('Public Ip Address SKU')
@@ -68,13 +68,16 @@ param parVpnType string ='RouteBased'
 param parVpnSku string = 'VpnGw1'
 
 @description('The IP address range for all virtual networks to use.')
-param parVirtualNetworkAddressPrefix string = '10.10.0.0/16'
+param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
 @description('Prefix Used for Hub Network')
 param parHubNetworkPrefix string = 'Hub'
 
 @description('Azure Firewall Name')
 param parAzureFirewallName string ='MyAzureFirewall'
+
+@description('Name of Route table to create for the default route of Hub')
+param parHubRouteTableName string = 'HubRouteTable'
 
 @description('The name and IP address range for each subnet in the virtual networks.')
 param parSubnets array = [
@@ -111,19 +114,19 @@ var varBastionName = 'bastion-${resourceGroup().location}'
 
 
 resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDdosEnabled) {
-  name: parDDOSPlanName
+  name: parDdosPlanName
   location: resourceGroup().location
   tags: parTags 
 }
 
 
-resource resVirtualNetworks 'Microsoft.Network/virtualNetworks@2021-02-01' = {
+resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: '${parHubNetworkPrefix}-${resourceGroup().location}'
   location: resourceGroup().location
   properties:{
     addressSpace:{
       addressPrefixes:[
-        parVirtualNetworkAddressPrefix
+        parHubNetworkAddressPrefix
       ]
     }
     subnets: varSubnetProperties
@@ -150,7 +153,7 @@ resource resBastionPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = i
 
 
 resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
-  parent: resVirtualNetworks
+  parent: resHubVirtualNetwork
   name: 'AzureBastionSubnet'
 } 
 
@@ -182,7 +185,7 @@ resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if(parBastionE
 
 
 resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
-  parent: resVirtualNetworks
+  parent: resHubVirtualNetwork
   name: 'GatewaySubnet'
 } 
 
@@ -216,7 +219,7 @@ resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = i
     }
     ipConfigurations:[
       {
-        id: resVirtualNetworks.id
+        id: resHubVirtualNetwork.id
         name: 'vnetGatewayConfig'
         properties:{
           publicIPAddress:{
@@ -233,7 +236,7 @@ resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = i
 
 
 resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
-  parent: resVirtualNetworks
+  parent: resHubVirtualNetwork
   name: 'AzureFirewallSubnet'
 } 
 
@@ -273,7 +276,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(par
                 'TCP'
               ]
               sourceAddresses: [
-                parVirtualNetworkAddressPrefix
+                parHubNetworkAddressPrefix
               ]
               destinationAddresses: [
                 '*'
@@ -311,3 +314,25 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(par
   }
 }
 
+resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = {
+  name: parHubRouteTableName
+  location: resourceGroup().location
+  tags: parTags
+  properties: {
+    routes: [
+      {
+        name: 'udr-default'
+        properties: {
+          addressPrefix: '0.0.0.0/0'
+          nextHopType: 'VirtualAppliance'
+          nextHopIpAddress: resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress
+        }
+      }
+    ]
+    disableBgpRoutePropagation: false
+  }
+}
+
+output outAzureFirewallPrivateIP string = resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress
+output outAzureFirewallName string = parAzureFirewallName
+output outHubRouteTableID string = resHubRouteTable.id
