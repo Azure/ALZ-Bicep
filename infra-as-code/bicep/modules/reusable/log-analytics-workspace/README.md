@@ -1,4 +1,4 @@
-# Module:  Log Analytics Workspace
+# Module:  Log Analytics Workspace & Solutions
 
 Deploys an Azure Log Analytics Workspace & Solutions to a Resource Group.
 
