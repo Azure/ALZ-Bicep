@@ -8,9 +8,12 @@ VERSION: 1.0.0
 @description('Automation account name')
 param parName string = 'alz-automation-account'
 
+@description('Region name')
+param parRegion string = resourceGroup().location
+
 resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-01' = {
   name: parName
-  location: resourceGroup().location
+  location: parRegion
   properties: {
     sku: {
       name: 'Basic'
