@@ -25,7 +25,7 @@ param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 
 @minValue(30)
 @maxValue(730)
-@description('Number of days of log retention for Log Analytics Workspace.  1 year of log retention by default.')
+@description('Number of days of log retention for Log Analytics Workspace.  1 year (365 days) of log retention by default.')
 param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
 
 @allowed([
