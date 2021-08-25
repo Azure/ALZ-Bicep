@@ -5,10 +5,10 @@ AUTHOR/S: SenthuranSivananthan
 VERSION: 1.0.0
 */
 
-@description('Automation account name')
+@description('Automation account name. - DEFAULT VALUE: alz-automation-account')
 param parName string = 'alz-automation-account'
 
-@description('Region name')
+@description('Region name. - DEFAULT VALUE: resourceGroup().location')
 param parRegion string = resourceGroup().location
 
 resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-01' = {

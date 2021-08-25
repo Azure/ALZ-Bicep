@@ -8,8 +8,8 @@ The module requires the following required input parameters.
 
  Paramenter | Type | Description | Requirement | Example
 ----------- | ---- | ----------- | ----------- | -------
-parName | string | Automation account name | Mandatory input, name must be unique in the subscription | `alz-automation-account`
-parRegion | string | Region name | Mandatory input, defaults to `resourceGroup().location` | `eastus`
+parName | string | Automation account name | Mandatory input, name must be unique in the subscription, default: `alz-automation-account` | `alz-automation-account`
+parRegion | string | Region name | Mandatory input, default: `resourceGroup().location` | `eastus`
 
 ## Outputs
 
