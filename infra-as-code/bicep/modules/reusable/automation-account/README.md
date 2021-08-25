@@ -28,7 +28,7 @@ In this example, an Automation Account will be deployed to the resource group `a
 
 ### Azure CLI
 ```bash
-# Create Resource Group
+# Create Resource Group - optional when using an existing resource group
 az group create \
   --name alz-automation \
   --location eastus
@@ -43,7 +43,7 @@ az deployment group create \
 ### PowerShell
 
 ```powershell
-# Create Resource Group
+# Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
   -Name alz-automation `
   -Location eastus

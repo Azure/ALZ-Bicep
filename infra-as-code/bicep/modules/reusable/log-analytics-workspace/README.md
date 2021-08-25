@@ -46,7 +46,7 @@ In this example, a Log Analytics Workspace will be deployed to the resource grou
 
 ### Azure CLI
 ```bash
-# Create Resource Group
+# Create Resource Group - optional when using an existing resource group
 az group create \
   --name alz-log-analytics \
   --location eastus
@@ -61,7 +61,7 @@ az deployment group create \
 ### PowerShell
 
 ```powershell
-# Create Resource Group
+# Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
   -Name alz-log-analytics `
   -Location eastus

@@ -11,7 +11,7 @@
   * AzureActivity
   * ChangeTracking
   * Security
-  * SecurityInsights
+  * SecurityInsights (Azure Sentinel)
   * ServiceMap
   * SQLAssessment
   * Updates
@@ -52,7 +52,7 @@ In this example, a Log Analytics Workspace and Automation Account will be deploy
 
 ### Azure CLI
 ```bash
-# Create Resource Group
+# Create Resource Group - optional when using an existing resource group
 az group create \
   --name alz-logging \
   --location centralus
@@ -67,7 +67,7 @@ az deployment group create \
 ### PowerShell
 
 ```powershell
-# Create Resource Group
+# Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
   -Name alz-logging `
   -Location centralus
