@@ -335,4 +335,4 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = {
 
 output outAzureFirewallPrivateIP string = resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress
 output outAzureFirewallName string = parAzureFirewallName
-output outHubRouteTableID string = resHubRouteTable.id
+

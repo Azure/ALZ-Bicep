@@ -48,13 +48,13 @@ The module will generate the following outputs:
 
 Output | Type | Example
 ------ | ---- | --------
-
+outAzureFirewallPrivateIP | string | 192.168.100.1
+outAzureFirewallName | string | MyAzureFirewall
 
 ## Deployment
 
-In this example, the custom roles will be deployed to the `alz` management group (the intermediate root management group).
-
-Input parameter file `custom-role-definitions.parameters.example.json` defines the assignable scope for the roles.  In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation.
+In this example, the hub resources will be deployed to the resource group specified.
+We will take the default values and not pass any parameters.
 
 > For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
@@ -63,7 +63,7 @@ Input parameter file `custom-role-definitions.parameters.example.json` defines t
 az deployment group hubnet create --resource-group HUB --template-file hub-network.bicep
 ```
 
-![Example Deployment Output](media/example-deployment-output.png "Example Deployment Output")
+![Example Deployment Output](media/hub-network-example-deployment-output.png "Example Deployment Output")
 
 ## Bicep Visualizer
 
