@@ -1,7 +1,9 @@
 # Module:  Logging
 
-  Deploys Azure Log Analytics Workspace & Automation Account to a Resource Group.  Automation Account will be linked to Log Analytics Workspace to provide integration for Inventory, Change Tracking and Update Management.
+  Deploys Azure Log Analytics Workspace & Automation Account to a Resource Group.
   
+  Automation Account will be linked to Log Analytics Workspace to provide integration for Update Management, Change Tracking and Inventory, and Start/Stop VMs during off-hours for your servers and virtual machines.  Only one mapping can exist between Log Analytics Workspace and Automation Account.
+
   The module will deploy the following Log Analytics Workspace solutions by default.  Solutions can be customized as required:
 
   * AgentHealthAssessment
@@ -14,6 +16,9 @@
   * SQLAssessment
   * Updates
   * VMInsights
+
+ > Only certain regions are supported to link Log Analytics Workspace & Automation Account together.  Reference:  [Supported regions for linked Log Analytics workspace
+](https://docs.microsoft.com/azure/automation/how-to/region-mappings)
 
 ## Parameters
 
@@ -50,7 +55,7 @@ In this example, a Log Analytics Workspace and Automation Account will be deploy
 # Create Resource Group
 az group create \
   --name alz-logging \
-  --location eastus
+  --location centralus
 
 # Deploy Module
 az deployment group create \
@@ -65,7 +70,7 @@ az deployment group create \
 # Create Resource Group
 New-AzResourceGroup `
   -Name alz-logging `
-  -Location eastus
+  -Location centralus
 
 # Deploy Module
 New-AzResourceGroupDeployment `
