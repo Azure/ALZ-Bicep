@@ -20,15 +20,15 @@ AUTHOR/S: SenthuranSivananthan
 VERSION: 1.0.0
 */
 
-@description('Log Analytics Workspace name')
+@description('Log Analytics Workspace name. - DEFAULT VALUE: alz-log-analytics')
 param parName string = 'alz-log-analytics'
 
-@description('Region name')
+@description('Region name. - DEFAULT VALUE: resourceGroup().location')
 param parRegion string = resourceGroup().location
 
 @minValue(30)
 @maxValue(730)
-@description('Number of days of log retention for Log Analytics Workspace.  1 year (365 days) of log retention by default.')
+@description('Number of days of log retention for Log Analytics Workspace. - DEFAULT VALUE: 365')
 param parLogRetentionInDays int = 365
 
 @allowed([
@@ -43,7 +43,7 @@ param parLogRetentionInDays int = 365
   'Updates'
   'VMInsights'
 ])
-@description('Solutions that will be added to the Log Analytics Workspace')
+@description('Solutions that will be added to the Log Analytics Workspace - DEFAULT VALUE: [AgentHealthAssessment, AntiMalware, AzureActivity, ChangeTracking, Security, SecurityInsights, ServiceMap, SQLAssessment, Updates, VMInsights]')
 param parLogAnalyticsSolutions array = [
   'AgentHealthAssessment'
   'AntiMalware'
