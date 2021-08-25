@@ -26,12 +26,12 @@ The module requires the following required input parameters.
 
  Paramenter | Type | Description | Requirement | Example
 ----------- | ---- | ----------- | ----------- | -------
-parLogAnalyticsWorkspaceName | string | Log Analytics Workspace name | Mandatory input | `alz-log-analytics`
-parLogAnalyticsWorkspaceRegion | string | Region name | Mandatory input, defaults to `resourceGroup().location` | `eastus`
-parLogAnalyticsWorkspaceLogRetentionInDays | int | Number of days of log retention for Log Analytics Workspace.  1 year (365 days) of log retention by default. | 30-730 | `365`
-parLogAnalyticsWorkspaceSolutions | Array of string | Solutions that will be added to the Log Analytics Workspace | 1 or more of `AgentHealthAssessment`, `AntiMalware`, `AzureActivity`, `ChangeTracking`, `Security`, `SecurityInsights`, `ServiceMap`, `SQLAssessment`, `Updates`, `VMInsights` | Empty: `[]`<br />1 Solution: `["SecurityInsights"]`<br />Many Solutions: `["SecurityInsights","VMInsights"]`
-parAutomationAccountName | string | Automation account name | Mandatory input, name must be unique in the subscription | `alz-automation-account`
-parAutomationAccountRegion | string | Region name | Mandatory input, defaults to `resourceGroup().location` | `eastus`
+parLogAnalyticsWorkspaceName | string | Log Analytics Workspace name | Mandatory input, default: `alz-log-analytics` | `alz-log-analytics`
+parLogAnalyticsWorkspaceRegion | string | Region name | Mandatory input, default: `resourceGroup().location` | `eastus`
+parLogAnalyticsWorkspaceLogRetentionInDays | int | Number of days of log retention for Log Analytics Workspace | Mandatory input between 30-730, default: `365` | `365`
+parLogAnalyticsWorkspaceSolutions | Array of string | Solutions that will be added to the Log Analytics Workspace | 1 or more of `AgentHealthAssessment`, `AntiMalware`, `AzureActivity`, `ChangeTracking`, `Security`, `SecurityInsights`, `ServiceMap`, `SQLAssessment`, `Updates`, `VMInsights`, default:  *all solutions*  | Empty: `[]`<br />1 Solution: `["SecurityInsights"]`<br />Many Solutions: `["SecurityInsights","VMInsights"]`
+parAutomationAccountName | string | Automation account name | Mandatory input, name must be unique in the subscription, default: `alz-automation-account` | `alz-automation-account`
+parAutomationAccountRegion | string | Region name | Mandatory input, default: `resourceGroup().location` | `eastus`
 
 ## Outputs
 

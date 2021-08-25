@@ -20,15 +20,15 @@ AUTHOR/S: SenthuranSivananthan
 VERSION: 1.0.0
 */
 
-@description('Log Analytics Workspace name')
+@description('Log Analytics Workspace name. - DEFAULT VALUE: alz-log-analytics')
 param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 
-@description('Log Analytics region name')
+@description('Log Analytics region name. - DEFAULT VALUE: resourceGroup().location')
 param parLogAnalyticsWorkspaceRegion string = resourceGroup().location
 
 @minValue(30)
 @maxValue(730)
-@description('Number of days of log retention for Log Analytics Workspace.  1 year (365 days) of log retention by default.')
+@description('Number of days of log retention for Log Analytics Workspace. - DEFAULT VALUE: 365')
 param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
 
 @allowed([
@@ -43,7 +43,7 @@ param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
   'Updates'
   'VMInsights'
 ])
-@description('Solutions that will be added to the Log Analytics Workspace')
+@description('Solutions that will be added to the Log Analytics Workspace. - DEFAULT VALUE: [AgentHealthAssessment, AntiMalware, AzureActivity, ChangeTracking, Security, SecurityInsights, ServiceMap, SQLAssessment, Updates, VMInsights]')
 param parLogAnalyticsWorkspaceSolutions array = [
   'AgentHealthAssessment'
   'AntiMalware'
@@ -57,10 +57,10 @@ param parLogAnalyticsWorkspaceSolutions array = [
   'VMInsights'
 ]
 
-@description('Automation account name')
+@description('Automation account name. - DEFAULT VALUE: alz-automation-account')
 param parAutomationAccountName string = 'alz-automation-account'
 
-@description('Automation Account region name')
+@description('Automation Account region name. - DEFAULT VALUE: resourceGroup().location')
 param parAutomationAccountRegion string = resourceGroup().location
 
 module modAutomationAccount '../reusable/automation-account/automation-account.bicep' = {

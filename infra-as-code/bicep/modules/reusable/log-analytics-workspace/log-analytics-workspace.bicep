@@ -43,7 +43,7 @@ param parLogRetentionInDays int = 365
   'Updates'
   'VMInsights'
 ])
-@description('Solutions that will be added to the Log Analytics Workspace - DEFAULT VALUE: [AgentHealthAssessment, AntiMalware, AzureActivity, ChangeTracking, Security, SecurityInsights, ServiceMap, SQLAssessment, Updates, VMInsights]')
+@description('Solutions that will be added to the Log Analytics Workspace. - DEFAULT VALUE: [AgentHealthAssessment, AntiMalware, AzureActivity, ChangeTracking, Security, SecurityInsights, ServiceMap, SQLAssessment, Updates, VMInsights]')
 param parLogAnalyticsSolutions array = [
   'AgentHealthAssessment'
   'AntiMalware'
