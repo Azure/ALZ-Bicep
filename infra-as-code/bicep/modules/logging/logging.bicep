@@ -23,6 +23,9 @@ VERSION: 1.0.0
 @description('Log Analytics Workspace name')
 param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 
+@description('Log Analytics region name')
+param parLogAnalyticsWorkspaceRegion string = resourceGroup().location
+
 @minValue(30)
 @maxValue(730)
 @description('Number of days of log retention for Log Analytics Workspace.  1 year (365 days) of log retention by default.')
@@ -57,10 +60,14 @@ param parLogAnalyticsWorkspaceSolutions array = [
 @description('Automation account name')
 param parAutomationAccountName string = 'alz-automation-account'
 
+@description('Automation Account region name')
+param parAutomationAccountRegion string = resourceGroup().location
+
 module modAutomationAccount '../reusable/automation-account/automation-account.bicep' = {
   name: 'deploy-automation-account'
   params: {
     parName: parAutomationAccountName
+    parRegion: parAutomationAccountRegion
   }
 }
 
@@ -68,6 +75,7 @@ module modLogAnalyticsWorkspace '../reusable/log-analytics-workspace/log-analyti
   name: 'deploy-log-analytics-workspace'
   params: {
     parName: parLogAnalyticsWorkspaceName
+    parRegion: parLogAnalyticsWorkspaceRegion
     parLogRetentionInDays: parLogAnalyticsWorkspaceLogRetentionInDays
     parLogAnalyticsSolutions: parLogAnalyticsWorkspaceSolutions
   }

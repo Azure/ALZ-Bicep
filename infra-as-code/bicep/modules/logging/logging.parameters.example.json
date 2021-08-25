@@ -5,6 +5,9 @@
     "parLogAnalyticsWorkspaceName": {
       "value": "alz-log-analytics"
     },
+    "parLogAnalyticsWorkspaceRegion": {
+      "value": "eastus"
+    },
     "parLogAnalyticsWorkspaceLogRetentionInDays": {
       "value": 365
     },
@@ -24,6 +27,9 @@
     },
     "parAutomationAccountName": {
       "value": "alz-automation-account"
+    },
+    "parAutomationAccountRegion": {
+      "value": "eastus2"
     }
   }
 }
