@@ -1,6 +1,6 @@
 # Module:  Automation Account
 
-Deploys an Azure Automation Account to a Resource Group.
+Deploys an Azure Automation Account to an exisiting Resource Group.
 
 ## Parameters
 
