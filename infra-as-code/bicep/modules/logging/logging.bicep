@@ -10,7 +10,7 @@ DESCRIPTION:
     * AzureActivity
     * ChangeTracking
     * Security
-    * SecurityInsights
+    * SecurityInsights (Azure Sentinel)
     * ServiceMap
     * SQLAssessment
     * Updates

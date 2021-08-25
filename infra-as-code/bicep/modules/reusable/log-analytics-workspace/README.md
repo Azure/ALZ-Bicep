@@ -9,7 +9,7 @@ The module will deploy the following solutions by default.  Solutions can be cus
   * AzureActivity
   * ChangeTracking
   * Security
-  * SecurityInsights
+  * SecurityInsights (Azure Sentinel)
   * ServiceMap
   * SQLAssessment
   * Updates
