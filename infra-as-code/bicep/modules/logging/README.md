@@ -1,4 +1,4 @@
-# Module:  Logging
+# Module:  Logging, Automation & Sentinel
 
   Deploys Azure Log Analytics Workspace, Automation Account (linked together) & multiple Solutions deploy to the Log Analytics Workspace to an existing Resource Group.
   
