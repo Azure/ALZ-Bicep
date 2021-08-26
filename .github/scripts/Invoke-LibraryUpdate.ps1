@@ -50,7 +50,7 @@ if ($UseCacheFromModule -and (Test-Path "$esltModuleDirectory/ProviderApiVersion
 $defaultConfig = @{
     inputFilter    = "*.json"
     typeFilter     = @()
-    outputPath     = $TargetModulePath + "/infra-as-code/bicep/modules/policy"
+    outputPath     = $TargetModulePath + "/infra-as-code/bicep/modules/policy/lib"
     fileNamePrefix = ""
     fileNameSuffix = ".json"
     asTemplate     = $true
@@ -74,7 +74,7 @@ $esltConfig += $policyDefinitionFilePaths | ForEach-Object {
     [PsCustomObject]@{
         inputPath      = $_
         typeFilter     = "Microsoft.Authorization/policyDefinitions"
-        fileNamePrefix = "policy-definitions/lib/policy-definition-es-"
+        fileNamePrefix = "policy_definitions/policy_definition_es_"
     }
 }
 # Add Policy Set Definition source files to $esltConfig
@@ -82,7 +82,7 @@ $esltConfig += $policySetDefinitionFilePaths | ForEach-Object {
     [PsCustomObject]@{
         inputPath      = $_
         typeFilter     = "Microsoft.Authorization/policySetDefinitions"
-        fileNamePrefix = "policy-set-definitions/lib/policy-set-definition-es-"
+        fileNamePrefix = "policy_set_definitions/policy_set_definition_es_"
         fileNameSuffix = ".json"
     }
 }
@@ -91,9 +91,9 @@ $esltConfig += $policySetDefinitionFilePaths | ForEach-Object {
 # artefacts (by resource type) from the library
 if ($Reset) {
     Write-Information "Deleting existing Policy Definitions from library." -InformationAction Continue
-    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/policy-definitions/lib/" -Recurse -Force
+    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/lib/policy_definitions/" -Recurse -Force
     Write-Information "Deleting existing Policy Set Definitions from library." -InformationAction Continue
-    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/policy-set-definitions/lib/" -Recurse -Force
+    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/lib/policy_set_definitions/" -Recurse -Force
 }
 
 # Process the files added to $esltConfig, to add content
