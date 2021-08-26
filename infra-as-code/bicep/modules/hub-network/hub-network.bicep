@@ -153,14 +153,13 @@ var varSubnetProperties = [for subnet in parSubnets: {
 
 var varBastionName = 'bastion-${resourceGroup().location}'
 
-
 resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDdosEnabled) {
   name: parDdosPlanName
   location: resourceGroup().location
   tags: parTags 
 }
 
-//TODO:  Need to address Route table assignment.  Likely need to break out module to eliminate circular ref.
+
 resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: '${parHubNetworkPrefix}-${resourceGroup().location}'
   location: resourceGroup().location
@@ -375,7 +374,7 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = {
 }
 
 
-resource privateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: {
+resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: {
   name: privateDnsZone
   location: 'global'
   tags: parTags
@@ -385,4 +384,4 @@ resource privateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for p
 output outAzureFirewallPrivateIP string = resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress
 output outAzureFirewallName string = parAzureFirewallName
 
-//TODO: Output loop of DNS Zones and Ids 
+//TODO: Output loop of DNS Zones and Ids

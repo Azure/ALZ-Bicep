@@ -6,9 +6,9 @@ Module deploys the following resources:
   * VNet
   * Subnets
   * VPN Gateway/ExpressRoute Gateway
-  * Azure Firewall or leverage a Resource Group with 3rd party NVA
-  * Private DNS Zones
-  * DDOS
+  * Azure Firewall
+  * Private DNS Zones - https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
+  * Ddos
   * Bastion 
 
 
