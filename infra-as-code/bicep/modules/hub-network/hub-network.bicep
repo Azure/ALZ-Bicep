@@ -103,6 +103,47 @@ param parSubnets array = [
   }
 ]
 
+@description('Array of DNS Zones to provision in Hub Virtual Network.')
+param parPrivateDnsZones array =[
+  'privatelink.azure-automation.net'
+  'privatelink.database.windows.net'
+  'privatelink.sql.azuresynapse.net'
+  'privatelink.azuresynapse.net'
+  'privatelink.blob.core.windows.net'
+  'privatelink.table.core.windows.net'
+  'privatelink.queue.core.windows.net'
+  'privatelink.file.core.windows.net'
+  'privatelink.web.core.windows.net'
+  'privatelink.dfs.core.windows.net'
+  'privatelink.documents.azure.com'
+  'privatelink.mongo.cosmos.azure.com'
+  'privatelink.cassandra.cosmos.azure.com'
+  'privatelink.gremlin.cosmos.azure.com'
+  'privatelink.table.cosmos.azure.com'
+  'privatelink.${resourceGroup().location}.batch.azure.com'
+  'privatelink.postgres.database.azure.com'
+  'privatelink.mysql.database.azure.com'
+  'privatelink.mariadb.database.azure.com'
+  'privatelink.vaultcore.azure.net'
+  'privatelink.${resourceGroup().location}.azmk8s.io'
+  '${resourceGroup().location}.privatelink.siterecovery.windowsazure.com'
+  'privatelink.servicebus.windows.net'
+  'privatelink.azure-devices.net'
+  'privatelink.eventgrid.azure.net'
+  'privatelink.azurewebsites.net'
+  'privatelink.api.azureml.ms'
+  'privatelink.notebooks.azure.net'
+  'privatelink.service.signalr.net'
+  'privatelink.afs.azure.net'
+  'privatelink.datafactory.azure.net'
+  'privatelink.adf.azure.com'
+  'privatelink.redis.cache.windows.net'
+  'privatelink.redisenterprise.cache.azure.net'
+  'privatelink.purview.azure.com'
+  'privatelink.digitaltwins.azure.net'
+]
+
+
 var varSubnetProperties = [for subnet in parSubnets: {
   name: subnet.name
   properties: {
@@ -119,7 +160,7 @@ resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01
   tags: parTags 
 }
 
-
+//TODO:  Need to address Route table assignment.  Likely need to break out module to eliminate circular ref.
 resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: '${parHubNetworkPrefix}-${resourceGroup().location}'
   location: resourceGroup().location
@@ -333,6 +374,15 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = {
   }
 }
 
+
+resource privateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: {
+  name: privateDnsZone
+  location: 'global'
+  tags: parTags
+}]
+
+
 output outAzureFirewallPrivateIP string = resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress
 output outAzureFirewallName string = parAzureFirewallName
 
+//TODO: Output loop of DNS Zones and Ids 
