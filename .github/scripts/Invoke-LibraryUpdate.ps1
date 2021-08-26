@@ -74,7 +74,7 @@ $esltConfig += $policyDefinitionFilePaths | ForEach-Object {
     [PsCustomObject]@{
         inputPath      = $_
         typeFilter     = "Microsoft.Authorization/policyDefinitions"
-        fileNamePrefix = "policy_definitions/policy_definition_es_"
+        fileNamePrefix = "lib/policy_definitions/policy_definition_es_"
     }
 }
 # Add Policy Set Definition source files to $esltConfig
@@ -82,7 +82,7 @@ $esltConfig += $policySetDefinitionFilePaths | ForEach-Object {
     [PsCustomObject]@{
         inputPath      = $_
         typeFilter     = "Microsoft.Authorization/policySetDefinitions"
-        fileNamePrefix = "policy_set_definitions/policy_set_definition_es_"
+        fileNamePrefix = "lib/policy_set_definitions/policy_set_definition_es_"
         fileNameSuffix = ".json"
     }
 }
