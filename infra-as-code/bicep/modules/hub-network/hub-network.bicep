@@ -383,5 +383,7 @@ resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [fo
 
 output outAzureFirewallPrivateIP string = resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress
 output outAzureFirewallName string = parAzureFirewallName
-
-//TODO: Output loop of DNS Zones and Ids
+output outPrivateDnsZones array = [for i in range(0,length(parPrivateDnsZones)):{
+  name: resPrivateDnsZones[i].name
+  id: resPrivateDnsZones[i].id
+}]
