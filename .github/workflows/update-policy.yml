@@ -1,18 +1,17 @@
 ---
 name: Update Policy Library
 
-# on:
-#   schedule:
-#     - cron: '0 12 1 * *'
-
-on: workflow_dispatch
+on:
+  schedule:
+    - cron: '0 8 * * *'
+  workflow_dispatch: {}
 
 env:
   remote_repository: "Azure/Enterprise-Scale"
   branch_name: "patch-policy-library"
   az_accounts_minimum_version: "2.2.3"
   pr_title: "Update Policy Library (automated)"
-  pr_body: "This is an automated 'pull_request' containing updates to the library templates stored in 'modules/archetypes/lib'.\nPlease review the 'files changed' tab to review changes."
+  pr_body: "This is an automated 'pull_request' containing updates to the library templates stored in '/infra-as-code/bicep/modules/policy/lib'.\nPlease review the 'files changed' tab to review changes."
 
 jobs:
   update-templates:
