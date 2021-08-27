@@ -50,7 +50,7 @@ if ($UseCacheFromModule -and (Test-Path "$esltModuleDirectory/ProviderApiVersion
 $defaultConfig = @{
     inputFilter    = "*.json"
     typeFilter     = @()
-    outputPath     = $TargetModulePath + "infra-as-code/bicep/modules/policy/lib"
+    outputPath     = $TargetModulePath + "/infra-as-code/bicep/modules/policy/lib"
     fileNamePrefix = ""
     fileNameSuffix = ".json"
     asTemplate     = $true
@@ -83,7 +83,7 @@ $esltConfig += $policySetDefinitionFilePaths | ForEach-Object {
         inputPath      = $_
         typeFilter     = "Microsoft.Authorization/policySetDefinitions"
         fileNamePrefix = "policy_set_definitions/policy_set_definition_es_"
-        fileNameSuffix = ".tmpl.json"
+        fileNameSuffix = ".json"
     }
 }
 
