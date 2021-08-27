@@ -4,7 +4,7 @@
   "apiVersion": "2021-06-01",
   "scope": null,
   "properties": {
-    "policyType": "Custom",
+    "policyType": "NotSpecified",
     "displayName": "Public network access should be disabled for PaaS services",
     "description": "This policy initiative is a group of policies that prevents creation of Azure PaaS services with exposed public endpoints",
     "metadata": {},

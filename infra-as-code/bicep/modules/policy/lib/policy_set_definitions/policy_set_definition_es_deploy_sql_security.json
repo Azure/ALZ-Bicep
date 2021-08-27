@@ -4,7 +4,7 @@
   "apiVersion": "2021-06-01",
   "scope": null,
   "properties": {
-    "policyType": "Custom",
+    "policyType": "NotSpecified",
     "displayName": "Deploy SQL Database built-in SQL security configuration",
     "description": "Deploy auditing, Alert, TDE and SQL vulnerability to SQL Databases when it not exist in the deployment",
     "metadata": {
@@ -78,7 +78,7 @@
     "policyDefinitions": [
       {
         "policyDefinitionReferenceId": "SqlDbTdeDeploySqlSecurity",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-Tde",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-Tde')]",
         "parameters": {
           "effect": {
             "value": "[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
@@ -88,7 +88,7 @@
       },
       {
         "policyDefinitionReferenceId": "SqlDbSecurityAlertPoliciesDeploySqlSecurity",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-SecurityAlertPolicies",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-SecurityAlertPolicies')]",
         "parameters": {
           "effect": {
             "value": "[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
@@ -98,7 +98,7 @@
       },
       {
         "policyDefinitionReferenceId": "SqlDbAuditingSettingsDeploySqlSecurity",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-AuditingSettings",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-AuditingSettings')]",
         "parameters": {
           "effect": {
             "value": "[parameters('SqlDbAuditingSettingsDeploySqlSecurityEffect')]"
@@ -108,7 +108,7 @@
       },
       {
         "policyDefinitionReferenceId": "SqlDbVulnerabilityAssessmentsDeploySqlSecurity",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-vulnerabilityAssessments",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-vulnerabilityAssessments')]",
         "parameters": {
           "effect": {
             "value": "[parameters('SqlDbVulnerabilityAssessmentsDeploySqlSecurityEffect')]"

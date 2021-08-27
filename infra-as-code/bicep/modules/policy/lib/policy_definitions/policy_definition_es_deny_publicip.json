@@ -4,7 +4,7 @@
   "apiVersion": "2021-06-01",
   "scope": null,
   "properties": {
-    "policyType": "Custom",
+    "policyType": "NotSpecified",
     "mode": "Indexed",
     "displayName": "Deny the creation of public IP",
     "description": "This policy denies creation of Public IPs under the assigned scope.",

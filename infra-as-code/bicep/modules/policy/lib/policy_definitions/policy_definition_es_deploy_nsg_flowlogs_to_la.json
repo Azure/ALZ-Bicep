@@ -4,7 +4,7 @@
   "apiVersion": "2021-06-01",
   "scope": null,
   "properties": {
-    "policyType": "Custom",
+    "policyType": "NotSpecified",
     "mode": "Indexed",
     "displayName": "Deploys NSG flow logs and traffic analytics to Log Analytics",
     "description": "Deploys NSG flow logs and traffic analytics to Log Analytics with a specfied retention period.",
