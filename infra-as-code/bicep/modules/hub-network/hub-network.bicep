@@ -5,8 +5,8 @@ DESCRIPTION: The following components will be options in this deployment
               Subnets
               VPN Gateway
               ExpressRoute Gateway
-              Azure Firewall or 3rd Party NVA
-              NSG
+              Azure Firewall
+              Private DNS Zones
               Ddos Plan
               Bastion
 AUTHOR/S: Troy Ault
@@ -29,6 +29,9 @@ param parAzureFirewallEnabled bool = true
 
 @description('Switch which allows Virtual Network Gateway deployment to be disabled')
 param parGatewayEnabled bool = true
+
+@description('Switch which allows Private DNS Zones to be disabled')
+param parPrivateDNSZonesEnabled bool = true
 
 @description('DDOS Plan Name')
 param parDdosPlanName string = 'MyDDosPlan'
@@ -354,7 +357,8 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(par
   }
 }
 
-resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = {
+
+resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parAzureFirewallEnabled) {
   name: parHubRouteTableName
   location: resourceGroup().location
   tags: parTags
@@ -365,7 +369,7 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = {
         properties: {
           addressPrefix: '0.0.0.0/0'
           nextHopType: 'VirtualAppliance'
-          nextHopIpAddress: resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress
+          nextHopIpAddress: parAzureFirewallEnabled ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress : ''
         }
       }
     ]
@@ -374,15 +378,15 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = {
 }
 
 
-resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: {
+resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: if(parPrivateDNSZonesEnabled) {
   name: privateDnsZone
   location: 'global'
   tags: parTags
 }]
 
 
-output outAzureFirewallPrivateIP string = resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress
-output outAzureFirewallName string = parAzureFirewallName
+output outAzureFirewallPrivateIP string = parAzureFirewallEnabled ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress : ''
+output outAzureFirewallName string = parAzureFirewallEnabled ? parAzureFirewallName : ''
 output outPrivateDnsZones array = [for i in range(0,length(parPrivateDnsZones)):{
   name: resPrivateDnsZones[i].name
   id: resPrivateDnsZones[i].id
