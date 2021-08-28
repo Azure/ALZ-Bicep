@@ -1,5 +1,7 @@
 # Azure Landing Zones - Bicep - Staging Repo
 
+[![Update Policy Library](https://github.com/Azure/ALZ-Bicep/actions/workflows/update-policy.yml/badge.svg?branch=main)](https://github.com/Azure/ALZ-Bicep/actions/workflows/update-policy.yml)
+
 ![](docs/wiki/media/bicep-logo.png)
 
 Welcome to the Azure Landing Zones Bicep Staging repo.
