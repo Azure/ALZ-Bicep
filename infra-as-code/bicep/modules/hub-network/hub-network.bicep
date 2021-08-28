@@ -13,10 +13,6 @@ AUTHOR/S: Troy Ault
 VERSION: 1.0.0
 */
 
-//@description('The Azure regions into which the resources should be deployed.')
-//param parLocations array = [
-//  'eastus2'
-//]
 
 @description('Switch which allows Bastion deployment to be disabled')
 param parBastionEnabled bool = true
@@ -75,6 +71,9 @@ param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
 @description('Prefix Used for Hub Network')
 param parHubNetworkPrefix string = 'Hub'
+
+@description('')
+param parVpnGatewayGeneration string = 'Generation2'
 
 @description('Azure Firewall Name')
 param parAzureFirewallName string ='MyAzureFirewall'
@@ -254,7 +253,8 @@ resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = i
   properties:{
     activeActive: false
     enableBgp: false
-    gatewayType: parGatewayType
+    gatewayType: parGatewayType 
+    vpnGatewayGeneration: (parGatewayType == 'VPN') ? parVpnGatewayGeneration : 'None'
     vpnType: parVpnType
     sku:{
       name: parVpnSku
@@ -387,7 +387,7 @@ resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [fo
 
 output outAzureFirewallPrivateIP string = parAzureFirewallEnabled ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress : ''
 output outAzureFirewallName string = parAzureFirewallEnabled ? parAzureFirewallName : ''
-output outPrivateDnsZones array = [for i in range(0,length(parPrivateDnsZones)):{
+output outPrivateDnsZones array = [for i in range(0,length(parPrivateDnsZones)): {
   name: resPrivateDnsZones[i].name
   id: resPrivateDnsZones[i].id
 }]
