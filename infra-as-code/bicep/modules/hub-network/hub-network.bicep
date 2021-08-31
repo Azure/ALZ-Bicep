@@ -1,5 +1,5 @@
 /*
-SUMMARY: Module to deploy ALZ Hub Network 
+SUMMARY: Module to deploy the Hub Network and it's components as per the Azure Landing Zone conceptual architecture 
 DESCRIPTION: The following components will be options in this deployment
               VNET
               Subnets
