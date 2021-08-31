@@ -8,38 +8,38 @@ VERSION: 1.0.0
 # Policy Definitions
 
 Write-Information "====> Creating/Emptying '_policyDefinitionsBicepInput.txt'" -InformationAction Continue
-Set-Content -Path ".\infra-as-code\bicep\modules\policy\lib\policy_definitions\_policyDefinitionsBicepInput.txt" -Value $null -Encoding "utf8"
+Set-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_definitions/_policyDefinitionsBicepInput.txt" -Value $null -Encoding "utf8"
 
 Write-Information "====> Looping Through Policy Definitions:" -InformationAction Continue
-Get-ChildItem -Recurse -Path ".\infra-as-code\bicep\modules\policy\lib\policy_definitions" -Filter "*.json" | ForEach-Object {
+Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_definitions" -Filter "*.json" | ForEach-Object {
     $policyDef = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
     
     $policyDefinitionName = $policyDef.name
     $fileName = $_.Name
 
-    Write-Information "==> Adding '$policyDefinitionName' to '$PWD\_policyDefinitionsBicepInput.txt'" -InformationAction Continue
-    Add-Content -Path ".\infra-as-code\bicep\modules\policy\lib\policy_definitions\_policyDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: $policyDefinitionName`r`n  libDefinition: json(loadTextContent('lib/policy_definitions/$fileName'))`r`n}"
+    Write-Information "==> Adding '$policyDefinitionName' to '$PWD/_policyDefinitionsBicepInput.txt'" -InformationAction Continue
+    Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_definitions/_policyDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: $policyDefinitionName`r`n  libDefinition: json(loadTextContent('lib/policy_definitions/$fileName'))`r`n}"
 }
 
-$policyDefCount = Get-ChildItem -Recurse -Path ".\infra-as-code\bicep\modules\policy\lib\policy_definitions" -Filter "*.json" | Measure-Object 
+$policyDefCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_definitions" -Filter "*.json" | Measure-Object 
 $policyDefCountString = $policyDefCount.Count
 Write-Information "====> Policy Set/Initiative Definitions Total: $policyDefCountString" -InformationAction Continue
 
 # Policy Set Definitions
 
 Write-Information "====> Creating/Emptying '_policySetDefinitionsBicepInput.txt'" -InformationAction Continue
-Set-Content -Path ".\infra-as-code\bicep\modules\policy\lib\policy_set_definitions\_policySetDefinitionsBicepInput.txt" -Value $null -Encoding "utf8"
+Set-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Value $null -Encoding "utf8"
 
 Write-Information "==> Looping Through Policy Set/Initiative Definition:" -InformationAction Continue
-Get-ChildItem -Recurse -Path ".\infra-as-code\bicep\modules\policy\lib\policy_set_definitions" -Filter "*.json"  | ForEach-Object {
+Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions" -Filter "*.json"  | ForEach-Object {
     $policyDef = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
     
     $policyDefinitionName = $policyDef.name
     $fileName = $_.Name
 
-    Add-Content -Path ".\infra-as-code\bicep\modules\policy\lib\policy_set_definitions\_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: $policyDefinitionName`r`n  libDefinition: json(loadTextContent('lib/policy_set_definitions/$fileName'))`r`n}"
+    Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: $policyDefinitionName`r`n  libDefinition: json(loadTextContent('lib/policy_set_definitions/$fileName'))`r`n}"
 }
 
-$policyDefCount = Get-ChildItem -Recurse -Path ".\infra-as-code\bicep\modules\policy\lib\policy_set_definitions" -Filter "*.json" | Measure-Object
+$policyDefCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions" -Filter "*.json" | Measure-Object
 $policyDefCountString = $policyDefCount.Count
 Write-Information "====> Policy Set/Initiative Definitions Total: $policyDefCountString" -InformationAction Continue
