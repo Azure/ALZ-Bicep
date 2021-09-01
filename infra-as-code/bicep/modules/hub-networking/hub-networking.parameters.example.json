@@ -1,0 +1,68 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "parBastionEnabled": {
+        "value": true
+      },
+      "parDdosEnabled":{
+          "value": true
+      },
+      "parAzureFirewallEnabled": {
+          "value": true
+      },
+      "parGatewayEnabled": {
+          "value": true
+      }, 
+      "parPrivateDNSZonesEnabled": {
+          "value": true
+      },
+      "parGatewayType": {
+          "value": "ExpressRoute"
+      },
+      "parVpnSku": {
+          "value": "ErGw1AZ"
+      },
+      "parHubNetworkAddressPrefix": {
+          "value": "10.20.0.0/16"
+      },
+      "parHubNetworkName": {
+          "value": "alz-hub-eastus2"
+     
+      },
+      "parVpnGatewayGeneration": {
+          "value": "Generation2"
+      },
+      "parAzureFirewallName": {
+          "value": "alz-azure-firewall"
+      },
+      "parHubRouteTableName": {
+          "value": "alz-hub-routetable"
+      },
+      "parSubnets": {
+          "value": [
+            {
+                "name": "AzureBastionSubnet",
+                "ipAddressRange": "10.20.15.0/24" 
+            },
+            {
+                "name": "GatewaySubnet",
+                "ipAddressRange": "10.20.252.0/24" 
+            },
+            {
+                "name": "AzureFirewallSubnet",
+                "ipAddressRange": "10.20.254.0/24" 
+            }
+          ]
+      },
+      "parBastionName": {
+          "value": "alz-bastion"
+      },
+      "parPrivateDnsZones": {
+          "value": [
+              "privatelink.database.windows.net",
+              "privatelink.blob.core.windows.net"
+            ]
+      }
+    }
+  }
