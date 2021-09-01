@@ -67,6 +67,13 @@ jobs:
             -Reset
         shell: pwsh
 
+      - name: Update Policy Definition Bicep Input Files
+        run: |
+          Write-Information "==> Running script..." -InformationAction Continue
+          .github/scripts/Get-PolicyMetricsInfo.ps1
+        shell: pwsh
+        working-directory: ${{ github.repository }}
+
       - name: Check for changes
         id: git_status
         run: |
