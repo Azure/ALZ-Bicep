@@ -83,6 +83,22 @@ param parAzureFirewallName string ='${parCompanyPrefix}-azure-firewall'
 @description('Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable')
 param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 
+@description('Array of BGP paramaters to be utilized if enabling BGP.')
+param parBgpOptions object = {
+  enableBgp: false
+  activeActive: false
+  bgpsettings: {
+    asn: 65515
+    bgpPeeringAddress: ''
+    peerWeight: 5
+  }
+  enableBgpRouteTranslationForNat: false
+  enableDnsForwarding: false
+  asn: 65515
+  bgpPeeringAddress: ''
+  disableBgpRoutePropagation: false
+}
+
 @description('The name and IP address range for each subnet in the virtual networks. Default: AzureBastionSubnet, GatewaySubnet, AzureFirewall Subnet')
 param parSubnets array = [
   {
@@ -189,7 +205,6 @@ resource resBastionPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = i
   }
 }
 
-//TODO: Assumption this exists Prior
 resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
   parent: resHubVirtualNetwork
   name: 'AzureBastionSubnet'
@@ -222,7 +237,6 @@ resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if(parBastionE
 }
 
 
-//TODO: Assumption this exists Prio
 resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
   parent: resHubVirtualNetwork
   name: 'GatewaySubnet'
@@ -248,8 +262,12 @@ resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = i
   location: resourceGroup().location
   tags: parTags
   properties:{
-    activeActive: false
-    enableBgp: false
+    activeActive: parBgpOptions.activeActive
+    enableBgp: parBgpOptions.enableBgp
+    enableBgpRouteTranslationForNat: parBgpOptions.enableBgpRouteTranslationForNat
+    enableDnsForwarding: parBgpOptions.enableDnsForwarding
+    bgpSettings: (parBgpOptions.enableBgp) ? {bgpSettings: parBgpOptions.bgpSettings
+    } : null
     gatewayType: parGatewayType 
     vpnGatewayGeneration: (parGatewayType == 'VPN') ? parVpnGatewayGeneration : 'None'
     vpnType: parVpnType
@@ -275,7 +293,6 @@ resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = i
 }
 
 
-//TODO: Assumption this exists Prio
 resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
   parent: resHubVirtualNetwork
   name: 'AzureFirewallSubnet'
@@ -371,7 +388,7 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parAzu
         }
       }
     ]
-    disableBgpRoutePropagation: false
+    disableBgpRoutePropagation: parBgpOptions.disableBgpRoutePropagation
   }
 }
 

@@ -35,25 +35,50 @@ parHubNetworkAddressPrefix | string | 10.10.0.0/16 |CIDR range for Hub Network| 
 parHubNetworkName | string | ${parCompanyPrefix}-hub-${resourceGroup().location} |Name prefix for Virtual Network.  Prefix will be appended with the region.| 2-50 char | alz-hub-eastus2
 parVpnGatewayGeneration | string | Generation2 | Vpn Gateway generation to deploy | 11 char| Generation2
 parAzureFirewallName | string | ${parCompanyPrefix}-azure-firewall | Name associate with Azure Firewall | 1-80 char | alz-azure-firewall
-parHubRouteTableName | string | ${parCompanyPrefix}-hub-routetable |Name of route table to be associated with Hub Network | 1-80 char | alz-hub-routetable
+parHubRouteTableName | string | ${parCompanyPrefix}-hub-routetable | Name of route table to be associated with Hub Network | 1-80 char | alz-hub-routetable
+parBgpOptions | object | enableBgp: false
+|||   activeActive: false
+|||   bgpsettings: {
+|||     asn: 65515
+|||     bgpPeeringAddress: ''
+|||     peerWeight: 5
+|||   }
+|||   enableBgpRouteTranslationForNat: false
+|||   enableDnsForwarding: false
+|||   asn: 65515
+|||   bgpPeeringAddress: ''
+|||   disableBgpRoutePropagation: false | Collection of properties for BGP settings on Virtual Network Gateway.| None | {
+||||||   enableBgp: false
+||||||   activeActive: true
+||||||   bgpsettings: {
+||||||     asn: 65515
+||||||     bgpPeeringAddress: ''
+||||||     peerWeight: 5
+||||||   }
+||||||   enableBgpRouteTranslationForNat: true
+||||||   enableDnsForwarding: false
+||||||   asn: 65515
+||||||   bgpPeeringAddress: ''
+||||||   disableBgpRoutePropagation: false
+||||||   }
 parSubnets | array | AzureBastionSubnet, GatewaySubnet, AzureFirewallSubnet | Array of objects to providing for dynamic set of subnets | Must provide array of objects | { 
-  ||||| name: 'AzureBastionSubnet'
-  ||||| ipAddressRange: '10.10.15.0/24'
-||||| }
-||||| {
-  ||||| name: 'GatewaySubnet'
-  ||||| ipAddressRange: '10.10.252.0/24' 
-||||| }
-||||| {
-  ||||| name: 'AzureFirewallSubnet'
-  ||||| ipAddressRange: '10.10.254.0/24' 
-||||| }
-parPrivateDnsZones | array | All known Azure Private Dns Zones | Array of Private Dns Zones to provision in Hub Virtual Network | [
-|||||'privatelink.azure-automation.net'
-|||||'privatelink.database.windows.net'
-|||||'privatelink.sql.azuresynapse.net'
-|||||'privatelink.azuresynapse.net'
-|||||]
+|||||| name: 'AzureBastionSubnet'
+|||||| ipAddressRange: '10.10.15.0/24'
+|||||| }
+|||||| {
+|||||| name: 'GatewaySubnet'
+|||||| ipAddressRange: '10.10.252.0/24' 
+|||||| }
+|||||| {
+||||||    name: 'AzureFirewallSubnet'
+||||||    ipAddressRange: '10.10.254.0/24' 
+|||||| }
+parPrivateDnsZones | array | All known Azure Private Dns Zones | Array of Private Dns Zones to provision in Hub Virtual Network | None| [
+|||||| 'privatelink.azure-automation.net'
+|||||| 'privatelink.database.windows.net'
+|||||| 'privatelink.sql.azuresynapse.net'
+|||||| 'privatelink.azuresynapse.net'
+|||||| ]
 ## Outputs
 
 The module will generate the following outputs:
@@ -93,8 +118,10 @@ New-AzManagementGroupDeployment `
   -TemplateParameterFile infra-as-code/bicep/modules/hub-networking/hub-networking.parameters.example.json
 ```
 
+## Example Output
+
 ![Example Deployment Output](media/hub-network-example-deployment-output.png "Example Deployment Output")
 
 ## Bicep Visualizer
 
-![Bicep Visualizer](media/bicep-visualizer.png "Bicep Visualizer")
+![Bicep Visualizer](media/hub-networking-bicep-visualizer.png "Bicep Visualizer")

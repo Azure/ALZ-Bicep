@@ -39,6 +39,22 @@
       "parHubRouteTableName": {
           "value": "alz-hub-routetable"
       },
+      "parBgpOptions": {
+          "value": {
+            "enableBgp": false,
+            "activeActive": false,
+            "bgpsettings": {
+              "asn": 65515,
+              "bgpPeeringAddress": "",
+              "peerWeight": 5
+            },
+            "enableBgpRouteTranslationForNat": false,
+            "enableDnsForwarding": false,
+            "asn": 65515,
+            "bgpPeeringAddress": "",
+            "disableBgpRoutePropagation": false
+          }
+      },
       "parSubnets": {
           "value": [
             {
