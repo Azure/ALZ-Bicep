@@ -23,20 +23,21 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_de
 
 $policyDefCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_definitions" -Filter "*.json" | Measure-Object 
 $policyDefCountString = $policyDefCount.Count
-Write-Information "====> Policy Set/Initiative Definitions Total: $policyDefCountString" -InformationAction Continue
+Write-Information "====> Policy Definitions Total: $policyDefCountString" -InformationAction Continue
 
 # Policy Set Definitions
 
 Write-Information "====> Creating/Emptying '_policySetDefinitionsBicepInput.txt'" -InformationAction Continue
 Set-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Value $null -Encoding "utf8"
 
-Write-Information "==> Looping Through Policy Set/Initiative Definition:" -InformationAction Continue
+Write-Information "====> Looping Through Policy Set/Initiative Definition:" -InformationAction Continue
 Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions" -Filter "*.json"  | ForEach-Object {
     $policyDef = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
     
     $policyDefinitionName = $policyDef.name
     $fileName = $_.Name
 
+    Write-Information "==> Adding '$policyDefinitionName' to '$PWD/_policySetDefinitionsBicepInput.txt'" -InformationAction Continue
     Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: '$policyDefinitionName'`r`n  libDefinition: json(loadTextContent('lib/policy_set_definitions/$fileName'))`r`n}"
 }
 
