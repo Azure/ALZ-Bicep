@@ -8,7 +8,9 @@ VERSION: 1.0.0
 
 targetScope = 'managementGroup'
 
-// This variable contains a number of objects that load in the custom Azure Policy defintions that are provided as part of the ESLZ/ALZ reference implementation
+var varTargetManagementGroupResoruceID = tenantResourceId('Microsoft.Management/managementGroups', '${managementGroup()}')
+
+// This variable contains a number of objects that load in the custom Azure Policy Defintions that are provided as part of the ESLZ/ALZ reference implementation
 var varCustomPolicyDefinitionsArray = [
   {
     name: 'Append-AppService-httpsonly'
@@ -53,6 +55,18 @@ var varCustomPolicyDefinitionsArray = [
   {
     name: 'Deny-AppServiceWebApp-http'
     libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_appservicewebapp_http.json'))
+  }
+  {
+    name: 'Deny-Databricks-NoPublicIp'
+    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_databricks_nopublicip.json'))
+  }
+  {
+    name: 'Deny-Databricks-Sku'
+    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_databricks_sku.json'))
+  }
+  {
+    name: 'Deny-Databricks-VirtualNetwork'
+    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_databricks_virtualnetwork.json'))
   }
   {
     name: 'Deny-MachineLearning-Aks'
@@ -448,6 +462,39 @@ var varCustomPolicyDefinitionsArray = [
   }  
 ]
 
+// This variable contains a number of objects that load in the custom Azure Policy Set/Initiative Defintions that are provided as part of the ESLZ/ALZ reference implementation
+var varCustomPolicySetDefinitionsArray = [
+  {
+    name: 'Deny-PublicPaaSEndpoints'
+    libDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deny_publicpaasendpoints.json'))
+  }
+  {
+    name: 'Deploy-ASC-Config'
+    libDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.json'))
+  }
+  {
+    name: 'Deploy-Diagnostics-LogAnalytics'
+    libDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_diagnostics_loganalytics.json'))
+  }
+  {
+    name: 'Deploy-Private-DNS-Zones'
+    libDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.json'))
+  }
+  {
+    name: 'Deploy-Sql-Security'
+    libDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_sql_security.json'))
+  }
+  {
+    name: 'Enforce-Encryption-CMK'
+    libDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_enforce_encryption_cmk.json'))
+  }
+  {
+    name: 'Enforce-EncryptTransit'
+    libDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_enforce_encrypttransit.json'))
+  }  
+]
+
+
 resource resPolicyDefinitions 'Microsoft.Authorization/policyDefinitions@2020-09-01' = [for policy in varCustomPolicyDefinitionsArray: {
   name: policy.libDefinition.name
   properties: {
@@ -458,6 +505,23 @@ resource resPolicyDefinitions 'Microsoft.Authorization/policyDefinitions@2020-09
     parameters: policy.libDefinition.properties.parameters
     policyType: policy.libDefinition.properties.policyType
     policyRule: policy.libDefinition.properties.policyRule
+  }
+}]
+
+resource resPolicySetDefinitions 'Microsoft.Authorization/policySetDefinitions@2020-09-01' = [for policySet in varCustomPolicySetDefinitionsArray: {
+  dependsOn: [
+    resPolicyDefinitions // Must wait for policy definitons to be deployed before starting the creation of Policy Set/Initiative Defininitions
+  ] 
+  name: policySet.libDefinition.name
+  properties: {
+    description: policySet.libDefinition.properties.description
+    displayName: policySet.libDefinition.properties.displayName
+    metadata: policySet.libDefinition.properties.metadata
+    parameters: policySet.libDefinition.properties.parameters
+    policyType: policySet.libDefinition.properties.policyType
+    policyDefinitions: policySet.libDefinition.properties.policyDefinitions
+    policyDefinitionGroups: policySet.libDefinition.properties.policyDefinitionGroups
+    
   }
 }]
 
