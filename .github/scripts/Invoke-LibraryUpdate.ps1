@@ -53,7 +53,7 @@ $defaultConfig = @{
     outputPath     = $TargetModulePath + "/infra-as-code/bicep/modules/policy/lib"
     fileNamePrefix = ""
     fileNameSuffix = ".json"
-    asTemplate     = $true
+    asTemplate     = $false
     recurse        = $false
 }
 
