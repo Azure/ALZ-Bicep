@@ -31,14 +31,41 @@ Write-Information "====> Creating/Emptying '_policySetDefinitionsBicepInput.txt'
 Set-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Value $null -Encoding "utf8"
 
 Write-Information "====> Looping Through Policy Set/Initiative Definition:" -InformationAction Continue
+# Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions" -Filter "*.json"  | ForEach-Object {
+#     $policyDef = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
+    
+#     $policyDefinitionName = $policyDef.name
+#     $fileName = $_.Name
+
+#     ## Add here for policyDefinitions array
+
+#     $policyDefinitions = $policyDef.properties.policyDefinitions
+
+
+
+#     Write-Information "==> Adding '$policyDefinitionName' to '$PWD/_policySetDefinitionsBicepInput.txt'" -InformationAction Continue
+#     Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: '$policyDefinitionName'`r`n  libDefinition: json(loadTextContent('lib/policy_set_definitions/$fileName'))`r`n}"
+# }
+
 Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions" -Filter "*.json"  | ForEach-Object {
     $policyDef = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
     
     $policyDefinitionName = $policyDef.name
     $fileName = $_.Name
+    
+    Clear-Variable -Name policySetDefinitionsOutputForBicep
+    [System.Collections.Hashtable]$policySetDefinitionsOutputForBicep = @{}
 
-    Write-Information "==> Adding '$policyDefinitionName' to '$PWD/_policySetDefinitionsBicepInput.txt'" -InformationAction Continue
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: '$policyDefinitionName'`r`n  libDefinition: json(loadTextContent('lib/policy_set_definitions/$fileName'))`r`n}"
+    $policyDefinitions = $policyDef.properties.policyDefinitions
+
+    $policyDefinitions | ForEach-Object {
+        $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, $_.policyDefinitionId) 
+    }
+
+    # Split the below Add-Content into multiple steps. 1. Before the array for the child definition IDs for each set 2. the bits after to close the array
+
+    # Write-Information "==> Adding '$policyDefinitionName' to '$PWD/_policySetDefinitionsBicepInput.txt'" -InformationAction Continue
+    Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: '$policyDefinitionName'`r`n  libDefinition: json(loadTextContent('lib/policy_set_definitions/$fileName'))`r`n  libSetChildDefinitions: [`r`n      {`r`n        definitionReferenceId: $policyDefintionsReferenceIDForBicep  }"
 }
 
 $policyDefCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions" -Filter "*.json" | Measure-Object
