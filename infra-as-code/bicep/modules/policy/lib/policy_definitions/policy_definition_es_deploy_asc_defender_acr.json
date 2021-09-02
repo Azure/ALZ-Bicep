@@ -4,7 +4,7 @@
   "apiVersion": "2021-06-01",
   "scope": null,
   "properties": {
-    "policyType": "Custom",
+    "policyType": "NotSpecified",
     "mode": "All",
     "displayName": "Deploy Azure Defender for ACR",
     "description": "Deploy the Azure Defender settings for Azure Container Registry",

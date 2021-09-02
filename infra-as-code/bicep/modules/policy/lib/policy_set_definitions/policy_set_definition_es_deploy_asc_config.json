@@ -4,7 +4,7 @@
   "apiVersion": "2021-06-01",
   "scope": null,
   "properties": {
-    "policyType": "Custom",
+    "policyType": "NotSpecified",
     "displayName": "Deploy Azure Security Center configuration",
     "description": "Deploy Azure Security Center configuration",
     "metadata": {
@@ -165,7 +165,7 @@
     "policyDefinitions": [
       {
         "policyDefinitionReferenceId": "defenderForVM",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-VMs",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-VMs')]",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierVMs')]"
@@ -175,7 +175,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForSqlServers",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-Sql",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-Sql')]",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierSqlServers')]"
@@ -185,7 +185,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForAppServices",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AppSrv",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AppSrv')]",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierAppServices')]"
@@ -195,7 +195,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForStorageAccounts",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-SA",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-SA')]",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierStorageAccounts')]"
@@ -205,7 +205,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForSqlServerVirtualMachines",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-SQLVM",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-SQLVM')]",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierSqlServerVirtualMachines')]"
@@ -215,7 +215,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForKubernetesService",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AKS",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AKS')]",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierKubernetesService')]"
@@ -225,7 +225,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForContainerRegistry",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-ACR",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-ACR')]",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierContainerRegistry')]"
@@ -235,7 +235,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForKeyVaults",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AKV",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AKV')]",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierKeyVaults')]"
@@ -245,7 +245,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForDns",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-DNS",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-DNS')]",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierDns')]"
@@ -255,7 +255,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForArm",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-ARM",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-ARM')]",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierArm')]"
@@ -265,7 +265,7 @@
       },
       {
         "policyDefinitionReferenceId": "securityEmailContact",
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-SecurityContacts",
+        "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-SecurityContacts')]",
         "parameters": {
           "emailSecurityContact": {
             "value": "[parameters('emailSecurityContact')]"

@@ -4,7 +4,7 @@
   "apiVersion": "2021-06-01",
   "scope": null,
   "properties": {
-    "policyType": "Custom",
+    "policyType": "NotSpecified",
     "mode": "Indexed",
     "displayName": "Function App should only be accessible over HTTPS",
     "description": "Use of HTTPS ensures server/service authentication and protects data in transit from network layer eavesdropping attacks.",

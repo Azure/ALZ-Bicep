@@ -4,7 +4,7 @@
   "apiVersion": "2021-06-01",
   "scope": null,
   "properties": {
-    "policyType": "Custom",
+    "policyType": "NotSpecified",
     "mode": "Indexed",
     "displayName": "Deploy SQL Database Transparent Data Encryption ",
     "description": "Deploy the Transparent Data Encryption when it is not enabled in the deployment",

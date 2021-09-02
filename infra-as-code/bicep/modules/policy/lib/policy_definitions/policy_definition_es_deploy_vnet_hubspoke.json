@@ -4,7 +4,7 @@
   "apiVersion": "2021-06-01",
   "scope": null,
   "properties": {
-    "policyType": "Custom",
+    "policyType": "NotSpecified",
     "mode": "All",
     "displayName": "Deploy Virtual Network with peering to the hub",
     "description": "This policy deploys virtual network and peer to the hub",
