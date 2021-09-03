@@ -43,6 +43,18 @@
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_appservicewebapp_http.json'))
 }
 {
+  name: 'Deny-Databricks-NoPublicIp'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_databricks_nopublicip.json'))
+}
+{
+  name: 'Deny-Databricks-Sku'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_databricks_sku.json'))
+}
+{
+  name: 'Deny-Databricks-VirtualNetwork'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_databricks_virtualnetwork.json'))
+}
+{
   name: 'Deny-MachineLearning-Aks'
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_machinelearning_aks.json'))
 }
