@@ -8,7 +8,12 @@ VERSION: 1.0.0
 
 targetScope = 'managementGroup'
 
-var varTargetManagementGroupResoruceID = tenantResourceId('Microsoft.Management/managementGroups', '${managementGroup()}')
+
+@description('The management group scope to which the policy definitions are to be created at. DEFAULT VALUE = "alz"')
+param parTargetManagementGroupId string = 'alz'
+
+
+var varTargetManagementGroupResoruceID = tenantResourceId('Microsoft.Management/managementGroups', parTargetManagementGroupId)
 
 // This variable contains a number of objects that load in the custom Azure Policy Defintions that are provided as part of the ESLZ/ALZ reference implementation
 var varCustomPolicyDefinitionsArray = [
@@ -491,6 +496,12 @@ var varCustomPolicySetDefinitionsArray = [
   {
     name: 'Enforce-EncryptTransit'
     libDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_enforce_encrypttransit.json'))
+    libSetChildDefinitions: [
+      {
+        definitionReferenceId: ''
+        definitionID: ''
+      }
+    ]
   }  
 ]
 
