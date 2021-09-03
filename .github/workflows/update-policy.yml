@@ -71,7 +71,7 @@ jobs:
       - name: Update Policy Definition Bicep Input Files
         run: |
           Write-Information "==> Running script..." -InformationAction Continue
-          .github/scripts/Get-PolicyMetricsInfo.ps1
+          .github/scripts/Invoke-PolicyToBicep.ps1
         shell: pwsh
         working-directory: ${{ github.repository }}
 
