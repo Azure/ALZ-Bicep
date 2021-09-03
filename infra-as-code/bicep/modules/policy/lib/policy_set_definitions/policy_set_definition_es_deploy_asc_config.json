@@ -165,7 +165,7 @@
     "policyDefinitions": [
       {
         "policyDefinitionReferenceId": "defenderForVM",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-VMs",
+        "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-VMs",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierVMs')]"
@@ -175,7 +175,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForSqlServers",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-Sql",
+        "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-Sql",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierSqlServers')]"
@@ -185,7 +185,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForAppServices",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AppSrv",
+        "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AppSrv",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierAppServices')]"
@@ -195,7 +195,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForStorageAccounts",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-SA",
+        "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-SA",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierStorageAccounts')]"
@@ -205,7 +205,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForSqlServerVirtualMachines",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-SQLVM",
+        "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-SQLVM",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierSqlServerVirtualMachines')]"
@@ -215,7 +215,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForKubernetesService",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AKS",
+        "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AKS",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierKubernetesService')]"
@@ -225,7 +225,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForContainerRegistry",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-ACR",
+        "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-ACR",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierContainerRegistry')]"
@@ -235,7 +235,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForKeyVaults",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AKV",
+        "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AKV",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierKeyVaults')]"
@@ -245,7 +245,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForDns",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-DNS",
+        "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-DNS",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierDns')]"
@@ -255,7 +255,7 @@
       },
       {
         "policyDefinitionReferenceId": "defenderForArm",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-ARM",
+        "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-ARM",
         "parameters": {
           "pricingTier": {
             "value": "[parameters('pricingTierArm')]"
@@ -265,7 +265,7 @@
       },
       {
         "policyDefinitionReferenceId": "securityEmailContact",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-SecurityContacts",
+        "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-SecurityContacts",
         "parameters": {
           "emailSecurityContact": {
             "value": "[parameters('emailSecurityContact')]"
