@@ -213,7 +213,9 @@ resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-
   name: 'AzureBastionSubnet'
 } 
 
-
+// AzureBastionSubnet is required to deploy Bastion service. This subnet must exist in the parsubnets array if you enable Bastion Service.
+// There is a minimum subnet requirement of /27 prefix.  
+// If you are deploying standard this needs to be larger.
 resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if(parBastionEnabled){
   location: resourceGroup().location
   name: parBastionName
@@ -319,7 +321,8 @@ module modAzureFirewallPublicIP '../reusable/public-ip/public-ip.bicep' = if(par
   }
 }
 
-
+// AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
+// There is a minimum subnet requirement of /26 prefix.  
 resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(parAzureFirewallEnabled){
   name: parAzureFirewallName
   location: resourceGroup().location
@@ -386,7 +389,7 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parAzu
   properties: {
     routes: [
       {
-        name: 'udr-default'
+        name: 'udr-default-azfw'
         properties: {
           addressPrefix: '0.0.0.0/0'
           nextHopType: 'VirtualAppliance'
