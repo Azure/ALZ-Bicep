@@ -22,11 +22,52 @@ param parDdosEnabled bool = true
 @description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
 param parAzureFirewallEnabled bool = true
 
-@description('Switch which allows Virtual Network Gateway deployment to be disabled. Default true')
-param parGatewayEnabled bool = true
+@description('Switch which allows BGP Propagation to be disabled on the routes: Default: false')
+param  pardisableBgpRoutePropagation bool = false
 
 @description('Switch which allows Private DNS Zones to be disabled. Default: true')
 param parPrivateDNSZonesEnabled bool = true
+
+@description('Array of Gateways to be deployed. Array will consist of one or two items.  Specifically Vpn and/or ExpressRoute Default: Vpn')
+param parGatewayArray array = [
+  {
+    name: '${parCompanyPrefix}-Vpn-Gateway'
+    gatewaytype: 'Vpn'
+    sku: 'VpnGw1'
+    vpntype: 'RouteBased'
+    generation: 'Generation2'
+    enableBgp: false
+    activeActive: false
+    enableBgpRouteTranslationForNat: false
+    enableDnsForwarding: false
+    asn: 65515
+    bgpPeeringAddress: ''
+    bgpsettings: {
+      asn: 65515
+      bgpPeeringAddress: ''
+      peerWeight: 5
+    }
+  }
+  {
+    name: '${parCompanyPrefix}-Gateway-ExpressRoute'
+    gatewaytype: 'ExpressRoute'
+    sku: 'ErGw1AZ'
+    vpntype: 'RouteBased'
+    generation: 'None'
+    enableBgp: false
+    activeActive: false
+    enableBgpRouteTranslationForNat: false
+    enableDnsForwarding: false
+    asn: 65515
+    bgpPeeringAddress: ''
+    bgpsettings: {
+      asn: 65515
+      bgpPeeringAddress: ''
+      peerWeight: 5
+    }
+  }
+
+]
 
 @description('Prefix value which will be prepended to all resource names. Default: alz')
 param parCompanyPrefix string = 'alz'
@@ -47,57 +88,17 @@ param parPublicIPSku string = 'Standard'
 @description('Tags you would like to be applied to all resources in this module. Default: empty array')
 param parTags object = {}
 
-@description('Parameter to specify Type of Gateway to deploy. Default: Vpn')
-@allowed([
-  'Vpn'
-  'ExpressRoute'
-  'LocalGateway'
-])
-param parGatewayType string = 'Vpn'
-
-@description('Name of the Express Route/VPN Gateway which will be created. Default: {parCompanyPrefix}-Gateway')
-param parGatewayName string = '${parCompanyPrefix}-Gateway'
-
-@description('Type of virtual Network Gateway. Default: RouteBased')
-@allowed([
-  'PolicyBased'
-  'RouteBased'
-])
-param parVpnType string ='RouteBased'
-
-@description('Sku/Tier of Virtual Network Gateway to deploy. Default: VpnGw1')
-param parVpnSku string = 'VpnGw1'
-
 @description('The IP address range for all virtual networks to use. Default: 10.10.0.0/16')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
 @description('Prefix Used for Hub Network. Default: {parCompanyPrefix}-hub-{resourceGroup().location}')
 param parHubNetworkName string = '${parCompanyPrefix}-hub-${resourceGroup().location}'
 
-@description('Vpn Gateway Generation to deploy.  Default: Generation2')
-param parVpnGatewayGeneration string = 'Generation2'
-
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
 param parAzureFirewallName string ='${parCompanyPrefix}-azure-firewall'
 
 @description('Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable')
 param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
-
-@description('Array of BGP paramaters to be utilized if enabling BGP.')
-param parBgpOptions object = {
-  enableBgp: false
-  activeActive: false
-  bgpsettings: {
-    asn: 65515
-    bgpPeeringAddress: ''
-    peerWeight: 5
-  }
-  enableBgpRouteTranslationForNat: false
-  enableDnsForwarding: false
-  asn: 65515
-  bgpPeeringAddress: ''
-  disableBgpRoutePropagation: false
-}
 
 @description('The name and IP address range for each subnet in the virtual networks. Default: AzureBastionSubnet, GatewaySubnet, AzureFirewall Subnet')
 param parSubnets array = [
@@ -191,19 +192,21 @@ resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   }
 }
 
-
-resource resBastionPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = if(parBastionEnabled){
-  location: resourceGroup().location
-  name: '${parBastionName}-PublicIp'
-  tags: parTags
-  sku: {
+module modBastionPublicIp '../reusable/public-ip/public-ip.bicep' ={
+  name: 'deploy-Bastion-Public-IP'
+  params:{
+    parPublicIpName: '${parBastionName}-PublicIp'
+    parPublicIpSku: {
       name: parPublicIPSku
-  }
-  properties: {
+    }
+    parPublicIpProperties: {
       publicIPAddressVersion: 'IPv4'
-      publicIPAllocationMethod: 'Static'
+      publicIPAllocationMethod: 'Static' 
+    }
+    parTags: parTags
   }
 }
+
 
 resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
   parent: resHubVirtualNetwork
@@ -228,7 +231,7 @@ resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if(parBastionE
                     id: resBastionSubnetRef.id
                   }
                   publicIPAddress: {
-                      id: resBastionPublicIP.id
+                      id: modBastionPublicIp.outputs.outPublicIpID
                   }
               }
           }
@@ -242,38 +245,39 @@ resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-
   name: 'GatewaySubnet'
 } 
 
-
-resource resGatewayPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = if(parGatewayEnabled){
-  location: resourceGroup().location
-  name: '${parGatewayName}-PublicIp'
-  tags: parTags
-  sku: {
-      name: parPublicIPSku
-  }
-  properties: {
+module modGatewayPublicIP '../reusable/public-ip/public-ip.bicep' = [for (gateway,i) in parGatewayArray:{
+  name: 'deploy-Gateway-Public-Ip-${i}'
+  params: {
+    parPublicIpName: '${gateway.name}-PublicIp'
+    location: resourceGroup().location
+    parPublicIpProperties: {
       publicIPAddressVersion: 'IPv4'
       publicIPAllocationMethod: 'Static'
+    }
+    parPublicIpSku: {
+        name: parPublicIPSku
+    }
+    parTags: parTags
   }
-}
+}]
 
 
-resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = if(parGatewayEnabled){
-  name: parGatewayName
+resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for (gateway,i) in parGatewayArray: {
+  name: gateway.name
   location: resourceGroup().location
   tags: parTags
   properties:{
-    activeActive: parBgpOptions.activeActive
-    enableBgp: parBgpOptions.enableBgp
-    enableBgpRouteTranslationForNat: parBgpOptions.enableBgpRouteTranslationForNat
-    enableDnsForwarding: parBgpOptions.enableDnsForwarding
-    bgpSettings: (parBgpOptions.enableBgp) ? {bgpSettings: parBgpOptions.bgpSettings
-    } : null
-    gatewayType: parGatewayType 
-    vpnGatewayGeneration: (parGatewayType == 'VPN') ? parVpnGatewayGeneration : 'None'
-    vpnType: parVpnType
+    activeActive: gateway.activeActive
+    enableBgp: gateway.enableBgp
+    enableBgpRouteTranslationForNat: gateway.enableBgpRouteTranslationForNat
+    enableDnsForwarding: gateway.enableDnsForwarding
+    bgpSettings: (gateway.enableBgp) ? gateway.bgpSettings : null
+    gatewayType: gateway.gatewayType
+    vpnGatewayGeneration: (gateway.gatewayType == 'VPN') ? gateway.generation : 'None'
+    vpnType: gateway.vpntype
     sku:{
-      name: parVpnSku
-      tier: parVpnSku
+      name: gateway.sku  
+      tier: gateway.sku
     }
     ipConfigurations:[
       {
@@ -281,7 +285,7 @@ resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = i
         name: 'vnetGatewayConfig'
         properties:{
           publicIPAddress:{
-            id: resGatewayPublicIP.id
+            id: modGatewayPublicIP[i].outputs.outPublicIpID
           }
           subnet:{
             id: resGatewaySubnetRef.id
@@ -290,7 +294,7 @@ resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = i
       }
     ]
   }
-}
+}]
 
 
 resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
@@ -299,16 +303,19 @@ resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@20
 } 
 
 
-resource resAzureFirewallPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = if(parAzureFirewallEnabled){
-  location: resourceGroup().location
-  name: '${parAzureFirewallName}-PublicIp'
-  tags: parTags
-  sku: {
-      name: parPublicIPSku
-  }
-  properties: {
+module modAzureFirewallPublicIP '../reusable/public-ip/public-ip.bicep' = if(parAzureFirewallEnabled){
+  name: 'deploy-Firewall-Public-Ip'
+  params: {
+    parPublicIpName: '${parAzureFirewallName}-PublicIp'
+    location: resourceGroup().location
+    parPublicIpProperties: {
       publicIPAddressVersion: 'IPv4'
       publicIPAllocationMethod: 'Static'
+    }
+    parPublicIpSku: {
+        name: parPublicIPSku
+    }
+    parTags: parTags
   }
 }
 
@@ -356,7 +363,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(par
             id: resAzureFirewallSubnetRef.id
           }
           publicIPAddress: {
-            id: resAzureFirewallPublicIP.id
+            id: modAzureFirewallPublicIP.outputs.outPublicIpID
           }
         }
       }
@@ -371,7 +378,6 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(par
     }
   }
 }
-
 
 resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parAzureFirewallEnabled) {
   name: parHubRouteTableName
@@ -388,7 +394,7 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parAzu
         }
       }
     ]
-    disableBgpRoutePropagation: parBgpOptions.disableBgpRoutePropagation
+    disableBgpRoutePropagation: pardisableBgpRoutePropagation
   }
 }
 

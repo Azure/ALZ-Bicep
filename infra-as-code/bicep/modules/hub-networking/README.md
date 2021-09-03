@@ -21,46 +21,59 @@ The module requires the following inputs:
 parBastionEnabled | bool| true |Switch to enable deployment Bastion Service  | None | true
 parDdosEnabled | bool | true | Switch to enable deployment of distributed denial of service attacks service | None | true
 parAzureFirewallEnabled | bool | true | Switch to enable deployment Azure Firewall | None | true 
-parGatewayEnabled | bool | true | Switch to enable deployment of Azure Virtual Network Gateway | None | true
+parPrivateDNSZonesEnabled | bool | true | Switch to enable deployment of Azure Private Dns Zones | None | true
+parGatewayArray | array | 'Vpn' | Array of Gateways to be deployed. Array will consist of one or two items.  Specifically Vpn and/or ExpressRoute Default: Vpn' | None |[
+||||||  'Vpn' 
+||||||  'ExpressRoute'
+||||||]
 parCompanyPrefix | string | alz | Prefix value which will be pre-appended to all resource names | 1-10 char | alz 
 parDdosPlanName | string | ${parCompanyPrefix}-DDos-Plan | Name which will be associated with distributed denial of service protection plan | 1-80 char | alz-DDos-Plan
+parBastionName | string | ${parCompanyPrefix}-bastion | Name which will be associated with Bastion Service. | 1-80 char | alz-bastion
+parVpnGatewayGeneration | string | Generation2 | Vpn Gateway generation to deploy | 11 char| Generation2
 parBastionSku | string | Standard | SKU or Tier of Bastion Service to deploy | Standard or Basic | Standard
 parPublicIPSku | string | Standard |SKU or Tier of Public IP to deploy | Standard or Basic | Standard
 parTags | object | Empty Array |List of tags (Key Value Pairs) to be applied to resources | None | environment: 'development'
-parGatewayType | string | Vpn |Type of Virtual Network Gateway to deploy | Vpn, ExpressRoute, Local Gateway | Vpn
-parGatewayName | string | ${parCompanyPrefix}-Gateway | Name associated with Virtual Network Gateway | 1-80 char | alz-Gateway
-parVpnType | string | RouteBased | Type of virtual private network to deploy | PolicyBased or RouteBased | RouteBased
-parVPNSku | string | VpnGw1 | Sku or Tier of VPN to deploy. | Documentation on valid options: https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-skus-legacy | VpnGw1
 parHubNetworkAddressPrefix | string | 10.10.0.0/16 |CIDR range for Hub Network| CIDR Notation | 10.10.0.0/16
 parHubNetworkName | string | ${parCompanyPrefix}-hub-${resourceGroup().location} |Name prefix for Virtual Network.  Prefix will be appended with the region.| 2-50 char | alz-hub-eastus2
-parVpnGatewayGeneration | string | Generation2 | Vpn Gateway generation to deploy | 11 char| Generation2
 parAzureFirewallName | string | ${parCompanyPrefix}-azure-firewall | Name associate with Azure Firewall | 1-80 char | alz-azure-firewall
 parHubRouteTableName | string | ${parCompanyPrefix}-hub-routetable | Name of route table to be associated with Hub Network | 1-80 char | alz-hub-routetable
-parBgpOptions | object | enableBgp: false
+parGatewayArray | array| { | Array of Gateways to create including the properties of the gateway. | None | See Default
+|||   name: alz-Vpn-Gateway
+|||   gatewaytype: 'Vpn'
+|||   sku: 'VpnGw1'
+|||   vpntype: 'RouteBased'
+|||   generation: 'Generation2' 
+|||   enableBgp: false
 |||   activeActive: false
+|||    enableBgpRouteTranslationForNat: false
+|||    enableDnsForwarding: false
+|||    asn: 65515
+|||    bgpPeeringAddress: ''
 |||   bgpsettings: {
 |||     asn: 65515
 |||     bgpPeeringAddress: ''
 |||     peerWeight: 5
 |||   }
-|||   enableBgpRouteTranslationForNat: false
-|||   enableDnsForwarding: false
-|||   asn: 65515
-|||   bgpPeeringAddress: ''
-|||   disableBgpRoutePropagation: false | Collection of properties for BGP settings on Virtual Network Gateway.| None | {
-||||||   enableBgp: false
-||||||   activeActive: true
-||||||   bgpsettings: {
-||||||     asn: 65515
-||||||     bgpPeeringAddress: ''
-||||||     peerWeight: 5
-||||||   }
-||||||   enableBgpRouteTranslationForNat: true
-||||||   enableDnsForwarding: false
-||||||   asn: 65515
-||||||   bgpPeeringAddress: ''
-||||||   disableBgpRoutePropagation: false
-||||||   }
+|||}
+|||{
+|||   name: alz-ExpressRoute-Gateway
+|||   gatewaytype: 'ExpressRoute'
+|||   sku: 'ErGw1Az'
+|||   vpntype: 'RouteBased'
+|||   generation: 'None' 
+|||   enableBgp: false
+|||   activeActive: false
+|||    enableBgpRouteTranslationForNat: false
+|||    enableDnsForwarding: false
+|||    asn: 65515
+|||    bgpPeeringAddress: ''
+|||   bgpsettings: {
+|||     asn: 65515
+|||     bgpPeeringAddress: ''
+|||     peerWeight: 5
+|||   }
+|||}
+|||| 
 parSubnets | array | AzureBastionSubnet, GatewaySubnet, AzureFirewallSubnet | Array of objects to providing for dynamic set of subnets | Must provide array of objects | { 
 |||||| name: 'AzureBastionSubnet'
 |||||| ipAddressRange: '10.10.15.0/24'

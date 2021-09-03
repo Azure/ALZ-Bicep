@@ -9,51 +9,78 @@
           "value": true
       },
       "parAzureFirewallEnabled": {
-          "value": true
+          "value": true 
       },
-      "parGatewayEnabled": {
-          "value": true
-      }, 
       "parPrivateDNSZonesEnabled": {
           "value": true
       },
-      "parGatewayType": {
-          "value": "ExpressRoute"
+      "parGatewayArray": {
+          "value": [
+          {
+            "name": "alz-Vpn-Gateway",
+            "gatewaytype": "Vpn",
+            "sku": "VpnGw1",
+            "vpntype": "RouteBased",
+            "generation": "Generation2",
+            "enableBgp": false,
+            "activeActive": false,
+            "enableBgpRouteTranslationForNat": false,
+            "enableDnsForwarding": false,
+            "asn": "65515",
+            "bgpPeeringAddress": "",
+            "bgpsettings": {
+              "asn": "65515",
+              "bgpPeeringAddress": "",
+              "peerWeight": "5"
+            }
+          },
+          {
+            "name": "alz-ExpressRoute-Gateway",
+            "gatewaytype": "ExpressRoute",
+            "sku": "ErGw1AZ",
+            "vpntype": "RouteBased",
+            "generation": "None",
+            "enableBgp": false,
+            "activeActive": false,
+            "enableBgpRouteTranslationForNat": false,
+            "enableDnsForwarding": false,
+            "asn": "65515",
+            "bgpPeeringAddress": "",
+            "bgpsettings": {
+              "asn": "65515",
+              "bgpPeeringAddress": "",
+              "peerWeight": "5"
+            }
+          }]
       },
-      "parVpnSku": {
-          "value": "ErGw1AZ"
+      "parCompanyPrefix":{
+          "value": "alz"
+      },
+      "parDdosPlanName":{
+          "value":"alz-Ddos-Plan"
+      },
+      "parBastionSku": {
+          "value":"Standard"
+      },
+      "parPublicIPSku":{
+          "value":"Standard"
+      },
+      "parTags":{
+          "value":{
+            "Environment": "POC"
+          }
       },
       "parHubNetworkAddressPrefix": {
           "value": "10.20.0.0/16"
       },
       "parHubNetworkName": {
           "value": "alz-hub-eastus2"
-     
-      },
-      "parVpnGatewayGeneration": {
-          "value": "Generation2"
       },
       "parAzureFirewallName": {
           "value": "alz-azure-firewall"
       },
       "parHubRouteTableName": {
           "value": "alz-hub-routetable"
-      },
-      "parBgpOptions": {
-          "value": {
-            "enableBgp": false,
-            "activeActive": false,
-            "bgpsettings": {
-              "asn": 65515,
-              "bgpPeeringAddress": "",
-              "peerWeight": 5
-            },
-            "enableBgpRouteTranslationForNat": false,
-            "enableDnsForwarding": false,
-            "asn": 65515,
-            "bgpPeeringAddress": "",
-            "disableBgpRoutePropagation": false
-          }
       },
       "parSubnets": {
           "value": [
