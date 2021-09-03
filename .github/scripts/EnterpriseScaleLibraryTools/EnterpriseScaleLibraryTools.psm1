@@ -498,12 +498,11 @@ class ArmTemplateResource : ESLTBase {
         $this.apiVersion = [ProviderApiVersions]::GetLatestStableByType($ResourceType)
     }
 
-    # Update resource values as per requirements for Terraform Module
-    # for Cloud Adoption Framework Enterprise Scale
+    # Update resource values as per requirements for ALZ Bicep Modules
     [Object] ToTemplateFile() {
         if ($this.type -eq "Microsoft.Authorization/policyAssignments") {
             $this.properties.scope = "`${current_scope_resource_id}"
-            $this.properties.policyDefinitionId = "`${root_scope_resource_id}/"
+            $this.properties.policyDefinitionId = ""
             $this.location = "`${default_location}"
         }
         if ($this.type -eq "Microsoft.Authorization/policyDefinitions") {
@@ -514,7 +513,7 @@ class ArmTemplateResource : ESLTBase {
             foreach ($policyDefinition in $this.properties.policyDefinitions) {
                 $regexMatches = [ArmTemplateResource]::regexExtractProviderId.Matches($policyDefinition.policyDefinitionId)
                 if ($regexMatches.Index -gt 0) {
-                    $policyDefinition.policyDefinitionId = "`${root_scope_resource_id}$($regexMatches.Value)"
+                    $policyDefinition.policyDefinitionId = "$($regexMatches.Value)"
                 }
                 else {
                     $policyDefinition.policyDefinitionId = $regexMatches.Value
