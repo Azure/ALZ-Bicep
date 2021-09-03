@@ -502,7 +502,7 @@ class ArmTemplateResource : ESLTBase {
     [Object] ToTemplateFile() {
         if ($this.type -eq "Microsoft.Authorization/policyAssignments") {
             $this.properties.scope = "`${current_scope_resource_id}"
-            $this.properties.policyDefinitionId = ""
+            $this.properties.policyDefinitionId = "`${varTargetManagementGroupResoruceID}/"
             $this.location = "`${default_location}"
         }
         if ($this.type -eq "Microsoft.Authorization/policyDefinitions") {
@@ -513,7 +513,7 @@ class ArmTemplateResource : ESLTBase {
             foreach ($policyDefinition in $this.properties.policyDefinitions) {
                 $regexMatches = [ArmTemplateResource]::regexExtractProviderId.Matches($policyDefinition.policyDefinitionId)
                 if ($regexMatches.Index -gt 0) {
-                    $policyDefinition.policyDefinitionId = "$($regexMatches.Value)"
+                    $policyDefinition.policyDefinitionId = "`${varTargetManagementGroupResoruceID}$($regexMatches.Value)"
                 }
                 else {
                     $policyDefinition.policyDefinitionId = $regexMatches.Value
