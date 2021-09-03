@@ -38,9 +38,15 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_se
     $policyDefinitionName = $policyDef.name
     $fileName = $_.Name
     
-    Clear-Variable -Name policySetDefinitionsOutputForBicep
+    # Check if variable exists before trying to clear it
+    if ($policySetDefinitionsOutputForBicep) {
+        Clear-Variable -Name policySetDefinitionsOutputForBicep -ErrorAction Continue 
+    }
+
+    # Create HashTable variable
     [System.Collections.Hashtable]$policySetDefinitionsOutputForBicep = @{}
 
+    # Load child Policy Set/Initiative Definitions
     $policyDefinitions = $policyDef.properties.policyDefinitions
 
     # Loop through child Policy Set/Initiative Definitions if HashTable not == 0
