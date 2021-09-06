@@ -2,7 +2,7 @@
 SUMMARY: This PowerShell script helps with the authoring of the policy definiton module by outputting information required for the variables within the module.
 DESCRIPTION: This PowerShell script outputs the Name & Path to a Bicep strucutred .txt file named '_policyDefinitionsBicepInput.txt' and '_policySetDefinitionsBicepInput.txt' respectively. It also outputs the number of policies definition and set definition files to the console for easier reviewing as part of the PR process.
 AUTHOR/S: jtracey93
-VERSION: 1.1.0
+VERSION: 1.2.0
 #>
 
 # Policy Definitions
@@ -44,14 +44,14 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_se
     }
 
     # Create HashTable variable
-    [System.Collections.Hashtable]$policySetDefinitionsOutputForBicep = @{}
+    [System.Collections.Hashtable]$policySetDefinitionsOutputForBicep = [ordered]@{}
 
     # Load child Policy Set/Initiative Definitions
-    $policyDefinitions = $policyDef.properties.policyDefinitions
+    $policyDefinitions = $policyDef.properties.policyDefinitions | Sort-Object -Property policyDefinitionReferenceId
 
     # Loop through child Policy Set/Initiative Definitions if HashTable not == 0
     if (($policyDefinitions.Count) -ne 0) {
-        $policyDefinitions | ForEach-Object {
+        $policyDefinitions | Sort-Object | ForEach-Object {
             $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, $_.policyDefinitionId) 
         }
     }
@@ -62,7 +62,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_se
 
     # Loop through child Policy Set/Initiative Definitions for Bicep output if HashTable not == 0
     if (($policySetDefinitionsOutputForBicep.Count) -ne 0) {
-        $policySetDefinitionsOutputForBicep.Keys | ForEach-Object {
+        $policySetDefinitionsOutputForBicep.Keys | Sort-Object | ForEach-Object {
             $definitionReferenceId = $_
             $definitionID = $($policySetDefinitionsOutputForBicep[$_])
             # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
