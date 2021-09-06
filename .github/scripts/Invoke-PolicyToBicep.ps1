@@ -44,7 +44,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_se
     }
 
     # Create HashTable variable
-    [System.Collections.Hashtable]$policySetDefinitionsOutputForBicep = @{}
+    [System.Collections.Hashtable]$policySetDefinitionsOutputForBicep = [ordered]@{}
 
     # Load child Policy Set/Initiative Definitions
     $policyDefinitions = $policyDef.properties.policyDefinitions
