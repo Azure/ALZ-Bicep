@@ -2,34 +2,34 @@
     "SqlDbTdeDeploySqlSecurity": {
         "parameters": {
             "effect": {
-                "value": "[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
+                "value": "[[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
             }
         }
     },
     "SqlDbSecurityAlertPoliciesDeploySqlSecurity": {
         "parameters": {
             "effect": {
-                "value": "[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
+                "value": "[[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
             }
         }
     },
     "SqlDbAuditingSettingsDeploySqlSecurity": {
         "parameters": {
             "effect": {
-                "value": "[parameters('SqlDbAuditingSettingsDeploySqlSecurityEffect')]"
+                "value": "[[parameters('SqlDbAuditingSettingsDeploySqlSecurityEffect')]"
             }
         }
     },
     "SqlDbVulnerabilityAssessmentsDeploySqlSecurity": {
         "parameters": {
             "effect": {
-                "value": "[parameters('SqlDbVulnerabilityAssessmentsDeploySqlSecurityEffect')]"
+                "value": "[[parameters('SqlDbVulnerabilityAssessmentsDeploySqlSecurityEffect')]"
             },
             "vulnerabilityAssessmentsEmail": {
-                "value": "[parameters('vulnerabilityAssessmentsEmail')]"
+                "value": "[[parameters('vulnerabilityAssessmentsEmail')]"
             },
             "vulnerabilityAssessmentsStorageID": {
-                "value": "[parameters('vulnerabilityAssessmentsStorageID')]"
+                "value": "[[parameters('vulnerabilityAssessmentsStorageID')]"
             }
         }
     }
