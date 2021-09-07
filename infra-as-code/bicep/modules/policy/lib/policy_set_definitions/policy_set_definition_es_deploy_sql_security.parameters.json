@@ -1,0 +1,36 @@
+{
+    "SqlDbTdeDeploySqlSecurity": {
+        "parameters": {
+            "effect": {
+                "value": "[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
+            }
+        }
+    },
+    "SqlDbSecurityAlertPoliciesDeploySqlSecurity": {
+        "parameters": {
+            "effect": {
+                "value": "[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
+            }
+        }
+    },
+    "SqlDbAuditingSettingsDeploySqlSecurity": {
+        "parameters": {
+            "effect": {
+                "value": "[parameters('SqlDbAuditingSettingsDeploySqlSecurityEffect')]"
+            }
+        }
+    },
+    "SqlDbVulnerabilityAssessmentsDeploySqlSecurity": {
+        "parameters": {
+            "effect": {
+                "value": "[parameters('SqlDbVulnerabilityAssessmentsDeploySqlSecurityEffect')]"
+            },
+            "vulnerabilityAssessmentsEmail": {
+                "value": "[parameters('vulnerabilityAssessmentsEmail')]"
+            },
+            "vulnerabilityAssessmentsStorageID": {
+                "value": "[parameters('vulnerabilityAssessmentsStorageID')]"
+            }
+        }
+    }
+}
