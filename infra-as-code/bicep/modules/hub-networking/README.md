@@ -38,24 +38,7 @@ parHubNetworkName | string | ${parCompanyPrefix}-hub-${resourceGroup().location}
 parAzureFirewallName | string | ${parCompanyPrefix}-azure-firewall | Name associate with Azure Firewall | 1-80 char | alz-azure-firewall
 parHubRouteTableName | string | ${parCompanyPrefix}-hub-routetable | Name of route table to be associated with Hub Network | 1-80 char | alz-hub-routetable
 parGatewayArray | array| [{"name":"alz-Vpn-Gateway","gatewaytype":"Vpn","sku":"VpnGw1","vpntype":"RouteBased","generation":"Generation2","enableBgp":false,"activeActive":false,"enableBgpRouteTranslationForNat":false,"enableDnsForwarding":false,"asn":"65515","bgpPeeringAddress":"","bgpsettings":{"asn":"65515","bgpPeeringAddress":"","peerWeight":"5"}},{"name":"alz-ExpressRoute-Gateway","gatewaytype":"ExpressRoute","sku":"ErGw1AZ","vpntype":"RouteBased","generation":"None","enableBgp":false,"activeActive":false,"enableBgpRouteTranslationForNat":false,"enableDnsForwarding":false,"asn":"65515","bgpPeeringAddress":"","bgpsettings":{"asn":"65515","bgpPeeringAddress":"","peerWeight":"5"}}] | Array of Gateways to create including the properties of the gateway. | None | See Default
-parSubnets | array | AzureBastionSubnet, GatewaySubnet, AzureFirewallSubnet | Array of objects to providing for dynamic set of subnets | Must provide array of objects | { 
-|||||| name: 'AzureBastionSubnet'
-|||||| ipAddressRange: '10.10.15.0/24'
-|||||| }
-|||||| {
-|||||| name: 'GatewaySubnet'
-|||||| ipAddressRange: '10.10.252.0/24' 
-|||||| }
-|||||| {
-||||||    name: 'AzureFirewallSubnet'
-||||||    ipAddressRange: '10.10.254.0/24' 
-|||||| }
-parPrivateDnsZones | array | All known Azure Private Dns Zones | Array of Private Dns Zones to provision in Hub Virtual Network | None| [
-|||||| 'privatelink.azure-automation.net'
-|||||| 'privatelink.database.windows.net'
-|||||| 'privatelink.sql.azuresynapse.net'
-|||||| 'privatelink.azuresynapse.net'
-|||||| ]
+parSubnets | array | AzureBastionSubnet, GatewaySubnet, AzureFirewallSubnet | Array of objects to providing for dynamic set of subnets | Must provide array of objects | [{"name":"AzureBastionSubnet","ipAddressRange":"10.20.15.0/24"},{"name":"GatewaySubnet","ipAddressRange":"10.20.252.0/24"},{"name":"AzureFirewallSubnet","ipAddressRange":"10.20.254.0/24"}]
 ## Outputs
 
 The module will generate the following outputs:
