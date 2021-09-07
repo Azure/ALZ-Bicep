@@ -102,7 +102,7 @@ outAzureFirewallPrivateIP | string | 192.168.100.1
 outAzureFirewallName | string | MyAzureFirewall
 
 ## Deployment
-* Note: bicepconfig.json file is included in the module directory.  This file allows us to override Bicep Linters.  Currently there are two URLs which were removed because of linter warnings.  URLs removed are the following: database.windows.net and core.windows.net
+> **Note:** `bicepconfig.json` file is included in the module directory.  This file allows us to override Bicep Linters.  Currently there are two URLs which were removed because of linter warnings.  URLs removed are the following: database.windows.net and core.windows.net
 
 In this example, the hub resources will be deployed to the resource group specified.
 We will take the default values and not pass any parameters.
