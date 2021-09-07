@@ -264,7 +264,7 @@ module modGatewayPublicIP '../reusable/public-ip/public-ip.bicep' = [for (gatewa
   }
 }]
 
-
+//Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
 resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for (gateway,i) in parGatewayArray: {
   name: gateway.name
   location: resourceGroup().location
