@@ -175,7 +175,7 @@ resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01
   tags: parTags 
 }
 
-
+//Ddos Protection plan will only be enabled if parDdosEnabled is true.  
 resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: parHubNetworkName
   location: resourceGroup().location
@@ -216,7 +216,7 @@ resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-
 
 // AzureBastionSubnet is required to deploy Bastion service. This subnet must exist in the parsubnets array if you enable Bastion Service.
 // There is a minimum subnet requirement of /27 prefix.  
-// If you are deploying standard this needs to be larger.
+// If you are deploying standard this needs to be larger. https://docs.microsoft.com/en-us/azure/bastion/configuration-settings#subnet
 resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if(parBastionEnabled){
   location: resourceGroup().location
   name: parBastionName
