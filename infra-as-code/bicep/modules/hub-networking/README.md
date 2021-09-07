@@ -100,6 +100,10 @@ Output | Type | Example
 ------ | ---- | --------
 outAzureFirewallPrivateIP | string | 192.168.100.1
 outAzureFirewallName | string | MyAzureFirewall
+outDdosPlanResourceId | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/ddosProtectionPlans/alz-Ddos-Plan
+outPrivateDnsZones | array | [name: 'privatelink.azure-automation.net'
+|||id: ''
+|||]
 
 ## Deployment
 > **Note:** `bicepconfig.json` file is included in the module directory.  This file allows us to override Bicep Linters.  Currently there are two URLs which were removed because of linter warnings.  URLs removed are the following: database.windows.net and core.windows.net
