@@ -1,4 +1,4 @@
-# Module: public-ip 
+# Module: Public IP
 
 This module defines a public ip address and outputs the id for other modules to consume.  
 
