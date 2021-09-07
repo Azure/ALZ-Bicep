@@ -265,7 +265,7 @@ module modGatewayPublicIP '../reusable/public-ip/public-ip.bicep' = [for (gatewa
 }]
 
 
-resource resVPNGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for (gateway,i) in parGatewayArray: {
+resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for (gateway,i) in parGatewayArray: {
   name: gateway.name
   location: resourceGroup().location
   tags: parTags
