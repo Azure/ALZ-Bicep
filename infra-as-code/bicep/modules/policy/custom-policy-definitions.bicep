@@ -473,22 +473,22 @@ var varCustomPolicySetDefinitionsArray = [
       {
         definitionReferenceId: 'SqlDbAuditingSettingsDeploySqlSecurity'
         definitionID: '${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-AuditingSettings'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_sql_security.parameters.json')).SqlDbAuditingSettingsDeploySqlSecurity
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_sql_security.parameters.json')).SqlDbAuditingSettingsDeploySqlSecurity.parameters
       }
       {
         definitionReferenceId: 'SqlDbSecurityAlertPoliciesDeploySqlSecurity'
         definitionID: '${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-SecurityAlertPolicies'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_sql_security.parameters.json')).SqlDbSecurityAlertPoliciesDeploySqlSecurity
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_sql_security.parameters.json')).SqlDbSecurityAlertPoliciesDeploySqlSecurity.parameters
       }
       {
         definitionReferenceId: 'SqlDbTdeDeploySqlSecurity'
         definitionID: '${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-Tde'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_sql_security.parameters.json')).SqlDbTdeDeploySqlSecurity
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_sql_security.parameters.json')).SqlDbTdeDeploySqlSecurity.parameters
       }
       {
         definitionReferenceId: 'SqlDbVulnerabilityAssessmentsDeploySqlSecurity'
         definitionID: '${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-vulnerabilityAssessments'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_sql_security.parameters.json')).SqlDbVulnerabilityAssessmentsDeploySqlSecurity
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_sql_security.parameters.json')).SqlDbVulnerabilityAssessmentsDeploySqlSecurity.parameters
       }
     ]
   }
@@ -520,7 +520,7 @@ resource resPolicySetDefinitions 'Microsoft.Authorization/policySetDefinitions@2
     policyType: policySet.libDefinition.properties.policyType
     policyDefinitions: [for policySetDef in policySet.libSetChildDefinitions: {
       policyDefinitionReferenceId: policySetDef.definitionReferenceId
-      policyDefinitionId: '${varTargetManagementGroupResoruceID}${policySetDef.definitionID}'
+      policyDefinitionId: policySetDef.definitionID
       parameters: policySetDef.definitionParameters
     }]
     policyDefinitionGroups: policySet.libDefinition.properties.policyDefinitionGroups
