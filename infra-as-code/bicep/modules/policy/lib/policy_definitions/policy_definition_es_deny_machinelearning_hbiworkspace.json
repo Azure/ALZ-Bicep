@@ -6,8 +6,8 @@
   "properties": {
     "policyType": "Custom",
     "mode": "Indexed",
-    "displayName": "Deny-MachineLearning-HbiWorkspace",
-    "description": "Enforce high business impact machine learning workspaces across the environment.",
+    "displayName": "Enforces high business impact Azure Machine Learning Workspaces",
+    "description": "Enforces high business impact Azure Machine Learning workspaces.",
     "metadata": {
       "version": "1.0.0",
       "category": "Machine Learning"

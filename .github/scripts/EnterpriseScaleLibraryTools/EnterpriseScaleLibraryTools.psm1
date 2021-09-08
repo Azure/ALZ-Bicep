@@ -699,7 +699,7 @@ function GetObjectByResourceTypeFromJson {
         }
         foreach ($policySetDefinition in $objectFromJson.variables.initiatives.policySetDefinitions) {
             ProcessObjectByResourceType `
-                -ResourceObject (RemoveEscaping -InputObject $policySetDefinition) `
+                -ResourceObject $policySetDefinition `
                 -ResourceType ("Microsoft.Authorization/policySetDefinitions")
         }
         foreach (
@@ -717,7 +717,7 @@ function GetObjectByResourceTypeFromJson {
             Where-Object { $_.name -ne "[variables('initiatives').policySetDefinitions[copyIndex()].name]" }
         ) {
             ProcessObjectByResourceType `
-                -ResourceObject (RemoveEscaping -InputObject $policySetDefinition) `
+                -ResourceObject $policySetDefinition `
                 -ResourceType ("Microsoft.Authorization/policySetDefinitions")
         }
     }

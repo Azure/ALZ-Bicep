@@ -146,7 +146,7 @@
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/797b37f7-06b8-444c-b1ad-fc62867f335a",
         "parameters": {
           "effect": {
-            "value": "[parameters('CosmosPublicIpDenyEffect')]"
+            "value": "[[parameters('CosmosPublicIpDenyEffect')]"
           }
         },
         "groupNames": []
@@ -156,7 +156,7 @@
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/55615ac9-af46-4a59-874e-391cc3dfb490",
         "parameters": {
           "effect": {
-            "value": "[parameters('KeyVaultPublicIpDenyEffect')]"
+            "value": "[[parameters('KeyVaultPublicIpDenyEffect')]"
           }
         },
         "groupNames": []
@@ -166,7 +166,7 @@
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1b8ca024-1d5c-4dec-8995-b1a932b41780",
         "parameters": {
           "effect": {
-            "value": "[parameters('SqlServerPublicIpDenyEffect')]"
+            "value": "[[parameters('SqlServerPublicIpDenyEffect')]"
           }
         },
         "groupNames": []
@@ -176,7 +176,7 @@
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/34c877ad-507e-4c82-993e-3452a6e0ad3c",
         "parameters": {
           "effect": {
-            "value": "[parameters('StoragePublicIpDenyEffect')]"
+            "value": "[[parameters('StoragePublicIpDenyEffect')]"
           }
         },
         "groupNames": []
@@ -186,7 +186,7 @@
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/040732e8-d947-40b8-95d6-854c95024bf8",
         "parameters": {
           "effect": {
-            "value": "[parameters('AKSPublicIpDenyEffect')]"
+            "value": "[[parameters('AKSPublicIpDenyEffect')]"
           }
         },
         "groupNames": []
@@ -196,7 +196,7 @@
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/0fdf0491-d080-4575-b627-ad0e843cba0f",
         "parameters": {
           "effect": {
-            "value": "[parameters('ACRPublicIpDenyEffect')]"
+            "value": "[[parameters('ACRPublicIpDenyEffect')]"
           }
         },
         "groupNames": []
@@ -206,7 +206,7 @@
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/21a8cd35-125e-4d13-b82d-2e19b7208bb7",
         "parameters": {
           "effect": {
-            "value": "[parameters('AFSPublicIpDenyEffect')]"
+            "value": "[[parameters('AFSPublicIpDenyEffect')]"
           }
         },
         "groupNames": []
@@ -216,7 +216,7 @@
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/5e1de0e3-42cb-4ebc-a86d-61d0c619ca48",
         "parameters": {
           "effect": {
-            "value": "[parameters('PostgreSQLFlexPublicIpDenyEffect')]"
+            "value": "[[parameters('PostgreSQLFlexPublicIpDenyEffect')]"
           }
         },
         "groupNames": []
@@ -226,7 +226,7 @@
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/c9299215-ae47-4f50-9c54-8a392f68a052",
         "parameters": {
           "effect": {
-            "value": "[parameters('MySQLFlexPublicIpDenyEffect')]"
+            "value": "[[parameters('MySQLFlexPublicIpDenyEffect')]"
           }
         },
         "groupNames": []
@@ -236,7 +236,7 @@
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/74c5a0ae-5e48-4738-b093-65e23a060488",
         "parameters": {
           "effect": {
-            "value": "[parameters('BatchPublicIpDenyEffect')]"
+            "value": "[[parameters('BatchPublicIpDenyEffect')]"
           }
         },
         "groupNames": []
