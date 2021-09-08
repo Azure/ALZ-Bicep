@@ -1,8 +1,8 @@
 {
-  "SqlDbSecurityAlertPoliciesDeploySqlSecurity": {
+  "SqlDbTdeDeploySqlSecurity": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
+        "value": "[[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
       }
     }
   },
@@ -26,10 +26,10 @@
       }
     }
   },
-  "SqlDbTdeDeploySqlSecurity": {
+  "SqlDbSecurityAlertPoliciesDeploySqlSecurity": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
+        "value": "[[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
       }
     }
   }

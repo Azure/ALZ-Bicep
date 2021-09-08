@@ -1,8 +1,8 @@
 {
-  "defenderForSqlServers": {
+  "defenderForKubernetesService": {
     "parameters": {
       "pricingTier": {
-        "value": "[[parameters('pricingTierSqlServers')]"
+        "value": "[[parameters('pricingTierKubernetesService')]"
       }
     }
   },
@@ -20,34 +20,6 @@
       }
     }
   },
-  "defenderForVM": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierVMs')]"
-      }
-    }
-  },
-  "defenderForAppServices": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierAppServices')]"
-      }
-    }
-  },
-  "securityEmailContact": {
-    "parameters": {
-      "emailSecurityContact": {
-        "value": "[[parameters('emailSecurityContact')]"
-      }
-    }
-  },
-  "defenderForDns": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierDns')]"
-      }
-    }
-  },
   "defenderForStorageAccounts": {
     "parameters": {
       "pricingTier": {
@@ -55,17 +27,24 @@
       }
     }
   },
-  "defenderForKeyVaults": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierKeyVaults')]"
-      }
-    }
-  },
   "defenderForSqlServerVirtualMachines": {
     "parameters": {
       "pricingTier": {
         "value": "[[parameters('pricingTierSqlServerVirtualMachines')]"
+      }
+    }
+  },
+  "defenderForSqlServers": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierSqlServers')]"
+      }
+    }
+  },
+  "defenderForKeyVaults": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierKeyVaults')]"
       }
     }
   },
@@ -82,10 +61,31 @@
       }
     }
   },
-  "defenderForKubernetesService": {
+  "securityEmailContact": {
+    "parameters": {
+      "emailSecurityContact": {
+        "value": "[[parameters('emailSecurityContact')]"
+      }
+    }
+  },
+  "defenderForAppServices": {
     "parameters": {
       "pricingTier": {
-        "value": "[[parameters('pricingTierKubernetesService')]"
+        "value": "[[parameters('pricingTierAppServices')]"
+      }
+    }
+  },
+  "defenderForDns": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierDns')]"
+      }
+    }
+  },
+  "defenderForVM": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierVMs')]"
       }
     }
   }
