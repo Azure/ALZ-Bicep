@@ -168,7 +168,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-VMs",
         "parameters": {
           "pricingTier": {
-            "value": "[parameters('pricingTierVMs')]"
+            "value": "[[parameters('pricingTierVMs')]"
           }
         },
         "groupNames": []
@@ -178,7 +178,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-Sql",
         "parameters": {
           "pricingTier": {
-            "value": "[parameters('pricingTierSqlServers')]"
+            "value": "[[parameters('pricingTierSqlServers')]"
           }
         },
         "groupNames": []
@@ -188,7 +188,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AppSrv",
         "parameters": {
           "pricingTier": {
-            "value": "[parameters('pricingTierAppServices')]"
+            "value": "[[parameters('pricingTierAppServices')]"
           }
         },
         "groupNames": []
@@ -198,7 +198,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-SA",
         "parameters": {
           "pricingTier": {
-            "value": "[parameters('pricingTierStorageAccounts')]"
+            "value": "[[parameters('pricingTierStorageAccounts')]"
           }
         },
         "groupNames": []
@@ -208,7 +208,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-SQLVM",
         "parameters": {
           "pricingTier": {
-            "value": "[parameters('pricingTierSqlServerVirtualMachines')]"
+            "value": "[[parameters('pricingTierSqlServerVirtualMachines')]"
           }
         },
         "groupNames": []
@@ -218,7 +218,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AKS",
         "parameters": {
           "pricingTier": {
-            "value": "[parameters('pricingTierKubernetesService')]"
+            "value": "[[parameters('pricingTierKubernetesService')]"
           }
         },
         "groupNames": []
@@ -228,7 +228,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-ACR",
         "parameters": {
           "pricingTier": {
-            "value": "[parameters('pricingTierContainerRegistry')]"
+            "value": "[[parameters('pricingTierContainerRegistry')]"
           }
         },
         "groupNames": []
@@ -238,7 +238,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AKV",
         "parameters": {
           "pricingTier": {
-            "value": "[parameters('pricingTierKeyVaults')]"
+            "value": "[[parameters('pricingTierKeyVaults')]"
           }
         },
         "groupNames": []
@@ -248,7 +248,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-DNS",
         "parameters": {
           "pricingTier": {
-            "value": "[parameters('pricingTierDns')]"
+            "value": "[[parameters('pricingTierDns')]"
           }
         },
         "groupNames": []
@@ -258,7 +258,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-ARM",
         "parameters": {
           "pricingTier": {
-            "value": "[parameters('pricingTierArm')]"
+            "value": "[[parameters('pricingTierArm')]"
           }
         },
         "groupNames": []
@@ -268,7 +268,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-SecurityContacts",
         "parameters": {
           "emailSecurityContact": {
-            "value": "[parameters('emailSecurityContact')]"
+            "value": "[[parameters('emailSecurityContact')]"
           }
         },
         "groupNames": []
@@ -278,13 +278,13 @@
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/ffb6f416-7bd2-4488-8828-56585fef2be9",
         "parameters": {
           "resourceGroupName": {
-            "value": "[parameters('ascExportResourceGroupName')]"
+            "value": "[[parameters('ascExportResourceGroupName')]"
           },
           "resourceGroupLocation": {
-            "value": "[parameters('ascExportResourceGroupLocation')]"
+            "value": "[[parameters('ascExportResourceGroupLocation')]"
           },
           "workspaceResourceId": {
-            "value": "[parameters('logAnalytics')]"
+            "value": "[[parameters('logAnalytics')]"
           }
         },
         "groupNames": []
