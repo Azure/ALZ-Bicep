@@ -98,6 +98,13 @@ param parHubNetworkName string = '${parCompanyPrefix}-hub-${resourceGroup().loca
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
 param parAzureFirewallName string ='${parCompanyPrefix}-azure-firewall'
 
+@description('Azure Firewall Sku associated with the Firewall to deploy. Default: Standard ')
+@allowed([
+  'Standard'
+  'Premium'
+])
+param parAzureFirewallSku string = 'Standard'
+
 @description('Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable')
 param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 
@@ -375,7 +382,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(par
     threatIntelMode: 'Alert'
     sku: {
       name: 'AZFW_VNet'
-      tier: 'Standard'
+      tier: parAzureFirewallSku
     }
     additionalProperties: {
        'Network.DNS.EnableProxy': 'true'
