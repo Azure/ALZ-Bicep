@@ -16,7 +16,7 @@ param parAssigneePrincipalType string
 @description('Object Id of groups, service principals or  managed identities. For managed identities use the principal id. For service principals, use the object id and not the app id')
 param parAssigneeObjectId string
 
-module roleAssignment 'role-assignment-subscription.bicep' = [for subscriptionId in parSubscriptionIds: {
+module modRoleAssignment 'role-assignment-subscription.bicep' = [for subscriptionId in parSubscriptionIds: {
   name: 'rbac-assign-${uniqueString(subscriptionId, parAssigneeObjectId)}'
   scope: subscription(subscriptionId)
   params: {
