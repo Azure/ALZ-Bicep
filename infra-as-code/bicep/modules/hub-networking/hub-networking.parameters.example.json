@@ -79,7 +79,7 @@
       "parAzureFirewallName": {
           "value": "alz-azure-firewall"
       },
-      "parAzureFirewallSku": {
+      "parAzureFirewallTier": {
         "value": "Standard"
       },
       "parHubRouteTableName": {
