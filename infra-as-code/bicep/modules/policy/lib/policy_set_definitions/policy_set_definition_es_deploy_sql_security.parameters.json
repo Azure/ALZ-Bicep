@@ -1,11 +1,4 @@
 {
-  "SqlDbAuditingSettingsDeploySqlSecurity": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('SqlDbAuditingSettingsDeploySqlSecurityEffect')]"
-      }
-    }
-  },
   "SqlDbVulnerabilityAssessmentsDeploySqlSecurity": {
     "parameters": {
       "effect": {
@@ -19,17 +12,24 @@
       }
     }
   },
-  "SqlDbTdeDeploySqlSecurity": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
-      }
-    }
-  },
   "SqlDbSecurityAlertPoliciesDeploySqlSecurity": {
     "parameters": {
       "effect": {
         "value": "[[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
+      }
+    }
+  },
+  "SqlDbAuditingSettingsDeploySqlSecurity": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SqlDbAuditingSettingsDeploySqlSecurityEffect')]"
+      }
+    }
+  },
+  "SqlDbTdeDeploySqlSecurity": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
       }
     }
   }

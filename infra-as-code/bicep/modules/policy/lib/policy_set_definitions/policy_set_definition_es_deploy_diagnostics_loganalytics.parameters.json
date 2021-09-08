@@ -1,128 +1,24 @@
 {
-  "WVDWorkspaceDeployDiagnosticLogDeployLogAnalytics": {
+  "SQLDatabaseDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('WVDWorkspaceLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "DataLakeAnalyticsDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('DataLakeAnalyticsLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "AppServiceWebappDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('AppServiceWebappLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "WVDAppGroupDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('WVDAppGroupsLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "DataExplorerClusterDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('DataExplorerClusterLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "VirtualMachinesDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('VirtualMachinesLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "StreamAnalyticsDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('StreamAnalyticsLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "AKSDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('AKSLogAnalyticsEffect')]"
+        "value": "[[parameters('SQLDBsLogAnalyticsEffect')]"
       },
       "diagnosticsSettingNameToUse": {
         "value": "[[parameters('profileName')]"
       }
     }
   },
-  "FunctionAppDeployDiagnosticLogDeployLogAnalytics": {
+  "PowerBIEmbeddedDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('FunctionAppLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "RedisCacheDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('RedisCacheLogAnalyticsEffect')]"
+        "value": "[[parameters('PowerBIEmbeddedLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
@@ -142,13 +38,49 @@
       }
     }
   },
-  "AutomationDeployDiagnosticLogDeployLogAnalytics": {
+  "FirewallDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('AutomationLogAnalyticsEffect')]"
+        "value": "[[parameters('FirewallLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "StorageAccountDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('StorageAccountsLogAnalyticsEffect')]"
+      }
+    }
+  },
+  "EventGridTopicDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('EventGridTopicLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "AppServiceWebappDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('AppServiceWebappLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
@@ -168,6 +100,32 @@
       }
     }
   },
+  "SQLMDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('SQLMLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "EventSystemTopicDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('EventSystemTopicLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
   "DatabricksDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
@@ -181,205 +139,26 @@
       }
     }
   },
-  "ApplicationGatewayDeployDiagnosticLogDeployLogAnalytics": {
+  "APIforFHIRDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('ApplicationGatewayLogAnalyticsEffect')]"
+        "value": "[[parameters('APIforFHIRLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
       }
     }
   },
-  "ACIDeployDiagnosticLogDeployLogAnalytics": {
+  "CosmosDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('ACILogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "ExpressRouteDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('ExpressRouteLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "EventGridSubDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('EventGridSubLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "FirewallDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('FirewallLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "RelayDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('RelayLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "RecoveryVaultDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "VMSSDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('VMSSLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "WVDHostPoolsDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('WVDHostPoolsLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "DataFactoryDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('DataFactoryLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "AppServiceDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('AppServiceLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "PostgreSQLDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('PostgreSQLLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "MySQLDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('MySQLLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "NetworkSecurityGroupsDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('NetworkSecurityGroupsLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "DataLakeStoreDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('DataLakeStoreLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "LogicAppsWFDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('LogicAppsWFLogAnalyticsEffect')]"
+        "value": "[[parameters('CosmosLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
@@ -399,13 +178,179 @@
       }
     }
   },
-  "LogicAppsISEDeployDiagnosticLogDeployLogAnalytics": {
+  "CDNEndpointsDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('LogicAppsISELogAnalyticsEffect')]"
+        "value": "[[parameters('CDNEndpointsLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "WVDAppGroupDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('WVDAppGroupsLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "LogicAppsWFDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('LogicAppsWFLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "RecoveryVaultDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "HDInsightDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('HDInsightLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "ACRDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('ACRLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "ServiceBusDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('ServiceBusLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "WVDHostPoolsDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('WVDHostPoolsLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "VirtualNetworkDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('VirtualNetworkLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "PostgreSQLDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('PostgreSQLLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "VNetGWDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('VNetGWLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "VirtualMachinesDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('VirtualMachinesLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "IotHubDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('IotHubLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "NetworkNICDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('NetworkNICLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
@@ -428,67 +373,41 @@
       }
     }
   },
-  "PowerBIEmbeddedDeployDiagnosticLogDeployLogAnalytics": {
+  "MySQLDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('PowerBIEmbeddedLogAnalyticsEffect')]"
+        "value": "[[parameters('MySQLLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
       }
     }
   },
-  "VNetGWDeployDiagnosticLogDeployLogAnalytics": {
+  "DataExplorerClusterDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('VNetGWLogAnalyticsEffect')]"
+        "value": "[[parameters('DataExplorerClusterLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
       }
     }
   },
-  "APIforFHIRDeployDiagnosticLogDeployLogAnalytics": {
+  "VMSSDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('APIforFHIRLogAnalyticsEffect')]"
+        "value": "[[parameters('VMSSLogAnalyticsEffect')]"
       },
       "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "CognitiveServicesDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('CognitiveServicesLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "SQLDatabaseDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('SQLDBsLogAnalyticsEffect')]"
-      },
-      "diagnosticsSettingNameToUse": {
         "value": "[[parameters('profileName')]"
       }
     }
@@ -506,13 +425,13 @@
       }
     }
   },
-  "EventGridTopicDeployDiagnosticLogDeployLogAnalytics": {
+  "AutomationDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('EventGridTopicLogAnalyticsEffect')]"
+        "value": "[[parameters('AutomationLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
@@ -532,65 +451,13 @@
       }
     }
   },
-  "SearchServicesDeployDiagnosticLogDeployLogAnalytics": {
+  "AppServiceDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('SearchServicesLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "MlWorkspaceDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('MlWorkspaceLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "MediaServiceDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('MediaServiceLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "AnalysisServiceDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('AnalysisServiceLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "CDNEndpointsDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('CDNEndpointsLogAnalyticsEffect')]"
+        "value": "[[parameters('AppServiceLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
@@ -610,140 +477,39 @@
       }
     }
   },
-  "SignalRDeployDiagnosticLogDeployLogAnalytics": {
+  "SearchServicesDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('SignalRLogAnalyticsEffect')]"
+        "value": "[[parameters('SearchServicesLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
       }
     }
   },
-  "BatchDeployDiagnosticLogDeployLogAnalytics": {
+  "RelayDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('BatchLogAnalyticsEffect')]"
+        "value": "[[parameters('RelayLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
       }
     }
   },
-  "SQLMDeployDiagnosticLogDeployLogAnalytics": {
+  "CognitiveServicesDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('SQLMLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "StorageAccountDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('StorageAccountsLogAnalyticsEffect')]"
-      }
-    }
-  },
-  "HDInsightDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('HDInsightLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "NetworkNICDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('NetworkNICLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "EventSystemTopicDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('EventSystemTopicLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "ServiceBusDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('ServiceBusLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "KeyVaultDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('KeyVaultLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "IotHubDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('IotHubLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "EventHubDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('EventHubLogAnalyticsEffect')]"
+        "value": "[[parameters('CognitiveServicesLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
@@ -763,39 +529,273 @@
       }
     }
   },
-  "ACRDeployDiagnosticLogDeployLogAnalytics": {
+  "SignalRDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('ACRLogAnalyticsEffect')]"
+        "value": "[[parameters('SignalRLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
       }
     }
   },
-  "CosmosDeployDiagnosticLogDeployLogAnalytics": {
+  "MlWorkspaceDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('CosmosLogAnalyticsEffect')]"
+        "value": "[[parameters('MlWorkspaceLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
       }
     }
   },
-  "VirtualNetworkDeployDiagnosticLogDeployLogAnalytics": {
+  "NetworkSecurityGroupsDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
       "effect": {
-        "value": "[[parameters('VirtualNetworkLogAnalyticsEffect')]"
+        "value": "[[parameters('NetworkSecurityGroupsLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "EventHubDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('EventHubLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "FunctionAppDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('FunctionAppLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "EventGridSubDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('EventGridSubLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "LogicAppsISEDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('LogicAppsISELogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "RedisCacheDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('RedisCacheLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "WVDWorkspaceDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('WVDWorkspaceLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "ExpressRouteDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('ExpressRouteLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "DataLakeAnalyticsDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('DataLakeAnalyticsLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "DataFactoryDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('DataFactoryLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "BatchDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('BatchLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "ApplicationGatewayDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('ApplicationGatewayLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "MediaServiceDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('MediaServiceLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "DataLakeStoreDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('DataLakeStoreLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "AnalysisServiceDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('AnalysisServiceLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "ACIDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('ACILogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "AKSDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('AKSLogAnalyticsEffect')]"
+      },
+      "diagnosticsSettingNameToUse": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "KeyVaultDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('KeyVaultLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "StreamAnalyticsDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('StreamAnalyticsLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
