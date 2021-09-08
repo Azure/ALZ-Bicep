@@ -33,5 +33,6 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILTER_REGEX_EXCLUDE: .*infra-as-code/bicep/modules/policy/lib/.*
           VALIDATE_ARM: true
           VALIDATE_JSON: true
