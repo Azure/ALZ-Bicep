@@ -382,7 +382,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(par
     threatIntelMode: 'Alert'
     sku: {
       name: 'AZFW_VNet'
-      tier: parAzureFirewallSku
+      tier: parAzureFirewallTier
     }
     additionalProperties: {
        'Network.DNS.EnableProxy': 'true'
