@@ -1,21 +1,21 @@
 {
-  "DINE-Private-DNS-Azure-RedisCache": {
+  "DINE-Private-DNS-Azure-ACR": {
     "parameters": {
       "privateDnsZoneId": {
-        "value": "[[parameters('azureRedisCachePrivateDnsZoneId')]"
+        "value": "[[parameters('azureAcrPrivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"
       }
     }
   },
-  "DINE-Private-DNS-Azure-IoTHubs": {
+  "DINE-Private-DNS-Azure-CognitiveServices": {
     "parameters": {
       "privateDnsZoneId": {
-        "value": "[[parameters('azureIotHubsPrivateDnsZoneId')]"
+        "value": "[[parameters('azureCognitiveServicesPrivateDnsZoneId')]"
       },
       "effect": {
-        "value": "[[parameters('effect1')]"
+        "value": "[[parameters('effect')]"
       }
     }
   },
@@ -29,10 +29,10 @@
       }
     }
   },
-  "DINE-Private-DNS-Azure-Site-Recovery": {
+  "DINE-Private-DNS-Azure-KeyVault": {
     "parameters": {
       "privateDnsZoneId": {
-        "value": "[[parameters('azureAsrPrivateDnsZoneId')]"
+        "value": "[[parameters('azureKeyVaultPrivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"
@@ -59,40 +59,60 @@
       }
     }
   },
-  "DINE-Private-DNS-Azure-SignalR": {
+  "DINE-Private-DNS-Azure-App": {
     "parameters": {
       "privateDnsZoneId": {
-        "value": "[[parameters('azureSignalRPrivateDnsZoneId')]"
+        "value": "[[parameters('azureAppPrivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"
       }
     }
   },
-  "DINE-Private-DNS-Azure-CognitiveSearch": {
+  "DINE-Private-DNS-Azure-EventHubNamespace": {
     "parameters": {
       "privateDnsZoneId": {
-        "value": "[[parameters('azureCognitiveSearchPrivateDnsZoneId')]"
+        "value": "[[parameters('azureEventHubNamespacePrivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"
       }
     }
   },
-  "DINE-Private-DNS-Azure-CognitiveServices": {
+  "DINE-Private-DNS-Azure-Site-Recovery": {
     "parameters": {
       "privateDnsZoneId": {
-        "value": "[[parameters('azureCognitiveServicesPrivateDnsZoneId')]"
+        "value": "[[parameters('azureAsrPrivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"
       }
     }
   },
-  "DINE-Private-DNS-Azure-File-Sync": {
+  "DINE-Private-DNS-Azure-MachineLearningWorkspace": {
     "parameters": {
       "privateDnsZoneId": {
-        "value": "[[parameters('azureFileprivateDnsZoneId')]"
+        "value": "[[parameters('azureMachineLearningWorkspacePrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-AppServices": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureAppServicesPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-RedisCache": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureRedisCachePrivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"
@@ -119,60 +139,20 @@
       }
     }
   },
-  "DINE-Private-DNS-Azure-KeyVault": {
+  "DINE-Private-DNS-Azure-File-Sync": {
     "parameters": {
       "privateDnsZoneId": {
-        "value": "[[parameters('azureKeyVaultPrivateDnsZoneId')]"
+        "value": "[[parameters('azureFileprivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"
       }
     }
   },
-  "DINE-Private-DNS-Azure-EventHubNamespace": {
+  "DINE-Private-DNS-Azure-SignalR": {
     "parameters": {
       "privateDnsZoneId": {
-        "value": "[[parameters('azureEventHubNamespacePrivateDnsZoneId')]"
-      },
-      "effect": {
-        "value": "[[parameters('effect')]"
-      }
-    }
-  },
-  "DINE-Private-DNS-Azure-EventGridDomains": {
-    "parameters": {
-      "privateDnsZoneId": {
-        "value": "[[parameters('azureEventGridDomainsPrivateDnsZoneId')]"
-      },
-      "effect": {
-        "value": "[[parameters('effect1')]"
-      }
-    }
-  },
-  "DINE-Private-DNS-Azure-MachineLearningWorkspace": {
-    "parameters": {
-      "privateDnsZoneId": {
-        "value": "[[parameters('azureMachineLearningWorkspacePrivateDnsZoneId')]"
-      },
-      "effect": {
-        "value": "[[parameters('effect')]"
-      }
-    }
-  },
-  "DINE-Private-DNS-Azure-App": {
-    "parameters": {
-      "privateDnsZoneId": {
-        "value": "[[parameters('azureAppPrivateDnsZoneId')]"
-      },
-      "effect": {
-        "value": "[[parameters('effect')]"
-      }
-    }
-  },
-  "DINE-Private-DNS-Azure-ACR": {
-    "parameters": {
-      "privateDnsZoneId": {
-        "value": "[[parameters('azureAcrPrivateDnsZoneId')]"
+        "value": "[[parameters('azureSignalRPrivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"
@@ -189,13 +169,33 @@
       }
     }
   },
-  "DINE-Private-DNS-Azure-AppServices": {
+  "DINE-Private-DNS-Azure-CognitiveSearch": {
     "parameters": {
       "privateDnsZoneId": {
-        "value": "[[parameters('azureAppServicesPrivateDnsZoneId')]"
+        "value": "[[parameters('azureCognitiveSearchPrivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-IoTHubs": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureIotHubsPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect1')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-EventGridDomains": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureEventGridDomainsPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect1')]"
       }
     }
   }

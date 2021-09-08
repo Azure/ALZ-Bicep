@@ -1,55 +1,8 @@
 {
-  "StorageDeployHttpsEnabledEffect": {
+  "AppServiceHttpEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('StorageDeployHttpsEnabledEffect')]"
-      },
-      "minimumTlsVersion": {
-        "value": "[[parameters('StorageMinimumTlsVersion')]"
-      }
-    }
-  },
-  "MySQLEnableSSLDeployEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('MySQLEnableSSLDeployEffect')]"
-      },
-      "minimalTlsVersion": {
-        "value": "[[parameters('MySQLminimalTlsVersion')]"
-      }
-    }
-  },
-  "WebAppServiceHttpsEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('WebAppServiceHttpsEffect')]"
-      }
-    }
-  },
-  "SQLServerTLSDeployEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('SQLServerTLSDeployEffect')]"
-      },
-      "minimalTlsVersion": {
-        "value": "[[parameters('SQLServerminTlsVersion')]"
-      }
-    }
-  },
-  "RedisDenyhttps": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('RedisTLSEffect')]"
-      },
-      "minimumTlsVersion": {
-        "value": "[[parameters('RedisMinTlsVersion')]"
-      }
-    }
-  },
-  "FunctionLatestTlsEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('FunctionLatestTlsEffect')]"
+        "value": "[[parameters('AppServiceHttpEffect')]"
       }
     }
   },
@@ -60,17 +13,37 @@
       }
     }
   },
-  "WebAppServiceLatestTlsEffect": {
+  "StorageDeployHttpsEnabledEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('WebAppServiceLatestTlsEffect')]"
+        "value": "[[parameters('StorageDeployHttpsEnabledEffect')]"
+      },
+      "minimumTlsVersion": {
+        "value": "[[parameters('StorageMinimumTlsVersion')]"
       }
     }
   },
-  "SQLManagedInstanceTLSEffect": {
+  "WebAppServiceHttpsEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('SQLManagedInstanceTLSEffect')]"
+        "value": "[[parameters('WebAppServiceHttpsEffect')]"
+      }
+    }
+  },
+  "MySQLEnableSSLEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('MySQLEnableSSLEffect')]"
+      },
+      "minimalTlsVersion": {
+        "value": "[[parameters('MySQLminimalTlsVersion')]"
+      }
+    }
+  },
+  "SQLManagedInstanceTLSDeployEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SQLManagedInstanceTLSDeployEffect')]"
       },
       "minimalTlsVersion": {
         "value": "[[parameters('SQLManagedInstanceMinTlsVersion')]"
@@ -94,6 +67,16 @@
       }
     }
   },
+  "SQLManagedInstanceTLSEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SQLManagedInstanceTLSEffect')]"
+      },
+      "minimalTlsVersion": {
+        "value": "[[parameters('SQLManagedInstanceMinTlsVersion')]"
+      }
+    }
+  },
   "AppServiceminTlsVersion": {
     "parameters": {
       "effect": {
@@ -104,43 +87,27 @@
       }
     }
   },
-  "StorageHttpsEnabledEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('StorageHttpsEnabledEffect')]"
-      },
-      "minimumTlsVersion": {
-        "value": "[[parameters('StorageMinimumTlsVersion')]"
-      }
-    }
-  },
-  "MySQLEnableSSLEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('MySQLEnableSSLEffect')]"
-      },
-      "minimalTlsVersion": {
-        "value": "[[parameters('MySQLminimalTlsVersion')]"
-      }
-    }
-  },
-  "RedisTLSDeployEffect": {
+  "RedisdisableNonSslPort": {
     "parameters": {
       "effect": {
         "value": "[[parameters('RedisTLSDeployEffect')]"
-      },
-      "minimumTlsVersion": {
-        "value": "[[parameters('RedisMinTlsVersion')]"
       }
     }
   },
-  "SQLManagedInstanceTLSDeployEffect": {
+  "FunctionServiceHttpsEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('SQLManagedInstanceTLSDeployEffect')]"
+        "value": "[[parameters('FunctionServiceHttpsEffect')]"
+      }
+    }
+  },
+  "SQLServerTLSDeployEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SQLServerTLSDeployEffect')]"
       },
       "minimalTlsVersion": {
-        "value": "[[parameters('SQLManagedInstanceMinTlsVersion')]"
+        "value": "[[parameters('SQLServerminTlsVersion')]"
       }
     }
   },
@@ -154,10 +121,10 @@
       }
     }
   },
-  "RedisdisableNonSslPort": {
+  "FunctionLatestTlsEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('RedisTLSDeployEffect')]"
+        "value": "[[parameters('FunctionLatestTlsEffect')]"
       }
     }
   },
@@ -168,10 +135,13 @@
       }
     }
   },
-  "FunctionServiceHttpsEffect": {
+  "StorageHttpsEnabledEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('FunctionServiceHttpsEffect')]"
+        "value": "[[parameters('StorageHttpsEnabledEffect')]"
+      },
+      "minimumTlsVersion": {
+        "value": "[[parameters('StorageMinimumTlsVersion')]"
       }
     }
   },
@@ -185,10 +155,40 @@
       }
     }
   },
-  "AppServiceHttpEffect": {
+  "MySQLEnableSSLDeployEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('AppServiceHttpEffect')]"
+        "value": "[[parameters('MySQLEnableSSLDeployEffect')]"
+      },
+      "minimalTlsVersion": {
+        "value": "[[parameters('MySQLminimalTlsVersion')]"
+      }
+    }
+  },
+  "WebAppServiceLatestTlsEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('WebAppServiceLatestTlsEffect')]"
+      }
+    }
+  },
+  "RedisDenyhttps": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('RedisTLSEffect')]"
+      },
+      "minimumTlsVersion": {
+        "value": "[[parameters('RedisMinTlsVersion')]"
+      }
+    }
+  },
+  "RedisTLSDeployEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('RedisTLSDeployEffect')]"
+      },
+      "minimumTlsVersion": {
+        "value": "[[parameters('RedisMinTlsVersion')]"
       }
     }
   }
