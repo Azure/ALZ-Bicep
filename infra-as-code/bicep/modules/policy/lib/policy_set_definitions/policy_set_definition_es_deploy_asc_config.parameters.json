@@ -1,29 +1,8 @@
 {
-  "defenderForSqlServers": {
+  "securityEmailContact": {
     "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierSqlServers')]"
-      }
-    }
-  },
-  "defenderForContainerRegistry": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierContainerRegistry')]"
-      }
-    }
-  },
-  "defenderForArm": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierArm')]"
-      }
-    }
-  },
-  "defenderForVM": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierVMs')]"
+      "emailSecurityContact": {
+        "value": "[[parameters('emailSecurityContact')]"
       }
     }
   },
@@ -34,10 +13,24 @@
       }
     }
   },
-  "securityEmailContact": {
+  "defenderForArm": {
     "parameters": {
-      "emailSecurityContact": {
-        "value": "[[parameters('emailSecurityContact')]"
+      "pricingTier": {
+        "value": "[[parameters('pricingTierArm')]"
+      }
+    }
+  },
+  "defenderForKubernetesService": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierKubernetesService')]"
+      }
+    }
+  },
+  "defenderForVM": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierVMs')]"
       }
     }
   },
@@ -45,13 +38,6 @@
     "parameters": {
       "pricingTier": {
         "value": "[[parameters('pricingTierDns')]"
-      }
-    }
-  },
-  "defenderForStorageAccounts": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierStorageAccounts')]"
       }
     }
   },
@@ -69,6 +55,13 @@
       }
     }
   },
+  "defenderForContainerRegistry": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierContainerRegistry')]"
+      }
+    }
+  },
   "ascExport": {
     "parameters": {
       "resourceGroupName": {
@@ -82,10 +75,17 @@
       }
     }
   },
-  "defenderForKubernetesService": {
+  "defenderForStorageAccounts": {
     "parameters": {
       "pricingTier": {
-        "value": "[[parameters('pricingTierKubernetesService')]"
+        "value": "[[parameters('pricingTierStorageAccounts')]"
+      }
+    }
+  },
+  "defenderForSqlServers": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierSqlServers')]"
       }
     }
   }

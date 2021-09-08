@@ -1,28 +1,45 @@
 {
-  "StorageDeployHttpsEnabledEffect": {
+  "APIAppServiceLatestTlsEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('StorageDeployHttpsEnabledEffect')]"
-      },
-      "minimumTlsVersion": {
-        "value": "[[parameters('StorageMinimumTlsVersion')]"
+        "value": "[[parameters('APIAppServiceLatestTlsEffect')]"
       }
     }
   },
-  "MySQLEnableSSLDeployEffect": {
+  "SQLManagedInstanceTLSDeployEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('MySQLEnableSSLDeployEffect')]"
+        "value": "[[parameters('SQLManagedInstanceTLSDeployEffect')]"
       },
       "minimalTlsVersion": {
-        "value": "[[parameters('MySQLminimalTlsVersion')]"
+        "value": "[[parameters('SQLManagedInstanceMinTlsVersion')]"
       }
     }
   },
-  "WebAppServiceHttpsEffect": {
+  "PostgreSQLEnableSSLEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('WebAppServiceHttpsEffect')]"
+        "value": "[[parameters('PostgreSQLEnableSSLEffect')]"
+      },
+      "minimalTlsVersion": {
+        "value": "[[parameters('PostgreSQLminimalTlsVersion')]"
+      }
+    }
+  },
+  "PostgreSQLEnableSSLDeployEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('PostgreSQLEnableSSLDeployEffect')]"
+      },
+      "minimalTlsVersion": {
+        "value": "[[parameters('PostgreSQLminimalTlsVersion')]"
+      }
+    }
+  },
+  "RedisdisableNonSslPort": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('RedisTLSDeployEffect')]"
       }
     }
   },
@@ -36,27 +53,30 @@
       }
     }
   },
-  "RedisDenyhttps": {
+  "AppServiceHttpEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('RedisTLSEffect')]"
+        "value": "[[parameters('AppServiceHttpEffect')]"
+      }
+    }
+  },
+  "MySQLEnableSSLEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('MySQLEnableSSLEffect')]"
+      },
+      "minimalTlsVersion": {
+        "value": "[[parameters('MySQLminimalTlsVersion')]"
+      }
+    }
+  },
+  "StorageHttpsEnabledEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('StorageHttpsEnabledEffect')]"
       },
       "minimumTlsVersion": {
-        "value": "[[parameters('RedisMinTlsVersion')]"
-      }
-    }
-  },
-  "FunctionLatestTlsEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('FunctionLatestTlsEffect')]"
-      }
-    }
-  },
-  "APIAppServiceLatestTlsEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('APIAppServiceLatestTlsEffect')]"
+        "value": "[[parameters('StorageMinimumTlsVersion')]"
       }
     }
   },
@@ -77,87 +97,20 @@
       }
     }
   },
-  "AKSIngressHttpsOnlyEffect": {
+  "MySQLEnableSSLDeployEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('AKSIngressHttpsOnlyEffect')]"
-      }
-    }
-  },
-  "PostgreSQLEnableSSLDeployEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('PostgreSQLEnableSSLDeployEffect')]"
-      },
-      "minimalTlsVersion": {
-        "value": "[[parameters('PostgreSQLminimalTlsVersion')]"
-      }
-    }
-  },
-  "AppServiceminTlsVersion": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('AppServiceTlsVersionEffect')]"
-      },
-      "minTlsVersion": {
-        "value": "[[parameters('AppServiceminTlsVersion')]"
-      }
-    }
-  },
-  "StorageHttpsEnabledEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('StorageHttpsEnabledEffect')]"
-      },
-      "minimumTlsVersion": {
-        "value": "[[parameters('StorageMinimumTlsVersion')]"
-      }
-    }
-  },
-  "MySQLEnableSSLEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('MySQLEnableSSLEffect')]"
+        "value": "[[parameters('MySQLEnableSSLDeployEffect')]"
       },
       "minimalTlsVersion": {
         "value": "[[parameters('MySQLminimalTlsVersion')]"
       }
     }
   },
-  "RedisTLSDeployEffect": {
+  "AKSIngressHttpsOnlyEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('RedisTLSDeployEffect')]"
-      },
-      "minimumTlsVersion": {
-        "value": "[[parameters('RedisMinTlsVersion')]"
-      }
-    }
-  },
-  "SQLManagedInstanceTLSDeployEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('SQLManagedInstanceTLSDeployEffect')]"
-      },
-      "minimalTlsVersion": {
-        "value": "[[parameters('SQLManagedInstanceMinTlsVersion')]"
-      }
-    }
-  },
-  "SQLServerTLSEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('SQLServerTLSEffect')]"
-      },
-      "minimalTlsVersion": {
-        "value": "[[parameters('SQLServerminTlsVersion')]"
-      }
-    }
-  },
-  "RedisdisableNonSslPort": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('RedisTLSDeployEffect')]"
+        "value": "[[parameters('AKSIngressHttpsOnlyEffect')]"
       }
     }
   },
@@ -175,20 +128,67 @@
       }
     }
   },
-  "PostgreSQLEnableSSLEffect": {
+  "FunctionLatestTlsEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('PostgreSQLEnableSSLEffect')]"
-      },
-      "minimalTlsVersion": {
-        "value": "[[parameters('PostgreSQLminimalTlsVersion')]"
+        "value": "[[parameters('FunctionLatestTlsEffect')]"
       }
     }
   },
-  "AppServiceHttpEffect": {
+  "AppServiceminTlsVersion": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('AppServiceHttpEffect')]"
+        "value": "[[parameters('AppServiceTlsVersionEffect')]"
+      },
+      "minTlsVersion": {
+        "value": "[[parameters('AppServiceminTlsVersion')]"
+      }
+    }
+  },
+  "RedisTLSDeployEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('RedisTLSDeployEffect')]"
+      },
+      "minimumTlsVersion": {
+        "value": "[[parameters('RedisMinTlsVersion')]"
+      }
+    }
+  },
+  "StorageDeployHttpsEnabledEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('StorageDeployHttpsEnabledEffect')]"
+      },
+      "minimumTlsVersion": {
+        "value": "[[parameters('StorageMinimumTlsVersion')]"
+      }
+    }
+  },
+  "SQLServerTLSEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SQLServerTLSEffect')]"
+      },
+      "minimalTlsVersion": {
+        "value": "[[parameters('SQLServerminTlsVersion')]"
+      }
+    }
+  },
+  "WebAppServiceHttpsEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('WebAppServiceHttpsEffect')]"
+      }
+    }
+  },
+  "RedisDenyhttps": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('RedisTLSEffect')]"
+      },
+      "minimumTlsVersion": {
+        "value": "[[parameters('RedisMinTlsVersion')]"
       }
     }
   }
