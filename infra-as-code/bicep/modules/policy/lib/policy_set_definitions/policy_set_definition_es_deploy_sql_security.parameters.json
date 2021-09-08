@@ -1,8 +1,8 @@
 {
-  "SqlDbSecurityAlertPoliciesDeploySqlSecurity": {
+  "SqlDbAuditingSettingsDeploySqlSecurity": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
+        "value": "[[parameters('SqlDbAuditingSettingsDeploySqlSecurityEffect')]"
       }
     }
   },
@@ -19,17 +19,17 @@
       }
     }
   },
-  "SqlDbAuditingSettingsDeploySqlSecurity": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('SqlDbAuditingSettingsDeploySqlSecurityEffect')]"
-      }
-    }
-  },
   "SqlDbTdeDeploySqlSecurity": {
     "parameters": {
       "effect": {
         "value": "[[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
+      }
+    }
+  },
+  "SqlDbSecurityAlertPoliciesDeploySqlSecurity": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
       }
     }
   }

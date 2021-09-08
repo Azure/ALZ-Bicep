@@ -1,36 +1,14 @@
 {
-  "defenderForSqlServers": {
+  "ascExport": {
     "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierSqlServers')]"
-      }
-    }
-  },
-  "defenderForContainerRegistry": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierContainerRegistry')]"
-      }
-    }
-  },
-  "defenderForArm": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierArm')]"
-      }
-    }
-  },
-  "defenderForVM": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierVMs')]"
-      }
-    }
-  },
-  "defenderForAppServices": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierAppServices')]"
+      "resourceGroupName": {
+        "value": "[[parameters('ascExportResourceGroupName')]"
+      },
+      "resourceGroupLocation": {
+        "value": "[[parameters('ascExportResourceGroupLocation')]"
+      },
+      "workspaceResourceId": {
+        "value": "[[parameters('logAnalytics')]"
       }
     }
   },
@@ -41,10 +19,17 @@
       }
     }
   },
-  "defenderForDns": {
+  "defenderForAppServices": {
     "parameters": {
       "pricingTier": {
-        "value": "[[parameters('pricingTierDns')]"
+        "value": "[[parameters('pricingTierAppServices')]"
+      }
+    }
+  },
+  "defenderForContainerRegistry": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierContainerRegistry')]"
       }
     }
   },
@@ -52,6 +37,41 @@
     "parameters": {
       "pricingTier": {
         "value": "[[parameters('pricingTierStorageAccounts')]"
+      }
+    }
+  },
+  "defenderForSqlServers": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierSqlServers')]"
+      }
+    }
+  },
+  "defenderForDns": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierDns')]"
+      }
+    }
+  },
+  "defenderForArm": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierArm')]"
+      }
+    }
+  },
+  "defenderForKubernetesService": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierKubernetesService')]"
+      }
+    }
+  },
+  "defenderForVM": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierVMs')]"
       }
     }
   },
@@ -66,26 +86,6 @@
     "parameters": {
       "pricingTier": {
         "value": "[[parameters('pricingTierSqlServerVirtualMachines')]"
-      }
-    }
-  },
-  "ascExport": {
-    "parameters": {
-      "resourceGroupName": {
-        "value": "[[parameters('ascExportResourceGroupName')]"
-      },
-      "resourceGroupLocation": {
-        "value": "[[parameters('ascExportResourceGroupLocation')]"
-      },
-      "workspaceResourceId": {
-        "value": "[[parameters('logAnalytics')]"
-      }
-    }
-  },
-  "defenderForKubernetesService": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierKubernetesService')]"
       }
     }
   }
