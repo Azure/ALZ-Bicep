@@ -79,7 +79,7 @@ param parDdosPlanName string = '${parCompanyPrefix}-DDos-Plan'
 @description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard')
 param parBastionSku string = 'Standard'
 
-@description('Public Ip Address SKU. Default: Standard')
+@description('Public IP Address SKU. Default: Standard')
 @allowed([
   'Basic'
   'Standard'
@@ -200,14 +200,14 @@ resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   }
 }
 
-module modBastionPublicIp '../reusable/public-ip/public-ip.bicep' ={
+module modBastionPublicIP '../reusable/public-ip/public-ip.bicep' ={
   name: 'deploy-Bastion-Public-IP'
   params:{
-    parPublicIpName: '${parBastionName}-PublicIp'
-    parPublicIpSku: {
+    parPublicIPName: '${parBastionName}-PublicIP'
+    parPublicIPSku: {
       name: parPublicIPSku
     }
-    parPublicIpProperties: {
+    parPublicIPProperties: {
       publicIPAddressVersion: 'IPv4'
       publicIPAllocationMethod: 'Static' 
     }
@@ -241,7 +241,7 @@ resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if(parBastionE
                     id: resBastionSubnetRef.id
                   }
                   publicIPAddress: {
-                      id: modBastionPublicIp.outputs.outPublicIpID
+                      id: modBastionPublicIP.outputs.outPublicIPID
                   }
               }
           }
@@ -256,15 +256,15 @@ resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-
 } 
 
 module modGatewayPublicIP '../reusable/public-ip/public-ip.bicep' = [for (gateway,i) in parGatewayArray:{
-  name: 'deploy-Gateway-Public-Ip-${i}'
+  name: 'deploy-Gateway-Public-IP-${i}'
   params: {
-    parPublicIpName: '${gateway.name}-PublicIp'
+    parPublicIPName: '${gateway.name}-PublicIP'
     location: resourceGroup().location
-    parPublicIpProperties: {
+    parPublicIPProperties: {
       publicIPAddressVersion: 'IPv4'
       publicIPAllocationMethod: 'Static'
     }
-    parPublicIpSku: {
+    parPublicIPSku: {
         name: parPublicIPSku
     }
     parTags: parTags
@@ -295,7 +295,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for
         name: 'vnetGatewayConfig'
         properties:{
           publicIPAddress:{
-            id: modGatewayPublicIP[i].outputs.outPublicIpID
+            id: modGatewayPublicIP[i].outputs.outPublicIPID
           }
           subnet:{
             id: resGatewaySubnetRef.id
@@ -314,15 +314,15 @@ resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@20
 
 
 module modAzureFirewallPublicIP '../reusable/public-ip/public-ip.bicep' = if(parAzureFirewallEnabled){
-  name: 'deploy-Firewall-Public-Ip'
+  name: 'deploy-Firewall-Public-IP'
   params: {
-    parPublicIpName: '${parAzureFirewallName}-PublicIp'
+    parPublicIPName: '${parAzureFirewallName}-PublicIP'
     location: resourceGroup().location
-    parPublicIpProperties: {
+    parPublicIPProperties: {
       publicIPAddressVersion: 'IPv4'
       publicIPAllocationMethod: 'Static'
     }
-    parPublicIpSku: {
+    parPublicIPSku: {
         name: parPublicIPSku
     }
     parTags: parTags
@@ -374,7 +374,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(par
             id: resAzureFirewallSubnetRef.id
           }
           publicIPAddress: {
-            id: modAzureFirewallPublicIP.outputs.outPublicIpID
+            id: modAzureFirewallPublicIP.outputs.outPublicIPID
           }
         }
       }
