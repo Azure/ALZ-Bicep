@@ -2,7 +2,7 @@
 SUMMARY: This PowerShell script helps with the authoring of the policy definiton module by outputting information required for the variables within the module.
 DESCRIPTION: This PowerShell script outputs the Name & Path to a Bicep strucutred .txt file named '_policyDefinitionsBicepInput.txt' and '_policySetDefinitionsBicepInput.txt' respectively. It also creates a parameters file for each of the policy set definitions. It also outputs the number of policies definition and set definition files to the console for easier reviewing as part of the PR process.
 AUTHOR/S: jtracey93
-VERSION: 1.3.0
+VERSION: 1.3.1
 #>
 
 # Policy Definitions
@@ -61,6 +61,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_se
     
         $definitionParametersOutputJSONObject.Add("$definitionReferenceId", $definitionParametersOutputArray)
     }
+    Write-Information "==> Adding parameters to '$parametersFileName'" -InformationAction Continue
     Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/$parametersFileName" -Value ($definitionParametersOutputJSONObject | ConvertTo-Json -Depth 10) -Encoding "utf8"
     
     # Check if variable exists before trying to clear it
