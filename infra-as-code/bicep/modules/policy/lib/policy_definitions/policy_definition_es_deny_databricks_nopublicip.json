@@ -6,7 +6,7 @@
   "properties": {
     "policyType": "Custom",
     "mode": "Indexed",
-    "displayName": "Deny public IPs for Databricks clustern",
+    "displayName": "Deny public IPs for Databricks cluster",
     "description": "Denies the deployment of workspaces that do not use the noPublicIp feature to host Databricks clusters without public IPs.",
     "metadata": {
       "version": "1.0.0",
