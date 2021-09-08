@@ -699,7 +699,7 @@ function GetObjectByResourceTypeFromJson {
         }
         foreach ($policySetDefinition in $objectFromJson.variables.initiatives.policySetDefinitions) {
             ProcessObjectByResourceType `
-                -ResourceObject (RemoveEscaping -InputObject $policySetDefinition) `
+                -ResourceObject $policySetDefinition `
                 -ResourceType ("Microsoft.Authorization/policySetDefinitions")
         }
         foreach (
