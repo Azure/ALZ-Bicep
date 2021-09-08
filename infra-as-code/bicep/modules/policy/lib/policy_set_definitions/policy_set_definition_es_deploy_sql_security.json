@@ -81,7 +81,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-Tde",
         "parameters": {
           "effect": {
-            "value": "[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
+            "value": "[[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
           }
         },
         "groupNames": []
@@ -91,7 +91,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-SecurityAlertPolicies",
         "parameters": {
           "effect": {
-            "value": "[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
+            "value": "[[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
           }
         },
         "groupNames": []
@@ -101,7 +101,7 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-AuditingSettings",
         "parameters": {
           "effect": {
-            "value": "[parameters('SqlDbAuditingSettingsDeploySqlSecurityEffect')]"
+            "value": "[[parameters('SqlDbAuditingSettingsDeploySqlSecurityEffect')]"
           }
         },
         "groupNames": []
@@ -111,13 +111,13 @@
         "policyDefinitionId": "${varTargetManagementGroupResoruceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-vulnerabilityAssessments",
         "parameters": {
           "effect": {
-            "value": "[parameters('SqlDbVulnerabilityAssessmentsDeploySqlSecurityEffect')]"
+            "value": "[[parameters('SqlDbVulnerabilityAssessmentsDeploySqlSecurityEffect')]"
           },
           "vulnerabilityAssessmentsEmail": {
-            "value": "[parameters('vulnerabilityAssessmentsEmail')]"
+            "value": "[[parameters('vulnerabilityAssessmentsEmail')]"
           },
           "vulnerabilityAssessmentsStorageID": {
-            "value": "[parameters('vulnerabilityAssessmentsStorageID')]"
+            "value": "[[parameters('vulnerabilityAssessmentsStorageID')]"
           }
         },
         "groupNames": []
