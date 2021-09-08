@@ -98,12 +98,12 @@ param parHubNetworkName string = '${parCompanyPrefix}-hub-${resourceGroup().loca
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
 param parAzureFirewallName string ='${parCompanyPrefix}-azure-firewall'
 
-@description('Azure Firewall Sku associated with the Firewall to deploy. Default: Standard ')
+@description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
 @allowed([
   'Standard'
   'Premium'
 ])
-param parAzureFirewallSku string = 'Standard'
+param parAzureFirewallTier string = 'Standard'
 
 @description('Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable')
 param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
