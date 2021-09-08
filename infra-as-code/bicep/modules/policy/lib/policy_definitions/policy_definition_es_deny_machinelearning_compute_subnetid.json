@@ -6,8 +6,8 @@
   "properties": {
     "policyType": "Custom",
     "mode": "Indexed",
-    "displayName": "Deny-MachineLearning-Compute-SubnetId",
-    "description": "Enforce subnet connectivity for machine learning compute clusters and instances.",
+    "displayName": "Enforce subnet connectivity for Azure Machine Learning compute clusters and compute instances",
+    "description": "Enforce subnet connectivity for Azure Machine Learning compute clusters and compute instances.",
     "metadata": {
       "version": "1.0.0",
       "category": "Machine Learning"
