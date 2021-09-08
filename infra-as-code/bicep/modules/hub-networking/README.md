@@ -22,10 +22,7 @@ parBastionEnabled | bool| true |Switch to enable deployment Bastion Service  | N
 parDdosEnabled | bool | true | Switch to enable deployment of distributed denial of service attacks service | None | true
 parAzureFirewallEnabled | bool | true | Switch to enable deployment Azure Firewall | None | true 
 parPrivateDNSZonesEnabled | bool | true | Switch to enable deployment of Azure Private Dns Zones | None | true
-parGatewayArray | array | 'Vpn' | Array of Gateways to be deployed. Array will consist of one or two items.  Specifically Vpn and/or ExpressRoute Default: Vpn' | None |[
-||||||  'Vpn' 
-||||||  'ExpressRoute'
-||||||]
+parGatewayArray | array | 'Vpn' | Array of Gateways to be deployed. Array will consist of one or two items.  Specifically Vpn and/or ExpressRoute Default: Vpn' | None |`['Vpn', 'ExpressRoute']`
 parCompanyPrefix | string | alz | Prefix value which will be pre-appended to all resource names | 1-10 char | alz 
 parDdosPlanName | string | ${parCompanyPrefix}-DDos-Plan | Name which will be associated with distributed denial of service protection plan | 1-80 char | alz-DDos-Plan
 parBastionName | string | ${parCompanyPrefix}-bastion | Name which will be associated with Bastion Service. | 1-80 char | alz-bastion
