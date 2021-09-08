@@ -7,8 +7,10 @@ VERSION: 1.0.0
 
 targetScope = 'managementGroup'
 
+
 @description('The management group scope to which the policy definitions are to be created at. DEFAULT VALUE = "alz"')
 param parTargetManagementGroupId string = 'alz'
+
 
 var varTargetManagementGroupResoruceID = tenantResourceId('Microsoft.Management/managementGroups', parTargetManagementGroupId)
 
@@ -493,6 +495,7 @@ var varCustomPolicySetDefinitionsArray = [
     ]
   }
 ]
+
 
 resource resPolicyDefinitions 'Microsoft.Authorization/policyDefinitions@2020-09-01' = [for policy in varCustomPolicyDefinitionsArray: {
   name: policy.libDefinition.name
