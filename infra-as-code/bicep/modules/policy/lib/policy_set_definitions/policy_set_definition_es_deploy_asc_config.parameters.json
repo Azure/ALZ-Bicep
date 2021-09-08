@@ -1,0 +1,92 @@
+{
+  "defenderForSqlServers": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierSqlServers')]"
+      }
+    }
+  },
+  "defenderForContainerRegistry": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierContainerRegistry')]"
+      }
+    }
+  },
+  "defenderForArm": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierArm')]"
+      }
+    }
+  },
+  "defenderForVM": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierVMs')]"
+      }
+    }
+  },
+  "defenderForAppServices": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierAppServices')]"
+      }
+    }
+  },
+  "securityEmailContact": {
+    "parameters": {
+      "emailSecurityContact": {
+        "value": "[[parameters('emailSecurityContact')]"
+      }
+    }
+  },
+  "defenderForDns": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierDns')]"
+      }
+    }
+  },
+  "defenderForStorageAccounts": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierStorageAccounts')]"
+      }
+    }
+  },
+  "defenderForKeyVaults": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierKeyVaults')]"
+      }
+    }
+  },
+  "defenderForSqlServerVirtualMachines": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierSqlServerVirtualMachines')]"
+      }
+    }
+  },
+  "ascExport": {
+    "parameters": {
+      "resourceGroupName": {
+        "value": "[[parameters('ascExportResourceGroupName')]"
+      },
+      "resourceGroupLocation": {
+        "value": "[[parameters('ascExportResourceGroupLocation')]"
+      },
+      "workspaceResourceId": {
+        "value": "[[parameters('logAnalytics')]"
+      }
+    }
+  },
+  "defenderForKubernetesService": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierKubernetesService')]"
+      }
+    }
+  }
+}
