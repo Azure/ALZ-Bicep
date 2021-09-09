@@ -12,45 +12,10 @@
       }
     }
   },
-  "securityEmailContact": {
-    "parameters": {
-      "emailSecurityContact": {
-        "value": "[[parameters('emailSecurityContact')]"
-      }
-    }
-  },
   "defenderForAppServices": {
     "parameters": {
       "pricingTier": {
         "value": "[[parameters('pricingTierAppServices')]"
-      }
-    }
-  },
-  "defenderForContainerRegistry": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierContainerRegistry')]"
-      }
-    }
-  },
-  "defenderForStorageAccounts": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierStorageAccounts')]"
-      }
-    }
-  },
-  "defenderForSqlServers": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierSqlServers')]"
-      }
-    }
-  },
-  "defenderForDns": {
-    "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierDns')]"
       }
     }
   },
@@ -61,17 +26,17 @@
       }
     }
   },
-  "defenderForKubernetesService": {
+  "defenderForContainerRegistry": {
     "parameters": {
       "pricingTier": {
-        "value": "[[parameters('pricingTierKubernetesService')]"
+        "value": "[[parameters('pricingTierContainerRegistry')]"
       }
     }
   },
-  "defenderForVM": {
+  "defenderForDns": {
     "parameters": {
       "pricingTier": {
-        "value": "[[parameters('pricingTierVMs')]"
+        "value": "[[parameters('pricingTierDns')]"
       }
     }
   },
@@ -82,10 +47,45 @@
       }
     }
   },
+  "defenderForKubernetesService": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierKubernetesService')]"
+      }
+    }
+  },
+  "defenderForSqlServers": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierSqlServers')]"
+      }
+    }
+  },
   "defenderForSqlServerVirtualMachines": {
     "parameters": {
       "pricingTier": {
         "value": "[[parameters('pricingTierSqlServerVirtualMachines')]"
+      }
+    }
+  },
+  "defenderForStorageAccounts": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierStorageAccounts')]"
+      }
+    }
+  },
+  "defenderForVM": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierVMs')]"
+      }
+    }
+  },
+  "securityEmailContact": {
+    "parameters": {
+      "emailSecurityContact": {
+        "value": "[[parameters('emailSecurityContact')]"
       }
     }
   }
