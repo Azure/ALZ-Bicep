@@ -12,7 +12,7 @@ param parTargetManagementGroupId string = 'alz'
 
 var varTargetManagementGroupResoruceID = tenantResourceId('Microsoft.Management/managementGroups', parTargetManagementGroupId)
 
-// This variable contains a number of objects that load in the custom Azure Policy Defintions that are provided as part of the ESLZ/ALZ reference implementation
+// This variable contains a number of objects that load in the custom Azure Policy Defintions that are provided as part of the ESLZ/ALZ reference implementation - this is automatically created in the file 'infra-as-code\bicep\modules\policy\lib\policy_definitions\_policyDefinitionsBicepInput.txt' via a GitHub action, that runs on a daily schedule, and is then manually copied into this variable. 
 var varCustomPolicyDefinitionsArray = [
   {
     name: 'Append-AppService-httpsonly'
@@ -464,7 +464,7 @@ var varCustomPolicyDefinitionsArray = [
   }
 ]
 
-// This variable contains a number of objects that load in the custom Azure Policy Set/Initiative Defintions that are provided as part of the ESLZ/ALZ reference implementation
+// This variable contains a number of objects that load in the custom Azure Policy Set/Initiative Defintions that are provided as part of the ESLZ/ALZ reference implementation - this is automatically created in the file 'infra-as-code\bicep\modules\policy\lib\policy_set_definitions\_policySetDefinitionsBicepInput.txt' via a GitHub action, that runs on a daily schedule, and is then manually copied into this variable.
 var varCustomPolicySetDefinitionsArray = [
   {
     name: 'Deny-PublicPaaSEndpoints'
