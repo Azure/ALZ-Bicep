@@ -25,7 +25,7 @@ All templates require an input for `parAssigneeObjectId` and this value is depen
 ```bash
 # Identify Object Id for User Assigned / System Assigned Managed Identity
 # Example: az identity show --resource-group rgManagedIdentities --name alz-managed-identity  --query 'principalId'
-az identity show --resource-group __RESOURCE_GROUP__ --name __IDENTITY_NAME__ --query 'principalId'
+az identity show --resource-group <RESOURCE_GROUP> --name <IDENTITY_NAME> --query 'principalId'
 
 # Identify Object Id for Service Principal (App Registration)
 # Require read permission to query Azure Active Directory
