@@ -47,7 +47,7 @@ az ad group show --group __SECURITY_GROUP_NAME__ --query objectId
 # Identify Object Id for Service Principal (App Registration)
 # Require read permission to query Azure Active Directory
 # Example:  (Get-AzADServicePrincipal -DisplayName 'Azure Landing Zone SPN').Id
-(Get-AzADServicePrincipal -DisplayName '__APP_REGISTRATION_DISPLAY_NAME__').Id
+(Get-AzADServicePrincipal -DisplayName '<APP_REGISTRATION_DISPLAY_NAME>').Id
 
 # Identify Object Id for Security Group
 # Require read permission to query Azure Active Directory
