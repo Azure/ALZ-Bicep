@@ -89,7 +89,7 @@ parAssigneeObjectId | string | Object Id of groups, service principals or  manag
  Paramenter | Type | Description | Requirement | Example
 ----------- | ---- | ----------- | ----------- | -------
 parSubscriptionIds | Array of string | A list of subscription ids that will be used for role assignment (i.e. 4f9f8765-911a-4a6d-af60-4bc0473268c0)  Default = [] | Must exist | `['4f9f8765-911a-4a6d-af60-4bc0473268c0','82f7705e-3386-427b-95b7-cbed91ab29a7']`
-parRoleDefinitionId | string | Role Definition Id (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7) | Must exist | `acdd72a7-3385-48ef-bd42-f606fba81ae7`
+parRoleDefinitionId | string | Role Definition ID(i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7) | Must exist | `acdd72a7-3385-48ef-bd42-f606fba81ae7`
 parAssigneePrincipalType | string | Principal type of the assignee.  Allowed values are \'Group\' (Security Group) or \'ServicePrincipal\' (Servince Principal or System/User Assigned Managed Identity) | One of [Group, ServicePrincipal] | `ServicePrincipal`
 parAssigneeObjectId | string | Object Id of groups, service principals or  managed identities. For managed identities use the principal id. For service principals, use the object id and not the app id | Must exist | `a86fe549-7f87-4873-8b0e-82f0081a0034`
 
