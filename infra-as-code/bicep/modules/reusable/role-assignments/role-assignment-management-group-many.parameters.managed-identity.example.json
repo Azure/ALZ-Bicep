@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parManagementGroupScopes": {
+      "value": [
+        "alz-platform-connectivity",
+        "alz-platform-identity"
+      ]
+    },
+    "parRoleDefinitionId": {
+      "value": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    },
+    "parAssigneePrincipalType": {
+      "value": "ServicePrincipal"
+    },
+    "parAssigneeObjectId": {
+      "value": "a86fe549-7f87-4873-8b0e-82f0081a0034"
+    }
+  }
+}
