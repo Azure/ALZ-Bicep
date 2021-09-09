@@ -30,7 +30,7 @@ az identity show --resource-group <RESOURCE_GROUP> --name <IDENTITY_NAME> --quer
 # Identify Object Id for Service Principal (App Registration)
 # Require read permission to query Azure Active Directory
 # Example:  az ad sp show --id c705dc53-7c95-42bc-b1d5-75e172571370 --query objectId
-az ad sp show --id __APP_REGISTRATION_APPLICATION_ID__ --query objectId
+az ad sp show --id <APP_REGISTRATION_APPLICATION_ID> --query objectId
 
 # Identify Object Id for Security Group
 # Require read permission to query Azure Active Directory
