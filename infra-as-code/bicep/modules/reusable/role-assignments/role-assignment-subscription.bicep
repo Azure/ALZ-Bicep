@@ -12,8 +12,8 @@ VERSION: 1.0.0
 */
 targetScope = 'subscription'
 
-@description('A GUID representing the role assignment name.  Default:  guid(subscription().id, parRoleDefinitionId, parAssigneeObjectId)')
-param parRoleAssignmentNameGuid string = guid(subscription().id, parRoleDefinitionId, parAssigneeObjectId)
+@description('A GUID representing the role assignment name.  Default:  guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId)')
+param parRoleAssignmentNameGuid string = guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId)
 
 @description('Role Definition Id (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)')
 param parRoleDefinitionId string
