@@ -1,57 +1,8 @@
 {
-  "StorageDenyPaasPublicIP": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('StoragePublicIpDenyEffect')]"
-      }
-    }
-  },
   "MySQLFlexDenyPublicIP": {
     "parameters": {
       "effect": {
         "value": "[[parameters('MySQLFlexPublicIpDenyEffect')]"
-      }
-    }
-  },
-  "BatchDenyPublicIP": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('BatchPublicIpDenyEffect')]"
-      }
-    }
-  },
-  "AFSDenyPaasPublicIP": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('AFSPublicIpDenyEffect')]"
-      }
-    }
-  },
-  "KeyVaultDenyPaasPublicIP": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('KeyVaultPublicIpDenyEffect')]"
-      }
-    }
-  },
-  "PostgreSQLFlexDenyPublicIP": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('PostgreSQLFlexPublicIpDenyEffect')]"
-      }
-    }
-  },
-  "CosmosDenyPaasPublicIP": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('CosmosPublicIpDenyEffect')]"
-      }
-    }
-  },
-  "ACRDenyPaasPublicIP": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('ACRPublicIpDenyEffect')]"
       }
     }
   },
@@ -62,10 +13,59 @@
       }
     }
   },
+  "CosmosDenyPaasPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('CosmosPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "StorageDenyPaasPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('StoragePublicIpDenyEffect')]"
+      }
+    }
+  },
+  "AFSDenyPaasPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('AFSPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "PostgreSQLFlexDenyPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('PostgreSQLFlexPublicIpDenyEffect')]"
+      }
+    }
+  },
   "AKSDenyPaasPublicIP": {
     "parameters": {
       "effect": {
         "value": "[[parameters('AKSPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "KeyVaultDenyPaasPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('KeyVaultPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "BatchDenyPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('BatchPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "ACRDenyPaasPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('ACRPublicIpDenyEffect')]"
       }
     }
   }

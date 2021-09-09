@@ -1,18 +1,4 @@
 {
-  "SynapseWorkspaceCMKEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('SynapseWorkspaceCMKEffect')]"
-      }
-    }
-  },
-  "SqlServerTDECMKEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('SqlServerTDECMKEffect')]"
-      }
-    }
-  },
   "WorkspaceCMK": {
     "parameters": {
       "effect": {
@@ -20,66 +6,10 @@
       }
     }
   },
-  "CognitiveServicesCMK": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('CognitiveServicesCMKEffect')]"
-      }
-    }
-  },
-  "ACRCmkDeny": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('ACRCmkEffect')]"
-      }
-    }
-  },
-  "EncryptedVMDisksEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('EncryptedVMDisksEffect')]"
-      }
-    }
-  },
-  "AzureBatchCMKEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('AzureBatchCMKEffect')]"
-      }
-    }
-  },
-  "PostgreSQLCMKEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('PostgreSQLCMKEffect')]"
-      }
-    }
-  },
-  "StorageCMKEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('StorageCMKEffect')]"
-      }
-    }
-  },
   "MySQLCMKEffect": {
     "parameters": {
       "effect": {
         "value": "[[parameters('MySQLCMKEffect')]"
-      }
-    }
-  },
-  "HealthcareAPIsCMKEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('HealthcareAPIsCMKEffect')]"
-      }
-    }
-  },
-  "AksCmkDeny": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('AksCmkEffect')]"
       }
     }
   },
@@ -97,10 +27,80 @@
       }
     }
   },
+  "SqlServerTDECMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SqlServerTDECMKEffect')]"
+      }
+    }
+  },
+  "SynapseWorkspaceCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SynapseWorkspaceCMKEffect')]"
+      }
+    }
+  },
+  "HealthcareAPIsCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('HealthcareAPIsCMKEffect')]"
+      }
+    }
+  },
+  "EncryptedVMDisksEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('EncryptedVMDisksEffect')]"
+      }
+    }
+  },
+  "PostgreSQLCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('PostgreSQLCMKEffect')]"
+      }
+    }
+  },
   "CosmosCMKEffect": {
     "parameters": {
       "effect": {
         "value": "[[parameters('CosmosCMKEffect')]"
+      }
+    }
+  },
+  "AzureBatchCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('AzureBatchCMKEffect')]"
+      }
+    }
+  },
+  "CognitiveServicesCMK": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('CognitiveServicesCMKEffect')]"
+      }
+    }
+  },
+  "AksCmkDeny": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('AksCmkEffect')]"
+      }
+    }
+  },
+  "StorageCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('StorageCMKEffect')]"
+      }
+    }
+  },
+  "ACRCmkDeny": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('ACRCmkEffect')]"
       }
     }
   }

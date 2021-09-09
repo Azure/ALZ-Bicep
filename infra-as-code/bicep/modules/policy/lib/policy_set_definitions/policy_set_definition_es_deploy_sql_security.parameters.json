@@ -1,14 +1,8 @@
 {
-  "SqlDbVulnerabilityAssessmentsDeploySqlSecurity": {
+  "SqlDbTdeDeploySqlSecurity": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('SqlDbVulnerabilityAssessmentsDeploySqlSecurityEffect')]"
-      },
-      "vulnerabilityAssessmentsEmail": {
-        "value": "[[parameters('vulnerabilityAssessmentsEmail')]"
-      },
-      "vulnerabilityAssessmentsStorageID": {
-        "value": "[[parameters('vulnerabilityAssessmentsStorageID')]"
+        "value": "[[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
       }
     }
   },
@@ -26,10 +20,16 @@
       }
     }
   },
-  "SqlDbTdeDeploySqlSecurity": {
+  "SqlDbVulnerabilityAssessmentsDeploySqlSecurity": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('SqlDbTdeDeploySqlSecurityEffect')]"
+        "value": "[[parameters('SqlDbVulnerabilityAssessmentsDeploySqlSecurityEffect')]"
+      },
+      "vulnerabilityAssessmentsEmail": {
+        "value": "[[parameters('vulnerabilityAssessmentsEmail')]"
+      },
+      "vulnerabilityAssessmentsStorageID": {
+        "value": "[[parameters('vulnerabilityAssessmentsStorageID')]"
       }
     }
   }
