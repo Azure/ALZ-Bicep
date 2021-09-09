@@ -81,7 +81,7 @@ parAssigneeObjectId | string | Object ID of groups, service principals or manage
 parRoleAssignmentNameGuid | string | A GUID representing the role assignment name.  Default:  guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId) | Unique GUID | `f3b171da-2023-4508-b467-042a53f4cd5d`
 parRoleDefinitionId | string | Role Definition Id (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7) | Must exist | `acdd72a7-3385-48ef-bd42-f606fba81ae7`
 parAssigneePrincipalType | string | Principal type of the assignee.  Allowed values are \'Group\' (Security Group) or \'ServicePrincipal\' (Servince Principal or System/User Assigned Managed Identity) | One of [Group, ServicePrincipal] | `ServicePrincipal`
-parAssigneeObjectId | string | Object Id of groups, service principals or  managed identities. For managed identities use the principal id. For service principals, use the object id and not the app id | Must exist | `a86fe549-7f87-4873-8b0e-82f0081a0034`
+parAssigneeObjectId | string | Object ID of groups, service principals or managed identities. For managed identities use the principal ID. For service principals, use the object ID and not the app ID | Must exist | `a86fe549-7f87-4873-8b0e-82f0081a0034`
 
 
 ### role-assignment-subscription-many.bicep
