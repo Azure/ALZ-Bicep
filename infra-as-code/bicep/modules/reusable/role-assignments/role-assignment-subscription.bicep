@@ -28,7 +28,7 @@ param parAssigneePrincipalType string
 @description('Object Id of groups, service principals or  managed identities. For managed identities use the principal id. For service principals, use the object id and not the app id')
 param parAssigneeObjectId string
 
-resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-08-01-preview' = {
+resource resRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-08-01-preview' = {
   name: parRoleAssignmentNameGuid
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', parRoleDefinitionId)
