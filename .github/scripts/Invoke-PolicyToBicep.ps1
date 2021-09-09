@@ -2,7 +2,7 @@
 SUMMARY: This PowerShell script helps with the authoring of the policy definiton module by outputting information required for the variables within the module.
 DESCRIPTION: This PowerShell script outputs the Name & Path to a Bicep strucutred .txt file named '_policyDefinitionsBicepInput.txt' and '_policySetDefinitionsBicepInput.txt' respectively. It also creates a parameters file for each of the policy set definitions. It also outputs the number of policies definition and set definition files to the console for easier reviewing as part of the PR process.
 AUTHOR/S: jtracey93
-VERSION: 1.3.6
+VERSION: 1.4.0
 #>
 
 # Policy Definitions
@@ -90,7 +90,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_se
 
     # Start output file creation of Policy Set/Initiative Definitions for Bicep
     Write-Information "==> Adding '$policyDefinitionName' to '$PWD/_policySetDefinitionsBicepInput.txt'" -InformationAction Continue
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: '$policyDefinitionName'`r`n  libDefinition: json(loadTextContent('lib/policy_set_definitions/$fileName'))`r`n  libSetChildDefinitions: ["
+    Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: '$policyDefinitionName'`r`n  libSetDefinition: json(loadTextContent('lib/policy_set_definitions/$fileName'))`r`n  libSetChildDefinitions: ["
 
     # Loop through child Policy Set/Initiative Definitions for Bicep output if HashTable not == 0
     if (($policySetDefinitionsOutputForBicep.Count) -ne 0) {
@@ -98,7 +98,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_se
             $definitionReferenceId = $_
             $definitionID = $($policySetDefinitionsOutputForBicep[$_])
             # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
-            Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "      {`r`n        definitionReferenceId: '$definitionReferenceId'`r`n        definitionID: '$definitionID'`r`n        definitionParameters: json(loadTextContent('lib/policy_set_definitions/$parametersFileName')).$definitionReferenceId.parameters`r`n      }"
+            Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "      {`r`n        definitionReferenceID: '$definitionReferenceId'`r`n        definitionID: '$definitionID'`r`n        definitionParameters: json(loadTextContent('lib/policy_set_definitions/$parametersFileName')).$definitionReferenceId.parameters`r`n      }"
         }
     }
 
