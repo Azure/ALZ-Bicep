@@ -53,7 +53,7 @@ az ad group show --group <SECURITY_GROUP_NAME> --query objectId
 # Require read permission to query Azure Active Directory
 # Example: Get-AzureADGroup -SearchString 'SG_ALZ_SECURITY'
 Connect-AzureAD
-(Get-AzureADGroup -SearchString '__SECURITY_GROUP_NAME__').ObjectId
+(Get-AzureADGroup -SearchString '<SECURITY_GROUP_NAME>').ObjectId
 ```
 
 ### role-assignment-management-group.bicep
