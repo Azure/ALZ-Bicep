@@ -25,7 +25,7 @@ param parRoleDefinitionId string
 ])
 param parAssigneePrincipalType string
 
-@description('Object Id of groups, service principals or  managed identities. For managed identities use the principal id. For service principals, use the object id and not the app id')
+@description('Object ID of groups, service principals or managed identities. For managed identities use the principal id. For service principals, use the object ID and not the app ID')
 param parAssigneeObjectId string
 
 module modRoleAssignment 'role-assignment-subscription.bicep' = [for subscriptionId in parSubscriptionIds: {
