@@ -1,0 +1,92 @@
+{
+  "ascExport": {
+    "parameters": {
+      "resourceGroupName": {
+        "value": "[[parameters('ascExportResourceGroupName')]"
+      },
+      "resourceGroupLocation": {
+        "value": "[[parameters('ascExportResourceGroupLocation')]"
+      },
+      "workspaceResourceId": {
+        "value": "[[parameters('logAnalytics')]"
+      }
+    }
+  },
+  "defenderForAppServices": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierAppServices')]"
+      }
+    }
+  },
+  "defenderForArm": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierArm')]"
+      }
+    }
+  },
+  "defenderForContainerRegistry": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierContainerRegistry')]"
+      }
+    }
+  },
+  "defenderForDns": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierDns')]"
+      }
+    }
+  },
+  "defenderForKeyVaults": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierKeyVaults')]"
+      }
+    }
+  },
+  "defenderForKubernetesService": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierKubernetesService')]"
+      }
+    }
+  },
+  "defenderForSqlServers": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierSqlServers')]"
+      }
+    }
+  },
+  "defenderForSqlServerVirtualMachines": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierSqlServerVirtualMachines')]"
+      }
+    }
+  },
+  "defenderForStorageAccounts": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierStorageAccounts')]"
+      }
+    }
+  },
+  "defenderForVM": {
+    "parameters": {
+      "pricingTier": {
+        "value": "[[parameters('pricingTierVMs')]"
+      }
+    }
+  },
+  "securityEmailContact": {
+    "parameters": {
+      "emailSecurityContact": {
+        "value": "[[parameters('emailSecurityContact')]"
+      }
+    }
+  }
+}
