@@ -8,12 +8,12 @@ Module provides role assignment capabilities across Management Group & Subscript
 
 This module contains 4 Bicep templates:
 
-Template | Description
--------- | -----------
-role-assignment-management-group.bicep | Performs role assignment on one management group
-role-assignment-management-group-many.bicep | Performs role assignment on one or more management groups.  This template uses `role-assignment-management-group.bicep` for the deployments.
-role-assignment-subscription.bicep | Performs role assignment on one subscription
-role-assignment-subscription-many.bicep | Performs role assignment on one or more subscriptions.  This template uses `role-assignment-subscription.bicep` for the deployments.
+Template | Description | Deployment Scope 
+-------- | ----------- | ----------------
+role-assignment-management-group.bicep | Performs role assignment on one management group | Management Group
+role-assignment-management-group-many.bicep | Performs role assignment on one or more management groups.  This template uses `role-assignment-management-group.bicep` for the deployments. | Management Group
+role-assignment-subscription.bicep | Performs role assignment on one subscription | Subscription
+role-assignment-subscription-many.bicep | Performs role assignment on one or more subscriptions.  This template uses `role-assignment-subscription.bicep` for the deployments. | Management Group
 
 ## Parameters
 
