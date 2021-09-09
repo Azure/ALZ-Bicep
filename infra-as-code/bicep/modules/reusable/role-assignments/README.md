@@ -35,7 +35,7 @@ az ad sp show --id <APP_REGISTRATION_APPLICATION_ID> --query objectId
 # Identify Object Id for Security Group
 # Require read permission to query Azure Active Directory
 # Example: az ad group show --group SG_ALZ_SECURITY --query objectId
-az ad group show --group __SECURITY_GROUP_NAME__ --query objectId
+az ad group show --group <SECURITY_GROUP_NAME> --query objectId
 ```
 
 **PowerShell**
