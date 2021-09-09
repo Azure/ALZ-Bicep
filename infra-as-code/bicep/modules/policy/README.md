@@ -1,6 +1,6 @@
 # Module: Custom Policy Definitions
 
-This module deploys the custom Azure Policy Definitions & Initiatives supplied by the Azure Landing Zones conceptual architecture and reference implementation defined [here](https://docs.microsoft.com/en-gb/azure/cloud-adoption-framework/ready/enterprise-scale/architecture) to the specified Management Group.
+This module deploys the custom Azure Policy Definitions & Initiatives supplied by the Azure Landing Zones conceptual architecture and reference implementation defined [here](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/architecture) to the specified Management Group.
 
 For a list of the custom policy definitions that are deployed, please see the below links:
 
@@ -28,6 +28,7 @@ The input parameter file `custom-policy-definitions.parameters.example.json` def
 > For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+
 ```bash
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/custom-policy-definitions.bicep \
