@@ -1,3 +1,15 @@
+/*
+SUMMARY: Role Assignments for 1 Subscriptions
+DESCRIPTION:
+  Module provides role assignment capabilities for Subscriptions.  The role assignments can be performed for:
+
+  * Managed Identities (System and User Assigned)
+  * Service Principals
+  * Security Groups
+
+AUTHOR/S: SenthuranSivananthan
+VERSION: 1.0.0
+*/
 targetScope = 'subscription'
 
 @description('A GUID representing the role assignment name.  Default:  guid(subscription().id, parRoleDefinitionId, parAssigneeObjectId)')
