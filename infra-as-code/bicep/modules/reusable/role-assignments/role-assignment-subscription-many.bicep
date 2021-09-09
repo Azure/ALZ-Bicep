@@ -20,6 +20,7 @@ module modRoleAssignment 'role-assignment-subscription.bicep' = [for subscriptio
   name: 'rbac-assign-${uniqueString(subscriptionId, parAssigneeObjectId)}'
   scope: subscription(subscriptionId)
   params: {
+    parRoleAssignmentNameGuid: guid(subscriptionId, parRoleDefinitionId, parAssigneeObjectId)
     parAssigneeObjectId: parAssigneeObjectId
     parAssigneePrincipalType: parAssigneePrincipalType
     parRoleDefinitionId: parRoleDefinitionId

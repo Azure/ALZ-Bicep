@@ -1,5 +1,8 @@
 targetScope = 'subscription'
 
+@description('A GUID representing the role assignment name.  Default:  guid(subscription().id, parRoleDefinitionId, parAssigneeObjectId)')
+param parRoleAssignmentNameGuid string = guid(subscription().id, parRoleDefinitionId, parAssigneeObjectId)
+
 @description('Role Definition Id (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)')
 param parRoleDefinitionId string
 
@@ -14,7 +17,7 @@ param parAssigneePrincipalType string
 param parAssigneeObjectId string
 
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-08-01-preview' = {
-  name: guid(subscription().id, parRoleDefinitionId, parAssigneeObjectId)
+  name: parRoleAssignmentNameGuid
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', parRoleDefinitionId)
     principalId: parAssigneeObjectId
