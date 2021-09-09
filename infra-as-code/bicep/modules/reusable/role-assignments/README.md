@@ -19,7 +19,7 @@ role-assignment-subscription-many.bicep | Performs role assignment on one or mor
 
 The module requires the following required input parameters.
 
-All templates require an input for `parAssigneeObjectId` and this value is dependent on the Service Principal Type:
+All templates require an input for `parAssigneeObjectId` and this value is dependent on the Service Principal type.  Azure CLI and PowerShell commands can be executed to identify the correct `object id`.  Examples:
 
 **Azure CLI**
 ```bash
