@@ -1,6 +1,6 @@
 # Module: Custom Policy Definitions
 
-This module deploys the custom Azure Policy Definitions & Initiatives supplied by the Azure Landing Zones conceptual architecture and reference implementation defined [here](https://aka.ms/enterprisescale) to the specified Management Group.
+This module deploys the custom Azure Policy Definitions & Initiatives supplied by the Azure Landing Zones conceptual architecture and reference implementation defined [here](https://docs.microsoft.com/en-gb/azure/cloud-adoption-framework/ready/enterprise-scale/architecture) to the specified Management Group.
 
 For a list of the custom policy definitions that are deployed, please see the below links:
 
@@ -13,7 +13,7 @@ The module requires the following inputs:
 
  Parameter | Description | Requirement | Example
 ----------- | ----------- | ----------- | -------
-parTargetManagementGroupId | The management group scope to which the the policy definitions will be stored/deployed to. | Mandatory input | `alz`
+parTargetManagementGroupID | The management group scope to which the the policy definitions will be stored/deployed to. This management group must already exist before deploying this bicep module. | Mandatory input | `alz`
 
 ## Outputs
 

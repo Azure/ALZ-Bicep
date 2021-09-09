@@ -7,10 +7,12 @@ VERSION: 1.0.0
 
 targetScope = 'managementGroup'
 
-@description('The management group scope to which the policy definitions are to be created at. DEFAULT VALUE = "alz"')
-param parTargetManagementGroupId string = 'alz'
 
-var varTargetManagementGroupResoruceID = tenantResourceId('Microsoft.Management/managementGroups', parTargetManagementGroupId)
+@description('The management group scope to which the policy definitions are to be created at. DEFAULT VALUE = "alz"')
+param parTargetManagementGroupID string = 'alz'
+
+
+var varTargetManagementGroupResoruceID = tenantResourceId('Microsoft.Management/managementGroups', parTargetManagementGroupID)
 
 // This variable contains a number of objects that load in the custom Azure Policy Defintions that are provided as part of the ESLZ/ALZ reference implementation - this is automatically created in the file 'infra-as-code\bicep\modules\policy\lib\policy_definitions\_policyDefinitionsBicepInput.txt' via a GitHub action, that runs on a daily schedule, and is then manually copied into this variable. 
 var varCustomPolicyDefinitionsArray = [
