@@ -128,16 +128,16 @@ New-AzManagementGroupDeployment `
 
 **Single Management Group Role Assignment**
 
-![Bicep Visualizer - Single Management Group Role Assignment](media/bicep-visualizer-mg.png "Bicep Visualizer - Single Management Group Role Assignment")
+![Bicep Visualizer - Single Management Group Role Assignment](media/bicep-visualizer-mg.PNG "Bicep Visualizer - Single Management Group Role Assignment")
 
 **Many Management Group Role Assignments**
 
-![Bicep Visualizer - Many Management Group Role Assignments](media/bicep-visualizer-mg-many.png "Bicep Visualizer - Many Management Group Role Assignments")
+![Bicep Visualizer - Many Management Group Role Assignments](media/bicep-visualizer-mg-many.PNG "Bicep Visualizer - Many Management Group Role Assignments")
 
 **Single Subscription Role Assignment**
 
-![Bicep Visualizer - Single Subscription Role Assignment](media/bicep-visualizer-sub.png "Bicep Visualizer - Single Subscription Role Assignment")
+![Bicep Visualizer - Single Subscription Role Assignment](media/bicep-visualizer-sub.PNG "Bicep Visualizer - Single Subscription Role Assignment")
 
 **Many Subscription Role Assignments**
 
-![Bicep Visualizer - Many Subscription Role Assignments](media/bicep-visualizer-sub-many.png "Bicep Visualizer - Many Subscription Role Assignments")
+![Bicep Visualizer - Many Subscription Role Assignments](media/bicep-visualizer-sub-many.PNG "Bicep Visualizer - Many Subscription Role Assignments")
