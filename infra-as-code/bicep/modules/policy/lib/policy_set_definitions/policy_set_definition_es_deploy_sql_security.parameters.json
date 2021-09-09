@@ -6,16 +6,10 @@
       }
     }
   },
-  "SqlDbVulnerabilityAssessmentsDeploySqlSecurity": {
+  "SqlDbSecurityAlertPoliciesDeploySqlSecurity": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('SqlDbVulnerabilityAssessmentsDeploySqlSecurityEffect')]"
-      },
-      "vulnerabilityAssessmentsEmail": {
-        "value": "[[parameters('vulnerabilityAssessmentsEmail')]"
-      },
-      "vulnerabilityAssessmentsStorageID": {
-        "value": "[[parameters('vulnerabilityAssessmentsStorageID')]"
+        "value": "[[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
       }
     }
   },
@@ -26,10 +20,16 @@
       }
     }
   },
-  "SqlDbSecurityAlertPoliciesDeploySqlSecurity": {
+  "SqlDbVulnerabilityAssessmentsDeploySqlSecurity": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('SqlDbSecurityAlertPoliciesDeploySqlSecurityEffect')]"
+        "value": "[[parameters('SqlDbVulnerabilityAssessmentsDeploySqlSecurityEffect')]"
+      },
+      "vulnerabilityAssessmentsEmail": {
+        "value": "[[parameters('vulnerabilityAssessmentsEmail')]"
+      },
+      "vulnerabilityAssessmentsStorageID": {
+        "value": "[[parameters('vulnerabilityAssessmentsStorageID')]"
       }
     }
   }

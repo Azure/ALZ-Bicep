@@ -1,11 +1,4 @@
 {
-  "CosmosCMKEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('CosmosCMKEffect')]"
-      }
-    }
-  },
   "ACRCmkDeny": {
     "parameters": {
       "effect": {
@@ -13,10 +6,10 @@
       }
     }
   },
-  "SynapseWorkspaceCMKEffect": {
+  "AksCmkDeny": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('SynapseWorkspaceCMKEffect')]"
+        "value": "[[parameters('AksCmkEffect')]"
       }
     }
   },
@@ -34,52 +27,17 @@
       }
     }
   },
-  "MySQLCMKEffect": {
+  "CosmosCMKEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('MySQLCMKEffect')]"
+        "value": "[[parameters('CosmosCMKEffect')]"
       }
     }
   },
-  "WorkspaceCMK": {
+  "DataBoxCMKEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('WorkspaceCMKEffect')]"
-      }
-    }
-  },
-  "SqlServerTDECMKEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('SqlServerTDECMKEffect')]"
-      }
-    }
-  },
-  "PostgreSQLCMKEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('PostgreSQLCMKEffect')]"
-      }
-    }
-  },
-  "AksCmkDeny": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('AksCmkEffect')]"
-      }
-    }
-  },
-  "HealthcareAPIsCMKEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('HealthcareAPIsCMKEffect')]"
-      }
-    }
-  },
-  "StreamAnalyticsCMKEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('StreamAnalyticsCMKEffect')]"
+        "value": "[[parameters('DataBoxCMKEffect')]"
       }
     }
   },
@@ -90,6 +48,34 @@
       }
     }
   },
+  "HealthcareAPIsCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('HealthcareAPIsCMKEffect')]"
+      }
+    }
+  },
+  "MySQLCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('MySQLCMKEffect')]"
+      }
+    }
+  },
+  "PostgreSQLCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('PostgreSQLCMKEffect')]"
+      }
+    }
+  },
+  "SqlServerTDECMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SqlServerTDECMKEffect')]"
+      }
+    }
+  },
   "StorageCMKEffect": {
     "parameters": {
       "effect": {
@@ -97,10 +83,24 @@
       }
     }
   },
-  "DataBoxCMKEffect": {
+  "StreamAnalyticsCMKEffect": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('DataBoxCMKEffect')]"
+        "value": "[[parameters('StreamAnalyticsCMKEffect')]"
+      }
+    }
+  },
+  "SynapseWorkspaceCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SynapseWorkspaceCMKEffect')]"
+      }
+    }
+  },
+  "WorkspaceCMK": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('WorkspaceCMKEffect')]"
       }
     }
   }
