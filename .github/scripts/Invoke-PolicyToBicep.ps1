@@ -103,7 +103,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/lib/policy_se
     }
 
     # Finish output file creation of Policy Set/Initiative Definitions for Bicep
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "     ]`r`n  }"
+    Add-Content -Path "./infra-as-code/bicep/modules/policy/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "    ]`r`n}"
 
 }
 
