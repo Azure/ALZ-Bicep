@@ -22,6 +22,9 @@ param parDdosEnabled bool = true
 @description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
 param parAzureFirewallEnabled bool = true
 
+@description('Switch which allos Dns Proxy to be enabled on the virtual network.')
+param parNetworkDnsEnableProxy bool = true
+
 @description('Switch which allows BGP Propagation to be disabled on the routes: Default: false')
 param  pardisableBgpRoutePropagation bool = false
 
@@ -385,7 +388,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(par
       tier: parAzureFirewallTier
     }
     additionalProperties: {
-       'Network.DNS.EnableProxy': 'true'
+       'Network.DNS.EnableProxy': '${parNetworkDnsEnableProxy}'
     }
   }
 }
@@ -417,6 +420,19 @@ resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [fo
   tags: parTags
 }]
 
+
+resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in parPrivateDnsZones: if(parPrivateDNSZonesEnabled) {
+  name: '${privateDnsZoneName}/${privateDnsZoneName}'
+  location: 'global'
+  properties: {
+    registrationEnabled: false
+    virtualNetwork: {
+      id: resHubVirtualNetwork.id
+    }
+  }
+dependsOn: resPrivateDnsZones
+}]
+
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 output outAzureFirewallPrivateIP string = parAzureFirewallEnabled ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress : ''
 
@@ -429,3 +445,5 @@ output outPrivateDnsZones array = [for i in range(0,length(parPrivateDnsZones)):
 }]
 
 output outDdosPlanResourceId string = resDdosProtectionPlan.id
+output outHubVirtualNetworkName string = resHubVirtualNetwork.name
+output outHubVirtualNetworkid string = resHubVirtualNetwork.id
