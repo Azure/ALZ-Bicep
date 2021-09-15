@@ -17,7 +17,7 @@ param parSourceVirtualNetworkName string
 param parDestinationVirtualNetworkName string
 
 resource resVirtualNetworkPeer 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-11-01' = {
-  name:  '${parSourceVirtualNetworkName}/${parDestinationVirtualNetworkName}'
+  name:  '${parSourceVirtualNetworkName}/peer-to-${parDestinationVirtualNetworkName}'
   properties: {
     allowVirtualNetworkAccess: true
     allowForwardedTraffic: true
