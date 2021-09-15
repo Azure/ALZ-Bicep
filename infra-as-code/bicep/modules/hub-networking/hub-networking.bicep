@@ -22,7 +22,7 @@ param parDdosEnabled bool = true
 @description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
 param parAzureFirewallEnabled bool = true
 
-@description('Switch which allos Dns Proxy to be enabled on the virtual network.')
+@description('Switch which allow DNS Proxy to be enabled on the virtual network. Default: true')
 param parNetworkDnsEnableProxy bool = true
 
 @description('Switch which allows BGP Propagation to be disabled on the routes: Default: false')
