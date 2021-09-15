@@ -46,7 +46,7 @@ param parSubnets array = [
 @description('Firewall Ip Address')
 param parFirewallIPAddress string = ''
 
-@description('Name of Route table to create for the default route of Hub')
+@description('Name of Route table to create for the default route of Hub. Default: udr-spoke-to-hub')
 param parSpoketoHubRouteTableName string = 'SpoketoHubRouteTable'
 
 
