@@ -91,7 +91,7 @@ resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
   properties: {
     routes: [
       {
-        name: 'udr-default'
+        name: 'udr-default-to-hub-nva'
         properties: {
           addressPrefix: '0.0.0.0/0'
           nextHopType: 'VirtualAppliance'
