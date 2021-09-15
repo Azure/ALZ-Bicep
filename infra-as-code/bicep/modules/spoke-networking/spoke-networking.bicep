@@ -5,7 +5,7 @@ DESCRIPTION: The following components will be options in this deployment
               Subnets
               UDR - if Firewall is enabled
               Private DNS Link
-AUTHOR/S: Troy Ault
+AUTHOR/S: aultt
 VERSION: 1.0.0
 */
 
