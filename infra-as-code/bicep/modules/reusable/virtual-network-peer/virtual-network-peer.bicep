@@ -7,7 +7,7 @@ AUTHOR/S: aultt
 VERSION: 1.0.0
 */
 
-@description('Virtual Netork Id of virtual network Destination.  No Default')
+@description('Virtual Network ID of Virtual Network destination. No default')
 param parDestinationVirtualNetworkId string
 
 @description('Name of source virtual network we are peering.  No Default')
