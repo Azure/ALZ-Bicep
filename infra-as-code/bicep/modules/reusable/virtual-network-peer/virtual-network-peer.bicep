@@ -8,7 +8,7 @@ VERSION: 1.0.0
 */
 
 @description('Virtual Network ID of Virtual Network destination. No default')
-param parDestinationVirtualNetworkId string
+param parDestinationVirtualNetworkID string
 
 @description('Name of source virtual network we are peering.  No Default')
 param parSourceVirtualNetworkName string
