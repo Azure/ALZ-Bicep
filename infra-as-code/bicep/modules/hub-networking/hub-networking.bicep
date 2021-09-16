@@ -19,11 +19,14 @@ param parBastionEnabled bool = true
 @description('Switch which allows DDOS deployment to be disabled. Default: true')
 param parDdosEnabled bool = true
 
+@description('DDOS Plan Name. Default: {parCompanyPrefix}-DDos-Plan')
+param parDdosPlanName string = '${parCompanyPrefix}-DDos-Plan'
+
 @description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
 param parAzureFirewallEnabled bool = true
 
-@description('Switch which allos Dns Proxy to be enabled on the virtual network.')
-param parNetworkDnsEnableProxy bool = true
+@description('Switch which allos DNS Proxy to be enabled on the virtual network.')
+param parNetworkDNSEnableProxy bool = true
 
 @description('Switch which allows BGP Propagation to be disabled on the routes: Default: false')
 param  pardisableBgpRoutePropagation bool = false
@@ -75,9 +78,6 @@ param parGatewayArray array = [
 
 @description('Prefix value which will be prepended to all resource names. Default: alz')
 param parCompanyPrefix string = 'alz'
-
-@description('DDOS Plan Name. Default: {parCompanyPrefix}-DDos-Plan')
-param parDdosPlanName string = '${parCompanyPrefix}-DDos-Plan'
 
 @description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard')
 param parBastionSku string = 'Standard'
@@ -388,7 +388,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(par
       tier: parAzureFirewallTier
     }
     additionalProperties: {
-       'Network.DNS.EnableProxy': '${parNetworkDnsEnableProxy}'
+       'Network.DNS.EnableProxy': '${parNetworkDNSEnableProxy}'
     }
   }
 }
@@ -444,6 +444,6 @@ output outPrivateDnsZones array = [for i in range(0,length(parPrivateDnsZones)):
   id: resPrivateDnsZones[i].id
 }]
 
-output outDdosPlanResourceId string = resDdosProtectionPlan.id
+output outDdosPlanResourceID string = resDdosProtectionPlan.id
 output outHubVirtualNetworkName string = resHubVirtualNetwork.name
-output outHubVirtualNetworkid string = resHubVirtualNetwork.id
+output outHubVirtualNetworkID string = resHubVirtualNetwork.id
