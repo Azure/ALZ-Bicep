@@ -31,8 +31,8 @@ The input parameter file `custom-policy-definitions.parameters.example.json` def
 
 ```bash
 az deployment mg create \
-  --template-file infra-as-code/bicep/modules/policy/custom-policy-definitions.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/custom-policy-definitions.parameters.example.json \
+  --template-file infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep \
+  --parameters @infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json \
   --location eastus \
   --management-group-id alz
 ```
@@ -41,8 +41,8 @@ az deployment mg create \
 
 ```powershell
 New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/policy/custom-policy-definitions.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/custom-policy-definitions.parameters.example.json `
+  -TemplateFile infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json `
   -Location eastus `
   -ManagementGroupId alz
 ```
