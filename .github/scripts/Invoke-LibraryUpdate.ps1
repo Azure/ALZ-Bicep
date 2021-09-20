@@ -50,7 +50,7 @@ if ($UseCacheFromModule -and (Test-Path "$esltModuleDirectory/ProviderApiVersion
 $defaultConfig = @{
     inputFilter    = "*.json"
     typeFilter     = @()
-    outputPath     = $TargetModulePath + "/infra-as-code/bicep/modules/policy/lib"
+    outputPath     = $TargetModulePath + "/infra-as-code/bicep/modules/policy/definitions/lib"
     fileNamePrefix = ""
     fileNameSuffix = ".json"
     asTemplate     = $true
@@ -91,9 +91,9 @@ $esltConfig += $policySetDefinitionFilePaths | ForEach-Object {
 # artefacts (by resource type) from the library
 if ($Reset) {
     Write-Information "Deleting existing Policy Definitions from library." -InformationAction Continue
-    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/lib/policy_definitions/" -Recurse -Force
+    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions/" -Recurse -Force
     Write-Information "Deleting existing Policy Set Definitions from library." -InformationAction Continue
-    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/lib/policy_set_definitions/" -Recurse -Force
+    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/" -Recurse -Force
 }
 
 # Process the files added to $esltConfig, to add content
@@ -112,13 +112,13 @@ foreach ($config in $esltConfig) {
 }
 
 # Get a list of current Policy Definition names
-$policyDefinitionFiles = Get-ChildItem -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/lib/policy_definitions/"
+$policyDefinitionFiles = Get-ChildItem -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions/"
 $policyDefinitionNames = $policyDefinitionFiles | ForEach-Object {
     (Get-Content -Path $_ | ConvertFrom-Json).Name
 }
 
 # Get a list of current Policy Set Definition names
-$policySetDefinitionFiles = Get-ChildItem -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/lib/policy_set_definitions/"
+$policySetDefinitionFiles = Get-ChildItem -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/"
 $policySetDefinitionNames = $policySetDefinitionFiles | ForEach-Object {
     (Get-Content -Path $_ | ConvertFrom-Json).Name
 }
