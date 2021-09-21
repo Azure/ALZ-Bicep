@@ -1,5 +1,5 @@
 /*
-SUMMARY: This module assigns Azure Policies to a specified Management Group as well as assigning the Managed Identity to various
+SUMMARY: This module assigns Azure Policies to a specified Management Group as well as assigning the Managed Identity to various Management Groups 
 DESCRIPTION: This module assigns Azure Policies to a specified Management Group.
 AUTHOR/S: jtracey93
 VERSION: 1.0.0
@@ -44,8 +44,10 @@ param parPolicyAssignmentEnforcementMode string = 'Default'
 @description('The type of identity to be created and assoiated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects . DEAFULT VALUE = "None"')
 param parPolicyAssignmentIdentityType string = 'None'
 
-@description('An array containing a list of Management Group IDs that the System-assigned Managed Identity associated to the policy assignment will be assigned to. e.g. [\'alz\', \'alz-sandbox\' ]. DEFAULT VALUE = []')
-param parPolicyAssignmentIdentityRoleAssignmentsMGs array = []
+@description('An array containing a list of Management Group IDs that the System-assigned Managed Identity associated to the policy assignment will be assigned to. e.g. [\'alz\', \'alz-sandbox\' ]. DEFAULT VALUE = [ <Management Group You Are Deploying To> ]')
+param parPolicyAssignmentIdentityRoleAssignmentsMGs array = [
+  '${managementGroup()}'
+]
 
 @description('An array containing a list of Subscription IDs that the System-assigned Managed Identity associated to the policy assignment will be assigned to. e.g. [\'8200b669-cbc6-4e6c-b6d8-f4797f924074\', \'7d58dc5d-93dc-43cd-94fc-57da2e74af0d\' ]. DEFAULT VALUE = []')
 param parPolicyAssignmentIdentityRoleAssignmentsSubs array = []
@@ -55,10 +57,12 @@ param parPolicyAssignmentIdentityRoleDefinitionIDs array = []
 
 var varPolicyIdentity = parPolicyAssignmentIdentityType == 'SystemAssigned' ? 'SystemAssigned' : 'None'
 
+var varPolicyIdentityLocation = parPolicyAssignmentIdentityType == 'SystemAssigned' ? deployment().location : json('null')
+
 resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-01' = {
   name: parPolicyAssignmentName
   properties: {
-    displayName: parPolicyAssignmentDisplayName
+    displayName: parPolicyAssignmentDisplayName 
     description: parPolicyAssignmentDescription
     policyDefinitionId: parPolicyAssignmentDefinitionID
     parameters: parPolicyAssignmentParameters
@@ -69,11 +73,12 @@ resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-
   identity: {
     type: varPolicyIdentity
   }
+  location: varPolicyIdentityLocation
 }
 
 // Handle Managed Identity RBAC Assignments to Management Group scopes based on parameter inputs, if they are not empty and a policy assignment with an identity is required.
 module modPolicyIdentityRoleAssignmentMGsMany '../role-assignments/role-assignment-management-group-many.bicep' = [for roles in parPolicyAssignmentIdentityRoleDefinitionIDs: if ((varPolicyIdentity == 'SystemAssigned') && !empty(parPolicyAssignmentIdentityRoleDefinitionIDs) && !empty(parPolicyAssignmentIdentityRoleAssignmentsMGs)) {
-  name: 'rbac-assign-policy-${parPolicyAssignmentName}-${uniqueString(parPolicyAssignmentName, roles)}'
+  name: 'rbac-assign-mg-policy-${parPolicyAssignmentName}-${uniqueString(parPolicyAssignmentName, roles)}'
   params: {
     parManagementGroupIds: parPolicyAssignmentIdentityRoleAssignmentsMGs
     parAssigneeObjectId: resPolicyAssignment.identity.principalId
@@ -84,7 +89,7 @@ module modPolicyIdentityRoleAssignmentMGsMany '../role-assignments/role-assignme
 
 // Handle Managed Identity RBAC Assignments to Subscription scopes based on parameter inputs, if they are not empty and a policy assignment with an identity is required.
 module modPolicyIdentityRoleAssignmentSubsMany '../role-assignments/role-assignment-subscription-many.bicep' = [for roles in parPolicyAssignmentIdentityRoleDefinitionIDs: if ((varPolicyIdentity == 'SystemAssigned') && !empty(parPolicyAssignmentIdentityRoleDefinitionIDs) && !empty(parPolicyAssignmentIdentityRoleAssignmentsSubs)) {
-  name: 'rbac-assign-policy-${parPolicyAssignmentName}-${uniqueString(parPolicyAssignmentName, roles)}'
+  name: 'rbac-assign-sub-policy-${parPolicyAssignmentName}-${uniqueString(parPolicyAssignmentName, roles)}'
   params: {
     parSubscriptionIds: parPolicyAssignmentIdentityRoleAssignmentsSubs
     parAssigneeObjectId: resPolicyAssignment.identity.principalId

@@ -1,0 +1,90 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "parPolicyAssignmentName": {
+            "value": "Deploy-ASC-Config"
+        },
+        "parPolicyAssignmentDisplayName": {
+            "value": "Deploy Azure Security Center configuration"
+        },
+        "parPolicyAssignmentDescription": {
+            "value": "Deploy Azure Security Center configuration"
+        },
+        "parPolicyAssignmentDefinitionID": {
+            "value": "/providers/Microsoft.Management/managementGroups/alz/providers/Microsoft.Authorization/policySetDefinitions/Deploy-ASC-Config"
+        },
+        "parPolicyAssignmentParameters": {
+            "value": {
+                "emailSecurityContact": {
+                    "value": "security_contact@replace_me"
+                },
+                "logAnalytics": {
+                    "value": "alz-la"
+                },
+                "ascExportResourceGroupName": {
+                    "value": "alz-asc-export"
+                },
+                "ascExportResourceGroupLocation": {
+                    "value": "uksouth"
+                },
+                "pricingTierContainerRegistry": {
+                    "value": "Standard"
+                },
+                "pricingTierAppServices": {
+                    "value": "Standard"
+                },
+                "pricingTierArm": {
+                    "value": "Standard"
+                },
+                "pricingTierDns": {
+                    "value": "Standard"
+                },
+                "pricingTierKeyVaults": {
+                    "value": "Standard"
+                },
+                "pricingTierKubernetesService": {
+                    "value": "Standard"
+                },
+                "pricingTierVMs": {
+                    "value": "Standard"
+                },
+                "pricingTierSqlServers": {
+                    "value": "Standard"
+                },
+                "pricingTierSqlServerVirtualMachines": {
+                    "value": "Standard"
+                },
+                "pricingTierStorageAccounts": {
+                    "value": "Standard"
+                }
+            }
+        },
+        "parPolicyAssignmentNonComplianceMessages": {
+            "value": []
+        },
+        "parPolicyAssignmentNotScopes": {
+            "value": []
+        },
+        "parPolicyAssignmentEnforcementMode": {
+            "value": "Default"
+        },
+        "parPolicyAssignmentIdentityType": {
+            "value": "SystemAssigned"
+        },
+        "parPolicyAssignmentIdentityRoleAssignmentsMGs": {
+            "value": [
+                "alz-landingzones"
+            ]
+        },
+        "parPolicyAssignmentIdentityRoleAssignmentsSubs": {
+            "value": []
+        },
+        "parPolicyAssignmentIdentityRoleDefinitionIDs": {
+            "value": [
+                "b24988ac-6180-42a0-ab88-20f7382dd24c",
+                "fb1c8493-542b-48eb-b624-b4c8fea62acd"
+            ]
+        }
+    }
+}

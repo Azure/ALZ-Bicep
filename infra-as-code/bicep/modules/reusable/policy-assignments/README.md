@@ -34,7 +34,7 @@ az deployment mg create \
   --template-file infra-as-code/bicep/modules/reusable/policy-assignments/policy-assignment-management-group.bicep \
   --parameters @infra-as-code/bicep/modules/reusable/policy-assignments/policy-assignment-management-group.parameters.example-deny.json \
   --location eastus \
-  --management-group-id alz-landingzones
+  --management-group-id 'alz-landingzones'
 ```
 
 ### PowerShell
@@ -44,7 +44,7 @@ New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/reusable/policy-assignments/policy-assignment-management-group.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/reusable/policy-assignments/policy-assignment-management-group.parameters.example-deny.json `
   -Location eastus `
-  -ManagementGroupId alz
+  -ManagementGroupId 'alz-landingzones'
 ```
 
 ![Example Deployment Output](media/example-deployment-output.png "Example Deployment Output")
