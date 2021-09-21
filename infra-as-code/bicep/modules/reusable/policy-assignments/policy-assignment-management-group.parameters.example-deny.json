@@ -29,7 +29,7 @@
         "parPolicyAssignmentIdentityType": {
             "value": "None"
         },
-        "parPolicyAssignmentIdentityRoleAssignmentsMGs": {
+        "parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs": {
             "value": []
         },
         "parPolicyAssignmentIdentityRoleAssignmentsSubs": {

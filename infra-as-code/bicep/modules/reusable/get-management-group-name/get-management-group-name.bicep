@@ -1,7 +1,9 @@
 targetScope = 'managementGroup'
 
+param parCurrentTime string = utcNow()
+
 module modManagementGroupBlankDeployment 'blank-mg-deployment.bicep' = {
-  name: 'ManagementGroupBlankDeployment'
+  name: 'ManagementGroupBlankDeployment-${uniqueString(parCurrentTime)}'
   scope: managementGroup()
 }
 

@@ -72,7 +72,7 @@
         "parPolicyAssignmentIdentityType": {
             "value": "SystemAssigned"
         },
-        "parPolicyAssignmentIdentityRoleAssignmentsMGs": {
+        "parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs": {
             "value": [
                 "alz-landingzones"
             ]
