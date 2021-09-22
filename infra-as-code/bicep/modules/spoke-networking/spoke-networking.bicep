@@ -59,7 +59,7 @@ resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' =
       id: parDdosProtectionPlanId
       } : null
     dhcpOptions: (parNetworkDnsEnableProxy) ? {
-      dnsServers: parDnsServerIpArray 
+      dnsServers: parDNSServerIPArray 
     }:null  
   }
 }
