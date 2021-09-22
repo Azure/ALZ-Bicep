@@ -409,7 +409,7 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parAzu
         }
       }
     ]
-    disableBgpRoutePropagation: pardisableBgpRoutePropagation
+    disableBgpRoutePropagation: pardisableBGPRoutePropagation
   }
 }
 
