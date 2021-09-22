@@ -444,6 +444,6 @@ output outPrivateDnsZones array = [for i in range(0,length(parPrivateDnsZones)):
   id: resPrivateDnsZones[i].id
 }]
 
-output outDdosPlanResourceID string = resDdosProtectionPlan.id
+output outDDoSPlanResourceID string = resDDoSProtectionPlan.id
 output outHubVirtualNetworkName string = resHubVirtualNetwork.name
 output outHubVirtualNetworkID string = resHubVirtualNetwork.id
