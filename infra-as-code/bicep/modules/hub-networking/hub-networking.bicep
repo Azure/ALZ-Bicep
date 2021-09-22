@@ -29,7 +29,7 @@ param parAzureFirewallEnabled bool = true
 param parNetworkDNSEnableProxy bool = true
 
 @description('Switch which allows BGP Propagation to be disabled on the routes: Default: false')
-param  pardisableBgpRoutePropagation bool = false
+param  pardisableBGPRoutePropagation bool = false
 
 @description('Switch which allows Private DNS Zones to be disabled. Default: true')
 param parPrivateDNSZonesEnabled bool = true
