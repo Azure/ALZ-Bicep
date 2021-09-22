@@ -32,7 +32,7 @@ resource resVirtualNetworkPeer 'Microsoft.Network/virtualNetworks/virtualNetwork
     allowForwardedTraffic: parAllowForwardedTraffic
     allowGatewayTransit: parAllowGatewayTransit
     remoteVirtualNetwork: {
-        id: parDestinationVirtualNetworkId
+        id: parDestinationVirtualNetworkID
     }
   }
 }
