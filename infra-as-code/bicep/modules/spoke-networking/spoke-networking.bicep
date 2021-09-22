@@ -35,7 +35,7 @@ param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 param parSpokeNetworkPrefix string = 'Corp-Spoke'
 
 @description('Array of Dns Server Ip addresses.  No Default Value')
-param parDnsServerIpArray array 
+param parDNSServerIPArray array 
 
 @description('IP Address where network traffic should route to leveraged with DNS Proxy.  No Default Value')
 param parNextHopIPAddress string 
