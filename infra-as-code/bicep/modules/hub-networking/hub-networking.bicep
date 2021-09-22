@@ -20,7 +20,7 @@ param parBastionEnabled bool = true
 param parDDoSEnabled bool = true
 
 @description('DDOS Plan Name. Default: {parCompanyPrefix}-DDos-Plan')
-param parDdosPlanName string = '${parCompanyPrefix}-DDos-Plan'
+param parDDoSPlanName string = '${parCompanyPrefix}-DDoS-Plan'
 
 @description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
 param parAzureFirewallEnabled bool = true
