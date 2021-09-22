@@ -17,13 +17,19 @@ VERSION: 1.0.0
 param parBastionEnabled bool = true
 
 @description('Switch which allows DDOS deployment to be disabled. Default: true')
-param parDdosEnabled bool = true
+param parDDoSEnabled bool = true
+
+@description('DDOS Plan Name. Default: {parCompanyPrefix}-DDos-Plan')
+param parDDoSPlanName string = '${parCompanyPrefix}-DDoS-Plan'
 
 @description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
 param parAzureFirewallEnabled bool = true
 
+@description('Switch which allos DNS Proxy to be enabled on the virtual network. Default: true')
+param parNetworkDNSEnableProxy bool = true
+
 @description('Switch which allows BGP Propagation to be disabled on the routes: Default: false')
-param  pardisableBgpRoutePropagation bool = false
+param  pardisableBGPRoutePropagation bool = false
 
 @description('Switch which allows Private DNS Zones to be disabled. Default: true')
 param parPrivateDNSZonesEnabled bool = true
@@ -72,9 +78,6 @@ param parGatewayArray array = [
 
 @description('Prefix value which will be prepended to all resource names. Default: alz')
 param parCompanyPrefix string = 'alz'
-
-@description('DDOS Plan Name. Default: {parCompanyPrefix}-DDos-Plan')
-param parDdosPlanName string = '${parCompanyPrefix}-DDos-Plan'
 
 @description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard')
 param parBastionSku string = 'Standard'
@@ -176,13 +179,13 @@ var varSubnetProperties = [for subnet in parSubnets: {
 }]
 
 
-resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDdosEnabled) {
-  name: parDdosPlanName
+resource resDDoSProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDDoSEnabled) {
+  name: parDDoSPlanName
   location: resourceGroup().location
   tags: parTags 
 }
 
-//Ddos Protection plan will only be enabled if parDdosEnabled is true.  
+//DDos Protection plan will only be enabled if parDDoSEnabled is true.  
 resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: parHubNetworkName
   location: resourceGroup().location
@@ -193,9 +196,9 @@ resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
       ]
     }
     subnets: varSubnetProperties
-    enableDdosProtection:parDdosEnabled
-    ddosProtectionPlan: (parDdosEnabled) ? {
-      id: resDdosProtectionPlan.id
+    enableDdosProtection:parDDoSEnabled
+    ddosProtectionPlan: (parDDoSEnabled) ? {
+      id: resDDoSProtectionPlan.id
       } : null
   }
 }
@@ -385,7 +388,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(par
       tier: parAzureFirewallTier
     }
     additionalProperties: {
-       'Network.DNS.EnableProxy': 'true'
+       'Network.DNS.EnableProxy': '${parNetworkDNSEnableProxy}'
     }
   }
 }
@@ -406,7 +409,7 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parAzu
         }
       }
     ]
-    disableBgpRoutePropagation: pardisableBgpRoutePropagation
+    disableBgpRoutePropagation: pardisableBGPRoutePropagation
   }
 }
 
@@ -415,6 +418,19 @@ resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [fo
   name: privateDnsZone
   location: 'global'
   tags: parTags
+}]
+
+
+resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in parPrivateDnsZones: if(parPrivateDNSZonesEnabled) {
+  name: '${privateDnsZoneName}/${privateDnsZoneName}'
+  location: 'global'
+  properties: {
+    registrationEnabled: false
+    virtualNetwork: {
+      id: resHubVirtualNetwork.id
+    }
+  }
+dependsOn: resPrivateDnsZones
 }]
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
@@ -428,4 +444,6 @@ output outPrivateDnsZones array = [for i in range(0,length(parPrivateDnsZones)):
   id: resPrivateDnsZones[i].id
 }]
 
-output outDdosPlanResourceId string = resDdosProtectionPlan.id
+output outDDoSPlanResourceID string = resDDoSProtectionPlan.id
+output outHubVirtualNetworkName string = resHubVirtualNetwork.name
+output outHubVirtualNetworkID string = resHubVirtualNetwork.id
