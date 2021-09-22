@@ -75,7 +75,7 @@ resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
         properties: {
           addressPrefix: '0.0.0.0/0'
           nextHopType: 'VirtualAppliance'
-          nextHopIpAddress: parNetworkDnsEnableProxy ? parNextHopIPAddress : ''
+          nextHopIpAddress: parNetworkDNSEnableProxy ? parNextHopIPAddress : ''
         }
       }
     ]
