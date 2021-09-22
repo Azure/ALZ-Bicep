@@ -17,7 +17,7 @@ VERSION: 1.0.0
 param parBastionEnabled bool = true
 
 @description('Switch which allows DDOS deployment to be disabled. Default: true')
-param parDdosEnabled bool = true
+param parDDosEnabled bool = true
 
 @description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
 param parAzureFirewallEnabled bool = true
@@ -74,7 +74,7 @@ param parGatewayArray array = [
 param parCompanyPrefix string = 'alz'
 
 @description('DDOS Plan Name. Default: {parCompanyPrefix}-DDos-Plan')
-param parDdosPlanName string = '${parCompanyPrefix}-DDos-Plan'
+param parDDosPlanName string = '${parCompanyPrefix}-DDos-Plan'
 
 @description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard')
 param parBastionSku string = 'Standard'
@@ -176,13 +176,13 @@ var varSubnetProperties = [for subnet in parSubnets: {
 }]
 
 
-resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDdosEnabled) {
-  name: parDdosPlanName
+resource resDDosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDDosEnabled) {
+  name: parDDosPlanName
   location: resourceGroup().location
   tags: parTags 
 }
 
-//Ddos Protection plan will only be enabled if parDdosEnabled is true.  
+//DDos Protection plan will only be enabled if parDDosEnabled is true.  
 resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: parHubNetworkName
   location: resourceGroup().location
@@ -193,9 +193,9 @@ resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
       ]
     }
     subnets: varSubnetProperties
-    enableDdosProtection:parDdosEnabled
-    ddosProtectionPlan: (parDdosEnabled) ? {
-      id: resDdosProtectionPlan.id
+    enableDDosProtection:parDDosEnabled
+    DDosProtectionPlan: (parDDosEnabled) ? {
+      id: resDDosProtectionPlan.id
       } : null
   }
 }
@@ -428,4 +428,4 @@ output outPrivateDnsZones array = [for i in range(0,length(parPrivateDnsZones)):
   id: resPrivateDnsZones[i].id
 }]
 
-output outDdosPlanResourceId string = resDdosProtectionPlan.id
+output outDDosPlanResourceId string = resDDosProtectionPlan.id
