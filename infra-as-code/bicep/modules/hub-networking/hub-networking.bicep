@@ -179,13 +179,13 @@ var varSubnetProperties = [for subnet in parSubnets: {
 }]
 
 
-resource resDDosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDDosEnabled) {
-  name: parDDosPlanName
+resource resDDosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDDoSEnabled) {
+  name: parDDoSPlanName
   location: resourceGroup().location
   tags: parTags 
 }
 
-//DDos Protection plan will only be enabled if parDDosEnabled is true.  
+//DDos Protection plan will only be enabled if parDDoSEnabled is true.  
 resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: parHubNetworkName
   location: resourceGroup().location
@@ -196,8 +196,8 @@ resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
       ]
     }
     subnets: varSubnetProperties
-    enableDDosProtection:parDDosEnabled
-    ddosProtectionPlan: (parDDosEnabled) ? {
+    enableDDosProtection:parDDoSEnabled
+    ddosProtectionPlan: (parDDoSEnabled) ? {
       id: resDDosProtectionPlan.id
       } : null
   }
