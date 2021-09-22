@@ -17,7 +17,7 @@ param parHubNVAEnabled bool = true
 param parDdosEnabled bool = true
 
 @description('Switch which allows DDOS deployment to be disabled')
-param parNetworkDnsEnableProxy bool = true
+param parNetworkDNSEnableProxy bool = true
 
 @description('Switch which allows BGP Route Propogation to be disabled')
 param parBGPRoutePropogation bool = false
@@ -58,7 +58,7 @@ resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' =
     ddosProtectionPlan: (parDdosEnabled) ? {
       id: parDdosProtectionPlanId
       } : null
-    dhcpOptions: (parNetworkDnsEnableProxy) ? {
+    dhcpOptions: (parNetworkDNSEnableProxy) ? {
       dnsServers: parDNSServerIPArray 
     }:null  
   }
