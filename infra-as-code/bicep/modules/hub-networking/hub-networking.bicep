@@ -17,7 +17,7 @@ VERSION: 1.0.0
 param parBastionEnabled bool = true
 
 @description('Switch which allows DDOS deployment to be disabled. Default: true')
-param parDdosEnabled bool = true
+param parDDoSEnabled bool = true
 
 @description('DDOS Plan Name. Default: {parCompanyPrefix}-DDos-Plan')
 param parDdosPlanName string = '${parCompanyPrefix}-DDos-Plan'
