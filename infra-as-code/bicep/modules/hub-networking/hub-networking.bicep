@@ -25,7 +25,7 @@ param parDdosPlanName string = '${parCompanyPrefix}-DDos-Plan'
 @description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
 param parAzureFirewallEnabled bool = true
 
-@description('Switch which allos DNS Proxy to be enabled on the virtual network.')
+@description('Switch which allos DNS Proxy to be enabled on the virtual network. Default: true')
 param parNetworkDNSEnableProxy bool = true
 
 @description('Switch which allows BGP Propagation to be disabled on the routes: Default: false')

@@ -7,10 +7,10 @@ AUTHOR/S: aultt
 VERSION: 1.0.0
 */
 
-@description('Virtual Netork Id of virtual network Destination.  No Default')
-param parDestinationVirtualNetworkId string
+@description('Virtual Network ID of Virtual Network destination. No default')
+param parDestinationVirtualNetworkID string
 
-@description('Name of source virtual network we are peering.  No Default')
+@description('Name of source Virtual Network we are peering. No default')
 param parSourceVirtualNetworkName string
 
 @description('Name of destination virtual network we are peering.  No Default')
@@ -26,7 +26,7 @@ param parAllowForwardedTraffic bool = true
 param parAllowGatewayTransit bool = false
 
 resource resVirtualNetworkPeer 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-11-01' = {
-  name:  '${parSourceVirtualNetworkName}/${parDestinationVirtualNetworkName}'
+  name:  '${parSourceVirtualNetworkName}/peer-to-${parDestinationVirtualNetworkName}'
   properties: {
     allowVirtualNetworkAccess: parAllowVirtualNetworkAccess
     allowForwardedTraffic: parAllowForwardedTraffic

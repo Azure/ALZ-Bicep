@@ -5,7 +5,7 @@ DESCRIPTION: The following components will be options in this deployment
               Subnets
               UDR - if Firewall is enabled
               Private DNS Link
-AUTHOR/S: Troy Ault
+AUTHOR/S: aultt
 VERSION: 1.0.0
 */
 
@@ -40,8 +40,8 @@ param parDnsServerIpArray array
 @description('Ip Address where network traffic should route to leveraged with DnsProxy.  No Default Value')
 param parNextHopIPAddress string 
 
-@description('Name of Route table to create for the default route of Hub')
-param parSpoketoHubRouteTableName string = 'SpoketoHubRouteTable'
+@description('Name of Route table to create for the default route of Hub. Default: udr-spoke-to-hub')
+param parSpoketoHubRouteTableName string = 'udr-spoke-to-hub'
 
 //If Ddos parameter is true Ddos will be Enabled on the Virtual Network
 //If Azure Firewall is enabled and Network Dns Proxy is enabled dns will be configured to point to AzureFirewall
@@ -71,7 +71,7 @@ resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
   properties: {
     routes: [
       {
-        name: 'udr-default'
+        name: 'udr-default-to-hub-nva'
         properties: {
           addressPrefix: '0.0.0.0/0'
           nextHopType: 'VirtualAppliance'
