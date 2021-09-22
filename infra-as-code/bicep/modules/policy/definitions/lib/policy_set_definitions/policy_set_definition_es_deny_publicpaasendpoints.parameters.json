@@ -41,20 +41,6 @@
       }
     }
   },
-  "MySQLFlexDenyPublicIP": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('MySQLFlexPublicIpDenyEffect')]"
-      }
-    }
-  },
-  "PostgreSQLFlexDenyPublicIP": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('PostgreSQLFlexPublicIpDenyEffect')]"
-      }
-    }
-  },
   "SqlServerDenyPaasPublicIP": {
     "parameters": {
       "effect": {

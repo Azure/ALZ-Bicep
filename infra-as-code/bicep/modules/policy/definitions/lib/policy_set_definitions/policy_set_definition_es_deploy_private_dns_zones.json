@@ -199,8 +199,8 @@
     },
     "policyDefinitions": [
       {
-        "policyDefinitionReferenceId": "DINE-Private-DNS-Azure-File-Sync",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/06695360-db88-47f6-b976-7500d4297475",
+        "policyDefinitionReferenceId": "Deploy-Private-DNS-Azure-File-Sync",
+        "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Private-DNS-Azure-File-Sync",
         "parameters": {
           "privateDnsZoneId": {
             "value": "[[parameters('azureFileprivateDnsZoneId')]"
@@ -212,8 +212,8 @@
         "groupNames": []
       },
       {
-        "policyDefinitionReferenceId": "DINE-Private-DNS-Azure-Web",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/0b026355-49cb-467b-8ac4-f777874e175a",
+        "policyDefinitionReferenceId": "Deploy-Private-DNS-Azure-Web",
+        "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Private-DNS-Azure-Web",
         "parameters": {
           "privateDnsZoneId": {
             "value": "[[parameters('azureWebPrivateDnsZoneId')]"
@@ -277,8 +277,8 @@
         "groupNames": []
       },
       {
-        "policyDefinitionReferenceId": "DINE-Private-DNS-Azure-KeyVault",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/ac673a9a-f77d-4846-b2d8-a57f8e1c01d4",
+        "policyDefinitionReferenceId": "Deploy-Private-DNS-Azure-KeyVault",
+        "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Private-DNS-Azure-KeyVault",
         "parameters": {
           "privateDnsZoneId": {
             "value": "[[parameters('azureKeyVaultPrivateDnsZoneId')]"
