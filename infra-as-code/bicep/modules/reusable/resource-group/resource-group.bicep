@@ -7,13 +7,13 @@ AUTHOR/S: aultt
 VERSION: 1.0.0
 */
 
+targetScope = 'subscription'
+
 @description('Azure Region where Resource Group will be created.  No Default')
 param parResourceGroupLocation string
 
 @description('Name of Resource Group to be created.  No Default')
 param parResourceGroupName string
-
-targetScope = 'subscription'
 
 resource resResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   location: parResourceGroupLocation
