@@ -1,9 +1,9 @@
-# Module: Public IP
+# Module: Spoke Networking
 
 This module defines spoke networking based on the recommendations from the Azure Landing Zone Conceptual Architecture.  
 
 Module deploys the following resources:
-  * VirtualNetwork(Spoke Vnet)
+  * VirtualNetwork(Spoke VNet)
   * Subnets
   * UDR - if Firewall is enabled
   * Private DNS Link
@@ -16,15 +16,15 @@ The module requires the following inputs:
  Parameter | Type | Default | Description | Requirement | Example
 ----------- | ---- | ------- |----------- | ----------- | -------
  parHubNVAEnabled | bool| true | Switch to enable use of NVA for Hub| None | true
- parDdosEnabled  | bool | true | Switch to enable Ddos on Vnet | None | true
- parNetworkDnsEnableProxy | bool | true | Switch to enable Network Dns Proxy on Vnet | None | true
- parBGPRoutePropogation | bool | false | Switch to enable BGP Route Propogation on Vnet | None | false
+ parDdosEnabled  | bool | true | Switch to enable DDos on VNet | None | true
+ parNetworkDnsEnableProxy | bool | true | Switch to enable Network DNS Proxy on VNet | None | true
+ parBGPRoutePropogation | bool | false | Switch to enable BGP Route Propogation on VNet | None | false
  parTags | object| empty array | Array of Tags to be applied to all resources in the Spoke Network | None | 
- parDdosProtectionPlanId | string | Empty String | Existing Ddos Protection plan to utilize| Valid Ddos Plan Id | 
- parSpokeNetworkAddressPrefix | string | '10.11.0.0/16' | Cidr for Spoke Network | Valid Cidr for Spoke Network |'10.11.0.0/16' 
- parSpokeNetworkPrefix | string | Corp-Spoke | Name Prefix which will be leveraged when creating vnet |  2-50 char  | Corp-Spoke
- parDNSServerIPArray | array | empty array | Array Ip DNS Servers to use for Vnet Dns Resolution | None | None
- parNextHopIPAddress | string | empty string | Ip Address where network traffic should route to leverage DNS Proxy | 192.168.50.1
+ parDdosProtectionPlanId | string | Empty String | Existing DDos Protection plan to utilize| Valid DDos Plan ID | 
+ parSpokeNetworkAddressPrefix | string | '10.11.0.0/16' | CIDR for Spoke Network | Valid CIDR for Spoke Network | '10.11.0.0/16' 
+ parSpokeNetworkPrefix | string | Corp-Spoke | Name Prefix which will be leveraged when creating VNet |  2-50 char  | Corp-Spoke
+ parDNSServerIPArray | array | empty array | Array IP DNS Servers to use for VNet DNS Resolution | None | None
+ parNextHopIPAddress | string | empty string | IP Address where network traffic should route to leverage DNS Proxy | 192.168.50.1
  parSpokeToHubRouteTableName | string | udr-spoke-to_hub | Name of Route table to create for the default route of Hub. |udr-spoke-to_hub
 
 ## Outputs
@@ -34,7 +34,7 @@ The module will generate the following outputs:
 Output | Type | Example
 ------ | ---- | --------
 outSpookeVirtualNetworkName | string | Corp-Spoke-eastus
-outSpokeVirtualNetworkid | string |
+outSpokeVirtualNetworkid | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxxx-xxxxxxxxx/resourceGroups/net-core-hub-eastus-rg/providers/Microsoft.Network/virtualNetworks/vnet-hub-eastus
 
 ## Deployment
 Module is intended to be called from other modules as a reusable resource.

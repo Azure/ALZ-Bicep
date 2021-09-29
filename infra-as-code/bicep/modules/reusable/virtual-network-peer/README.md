@@ -1,9 +1,15 @@
-# Module: Public IP
+# Module: Virtual Network Peer
 
-This module creates a virtual network peer between two virtual networks and is to be utilized by other modules.  
+This module creates a virtual network peer between two virtual networks and is to be utilized by other modules.  Module will need to be called twice to create the completed peering.  Each time with a peering direction. This allows for peering between different subscriptions.  
+
+Supporting Documentation Overview:
+https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview
+
+Peering Options Documentation:
+https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering
 
 Module deploys the following resources:
-  * Network-Peering
+  * Virtual Network-Peering
 
 
 ## Parameters
@@ -12,8 +18,8 @@ The module requires the following inputs:
 
  Parameter | Type | Default | Description | Requirement | Example
 ----------- | ---- | ------- |----------- | ----------- | -------
- parDestinationVirtualNetworkId | string| None | Name of Resource Group to create in the specified region| 2-64 char, letters, numbers, and underscores | alz-identity-eastus2  
- parSourceVirtualNetworkName  | string | None | Location where Resource Group will be deployed | Valid Azure Region | eastus2
+ parDestinationVirtualNetworkID | string| None | Id of the Destination Virtual Network | Valid Virtual Network id |   
+ parSourceVirtualNetworkName  | string | None | Name of Source Virtual Network | Valid Azure Region | alz-spk-eastus2
  parDestinationVirtualNetworkName | string| None | Virtual Network Id of virtual network Destination.| 2-64 char, letters, numbers, and underscores | alz-hub-eastus2 
  parAllowVirtualNetworkAccess | bool | true | Switch to enable virtual Network Access | None | true
  parAllowForwardedTraffic | bool | true | Switch to enable Forwarded Traffic | None |true

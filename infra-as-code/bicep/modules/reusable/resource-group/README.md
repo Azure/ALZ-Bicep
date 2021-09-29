@@ -1,4 +1,4 @@
-# Module: Public IP
+# Module: Resource Group
 
 This module creates a Resource group to be utilized by other modules.  
 
