@@ -1,6 +1,6 @@
 # Module: Spoke Networking
 
-This module defines spoke networking based on the recommendations from the Azure Landing Zone Conceptual Architecture.  
+This module defines spoke networking based on the recommendations from the Azure Landing Zone Conceptual Architecture. If enabled spoke will route traffic to Hub Network with NVA.
 
 Module deploys the following resources:
   * VirtualNetwork(Spoke VNet)

@@ -7,6 +7,7 @@ https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-o
 
 Peering Options Documentation:
 https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering
+https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#create-a-peering
 
 Module deploys the following resources:
   * Virtual Network-Peering
@@ -18,9 +19,9 @@ The module requires the following inputs:
 
  Parameter | Type | Default | Description | Requirement | Example
 ----------- | ---- | ------- |----------- | ----------- | -------
- parDestinationVirtualNetworkID | string| None | Id of the Destination Virtual Network | Valid Virtual Network id |   
+ parDestinationVirtualNetworkID | string| None | ID of the Destination Virtual Network | Valid Virtual Network ID |   
  parSourceVirtualNetworkName  | string | None | Name of Source Virtual Network | Valid Azure Region | alz-spk-eastus2
- parDestinationVirtualNetworkName | string| None | Virtual Network Id of virtual network Destination.| 2-64 char, letters, numbers, and underscores | alz-hub-eastus2 
+ parDestinationVirtualNetworkName | string| None | Virtual Network Name of the destination/target Virtual Network.| 2-64 char, letters, numbers, and underscores | alz-hub-eastus2 
  parAllowVirtualNetworkAccess | bool | true | Switch to enable virtual Network Access | None | true
  parAllowForwardedTraffic | bool | true | Switch to enable Forwarded Traffic | None |true
  parAllowGatewayTransit | bool | false | Switch to enable Gateway Transit | None | false
