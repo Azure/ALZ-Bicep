@@ -27,6 +27,10 @@
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_aa_child_resources.json'))
 }
 {
+  name: 'Deny-AFSPaasPublicIP'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_afspaaspublicip.json'))
+}
+{
   name: 'Deny-AppGW-Without-WAF'
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_appgw_without_waf.json'))
 }
@@ -55,6 +59,10 @@
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_databricks_virtualnetwork.json'))
 }
 {
+  name: 'Deny-KeyVaultPaasPublicIP'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_keyvaultpaaspublicip.json'))
+}
+{
   name: 'Deny-MachineLearning-Aks'
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_machinelearning_aks.json'))
 }
@@ -81,6 +89,10 @@
 {
   name: 'Deny-MachineLearning-PublicAccessWhenBehindVnet'
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_machinelearning_publicaccesswhenbehindvnet.json'))
+}
+{
+  name: 'Deny-MachineLearning-PublicNetworkAccess'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_machinelearning_publicnetworkaccess.json'))
 }
 {
   name: 'Deny-MySql-http'
@@ -137,6 +149,10 @@
 {
   name: 'Deny-VNet-Peering'
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_vnet_peering.json'))
+}
+{
+  name: 'Deploy-ActivityLogs-to-LA-workspace'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_activitylogs_to_la_workspace.json'))
 }
 {
   name: 'Deploy-ASC-Defender-ACR'
@@ -399,6 +415,10 @@
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_mysql_sslenforcement.json'))
 }
 {
+  name: 'Deploy-MySQLCMKEffect'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_mysqlcmkeffect.json'))
+}
+{
   name: 'Deploy-Nsg-FlowLogs-to-LA'
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_nsg_flowlogs_to_la.json'))
 }
@@ -409,6 +429,22 @@
 {
   name: 'Deploy-PostgreSQL-sslEnforcement'
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_postgresql_sslenforcement.json'))
+}
+{
+  name: 'Deploy-PostgreSQLCMKEffect'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_postgresqlcmkeffect.json'))
+}
+{
+  name: 'Deploy-Private-DNS-Azure-File-Sync'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_private_dns_azure_file_sync.json'))
+}
+{
+  name: 'Deploy-Private-DNS-Azure-KeyVault'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_private_dns_azure_keyvault.json'))
+}
+{
+  name: 'Deploy-Private-DNS-Azure-Web'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_private_dns_azure_web.json'))
 }
 {
   name: 'Deploy-Sql-AuditingSettings'
