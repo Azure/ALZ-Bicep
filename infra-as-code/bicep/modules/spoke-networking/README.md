@@ -15,7 +15,7 @@ The module requires the following inputs:
 
  Parameter | Type | Default | Description | Requirement | Example
 ----------- | ---- | ------- |----------- | ----------- | -------
- parHubNVAEnabled | bool| true | Switch to enable use of NVA for Hub| None | true
+ parHubNVAEnabled | bool| true | Switch to enable use of NVA for Hub. Creates route table and associated route for 0.0.0.0/0 to point to provided parNextHopIpAddress | None | true
  parDdosEnabled  | bool | true | Switch to enable DDoS on VNet | None | true
  parNetworkDnsEnableProxy | bool | true | Switch to enable Network DNS Proxy on VNet | None | true
  parBGPRoutePropogation | bool | false | Switch to enable BGP Route Propogation on VNet | None | false
