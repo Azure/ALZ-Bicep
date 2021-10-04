@@ -3,7 +3,7 @@
 This module creates a virtual network peer between two virtual networks and is to be utilized by other modules.  Module will need to be called twice to create the completed peering.  Each time with a peering direction. This allows for peering between different subscriptions.  
 
 
-Peering Options Documentation:
+**Peering Options Documentation:**
 
 - https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering
 - https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#create-a-peering
