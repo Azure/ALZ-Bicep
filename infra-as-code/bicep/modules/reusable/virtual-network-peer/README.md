@@ -8,7 +8,7 @@ https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-o
 Peering Options Documentation:
 
 - https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering
-https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#create-a-peering
+- https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#create-a-peering
 
 Module deploys the following resources:
   * Virtual Network-Peering
