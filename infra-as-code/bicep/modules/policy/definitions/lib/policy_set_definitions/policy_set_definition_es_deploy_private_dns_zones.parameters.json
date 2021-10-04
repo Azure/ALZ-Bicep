@@ -1,34 +1,4 @@
 {
-  "Deploy-Private-DNS-Azure-File-Sync": {
-    "parameters": {
-      "privateDnsZoneId": {
-        "value": "[[parameters('azureFileprivateDnsZoneId')]"
-      },
-      "effect": {
-        "value": "[[parameters('effect')]"
-      }
-    }
-  },
-  "Deploy-Private-DNS-Azure-KeyVault": {
-    "parameters": {
-      "privateDnsZoneId": {
-        "value": "[[parameters('azureKeyVaultPrivateDnsZoneId')]"
-      },
-      "effect": {
-        "value": "[[parameters('effect')]"
-      }
-    }
-  },
-  "Deploy-Private-DNS-Azure-Web": {
-    "parameters": {
-      "privateDnsZoneId": {
-        "value": "[[parameters('azureWebPrivateDnsZoneId')]"
-      },
-      "effect": {
-        "value": "[[parameters('effect')]"
-      }
-    }
-  },
   "DINE-Private-DNS-Azure-ACR": {
     "parameters": {
       "privateDnsZoneId": {
@@ -129,6 +99,16 @@
       }
     }
   },
+  "DINE-Private-DNS-Azure-File-Sync": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureFileprivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
   "DINE-Private-DNS-Azure-IoT": {
     "parameters": {
       "privateDnsZoneId": {
@@ -146,6 +126,16 @@
       },
       "effect": {
         "value": "[[parameters('effect1')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-KeyVault": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureKeyVaultPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
       }
     }
   },
@@ -193,6 +183,16 @@
     "parameters": {
       "privateDnsZoneId": {
         "value": "[[parameters('azureAsrPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Web": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureWebPrivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"

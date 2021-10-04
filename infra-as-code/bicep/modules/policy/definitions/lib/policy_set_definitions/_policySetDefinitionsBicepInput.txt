@@ -9,7 +9,7 @@
       }
       {
         definitionReferenceID: 'AFSDenyPaasPublicIP'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-AFSPaasPublicIP'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/21a8cd35-125e-4d13-b82d-2e19b7208bb7'
         definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deny_publicpaasendpoints.parameters.json')).AFSDenyPaasPublicIP.parameters
       }
       {
@@ -29,8 +29,18 @@
       }
       {
         definitionReferenceID: 'KeyVaultDenyPaasPublicIP'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-KeyVaultPaasPublicIP'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/55615ac9-af46-4a59-874e-391cc3dfb490'
         definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deny_publicpaasendpoints.parameters.json')).KeyVaultDenyPaasPublicIP.parameters
+      }
+      {
+        definitionReferenceID: 'MySQLFlexDenyPublicIP'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/c9299215-ae47-4f50-9c54-8a392f68a052'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deny_publicpaasendpoints.parameters.json')).MySQLFlexDenyPublicIP.parameters
+      }
+      {
+        definitionReferenceID: 'PostgreSQLFlexDenyPublicIP'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/5e1de0e3-42cb-4ebc-a86d-61d0c619ca48'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deny_publicpaasendpoints.parameters.json')).PostgreSQLFlexDenyPublicIP.parameters
       }
       {
         definitionReferenceID: 'SqlServerDenyPaasPublicIP'
@@ -431,21 +441,6 @@
   libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.json'))
   libSetChildDefinitions: [
       {
-        definitionReferenceID: 'Deploy-Private-DNS-Azure-File-Sync'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Private-DNS-Azure-File-Sync'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.parameters.json')).Deploy-Private-DNS-Azure-File-Sync.parameters
-      }
-      {
-        definitionReferenceID: 'Deploy-Private-DNS-Azure-KeyVault'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Private-DNS-Azure-KeyVault'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.parameters.json')).Deploy-Private-DNS-Azure-KeyVault.parameters
-      }
-      {
-        definitionReferenceID: 'Deploy-Private-DNS-Azure-Web'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Private-DNS-Azure-Web'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.parameters.json')).Deploy-Private-DNS-Azure-Web.parameters
-      }
-      {
         definitionReferenceID: 'DINE-Private-DNS-Azure-ACR'
         definitionID: '/providers/Microsoft.Authorization/policyDefinitions/e9585a95-5b8c-4d03-b193-dc7eb5ac4c32'
         definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.parameters.json')).DINE-Private-DNS-Azure-ACR.parameters
@@ -496,6 +491,11 @@
         definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.parameters.json')).DINE-Private-DNS-Azure-EventHubNamespace.parameters
       }
       {
+        definitionReferenceID: 'DINE-Private-DNS-Azure-File-Sync'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/06695360-db88-47f6-b976-7500d4297475'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.parameters.json')).DINE-Private-DNS-Azure-File-Sync.parameters
+      }
+      {
         definitionReferenceID: 'DINE-Private-DNS-Azure-IoT'
         definitionID: '/providers/Microsoft.Authorization/policyDefinitions/aaa64d2d-2fa3-45e5-b332-0b031b9b30e8'
         definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.parameters.json')).DINE-Private-DNS-Azure-IoT.parameters
@@ -504,6 +504,11 @@
         definitionReferenceID: 'DINE-Private-DNS-Azure-IoTHubs'
         definitionID: '/providers/Microsoft.Authorization/policyDefinitions/c99ce9c1-ced7-4c3e-aca0-10e69ce0cb02'
         definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.parameters.json')).DINE-Private-DNS-Azure-IoTHubs.parameters
+      }
+      {
+        definitionReferenceID: 'DINE-Private-DNS-Azure-KeyVault'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/ac673a9a-f77d-4846-b2d8-a57f8e1c01d4'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.parameters.json')).DINE-Private-DNS-Azure-KeyVault.parameters
       }
       {
         definitionReferenceID: 'DINE-Private-DNS-Azure-MachineLearningWorkspace'
@@ -529,6 +534,11 @@
         definitionReferenceID: 'DINE-Private-DNS-Azure-Site-Recovery'
         definitionID: '/providers/Microsoft.Authorization/policyDefinitions/942bd215-1a66-44be-af65-6a1c0318dbe2'
         definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.parameters.json')).DINE-Private-DNS-Azure-Site-Recovery.parameters
+      }
+      {
+        definitionReferenceID: 'DINE-Private-DNS-Azure-Web'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/0b026355-49cb-467b-8ac4-f777874e175a'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_private_dns_zones.parameters.json')).DINE-Private-DNS-Azure-Web.parameters
       }
     ]
 }
