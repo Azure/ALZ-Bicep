@@ -6,7 +6,7 @@ This document outlines the prerequisites, dependencies and flow to help orchestr
 
 1. Azure Active Directory Tenant.
 2. Minimum 1 subscription.  Subscription(s) are required when configuring `Log Analytics Workspace` & `Hub Networking` services.  Each can be deployed in the same subscription or separate subscriptions based on deployment requirements.
-3. Service Principal Account with `Owner` permission to the `/` root management group.  Owner permission is required to allow the Service Principal Account to create role-based access control assignments.  See [configuration instructions below](#service-principal-account).
+3. Deployment Identity with `Owner` permission to the `/` root management group.  Owner permission is required to allow the Service Principal Account to create role-based access control assignments.  See [configuration instructions below](#deployment-identity).
 
 ## High Level Deployment Flow
 
@@ -29,7 +29,9 @@ Modules in this reference implementation must be deployed in the following order
 | 8     | Hub Networking                            | Creates Hub networking infrastructure with Azure Firewall to support Hub & Spoke network topology in the `Connectivity` subscription.                                                       | Management Groups, Subscription for Hub Networking.                   | [infra-as-code/bicep/modules/hub-networking/README.md](../../infra-as-code/bicep/modules/hub-networking/README.md)
 | 9     | Corp Connected Spoke Network              | Creates Spoke networking infrastructure with Virtual Network Peering to support Hub & Spoke network topology.  Spoke subscriptions are used for deploying construction sets and workloads.  | Management Groups, Hub Networking & Subscription for spoke networking | [infra-as-code/bicep/modules/spoke-networking/README.md](../../infra-as-code/bicep/modules/spoke-networking/README.md) |
 
-## Service Principal Account
+## Deployment Identity
+
+### Service Principal Account
 
 A service principal account is required to automate through Azure DevOps or GitHub Workflows. 
 
