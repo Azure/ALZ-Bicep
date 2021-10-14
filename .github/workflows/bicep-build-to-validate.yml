@@ -23,7 +23,7 @@ jobs:
         shell: pwsh
         run: |
           Get-ChildItem -Recurse -Filter '*.bicep' | ForEach-Object {
-              Write-Information "==> Attempting Bicep Build For File: $_.FullName" -InformationAction Continue
+              Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
               bicep build $_.FullName
           }
 
