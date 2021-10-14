@@ -1,19 +1,25 @@
 # Module: Policy Assignments
 
-This module deploys the custom Azure Policy Definitions & Initiatives supplied by the Azure Landing Zones conceptual architecture and reference implementation defined [here](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/architecture) to the specified Management Group.
-
-For a list of the custom policy definitions that are deployed, please see the below links:
-
-- [Policies included in Enterprise-Scale Landing Zones reference implementations](https://github.com/Azure/Enterprise-Scale/blob/main/docs/ESLZ-Policies.md)
-- [Enterprise Scale - What's New?](https://github.com/Azure/Enterprise-Scale/wiki/Whats-new)
+This module deploys the Azure Policy Assignments to the specified Management Group and also assigns the relevant RBAC for the system-assigned Managed Identities created for policies that require them (e.g DeployIfNotExist & Modify effect policies).
 
 ## Parameters
 
 The module requires the following inputs:
 
- Parameter | Description | Requirement | Example
------------ | ----------- | ----------- | -------
-parTargetManagementGroupID | The management group scope to which the the policy definitions will be stored/deployed to. This management group must already exist before deploying this bicep module. | Mandatory input | `alz`
+ Parameter | Description | Requirement | Example | Default Value
+----------- | ----------- | ----------- | ------- | -------------
+parPolicyAssignmentName | The name of the policy assignment. | Mandatory input. Can only be a maximum of 24 characters in length as per: [Naming rules and restrictions for Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftauthorization) | `Deny-Public-IP` | None
+parPolicyAssignmentDisplayName | The display name of the policy assignment | Mandatory input | `Deny the creation of Public IPs` | None
+parPolicyAssignmentDescription | The description of the policy assignment | Mandatory input | `This policy denies creation of Public IPs under the assigned scope.` | None
+parPolicyAssignmentDefinitionID | The policy definition ID (full resource ID) for the policy to be assigned. | Mandatory input | `/providers/Microsoft.Authorization/policyDefinitions/9d0a794f-1444-4c96-9534-e35fc8c39c91` (built-in) or `/providers/Microsoft.Management/managementgroups/alz/providers/Microsoft.Authorization/policyDefinitions/Deny-Public-IP` (custom) | None
+parPolicyAssignmentParameters | An object containing the parameter values for the policy to be assigned. | Mandatory input | `{"value":{"emailSecurityContact":{"value":"security_contact@replace_me"}}}` | `{}`
+parPolicyAssignmentNonComplianceMessages | An array containing object/s for the non-compliance messages for the policy to be assigned. See [Non-compliance messages](https://docs.microsoft.com/azure/governance/policy/concepts/assignment-structure#non-compliance-messages) for more details on use. | Mandatory input | `[{"message":"Default message"}]` | `[]`
+parPolicyAssignmentNotScopes | An array containing a list of scope Resource IDs to be excluded for the policy assignment. | Mandatory input | `["/providers/Microsoft.Management/managementgroups/alz","/providers/Microsoft.Management/managementgroups/alz-sandbox"]` | `[]`
+parPolicyAssignmentEnforcementMode | The enforcement mode for the policy assignment. See [Enforcement Mode](https://aka.ms/EnforcementMode) for more details on use. | Not mandatory. Will only allow values of `Default` or `DoNotEnforce` | `Default` | `Default`
+parPolicyAssignmentIdentityType | The type of identity to be created and associated with the policy assignment. Only required for `Modify` and `DeployIfNotExists` policy effects | Not mandatory. Will only allow values of `None` or `SystemAssigned` | `None`
+parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs | An array containing a list of additional Management Group IDs (as the Management Group deployed to is included automatically) that the System-assigned Managed Identity, associated to the policy assignment, will be assigned to additionally. | Not mandatory | `["alz","alz-sandbox"]` | `[]`
+parPolicyAssignmentIdentityRoleAssignmentsSubs | An array containing a list of Subscription IDs that the System-assigned Managed Identity associated to the policy assignment will be assigned to in addition to the Management Group the policy is deployed/assigned to. | Not mandatory | `["d4417fe6-3370-48e2-ab38-c7b926526fe7","fbec3ec1-292a-4207-831c-bd62fdb7b468"]` | `[]`
+parPolicyAssignmentIdentityRoleDefinitionIDs | An array containing a list of RBAC role definition IDs to be assigned to the Managed Identity that is created and associated with the policy assignment. Only required for `Modify` and `DeployIfNotExists` policy effects | Not mandatory. But required for a `Modify` and `DeployIfNotExists` policy effect assignment. | `alz` | `[]`
 
 ## Outputs
 
@@ -21,13 +27,13 @@ The module does not generate any outputs.
 
 ## Deployment
 
-In this example, the custom roles will be deployed to the `alz` management group (the intermediate root management group).
-
-The input parameter file `custom-policy-definitions.parameters.example.json` defines the target management group to which the custom policy definitions will be deployed to. In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation.
-
 > For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
-### Azure CLI
+### Deny Effect
+
+In this example, the `Deny-PublicIP` custom policy definition will be deployed/assigned to the `alz-landingzones` management group.
+
+#### Azure CLI
 
 ```bash
 az deployment mg create \
@@ -37,7 +43,7 @@ az deployment mg create \
   --management-group-id 'alz-landingzones'
 ```
 
-### PowerShell
+#### PowerShell
 
 ```powershell
 New-AzManagementGroupDeployment `
@@ -47,7 +53,28 @@ New-AzManagementGroupDeployment `
   -ManagementGroupId 'alz-landingzones'
 ```
 
-![Example Deployment Output](media/example-deployment-output.png "Example Deployment Output")
+### DeployIfNotExists Effect
+
+In this example, the `Deploy-ASC-Config` custom policy definition will be deployed/assigned to the `alz-landingzones` management group (intermediate root management group). And the managed identity associated with the policy will also be assigned to the `alz-platform` management group, as defined in the parameter file: `policy-assignment-management-group.parameters.example-dine.json`
+#### Azure CLI
+
+```bash
+az deployment mg create \
+  --template-file infra-as-code/bicep/modules/reusable/policy-assignments/policy-assignment-management-group.bicep \
+  --parameters @infra-as-code/bicep/modules/reusable/policy-assignments/policy-assignment-management-group.parameters.example-dine.json \
+  --location eastus \
+  --management-group-id 'alz-landingzones'
+```
+
+#### PowerShell
+
+```powershell
+New-AzManagementGroupDeployment `
+  -TemplateFile infra-as-code/bicep/modules/reusable/policy-assignments/policy-assignment-management-group.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/reusable/policy-assignments/policy-assignment-management-group.parameters.example-dine.json `
+  -Location eastus `
+  -ManagementGroupId 'alz-landingzones'
+```
 
 ## Bicep Visualizer
 

@@ -15,10 +15,10 @@ param parPolicyAssignmentName string
 @description('The display name of the policy assignment. e.g. "Deny the creation of Public IPs"')
 param parPolicyAssignmentDisplayName string
 
-@description('The desription of the policy assignment. e.g. "This policy denies creation of Public IPs under the assigned scope."')
+@description('The description of the policy assignment. e.g. "This policy denies creation of Public IPs under the assigned scope."')
 param parPolicyAssignmentDescription string
 
-@description('The policy definition ID for the policy to be assigned. e.g. "/providers/Microsoft.Authorization/policyDefinitions/9d0a794f-1444-4c96-9534-e35fc8c39c91." or "/providers/Microsoft.Management/managementgroups/alz/providers/Microsoft.Authorization/policyDefinitions/Deny-Public-IP"')
+@description('The policy definition ID for the policy to be assigned. e.g. "/providers/Microsoft.Authorization/policyDefinitions/9d0a794f-1444-4c96-9534-e35fc8c39c91" or "/providers/Microsoft.Management/managementgroups/alz/providers/Microsoft.Authorization/policyDefinitions/Deny-Public-IP"')
 param parPolicyAssignmentDefinitionID string
 
 @description('An object containing the parameter values for the policy to be assigned. DEFAULT VALUE = {}')
@@ -41,16 +41,16 @@ param parPolicyAssignmentEnforcementMode string = 'Default'
   'None'
   'SystemAssigned'
 ])
-@description('The type of identity to be created and assoiated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects . DEAFULT VALUE = "None"')
+@description('The type of identity to be created and associated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects. DEAFULT VALUE = "None"')
 param parPolicyAssignmentIdentityType string = 'None'
 
-@description('An array containing a list of addititonal Management Group IDs, as the scope deployed to is inlcuded automatically, that the System-assigned Managed Identity associated to the policy assignment will be assigned to. e.g. [\'alz\', \'alz-sandbox\' ]. DEFAULT VALUE = [ <Management Group You Are Deploying To> ]')
+@description('An array containing a list of additional Management Group IDs (as the Management Group deployed to is included automatically) that the System-assigned Managed Identity, associated to the policy assignment, will be assigned to additionally. e.g. [\'alz\', \'alz-sandbox\' ]. DEFAULT VALUE = [ <Management Group You Are Deploying To> ]')
 param parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs array = []
 
-@description('An array containing a list of Subscription IDs that the System-assigned Managed Identity associated to the policy assignment will be assigned to. e.g. [\'8200b669-cbc6-4e6c-b6d8-f4797f924074\', \'7d58dc5d-93dc-43cd-94fc-57da2e74af0d\' ]. DEFAULT VALUE = []')
+@description('An array containing a list of Subscription IDs that the System-assigned Managed Identity associated to the policy assignment will be assigned to in addition to the Management Group the policy is deployed/assigned to. e.g. [\'8200b669-cbc6-4e6c-b6d8-f4797f924074\', \'7d58dc5d-93dc-43cd-94fc-57da2e74af0d\' ]. DEFAULT VALUE = []')
 param parPolicyAssignmentIdentityRoleAssignmentsSubs array = []
 
-@description('An array containing a list of RBAC role definition IDs to be assigned to the identity to be created and assoiated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects . e.g. [\'/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c\']. DEFAULT VALUE = []')
+@description('An array containing a list of RBAC role definition IDs to be assigned to the Managed Identity that is created and associated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects. e.g. [\'/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c\']. DEFAULT VALUE = []')
 param parPolicyAssignmentIdentityRoleDefinitionIDs array = []
 
 var varPolicyIdentity = parPolicyAssignmentIdentityType == 'SystemAssigned' ? 'SystemAssigned' : 'None'
