@@ -11,7 +11,7 @@
         "value": "Modify"
       },
       "ddosPlan": {
-        "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/${root_scope_id}-mgmt/providers/Microsoft.Network/ddosProtectionPlans/${root_scope_id}-ddos"
+        "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/${parTopLevelManagementGroupPrefix}-mgmt/providers/Microsoft.Network/ddosProtectionPlans/${parTopLevelManagementGroupPrefix}-ddos"
       }
     },
     "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d",

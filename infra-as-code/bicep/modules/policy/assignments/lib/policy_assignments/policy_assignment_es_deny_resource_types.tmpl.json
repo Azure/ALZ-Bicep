@@ -9,9 +9,6 @@
     "parameters": {
       "effect": {
         "value": "deny"
-      },
-      "listOfResourceTypesNotAllowed": {
-        "value": []
       }
     },
     "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/6c112d4e-5bc7-47ae-a041-ea2d9dccd749",

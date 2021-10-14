@@ -14,13 +14,13 @@
         "value": "security_contact@replace_me"
       },
       "logAnalytics": {
-        "value": "${root_scope_id}-la"
+        "value": "${parTopLevelManagementGroupPrefix}-la"
       },
       "ascExportResourceGroupName": {
-        "value": "${root_scope_id}-asc-export"
+        "value": "${parTopLevelManagementGroupPrefix}-asc-export"
       },
       "ascExportResourceGroupLocation": {
-        "value": "${default_location}"
+        "value": "${parDefaultRegion}"
       },
       "pricingTierContainerRegistry": {
         "value": "Free"

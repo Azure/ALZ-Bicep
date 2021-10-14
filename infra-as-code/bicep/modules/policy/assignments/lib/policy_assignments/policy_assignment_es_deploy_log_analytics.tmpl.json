@@ -11,16 +11,16 @@
         "value": "DeployIfNotExists"
       },
       "workspaceName": {
-        "value": "${root_scope_id}-la"
+        "value": "${parTopLevelManagementGroupPrefix}-la"
       },
       "automationAccountName": {
-        "value": "${root_scope_id}-automation"
+        "value": "${parTopLevelManagementGroupPrefix}-automation"
       },
       "workspaceRegion": {
-        "value": "${default_location}"
+        "value": "${parDefaultRegion}"
       },
       "automationRegion": {
-        "value": "${default_location}"
+        "value": "${parDefaultRegion}"
       },
       "dataRetention": {
         "value": "30"
@@ -29,7 +29,7 @@
         "value": "pergb2018"
       },
       "rgName": {
-        "value": "${root_scope_id}-mgmt"
+        "value": "${parTopLevelManagementGroupPrefix}-mgmt"
       }
     },
     "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8e3e61b3-0b32-22d5-4edf-55f87fdb5955",
