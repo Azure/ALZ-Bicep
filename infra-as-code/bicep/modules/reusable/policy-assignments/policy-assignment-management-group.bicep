@@ -55,7 +55,7 @@ param parPolicyAssignmentIdentityRoleDefinitionIDs array = []
 
 var varPolicyIdentity = parPolicyAssignmentIdentityType == 'SystemAssigned' ? 'SystemAssigned' : 'None'
 
-var varPolicyIdentityLocation = parPolicyAssignmentIdentityType == 'SystemAssigned' ? deployment().location : json('null')
+var varPolicyIdentityLocation = parPolicyAssignmentIdentityType == 'SystemAssigned' ? deployment().location : deployment().location
 
 var varPolicyAssignmentIdentityRoleAssignmentsMGsConverged = union(parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs, (array(modGetManagementGroupName.outputs.outManagementGroupName)))
 
