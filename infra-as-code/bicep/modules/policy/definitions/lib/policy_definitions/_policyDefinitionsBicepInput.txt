@@ -83,6 +83,10 @@
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_machinelearning_publicaccesswhenbehindvnet.json'))
 }
 {
+  name: 'Deny-MachineLearning-PublicNetworkAccess'
+  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_machinelearning_publicnetworkaccess.json'))
+}
+{
   name: 'Deny-MySql-http'
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_mysql_http.json'))
 }

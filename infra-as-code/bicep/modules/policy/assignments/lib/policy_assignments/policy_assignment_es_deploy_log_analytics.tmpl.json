@@ -1,0 +1,43 @@
+{
+  "name": "Deploy-Log-Analytics",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "Deploy-Log-Analytics.",
+    "displayName": "Deploy-Log-Analytics",
+    "notScopes": [],
+    "parameters": {
+      "effect": {
+        "value": "DeployIfNotExists"
+      },
+      "workspaceName": {
+        "value": "${parTopLevelManagementGroupPrefix}-la"
+      },
+      "automationAccountName": {
+        "value": "${parTopLevelManagementGroupPrefix}-automation"
+      },
+      "workspaceRegion": {
+        "value": "${parDefaultRegion}"
+      },
+      "automationRegion": {
+        "value": "${parDefaultRegion}"
+      },
+      "dataRetention": {
+        "value": "30"
+      },
+      "sku": {
+        "value": "pergb2018"
+      },
+      "rgName": {
+        "value": "${parTopLevelManagementGroupPrefix}-mgmt"
+      }
+    },
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8e3e61b3-0b32-22d5-4edf-55f87fdb5955",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

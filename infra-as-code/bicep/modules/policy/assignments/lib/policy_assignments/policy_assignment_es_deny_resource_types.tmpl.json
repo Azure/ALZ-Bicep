@@ -1,0 +1,22 @@
+{
+  "name": "Deny-Resource-Types",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "Specifies the Resource Types to deny deployment by policy.",
+    "displayName": "Deny-Resource-Types",
+    "notScopes": [],
+    "parameters": {
+      "effect": {
+        "value": "deny"
+      }
+    },
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/6c112d4e-5bc7-47ae-a041-ea2d9dccd749",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "None"
+  }
+}

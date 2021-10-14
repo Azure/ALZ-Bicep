@@ -7,4 +7,5 @@ Welcome the wiki of the ALZ Bicep staging repo. This repo and wiki are only for 
 ## Navigation
 
 * [Home](./Home)
+* [Deployment Flow](./DeploymentFlow)
 * [Contributing](./Contributing)

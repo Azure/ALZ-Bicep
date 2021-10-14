@@ -2,7 +2,7 @@
 SUMMARY: This PowerShell script helps with the authoring of the policy definiton module by outputting information required for the variables within the module.
 DESCRIPTION: This PowerShell script outputs the Name & Path to a Bicep strucutred .txt file named '_policyDefinitionsBicepInput.txt' and '_policySetDefinitionsBicepInput.txt' respectively. It also creates a parameters file for each of the policy set definitions. It also outputs the number of policies definition and set definition files to the console for easier reviewing as part of the PR process.
 AUTHOR/S: jtracey93
-VERSION: 1.4.2
+VERSION: 1.5.0
 #>
 
 # Policy Definitions
@@ -110,3 +110,24 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/l
 $policyDefCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions" -Filter "*.json" -Exclude "*.parameters.json" | Measure-Object
 $policyDefCountString = $policyDefCount.Count
 Write-Information "====> Policy Set/Initiative Definitions Total: $policyDefCountString" -InformationAction Continue
+
+# Policy Asssignments
+
+Write-Information "====> Creating/Emptying '_policyAssignmentsBicepInput.txt'" -InformationAction Continue
+Set-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Value $null -Encoding "utf8"
+
+Write-Information "====> Looping Through Policy Assignments:" -InformationAction Continue
+Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments" -Filter "*.json" | ForEach-Object {
+    $policyAssignment = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
+    
+    $policyAssignmentName = $policyAssignment.name
+    $policyAssignmentDefinitionID = $policyAssignment.properties.policyDefinitionId
+    $fileName = $_.Name
+
+    Write-Information "==> Adding '$policyAssignmentName' to '$PWD/_policyAssignmentsBicepInput.txt'" -InformationAction Continue
+    Add-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: '$policyAssignmentName'`r`n  definitionID: '$policyAssignmentDefinitionID'`r`n  libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/$fileName'))`r`n}"
+}
+
+$policyAssignmentCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments" -Filter "*.json" | Measure-Object 
+$policyAssignmentCountString = $policyAssignmentCount.Count
+Write-Information "====> Policy Assignments Total: $policyAssignmentCountString" -InformationAction Continue
