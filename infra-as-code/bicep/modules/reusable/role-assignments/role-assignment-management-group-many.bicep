@@ -7,8 +7,8 @@ DESCRIPTION:
   * Service Principals
   * Security Groups
 
-AUTHOR/S: SenthuranSivananthan
-VERSION: 1.0.0
+AUTHOR/S: SenthuranSivananthan, jtracey93
+VERSION: 1.1.0
 */
 targetScope = 'managementGroup'
 
@@ -29,7 +29,7 @@ param parAssigneePrincipalType string
 param parAssigneeObjectId string
 
 module modRoleAssignment 'role-assignment-management-group.bicep' = [for parManagementGroupId in parManagementGroupIds: {
-  name: 'rbac-assign-${uniqueString(parManagementGroupId, parAssigneeObjectId)}'
+  name: 'rbac-assign-${uniqueString(parManagementGroupId, parAssigneeObjectId, parRoleDefinitionId)}'
   scope: managementGroup(parManagementGroupId)
   params: {
     parRoleAssignmentNameGuid: guid(parManagementGroupId, parRoleDefinitionId, parAssigneeObjectId)
