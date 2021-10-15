@@ -101,12 +101,38 @@ param parHubNetworkName string = '${parCompanyPrefix}-hub-${resourceGroup().loca
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
 param parAzureFirewallName string ='${parCompanyPrefix}-azure-firewall'
 
+@description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
+param parFirewallPolicyName string ='${parCompanyPrefix}-azure-firewall-policy'
+
+@description('Azure Firewall Policy Intel Mode. Default: Alert')
+@allowed([
+  'Alert'
+  'Deny'
+  'Off'
+])
+param parFirewallPolicyIntelMode string ='Alert'
+
+@description('Azure Firewall Intrusion Detection Mode. Default: Alert')
+@allowed([
+  'Alert'
+  'Deny'
+  'Off'
+])
+param parFirewallPolicyIntrusionDetection string ='Alert'
+
 @description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
 @allowed([
   'Standard'
   'Premium'
 ])
 param parAzureFirewallTier string = 'Standard'
+
+@description('Azure Firewall Policy associated with the Firewall to deploy. Default: Standard ')
+@allowed([
+  'Standard'
+  'Premium'
+])
+param parAzureFirewallPolicySku string = 'Standard'
 
 @description('Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable')
 param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
@@ -333,64 +359,23 @@ module modAzureFirewallPublicIP '../reusable/public-ip/public-ip.bicep' = if(par
 }
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
-// There is a minimum subnet requirement of /26 prefix.  
-resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(parAzureFirewallEnabled){
-  name: parAzureFirewallName
-  location: resourceGroup().location
-  tags: parTags
-  properties:{
-    networkRuleCollections: [
-      {
-        name: 'VmInternetAccess'
-        properties: {
-          priority: 101
-          action: {
-            type: 'Allow'
-          }
-          rules: [
-            {
-              name: 'AllowVMAppAccess'
-              description: 'Allows VM access to the web'
-              protocols: [
-                'TCP'
-              ]
-              sourceAddresses: [
-                parHubNetworkAddressPrefix
-              ]
-              destinationAddresses: [
-                '*'
-              ]
-              destinationPorts: [
-                '80'
-                '443'
-              ]
-            }
-          ]
-        }
-      }
-    ]
-    ipConfigurations: [
-      {
-        name: 'ipconfig1'
-        properties: {
-          subnet: {
-            id: resAzureFirewallSubnetRef.id
-          }
-          publicIPAddress: {
-            id: modAzureFirewallPublicIP.outputs.outPublicIPID
-          }
-        }
-      }
-    ]
-    threatIntelMode: 'Alert'
-    sku: {
-      name: 'AZFW_VNet'
-      tier: parAzureFirewallTier
-    }
-    additionalProperties: {
-       'Network.DNS.EnableProxy': '${parNetworkDNSEnableProxy}'
+// There is a minimum subnet requirement of /26 prefix. 
+module modAzureFirewall '../reusable/azure-firewall/azure-firewall.bicep' = if(parAzureFirewallEnabled) {
+  name: 'deploy-AzureFirewall'
+  params:{
+    parAzureFirewallName: parAzureFirewallName
+    parFirewallPolicyName: parFirewallPolicyName
+    parAzureFirewallPublicIPID: modAzureFirewallPublicIP.outputs.outPublicIPID
+    parAzureFirewallSubnetID: resAzureFirewallSubnetRef.id
+    parFirewallPolicyEnableProxy: parNetworkDNSEnableProxy
+    parFirewallPolicyIntelMode: parFirewallPolicyIntelMode
+    parFirewallPolicyIntrusionDetection: parFirewallPolicyIntrusionDetection
+    parFirewallPolicySku: parAzureFirewallPolicySku
+    parFirewallTier: parAzureFirewallTier
+    parTags: {
     }
   }
+
 }
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
@@ -405,14 +390,13 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parAzu
         properties: {
           addressPrefix: '0.0.0.0/0'
           nextHopType: 'VirtualAppliance'
-          nextHopIpAddress: parAzureFirewallEnabled ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress : ''
+          nextHopIpAddress: parAzureFirewallEnabled ? modAzureFirewall.outputs.outAzureFirewallPrivateIp : ''
         }
       }
     ]
     disableBgpRoutePropagation: pardisableBGPRoutePropagation
   }
 }
-
 
 resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: if(parPrivateDNSZonesEnabled) {
   name: privateDnsZone
@@ -434,7 +418,7 @@ dependsOn: resPrivateDnsZones
 }]
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
-output outAzureFirewallPrivateIP string = parAzureFirewallEnabled ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress : ''
+output outAzureFirewallPrivateIP string = parAzureFirewallEnabled ? modAzureFirewall.outputs.outAzureFirewallPrivateIp : ''
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 output outAzureFirewallName string = parAzureFirewallEnabled ? parAzureFirewallName : ''
