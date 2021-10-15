@@ -11,7 +11,7 @@ env:
   branch_name: "patch-policy-library"
   az_accounts_minimum_version: "2.2.3"
   pr_title: "Update Policy Library (automated)"
-  pr_body: "This is an automated 'pull_request' containing updates to the library templates stored in `/infra-as-code/bicep/modules/policy/definitions/lib` & `/infra-as-code/bicep/modules/policy/assignments/lib`.\nPlease review the 'files changed' tab to review changes."
+  pr_body: "This is an automated 'pull_request' containing updates to the library templates stored in '/infra-as-code/bicep/modules/policy/definitions/lib' & '/infra-as-code/bicep/modules/policy/assignments/lib'.\nPlease review the 'files changed' tab to review changes."
 
 jobs:
   update-templates:
