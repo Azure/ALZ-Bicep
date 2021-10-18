@@ -21,6 +21,8 @@ The module requires the following inputs:
 parBastionEnabled | bool| true |Switch to enable deployment Bastion Service  | None | true
 parDdosEnabled | bool | true | Switch to enable deployment of distributed denial of service attacks service | None | true
 parAzureFirewallEnabled | bool | true | Switch to enable deployment Azure Firewall | None | true 
+parNetworkDNSEnableProxy | bool | true | Switch to enable Proxy DNS through Firewall | None | true
+pardisableBGPRoutePropagation | bool | true | Switch to enable BGP Route Propogation | None | true
 parPrivateDNSZonesEnabled | bool | true | Switch to enable deployment of Azure Private Dns Zones | None | true
 parGatewayArray | array | 'Vpn' | Array of Gateways to be deployed. Array will consist of one or two items.  Specifically Vpn and/or ExpressRoute Default: Vpn' | None |`['Vpn', 'ExpressRoute']`
 parCompanyPrefix | string | alz | Prefix value which will be pre-appended to all resource names | 1-10 char | alz 
@@ -34,6 +36,10 @@ parHubNetworkAddressPrefix | string | 10.10.0.0/16 |CIDR range for Hub Network| 
 parHubNetworkName | string | ${parCompanyPrefix}-hub-${resourceGroup().location} |Name prefix for Virtual Network.  Prefix will be appended with the region.| 2-50 char | alz-hub-eastus2
 parAzureFirewallName | string | ${parCompanyPrefix}-azure-firewall | Name associate with Azure Firewall | 1-80 char | alz-azure-firewall
 parAzureFirewallTier | string | Standard | Tier associated with the Firewall to be deployed. | Standard or Premium | Premium
+parAzureFirewallPolicySku | string | Standard | Azure Firewall Policy Sku associated with the Firewall to deploy. | Standard or Premium | Premium
+parFirewallPolicyName | string |${parCompanyPrefix}-firewall-policy | Name associated with Azure Firewall Policy | 1-80 char | alz-firewall-policy
+parFirewallPolicyIntelMode string | Alert | Azure Firewall Policy Intel Mode | Alert, Deny, Off | Alert
+parFirewallPolicyIntrusionDetection | Alert | Azure Firewally Intrusion Detections| RequiresPremium Sku | Alert
 parHubRouteTableName | string | ${parCompanyPrefix}-hub-routetable | Name of route table to be associated with Hub Network | 1-80 char | alz-hub-routetable
 parGatewayArray | array| `[{"name":"alz-Vpn-Gateway","gatewaytype":"Vpn","sku":"VpnGw1","vpntype":"RouteBased","generation":"Generation2","enableBgp":false,"activeActive":false,"enableBgpRouteTranslationForNat":false,"enableDnsForwarding":false,"asn":"65515","bgpPeeringAddress":"","bgpsettings":{"asn":"65515","bgpPeeringAddress":"","peerWeight":"5"}},{"name":"alz-ExpressRoute-Gateway","gatewaytype":"ExpressRoute","sku":"ErGw1AZ","vpntype":"RouteBased","generation":"None","enableBgp":false,"activeActive":false,"enableBgpRouteTranslationForNat":false,"enableDnsForwarding":false,"asn":"65515","bgpPeeringAddress":"","bgpsettings":{"asn":"65515","bgpPeeringAddress":"","peerWeight":"5"}}]` | Array of Gateways to create including the properties of the gateway. | None | See Default
 parSubnets | array | AzureBastionSubnet, GatewaySubnet, AzureFirewallSubnet | Array of objects to providing for dynamic set of subnets | Must provide array of objects | `[{"name":"AzureBastionSubnet","ipAddressRange":"10.20.15.0/24"},{"name":"GatewaySubnet","ipAddressRange":"10.20.252.0/24"},{"name":"AzureFirewallSubnet","ipAddressRange":"10.20.254.0/24"}]`

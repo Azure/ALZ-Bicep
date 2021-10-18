@@ -11,6 +11,12 @@
       "parAzureFirewallEnabled": {
           "value": true 
       },
+      "parNetworkDNSEnableProxy": {
+          "value": true
+      },
+      "pardisableBGPRoutePropagation":{
+          "value": true
+      },
       "parPrivateDNSZonesEnabled": {
           "value": true
       },
@@ -80,7 +86,20 @@
           "value": "alz-azure-firewall"
       },
       "parAzureFirewallTier": {
-        "value": "Standard"
+          "value": "Premium"
+      },
+      "parAzureFirewallPolicySku":{
+          "value": "Premium"
+      },
+
+      "parFirewallPolicyName": {
+          "value": "alz-firewall-policy"
+      },
+      "parFirewallPolicyIntelMode" :{
+          "value": "Alert"
+      },
+      "parFirewallPolicyIntrusionDetection":{
+          "value": "Alert"
       },
       "parHubRouteTableName": {
           "value": "alz-hub-routetable"

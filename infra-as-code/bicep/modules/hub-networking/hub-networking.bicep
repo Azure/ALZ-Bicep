@@ -101,7 +101,7 @@ param parHubNetworkName string = '${parCompanyPrefix}-hub-${resourceGroup().loca
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
 param parAzureFirewallName string ='${parCompanyPrefix}-azure-firewall'
 
-@description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
+@description('Azure Firewall Policy Name. Default: {parCompanyPrefix}-azure-firewall ')
 param parFirewallPolicyName string ='${parCompanyPrefix}-azure-firewall-policy'
 
 @description('Azure Firewall Policy Intel Mode. Default: Alert')
@@ -125,14 +125,14 @@ param parFirewallPolicyIntrusionDetection string ='Alert'
   'Standard'
   'Premium'
 ])
-param parAzureFirewallTier string = 'Standard'
+param parAzureFirewallTier string = 'Premium'
 
-@description('Azure Firewall Policy associated with the Firewall to deploy. Default: Standard ')
+@description('Azure Firewall Policy Sku associated with the Firewall to deploy. Default: Standard ')
 @allowed([
   'Standard'
   'Premium'
 ])
-param parAzureFirewallPolicySku string = 'Standard'
+param parAzureFirewallPolicySku string = 'Premium'
 
 @description('Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable')
 param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
@@ -372,8 +372,7 @@ module modAzureFirewall '../reusable/azure-firewall/azure-firewall.bicep' = if(p
     parFirewallPolicyIntrusionDetection: parFirewallPolicyIntrusionDetection
     parFirewallPolicySku: parAzureFirewallPolicySku
     parFirewallTier: parAzureFirewallTier
-    parTags: {
-    }
+    parTags: parTags
   }
 
 }

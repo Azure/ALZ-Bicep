@@ -10,7 +10,7 @@ VERSION: 1.0.0
 @description('Azure Firewall Name. Default: None ')
 param parAzureFirewallName string
 
-@description('Azure Region to deploy Public IP Address to. Default: Current Resource Group')
+@description('Azure Region to deploy Azure Firewall to. Default: Current Resource Group')
 param parLocation string = resourceGroup().location
 
 @description('Tags you would like to be applied to all resources in this module. Default: empty array')
@@ -42,7 +42,7 @@ param parFirewallTier string
 @description('Switch which allos DNS Proxy to be enabled on the virtual network. Default: none')
 param parFirewallPolicyEnableProxy bool = true
 
-@description('Azure Firewall threat Intel Mode. Default: Alert')
+@description('Azure Firewall Intrusion Detection Mode. Default: Alert')
 @allowed([
   'Alert'
   'Deny'
@@ -58,20 +58,22 @@ param parFirewallPolicyIntrusionDetection string = 'Alert'
 ])
 param parFirewallPolicyIntelMode string = 'Alert'
 
+var varIntrusionDetection  = {
+  mode: parFirewallPolicyIntrusionDetection 
+}
+
 resource resAzureFirewallPolicy 'Microsoft.Network/firewallPolicies@2021-02-01' = {
   name:parFirewallPolicyName
   location: parLocation
   tags: parTags
   properties: {
     sku: {
-      tier: parFirewallPolicySku
+      tier:(parFirewallTier == 'Standard' ) ? 'Standard' : parFirewallPolicySku 
     }
     dnsSettings: {
       enableProxy: parFirewallPolicyEnableProxy
     }
-    intrusionDetection: {
-      mode: parFirewallPolicyIntrusionDetection
-    }
+    intrusionDetection: (parFirewallTier == 'Premium' ) ? varIntrusionDetection : null
     threatIntelMode: parFirewallPolicyIntelMode
   }
 } 
