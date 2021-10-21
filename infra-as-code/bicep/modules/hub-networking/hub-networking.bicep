@@ -101,7 +101,7 @@ param parHubNetworkName string = '${parCompanyPrefix}-hub-${resourceGroup().loca
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
 param parAzureFirewallName string ='${parCompanyPrefix}-azure-firewall'
 
-@description('Azure Firewall Policy Name. Default: {parCompanyPrefix}-azure-firewall ')
+@description('Azure Firewall Policy Name. Default: {parCompanyPrefix}-azure-firewall-policy')
 param parFirewallPolicyName string ='${parCompanyPrefix}-azure-firewall-policy'
 
 @description('Azure Firewall Policy Intel Mode. Default: Alert')
@@ -110,7 +110,7 @@ param parFirewallPolicyName string ='${parCompanyPrefix}-azure-firewall-policy'
   'Deny'
   'Off'
 ])
-param parFirewallPolicyIntelMode string ='Alert'
+param parFirewallPolicyIntelMode string = 'Alert'
 
 @description('Azure Firewall Intrusion Detection Mode. Default: Alert')
 @allowed([
@@ -118,16 +118,16 @@ param parFirewallPolicyIntelMode string ='Alert'
   'Deny'
   'Off'
 ])
-param parFirewallPolicyIntrusionDetection string ='Alert'
+param parFirewallPolicyIntrusionDetection string = 'Alert'
 
-@description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
+@description('Azure Firewall Tier associated with the Firewall to deploy. Default: Premium')
 @allowed([
   'Standard'
   'Premium'
 ])
 param parAzureFirewallTier string = 'Premium'
 
-@description('Azure Firewall Policy Sku associated with the Firewall to deploy. Default: Standard ')
+@description('Azure Firewall Policy Sku associated with the Firewall to deploy. Default: Premium')
 @allowed([
   'Standard'
   'Premium'

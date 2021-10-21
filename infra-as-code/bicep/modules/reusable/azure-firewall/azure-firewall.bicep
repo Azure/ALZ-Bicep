@@ -7,13 +7,13 @@ AUTHOR/S: aultt
 VERSION: 1.0.0
 */
 
-@description('Azure Firewall Name. Default: None ')
+@description('Azure Firewall Name. Default: None')
 param parAzureFirewallName string
 
 @description('Azure Region to deploy Azure Firewall to. Default: Current Resource Group')
 param parLocation string = resourceGroup().location
 
-@description('Tags you would like to be applied to all resources in this module. Default: empty array')
+@description('Tags you would like to be applied to all resources in this module. Default: {}')
 param parTags object = {}
 
 @description('ID of Azure Firewall Subnet to deploy azure firewall to. Default: None')
@@ -30,16 +30,16 @@ param parFirewallPolicyName string
   'Standard'
   'Premium'
 ])
-param parFirewallPolicySku string
+param parFirewallPolicySku string = 'Standard'
 
 @description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
 @allowed([
   'Standard'
   'Premium'
 ])
-param parFirewallTier string
+param parFirewallTier string = 'Standard'
 
-@description('Switch which allos DNS Proxy to be enabled on the virtual network. Default: none')
+@description('Switch which allos DNS Proxy to be enabled on the virtual network. Default: true')
 param parFirewallPolicyEnableProxy bool = true
 
 @description('Azure Firewall Intrusion Detection Mode. Default: Alert')
