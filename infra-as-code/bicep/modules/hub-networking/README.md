@@ -36,7 +36,7 @@ parHubNetworkAddressPrefix | string | 10.10.0.0/16 |CIDR range for Hub Network| 
 parHubNetworkName | string | ${parCompanyPrefix}-hub-${resourceGroup().location} |Name prefix for Virtual Network.  Prefix will be appended with the region.| 2-50 char | alz-hub-eastus2
 parAzureFirewallName | string | ${parCompanyPrefix}-azure-firewall | Name associate with Azure Firewall | 1-80 char | alz-azure-firewall
 parAzureFirewallTier | string | Standard | Tier associated with the Firewall to be deployed. | Standard or Premium | Premium
-parAzureFirewallPolicyTier | string | Standard | Azure Firewall Policy Sku associated with the Firewall to deploy. | Standard or Premium | Premium
+parAzureFirewallPolicyTier | string | Standard | Azure Firewall Policy Tier associated with the Firewall to deploy. | Standard or Premium | Premium
 parFirewallPolicyName | string |${parCompanyPrefix}-firewall-policy | Name associated with Azure Firewall Policy | 1-80 char | alz-firewall-policy
 parFirewallPolicyIntelMode string | Alert | Azure Firewall Policy Intel Mode | Alert, Deny, Off | Alert
 parFirewallPolicyIntrusionDetection | Alert | Azure Firewally Intrusion Detections| RequiresPremium Sku | Alert
