@@ -95,10 +95,10 @@ param parTags object = {}
 @description('The IP address range for all virtual networks to use. Default: 10.10.0.0/16')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
-@description('Prefix Used for Hub Network. Default: {parCompanyPrefix}-hub-{resourceGroup().location}')
+@description('Prefix Used for Hub Network. Default: \${parCompanyPrefix}-hub-{resourceGroup().location}')
 param parHubNetworkName string = '${parCompanyPrefix}-hub-${resourceGroup().location}'
 
-@description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
+@description('Azure Firewall Name. Default: \${parCompanyPrefix}-azure-firewall ')
 param parAzureFirewallName string ='${parCompanyPrefix}-azure-firewall'
 
 @description('Azure Firewall Policy Name. Default: {parCompanyPrefix}-azure-firewall-policy')
@@ -127,12 +127,12 @@ param parFirewallPolicyIntrusionDetection string = 'Alert'
 ])
 param parAzureFirewallTier string = 'Premium'
 
-@description('Azure Firewall Policy Sku associated with the Firewall to deploy. Default: Premium')
+@description('Azure Firewall Policy Tier associated with the Firewall to deploy. Default: Premium')
 @allowed([
   'Standard'
   'Premium'
 ])
-param parAzureFirewallPolicySku string = 'Premium'
+param parAzureFirewallPolicyTier string = 'Premium'
 
 @description('Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable')
 param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
@@ -370,7 +370,7 @@ module modAzureFirewall '../reusable/azure-firewall/azure-firewall.bicep' = if(p
     parFirewallPolicyEnableProxy: parNetworkDNSEnableProxy
     parFirewallPolicyIntelMode: parFirewallPolicyIntelMode
     parFirewallPolicyIntrusionDetection: parFirewallPolicyIntrusionDetection
-    parFirewallPolicySku: parAzureFirewallPolicySku
+    parFirewallPolicyTier: parAzureFirewallPolicyTier
     parFirewallTier: parAzureFirewallTier
     parTags: parTags
   }

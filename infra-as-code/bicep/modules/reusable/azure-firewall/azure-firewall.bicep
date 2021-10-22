@@ -30,7 +30,7 @@ param parFirewallPolicyName string
   'Standard'
   'Premium'
 ])
-param parFirewallPolicySku string = 'Standard'
+param parFirewallPolicyTier string = 'Standard'
 
 @description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
 @allowed([
@@ -68,7 +68,7 @@ resource resAzureFirewallPolicy 'Microsoft.Network/firewallPolicies@2021-02-01' 
   tags: parTags
   properties: {
     sku: {
-      tier:(parFirewallTier == 'Standard' ) ? 'Standard' : parFirewallPolicySku 
+      tier:(parFirewallTier == 'Standard' ) ? 'Standard' : parFirewallPolicyTier 
     }
     dnsSettings: {
       enableProxy: parFirewallPolicyEnableProxy
