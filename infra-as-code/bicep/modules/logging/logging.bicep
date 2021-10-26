@@ -63,7 +63,7 @@ param parAutomationAccountName string = 'alz-automation-account'
 @description('Automation Account region name. - DEFAULT VALUE: resourceGroup().location')
 param parAutomationAccountRegion string = resourceGroup().location
 
-module modAutomationAccount '../reusable/automation-account/automation-account.bicep' = {
+module modAutomationAccount '../automationAccount/automationAccount.bicep' = {
   name: 'deploy-automation-account'
   params: {
     parName: parAutomationAccountName
@@ -71,7 +71,7 @@ module modAutomationAccount '../reusable/automation-account/automation-account.b
   }
 }
 
-module modLogAnalyticsWorkspace '../reusable/log-analytics-workspace/log-analytics-workspace.bicep' = {
+module modLogAnalyticsWorkspace '../logAnalyticsWorkspace/logAnalyticsWorkspace.bicep' = {
   name: 'deploy-log-analytics-workspace'
   params: {
     parName: parLogAnalyticsWorkspaceName

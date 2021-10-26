@@ -1,44 +1,81 @@
-# Policy Assignments Library
+# Module: Policy Assignments
 
-This directory contains the default policy assignments we make as part of the Azure Landing Zones (aka. Enterprise-scale) in JSON files. These can then be used in variables with the bicep functions of:
+This module deploys the Azure Policy Assignments to the specified Management Group and also assigns the relevant RBAC for the system-assigned Managed Identities created for policies that require them (e.g DeployIfNotExist & Modify effect policies).
 
-- [`json()`](https://docs.microsoft.com/azure/azure-resource-manager/bicep/bicep-functions-object#json)
-- [`loadTextContent()`](https://docs.microsoft.com/azure/azure-resource-manager/bicep/bicep-functions-files#loadtextcontent)
+## Parameters
 
-For example:
+The module requires the following inputs:
 
-```bicep
-var varPolicyAssignmentDenyPublicIP = json(loadTextContent('infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json'))
+ Parameter | Description | Requirement | Example | Default Value
+----------- | ----------- | ----------- | ------- | -------------
+parPolicyAssignmentName | The name of the policy assignment. | Mandatory input. Can only be a maximum of 24 characters in length as per: [Naming rules and restrictions for Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftauthorization) | `Deny-Public-IP` | None
+parPolicyAssignmentDisplayName | The display name of the policy assignment | Mandatory input | `Deny the creation of Public IPs` | None
+parPolicyAssignmentDescription | The description of the policy assignment | Mandatory input | `This policy denies creation of Public IPs under the assigned scope.` | None
+parPolicyAssignmentDefinitionID | The policy definition ID (full resource ID) for the policy to be assigned. | Mandatory input | `/providers/Microsoft.Authorization/policyDefinitions/9d0a794f-1444-4c96-9534-e35fc8c39c91` (built-in) or `/providers/Microsoft.Management/managementgroups/alz/providers/Microsoft.Authorization/policyDefinitions/Deny-Public-IP` (custom) | None
+parPolicyAssignmentParameters | An object containing the parameter values for the policy to be assigned. | Mandatory input | `{"value":{"emailSecurityContact":{"value":"security_contact@replace_me"}}}` | `{}`
+parPolicyAssignmentNonComplianceMessages | An array containing object/s for the non-compliance messages for the policy to be assigned. See [Non-compliance messages](https://docs.microsoft.com/azure/governance/policy/concepts/assignment-structure#non-compliance-messages) for more details on use. | Mandatory input | `[{"message":"Default message"}]` | `[]`
+parPolicyAssignmentNotScopes | An array containing a list of scope Resource IDs to be excluded for the policy assignment. | Mandatory input | `["/providers/Microsoft.Management/managementgroups/alz","/providers/Microsoft.Management/managementgroups/alz-sandbox"]` | `[]`
+parPolicyAssignmentEnforcementMode | The enforcement mode for the policy assignment. See [Enforcement Mode](https://aka.ms/EnforcementMode) for more details on use. | Not mandatory. Will only allow values of `Default` or `DoNotEnforce` | `Default` | `Default`
+parPolicyAssignmentIdentityType | The type of identity to be created and associated with the policy assignment. Only required for `Modify` and `DeployIfNotExists` policy effects | Not mandatory. Will only allow values of `None` or `SystemAssigned` | `None`
+parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs | An array containing a list of additional Management Group IDs (as the Management Group deployed to is included automatically) that the System-assigned Managed Identity, associated to the policy assignment, will be assigned to additionally. | Not mandatory | `["alz","alz-sandbox"]` | `[]`
+parPolicyAssignmentIdentityRoleAssignmentsSubs | An array containing a list of Subscription IDs that the System-assigned Managed Identity associated to the policy assignment will be assigned to in addition to the Management Group the policy is deployed/assigned to. | Not mandatory | `["d4417fe6-3370-48e2-ab38-c7b926526fe7","fbec3ec1-292a-4207-831c-bd62fdb7b468"]` | `[]`
+parPolicyAssignmentIdentityRoleDefinitionIDs | An array containing a list of RBAC role definition IDs to be assigned to the Managed Identity that is created and associated with the policy assignment. Only required for `Modify` and `DeployIfNotExists` policy effects | Not mandatory. But required for a `Modify` and `DeployIfNotExists` policy effect assignment. | `alz` | `[]`
+
+## Outputs
+
+The module does not generate any outputs.
+
+## Deployment
+
+> For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
+
+### Deny Effect
+
+In this example, the `Deny-PublicIP` custom policy definition will be deployed/assigned to the `alz-landingzones` management group.
+
+#### Azure CLI
+
+```bash
+az deployment mg create \
+  --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
+  --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-deny.json \
+  --location eastus \
+  --management-group-id 'alz-landingzones'
 ```
 
-Or you can use the export available in `_policyAssignmentsBicepInput.txt` to copy and paste into a variable to then use to assign policies but manage their properties from the JSON files, like below:
+#### PowerShell
 
-```bicep
-targetScope = 'tenant'
-
-@description('The management group scope to which the policy assignments are to be created at. DEFAULT VALUE = "alz"')
-param parTargetManagementGroupID string = 'alz'
-
-var varTargetManagementGroupResourceID = tenantResourceId('Microsoft.Management/managementGroups', parTargetManagementGroupID)
-
-var varPolicyAssignmentDenyPublicIP = {
-  name: 'Deny-Public-IP'
-  definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP'
-  libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json'))
-}
-
-module modPolicyAssignmentDenyPublicIP '../../reusable/policy-assignments/policy-assignment-management-group.bicep' = {
-  name: 'PolicyAssignmentDenyPublicIP'
-  scope: managementGroup('alz')
-  params: {
-    parPolicyAssignmentDefinitionID: varPolicyAssignmentDenyPublicIP.definitionID
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyPublicIP.libDefinition.properties.description
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPublicIP.libDefinition.properties.displayName
-    parPolicyAssignmentName: varPolicyAssignmentDenyPublicIP.libDefinition.name
-  }
-}
+```powershell
+New-AzManagementGroupDeployment `
+  -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-deny.json `
+  -Location eastus `
+  -ManagementGroupId 'alz-landingzones'
 ```
 
-> You do not have to use this method, but it is provided to you for ease and is used in the orchestration templates.
+### DeployIfNotExists Effect
 
-> You may also extend the library and add your own assignment files in following the pattern shown in the examples above.
+In this example, the `Deploy-ASC-Config` custom policy definition will be deployed/assigned to the `alz-landingzones` management group (intermediate root management group). And the managed identity associated with the policy will also be assigned to the `alz-platform` management group, as defined in the parameter file: `policyAssignmentManagementGroup.parameters.example-dine.json`
+#### Azure CLI
+
+```bash
+az deployment mg create \
+  --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
+  --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-dine.json \
+  --location eastus \
+  --management-group-id 'alz-landingzones'
+```
+
+#### PowerShell
+
+```powershell
+New-AzManagementGroupDeployment `
+  -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-dine.json `
+  -Location eastus `
+  -ManagementGroupId 'alz-landingzones'
+```
+
+## Bicep Visualizer
+
+![Bicep Visualizer](media/bicepVisualizer.png "Bicep Visualizer")
