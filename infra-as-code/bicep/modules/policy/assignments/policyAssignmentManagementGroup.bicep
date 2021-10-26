@@ -77,7 +77,7 @@ resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-
 }
 
 // Handle Managed Identity RBAC Assignments to Management Group scopes based on parameter inputs, if they are not empty and a policy assignment with an identity is required.
-module modPolicyIdentityRoleAssignmentMGsMany '../roleAssignments/roleAssignmentManagementGroupMany.bicep' = [for roles in parPolicyAssignmentIdentityRoleDefinitionIDs: if ((varPolicyIdentity == 'SystemAssigned') && !empty(parPolicyAssignmentIdentityRoleDefinitionIDs)) {
+module modPolicyIdentityRoleAssignmentMGsMany '../../roleAssignments/roleAssignmentManagementGroupMany.bicep' = [for roles in parPolicyAssignmentIdentityRoleDefinitionIDs: if ((varPolicyIdentity == 'SystemAssigned') && !empty(parPolicyAssignmentIdentityRoleDefinitionIDs)) {
   name: 'rbac-assign-mg-policy-${parPolicyAssignmentName}-${uniqueString(parPolicyAssignmentName, roles)}'
   params: {
     parManagementGroupIds: varPolicyAssignmentIdentityRoleAssignmentsMGsConverged
@@ -88,7 +88,7 @@ module modPolicyIdentityRoleAssignmentMGsMany '../roleAssignments/roleAssignment
 }]
 
 // Handle Managed Identity RBAC Assignments to Subscription scopes based on parameter inputs, if they are not empty and a policy assignment with an identity is required.
-module modPolicyIdentityRoleAssignmentSubsMany '../roleAssignments/roleAssignmentSubscriptionMany.bicep' = [for roles in parPolicyAssignmentIdentityRoleDefinitionIDs: if ((varPolicyIdentity == 'SystemAssigned') && !empty(parPolicyAssignmentIdentityRoleDefinitionIDs) && !empty(parPolicyAssignmentIdentityRoleAssignmentsSubs)) {
+module modPolicyIdentityRoleAssignmentSubsMany '../../roleAssignments/roleAssignmentSubscriptionMany.bicep' = [for roles in parPolicyAssignmentIdentityRoleDefinitionIDs: if ((varPolicyIdentity == 'SystemAssigned') && !empty(parPolicyAssignmentIdentityRoleDefinitionIDs) && !empty(parPolicyAssignmentIdentityRoleAssignmentsSubs)) {
   name: 'rbac-assign-sub-policy-${parPolicyAssignmentName}-${uniqueString(parPolicyAssignmentName, roles)}'
   params: {
     parSubscriptionIds: parPolicyAssignmentIdentityRoleAssignmentsSubs
@@ -99,7 +99,7 @@ module modPolicyIdentityRoleAssignmentSubsMany '../roleAssignments/roleAssignmen
 }]
 
 // Get current deployment Management Group name where this module is being deployed to.
-module modGetManagementGroupName '../getManagementGroupName/getManagementGroupName.bicep' = {
+module modGetManagementGroupName '../../getManagementGroupName/getManagementGroupName.bicep' = {
   name: 'getManagementGroupName'
   scope: managementGroup()
 }
