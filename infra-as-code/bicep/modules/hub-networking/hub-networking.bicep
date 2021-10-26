@@ -187,7 +187,7 @@ resource resDDoSProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01
 
 //DDos Protection plan will only be enabled if parDDoSEnabled is true.  
 resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
-  name: parHubNetworkName
+  name: '${parHubNetworkName}'
   location: resourceGroup().location
   properties:{
     addressSpace:{
@@ -196,7 +196,7 @@ resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
       ]
     }
     subnets: varSubnetProperties
-    enableDdosProtection2:parDDoSEnabled
+    enableDdosProtection:parDDoSEnabled
     ddosProtectionPlan: (parDDoSEnabled) ? {
       id: resDDoSProtectionPlan.id
       } : null
