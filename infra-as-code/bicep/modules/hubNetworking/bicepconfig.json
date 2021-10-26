@@ -1,11 +1,11 @@
 {
     "analyzers": {
       "core": {
-        "verbose": false,
+        "verbose": true,
         "enabled": true,
         "rules": {
           "no-hardcoded-env-urls": {
-            "level": "warning",
+            "level": "error",
             "disallowedhosts": [
               "management.core.windows.net",
               "gallery.azure.com",
@@ -32,6 +32,24 @@
             "excludedhosts": [
               "schema.management.azure.com"
             ]
+          },
+          "adminusername-should-not-be-literal": {
+            "level": "error"
+          },
+          "no-unused-params": {
+            "level": "error"
+          },
+          "no-unused-vars": {
+            "level": "error"
+          },
+          "prefer-interpolation": {
+            "level": "error"
+          },
+          "secure-parameter-default": {
+            "level": "error"
+          },
+          "simplify-interpolation": {
+            "level": "error"
           }
         }
       }

@@ -12,22 +12,21 @@ This document outlines the prerequisites, dependencies and flow to help orchestr
 
 ![High Level Deployment Flow](media/high-level-deployment-flow.png)
 
-
 ## Module Deployment Sequence
 
 Modules in this reference implementation must be deployed in the following order to ensure consistency across the environment:
 
-| Order | Module                                    | Description                                                                                                                                                                                 | Prerequisites                                                         | Module Documentation |
-| :---: | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | -------------------- |
-| 1     | Management Groups                         | Configures the management group hierarchy to support Azure Landing Zone reference implementation.                                                                                           | Owner role assignment at `/` root management group.                   | [infra-as-code/bicep/modules/managementGroups/README.md](../../infra-as-code/bicep/modules/managementGroups/README.md)
-| 2     | Custom Role Definitions                   | Configures custom roles based on Cloud Adoption Framework's recommendations at the `organization management group`.                                                                         | Management Groups.                                                    | [infra-as-code/bicep/modules/customRoleDefinitions/README.md](../../infra-as-code/bicep/modules/customRoleDefinitions/README.md)
-| 3     | Custom Policy Definitions                 | Configures Custom Policy Definitions at the `organization management group`.                                                                                                                | Management Groups.                                                    | [infra-as-code/bicep/modules/policy/definitions/README.md](../../infra-as-code/bicep/modules/policy/definitions/README.md)
-| 4     | Logging & Sentinel                        | Configures a centrally managed Log Analytics Workspace, Automation Account and Sentinel in the `Logging` subscription.                                                                      | Management Groups & Subscription for Log Analytics and Sentinel.      | [infra-as-code/bicep/modules/logging/README.md](../../infra-as-code/bicep/modules/logging/README.md)
-| 5     | Built-In and Custom Policy Assignments    | Creates policy assignments to provide governance at scale.                                                                                                                                  | Management Groups & Log Analytics Workspace.                          | TBD
-| 6     | Role Assignments                          | Creates role assignments using built-in and custom role definitions.                                                                                                                        | Management Groups & Subscriptions.                                    | [infra-as-code/bicep/modules/roleAssignments/README.md](../../infra-as-code/bicep/modules/roleAssignments/README.md) |
-| 7     | Subscription Placement                    | Moves one or more subscriptions to the target management group.                                                                                                                             | Management Groups & Subscriptions.                                    | [infra-as-code/bicep/modules/subscriptionPacement/subscriptionPacement.bicep](.././infra-as-code/bicep/modules/subscriptionPacement/subscriptionPacement.bicep)
-| 8     | Hub Networking                            | Creates Hub networking infrastructure with Azure Firewall to support Hub & Spoke network topology in the `Connectivity` subscription.                                                       | Management Groups, Subscription for Hub Networking.                   | [infra-as-code/bicep/modules/hubNetworking/README.md](../../infra-as-code/bicep/modules/hubNetworking/README.md)
-| 9     | Corp Connected Spoke Network              | Creates Spoke networking infrastructure with Virtual Network Peering to support Hub & Spoke network topology.  Spoke subscriptions are used for deploying construction sets and workloads.  | Management Groups, Hub Networking & Subscription for spoke networking | [infra-as-code/bicep/modules/spokeNetworking/README.md](../../infra-as-code/bicep/modules/spokeNetworking/README.md) |
+| Order | Module                                    | Description                                                                                                                                                                                 | Prerequisites                                                          | Module Documentation |
+| :---: | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------  | -------------------- |
+| 1     | Management Groups                         | Configures the management group hierarchy to support Azure Landing Zone reference implementation.                                                                                           | Owner role assignment at `/` root management group.                    | [infra-as-code/bicep/modules/management-groups](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/management-groups)
+| 2     | Custom Role Definitions                   | Configures custom roles based on Cloud Adoption Framework's recommendations at the `organization management group`.                                                                         | Management Groups.                                                     | [infra-as-code/bicep/modules/custom-role-definitions](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/custom-role-definitions)
+| 3     | Custom Policy Definitions                 | Configures Custom Policy Definitions at the `organization management group`.                                                                                                                | Management Groups.                                                     | [infra-as-code/bicep/modules/policy/definitions](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions)
+| 4     | Logging & Sentinel                        | Configures a centrally managed Log Analytics Workspace, Automation Account and Sentinel in the `Logging` subscription.                                                                      | Management Groups & Subscription for Log Analytics and Sentinel.       | [infra-as-code/bicep/modules/logging](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/logging)
+| 5     | Built-In and Custom Policy Assignments    | Creates policy assignments to provide governance at scale.                                                                                                                                  | Management Groups, Log Analytics Workspace & Custom Policy Definitions | [infra-as-code/bicep/modules/reusable/policy-assignments](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/reusable/policy-assignments)
+| 6     | Role Assignments                          | Creates role assignments using built-in and custom role definitions.                                                                                                                        | Management Groups & Subscriptions.                                     | [infra-as-code/bicep/modules/reusable/role-assignments](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/reusable/role-assignments) |
+| 7     | Subscription Placement                    | Moves one or more subscriptions to the target management group.                                                                                                                             | Management Groups & Subscriptions.                                     | [infra-as-code/bicep/modules/reusable/subscription-placement](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/reusable/subscription-placement)
+| 8     | Hub Networking                            | Creates Hub networking infrastructure with Azure Firewall to support Hub & Spoke network topology in the `Connectivity` subscription.                                                       | Management Groups, Subscription for Hub Networking.                    | [infra-as-code/bicep/modules/hub-networking](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/hub-networking)
+| 9     | Corp Connected Spoke Network              | Creates Spoke networking infrastructure with Virtual Network Peering to support Hub & Spoke network topology.  Spoke subscriptions are used for deploying construction sets and workloads.  | Management Groups, Hub Networking & Subscription for spoke networking  | [infra-as-code/bicep/modules/spoke-networking](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/spoke-networking) |
 
 ## Deployment Identity
 
@@ -35,19 +34,15 @@ Modules in this reference implementation must be deployed in the following order
 
 A service principal account is required to automate through Azure DevOps or GitHub Workflows. 
 
-* **Service Principal Name**:  any name (i.e. spn-azure-platform-ops)
+- **Service Principal Name**:  any name (i.e. `spn-azure-platform-ops`)
+- **RBAC Assignment**
+  - Scope:  `/` (Root Management Group)
+  - Role Assignment:  `Owner`
 
-* **RBAC Assignment**
+> See [step-by-step instructions on Azure Docs](https://docs.microsoft.com/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-powershell#required-access) to configure the role assignment at `/` root management group.
 
-    * Scope:  `/` (Root Management Group)
+### Configure Service Principal Account in Azure DevOps or GitHub
 
-    * Role Assignment:  `Owner`
+- Azure DevOps: [Setup Service Connection](https://docs.microsoft.com/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml)
 
-See [step-by-step instructions on Azure Docs](https://docs.microsoft.com/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-powershell#required-access) to configure the role assignment at `/` root management group.
-
-  
-**Configure Service Principal Account in Azure DevOps or GitHub:**
-
-* Azure DevOps: [Setup Service Connection](https://docs.microsoft.com/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml)
-
-* GitHub: [Connect GitHub Actions to Azure](https://docs.microsoft.com/azure/developer/github/connect-from-azure)
+- GitHub: [Connect GitHub Actions to Azure](https://docs.microsoft.com/azure/developer/github/connect-from-azure)
