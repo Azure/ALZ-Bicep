@@ -27,7 +27,7 @@ jobs:
               bicep build $_.FullName
           }
 
-      - name: ARM-TTK Bicep Files
+      - name: ARM-TTK Bicep Parameter Files
         uses: github/super-linter@v4
         env:
           VALIDATE_ALL_CODEBASE: true
