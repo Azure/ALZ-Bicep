@@ -196,7 +196,7 @@ resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
       ]
     }
     subnets: varSubnetProperties
-    enableDdosProtection:parDDoSEnabled
+    enableDdosProtection2:parDDoSEnabled
     ddosProtectionPlan: (parDDoSEnabled) ? {
       id: resDDoSProtectionPlan.id
       } : null
