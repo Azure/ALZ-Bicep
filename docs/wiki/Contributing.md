@@ -167,7 +167,7 @@ To author Bicep modules that are in-line with the requirements for this project,
 - Follows the [Bicep Formatting Guidelines](#bicep-formatting-guidelines) as detailed above
 - A new folder per module in the following directory: `infra-as-code/bicep/modules/...`
   - Choosing the correct folder, beneath the above path, based on whether the module is:
-    - A reusable resource (e.g. a Resource Group) - If so, the path would be: `infra-as-code/bicep/modules/reusable/<module name>`
+    - A reusable resource (e.g. a Resource Group) - If so, the path would be: `infra-as-code/bicep/modules/<module name>`
     - Or whether the module is constructing an ALZ component aligning to the ALZ conceptual architecture - If so, the path would be: `infra-as-code/bicep/modules/alz/<module name>`
 - Each new module folder must contain:
   - A `media` folder that will contain images used in the `README.md`

@@ -83,4 +83,4 @@ New-AzResourceGroupDeployment `
 
 ## Bicep Visualizer
 
-![Bicep Visualizer](media/bicep-visualizer.png "Bicep Visualizer")
+![Bicep Visualizer](media/bicepVisualizer.png "Bicep Visualizer")
