@@ -14,71 +14,78 @@
   },
   "defenderForAppServices": {
     "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierAppServices')]"
+      "effect": {
+        "value": "[[parameters('enableAscForAppServices')]"
       }
     }
   },
   "defenderForArm": {
     "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierArm')]"
+      "effect": {
+        "value": "[[parameters('enableAscForArm')]"
       }
     }
   },
   "defenderForContainerRegistry": {
     "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierContainerRegistry')]"
+      "effect": {
+        "value": "[[parameters('enableAscForRegistries')]"
       }
     }
   },
   "defenderForDns": {
     "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierDns')]"
+      "effect": {
+        "value": "[[parameters('enableAscForDns')]"
       }
     }
   },
   "defenderForKeyVaults": {
     "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierKeyVaults')]"
+      "Effect": {
+        "value": "[[parameters('enableAscForKeyVault')]"
       }
     }
   },
   "defenderForKubernetesService": {
     "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierKubernetesService')]"
+      "effect": {
+        "value": "[[parameters('enableAscForKubernetes')]"
       }
     }
   },
-  "defenderForSqlServers": {
+  "defenderForOssDb": {
     "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierSqlServers')]"
+      "effect": {
+        "value": "[[parameters('enableAscForOssDb')]"
+      }
+    }
+  },
+  "defenderForSqlPaas": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForSql')]"
       }
     }
   },
   "defenderForSqlServerVirtualMachines": {
     "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierSqlServerVirtualMachines')]"
+      "effect": {
+        "value": "[[parameters('enableAscForSqlOnVm')]"
       }
     }
   },
   "defenderForStorageAccounts": {
     "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierStorageAccounts')]"
+      "effect": {
+        "value": "[[parameters('enableAscForStorage')]"
       }
     }
   },
   "defenderForVM": {
     "parameters": {
-      "pricingTier": {
-        "value": "[[parameters('pricingTierVMs')]"
+      "effect": {
+        "value": "[[parameters('enableAscForServers')]"
       }
     }
   },
