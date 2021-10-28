@@ -34,7 +34,7 @@ Modules in this reference implementation must be deployed in the following order
 
 ### Service Principal Account
 
-A service principal account is required to automate through Azure DevOps or GitHub Workflows. 
+A service principal account is required to automate through Azure DevOps or GitHub Workflows.
 
 - **Service Principal Name**:  any name (i.e. `spn-azure-platform-ops`)
 - **RBAC Assignment**
