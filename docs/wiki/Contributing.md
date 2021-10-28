@@ -1,4 +1,6 @@
+<!-- markdownlint-disable -->
 ## Contents
+<!-- markdownlint-restore -->
 
 - [Recommended Learning](#recommended-learning)
   - [Bicep](#bicep)
@@ -42,7 +44,7 @@ To contribute to this project the following tooling is required:
 - [Visual Studio Code](https://code.visualstudio.com/download)
   - [Bicep extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep)
 
-![](media/bicep-vs-code.png)
+![Bicep Logo](media/bicep-vs-code.png)
 
 ### Recommended Tooling
 

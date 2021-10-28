@@ -2,24 +2,23 @@
 
 The Management Groups module deploys a management group hierarchy in a customer's tenant under the `Tenant Root Group`.  This is accomplished through a tenant-scoped Azure Resource Manager (ARM) deployment.  The heirarchy can be modifed by editing `managementGroups.bicep`.  The hierarchy created by the deployment is:
 
-  * Tenant Root Group
-    * Top Level Management Group (defined by parameter `parTopLevelManagementGroupPrefix`)
-      * Platform
-          * Management
-          * Connectivity
-          * Identity
-      * Landing Zones
-          * Corp
-          * Online
-      * Sandbox
-      * Decommissioned
-
+- Tenant Root Group
+  - Top Level Management Group (defined by parameter `parTopLevelManagementGroupPrefix`)
+    - Platform
+      - Management
+      - Connectivity
+      - Identity
+    - Landing Zones
+      - Corp
+      - Online
+    - Sandbox
+    - Decommissioned
 
 ## Parameters
 
 The module requires the following inputs:
 
- Paramenter | Type | Description | Requirements | Example
+Parameter | Type | Description | Requirements | Example
 ----------- | ---- | ----------- | ------------ | -------
 parTopLevelManagementGroupPrefix | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment. | 2-10 characters | `alz` |
 parTopLevelManagementGroupDisplayName | string | Display name for top level management group.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter. | Minimum two characters | `Azure Landing Zones` |
@@ -40,7 +39,6 @@ outLandingZonesCorpMGId | string | /providers/Microsoft.Management/managementGro
 outLandingZonesOnlineMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-online
 outSandboxManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-sandbox
 outDecommissionedManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-decommissioned
-
 
 ## Deployment
 
