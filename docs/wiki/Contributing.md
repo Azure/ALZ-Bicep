@@ -174,4 +174,4 @@ To author Bicep modules that are in-line with the requirements for this project,
   - A `README.md` for each module in the root of its own folder, as above, detailing the module, what it deploys, parameters and any other useful information for consumers.
     - The `README.md` must also contain a Bicep visualizer image of the complete module
   - The Bicep module file & parameters file, complete with default values.
-  - Bicep filename will be created based on the foldername and follow camel casing as well: `infra-as-code/bicep/modules/alz/moduleName/moduleName.bicep`
+  - Bicep filename will be created based on the folder name and follow camel casing as well: `infra-as-code/bicep/modules/alz/moduleName/moduleName.bicep`
