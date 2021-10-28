@@ -13,7 +13,7 @@ Set-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_d
 Write-Information "====> Looping Through Policy Definitions:" -InformationAction Continue
 Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions" -Filter "*.json" | ForEach-Object {
     $policyDef = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
-    
+
     $policyDefinitionName = $policyDef.name
     $fileName = $_.Name
 
@@ -21,7 +21,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/l
     Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions/_policyDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: '$policyDefinitionName'`r`n  libDefinition: json(loadTextContent('lib/policy_definitions/$fileName'))`r`n}"
 }
 
-$policyDefCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions" -Filter "*.json" | Measure-Object 
+$policyDefCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions" -Filter "*.json" | Measure-Object
 $policyDefCountString = $policyDefCount.Count
 Write-Information "====> Policy Definitions Total: $policyDefCountString" -InformationAction Continue
 
@@ -37,7 +37,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/l
 
     # Load child Policy Set/Initiative Definitions
     $policyDefinitions = $policyDef.properties.policyDefinitions | Sort-Object -Property policyDefinitionReferenceId
-    
+
     $policyDefinitionName = $policyDef.name
     $fileName = $_.Name
 
@@ -53,29 +53,29 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/l
     $policyDefinitions | Sort-Object | ForEach-Object {
         $definitionReferenceId = $_.policyDefinitionReferenceId
         $definitionParameters = $_.parameters
-    
+
         $definitionParameters | Sort-Object | ForEach-Object {
-            [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}    
+            [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
             $definitionParametersOutputArray.Add("parameters", $_)
         }
-    
+
         $definitionParametersOutputJSONObject.Add("$definitionReferenceId", $definitionParametersOutputArray)
     }
     Write-Information "==> Adding parameters to '$parametersFileName'" -InformationAction Continue
     Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/$parametersFileName" -Value ($definitionParametersOutputJSONObject | ConvertTo-Json -Depth 10) -Encoding "utf8"
-    
+
     # Sort parameters file alphabetically to remove false git diffs
     Write-Information "==> Sorting parameters file '$parametersFileName' alphabetically" -InformationAction Continue
     $definitionParametersOutputJSONObjectSorted = New-Object PSCustomObject
     Get-Content -Raw -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/$parametersFileName" | ConvertFrom-Json -pv fromPipe -Depth 10 |
-    Get-Member -Type NoteProperty | Sort-Object Name | % { 
+    Get-Member -Type NoteProperty | Sort-Object Name | ForEach-Object {
         Add-Member -InputObject $definitionParametersOutputJSONObjectSorted -Type NoteProperty -Name $_.Name -Value $fromPipe.$($_.Name)
     }
     Set-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/$parametersFileName" -Value ($definitionParametersOutputJSONObjectSorted | ConvertTo-Json -Depth 10) -Encoding "utf8"
-    
+
     # Check if variable exists before trying to clear it
     if ($policySetDefinitionsOutputForBicep) {
-        Clear-Variable -Name policySetDefinitionsOutputForBicep -ErrorAction Continue 
+        Clear-Variable -Name policySetDefinitionsOutputForBicep -ErrorAction Continue
     }
 
     # Create HashTable variable
@@ -84,7 +84,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/l
     # Loop through child Policy Set/Initiative Definitions if HashTable not == 0
     if (($policyDefinitions.Count) -ne 0) {
         $policyDefinitions | Sort-Object | ForEach-Object {
-            $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, $_.policyDefinitionId) 
+            $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, $_.policyDefinitionId)
         }
     }
 
@@ -119,7 +119,7 @@ Set-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_a
 Write-Information "====> Looping Through Policy Assignments:" -InformationAction Continue
 Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments" -Filter "*.json" | ForEach-Object {
     $policyAssignment = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
-    
+
     $policyAssignmentName = $policyAssignment.name
     $policyAssignmentDefinitionID = $policyAssignment.properties.policyDefinitionId
     $fileName = $_.Name
@@ -128,6 +128,6 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/l
     Add-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: '$policyAssignmentName'`r`n  definitionID: '$policyAssignmentDefinitionID'`r`n  libDefinition: json(loadTextContent('./lib/policy_assignments/$fileName'))`r`n}"
 }
 
-$policyAssignmentCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments" -Filter "*.json" | Measure-Object 
+$policyAssignmentCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments" -Filter "*.json" | Measure-Object
 $policyAssignmentCountString = $policyAssignmentCount.Count
 Write-Information "====> Policy Assignments Total: $policyAssignmentCountString" -InformationAction Continue

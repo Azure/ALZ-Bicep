@@ -1,4 +1,6 @@
+<!-- markdownlint-disable -->
 ## Contents
+<!-- markdownlint-restore -->
 
 - [Recommended Learning](#recommended-learning)
   - [Bicep](#bicep)
@@ -42,7 +44,7 @@ To contribute to this project the following tooling is required:
 - [Visual Studio Code](https://code.visualstudio.com/download)
   - [Bicep extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep)
 
-![](media/bicep-vs-code.png)
+![Bicep Logo](media/bicep-vs-code.png)
 
 ### Recommended Tooling
 
@@ -166,11 +168,10 @@ To author Bicep modules that are in-line with the requirements for this project,
 
 - Follows the [Bicep Formatting Guidelines](#bicep-formatting-guidelines) as detailed above
 - A new folder per module in the following directory: `infra-as-code/bicep/modules/...`
-    - Folder Name will be created with camel case: `infra-as-code/bicep/modules/moduleName`
+  - Folder Name will be created with camel case: `infra-as-code/bicep/modules/moduleName`
 - Each new module folder must contain:
   - A `media` folder that will contain images used in the `README.md`
   - A `README.md` for each module in the root of its own folder, as above, detailing the module, what it deploys, parameters and any other useful information for consumers.
     - The `README.md` must also contain a Bicep visualizer image of the complete module
   - The Bicep module file & parameters file, complete with default values.
-  - Bicep filename will be created based on the foldername and follow camel casing as well: `infra-as-code/bicep/modules/alz/moduleName/moduleName.bicep`
-  
+  - Bicep filename will be created based on the folder name and follow camel casing as well: `infra-as-code/bicep/modules/alz/moduleName/moduleName.bicep`

@@ -33,7 +33,7 @@ The module does not generate any outputs.
 
 In this example, the `Deny-PublicIP` custom policy definition will be deployed/assigned to the `alz-landingzones` management group.
 
-#### Azure CLI
+#### Azure CLI - Deny
 
 ```bash
 az deployment mg create \
@@ -43,7 +43,7 @@ az deployment mg create \
   --management-group-id 'alz-landingzones'
 ```
 
-#### PowerShell
+#### PowerShell - Deny
 
 ```powershell
 New-AzManagementGroupDeployment `
@@ -56,7 +56,7 @@ New-AzManagementGroupDeployment `
 ### DeployIfNotExists Effect
 
 In this example, the `Deploy-ASC-Config` custom policy definition will be deployed/assigned to the `alz-landingzones` management group (intermediate root management group). And the managed identity associated with the policy will also be assigned to the `alz-platform` management group, as defined in the parameter file: `policyAssignmentManagementGroup.parameters.example-dine.json`
-#### Azure CLI
+#### Azure CLI - DINE
 
 ```bash
 az deployment mg create \
@@ -66,7 +66,7 @@ az deployment mg create \
   --management-group-id 'alz-landingzones'
 ```
 
-#### PowerShell
+#### PowerShell - DINE
 
 ```powershell
 New-AzManagementGroupDeployment `
