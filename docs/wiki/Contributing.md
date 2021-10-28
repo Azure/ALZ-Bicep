@@ -173,5 +173,39 @@ To author Bicep modules that are in-line with the requirements for this project,
   - A `media` folder that will contain images used in the `README.md`
   - A `README.md` for each module in the root of its own folder, as above, detailing the module, what it deploys, parameters and any other useful information for consumers.
     - The `README.md` must also contain a Bicep visualizer image of the complete module
+  - A `bicepconfig.json` for each module in the root of its own folder.
+    - The `bicepconfig.json` file should contain the following: 
+```json
+      {
+        "analyzers": {
+          "core": {
+            "enabled": true,
+            "verbose": true,
+            "rules": {
+              "no-hardcoded-env-urls": {
+                "level": "error"
+              },
+              "no-unused-params": {
+                "level": "error"
+              },
+              "no-unused-vars": {
+                "level": "error"
+              },
+              "prefer-interpolation": {
+                "level": "error"
+              },
+              "secure-parameter-default": {
+                "level": "error"
+              },
+              "simplify-interpolation": {
+                "level": "error"
+              },
+              "adminusername-should-not-be-literal": {
+                "level": "error"
+              }
+            }
+          }
+        }
+      }
   - The Bicep module file & parameters file, complete with default values.
   
