@@ -208,4 +208,3 @@ To author Bicep modules that are in-line with the requirements for this project,
         }
       }
   - The Bicep module file & parameters file, complete with default values.
-  
