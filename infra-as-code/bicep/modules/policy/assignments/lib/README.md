@@ -40,5 +40,5 @@ module modPolicyAssignmentDenyPublicIP '../../policyAssignments/policyAssignment
 ```
 
 > You do not have to use this method, but it is provided to you for ease and is used in the orchestration templates.
-
+>  
 > You may also extend the library and add your own assignment files in following the pattern shown in the examples above.

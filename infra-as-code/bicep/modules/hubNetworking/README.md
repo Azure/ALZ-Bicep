@@ -3,14 +3,14 @@
 This module defines hub networking based on the recommendations from the Azure Landing Zone Conceptual Architecture.  
 
 Module deploys the following resources:
-  * Virtual Network (VNet)
-  * Subnets
-  * VPN Gateway/ExpressRoute Gateway
-  * Azure Firewall
-  * Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
-  * DDos Standard Plan
-  * Bastion 
 
+- Virtual Network (VNet)
+- Subnets
+- VPN Gateway/ExpressRoute Gateway
+- Azure Firewall
+- Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> [https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration](https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration)
+- DDos Standard Plan
+- Bastion
 
 ## Parameters
 
@@ -20,10 +20,10 @@ The module requires the following inputs:
 ----------- | ---- | ------- |----------- | ----------- | -------
 parBastionEnabled | bool| true |Switch to enable deployment Bastion Service  | None | true
 parDdosEnabled | bool | true | Switch to enable deployment of distributed denial of service attacks service | None | true
-parAzureFirewallEnabled | bool | true | Switch to enable deployment Azure Firewall | None | true 
+parAzureFirewallEnabled | bool | true | Switch to enable deployment Azure Firewall | None | true
 parPrivateDNSZonesEnabled | bool | true | Switch to enable deployment of Azure Private Dns Zones | None | true
 parGatewayArray | array | 'Vpn' | Array of Gateways to be deployed. Array will consist of one or two items.  Specifically Vpn and/or ExpressRoute Default: Vpn' | None |`['Vpn', 'ExpressRoute']`
-parCompanyPrefix | string | alz | Prefix value which will be pre-appended to all resource names | 1-10 char | alz 
+parCompanyPrefix | string | alz | Prefix value which will be pre-appended to all resource names | 1-10 char | alz
 parDdosPlanName | string | ${parCompanyPrefix}-DDos-Plan | Name which will be associated with distributed denial of service protection plan | 1-80 char | alz-DDos-Plan
 parBastionName | string | ${parCompanyPrefix}-bastion | Name which will be associated with Bastion Service. | 1-80 char | alz-bastion
 parVpnGatewayGeneration | string | Generation2 | Vpn Gateway generation to deploy | 11 char| Generation2

@@ -4,11 +4,10 @@ This module defines custom roles based on the recommendations from the Azure Lan
 
 Module supports the following custom roles:
 
-  * Subscription owner
-  * Application owners (DevOps/AppOps)
-  * Network management (NetOps)
-  * Security operations (SecOps)
-
+- Subscription owner
+- Application owners (DevOps/AppOps)
+- Network management (NetOps)
+- Security operations (SecOps)
 
 ## Parameters
 
