@@ -16,8 +16,8 @@ DESCRIPTION:
     * Updates
     * VMInsights
 
-AUTHOR/S: SenthuranSivananthan
-VERSION: 1.0.0
+AUTHOR/S: SenthuranSivananthan,aultt
+VERSION: 1.1.0
 */
 
 @description('Log Analytics Workspace name. - DEFAULT VALUE: alz-log-analytics')
@@ -63,39 +63,52 @@ param parAutomationAccountName string = 'alz-automation-account'
 @description('Automation Account region name. - DEFAULT VALUE: resourceGroup().location')
 param parAutomationAccountRegion string = resourceGroup().location
 
-module modAutomationAccount '../automationAccount/automationAccount.bicep' = {
-  name: 'deploy-automation-account'
-  params: {
-    parName: parAutomationAccountName
-    parRegion: parAutomationAccountRegion
+resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-01' = {
+  name: parAutomationAccountName
+  location: parAutomationAccountRegion
+  properties: {
+    sku: {
+      name: 'Basic'
+    }
   }
 }
 
-module modLogAnalyticsWorkspace '../logAnalyticsWorkspace/logAnalyticsWorkspace.bicep' = {
-  name: 'deploy-log-analytics-workspace'
-  params: {
-    parName: parLogAnalyticsWorkspaceName
-    parRegion: parLogAnalyticsWorkspaceRegion
-    parLogRetentionInDays: parLogAnalyticsWorkspaceLogRetentionInDays
-    parLogAnalyticsSolutions: parLogAnalyticsWorkspaceSolutions
+resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
+  name: parLogAnalyticsWorkspaceName
+  location: parLogAnalyticsWorkspaceRegion
+  properties: {
+    sku: {
+      name: 'PerNode'
+    }
+    retentionInDays: parLogAnalyticsWorkspaceLogRetentionInDays
   }
 }
+
+resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solutions@2015-11-01-preview' = [for solution in parLogAnalyticsWorkspaceSolutions: {
+  name: '${solution}(${resLogAnalyticsWorkspace.name})'
+  location: parLogAnalyticsWorkspaceRegion
+  properties: {
+    workspaceResourceId: resLogAnalyticsWorkspace.id
+  }
+  plan: {
+    name: '${solution}(${resLogAnalyticsWorkspace.name})'
+    product: 'OMSGallery/${solution}'
+    publisher: 'Microsoft'
+    promotionCode: ''
+  }
+}]
 
 resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2020-08-01' = {
-  dependsOn: [
-    modLogAnalyticsWorkspace
-  ]
-
   name: '${parLogAnalyticsWorkspaceName}/Automation'
   properties: {
-    resourceId: modAutomationAccount.outputs.outAutomationAccountId
+    resourceId: resAutomationAccount.id
   }
 }
 
-output outLogAnalyticsWorkspaceName string = modLogAnalyticsWorkspace.outputs.outLogAnalyticsWorkspaceName
-output outLogAnalyticsWorkspaceId string = modLogAnalyticsWorkspace.outputs.outLogAnalyticsWorkspaceId
-output outLogAnalyticsCustomerId string = modLogAnalyticsWorkspace.outputs.outLogAnalyticsCustomerId
-output outLogAnalyticsSolutions array = modLogAnalyticsWorkspace.outputs.outLogAnalyticsSolutions
+output outLogAnalyticsWorkspaceName string = resLogAnalyticsWorkspace.name
+output outLogAnalyticsWorkspaceId string = resLogAnalyticsWorkspace.id
+output outLogAnalyticsCustomerId string = resLogAnalyticsWorkspace.properties.customerId
+output outLogAnalyticsSolutions array = parLogAnalyticsWorkspaceSolutions
 
-output outAutomationAccountName string = modAutomationAccount.outputs.outAutomationAccountName
-output outAutomationAccountId string = modAutomationAccount.outputs.outAutomationAccountId
+output outAutomationAccountName string = resAutomationAccount.name
+output outAutomationAccountId string = resAutomationAccount.id
