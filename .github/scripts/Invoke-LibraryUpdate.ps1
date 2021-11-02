@@ -111,14 +111,3 @@ foreach ($config in $esltConfig) {
         -WhatIf:$WhatIfPreference
 }
 
-# Get a list of current Policy Definition names
-$policyDefinitionFiles = Get-ChildItem -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions/"
-$policyDefinitionNames = $policyDefinitionFiles | ForEach-Object {
-    (Get-Content -Path $_ | ConvertFrom-Json).Name
-}
-
-# Get a list of current Policy Set Definition names
-$policySetDefinitionFiles = Get-ChildItem -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/"
-$policySetDefinitionNames = $policySetDefinitionFiles | ForEach-Object {
-    (Get-Content -Path $_ | ConvertFrom-Json).Name
-}
