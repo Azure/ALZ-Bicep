@@ -74,14 +74,14 @@
   libDefinition: json(loadTextContent('./lib/policy_assignments/policy_assignment_es_deploy_aks_policy.tmpl.json'))
 }
 {
-  name: 'Deploy-ASCDF-Config'
-  definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-ASCDF-Config'
-  libDefinition: json(loadTextContent('./lib/policy_assignments/policy_assignment_es_deploy_ascdf_config.tmpl.json'))
-}
-{
   name: 'Deploy-ASC-Monitoring'
   definitionID: '/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8'
   libDefinition: json(loadTextContent('./lib/policy_assignments/policy_assignment_es_deploy_asc_monitoring.tmpl.json'))
+}
+{
+  name: 'Deploy-ASCDF-Config'
+  definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-ASCDF-Config'
+  libDefinition: json(loadTextContent('./lib/policy_assignments/policy_assignment_es_deploy_ascdf_config.tmpl.json'))
 }
 {
   name: 'Deploy-AzActivity-Log'
