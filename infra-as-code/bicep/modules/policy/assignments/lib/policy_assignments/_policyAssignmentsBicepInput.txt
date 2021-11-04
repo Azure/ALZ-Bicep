@@ -74,9 +74,9 @@
   libDefinition: json(loadTextContent('./lib/policy_assignments/policy_assignment_es_deploy_aks_policy.tmpl.json'))
 }
 {
-  name: 'Deploy-ASC-Configuration'
-  definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-ASC-Config'
-  libDefinition: json(loadTextContent('./lib/policy_assignments/policy_assignment_es_deploy_asc_configuration.tmpl.json'))
+  name: 'Deploy-ASCDF-Config'
+  definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-ASCDF-Config'
+  libDefinition: json(loadTextContent('./lib/policy_assignments/policy_assignment_es_deploy_ascdf_config.tmpl.json'))
 }
 {
   name: 'Deploy-ASC-Monitoring'
