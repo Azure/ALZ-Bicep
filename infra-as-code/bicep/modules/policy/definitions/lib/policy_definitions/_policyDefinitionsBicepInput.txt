@@ -143,46 +143,6 @@
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_vnet_peering.json'))
 }
 {
-  name: 'Deploy-ASC-Defender-ACR'
-  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_acr.json'))
-}
-{
-  name: 'Deploy-ASC-Defender-AKS'
-  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_aks.json'))
-}
-{
-  name: 'Deploy-ASC-Defender-AKV'
-  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_akv.json'))
-}
-{
-  name: 'Deploy-ASC-Defender-AppSrv'
-  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_appsrv.json'))
-}
-{
-  name: 'Deploy-ASC-Defender-ARM'
-  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_arm.json'))
-}
-{
-  name: 'Deploy-ASC-Defender-DNS'
-  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_dns.json'))
-}
-{
-  name: 'Deploy-ASC-Defender-SA'
-  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_sa.json'))
-}
-{
-  name: 'Deploy-ASC-Defender-Sql'
-  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_sql.json'))
-}
-{
-  name: 'Deploy-ASC-Defender-SQLVM'
-  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_sqlvm.json'))
-}
-{
-  name: 'Deploy-ASC-Defender-VMs'
-  libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_vms.json'))
-}
-{
   name: 'Deploy-ASC-SecurityContacts'
   libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_securitycontacts.json'))
 }
