@@ -44,77 +44,77 @@
       "enableAscForKubernetes": {
         "type": "String",
         "metadata": {
-          "displayName": "Effect",
+          "displayName": "Effect for Kubernetes",
           "description": "Enable or disable the execution of the policy"
         }
       },
       "enableAscForSql": {
         "type": "String",
         "metadata": {
-          "displayName": "Effect",
+          "displayName": "Effect for SQL",
           "description": "Enable or disable the execution of the policy"
         }
       },
       "enableAscForSqlOnVm": {
         "type": "String",
         "metadata": {
-          "displayName": "Effect",
+          "displayName": "Effect for SQL on VM",
           "description": "Enable or disable the execution of the policy"
         }
       },
       "enableAscForDns": {
         "type": "String",
         "metadata": {
-          "displayName": "Effect",
+          "displayName": "Effect for DNS",
           "description": "Enable or disable the execution of the policy"
         }
       },
       "enableAscForArm": {
         "type": "String",
         "metadata": {
-          "displayName": "Effect",
+          "displayName": "Effect for ARM",
           "description": "Enable or disable the execution of the policy"
         }
       },
       "enableAscForOssDb": {
         "type": "String",
         "metadata": {
-          "displayName": "Effect",
+          "displayName": "Effect for OSS DB",
           "description": "Enable or disable the execution of the policy"
         }
       },
       "enableAscForAppServices": {
         "type": "String",
         "metadata": {
-          "displayName": "Effect",
+          "displayName": "Effect for App Service",
           "description": "Enable or disable the execution of the policy"
         }
       },
       "enableAscForRegistries": {
         "type": "String",
         "metadata": {
-          "displayName": "Effect",
+          "displayName": "Effect for ACR",
           "description": "Enable or disable the execution of the policy"
         }
       },
       "enableAscForKeyVault": {
         "type": "String",
         "metadata": {
-          "displayName": "Effect",
+          "displayName": "Effect for Key Vault",
           "description": "Enable or disable the execution of the policy"
         }
       },
       "enableAscForStorage": {
         "type": "String",
         "metadata": {
-          "displayName": "Effect",
+          "displayName": "Effect for Storage",
           "description": "Enable or disable the execution of the policy"
         }
       },
       "enableAscForServers": {
         "type": "String",
         "metadata": {
-          "displayName": "Effect",
+          "displayName": "Effect for VMs",
           "description": "Enable or disable the execution of the policy"
         }
       }
