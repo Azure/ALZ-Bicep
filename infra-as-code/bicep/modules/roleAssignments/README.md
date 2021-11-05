@@ -1,19 +1,19 @@
 # Module:  Role Assignments for Management Groups & Subscriptions
 
-Module provides role assignment capabilities across Management Group & Subscription scopes.  The role assignments can be performed for:
+This module provides role assignment capabilities across Management Group & Subscription scopes. Role assignments are part of [Identity and Access Managemennt (IAM)](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management), which is one of the critical design areas in Enterprise-Scale Architecture. The role assignments can be performed for:
 
 - Managed Identities (System and User Assigned)
 - Service Principals
 - Security Groups
 
-This module contains 4 Bicep templates:
+This module contains 4 Bicep templates, you may optionally choose one of these modules to deploy depending on which scope you want to assign roles from broad to narrow; management group to subscription:
 
 Template | Description | Deployment Scope
 -------- | ----------- | ----------------
 roleAssignmentManagementGroup.bicep | Performs role assignment on one management group | Management Group
 roleAssignmentManagementGroupMany.bicep | Performs role assignment on one or more management groups.  This template uses `roleAssignmentManagementGroup.bicep` for the deployments. | Management Group
 roleAssignmentSubscription.bicep | Performs role assignment on one subscription | Subscription
-roleAssignmentSubscriptionMany.bicep | Performs role assignment on one or more subscriptions.  This template uses `roleAssignmentSubscription.bicep` for the deployments. | Management Group
+roleAssignmentSubscriptionMany.bicep | Performs role assignment on one or more subscriptions.  This template uses `roleAssignmentSubscription.bicep` for the deployments. | Subscription
 
 ## Parameters
 
@@ -102,7 +102,7 @@ parAssigneeObjectId | string | Object ID of groups, service principals or manage
 
 In this example, the built-in Reader role will be asigned to a Service Principal account at the `alz-platform` management group scope.  The inputs for this module are defined in `roleAssignmentManagementGroup.parameters.*.example.json`.
 
-> For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
+> For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
 
