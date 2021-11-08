@@ -55,8 +55,12 @@ module modManagementGroups '../../managementGroups/managementGroups.bicep' = {
   }
 }
 
-// Module - Custom RBAC Role Definitions
+// Module - Custom RBAC Role Definitions - REMOVED AS ISSUES ON FRESH DEPLOYMENT AND NOT DONE IN ESLZ ARM TODAY
+// ERROR: New-AzTenantDeployment: 17:25:33 - Error: Code=InvalidTemplate; Message=Deployment template validation failed: 'The deployment metadata 'MANAGEMENTGROUP' is not valid.'.
 // module modCustomRBACRoleDefinitions '../../customRoleDefinitions/customRoleDefinitions.bicep' = {
+//   dependsOn: [
+//     modManagementGroups
+//   ]
 //   scope: managementGroup(parTopLevelManagementGroupPrefix)
 //   name: varModuleDeploymentNames.modCustomRBACRoleDefinitions
 //   params: {
