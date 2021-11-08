@@ -23,7 +23,7 @@ The module will generate the following outputs:
 
 Output | Type | Example
 ------ | ---- | --------
-outLoginServer | string | acr5cix6w3rcizna.azurecr.io 
+outLoginServer | string | acr5cix6w3rcizna.azurecr.io
 
 ## Deployment
 In this example, the azure container registry will be deployed to the resource group specified.
