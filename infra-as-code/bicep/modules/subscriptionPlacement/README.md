@@ -1,6 +1,6 @@
 # Module:  Subscription Placement
 
-This module moves one or more subscriptions to be a child of management group(s). Once the subscription(s) are moved under the management group, Azure Policies assigned to the management group or its parent management group(s) will begin to govern the subscription(s).
+This module moves one or more subscriptions to be a child of the specified management group. Once the subscription(s) are moved under the management group, Azure Policies assigned to the management group or its parent management group(s) will begin to govern the subscription(s).
 
 ## Parameters
 
