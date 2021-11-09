@@ -26,5 +26,3 @@ foreach ($file in $files)
   Write-Output "Publishing $filewithPath to ACR: $azureContainerRegistryName"
   az bicep publish --file "$filewithPath" --target "br:$azureContainerRegistryName/bicep/modules/$($filenamelower):V1"
 }
-
-#Remove-AzResourceGroup -Name $azureResourceGroup -Force
