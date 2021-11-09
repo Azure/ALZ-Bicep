@@ -74,7 +74,7 @@ az deployment group create \
 
 ```powershell
 # Set Platform connectivity subscripion ID as the the current subscription 
-ConnectivitySubscriptionId="[your platform management subscription ID]"
+$ConnectivitySubscriptionId = "[your platform management subscription ID]"
 
 Select-AzSubscription -SubscriptionName $ConnectivitySubscriptionId
 
