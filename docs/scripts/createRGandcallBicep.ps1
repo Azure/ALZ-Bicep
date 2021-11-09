@@ -24,7 +24,7 @@ foreach ($file in $files)
 
   #Grab bicep module name and set to lowercase for Container Registry support
   $filenamelower = $($fileShortName.Substring(0,$fileShortName.length-6)).toLower()
-  
+ 
   Write-Output "Publishing $filewithPath to ACR: $azureContainerRegistryName"
   az bicep publish --file "$filewithPath" --target "br:$azureContainerRegistryName/bicep/modules/$($filenamelower):V1"
 }
