@@ -2,7 +2,6 @@
 
 azureResourceGroup='TestCalltoBicepModule'
 azureLocation='EastUs'
-#subscription='sandbox'
 
 #Create resource group
 az group create --name $azureResourceGroup --location $azureLocation
