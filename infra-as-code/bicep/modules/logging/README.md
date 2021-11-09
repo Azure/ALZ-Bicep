@@ -76,7 +76,7 @@ az deployment group create \
 # Set Platform management subscripion ID as the the current subscription 
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
-Select-AzSubscription -SubscriptionName $ManagementSubscriptionId
+Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
 
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
