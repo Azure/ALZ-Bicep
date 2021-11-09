@@ -13,7 +13,7 @@ Template | Description | Deployment Scope
 roleAssignmentManagementGroup.bicep | Performs role assignment on one management group | Management Group
 roleAssignmentManagementGroupMany.bicep | Performs role assignment on one or more management groups.  This template uses `roleAssignmentManagementGroup.bicep` for the deployments. | Management Group
 roleAssignmentSubscription.bicep | Performs role assignment on one subscription | Subscription
-roleAssignmentSubscriptionMany.bicep | Performs role assignment on one or more subscriptions.  This template uses `roleAssignmentSubscription.bicep` for the deployments. | Subscription
+roleAssignmentSubscriptionMany.bicep | Performs role assignment on one or more subscriptions.  This template uses `roleAssignmentSubscription.bicep` for the deployments. | Management Group
 
 ## Parameters
 
