@@ -76,7 +76,7 @@ az deployment group create \
 # Set Platform connectivity subscripion ID as the the current subscription 
 $ConnectivitySubscriptionId = "[your platform management subscription ID]"
 
-Select-AzSubscription -SubscriptionName $ConnectivitySubscriptionId
+Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 New-AzResourceGroup -Name 'Hub_Networking_POC' `
   -Location 'EastUs2'
