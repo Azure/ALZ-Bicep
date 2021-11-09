@@ -1,7 +1,7 @@
 /*
 SUMMARY: Sample Bicep file to show how to call a module from Azure Container Registry
 DESCRIPTION:
-  Sample deploys logging and hubnetwork modules
+  Sample deploys logging and hub network modules
 
 AUTHOR/S: aultt
 VERSION: 1.0.0

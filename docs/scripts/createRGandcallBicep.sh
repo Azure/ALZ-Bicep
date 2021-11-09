@@ -1,6 +1,6 @@
 #!/bin/bash
 
-azureResourceGroup='TestCalltoBicepModule4'
+azureResourceGroup='TestCalltoBicepModule'
 azureLocation='EastUs'
 #subscription='sandbox'
 
