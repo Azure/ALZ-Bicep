@@ -74,7 +74,7 @@ az deployment group create \
 
 ```powershell
 # Set Platform management subscripion ID as the the current subscription 
-ManagementSubscriptionId="[your platform management subscription ID]"
+$ManagementSubscriptionId = "[your platform management subscription ID]"
 
 Select-AzSubscription -SubscriptionName $ManagementSubscriptionId
 
