@@ -62,6 +62,14 @@ jobs:
             #!/bin/bash
             az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
 
+      - name: Bicep deploy each module
+        shell: Azure/CLI@v1
+        run: |
+            #!/bin/bash
+            az deployment group create --resource-group $azureResourceGroup  \
+                --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
+                --parameters @infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json
+
       - name: Az CLI Delete Resource Group
         uses: Azure/CLI@v1
         with: 
