@@ -67,7 +67,8 @@ jobs:
         with: 
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           resourceGroupName: ${{ env.ResourceGroupName }}
-          template: infra-as-code/bicep/modules/publicIp/publicIp.bicep
+          template: infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
+          parameters: infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json
         
       - name: Az CLI Delete Resource Group
         uses: Azure/CLI@v1
