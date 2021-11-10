@@ -1,5 +1,5 @@
 ---
-name: Update Policy Library for Azure China
+name: Update Policy Library for Azure China regions
 
 on:
   schedule:
