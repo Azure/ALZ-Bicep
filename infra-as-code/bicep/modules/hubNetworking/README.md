@@ -51,13 +51,16 @@ outPrivateDnsZones | array | `["name": "privatelink.azurecr.io", "id": "/subscri
 ## Deployment
 > **Note:** `bicepconfig.json` file is included in the module directory.  This file allows us to override Bicep Linters.  Currently there are two URLs which were removed because of linter warnings.  URLs removed are the following: database.windows.net and core.windows.net
 
-In this example, the hub resources will be deployed to the resource group specified.
-We will take the default values and not pass any parameters.
+In this example, the hub resources will be deployed to the resource group specified. According to the Azure Landing Zone Conceptual Architecture, the hub resources should be deployed into the Platform connectivity subscription. During the deployment step, we will take the default values and not pass any parameters.
 
-> For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
+> For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
 ```bash
+# Set Platform connectivity subscripion ID as the the current subscription 
+ConnectivitySubscriptionId="[your platform management subscription ID]"
+az account set --subscription $ConnectivitySubscriptionId
+
 az group create --location eastus2 \
    --name Hub_Networking_POC
 
@@ -70,6 +73,11 @@ az deployment group create \
 ### PowerShell
 
 ```powershell
+# Set Platform connectivity subscripion ID as the the current subscription 
+$ConnectivitySubscriptionId = "[your platform management subscription ID]"
+
+Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+
 New-AzResourceGroup -Name 'Hub_Networking_POC' `
   -Location 'EastUs2'
   
