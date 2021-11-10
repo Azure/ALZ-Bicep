@@ -16,7 +16,7 @@ env:
 jobs:
   update-templates:
     name: Update Policy Library
-    if: github.repository == 'Azure/ALZ-Bicep'
+    if: github.repository == 'faister/ALZ-Bicep'
     runs-on: ubuntu-latest
     steps:
 
