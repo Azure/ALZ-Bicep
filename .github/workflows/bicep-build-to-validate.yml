@@ -57,12 +57,14 @@ jobs:
         
         - name: Az CLI Create Resource Group
           uses: Azure/CLI@v1
-          with: inlineScript: |
-            #!/bin/bash
-            az group create --name ${{ env.ResourceGroupName }} --location $ {{ env.ResourceGroupLocation }}
+          with: 
+            inlineScript: |
+              #!/bin/bash
+              az group create --name ${{ env.ResourceGroupName }} --location $ {{ env.ResourceGroupLocation }}
 
         - name: Az CLI Delete Resource Group
           uses: Azure/CLI@v1
-          with: inlineScript: |
-            #!/bin/bash
-            az group delete --name ${{ env.ResourceGroupName }} --yes --no-wait
+          with: 
+            inlineScript: |
+              #!/bin/bash
+              az group delete --name ${{ env.ResourceGroupName }} --yes --no-wait
