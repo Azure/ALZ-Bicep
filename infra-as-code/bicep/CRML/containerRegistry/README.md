@@ -12,10 +12,10 @@ The module requires the following inputs:
 
  Parameter | Type | Default | Description | Requirement | Example
 ----------- | ---- | ------- |----------- | ----------- | -------
- parAcrName | string | acr${uniqueString} | Name of Azure Container Registry to deploy | 5-50 char | acr5cix6w3rcizn
+ parAcrName | string | acr${uniqueString(resourceGroup().id)} | Name of Azure Container Registry to deploy | 5-50 char | acr5cix6w3rcizn
  parACRSku | string | Basic | SKU of Azure Container Registry to deploy to Azure | Basic or Standard or Premium | Basic
- parlocation | string | resourceGroup().location | Location where Public Azure Container Registry will be deployed | Valid Azure Region | eastus2
- parTags | object | none | Tags to be appended to resource after it is created | none | {"Environment" : "Development"}
+ parLocation | string | resourceGroup().location | Location where Public Azure Container Registry will be deployed | Valid Azure Region | eastus2
+ parTags | object | none | Tags to be appended to resource | none | {"Environment" : "Development"}
 
 ## Outputs
 
@@ -26,12 +26,15 @@ Output | Type | Example
 outLoginServer | string | acr5cix6w3rcizna.azurecr.io
 
 ## Deployment
-In this example, the azure container registry will be deployed to the resource group specified.
+
+In this example, the Azure Container Registry will be deployed to the resource group specified.
+
 We will take the default values and not pass any parameters.
 
 > For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+
 ```bash
 az group create --location eastus2 \
    --name Bicep_ACR
