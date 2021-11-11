@@ -1,6 +1,6 @@
 #!/bin/bash
 
-azureResourceGroup='TestCalltoBicepModule'
+azureResourceGroup='rsg-private-bicep-registry'
 azureLocation='EastUs'
 
 #Create resource group
