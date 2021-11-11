@@ -32,7 +32,5 @@ Two scripts exist which automated steps 3-6.
 Prior to executing your desired script, steps one and two need to be complete, and the two variables should be reviewed in the script.
 * Variables exist on line 2 and 3 and should be updated to match your desired resource group and region
 * Execute script with following commands:
-    - **PowerShell**: ./docs/scripts/createRGandcallBicep.ps1
-    - **CLI**: ./docs/scripts/createRGandcallBicep.sh
-
-
+  - **PowerShell**: ./docs/scripts/createRGandcallBicep.ps1
+  - **CLI**: ./docs/scripts/createRGandcallBicep.sh
