@@ -71,14 +71,13 @@ jobs:
           parameters: infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json
           failOnStdErr: false
 
-      - name: Bicep deploy hubNetworking
-        uses: azure/arm-deploy@v1
+      - name: Az CLI Deploy hubNetworking
+        uses: Azure/CLI@v1
         with: 
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          resourceGroupName: ${{ env.ResourceGroupName }}
-          template: infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
-          parameters: infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json
-          failOnStdErr: false
+          inlineScript: |
+            #!/bin/bash
+            az deployment group create --resource-group $azureResourceGroup /
+              --template-file ${{ github.repository }}/infra-as-code/modules/spokeNetworking/spokeNetworking.bicep 
         
       - name: Az CLI Delete Resource Group
         uses: Azure/CLI@v1
