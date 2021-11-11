@@ -1,0 +1,51 @@
+name: Bicep Deploy Test
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "**.bicep"
+  workflow_dispatch: {}
+
+jobs:
+  bicep_deploy:
+    name: Deploy Bicep Files
+    runs-on: ubuntu-latest
+    env:
+      ResourceGroupName: gitaction-bicep-rg
+      ResourceGroupLocation: "EastUS"
+    environment: testdeploy
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.Azure_CREDENTIALS }}
+          enable-AzPSSession: true
+      
+      - name: Az CLI Create Resource Group
+        uses: Azure/CLI@v1
+        with: 
+          inlineScript: |
+            #!/bin/bash
+            az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
+      
+      - name: Az CLI Deploy hubNetworking
+        uses: Azure/CLI@v1
+        with: 
+          inlineScript: |
+            #!/bin/bash
+             ${{ github.repository }}/.github/scripts/Invoke-LibraryUpdate.ps1 
+            az deployment group create --resource-group $azureResourceGroup /
+              --template-file ${{ github.repository }}/infra-as-code/modules/spokeNetworking/spokeNetworking.bicep 
+        
+      - name: Az CLI Delete Resource Group
+        uses: Azure/CLI@v1
+        with: 
+          inlineScript: |
+            #!/bin/bash
+            az group delete --name ${{ env.ResourceGroupName }} --yes --no-wait
