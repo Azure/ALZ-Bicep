@@ -67,8 +67,9 @@ jobs:
         with: 
           inlineScript: |
             #!/bin/bash
-            az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file ${{ github.repository }}/infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep 
-        
+            #az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file ${{ github.repository }}/infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep 
+            pwd
+            ls -la
       - name: Az CLI Delete Resource Group
         uses: Azure/CLI@v1
         with: 
