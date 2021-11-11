@@ -5,7 +5,7 @@ $azureLocation='EastUs'
 New-AzResourceGroup -Name $azureResourceGroup -Location $azureLocation
 
 #Deploy Container Registry into Resource Group
-$deploymentOutput=New-AzResourceGroupDeployment  -TemplateFile infra-as-code/bicep/modules/containerRegistry/containerRegistry.bicep -ResourceGroupName $azureResourceGroup -name deployACR
+$deploymentOutput=New-AzResourceGroupDeployment  -TemplateFile infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep -ResourceGroupName $azureResourceGroup -name deployACR
 
 #Query the Deployment to get the login server to pass.
 #https://docs.microsoft.com/en-us/cli/azure/query-azure-cli#get-a-single-value
