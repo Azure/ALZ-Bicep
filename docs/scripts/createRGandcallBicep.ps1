@@ -1,3 +1,5 @@
+
+
 $azureResourceGroup='TestCalltoBicepModule'
 $azureLocation='EastUs'
 
