@@ -7,8 +7,8 @@ This document outlines the prerequisites, dependencies and flow to setup a Priva
 ## Prerequisites
 
 1. Azure Active Directory Tenant.
-2. Minimum 1 subscription.  Subscription(s) are required when configuring `Azure Container Registry` services.  
-3. Deployment Identity with `Contributor` permission to the subscription.  
+2. Minimum 1 subscription.  Subscription(s) are required when configuring `Azure Container Registry` services.
+3. Deployment Identity with `Contributor` permission to the subscription.
 
 ## Deployment Flow
 
@@ -24,7 +24,7 @@ This document outlines the prerequisites, dependencies and flow to setup a Priva
 
 ## Provided automation
 
-Two scripts exist which automated steps 3-6.  
+Two scripts exist which automated steps 3-6.
 * [Powershell](../scripts/createRGandcallBicep.ps1)
 * [Azure CLI](../scripts/createRGandcallBicep.sh)
 
@@ -32,7 +32,7 @@ Two scripts exist which automated steps 3-6.
 Prior to executing your desired script, steps one and two need to be complete, and the two variables should be reviewed in the script.
 * Variables exist on line 2 and 3 and should be updated to match your desired resource group and region
 * Execute script with following commands:
-    - **PowerShell**: ./docs/scripts/createRGandcallBicep.ps1 
-    - **CLI**: ./docs/scripts/createRGandcallBicep.sh 
+    - **PowerShell**: ./docs/scripts/createRGandcallBicep.ps1
+    - **CLI**: ./docs/scripts/createRGandcallBicep.sh
 
 
