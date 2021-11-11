@@ -61,8 +61,17 @@ jobs:
           inlineScript: |
             #!/bin/bash
             az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
+      
+      - name: Bicep deploy managementGroup
+        uses: azure/arm-deploy@v1
+        with: 
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          template: infra-as-code/bicep/modules/managementGroups/managementGroups.bicep
+          parameters: infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json
+          failOnStdErr: false
 
-      - name: Bicep deploy publicIp
+      - name: Bicep deploy hubNetworking
         uses: azure/arm-deploy@v1
         with: 
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
