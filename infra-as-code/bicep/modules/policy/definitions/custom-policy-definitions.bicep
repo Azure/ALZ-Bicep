@@ -167,12 +167,12 @@ var varCustomPolicyDefinitionsArray = [
     libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_budget.json'))
   }
   {
-    name: 'Deploy-DDoSProtection'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_ddosprotection.json'))
+    name: 'Deploy-Custom-Route-Table'
+    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_custom_route_table.json'))
   }
   {
-    name: 'Deploy-Default-Udr'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_default_udr.json'))
+    name: 'Deploy-DDoSProtection'
+    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_ddosprotection.json'))
   }
   {
     name: 'Deploy-Diagnostics-AA'
