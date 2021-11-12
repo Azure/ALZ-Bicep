@@ -64,6 +64,13 @@ jobs:
             #!/bin/bash
             az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
       
+      - name: Az CLI Deploy managementGroups
+        #if: steps.git_diff.outputs.diff
+        uses: Azure/CLI@v1
+        with: 
+          inlineScript: |   
+            az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json --location eastus
+
       - name: Check for hubNetworking Changes
         id: git_diff
         run: |
