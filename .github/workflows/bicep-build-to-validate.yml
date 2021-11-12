@@ -49,7 +49,8 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
-          fetch-depth: 2
+          path: ${{ github.repository }}
+          fetch-depth: 0
       
       - name: Azure Login
         uses: azure/login@v1
@@ -67,8 +68,8 @@ jobs:
       - name: Check for hubNetworking Changes
         id: git_diff
         run: |
-          git diff ${{ github.workspace }}/infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
-
+          git diff infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
+        working-directory: ${{ github.repository }}
       - name: Az CLI Deploy hubNetworking
         if: steps.git_diff.outputs.diff
         uses: Azure/CLI@v1
