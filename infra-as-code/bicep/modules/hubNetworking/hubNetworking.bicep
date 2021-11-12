@@ -8,8 +8,6 @@ DESCRIPTION: The following components will be options in this deployment
               Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
               DDos Standard Plan
               Bastion
-Testing Remove ME
-
 AUTHOR/S: aultt
 VERSION: 1.0.0
 */
