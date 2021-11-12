@@ -54,7 +54,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.Azure_CREDENTIALS }}
+          creds: ${{ secrets.ALZ_AZURE_SECRET }}
           enable-AzPSSession: true
       
       - name: Az CLI Create Resource Group
@@ -69,6 +69,7 @@ jobs:
         run: |
           git diff infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
         #working-directory: ${{ github.repository }}
+
       - name: Az CLI Deploy hubNetworking
         #if: steps.git_diff.outputs.diff
         uses: Azure/CLI@v1
