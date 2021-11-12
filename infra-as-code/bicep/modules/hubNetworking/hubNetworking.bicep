@@ -315,7 +315,6 @@ resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@20
   name: 'AzureFirewallSubnet'
 } 
 
-
 module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if(parAzureFirewallEnabled){
   name: 'deploy-Firewall-Public-IP'
   params: {
