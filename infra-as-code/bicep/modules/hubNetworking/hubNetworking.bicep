@@ -309,7 +309,6 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for
   }
 }]
 
-
 resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
   parent: resHubVirtualNetwork
   name: 'AzureFirewallSubnet'
