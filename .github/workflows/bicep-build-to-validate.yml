@@ -67,8 +67,7 @@ jobs:
       - name: Check for hubNetworking Changes
         id: git_diff
         run: |
-          pwd
-          #git diff ${{ github.workspace }}/${{ github.repository }}/infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
+          git diff ${{ github.workspace }}/infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
         working-directory: ${{ github.repository }}
 
       - name: Az CLI Deploy hubNetworking
