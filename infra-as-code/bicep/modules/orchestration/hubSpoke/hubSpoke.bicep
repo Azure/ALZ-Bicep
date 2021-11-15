@@ -27,13 +27,17 @@ param parLocation string = 'northeurope'
 @maxLength(36)
 param parManagementSubscriptionId string
 
-@description('The Subscription ID for the Connectivity Subscription (must already exists)')
-@maxLength(36)
-param parConnectivitySubscriptionId string
+// @description('The Subscription ID for the Connectivity Subscription (must already exists)')
+// @maxLength(36)
+// param parConnectivitySubscriptionId string
 
-@description('The Subscription ID for the Identity Subscription (must already exists)')
-@maxLength(36)
-param parIdentitySubscriptionId string
+// @description('The Subscription ID for the Identity Subscription (must already exists)')
+// @maxLength(36)
+// param parIdentitySubscriptionId string
+
+// Resource Group Modules Parameters - Used multiple times
+@description('Name of Resource Group to be created.  No Default')
+param parResourceGroupForLoggingName string = '${parTopLevelManagementGroupPrefix}-logging'
 
 // Management Group Module Parameters
 @description('Prefix for the management group hierarchy.  This management group will be created as part of the deployment.')
@@ -83,17 +87,14 @@ param parLogAnalyticsWorkspaceSolutions array = [
 @description('Automation account name. - DEFAULT VALUE: alz-automation-account')
 param parAutomationAccountName string = 'alz-automation-account'
 
-@description('Automation Account region name. - DEFAULT VALUE: resourceGroup().location')
-param parAutomationAccountRegion string = resourceGroup().location
-
 // **Variables**
 // Orchestration Module Variables
 var varDeploymentNameWrappers = {
   basePrefix: 'ALZBicep'
   baseSuffixTenantAndManagementGroup: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}'
   baseSuffixManagementSubscription: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}-${parManagementSubscriptionId}'
-  baseSuffixConnectivitySubscription: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}-${parConnectivitySubscriptionId}'
-  baseSuffixIdentitySubscription: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}-${parIdentitySubscriptionId}'
+  // baseSuffixConnectivitySubscription: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}-${parConnectivitySubscriptionId}'
+  // baseSuffixIdentitySubscription: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}-${parIdentitySubscriptionId}'
 }
 
 var varModuleDeploymentNames = {
@@ -143,23 +144,29 @@ module modCustomPolicyDefinitions '../../policy/definitions/custom-policy-defini
   }
 }
 
-// // Resource - Resource Group - For Logging - https://github.com/Azure/bicep/issues/5151
-resource resResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+// Resource - Resource Group - For Logging - https://github.com/Azure/bicep/issues/5151
+module modResourceGroupForLogging '../../resourceGroup/resourceGroup.bicep' = {
   scope: subscription(parManagementSubscriptionId)
-  location: parResourceGroupLocation
-  name: parResourceGroupName
+  name: varModuleDeploymentNames.modResourceGroupForLogging
+  params: {
+    parResourceGroupLocation: parLocation
+    parResourceGroupName: parResourceGroupForLoggingName
+  }
 }
 
 // Module - Logging, Automation & Sentinel
 module modLogging '../../logging/logging.bicep' = {
-  scope: subscription(parman)
+  dependsOn: [
+    modResourceGroupForLogging
+  ]
+  scope: resourceGroup(parManagementSubscriptionId, parResourceGroupForLoggingName)
   name: varModuleDeploymentNames.modLogging
   params: {
-    parAutomationAccountName:
+    parAutomationAccountName: parAutomationAccountName
     parAutomationAccountRegion: parLocation
-    parLogAnalyticsWorkspaceLogRetentionInDays:
-    parLogAnalyticsWorkspaceName:
-    parLogAnalyticsWorkspaceRegion:
-    parLogAnalyticsWorkspaceSolutions:
+    parLogAnalyticsWorkspaceLogRetentionInDays: parLogAnalyticsWorkspaceLogRetentionInDays
+    parLogAnalyticsWorkspaceName: parLogAnalyticsWorkspaceName
+    parLogAnalyticsWorkspaceRegion: parLocation
+    parLogAnalyticsWorkspaceSolutions: parLogAnalyticsWorkspaceSolutions
   }
 }

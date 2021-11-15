@@ -2,11 +2,43 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "parLocation": {
+            "value": "northeurope"
+        },
+        "parManagementSubscriptionId": {
+            "value": "8200b669-cbc6-4e6c-b6d8-f4797f924074"
+        },
+        "parResourceGroupForLoggingName": {
+            "value": "rsg-alz-logging"
+        },
         "parTopLevelManagementGroupPrefix": {
             "value": "alz"
         },
         "parTopLevelManagementGroupDisplayName": {
             "value": "Azure Landing Zones"
+        },
+        "parLogAnalyticsWorkspaceName": {
+            "value": "law-alz-001"
+        },
+        "parLogAnalyticsWorkspaceLogRetentionInDays": {
+            "value": 365
+        },
+        "parLogAnalyticsWorkspaceSolutions": {
+            "value": [
+              "AgentHealthAssessment",
+              "AntiMalware",
+              "AzureActivity",
+              "ChangeTracking",
+              "Security",
+              "SecurityInsights",
+              "ServiceMap",
+              "SQLAssessment",
+              "Updates",
+              "VMInsights"
+            ]
+        },
+        "parAutomationAccountName": {
+            "value": "auto-alz-001"
         }
     }
 }
