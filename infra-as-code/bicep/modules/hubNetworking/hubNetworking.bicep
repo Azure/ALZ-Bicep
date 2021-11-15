@@ -29,7 +29,7 @@ param parAzureFirewallEnabled bool = true
 param parNetworkDNSEnableProxy bool = true
 
 @description('Switch which allows BGP Propagation to be disabled on the routes: Default: false')
-param  pardisableBGPRoutePropagation bool = false
+param  parDisableBGPRoutePropagation bool = false
 
 @description('Switch which allows Private DNS Zones to be disabled. Default: true')
 param parPrivateDNSZonesEnabled bool = true
@@ -409,7 +409,7 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parAzu
         }
       }
     ]
-    disableBgpRoutePropagation: pardisableBGPRoutePropagation
+    disableBgpRoutePropagation: parDisableBGPRoutePropagation
   }
 }
 
