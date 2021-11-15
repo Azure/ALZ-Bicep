@@ -12,8 +12,8 @@ DESCRIPTION:  Management Group hierarchy is created through a tenant-scoped Azur
           * Online
       * Sandbox
       * Decommissioned
-AUTHOR/S: SenthuranSivananthan
-VERSION: 1.0.0
+AUTHOR/S: SenthuranSivananthan, jtracey93
+VERSION: 1.1.0
 */
 
 targetScope = 'tenant'
@@ -196,6 +196,7 @@ resource resLandingZonesOnlineMG 'Microsoft.Management/managementGroups@2021-04-
 }
 
 
+// Output Management Group IDs
 output outTopLevelMGId string = resTopLevelMG.id
 
 output outPlatformMGId string = resPlatformMG.id
@@ -207,6 +208,22 @@ output outLandingZonesMGId string = resLandingZonesMG.id
 output outLandingZonesCorpMGId string = resLandingZonesCorpMG.id
 output outLandingZonesOnlineMGId string = resLandingZonesOnlineMG.id
 
-output outSandboxManagementGroupId string = resSandboxMG.id
+output outSandboxMGId string = resSandboxMG.id
 
-output outDecommissionedManagementGroupId string = resDecommissionedMG.id
+output outDecommissionedMGId string = resDecommissionedMG.id
+
+// Output Management Group Names
+output outTopLevelMGName string = resTopLevelMG.name
+
+output outPlatformMGName string = resPlatformMG.name
+output outPlatformManagementMGName string = resPlatformManagementMG.name
+output outPlatformConnectivityMGName string = resPlatformConnectivityMG.name
+output outPlatformIdentityMGName string = resPlatformIdentityMG.name
+
+output outLandingZonesMGName string = resLandingZonesMG.name
+output outLandingZonesCorpMGName string = resLandingZonesCorpMG.name
+output outLandingZonesOnlineMGName string = resLandingZonesOnlineMG.name
+
+output outSandboxMGName string = resSandboxMG.name
+
+output outDecommissionedMGName string = resDecommissionedMG.name

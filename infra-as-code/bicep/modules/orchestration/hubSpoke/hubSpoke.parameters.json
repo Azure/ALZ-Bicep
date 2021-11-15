@@ -8,8 +8,17 @@
         "parManagementSubscriptionId": {
             "value": "8200b669-cbc6-4e6c-b6d8-f4797f924074"
         },
-        "parResourceGroupForLoggingName": {
-            "value": "rsg-alz-logging"
+        "parConnectivitySubscriptionId": {
+            "value": "7d58dc5d-93dc-43cd-94fc-57da2e74af0d"
+        },
+        "parIdentitySubscriptionId": {
+            "value": "10d2586c-7d01-4d85-962f-7bbace1c42f1"
+        },
+        "parResourceGroupNameForLogging": {
+            "value": "rsg-alz-mgmt-logging"
+        },
+        "parResourceGroupNameForHubNetworking": {
+            "value": "rsg-alz-neu-hub-networking"
         },
         "parTopLevelManagementGroupPrefix": {
             "value": "alz"
@@ -18,10 +27,10 @@
             "value": "Azure Landing Zones"
         },
         "parLogAnalyticsWorkspaceName": {
-            "value": "law-alz-001"
+            "value": "law-alz"
         },
         "parLogAnalyticsWorkspaceLogRetentionInDays": {
-            "value": 365
+            "value": 30
         },
         "parLogAnalyticsWorkspaceSolutions": {
             "value": [
@@ -38,7 +47,105 @@
             ]
         },
         "parAutomationAccountName": {
-            "value": "auto-alz-001"
+            "value": "auto-alz"
+        },
+        "parBastionEnabled": {
+            "value": true
+        },
+        "parDDoSEnabled": {
+            "value": true
+        },
+        "parDDoSPlanName": {
+            "value": "ddos-alz"
+        },
+        "parAzureFirewallEnabled": {
+            "value": true
+        },
+        "parNetworkDNSEnableProxy": {
+            "value": true
+        },
+        "parDisableBGPRoutePropagation": {
+            "value": false
+        },
+        "parPrivateDNSZonesEnabled": {
+            "value": true
+        },
+        "parGatewayArray": {
+            "value": [
+              {
+                "name": "vpn-gw-alz-neu",
+                "gatewaytype": "Vpn",
+                "sku": "VpnGw1",
+                "vpntype": "RouteBased",
+                "generation": "Generation2",
+                "enableBgp": true,
+                "activeActive": false,
+                "enableBgpRouteTranslationForNat": false,
+                "enableDnsForwarding": false,
+                "asn": 65515,
+                "bgpPeeringAddress": "",
+                "bgpsettings": {
+                  "asn": 65515,
+                  "bgpPeeringAddress": "",
+                  "peerWeight": 5
+                }
+              },
+              {
+                "name": "er-gw-alz-neu",
+                "gatewaytype": "ExpressRoute",
+                "sku": "ErGw1AZ",
+                "vpntype": "RouteBased",
+                "generation": "None",
+                "enableBgp": false,
+                "activeActive": false,
+                "enableBgpRouteTranslationForNat": false,
+                "enableDnsForwarding": false,
+                "asn": 65515,
+              }
+            ]
+        },
+        "parBastionSku": {
+            "value": "Standard"
+        },
+        "parPublicIPSku": {
+            "value": "Standard"
+        },
+        "parTags": {
+            "value": {}
+        },
+        "parHubNetworkAddressPrefix": {
+            "value": "10.10.0.0/16"
+        },
+        "parHubNetworkName": {
+            "value": "vnet-alz-neu-hub"
+        },
+        "parAzureFirewallName": {
+            "value": "azfw-alz-neu-hub"
+        },
+        "parAzureFirewallTier": {
+            "value": "Standard"
+        },
+        "parHubRouteTableName": {
+            "value": "rtb-alz-neu-hub"
+        },
+        "parSubnets": {
+            "value": [
+              {
+                "name": "AzureBastionSubnet",
+                "ipAddressRange": "10.10.0.0/24"
+              },
+              {
+                "name": "GatewaySubnet",
+                "ipAddressRange": "10.10.254.0/24"
+              },
+              {
+                "name": "AzureFirewallSubnet",
+                "ipAddressRange": "10.10.255.0/24"
+              }
+            ]
+        },
+        "parBastionName": {
+            "value": "bst-alz-neu-hub"
         }
     }
 }

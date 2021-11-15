@@ -27,17 +27,20 @@ param parLocation string = 'northeurope'
 @maxLength(36)
 param parManagementSubscriptionId string
 
-// @description('The Subscription ID for the Connectivity Subscription (must already exists)')
-// @maxLength(36)
-// param parConnectivitySubscriptionId string
+@description('The Subscription ID for the Connectivity Subscription (must already exists)')
+@maxLength(36)
+param parConnectivitySubscriptionId string
 
-// @description('The Subscription ID for the Identity Subscription (must already exists)')
-// @maxLength(36)
-// param parIdentitySubscriptionId string
+@description('The Subscription ID for the Identity Subscription (must already exists)')
+@maxLength(36)
+param parIdentitySubscriptionId string
 
 // Resource Group Modules Parameters - Used multiple times
-@description('Name of Resource Group to be created.  No Default')
-param parResourceGroupForLoggingName string = '${parTopLevelManagementGroupPrefix}-logging'
+@description('Name of Resource Group to be created to contain management resources like the central log analytics workspace.  Default: {parTopLevelManagementGroupPrefix}-logging')
+param parResourceGroupNameForLogging string = '${parTopLevelManagementGroupPrefix}-logging'
+
+@description('Name of Resource Group to be created to contain hub networking resources like the virtual network and ddos standard plan.  Default: {parTopLevelManagementGroupPrefix}-{parLocation}-hub-networking')
+param parResourceGroupNameForHubNetworking string = '${parTopLevelManagementGroupPrefix}-${parLocation}-hub-networking'
 
 // Management Group Module Parameters
 @description('Prefix for the management group hierarchy.  This management group will be created as part of the deployment.')
@@ -87,14 +90,169 @@ param parLogAnalyticsWorkspaceSolutions array = [
 @description('Automation account name. - DEFAULT VALUE: alz-automation-account')
 param parAutomationAccountName string = 'alz-automation-account'
 
+//Hub Networking Module Parameters
+@description('Switch which allows Bastion deployment to be disabled. Default: true')
+param parBastionEnabled bool = true
+
+@description('Switch which allows DDOS deployment to be disabled. Default: true')
+param parDDoSEnabled bool = true
+
+@description('DDOS Plan Name. Default: {parTopLevelManagementGroupPrefix}-DDos-Plan')
+param parDDoSPlanName string = '${parTopLevelManagementGroupPrefix}-DDoS-Plan'
+
+@description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
+param parAzureFirewallEnabled bool = true
+
+@description('Switch which allos DNS Proxy to be enabled on the virtual network. Default: true')
+param parNetworkDNSEnableProxy bool = true
+
+@description('Switch which allows BGP Propagation to be disabled on the routes: Default: false')
+param  parDisableBGPRoutePropagation bool = false
+
+@description('Switch which allows Private DNS Zones to be disabled. Default: true')
+param parPrivateDNSZonesEnabled bool = true
+
+//ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
+@description('Array of Gateways to be deployed. Array will consist of one or two items.  Specifically Vpn and/or ExpressRoute Default: Vpn')
+param parGatewayArray array = [
+  {
+    name: '${parTopLevelManagementGroupPrefix}-vpn-gateway'
+    gatewaytype: 'Vpn'
+    sku: 'VpnGw1'
+    vpntype: 'RouteBased'
+    generation: 'Generation2'
+    enableBgp: true
+    activeActive: false
+    enableBgpRouteTranslationForNat: false
+    enableDnsForwarding: false
+    asn: 65515
+    bgpPeeringAddress: ''
+    bgpsettings: {
+      asn: 65515
+      bgpPeeringAddress: ''
+      peerWeight: 5
+    }
+  }
+  {
+    name: '${parTopLevelManagementGroupPrefix}-exr-gateway'
+    gatewaytype: 'ExpressRoute'
+    sku: 'ErGw1AZ'
+    vpntype: 'RouteBased'
+    generation: 'None'
+    enableBgp: true
+    activeActive: false
+    enableBgpRouteTranslationForNat: false
+    enableDnsForwarding: false
+    asn: 65515
+    bgpPeeringAddress: ''
+    bgpsettings: {
+      asn: 65515
+      bgpPeeringAddress: ''
+      peerWeight: 5
+    }
+  }
+
+]
+
+@description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard')
+param parBastionSku string = 'Standard'
+
+@description('Public IP Address SKU. Default: Standard')
+@allowed([
+  'Basic'
+  'Standard'
+])
+param parPublicIPSku string = 'Standard'
+
+@description('Tags you would like to be applied to all resources in this module. Default: empty array')
+param parTags object = {}
+
+@description('The IP address range for all virtual networks to use. Default: 10.10.0.0/16')
+param parHubNetworkAddressPrefix string = '10.10.0.0/16'
+
+@description('Prefix Used for Hub Network. Default: {parTopLevelManagementGroupPrefix}-hub-{parLocation}')
+param parHubNetworkName string = '${parTopLevelManagementGroupPrefix}-hub-${parLocation}'
+
+@description('Azure Firewall Name. Default: {parTopLevelManagementGroupPrefix}-azure-firewall ')
+param parAzureFirewallName string ='${parTopLevelManagementGroupPrefix}-azure-firewall'
+
+@description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
+@allowed([
+  'Standard'
+  'Premium'
+])
+param parAzureFirewallTier string = 'Standard'
+
+@description('Name of Route table to create for the default route of Hub. Default: {parTopLevelManagementGroupPrefix}-hub-routetable')
+param parHubRouteTableName string = '${parTopLevelManagementGroupPrefix}-hub-routetable'
+
+@description('The name and IP address range for each subnet in the virtual networks. Default: AzureBastionSubnet, GatewaySubnet, AzureFirewall Subnet')
+param parSubnets array = [
+  {
+    name: 'AzureBastionSubnet'
+    ipAddressRange: '10.10.15.0/24' 
+  }
+  {
+    name: 'GatewaySubnet'
+    ipAddressRange: '10.10.252.0/24'
+  }
+  {
+    name: 'AzureFirewallSubnet'
+    ipAddressRange: '10.10.254.0/24'
+  }
+]
+
+@description('Name Associated with Bastion Service:  Default: {parTopLevelManagementGroupPrefix}-bastion')
+param parBastionName string = '${parTopLevelManagementGroupPrefix}-bastion'
+
+@description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Privatezones')
+param parPrivateDnsZones array =[
+  'privatelink.azure-automation.net'
+  'privatelink.database.windows.net'
+  'privatelink.sql.azuresynapse.net'
+  'privatelink.azuresynapse.net'
+  'privatelink.blob.core.windows.net'
+  'privatelink.table.core.windows.net'
+  'privatelink.queue.core.windows.net'
+  'privatelink.file.core.windows.net'
+  'privatelink.web.core.windows.net'
+  'privatelink.dfs.core.windows.net'
+  'privatelink.documents.azure.com'
+  'privatelink.mongo.cosmos.azure.com'
+  'privatelink.cassandra.cosmos.azure.com'
+  'privatelink.gremlin.cosmos.azure.com'
+  'privatelink.table.cosmos.azure.com'
+  'privatelink.${parLocation}.batch.azure.com'
+  'privatelink.postgres.database.azure.com'
+  'privatelink.mysql.database.azure.com'
+  'privatelink.mariadb.database.azure.com'
+  'privatelink.vaultcore.azure.net'
+  'privatelink.${parLocation}.azmk8s.io'
+  '${parLocation}.privatelink.siterecovery.windowsazure.com'
+  'privatelink.servicebus.windows.net'
+  'privatelink.azure-devices.net'
+  'privatelink.eventgrid.azure.net'
+  'privatelink.azurewebsites.net'
+  'privatelink.api.azureml.ms'
+  'privatelink.notebooks.azure.net'
+  'privatelink.service.signalr.net'
+  'privatelink.afs.azure.net'
+  'privatelink.datafactory.azure.net'
+  'privatelink.adf.azure.com'
+  'privatelink.redis.cache.windows.net'
+  'privatelink.redisenterprise.cache.azure.net'
+  'privatelink.purview.azure.com'
+  'privatelink.digitaltwins.azure.net'
+]
+
 // **Variables**
 // Orchestration Module Variables
 var varDeploymentNameWrappers = {
   basePrefix: 'ALZBicep'
   baseSuffixTenantAndManagementGroup: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}'
   baseSuffixManagementSubscription: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}-${parManagementSubscriptionId}'
-  // baseSuffixConnectivitySubscription: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}-${parConnectivitySubscriptionId}'
-  // baseSuffixIdentitySubscription: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}-${parIdentitySubscriptionId}'
+  baseSuffixConnectivitySubscription: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}-${parConnectivitySubscriptionId}'
+  baseSuffixIdentitySubscription: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}-${parIdentitySubscriptionId}'
 }
 
 var varModuleDeploymentNames = {
@@ -102,7 +260,12 @@ var varModuleDeploymentNames = {
   modCustomRBACRoleDefinitions: take('${varDeploymentNameWrappers.basePrefix}-rbacRoles-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modCustomPolicyDefinitions: take('${varDeploymentNameWrappers.basePrefix}-polDefs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modResourceGroupForLogging: take('${varDeploymentNameWrappers.basePrefix}-rsgLogging-${varDeploymentNameWrappers.baseSuffixManagementSubscription}', 64)
-  modLogging: take('${varDeploymentNameWrappers.basePrefix}-rsgLogging-${varDeploymentNameWrappers.baseSuffixManagementSubscription}', 64)
+  modLogging: take('${varDeploymentNameWrappers.basePrefix}-logging-${varDeploymentNameWrappers.baseSuffixManagementSubscription}', 64)
+  modResourceGroupForHubNetworking: take('${varDeploymentNameWrappers.basePrefix}-rsgHubNetworking-${varDeploymentNameWrappers.baseSuffixConnectivitySubscription}', 64)
+  modHubNetworking: take('${varDeploymentNameWrappers.basePrefix}-hubNetworking-${varDeploymentNameWrappers.baseSuffixConnectivitySubscription}', 64)
+  modSubscriptionPlacementManagement: take('${varDeploymentNameWrappers.basePrefix}-sub-place-mgmt-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modSubscriptionPlacementConnectivity: take('${varDeploymentNameWrappers.basePrefix}-sub-place-conn-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modSubscriptionPlacementIdentity: take('${varDeploymentNameWrappers.basePrefix}-sub-place-idnt-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
 }
 
 // **Scope**
@@ -134,13 +297,10 @@ module modManagementGroups '../../managementGroups/managementGroups.bicep' = {
 
 // Module - Custom Policy Definitions and Initiatives
 module modCustomPolicyDefinitions '../../policy/definitions/custom-policy-definitions.bicep' = {
-  dependsOn: [
-    modManagementGroups
-  ]
   scope: managementGroup(parTopLevelManagementGroupPrefix)
   name: varModuleDeploymentNames.modCustomPolicyDefinitions
   params: {
-    parTargetManagementGroupID: parTopLevelManagementGroupPrefix
+    parTargetManagementGroupID: modManagementGroups.outputs.outTopLevelMGName
   }
 }
 
@@ -150,7 +310,7 @@ module modResourceGroupForLogging '../../resourceGroup/resourceGroup.bicep' = {
   name: varModuleDeploymentNames.modResourceGroupForLogging
   params: {
     parResourceGroupLocation: parLocation
-    parResourceGroupName: parResourceGroupForLoggingName
+    parResourceGroupName: parResourceGroupNameForLogging
   }
 }
 
@@ -159,7 +319,7 @@ module modLogging '../../logging/logging.bicep' = {
   dependsOn: [
     modResourceGroupForLogging
   ]
-  scope: resourceGroup(parManagementSubscriptionId, parResourceGroupForLoggingName)
+  scope: resourceGroup(parManagementSubscriptionId, parResourceGroupNameForLogging)
   name: varModuleDeploymentNames.modLogging
   params: {
     parAutomationAccountName: parAutomationAccountName
@@ -168,5 +328,82 @@ module modLogging '../../logging/logging.bicep' = {
     parLogAnalyticsWorkspaceName: parLogAnalyticsWorkspaceName
     parLogAnalyticsWorkspaceRegion: parLocation
     parLogAnalyticsWorkspaceSolutions: parLogAnalyticsWorkspaceSolutions
+  }
+}
+
+// Resource - Resource Group - For Logging - https://github.com/Azure/bicep/issues/5151
+module modResourceGroupForHubNetworking '../../resourceGroup/resourceGroup.bicep' = {
+  scope: subscription(parConnectivitySubscriptionId)
+  name: varModuleDeploymentNames.modResourceGroupForHubNetworking
+  params: {
+    parResourceGroupLocation: parLocation
+    parResourceGroupName: parResourceGroupNameForHubNetworking
+  }
+}
+
+// Module - Hub Virtual Networking
+module modHubNetworking '../../hubNetworking/hubNetworking.bicep' = {
+  dependsOn: [
+    modResourceGroupForHubNetworking
+  ]
+  scope: resourceGroup(parConnectivitySubscriptionId, parResourceGroupNameForHubNetworking)
+  name: varModuleDeploymentNames.modHubNetworking
+  params: {
+    parBastionEnabled: parBastionEnabled
+    parDDoSEnabled: parDDoSEnabled
+    parDDoSPlanName: parDDoSPlanName
+    parAzureFirewallEnabled: parAzureFirewallEnabled
+    parNetworkDNSEnableProxy: parNetworkDNSEnableProxy
+    parDisableBGPRoutePropagation: parDisableBGPRoutePropagation
+    parPrivateDNSZonesEnabled: parPrivateDNSZonesEnabled
+    parGatewayArray: parGatewayArray
+    parCompanyPrefix: parTopLevelManagementGroupPrefix
+    parBastionSku: parBastionSku
+    parPublicIPSku: parPublicIPSku
+    parTags: parTags
+    parHubNetworkAddressPrefix: parHubNetworkAddressPrefix
+    parHubNetworkName: parHubNetworkName
+    parAzureFirewallName: parAzureFirewallName
+    parAzureFirewallTier: parAzureFirewallTier
+    parHubRouteTableName: parHubRouteTableName
+    parSubnets: parSubnets
+    parBastionName: parBastionName
+    parPrivateDnsZones: parPrivateDnsZones    
+  }
+}
+
+// Module - Subscription Placement - Management
+module modSubscriptionPlacementManagement '../../subscriptionPlacement/subscriptionPlacement.bicep' = {
+  scope: managementGroup(parTopLevelManagementGroupPrefix)
+  name: varModuleDeploymentNames.modSubscriptionPlacementManagement
+  params: {
+    parTargetManagementGroupId: modManagementGroups.outputs.outPlatformManagementMGName
+    parSubscriptionIds: [
+      parManagementSubscriptionId
+    ]
+  }
+}
+
+// Module - Subscription Placement - Connectivity
+module modSubscriptionPlacementConnectivity '../../subscriptionPlacement/subscriptionPlacement.bicep' = {
+  scope: managementGroup(parTopLevelManagementGroupPrefix)
+  name: varModuleDeploymentNames.modSubscriptionPlacementConnectivity
+  params: {
+    parTargetManagementGroupId: modManagementGroups.outputs.outPlatformConnectivityMGName
+    parSubscriptionIds: [
+      parConnectivitySubscriptionId
+    ]
+  }
+}
+
+// Module - Subscription Placement - Identity
+module modSubscriptionPlacementIdentity '../../subscriptionPlacement/subscriptionPlacement.bicep' = {
+  scope: managementGroup(parTopLevelManagementGroupPrefix)
+  name: varModuleDeploymentNames.modSubscriptionPlacementIdentity
+  params: {
+    parTargetManagementGroupId: modManagementGroups.outputs.outPlatformIdentityMGName
+    parSubscriptionIds: [
+      parIdentitySubscriptionId
+    ]
   }
 }
