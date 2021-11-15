@@ -65,11 +65,22 @@ jobs:
             az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
       
       - name: Az CLI Deploy managementGroups
-        #if: steps.git_diff.outputs.diff
         uses: Azure/CLI@v1
         with: 
           inlineScript: |   
             az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json --location eastus
+
+      - name: Az CLI Deploy Custom Role Definitions
+        uses: Azure/CLI@v1
+        with: 
+          inlineScript: |   
+            az deployment mg create --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json --location eastus --management-group-id alz
+
+      - name: Az CLI Deploy Custom Policy Definitions
+        uses: Azure/CLI@v1
+        with: 
+          inlineScript: |   
+            az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json --location eastus --management-group-id alz
 
       - name: Check for hubNetworking Changes
         id: git_diff
@@ -85,7 +96,7 @@ jobs:
             #!/bin/bash
             az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
       
-      - name: Az CLI Delete Resource Group
+      - name: Az CLI Remove/Cleanup Deployment
         shell: pwsh
         run: |
             install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Force
