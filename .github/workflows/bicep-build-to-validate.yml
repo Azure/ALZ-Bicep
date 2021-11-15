@@ -88,7 +88,7 @@ jobs:
       - name: Az CLI Delete Resource Group
         shell: pwsh
         run: |
-            install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Confirm
-            install-module -Name "Az.Resources" -MinimumVersion "4.3.0" -Confirm
-            install-module -Name "Az.ResourceGraph" -MinimumVersion "0.7.7"-Confirm
+            install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Force
+            install-module -Name "Az.Resources" -MinimumVersion "4.3.0" -Force
+            install-module -Name "Az.ResourceGraph" -MinimumVersion "0.7.7"-Force
             .github/scripts/Wipe-ESLZAzTenant.ps1 -tenantRootGroupID "276a2ed9-1969-4990-ba6c-8ac801a64c09" -intermediateRootGroupID "alz"
