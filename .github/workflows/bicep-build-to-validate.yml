@@ -121,9 +121,17 @@ jobs:
           inlineScript: |
             #!/bin/bash
             az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
+
+      - name: Az CLI Deploy spokeNetworking
+        #if: steps.git_diff.outputs.diff
+        uses: Azure/CLI@v1
+        with: 
+          inlineScript: |
+            #!/bin/bash
+            az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
     
   bicep_cleanup:
-    name: Deploy Cleanup Deployment
+    name: Cleanup Bicep Deployment
     runs-on: ubuntu-latest
     env:
       ResourceGroupName: gitaction-bicep-rg
