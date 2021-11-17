@@ -121,6 +121,28 @@ jobs:
           inlineScript: |
             #!/bin/bash
             az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
+    
+  bicep_cleanup:
+    name: Deploy Cleanup Deployment
+    runs-on: ubuntu-latest
+    env:
+      ResourceGroupName: gitaction-bicep-rg
+      ResourceGroupLocation: "EastUS"
+    environment: testdeploy
+    if: always()
+    needs: [bicep_unit_tests,bicep_deploy]
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+            creds: ${{ secrets.ALZ_AZURE_SECRET }}
+            enable-AzPSSession: true
       
       - name: Az CLI Remove/Cleanup Deployment
         shell: pwsh
