@@ -17,7 +17,7 @@ param parHubNVAEnabled bool = true
 param parDdosEnabled bool = true
 
 @description('Switch which allows DDOS deployment to be disabled')
-param parNetworkDNSEnableProxy bool = true
+param parNetworkDNSEnableProxy bool = false
 
 @description('Switch which allows BGP Route Propogation to be disabled')
 param parBGPRoutePropogation bool = false
