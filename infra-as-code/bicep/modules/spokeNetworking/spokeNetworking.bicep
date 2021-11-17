@@ -35,10 +35,10 @@ param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 param parSpokeNetworkPrefix string = 'Corp-Spoke'
 
 @description('Array of DNS Server IP addresses.  No Default Value')
-param parDNSServerIPArray array 
+param parDNSServerIPArray array = []
 
 @description('IP Address where network traffic should route to leveraged with DNS Proxy.  No Default Value')
-param parNextHopIPAddress string 
+param parNextHopIPAddress string = ''
 
 @description('Name of Route table to create for the default route of Hub. Default: udr-spoke-to-hub')
 param parSpoketoHubRouteTableName string = 'udr-spoke-to-hub'
