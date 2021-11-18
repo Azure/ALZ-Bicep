@@ -14,7 +14,7 @@ VERSION: 1.0.0
 param parHubNVAEnabled bool = true
 
 @description('Switch which allows DDOS deployment to be disabled')
-param parDdosEnabled bool = true
+param parDdosEnabled bool = false
 
 @description('Switch which allows DDOS deployment to be disabled')
 param parNetworkDNSEnableProxy bool = false
