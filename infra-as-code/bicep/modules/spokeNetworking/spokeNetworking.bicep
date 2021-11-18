@@ -74,7 +74,7 @@ resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
         name: 'udr-default-to-hub-nva'
         properties: {
           addressPrefix: '0.0.0.0/0'
-          nextHopType: 'VirtualAppliance'
+          nextHopType: parNetworkDNSEnableProxy ? 'VirtualAppliance' : 'Internet'
           nextHopIpAddress: parNetworkDNSEnableProxy ? parNextHopIPAddress : ''
         }
       }
