@@ -27,8 +27,8 @@ This document outlines the prerequisites, dependencies and flow to setup a Priva
 ## Provided automation
 
 Two scripts exist which automate steps 4 to 6.
-* [Powershell](../scripts/createRGandcallBicep.ps1)
-* [Azure CLI](../scripts/createRGandcallBicep.sh)
+* [PowerShell](https://github.com/Azure/ALZ-Bicep/blob/main/docs/scripts/createRGandcallBicep.ps1)
+* [Azure CLI](https://github.com/Azure/ALZ-Bicep/blob/main/docs/scripts/createRGandcallBicep.sh)
 
 ## Deployment
 Prior to executing your desired script, steps one and two need to be complete, and the two variables should be reviewed in the script.
