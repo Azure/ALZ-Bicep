@@ -304,7 +304,7 @@ module modCustomPolicyDefinitions '../../policy/definitions/custom-policy-defini
   }
 }
 
-// Resource - Resource Group - For Logging - https://github.com/Azure/bicep/issues/5151
+// Resource - Resource Group - For Logging - https://github.com/Azure/bicep/issues/5151 & https://github.com/Azure/bicep/issues/4992
 module modResourceGroupForLogging '../../resourceGroup/resourceGroup.bicep' = {
   scope: subscription(parManagementSubscriptionId)
   name: varModuleDeploymentNames.modResourceGroupForLogging
@@ -372,6 +372,7 @@ module modHubNetworking '../../hubNetworking/hubNetworking.bicep' = {
   }
 }
 
+// Subscription Placements Into Management Group Hierarchy
 // Module - Subscription Placement - Management
 module modSubscriptionPlacementManagement '../../subscriptionPlacement/subscriptionPlacement.bicep' = {
   scope: managementGroup(parTopLevelManagementGroupPrefix)
