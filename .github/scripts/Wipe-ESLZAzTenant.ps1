@@ -59,7 +59,7 @@ param (
     #Added this back into parameters as error occurs if multiple tenants are found when using Get-AzTenant
     [Parameter(Mandatory = $true, Position = 1, HelpMessage = "Please the Insert Tenant ID (GUID) of your Azure AD tenant e.g.'f73a2b89-6c0e-4382-899f-ea227cd6b68f'")]
     [string]
-    $tenantRootGroupID = "<Insert the Tenant ID (GUID) of your Azure AD tenant>",
+    #$tenantRootGroupID = "<Insert the Tenant ID (GUID) of your Azure AD tenant>",
 
     [Parameter(Mandatory = $true, Position = 2, HelpMessage = "Insert the name of your intermediate root Management Group e.g. 'Contoso'")]
     [string]
@@ -139,7 +139,7 @@ ForEach ($subscription in $intermediateRootGroupChildSubscriptions) {
     $resources = Get-AzResourceGroup
 
     $resources | ForEach-Object -Parallel {
-        Write-Output "Deleting " $_.ResourceGroupName "..." -ForegroundColor Red
+        Write-Output "Deleting  $_.ResourceGroupName ..." -ForegroundColor Red
         Remove-AzResourceGroup -Name $_.ResourceGroupName -Force | Out-Null
     }
 
