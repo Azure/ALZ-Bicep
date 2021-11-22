@@ -163,7 +163,7 @@ jobs:
       ResourceGroupLocation: "EastUS"
     environment: testdeploy
     if: always()
-    needs: [bicep_unit_tests,bicep_deploy]
+    needs: [bicep_deploy]
 
     steps:
       - name: Checkout Repo
