@@ -177,7 +177,18 @@ jobs:
             creds: ${{ secrets.ALZ_AZURE_SECRET }}
             enable-AzPSSession: true
       
+      - name: Check for managementGroup Changes
+        id: git_Management2_diff
+        run: |
+          git diff HEAD^ HEAD infra-as-code/bicep/modules/managementGroups/managementGroups.bicep
+          git diff HEAD^ HEAD infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep
+          git diff HEAD^ HEAD infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep
+          git diff HEAD^ HEAD infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep
+          git diff HEAD^ HEAD infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep
+          git diff HEAD^ HEAD infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep
+
       - name: Az CLI Remove/Cleanup Deployment
+        if: steps.git_management_diff.outputs.diff
         shell: pwsh
         run: |
             install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Force
