@@ -176,7 +176,9 @@ else {
 }
 
 # This function only deletes Management Groups in the Intermediate Root Management Group's hierarchy tree and will NOT delete other Intermediate Root level Management Groups and their children e.g. in the case of "canary"
-function Remove-Recursively($name) {
+function Remove-Recursively {
+    [CmdletBinding(SupportsShouldProcess)]
+    param($name)
     # Enters the parent Level
     Write-Output "Entering the scope with $name" -ForegroundColor Green
     $parent = Get-AzManagementGroup -GroupId $name -Expand -Recurse
