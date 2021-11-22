@@ -190,7 +190,10 @@ function Remove-Recursively {
 
         foreach ($children in $parent.Children) {
             # Tries to recur to each child item
-            Remove-Recursively($children.Name)
+            if($PSCmdlet.ShouldProcess($children.Name)){
+                Remove-Recursively($children.Name)
+            }
+            #Remove-Recursively($children.Name)
         }
     }
 
