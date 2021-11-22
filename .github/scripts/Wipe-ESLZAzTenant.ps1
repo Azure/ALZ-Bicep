@@ -5,6 +5,7 @@
 # Last Modified: 01/10/2021
 # Author: Jack Tracey
 # Contributors: Liam F. O'Neill, Paul Grimley, Jeff Mitchell, Johan Dahlbom
+# Modified by: aultt
 
 <#
 .SYNOPSIS
@@ -96,6 +97,7 @@ if ($null -ne $intermediateRootGroupChildSubscriptions) {
     Write-Output ""
 }
 
+# Removed because we are running through a pipeline  Can be enabled if running interactively. 
 # Generate 8 character random string (combination of lowercase letters and integers)
 #$userConfirmationRandomID = -join ((48..57) + (97..122) | Get-Random -Count 8 | ForEach-Object { [char]$_ })
 #
@@ -193,7 +195,6 @@ function Remove-Recursively {
             if($PSCmdlet.ShouldProcess($children.Name)){
                 Remove-Recursively($children.Name)
             }
-            #Remove-Recursively($children.Name)
         }
     }
 
