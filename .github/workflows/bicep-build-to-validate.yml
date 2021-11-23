@@ -57,7 +57,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.ALZ_AZURE_SECRET }}
+          creds: ${{ secrets.ALZ_AZURE_SECRET_UNIT_TESTS }}
           enable-AzPSSession: true
       
       - name: Check for managementGroup Changes
@@ -178,7 +178,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-            creds: ${{ secrets.ALZ_AZURE_SECRET }}
+            creds: ${{ secrets.ALZ_AZURE_SECRET_UNIT_TESTS }}
             enable-AzPSSession: true
 
       - name: Az CLI Remove/Cleanup Deployment
@@ -188,7 +188,7 @@ jobs:
             install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Force
             install-module -Name "Az.Resources" -MinimumVersion "4.3.0" -Force
             install-module -Name "Az.ResourceGraph" -MinimumVersion "0.7.7"-Force
-            .github/scripts/Wipe-ESLZAzTenant.ps1 -tenantRootGroupID "276a2ed9-1969-4990-ba6c-8ac801a64c09" -intermediateRootGroupID "alz"
+            .github/scripts/Wipe-ESLZAzTenant.ps1 -tenantRootGroupID "8d29a0a4-f756-4c2b-806f-81d1f40c9022" -intermediateRootGroupID "alz"
       
       - name: Az Remove Resource Group
         uses: Azure/CLI@v1
