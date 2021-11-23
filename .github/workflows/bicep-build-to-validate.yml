@@ -58,7 +58,7 @@ jobs:
           enable-AzPSSession: true
       
       - name: Check for managementGroup Changes
-        id: git_Management_diff
+        id: git_management_diff
         run: |
           git diff HEAD^ HEAD infra-as-code/bicep/modules/managementGroups/managementGroups.bicep
           git diff HEAD^ HEAD infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep
@@ -90,7 +90,7 @@ jobs:
             #!/bin/bash
             az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
       
-      - name: Az CLI Deploy managementGroups
+      - name: Az CLI Deploy ManagementGroups
         if: steps.git_management_diff.outputs.diff
         uses: Azure/CLI@v1
         with: 
@@ -119,14 +119,14 @@ jobs:
             #!/bin/bash
             az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json
 
-      - name: Az CLI Deploy if not Exists
+      - name: Az CLI Policy Assignment DINE
         if: steps.git_management_diff.outputs.diff
         uses: Azure/CLI@v1
         with: 
           inlineScript: |   
             az deployment mg create --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-dine.json --location eastus --management-group-id 'alz-landingzones'
 
-      - name: Az CLI built-in Reader role Service Principle
+      - name: Az CLI built-in Reader RBAC Role Service Principal
         if: steps.git_management_diff.outputs.diff
         uses: Azure/CLI@v1
         with: 
@@ -140,7 +140,7 @@ jobs:
           inlineScript: |   
             az deployment mg create --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep --parameters @infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json --location eastus --management-group-id 'alz'
 
-      - name: Az CLI Deploy hubNetworking
+      - name: Az CLI Deploy Hub Networking
         if: steps.git_hubnetworking_diff.outputs.diff
         uses: Azure/CLI@v1
         with: 
@@ -148,7 +148,7 @@ jobs:
             #!/bin/bash
             az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
 
-      - name: Az CLI Deploy spokeNetworking
+      - name: Az CLI Deploy Spoke Networking
         if: steps.git_spokenetworking_diff.outputs.diff
         uses: Azure/CLI@v1
         with: 

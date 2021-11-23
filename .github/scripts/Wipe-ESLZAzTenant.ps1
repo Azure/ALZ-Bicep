@@ -1,7 +1,7 @@
 ######################
 # Wipe-ESLZAzTenant #
 ######################
-# Version: 1.3
+# Version: 1.4
 # Last Modified: 01/10/2021
 # Author: Jack Tracey
 # Contributors: Liam F. O'Neill, Paul Grimley, Jeff Mitchell, Johan Dahlbom
@@ -46,6 +46,8 @@ https://aka.ms/es/guides
 
 # Release notes 01/10/2021 - V1.3:
 - Changed the way checks are handled for required PowerShell modules
+- Removed random string check as we are running this through a pipeline if you would like to leverage the orginal file you can find at the following:
+    https://github.com/jtracey93/PublicScripts/blob/master/Azure/PowerShell/Enterprise-scale/Wipe-ESLZAzTenant.ps1
 #>
 
 # Check for pre-reqs
