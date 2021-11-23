@@ -4,7 +4,7 @@
 # Version: 1.4
 # Last Modified: 01/10/2021
 # Author: Jack Tracey
-# Contributors: Liam F. O'Neill, Paul Grimley, Jeff Mitchell, Johan Dahlbom
+# Contributors: Liam F. O'Neill, Paul Grimley, Jeff Mitchell
 # Modified by: aultt
 
 <#
