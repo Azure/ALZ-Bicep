@@ -46,6 +46,8 @@ https://aka.ms/es/guides
 
 # Release notes 01/10/2021 - V1.3:
 - Changed the way checks are handled for required PowerShell modules
+
+# Release notes 11/23/2021 - V1.4:
 - Removed random string check as we are running this through a pipeline if you would like to leverage the orginal file you can find at the following:
     https://github.com/jtracey93/PublicScripts/blob/master/Azure/PowerShell/Enterprise-scale/Wipe-ESLZAzTenant.ps1
 #>
