@@ -17,7 +17,7 @@ DESCRIPTION:
     * VMInsights
 
 AUTHOR/S: SenthuranSivananthan,aultt
-VERSION: 1.1.0
+VERSION: 1.2.0
 
 Revisions:
 - Changed line 102 from parLogAnalyticsWorkspaceName to resLogAnalyticsWorkspace.name.  Change is required so the resources are created in the correct order.  Without the change the link would fail sporatically.
