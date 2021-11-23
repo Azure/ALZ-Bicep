@@ -47,9 +47,6 @@ jobs:
 
     outputs:
       git_management_diff: ${{ steps.git_management_diff.outputs.test}}
-      #git_logging_diff: ${{ steps.git_logging_diff.outputs.test}}
-      #git_hubnetworking_diff: ${{ steps.git_hubnetworking_diff.outputs.test}}
-      #git_spokenetworking_diff: ${{ steps.git_spokenetworking_diff.outputs.test}}
 
     steps:
       - name: Checkout Repo
@@ -183,19 +180,8 @@ jobs:
         with:
             creds: ${{ secrets.ALZ_AZURE_SECRET }}
             enable-AzPSSession: true
-      
-      #- name: Check for managementGroup Changes
-      #  id: git_Management2_diff
-      #  run: |
-      #    git diff HEAD^ HEAD infra-as-code/bicep/modules/managementGroups/managementGroups.bicep
-      #    git diff HEAD^ HEAD infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep
-      #    git diff HEAD^ HEAD infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep
-      #    git diff HEAD^ HEAD infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep
-      #    git diff HEAD^ HEAD infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep
-      #    git diff HEAD^ HEAD infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep
 
       - name: Az CLI Remove/Cleanup Deployment
-        #if: steps.git_management_diff.outputs.diff
         if: needs.bicep_deploy.outputs.git_management_diff
         shell: pwsh
         run: |
