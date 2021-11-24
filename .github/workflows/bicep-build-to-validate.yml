@@ -73,12 +73,12 @@ jobs:
       - name: Check for logging Changes
         id: git_logging_diff
         run: |
-          if git diff HEAD^ HEAD infra-as-code/bicep/modules/logging/logging.bicep --exit-code; then
-            echo "::set-env name=logging_changes::true"
+          git diff HEAD^ HEAD infra-as-code/bicep/modules/logging/logging.bicep --exit-code; then
+            echo "logging_changes=1" >> $GITHUB_ENV
           else
-            echo "::set-env name=logging_changes::false"
+            echo "logging_changes=0" >> $GITHUB_ENV
           fi
-          
+
       - name: Check for hubNetworking Changes
         id: git_hubnetworking_diff
         run: |
