@@ -21,7 +21,7 @@ VERSION: 1.2.0
 
 # Release notes 11/23/2021 - V1.2:
     - Changed line 102 from parLogAnalyticsWorkspaceName to resLogAnalyticsWorkspace.name.  
-      Change is required so the resources are created in the correct order.  Without the change the link would fail sporatically.
+    - Change is required so the resources are created in the correct order.  Without the change the link would fail sporatically.
 */
 
 @description('Log Analytics Workspace name. - DEFAULT VALUE: alz-log-analytics')

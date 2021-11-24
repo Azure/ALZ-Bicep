@@ -86,7 +86,7 @@ jobs:
           git diff HEAD^ HEAD infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
 
       - name: Az CLI Create Resource Group
-        if : ${{ steps.git_logging_diff.outputs.diff != '' }}
+        if : ${{ steps.git_logging_diff.outputs.diff != '' ||  steps.git_management_diff.outputs.diff != '' || steps.git_hubnetworking_diff.outputs.diff !='' || steps.git_spokenetworking_diff.outputs.diff != ''}}
         #if: steps.git_management_diff.outputs.diff || steps.git_logging_diff.outputs.diff || steps.git_hubnetworking_diff.outputs.diff || steps.git_spokenetworking_diff.outputs.diff
         uses: Azure/CLI@v1
         with: 
@@ -116,7 +116,7 @@ jobs:
             az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json --location eastus --management-group-id alz
 
       - name: Az CLI Deploy Logging
-        if: steps.git_logging_diff.outputs.diff
+        if: ${{ steps.git_logging_diff.outputs.diff != '' }}
         uses: Azure/CLI@v1
         with: 
           inlineScript: |
