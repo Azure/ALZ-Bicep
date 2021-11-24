@@ -42,8 +42,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ResourceGroupName: gitaction-bicep-rg
-      ResourceGroupLocation: "EastUS"
-    environment: testdeploy
+      ResourceGroupLocation: "eastus"
+    environment: BicepUnitTests
 
     outputs:
       git_management_diff: ${{ steps.git_management_diff.outputs.test}}
@@ -164,8 +164,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ResourceGroupName: gitaction-bicep-rg
-      ResourceGroupLocation: "EastUS"
-    environment: testdeploy
+      ResourceGroupLocation: "eastus"
+    environment: BicepUnitTests
     if: always()
     needs: [bicep_deploy]
 
