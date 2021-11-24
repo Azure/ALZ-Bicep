@@ -69,7 +69,6 @@ jobs:
           git diff HEAD^ HEAD infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep
           git diff HEAD^ HEAD infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep
           git diff HEAD^ HEAD infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep
-
       
       - name: Check for logging Changes
         id: git_logging_diff
@@ -78,7 +77,8 @@ jobs:
             echo "::set-env name=logging_changes::true"
           else
             echo "::set-env name=logging_changes::false"
-      
+          fi
+          
       - name: Check for hubNetworking Changes
         id: git_hubnetworking_diff
         run: |
