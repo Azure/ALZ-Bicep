@@ -17,6 +17,9 @@
         "parPolicyAssignmentParameters": {
             "value": {}
         },
+        "parPolicyAssignmentParameterOverrides": {
+            "value": {}
+        },
         "parPolicyAssignmentNonComplianceMessages": {
             "value": []
         },

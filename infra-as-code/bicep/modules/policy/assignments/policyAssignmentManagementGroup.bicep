@@ -2,7 +2,7 @@
 SUMMARY: This module assigns Azure Policies to a specified Management Group as well as assigning the Managed Identity to various Management Groups 
 DESCRIPTION: This module assigns Azure Policies to a specified Management Group.
 AUTHOR/S: jtracey93
-VERSION: 1.0.0
+VERSION: 1.1.0
 */
 
 targetScope = 'managementGroup'
@@ -23,6 +23,9 @@ param parPolicyAssignmentDefinitionID string
 
 @description('An object containing the parameter values for the policy to be assigned. DEFAULT VALUE = {}')
 param parPolicyAssignmentParameters object = {}
+
+@description('An object containing parameter values that override those provided to parPolicyAssignmentParameters, usually via a JSON file and json(loadTextContent(FILE_PATH)). This is only useful when wanting to take values from a source like a JSON file for the majority of the parameters but override specific parameter inputs from other sources or hardcoded. If duplicate parameters exist between parPolicyAssignmentParameters & parPolicyAssignmentParameterOverrides, inputs provided to parPolicyAssignmentParameterOverrides will win. DEFAULT VALUE = {}')
+param parPolicyAssignmentParameterOverrides object = {}
 
 @description('An array containing object/s for the non-compliance messages for the policy to be assigned. See https://docs.microsoft.com/en-us/azure/governance/policy/concepts/assignment-structure#non-compliance-messages for more details on use. DEFAULT VALUE = []')
 param parPolicyAssignmentNonComplianceMessages array = []
@@ -53,6 +56,8 @@ param parPolicyAssignmentIdentityRoleAssignmentsSubs array = []
 @description('An array containing a list of RBAC role definition IDs to be assigned to the Managed Identity that is created and associated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects. e.g. [\'/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c\']. DEFAULT VALUE = []')
 param parPolicyAssignmentIdentityRoleDefinitionIDs array = []
 
+var varPolicyAssignmentParametersMerged = union(parPolicyAssignmentParameters, parPolicyAssignmentParameterOverrides)
+
 var varPolicyIdentity = parPolicyAssignmentIdentityType == 'SystemAssigned' ? 'SystemAssigned' : 'None'
 
 var varPolicyIdentityLocation = parPolicyAssignmentIdentityType == 'SystemAssigned' ? deployment().location : deployment().location
@@ -65,7 +70,7 @@ resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-
     displayName: parPolicyAssignmentDisplayName 
     description: parPolicyAssignmentDescription
     policyDefinitionId: parPolicyAssignmentDefinitionID
-    parameters: parPolicyAssignmentParameters
+    parameters: varPolicyAssignmentParametersMerged
     nonComplianceMessages: parPolicyAssignmentNonComplianceMessages
     notScopes: parPolicyAssignmentNotScopes
     enforcementMode: parPolicyAssignmentEnforcementMode
