@@ -2,7 +2,7 @@
 SUMMARY: This PowerShell script helps with the authoring of the policy definiton module by outputting information required for the variables within the module.
 DESCRIPTION: This PowerShell script outputs the Name & Path to a Bicep strucutred .txt file named '_policyDefinitionsBicepInput.txt' and '_policySetDefinitionsBicepInput.txt' respectively. It also creates a parameters file for each of the policy set definitions. It also outputs the number of policies definition and set definition files to the console for easier reviewing as part of the PR process.
 AUTHOR/S: jtracey93
-VERSION: 1.5.1
+VERSION: 1.5.2
 #>
 
 # Policy Definitions
@@ -125,7 +125,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/l
     $fileName = $_.Name
 
     Write-Information "==> Adding '$policyAssignmentName' to '$PWD/_policyAssignmentsBicepInput.txt'" -InformationAction Continue
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "{`r`n  name: '$policyAssignmentName'`r`n  definitionID: '$policyAssignmentDefinitionID'`r`n  libDefinition: json(loadTextContent('./lib/policy_assignments/$fileName'))`r`n}"
+    Add-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "  '$policyAssignmentName': {`r`n    definitionID: '$policyAssignmentDefinitionID'`r`n    libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/$fileName'))`r`n  }"
 }
 
 $policyAssignmentCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments" -Filter "*.json" | Measure-Object

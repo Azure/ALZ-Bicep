@@ -11,7 +11,7 @@
         "value": "deny"
       }
     },
-    "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicPaaSEndpoints",
+    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicPaaSEndpoints",
     "scope": null,
     "enforcementMode": "Default"
   },
