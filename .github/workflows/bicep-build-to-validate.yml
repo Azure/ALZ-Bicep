@@ -93,7 +93,7 @@ jobs:
         with: 
           inlineScript: |
             #!/bin/bash
-            if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} ]] ; then
+            if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }}]] ; then
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
             fi
             exit 0
@@ -103,8 +103,12 @@ jobs:
         uses: Azure/CLI@v1
         with: 
           inlineScript: |   
-            az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json --location eastus
-
+            #!/bin/bash
+            if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
+              az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json --location eastus
+            fi
+            exit 0
+            
       - name: Az CLI Deploy Custom Role Definitions
         if: steps.git_management_diff.outputs.diff
         uses: Azure/CLI@v1
@@ -200,6 +204,6 @@ jobs:
         with: 
           inlineScript: |
             #!/bin/bash
-            if [ $(az group exists --name ${{ env.ResourceGroupName }} ) = true ]; then
+            if [ $(az group exists --name ${{ env.ResourceGroupName }} ) == true ]; then
               az group delete --name ${{ env.ResourceGroupName }} --yes
             fi
