@@ -79,12 +79,12 @@ jobs:
       - name: Check for hubNetworking Changes
         id: git_hubnetworking_diff
         run: |
-          git diff HEAD^ HEAD infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
+          git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
 
       - name: Check for spokeNetworking Changes
         id: git_spokenetworking_diff
         run: |
-          git diff HEAD^ HEAD infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
+          git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
 
       - name: Az CLI Create Resource Group
         #if : ${{ steps.git_logging_diff.outputs.diff  == 'infra-as-code/bicep/modules/logging/logging.bicep' }}
@@ -93,7 +93,7 @@ jobs:
         with: 
           inlineScript: |
             #!/bin/bash
-            if [["${{ steps.git_logging_diff.outputs.diff  == 'infra-as-code/bicep/modules/logging/logging.bicep' }}"]]; then
+            if [["${{ steps.git_logging_diff.outputs.diff  != '' || steps.git_hubnetworking_diff.outputs.diff !='' || steps.git_spokenetworking_diff.outputs.diff !='' || }}" || steps.git_management_diff.outputs.diff != '']]; then
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
             fi
             exit 0
