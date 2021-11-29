@@ -73,8 +73,7 @@ jobs:
       - name: Check for logging Changes
         id: git_logging_diff
         run: |
-            git diff --exit-code HEAD^ HEAD infra-as-code/bicep/modules/logging/logging.bicep
-            echo "logging_changes = $?" >> $GITHUB_ENV
+            git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/logging/logging.bicep
         continue-on-error: true
 
       - name: Check for hubNetworking Changes
