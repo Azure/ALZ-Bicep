@@ -35,6 +35,7 @@ param parLogAnalyticsWorkspaceRegion string = resourceGroup().location
 @description('Number of days of log retention for Log Analytics Workspace. - DEFAULT VALUE: 365')
 param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
 
+
 @allowed([
   'AgentHealthAssessment'
   'AntiMalware'
