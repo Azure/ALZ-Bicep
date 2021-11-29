@@ -93,7 +93,7 @@ jobs:
         with: 
           inlineScript: |
             #!/bin/bash
-            if [[ steps.git_logging_diff.outputs.diff  != '' || steps.git_hubnetworking_diff.outputs.diff != '' || steps.git_spokenetworking_diff.outputs.diff }} != '' || steps.git_management_diff.outputs.diff!= '']]; then
+            if [[ ${{ steps.git_logging_diff.outputs.diff }}  != '' || ${{ steps.git_hubnetworking_diff.outputs.diff }} != '' || ${{ steps.git_spokenetworking_diff.outputs.diff }} != '' || ${{ steps.git_management_diff.outputs.diff }} != '']]; then
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
             fi
             exit 0
