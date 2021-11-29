@@ -22,7 +22,7 @@ resource resResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: parResourceGroupName
 }
 
-module pid '../customerUsageAttribution/cuaId.bicep' = {
+module modPid '../customerUsageAttribution/cuaId.bicep' = {
   name: '${cuaId}-${deployment().location}'
   params: {}
 }
