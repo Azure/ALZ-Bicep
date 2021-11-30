@@ -73,8 +73,7 @@ jobs:
       - name: Check for logging Changes
         id: git_logging_diff
         run: |
-            git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/logging/logging.bicep
-        continue-on-error: true
+          git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/logging/logging.bicep
 
       - name: Check for hubNetworking Changes
         id: git_hubnetworking_diff
@@ -118,15 +117,15 @@ jobs:
               az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json --location eastus --management-group-id alz
        
       - name: Az CLI Deploy Logging
-        #if: ${{ steps.git_logging_diff.outputs.diff != ''  }}
+        if: ${{ steps.git_logging_diff.outputs.diff == 'infra-as-code/bicep/modules/logging/logging.bicep' }}
         uses: Azure/CLI@v1
         with: 
           inlineScript: |
             #!/bin/bash
-            if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} ]] ; then
+            #if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} ]] ; then
               az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json
-            fi
-            exit 0
+            #fi
+            #exit 0
 
       - name: Az CLI Policy Assignment DINE
         if: ${{ steps.git_management_diff.outputs.diff != ''  }}
