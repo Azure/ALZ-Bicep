@@ -86,12 +86,15 @@ jobs:
           git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
 
       - name: Az CLI Create Resource Group
-        if : ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }}
+        #if : ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }}
         uses: Azure/CLI@v1
         with: 
           inlineScript: |
-              az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
-            
+          if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
+              az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}\
+          fi
+          exit 0
+
       - name: Az CLI Deploy ManagementGroups
         #if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         uses: Azure/CLI@v1
@@ -146,7 +149,7 @@ jobs:
               az deployment mg create --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-dine.json --location eastus --management-group-id 'alz-landingzones'
             fi
             exit 0
-            
+
       - name: Az CLI built-in Reader RBAC Role Service Principal
         #if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         uses: Azure/CLI@v1
