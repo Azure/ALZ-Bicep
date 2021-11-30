@@ -91,19 +91,15 @@ jobs:
         uses: Azure/CLI@v1
         with: 
           inlineScript: |
-            #!/bin/bash
-            if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
-            fi
-            exit 0
-
+            
       - name: Az CLI Deploy ManagementGroups
         if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         uses: Azure/CLI@v1
         with: 
           inlineScript: |   
             #!/bin/bash
-            az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json --location eastus
+              az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json --location eastus
 
       - name: Az CLI Deploy Custom Role Definitions
         if: ${{ steps.git_management_diff.outputs.diff != ''  }} 
@@ -122,26 +118,21 @@ jobs:
               az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json --location eastus --management-group-id alz
        
       - name: Az CLI Deploy Logging
-        if: env.logging_changes == '1'
+        if: ${{ steps.git_logging_diff.outputs.diff != ''  }}
         uses: Azure/CLI@v1
         with: 
           inlineScript: |
             #!/bin/bash
-            if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} ]] ; then
               az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json
-            fi
-            exit 0
+            
       - name: Az CLI Policy Assignment DINE
-        #if: steps.git_management_diff.outputs.diff
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         uses: Azure/CLI@v1
         with: 
           inlineScript: |   
             #!/bin/bash
-            if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
               az deployment mg create --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-dine.json --location eastus --management-group-id 'alz-landingzones'
-            fi
-            exit 0
-
+            
       - name: Az CLI built-in Reader RBAC Role Service Principal
         if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         uses: Azure/CLI@v1
@@ -159,25 +150,20 @@ jobs:
               az deployment mg create --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep --parameters @infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json --location eastus --management-group-id 'alz'
 
       - name: Az CLI Deploy Hub Networking
-        if: steps.git_hubnetworking_diff.outputs.diff
+        if: ${{ steps.git_hubnetworking_diff.outputs.diff != ''  }}
         uses: Azure/CLI@v1
         with: 
           inlineScript: |
             #!/bin/bash
-            if [[ ${{ steps.git_hubnetworking_diff.outputs.diff != ''  }} ]] ; then
               az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
-            fi
-            exit 0
+            
       - name: Az CLI Deploy Spoke Networking
-        if: steps.git_spokenetworking_diff.outputs.diff
+        if: ${{ steps.git_spokenetworking_diff.outputs.diff != ''  }}
         uses: Azure/CLI@v1
         with: 
           inlineScript: |
             #!/bin/bash
-            if [[ ${{ steps.git_spokenetworking_diff.outputs.diff != ''  }} ]] ; then
               az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
-            fi
-            exit 0
             
   bicep_cleanup:
     name: Cleanup Bicep Deployment
