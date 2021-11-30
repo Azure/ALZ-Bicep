@@ -88,7 +88,6 @@ jobs:
 
       - name: Az CLI Create Resource Group
         if : ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }}
-        #if: steps.git_management_diff.outputs.diff || steps.git_logging_diff.outputs.diff || steps.git_hubnetworking_diff.outputs.diff || steps.git_spokenetworking_diff.outputs.diff
         uses: Azure/CLI@v1
         with: 
           inlineScript: |
@@ -99,38 +98,29 @@ jobs:
             exit 0
 
       - name: Az CLI Deploy ManagementGroups
-        #if: steps.git_management_diff.outputs.diff
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         uses: Azure/CLI@v1
         with: 
           inlineScript: |   
             #!/bin/bash
-            if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
-              az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json --location eastus
-            fi
-            exit 0
+            az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json --location eastus
 
       - name: Az CLI Deploy Custom Role Definitions
-        #if: steps.git_management_diff.outputs.diff
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }} 
         uses: Azure/CLI@v1
         with: 
           inlineScript: |   
             #!/bin/bash
-            if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
               az deployment mg create --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json --location eastus --management-group-id alz
-            fi
-            exit 0
-
+        
       - name: Az CLI Deploy Custom Policy Definitions
-        #if: steps.git_management_diff.outputs.diff
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }} 
         uses: Azure/CLI@v1
         with: 
           inlineScript: |   
             #!/bin/bash
-            if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
               az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json --location eastus --management-group-id alz
-            fi
-            exit 0
-
+       
       - name: Az CLI Deploy Logging
         if: env.logging_changes == '1'
         uses: Azure/CLI@v1
@@ -153,26 +143,20 @@ jobs:
             exit 0
 
       - name: Az CLI built-in Reader RBAC Role Service Principal
-        #if: steps.git_management_diff.outputs.diff
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         uses: Azure/CLI@v1
         with: 
           inlineScript: |  
             #!/bin/bash
-            if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then 
               az deployment mg create --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.parameters.service-principal.example.json --location eastus --management-group-id 'alz-platform'
-            fi
-            exit 0
-
+        
       - name: Az CLI Subscription Placement
-        if: steps.git_management_diff.outputs.diff
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         uses: Azure/CLI@v1
         with: 
           inlineScript: |   
             #!/bin/bash
-            if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
               az deployment mg create --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep --parameters @infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json --location eastus --management-group-id 'alz'
-            fi
-            exit 0
 
       - name: Az CLI Deploy Hub Networking
         if: steps.git_hubnetworking_diff.outputs.diff
