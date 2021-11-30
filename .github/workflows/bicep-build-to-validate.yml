@@ -86,7 +86,6 @@ jobs:
           git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
 
       - name: Az CLI Create Resource Group
-        #if : ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }}
         uses: Azure/CLI@v1
         with: 
           inlineScript: |
