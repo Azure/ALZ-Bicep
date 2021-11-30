@@ -144,6 +144,8 @@ jobs:
             #!/bin/bash
             if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
               az deployment mg create --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-dine.json --location eastus --management-group-id 'alz-landingzones'
+            fi
+            exit 0
             
       - name: Az CLI built-in Reader RBAC Role Service Principal
         #if: ${{ steps.git_management_diff.outputs.diff != ''  }}
