@@ -123,7 +123,7 @@ jobs:
         with: 
           inlineScript: |
             #!/bin/bash
-            if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} ]] then
+            if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} ]] ; then
               az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json
             fi
             exit 0
