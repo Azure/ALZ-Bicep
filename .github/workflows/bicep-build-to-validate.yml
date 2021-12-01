@@ -90,10 +90,10 @@ jobs:
         with: 
           inlineScript: |
           #!/bin/bash
-          if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
+          #if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
-          fi
-          exit 0
+          #fi
+          #exit 0
 
       - name: Az CLI Deploy ManagementGroups
         uses: Azure/CLI@v1
