@@ -90,7 +90,7 @@ jobs:
         with: 
           inlineScript: |
           if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
-              az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}\
+              az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
           fi
           exit 0
 
