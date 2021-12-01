@@ -116,7 +116,6 @@ jobs:
             exit 0
 
       - name: Az CLI Deploy Custom Policy Definitions
-        #if: ${{ steps.git_management_diff.outputs.diff != ''  }} 
         uses: Azure/CLI@v1
         with: 
           inlineScript: |   
