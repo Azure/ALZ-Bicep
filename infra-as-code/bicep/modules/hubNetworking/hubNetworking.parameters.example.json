@@ -109,6 +109,9 @@
               "privatelink.database.windows.net",
               "privatelink.blob.core.windows.net"
             ]
+      },
+      "parDNSServerIPArray": {
+        "value": []
       }
     }
   }

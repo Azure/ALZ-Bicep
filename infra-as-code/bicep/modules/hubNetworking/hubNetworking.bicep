@@ -8,8 +8,8 @@ DESCRIPTION: The following components will be options in this deployment
               Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
               DDos Standard Plan
               Bastion
-AUTHOR/S: aultt
-VERSION: 1.0.0
+AUTHOR/S: aultt, jtracey93
+VERSION: 1.1.0
 */
 
 
@@ -168,7 +168,16 @@ param parPrivateDnsZones array =[
   'privatelink.redisenterprise.cache.azure.net'
   'privatelink.purview.azure.com'
   'privatelink.digitaltwins.azure.net'
+  'privatelink.azconfig.io'
+  'privatelink.webpubsub.azure.com'
+  'privatelink.azure-devices-provisioning.net'
+  'privatelink.cognitiveservices.azure.com'
+  'privatelink.azurecr.io'
+  'privatelink.search.windows.net'
 ]
+
+@description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
+param parDNSServerIPArray array = []
 
 
 var varSubnetProperties = [for subnet in parSubnets: {
@@ -194,6 +203,9 @@ resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
       addressPrefixes:[
         parHubNetworkAddressPrefix
       ]
+    }
+    dhcpOptions: {
+      dnsServers: parDNSServerIPArray
     }
     subnets: varSubnetProperties
     enableDdosProtection: parDDoSEnabled

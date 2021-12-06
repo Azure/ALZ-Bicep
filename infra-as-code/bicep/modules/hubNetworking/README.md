@@ -36,7 +36,9 @@ parAzureFirewallName | string | ${parCompanyPrefix}-azure-firewall | Name associ
 parAzureFirewallTier | string | Standard | Tier associated with the Firewall to be deployed. | Standard or Premium | Premium
 parHubRouteTableName | string | ${parCompanyPrefix}-hub-routetable | Name of route table to be associated with Hub Network | 1-80 char | alz-hub-routetable
 parGatewayArray | array| `[{"name":"alz-Vpn-Gateway","gatewaytype":"Vpn","sku":"VpnGw1","vpntype":"RouteBased","generation":"Generation2","enableBgp":false,"activeActive":false,"enableBgpRouteTranslationForNat":false,"enableDnsForwarding":false,"asn":"65515","bgpPeeringAddress":"","bgpsettings":{"asn":"65515","bgpPeeringAddress":"","peerWeight":"5"}},{"name":"alz-ExpressRoute-Gateway","gatewaytype":"ExpressRoute","sku":"ErGw1AZ","vpntype":"RouteBased","generation":"None","enableBgp":false,"activeActive":false,"enableBgpRouteTranslationForNat":false,"enableDnsForwarding":false,"asn":"65515","bgpPeeringAddress":"","bgpsettings":{"asn":"65515","bgpPeeringAddress":"","peerWeight":"5"}}]` | Array of Gateways to create including the properties of the gateway. | None | See Default
-parSubnets | array | AzureBastionSubnet, GatewaySubnet, AzureFirewallSubnet | Array of objects to providing for dynamic set of subnets | Must provide array of objects | `[{"name":"AzureBastionSubnet","ipAddressRange":"10.20.15.0/24"},{"name":"GatewaySubnet","ipAddressRange":"10.20.252.0/24"},{"name":"AzureFirewallSubnet","ipAddressRange":"10.20.254.0/24"}]`
+parSubnets | array | AzureBastionSubnet, GatewaySubnet, AzureFirewallSubnet | Array of objects to providing for dynamic set of subnets | Must provide array of objects | `[{"name":"AzureBastionSubnet","ipAddressRange":"10.20.15.0/24"},{"name":"GatewaySubnet","ipAddressRange":"10.20.252.0/24"},{"name":"AzureFirewallSubnet","ipAddressRange":"10.20.254.0/24"}]` 
+parDNSServerIPArray | array | Empty Array | Array of DNS Server IP addresses for VNet. | None | `['10.10.1.4', '10.10.2.4']` 
+
 ## Outputs
 
 The module will generate the following outputs:
