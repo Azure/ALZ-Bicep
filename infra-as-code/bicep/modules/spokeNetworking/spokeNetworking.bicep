@@ -19,7 +19,7 @@ param parDdosEnabled bool = true
 @description('Switch which allows DDOS deployment to be disabled')
 param parNetworkDNSEnableProxy bool = true
 
-@description('Switch which allows BGP Route Propogation to be disabled')
+@description('Switch which allows BGP Route Propogation to be disabled on the route table')
 param parBGPRoutePropogation bool = false
 
 @description('Tags you would like to be applied to all resources in this module')
@@ -31,17 +31,17 @@ param parDdosProtectionPlanId string = ''
 @description('The IP address range for all virtual networks to use.')
 param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 
-@description('Prefix Used for Spoke Network')
-param parSpokeNetworkPrefix string = 'Corp-Spoke'
+@description('Prefix Used for Naming Spoke Network. Default: corp-spoke')
+param parSpokeNetworkPrefix string = 'corp-spoke'
 
-@description('Array of DNS Server IP addresses.  No Default Value')
-param parDNSServerIPArray array 
+@description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
+param parDNSServerIPArray array = []
 
-@description('IP Address where network traffic should route to leveraged with DNS Proxy.  No Default Value')
-param parNextHopIPAddress string 
+@description('IP Address where network traffic should route to leveraged with DNS Proxy. Default: Empty String')
+param parNextHopIPAddress string = ''
 
-@description('Name of Route table to create for the default route of Hub. Default: udr-spoke-to-hub')
-param parSpoketoHubRouteTableName string = 'udr-spoke-to-hub'
+@description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
+param parSpoketoHubRouteTableName string = 'rtb-spoke-to-hub'
 
 //If Ddos parameter is true Ddos will be Enabled on the Virtual Network
 //If Azure Firewall is enabled and Network Dns Proxy is enabled dns will be configured to point to AzureFirewall
