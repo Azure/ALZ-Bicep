@@ -60,9 +60,7 @@ var varPolicyAssignmentParametersMerged = union(parPolicyAssignmentParameters, p
 
 var varPolicyIdentity = parPolicyAssignmentIdentityType == 'SystemAssigned' ? 'SystemAssigned' : 'None'
 
-var varPolicyIdentityLocation = parPolicyAssignmentIdentityType == 'SystemAssigned' ? deployment().location : deployment().location
-
-var varPolicyAssignmentIdentityRoleAssignmentsMGsConverged = union(parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs, (array(managementGroup().name)))
+var varPolicyAssignmentIdentityRoleAssignmentsMGsConverged = parPolicyAssignmentIdentityType == 'SystemAssigned' ? union(parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs, (array(managementGroup().name))) : []
 
 resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-01' = {
   name: parPolicyAssignmentName
@@ -78,7 +76,7 @@ resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-
   identity: {
     type: varPolicyIdentity
   }
-  location: varPolicyIdentityLocation
+  location: deployment().location
 }
 
 // Handle Managed Identity RBAC Assignments to Management Group scopes based on parameter inputs, if they are not empty and a policy assignment with an identity is required.
