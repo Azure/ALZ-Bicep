@@ -50,6 +50,12 @@ outAutomationAccountId | string | /subscriptions/4f9f8765-911a-4a6d-af60-4bc0473
 
 In this example, a Log Analytics Workspace and Automation Account will be deployed to the resource group `alz-logging`.  The inputs for this module are defined in `logging.parameters.example.json`.
 
+There are separate input parameters files depending on which Azure cloud you are deploying because this module deploys resources into an existing resource group under the specified region. There is no change to the Bicep template file.
+Azure Cloud | Bicep template | Input parameters file
+ ----------- | ----------- | -----------
+ Global regions |  logging.bicep |  logging.parameters.example.json
+ China regions  |  logging.bicep |  mc-logging.parameters.example.json
+
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
@@ -57,16 +63,31 @@ In this example, a Log Analytics Workspace and Automation Account will be deploy
 # Set Platform management subscripion ID as the the current subscription 
 ManagementSubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ManagementSubscriptionId
-  
+
+# For Azure Global regions  
 # Create Resource Group - optional when using an existing resource group
 az group create \
   --name alz-logging \
   --location eastus
 
-# Deploy Module
+# Deploy Module 
 az deployment group create \
   --template-file infra-as-code/bicep/modules/logging/logging.bicep \
   --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json \
+  --resource-group alz-logging
+
+OR
+
+# For Azure Global regions  
+# Create Resource Group - optional when using an existing resource group
+az group create \
+  --name alz-logging \
+  --location chinaeast2
+
+# Deploy Module 
+az deployment group create \
+  --template-file infra-as-code/bicep/modules/logging/logging.bicep \
+  --parameters @infra-as-code/bicep/modules/logging/mc-logging.parameters.example.json \
   --resource-group alz-logging
 ```
 
@@ -78,15 +99,30 @@ $ManagementSubscriptionId = "[your platform management subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
 
+# For Azure Global regions
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
   -Name alz-logging `
   -Location eastus
 
-# Deploy Module
+# Deploy Module to Azure global regions
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/logging/logging.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/logging/logging.parameters.example.json `
+  -ResourceGroup alz-logging
+
+OR
+
+# For Azure China regions
+# Create Resource Group - optional when using an existing resource group
+New-AzResourceGroup `
+  -Name alz-logging `
+  -Location chinaeast2
+
+# Deploy Module to Azure global regions
+New-AzResourceGroupDeployment `
+  -TemplateFile infra-as-code/bicep/modules/logging/logging.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/logging/mc-logging.parameters.example.json `
   -ResourceGroup alz-logging
 ```
 
