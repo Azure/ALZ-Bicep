@@ -2,7 +2,7 @@
 SUMMARY: This module assigns Azure Policies to a specified Management Group as well as assigning the Managed Identity to various Management Groups 
 DESCRIPTION: This module assigns Azure Policies to a specified Management Group.
 AUTHOR/S: jtracey93
-VERSION: 1.1.0
+VERSION: 1.2.0
 */
 
 targetScope = 'managementGroup'
@@ -62,7 +62,7 @@ var varPolicyIdentity = parPolicyAssignmentIdentityType == 'SystemAssigned' ? 'S
 
 var varPolicyIdentityLocation = parPolicyAssignmentIdentityType == 'SystemAssigned' ? deployment().location : deployment().location
 
-var varPolicyAssignmentIdentityRoleAssignmentsMGsConverged = union(parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs, (array(modGetManagementGroupName.outputs.outManagementGroupName)))
+var varPolicyAssignmentIdentityRoleAssignmentsMGsConverged = union(parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs, (array(managementGroup().name)))
 
 resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-01' = {
   name: parPolicyAssignmentName
@@ -103,8 +103,3 @@ module modPolicyIdentityRoleAssignmentSubsMany '../../roleAssignments/roleAssign
   }
 }]
 
-// Get current deployment Management Group name where this module is being deployed to.
-module modGetManagementGroupName '../../getManagementGroupName/getManagementGroupName.bicep' = {
-  name: 'getManagementGroupName'
-  scope: managementGroup()
-}
