@@ -461,15 +461,15 @@ var varRBACRoleDefinitionIDs = {
 // Managment Groups Varaibles - Used For Policy Assignments
 var varManagementGroupIDs = {
   intRoot: parTopLevelManagementGroupPrefix
-  platform: '${parTopLevelManagementGroupDisplayName}-platform'
-  platformManagement: '${parTopLevelManagementGroupDisplayName}-platform-management'
-  platformConnectivity: '${parTopLevelManagementGroupDisplayName}-platform-connectivity'
-  platformIdentity: '${parTopLevelManagementGroupDisplayName}-platform-identity'
-  landingZones: '${parTopLevelManagementGroupDisplayName}-landingzones'
-  landingZonesCorp: '${parTopLevelManagementGroupDisplayName}-landingzones-corp'
-  landingZonesOnline: '${parTopLevelManagementGroupDisplayName}-landingzones-online'
-  decommissioned: '${parTopLevelManagementGroupDisplayName}-decommissioned'
-  sandbox: '${parTopLevelManagementGroupDisplayName}-sandbox'
+  platform: '${parTopLevelManagementGroupPrefix}-platform'
+  platformManagement: '${parTopLevelManagementGroupPrefix}-platform-management'
+  platformConnectivity: '${parTopLevelManagementGroupPrefix}-platform-connectivity'
+  platformIdentity: '${parTopLevelManagementGroupPrefix}-platform-identity'
+  landingZones: '${parTopLevelManagementGroupPrefix}-landingzones'
+  landingZonesCorp: '${parTopLevelManagementGroupPrefix}-landingzones-corp'
+  landingZonesOnline: '${parTopLevelManagementGroupPrefix}-landingzones-online'
+  decommissioned: '${parTopLevelManagementGroupPrefix}-decommissioned'
+  sandbox: '${parTopLevelManagementGroupPrefix}-sandbox'
 }
 
 // **Scope**
@@ -486,8 +486,7 @@ module modManagementGroups '../../managementGroups/managementGroups.bicep' = {
   }
 }
 
-// Module - Custom RBAC Role Definitions - REMOVED AS ISSUES ON FRESH DEPLOYMENT ONLY AND NOT DONE IN ESLZ ARM TODAY
-// ERROR: New-AzTenantDeployment: 17:25:33 - Error: Code=InvalidTemplate; Message=Deployment template validation failed: 'The deployment metadata 'MANAGEMENTGROUP' is not valid.'.
+// // Module - Custom RBAC Role Definitions - https://github.com/Azure/bicep/issues/5371
 // module modCustomRBACRoleDefinitions '../../customRoleDefinitions/customRoleDefinitions.bicep' = {
 //   dependsOn: [
 //     modManagementGroups
@@ -697,11 +696,11 @@ module modPolicyAssignmentIntRootDeployAzActivityLog '../../policy/assignments/p
   }
 }
 
-// // Module - Policy Assignment - Deploy-ASC-Monitoring - ISSUES - The deployment metadata 'MANAGEMENTGROUP' is not valid.'.
+// Module - Policy Assignment - Deploy-ASC-Monitoring - https://github.com/Azure/bicep/issues/5371
 // module modPolicyAssignmentIntRootDeployASCMonitoring '../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
-//   dependsOn: [
-//     modCustomPolicyDefinitions
-//   ]
+//   // dependsOn: [
+//   //   modCustomPolicyDefinitions
+//   // ]
 //   scope: managementGroup(varManagementGroupIDs.intRoot)
 //   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployASCMonitoring
 //   params: {
@@ -875,7 +874,7 @@ module modPolicyAssignmentIdentDenySubnetWithoutNSG '../../policy/assignments/po
   }
 }
 
-// // Module - Policy Assignment - Deploy-VM-Backup - ISSUES
+// // Module - Policy Assignment - Deploy-VM-Backup - https://github.com/Azure/bicep/issues/5371
 // module modPolicyAssignmentIdentDeployVMBackup '../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
 //   dependsOn: [
 //     modCustomPolicyDefinitions
@@ -896,7 +895,7 @@ module modPolicyAssignmentIdentDenySubnetWithoutNSG '../../policy/assignments/po
 //   }
 // }
 
-// Modules - Policy Assignments - Management Management Group
+// Modules - Policy Assignments - Management Management Group - https://github.com/Azure/bicep/issues/5371
 // // Module - Policy Assignment - Deploy-Log-Analytics - ISSUES
 // module modPolicyAssignmentMgmtDeployLogAnalytics '../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
 //   dependsOn: [
@@ -938,7 +937,7 @@ module modPolicyAssignmentIdentDenySubnetWithoutNSG '../../policy/assignments/po
 //   }
 // }
 
-// // Modules - Policy Assignments - Landing Zones Management Group
+// // Modules - Policy Assignments - Landing Zones Management Group - https://github.com/Azure/bicep/issues/5371
 // // Module - Policy Assignment - Deny-IP-Forwarding - ISSUES
 // module modPolicyAssignmentLZsDenyIPForwarding '../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
 //   dependsOn: [
@@ -1011,7 +1010,7 @@ module modPolicyAssignmentLZsDenySubnetWithoutNSG '../../policy/assignments/poli
   }
 }
 
-// // Module - Policy Assignment - Deploy-VM-Backup - ISSUES
+// // Module - Policy Assignment - Deploy-VM-Backup - https://github.com/Azure/bicep/issues/5371 
 // module modPolicyAssignmentLZsDeployVMBackup '../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
 //   dependsOn: [
 //     modCustomPolicyDefinitions
@@ -1058,7 +1057,7 @@ module modPolicyAssignmentLZsEnableDDoSVNET '../../policy/assignments/policyAssi
   }
 }
 
-// // Module - Policy Assignment - Deny-Storage-http - ISSUES
+// // Module - Policy Assignment - Deny-Storage-http - https://github.com/Azure/bicep/issues/5371
 // module modPolicyAssignmentLZsDenyStorageHttp '../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
 //   dependsOn: [
 //     modCustomPolicyDefinitions
@@ -1076,7 +1075,7 @@ module modPolicyAssignmentLZsEnableDDoSVNET '../../policy/assignments/policyAssi
 //   }
 // }
 
-// // Module - Policy Assignment - Deploy-AKS-Policy - ISSUES
+// // Module - Policy Assignment - Deploy-AKS-Policy - https://github.com/Azure/bicep/issues/5371
 // module modPolicyAssignmentLZsDeployAKSPolicy '../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
 //   dependsOn: [
 //     modCustomPolicyDefinitions
@@ -1097,7 +1096,7 @@ module modPolicyAssignmentLZsEnableDDoSVNET '../../policy/assignments/policyAssi
 //   }
 // }
 
-// // Module - Policy Assignment - Deny-Priv-Escalation-AKS
+// // Module - Policy Assignment - Deny-Priv-Escalation-AKS - https://github.com/Azure/bicep/issues/5371
 // module modPolicyAssignmentLZsDenyPrivEscalationAKS '../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
 //   dependsOn: [
 //     modCustomPolicyDefinitions
@@ -1115,7 +1114,7 @@ module modPolicyAssignmentLZsEnableDDoSVNET '../../policy/assignments/policyAssi
 //   }
 // }
 
-// // Module - Policy Assignment - Deny-Priv-Containers-AKS - ISSUES
+// // Module - Policy Assignment - Deny-Priv-Containers-AKS - https://github.com/Azure/bicep/issues/5371
 // module modPolicyAssignmentLZsDenyPrivContainersAKS '../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
 //   dependsOn: [
 //     modCustomPolicyDefinitions
@@ -1133,7 +1132,7 @@ module modPolicyAssignmentLZsEnableDDoSVNET '../../policy/assignments/policyAssi
 //   }
 // }
 
-// // Module - Policy Assignment - Enforce-AKS-HTTPS - ISSUES
+// // Module - Policy Assignment - Enforce-AKS-HTTPS - https://github.com/Azure/bicep/issues/5371
 // module modPolicyAssignmentLZsEnforceAKSHTTPS '../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
 //   dependsOn: [
 //     modCustomPolicyDefinitions
@@ -1169,7 +1168,7 @@ module modPolicyAssignmentLZsEnforceTLSSSL '../../policy/assignments/policyAssig
   }
 }
 
-// // Module - Policy Assignment - Deploy-SQL-DB-Auditing
+// // Module - Policy Assignment - Deploy-SQL-DB-Auditing - https://github.com/Azure/bicep/issues/5371
 // module modPolicyAssignmentLZsDeploySQLDBAuditing '../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
 //   dependsOn: [
 //     modCustomPolicyDefinitions
@@ -1190,7 +1189,7 @@ module modPolicyAssignmentLZsEnforceTLSSSL '../../policy/assignments/policyAssig
 //   }
 // }
 
-// // Module - Policy Assignment - Deploy-SQL-Threat - ISSUES
+// // Module - Policy Assignment - Deploy-SQL-Threat - https://github.com/Azure/bicep/issues/5371
 // module modPolicyAssignmentLZsDeploySQLThreat '../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
 //   dependsOn: [
 //     modCustomPolicyDefinitions
