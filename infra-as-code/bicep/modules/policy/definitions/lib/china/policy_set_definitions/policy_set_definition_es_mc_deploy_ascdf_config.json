@@ -5,8 +5,8 @@
   "scope": null,
   "properties": {
     "policyType": "Custom",
-    "displayName": "Deploy Azure Security Center configuration",
-    "description": "Deploy Azure Security Center configuration",
+    "displayName": "Deploy Microsoft Defender for Cloud configuration",
+    "description": "Deploy Microsoft Defender for Cloud configuration",
     "metadata": {
       "version": "2.0.0",
       "category": "Security Center"
@@ -16,7 +16,7 @@
         "type": "string",
         "metadata": {
           "displayName": "Security contacts email address",
-          "description": "Provide email address for Azure Security Center contact details"
+          "description": "Provide email address for Microsoft Defender for Cloud contact details"
         }
       },
       "logAnalytics": {
@@ -48,13 +48,6 @@
           "description": "Enable or disable the execution of the policy"
         }
       },
-      "enableAscForRegistries": {
-        "type": "String",
-        "metadata": {
-          "displayName": "Effect",
-          "description": "Enable or disable the execution of the policy"
-        }
-      },
       "enableAscForServers": {
         "type": "String",
         "metadata": {
@@ -70,16 +63,6 @@
         "parameters": {
           "effect": {
             "value": "[[parameters('enableAscForServers')]"
-          }
-        },
-        "groupNames": []
-      },
-      {
-        "policyDefinitionReferenceId": "defenderForContainerRegistry",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/d3d1e68e-49d4-4b56-acff-93cef644b432",
-        "parameters": {
-          "effect": {
-            "value": "[[parameters('enableAscForRegistries')]"
           }
         },
         "groupNames": []

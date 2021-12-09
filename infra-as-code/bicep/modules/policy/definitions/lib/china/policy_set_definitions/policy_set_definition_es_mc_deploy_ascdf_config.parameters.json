@@ -12,13 +12,6 @@
       }
     }
   },
-  "defenderForContainerRegistry": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('enableAscForRegistries')]"
-      }
-    }
-  },
   "defenderForSqlPaas": {
     "parameters": {
       "effect": {
