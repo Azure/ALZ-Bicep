@@ -345,6 +345,11 @@ var varPolicyAssignmentDenyIPForwarding = {
   libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_ip_forwarding.tmpl.json'))
 }
 
+var varPolicyAssignmentDenyAppGWWithoutWAF = {
+  definitionID: '${varManagementGroupIDs.intRoot}/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF'
+  libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_appgw_without_waf.tmpl.json'))
+}
+
 var varPolicyAssignmentDenyPrivContainersAKS = {
   definitionID: '/providers/Microsoft.Authorization/policyDefinitions/95edb821-ddaf-4404-9732-666045e056b4'
   libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_priv_containers_aks.tmpl.json'))
