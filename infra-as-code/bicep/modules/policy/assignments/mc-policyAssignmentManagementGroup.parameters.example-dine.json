@@ -6,7 +6,7 @@
             "value": "Deploy-ASCDF-Config"
         },
         "parPolicyAssignmentDisplayName": {
-            "value": "Deploy Azure Security Center configuration"
+            "value": "Deploy Microsoft Defender for Cloud configuration"
         },
         "parPolicyAssignmentDescription": {
             "value": "Deploy Microsoft Defender for Cloud and Security Contacts"
@@ -34,7 +34,7 @@
                 "enableAscForSql": {
                     "value": "Disabled"
                 },
-                "enableAscForRegistries": {
+                "enableAscForContainers": {
                     "value": "Disabled"
                 }
             }
