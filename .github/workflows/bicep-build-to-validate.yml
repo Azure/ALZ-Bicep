@@ -41,10 +41,10 @@ jobs:
     name: Deploy Bicep Files
     runs-on: ubuntu-latest
     env:
-      prNumber: ${{ github.event.number }}
-      ResourceGroupName: "rsg-github-pr-${{ env.prNumber }}"
-      ManagementGroupPrefix: "PR-${{ env.prNumber }}"
-      SubscriptionName: "sub-unit-test-pr-${{ env.prNumber }}"
+      #prNumber: ${{ github.event.number }}
+      ResourceGroupName: "rsg-github-pr-${{ github.event.number }}"
+      ManagementGroupPrefix: "PR-${{ github.event.number }}"
+      SubscriptionName: "sub-unit-test-pr-${{ github.event.number }}"
       Location: "eastus"
 
     environment: BicepUnitTests
