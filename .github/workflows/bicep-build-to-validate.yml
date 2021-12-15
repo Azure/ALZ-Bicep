@@ -113,8 +113,6 @@ jobs:
       - name: Az CLI Create Subscription
         uses: Azure/CLI@v1
         id: create_subscription
-        outputs:
-          subscriptionId: ${{ steps.create_subscription.outputs. }}
         with:
           inlineScript: |
             #!/bin/bash
