@@ -128,6 +128,7 @@ jobs:
           inlineScript: |
             #!/bin/bash
             if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
+              echo "${{ steps.create_subscription.outputs.subid }}"
               az account set --subscription ${{ steps.create_subscription.outputs.subid }}
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.Location }}
             fi
