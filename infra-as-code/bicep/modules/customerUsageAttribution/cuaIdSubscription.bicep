@@ -6,3 +6,6 @@ VERSION: 1.0.0
 */
 
 targetScope = 'subscription'
+
+// This is an empty deployment by design
+// Reference:  https://docs.microsoft.com/azure/marketplace/azure-partner-customer-usage-attribution
