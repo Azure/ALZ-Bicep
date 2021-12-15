@@ -89,14 +89,38 @@ jobs:
         run: |
           git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
 
+      #jobs:
+      #  test-job:
+      #    runs-on: ubuntu-latest
+      #    steps:
+      #      - name: Checkout this repo
+      #        uses: actions/checkout@v2
+      #        with:
+      #          fetch-depth: 2      #
+
+      #      - name: Test1
+      #        id: test1
+      #        run: |
+      #          h=$(az --version)     #
+
+      #          echo "::set-output name=h::$h"      #
+
+      #      - name: Test2
+      #        run: |
+      #          echo "${{ steps.test1.outputs.h }}"     #
+      #
+
       - name: Az CLI Create Subscription
         uses: Azure/CLI@v1
         id: create_subscription
+        outputs:
+          subscriptionId: ${{ steps.create_subscription.outputs. }}
         with:
           inlineScript: |
             #!/bin/bash
             if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
-              az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parEaBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }}
+              subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parEaBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }})
+              echo "::set-output name=subid::$subid"
             fi
             exit 0
 
@@ -106,7 +130,7 @@ jobs:
           inlineScript: |
             #!/bin/bash
             if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
-              az account set --subscription ${{ steps.create_subscription.outputs.outSubscriptionId }}
+              az account set --subscription ${{ steps.create_subscription.outputs.subid }}
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.Location }}
             fi
             exit 0
