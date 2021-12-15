@@ -118,7 +118,7 @@ jobs:
             #!/bin/bash
             if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
               subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parEaBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }})
-              echo "::set-output name=subid::$subid"
+              echo "::set-output name=subid::$subid.outSubscriptionId"
             fi
             exit 0
 
