@@ -42,9 +42,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       prNumber: ${{ github.event.number }}
-      ResourceGroupName: rsg-github-pr-${{ env.prNumber }}
-      ManagementGroupPrefix: PR-${{ env.prNumber }}
-      SubscriptionName: sub-unit-test-pr-${{ env.prNumber }}
+      ResourceGroupName: "rsg-github-pr-${{ env.prNumber }}"
+      ManagementGroupPrefix: "PR-${{ env.prNumber }}"
+      SubscriptionName: "sub-unit-test-pr-${{ env.prNumber }}"
       Location: "eastus"
 
     environment: BicepUnitTests
