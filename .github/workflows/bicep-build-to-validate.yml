@@ -52,7 +52,7 @@ jobs:
 
     outputs:
       isDeployed: $(${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }})
-
+      subscriptionID: ${{ env.SUBIDOUTPUT }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -205,7 +205,7 @@ jobs:
         if: always()
         shell: bash
         run: |
-          az account set --subscription ${{ env.SUBIDOUTPUT }}
+          az account set --subscription ${{ needs.bicep_deploy.outputs.subscriptionID}}
           if [ $(az group exists --name ${{ env.ResourceGroupName }} ) == true ]; then
             az group delete --name ${{ env.ResourceGroupName }} --yes
           fi
