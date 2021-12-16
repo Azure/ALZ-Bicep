@@ -87,24 +87,23 @@ jobs:
         id: git_hubnetworking_diff
         shell: bash
         run: |
-          git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
+          git_hub=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep)
+          echo "githubOUTPUT=$git_hub" >> $GITHUB_ENV
 
       - name: Check for spokeNetworking Changes
         id: git_spokenetworking_diff
         shell: bash
         run: |
-          git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
+          git_spoke=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep)
+          echo "gitSpokeOUTPUT=$git_spoke" >> $GITHUB_ENV
 
       - name: Az CLI Create Subscription for PR
         id: create_subscription
         if: ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ env.gitLoggingOUTPUT != '' }}
         shell: bash
         run: |
-          #if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
             subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }} | jq .properties.outputs.outSubscriptionId.value)
             echo "SUBIDOUTPUT=$subid" >> $GITHUB_ENV
-          #fi
-          #exit 0
 
       - name: Az CLI Create Resource Group for PR
         id: create_rsg
@@ -128,71 +127,51 @@ jobs:
         if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         shell: bash
         run: |
-          if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
             az deployment mg create --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json --location ${{ env.Location }} --management-group-id ${{ env.ManagementGroupPrefix }}
-          fi
-          exit 0
 
       - name: Az CLI Deploy Custom Policy Definitions for PR
         id: create_policy_defs
         if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         shell: bash
         run: |
-          if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
             az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json --location ${{ env.Location }} --management-group-id ${{ env.ManagementGroupPrefix }}
-          fi
-          exit 0
 
       - name: Az CLI Deploy Logging for PR
         id: create_logging
         if: ${{ env.gitLoggingOUTPUT != '' }}
         shell: bash
         run: |
-          #if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} ]] ; then
             az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json
-          #fi
-          #exit 0
 
       - name: Az CLI Policy Assignment DINE for PR
         id: create_policy_assignment_dine
         if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         shell: bash
         run: |
-          if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
             az deployment mg create --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-dine.json --location ${{ env.Location }} --management-group-id "${{ env.ManagementGroupPrefix }}-landingzones"
             az deployment mg create --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.parameters.service-principal.example.json --location ${{ env.Location }} --management-group-id "${{ env.ManagementGroupPrefix }}-platform"
-          fi
-          exit 0
-      #
+
       - name: Az CLI Subscription Placement for PR
         id: move_sub
         if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         shell: bash
         run: |
-          if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
             az deployment mg create --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep --parameters parTargetManagementGroupId=${{ env.ManagementGroupPrefix }} parSubscriptionIds='["${{env.SUBIDOUTPUT}}"]' --location ${{ env.Location }} --management-group-id ${{ env.ManagementGroupPrefix }}
-          fi
-          exit 0
 
       - name: Az CLI Deploy Hub Networking for PR
         id: create_hub_network
-        if: ${{ steps.git_hubnetworking_diff.outputs.diff != ''  }}
+        if: ${{ env.githubOUTPUT != ''  }}
         shell: bash
         run: |
-          if [[ ${{ steps.git_hubnetworking_diff.outputs.diff != ''  }} ]] ; then
             az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
-          fi
-          exit 0
-
+          
       - name: Az CLI Deploy Spoke Networking for PR
         id: create_spoke_network
-        if: ${{ steps.git_spokenetworking_diff.outputs.diff != ''  }}
+        if: ${{ env.gitSpokeOUTPUT != ''  }}
         shell: bash
         run: |
-          if [[ ${{ steps.git_spokenetworking_diff.outputs.diff != ''  }} ]] ; then
             az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
-          fi
-          exit 0
+
 
   bicep_cleanup:
     name: Cleanup Bicep Deployment for PR
