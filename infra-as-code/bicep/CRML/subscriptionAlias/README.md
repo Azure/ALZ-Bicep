@@ -1,27 +1,20 @@
-# Module:  Management Groups - NEEDS UPDATING
+# Module:  Subscription Alias
 
-The Management Groups module deploys a management group hierarchy in a customer's tenant under the `Tenant Root Group`.  This is accomplished through a tenant-scoped Azure Resource Manager (ARM) deployment.  The heirarchy can be modifed by editing `managementGroups.bicep`.  The hierarchy created by the deployment is:
+The Subscription Alias module deploys an Azure Subscription into an existing billing scope that can be from an EA, MCA or MPA as documented in [Create Azure subscriptions programmatically](https://docs.microsoft.com/azure/cost-management-billing/manage/programmatically-create-subscription).
 
-- Tenant Root Group
-  - Top Level Management Group (defined by parameter `parTopLevelManagementGroupPrefix`)
-    - Platform
-      - Management
-      - Connectivity
-      - Identity
-    - Landing Zones
-      - Corp
-      - Online
-    - Sandbox
-    - Decommissioned
+> Please review the [Create Azure subscriptions programmatically](https://docs.microsoft.com/azure/cost-management-billing/manage/programmatically-create-subscription) documentation as well as the documentation here [Assign roles to Azure Enterprise Agreement service principal names](https://docs.microsoft.com/azure/cost-management-billing/manage/assign-roles-azure-service-principals) for information on how this works and how to create and assign permissions to a SPN to allow it to create Subscriptions for you as part of a pipeline etc.
+ 
+The Subscription will be created and placed under the Tenant Root Group, unless the default Management Group has been changed as per [Setting - Default management group](https://docs.microsoft.com/azure/governance/management-groups/how-to/protect-resource-hierarchy#setting---default-management-group)
 
 ## Parameters
 
 The module requires the following inputs:
 
-Parameter | Type | Description | Requirements | Example
------------ | ---- | ----------- | ------------ | -------
-parTopLevelManagementGroupPrefix | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment. | 2-10 characters | `alz` |
-parTopLevelManagementGroupDisplayName | string | Display name for top level management group.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter. | Minimum two characters | `Azure Landing Zones` |
+| Parameter | Type | Description | Required | Example | Default |
+| ----------- | ---- | ----------- | ------------ | ------- | -------- |
+parSubscriptionName | string | Name of the subscription to be created. Will also be used as the alias name. Whilst you can use any name you like we recommend it to be: all lowercase, no spaces, alphanumeric and hyphens only. | Yes  | `sub-example-001` | None, must be provided. |
+parSubscriptionBillingScope | string | The full resource ID of billing scope associated to the EA, MCA or MPA account you wish to create the subscription in. | Yes | EA - `/providers/Microsoft.Billing/BillingAccounts/1234567/enrollmentAccounts/7654321` <br> MCA - `/providers/Microsoft.Billing/billingAccounts/5e98e158-xxxx-xxxx-xxxx-xxxxxxxxxxxx:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx_xxxx-xx-xx/billingProfiles/AW4F-xxxx-xxx-xxx/invoiceSections/SH3V-xxxx-xxx-xxx` <br> MPA - `/providers/Microsoft.Billing/billingAccounts/99a13315-xxxx-xxxx-xxxx-xxxxxxxxxxxx:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx_xxxx-xx-xx/customers/2281f543-xxxx-xxxx-xxxx-xxxxxxxxxxxx` | None, must be provided. |
+parSubscriptionOfferType | string | The offer type of the EA, MCA or MPA subscription to be created. | No | `DevTest` | `Production` |
 
 ## Outputs
 
@@ -29,28 +22,20 @@ The module will generate the following outputs:
 
 Output | Type | Example
 ------ | ---- | --------
-outTopLevelMGId | string | /providers/Microsoft.Management/managementGroups/alz
-outPlatformMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform
-outPlatformManagementMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform-management
-outPlatformConnectivityMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform-connectivity
-outPlatformIdentityMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform-identity
-outLandingZonesMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones
-outLandingZonesCorpMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-corp
-outLandingZonesOnlineMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-online
-outSandboxManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-sandbox
-outDecommissionedManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-decommissioned
+outSubscriptionName | string | `sub-example-001` 
+outSubscriptionId | string | `5583f55f-65b2-4a3a-87c9-e499c1c587c0`
 
 ## Deployment
 
-In this example, the management groups are created at the `Tenant Root Group` through a tenant-scoped deployment.
+In this example, the Subscription is created upon an EA Account through a tenant-scoped deployment.
 
 > For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
 ```bash
 az deployment tenant create \
-  --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
-  --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json \
+  --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep \
+  --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json \
   --location eastus
 ```
 
@@ -58,10 +43,12 @@ az deployment tenant create \
 
 ```powershell
 New-AzTenantDeployment `
-  -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json `
+  -TemplateFile infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep `
+  -TemplateParameterFile infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json `
   -Location eastus
 ```
+
+### Output Screenshot
 
 ![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output")
 
