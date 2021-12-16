@@ -203,9 +203,9 @@ jobs:
 
 
       - name: Az Remove Resource Group
-        uses: Azure/CLI@v1
         shell: bash
         run: |
-            az account set --subscription ${{ env.SUBIDOUTPUT }}
+          az account set --subscription ${{ env.SUBIDOUTPUT }}
+          if [ $(az group exists --name ${{ env.ResourceGroupName }} ) == true ]; then
             az group delete --name ${{ env.ResourceGroupName }} --yes
-            
+          fi
