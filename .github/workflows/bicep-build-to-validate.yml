@@ -51,7 +51,7 @@ jobs:
     environment: BicepUnitTests
 
     outputs:
-      git_management_diff: ${{ steps.git_management_diff.outputs.test}}
+      git_management_diff: ${{ steps.git_management_diff.outputs.diff}}
 
     steps:
       - name: Checkout Repo
