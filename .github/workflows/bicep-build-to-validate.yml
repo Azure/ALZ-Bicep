@@ -120,12 +120,9 @@ jobs:
         #    #!/bin/bash
         run: |
             if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
-              subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }})
-              $subId | jq .properties.outputs.outSubscriptionId.value
-              SUBIDOUTPUT=$($subId | jq .properties.outputs.outSubscriptionId.value)
-              echo "SUBIDOUTPUT2=$SUBIDOUTPUT" >> $GITHUB_ENV
+              subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }} | jq .properties.outputs.outSubscriptionId.value)
+              echo "SUBIDOUTPUT=$subid" >> $GITHUB_ENV
             fi
-            echo $SUBIDOUTPUT
             exit 0
 
       - name: Az CLI Create Resource Group
@@ -135,10 +132,10 @@ jobs:
             #!/bin/bash
         shell: bash
         run: |
-            echo "${{ env.SUBIDOUTPUT2 }}"
+            echo "${{ env.SUBIDOUTPUT }}"
 
             if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
-              az account set --subscription ${{ env.SUBIDOUTPUT2 }}
+              az account set --subscription ${{ env.SUBIDOUTPUT }}
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.Location }}
             fi
             exit 0
