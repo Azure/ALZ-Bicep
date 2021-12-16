@@ -207,7 +207,6 @@ jobs:
   bicep_cleanup:
     name: Cleanup Bicep Deployment for PR
     runs-on: ubuntu-latest
-    env:
     environment: BicepUnitTests
     if: always()
     needs: [bicep_deploy]
