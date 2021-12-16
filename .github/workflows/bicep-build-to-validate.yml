@@ -122,8 +122,8 @@ jobs:
             if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
               az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }}
               subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }})
-              echo "$subid.outputs.outSubscriptionId.value"
-              echo "::set-output name=subid::$subid.outSubscriptionId.value"
+              echo $subId | jq .properties.outputs.outSubscriptionId.value
+              echo "::set-output name=subid::$(echo $subId | jq .properties.outputs.outSubscriptionId.value)"
             fi
             exit 0
 
@@ -135,7 +135,7 @@ jobs:
         shell: bash
         run: |
             if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
-              echo "${{ steps.create_subscription.outputs.outSubscriptionId.value }}"
+              echo "${{ steps.create_subscription.outputs.subid }}"
               az account set --subscription ${{ steps.create_subscription.outputs.subid }}
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.Location }}
             fi
