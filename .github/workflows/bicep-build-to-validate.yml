@@ -90,27 +90,6 @@ jobs:
         run: |
           git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
 
-      #jobs:
-      #  test-job:
-      #    runs-on: ubuntu-latest
-      #    steps:
-      #      - name: Checkout this repo
-      #        uses: actions/checkout@v2
-      #        with:
-      #          fetch-depth: 2      #
-
-      #      - name: Test1
-      #        id: test1
-      #        run: |
-      #          h=$(az --version)     #
-
-      #          echo "::set-output name=h::$h"      #
-
-      #      - name: Test2
-      #        run: |
-      #          echo "${{ steps.test1.outputs.h }}"     #
-      #
-
       - name: Az CLI Create Subscription for PR
         id: create_subscription
         shell: bash
@@ -224,14 +203,17 @@ jobs:
             enable-AzPSSession: true
 
       - name: Az CLI Remove/Cleanup Deployment
-        if: needs.bicep_deploy.outputs.git_management_diff
+        #if: needs.bicep_deploy.outputs.git_management_diff
         shell: pwsh
         run: |
-            install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Force
-            install-module -Name "Az.Resources" -MinimumVersion "4.3.0" -Force
-            install-module -Name "Az.ResourceGraph" -MinimumVersion "0.7.7"-Force
-            .github/scripts/Wipe-ESLZAzTenant.ps1 -tenantRootGroupID ${{ secrets.ALZ_AZURE_SECRET_TENANT_ID }} -intermediateRootGroupID ${{ env.ManagementGroupPrefix }}
-      
+            if ($(bicep_deploy.outputs.git_management_diff != ''))
+            {
+              install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Force
+              install-module -Name "Az.Resources" -MinimumVersion "4.3.0" -Force
+              install-module -Name "Az.ResourceGraph" -MinimumVersion "0.7.7"-Force
+              .github/scripts/Wipe-ESLZAzTenant.ps1 -tenantRootGroupID ${{ secrets.ALZ_AZURE_SECRET_TENANT_ID }} -intermediateRootGroupID ${{ env.ManagementGroupPrefix }}
+            }
+
       - name: Az Remove Resource Group
         uses: Azure/CLI@v1
         with: 
