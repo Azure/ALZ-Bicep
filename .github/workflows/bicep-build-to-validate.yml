@@ -137,6 +137,7 @@ jobs:
 
       - name: Az CLI Deploy Custom Policy Definitions for PR
         id: create_policy_defs
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         shell: bash
         run: |
           if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
@@ -156,6 +157,7 @@ jobs:
 
       - name: Az CLI Policy Assignment DINE for PR
         id: create_policy_assignment_dine
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         shell: bash
         run: |
           if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
@@ -166,6 +168,7 @@ jobs:
       #
       - name: Az CLI Subscription Placement for PR
         id: move_sub
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         shell: bash
         run: |
           if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
@@ -175,6 +178,7 @@ jobs:
 
       - name: Az CLI Deploy Hub Networking for PR
         id: create_hub_network
+        if: ${{ steps.git_hubnetworking_diff.outputs.diff != ''  }}
         shell: bash
         run: |
           if [[ ${{ steps.git_hubnetworking_diff.outputs.diff != ''  }} ]] ; then
@@ -184,6 +188,7 @@ jobs:
 
       - name: Az CLI Deploy Spoke Networking for PR
         id: create_spoke_network
+        if: ${{ steps.git_spokenetworking_diff.outputs.diff != ''  }}
         shell: bash
         run: |
           if [[ ${{ steps.git_spokenetworking_diff.outputs.diff != ''  }} ]] ; then
