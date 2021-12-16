@@ -80,7 +80,7 @@ jobs:
         id: git_logging_diff
         shell: bash
         run: |
-          git_logging=git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/logging/logging.bicep
+          git_logging=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/logging/logging.bicep)
           echo "gitLoggingOUTPUT=$git_logging"  >> $GITHUB_ENV
 
       - name: Check for hubNetworking Changes
