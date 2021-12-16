@@ -51,7 +51,7 @@ jobs:
     environment: BicepUnitTests
 
     outputs:
-      git_management_diff: ${{ steps.git_management_diff.outputs.diff}}
+      mgmt_deployed: ${{ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} }}
 
     steps:
       - name: Checkout Repo
@@ -206,7 +206,7 @@ jobs:
         #if: needs.bicep_deploy.outputs.git_management_diff
         shell: pwsh
         run: |
-            if (${{ needs.bicep_deploy.outputs.git_management_diff != ''}})
+            if (${{ needs.bicep_deploy.outputs.mgmt_deployed}})
             {
               install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Force
               install-module -Name "Az.Resources" -MinimumVersion "4.3.0" -Force
