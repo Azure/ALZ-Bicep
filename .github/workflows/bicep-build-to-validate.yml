@@ -51,7 +51,7 @@ jobs:
     environment: BicepUnitTests
 
     outputs:
-      mgmt_deployed: ${{ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} }}
+      mgmt_deployed:  $(${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }})
 
     steps:
       - name: Checkout Repo
