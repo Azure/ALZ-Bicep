@@ -206,7 +206,7 @@ jobs:
         #if: needs.bicep_deploy.outputs.git_management_diff
         shell: pwsh
         run: |
-            if ($(bicep_deploy.outputs.git_management_diff != ''))
+            if ($(needs.bicep_deploy.outputs.git_management_diff != ''))
             {
               install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Force
               install-module -Name "Az.Resources" -MinimumVersion "4.3.0" -Force
