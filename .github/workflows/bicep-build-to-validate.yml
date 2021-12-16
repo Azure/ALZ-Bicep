@@ -97,7 +97,7 @@ jobs:
 
       - name: Az CLI Create Subscription for PR
         id: create_subscription
-        if: ${{ steps.git_management_diff.outputs.diff != ''  }}
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ env.gitLoggingOUTPUT != '' }}
         shell: bash
         run: |
           #if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
@@ -111,11 +111,8 @@ jobs:
         if: ${{ env.gitLoggingOUTPUT != '' }}
         shell: bash
         run: |
-          #if [[ $(${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }}) ]] ; then
             az account set --subscription ${{ env.SUBIDOUTPUT }}
             az group create --name ${{ env.ResourceGroupName }} --location ${{ env.Location }}
-          #fi
-          #exit 0
 
       - name: Az CLI Deploy Management Groups for PR
         id: create_mgs
