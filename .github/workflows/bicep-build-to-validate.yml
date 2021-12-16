@@ -123,7 +123,7 @@ jobs:
               az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }}
               subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }})
               echo $subId | jq .properties.outputs.outSubscriptionId.value
-              echo "::set-output name=subidoutput::$(echo $subId | jq .properties.outputs.outSubscriptionId.value)"
+              echo "::set-env name=SUBIDOUTPUT::$(echo $subId | jq .properties.outputs.outSubscriptionId.value)"
             fi
             exit 0
 
@@ -135,8 +135,8 @@ jobs:
         shell: bash
         run: |
             if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
-              echo "${{ steps.create_subscription.outputs.subidoutput }}"
-              az account set --subscription ${{ steps.create_subscription.outputs.subidoutput }}
+              echo "${{ env.SUBIDOUTPUT }}"
+              az account set --subscription ${{ env.SUBIDOUTPUT }}
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.Location }}
             fi
             exit 0
