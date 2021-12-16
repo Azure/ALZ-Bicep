@@ -78,7 +78,8 @@ jobs:
       - name: Check for logging Changes
         id: git_logging_diff
         run: |
-          git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/logging/logging.bicep
+          git_logging=git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/logging/logging.bicep
+          echo "gitLoggingOUTPUT=$git_logging"  >> $GITHUB_ENV
 
       - name: Check for hubNetworking Changes
         id: git_hubnetworking_diff
@@ -140,12 +141,13 @@ jobs:
 
       - name: Az CLI Deploy Logging for PR
         id: create_logging
+        if: ${{ env.gitLoggingOUTPUT != '' }}
         shell: bash
         run: |
-            if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} ]] ; then
+            #if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} ]] ; then
               az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json
-            fi
-            exit 0
+            #fi
+            #exit 0
 
       - name: Az CLI Policy Assignment DINE for PR
         id: create_policy_assignment_dine
