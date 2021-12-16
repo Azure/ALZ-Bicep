@@ -51,7 +51,7 @@ jobs:
     environment: BicepUnitTests
 
     outputs:
-      mgmt_deployed:  $(${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }})
+      isDeployed:  $(${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }})
 
     steps:
       - name: Checkout Repo
@@ -92,13 +92,14 @@ jobs:
 
       - name: Az CLI Create Subscription for PR
         id: create_subscription
+        if: ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }}
         shell: bash
         run: |
-            if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
+            #if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
               subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }} | jq .properties.outputs.outSubscriptionId.value)
               echo "SUBIDOUTPUT=$subid" >> $GITHUB_ENV
-            fi
-            exit 0
+            #fi
+            #exit 0
 
       - name: Az CLI Create Resource Group for PR
         id: create_rsg
@@ -203,10 +204,10 @@ jobs:
             enable-AzPSSession: true
 
       - name: Az CLI Remove/Cleanup Deployment
-        if: needs.bicep_deploy.outputs.mgmt_deployed
+        if: needs.bicep_deploy.outputs.isDeployed
         shell: pwsh
         run: |
-            #if (${{ needs.bicep_deploy.outputs.mgmt_deployed}})
+            #if (${{ needs.bicep_deploy.outputs.isDeployed}})
             #{
               install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Force
               install-module -Name "Az.Resources" -MinimumVersion "4.3.0" -Force
