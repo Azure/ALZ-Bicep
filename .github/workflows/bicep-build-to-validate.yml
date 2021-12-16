@@ -99,7 +99,7 @@ jobs:
 
       - name: Az CLI Create Subscription for PR
         id: create_subscription
-        if: ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ env.gitLoggingOUTPUT != '' }}
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ env.gitLoggingOUTPUT != '' }} || ${{ env.githubOUTPUT != ''  }} || ${{ env.gitSpokeOUTPUT != ''  }}
         shell: bash
         run: |
             subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }} | jq .properties.outputs.outSubscriptionId.value)
@@ -196,20 +196,16 @@ jobs:
         if: needs.bicep_deploy.outputs.isDeployed
         shell: pwsh
         run: |
-          #if (${{ needs.bicep_deploy.outputs.isDeployed}})
-          #{
             install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Force
             install-module -Name "Az.Resources" -MinimumVersion "4.3.0" -Force
             install-module -Name "Az.ResourceGraph" -MinimumVersion "0.7.7"-Force
             .github/scripts/Wipe-ESLZAzTenant.ps1 -tenantRootGroupID ${{ secrets.ALZ_AZURE_SECRET_TENANT_ID }} -intermediateRootGroupID ${{ env.ManagementGroupPrefix }}
-          #}
-          #exit 0
+
 
       - name: Az Remove Resource Group
         uses: Azure/CLI@v1
-        with:
-          inlineScript: |
-            #!/bin/bash
-            if [ $(az group exists --name ${{ env.ResourceGroupName }} ) == true ]; then
-              az group delete --name ${{ env.ResourceGroupName }} --yes
-            fi
+        shell: bash
+        run: |
+            az account set --subscription ${{ env.SUBIDOUTPUT }}
+            az group delete --name ${{ env.ResourceGroupName }} --yes
+            
