@@ -111,11 +111,13 @@ jobs:
       #
 
       - name: Az CLI Create Subscription
-        uses: Azure/CLI@v1
+        #uses: Azure/CLI@v1
         id: create_subscription
-        with:
-          inlineScript: |
-            #!/bin/bash
+        shell: bash
+        #with:
+        #  inlineScript: |
+        #    #!/bin/bash
+        run: |
             if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
               subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parEaBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }})
               echo "::set-output name=subid::$subid.outSubscriptionId.value"
@@ -123,10 +125,12 @@ jobs:
             exit 0
 
       - name: Az CLI Create Resource Group
-        uses: Azure/CLI@v1
-        with:
-          inlineScript: |
+        #uses: Azure/CLI@v1
+        #with:
+        #  inlineScript: |
             #!/bin/bash
+        shell: bash
+        run: |
             if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
               echo "${{ steps.create_subscription.outputs.subid }}"
               az account set --subscription ${{ steps.create_subscription.outputs.subid }}
