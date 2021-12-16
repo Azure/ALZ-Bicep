@@ -202,7 +202,7 @@ jobs:
             .github/scripts/Wipe-ESLZAzTenant.ps1 -tenantRootGroupID "${{ secrets.ALZ_AZURE_SECRET_TENANT_ID }}" -intermediateRootGroupID "${{ env.ManagementGroupPrefix }}"
 
       - name: Az Remove Resource Group
-        if: always
+        if: always()
         shell: bash
         run: |
           az account set --subscription ${{ env.SUBIDOUTPUT }}
