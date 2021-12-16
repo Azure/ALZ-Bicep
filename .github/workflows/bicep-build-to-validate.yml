@@ -127,6 +127,7 @@ jobs:
 
       - name: Az CLI Deploy Custom Role Definitions for PR
         id: create_rbac_roles
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }}
         shell: bash
         run: |
           if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
