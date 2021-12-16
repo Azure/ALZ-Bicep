@@ -203,17 +203,17 @@ jobs:
             enable-AzPSSession: true
 
       - name: Az CLI Remove/Cleanup Deployment
-        #if: needs.bicep_deploy.outputs.git_management_diff
+        if: needs.bicep_deploy.outputs.mgmt_deployed
         shell: pwsh
         run: |
-            if (${{ needs.bicep_deploy.outputs.mgmt_deployed}})
-            {
+            #if (${{ needs.bicep_deploy.outputs.mgmt_deployed}})
+            #{
               install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Force
               install-module -Name "Az.Resources" -MinimumVersion "4.3.0" -Force
               install-module -Name "Az.ResourceGraph" -MinimumVersion "0.7.7"-Force
               .github/scripts/Wipe-ESLZAzTenant.ps1 -tenantRootGroupID ${{ secrets.ALZ_AZURE_SECRET_TENANT_ID }} -intermediateRootGroupID ${{ env.ManagementGroupPrefix }}
-            }
-            exit 0
+            #}
+            #exit 0
 
       - name: Az Remove Resource Group
         uses: Azure/CLI@v1
