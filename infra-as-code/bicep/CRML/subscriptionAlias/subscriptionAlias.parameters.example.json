@@ -5,7 +5,7 @@
     "parSubscriptionName": {
       "value": "sub-example-001"
     },
-    "parEaBillingScope": {
+    "parSubscriptionBillingScope": {
       "value": "/providers/Microsoft.Billing/billingAccounts/6078687/enrollmentAccounts/298930"
     },
     "parSubscriptionOfferType": {

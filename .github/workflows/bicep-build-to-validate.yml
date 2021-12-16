@@ -44,6 +44,7 @@ jobs:
       #prNumber: ${{ github.event.number }}
       ResourceGroupName: "rsg-github-pr-${{ github.event.number }}"
       ManagementGroupPrefix: "PR-${{ github.event.number }}"
+      TopLevelManagementGroupDisplayName: "PR ${{ github.event.number }} Azure Landing Zones"
       SubscriptionName: "sub-unit-test-pr-${{ github.event.number }}"
       Location: "eastus"
 
@@ -117,7 +118,7 @@ jobs:
           inlineScript: |
             #!/bin/bash
             if [[ ${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }} ]] ; then
-              subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parEaBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }})
+              subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }})
               echo "::set-output name=subid::$subid.outSubscriptionId.value"
             fi
             exit 0
@@ -140,7 +141,7 @@ jobs:
           inlineScript: |   
             #!/bin/bash
             if [[ ${{ steps.git_management_diff.outputs.diff != ''  }} ]] ; then
-              az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json --location ${{ env.Location }}
+              az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters parTopLevelManagementGroupPrefix=${{ env.ManagementGroupPrefix }} parTopLevelManagementGroupDisplayName=${{ env.TopLevelManagementGroupDisplayName }} --location ${{ env.Location }}
             fi
             exit 0
 
