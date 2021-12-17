@@ -76,6 +76,7 @@ jobs:
           git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep
           git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep
 
+
       - name: Check for logging Changes
         id: git_logging_diff
         shell: bash
