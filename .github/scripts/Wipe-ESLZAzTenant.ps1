@@ -78,7 +78,7 @@ param (
 #Toggle to stop warnings with regards to DisplayName and DisplayId
 Set-Item Env:\SuppressAzurePowerShellBreakingChangeWarnings "true"
 
-# Start timer
+# Start timerremoving the scope
 $StopWatch = New-Object -TypeName System.Diagnostics.Stopwatch
 $StopWatch.Start()
 
@@ -206,7 +206,7 @@ function Remove-Recursively {
     Write-Output "No children found in scope $name" -ForegroundColor Yellow
     Write-Output "Removing the scope $name" -ForegroundColor Red
 
-    Remove-AzManagementGroup -InputObject $parent
+    Remove-AzManagementGroup -InputObject $parent -ErrorAction SilentlyContinue
 }
 
 # Remove all the Management Groups in Intermediate Root Management Group's hierarchy tree, including itself
