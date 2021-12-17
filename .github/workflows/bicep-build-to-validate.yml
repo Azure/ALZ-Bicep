@@ -111,6 +111,9 @@ jobs:
         shell: bash
         run: |
             az account set --subscription ${{ env.SUBIDOUTPUT }}
+            if [ $(az group exists --name ${{ env.ResourceGroupName }} ) == false ]; then
+                sleep 300
+            fi
             az group create --name ${{ env.ResourceGroupName }} --location ${{ env.Location }}
 
       - name: Az CLI Deploy Management Groups for PR
