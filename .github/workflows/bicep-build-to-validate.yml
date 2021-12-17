@@ -9,10 +9,10 @@ on:
   workflow_dispatch: {}
 
 env:
-  ResourceGroupName: "rsg-github-pr-${{ github.event.number }}"
-  ManagementGroupPrefix: "PR-${{ github.event.number }}"
-  TopLevelManagementGroupDisplayName: "PR ${{ github.event.number }} Azure Landing Zones"
-  SubscriptionName: "sub-unit-test-pr-${{ github.event.number }}"
+  ResourceGroupName: "rsg-github-prt-${{ github.event.number }}"
+  ManagementGroupPrefix: "PRT-${{ github.event.number }}"
+  TopLevelManagementGroupDisplayName: "PRT ${{ github.event.number }} Azure Landing Zones"
+  SubscriptionName: "sub-unit-test-prt-${{ github.event.number }}"
   Location: "eastus"
 
 jobs:
@@ -51,7 +51,7 @@ jobs:
     environment: BicepUnitTests
 
     outputs:
-      isDeployed: $(${{ steps.git_logging_diff.outputs.diff != ''  }} || ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ steps.git_hubnetworking_diff.diff != ''  }} || ${{ steps.git_spokenetworking_diff.diff != ''  }})
+      isDeployed: $(${{ env.gitLoggingOUTPUT != ''  }} || ${{ env.gitHubOUTPUT != ''  }} || ${{ env.gitSpokeOUTPUT != ''  }} || ${{ steps.git_management_diff.outputs.diff != '' != ''  }})
       subscriptionID: ${{ env.SUBIDOUTPUT }}
     steps:
       - name: Checkout Repo
@@ -88,7 +88,7 @@ jobs:
         shell: bash
         run: |
           git_hub=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep)
-          echo "githubOUTPUT=$git_hub" >> $GITHUB_ENV
+          echo "gitHubOUTPUT=$git_hub" >> $GITHUB_ENV
 
       - name: Check for spokeNetworking Changes
         id: git_spokenetworking_diff
@@ -99,7 +99,7 @@ jobs:
 
       - name: Az CLI Create Subscription for PR
         id: create_subscription
-        if: ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ env.gitLoggingOUTPUT != '' }} || ${{ env.githubOUTPUT != ''  }} || ${{ env.gitSpokeOUTPUT != ''  }}
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ env.gitLoggingOUTPUT != '' }} || ${{ env.gitHubOUTPUT != ''  }} || ${{ env.gitSpokeOUTPUT != ''  }}
         shell: bash
         run: |
             subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }} | jq .properties.outputs.outSubscriptionId.value)
@@ -160,7 +160,7 @@ jobs:
 
       - name: Az CLI Deploy Hub Networking for PR
         id: create_hub_network
-        if: ${{ env.githubOUTPUT != ''  }}
+        if: ${{ env.gitHubOUTPUT != ''  }}
         shell: bash
         run: |
             az deployment group create --resource-group ${{ env.ResourceGroupName }} --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
