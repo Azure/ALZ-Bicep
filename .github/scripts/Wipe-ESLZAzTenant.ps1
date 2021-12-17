@@ -123,7 +123,7 @@ if ($null -ne $intermediateRootGroupChildSubscriptions) {
 #    throw "Confirmation string not entered or incorrectly entered, terminating script..."
 #}
 
-Write-Output "Moving all subscriptions under root management group" -ForegroundColor Yellow
+Write-Output "Moving all subscriptions under tenant root management group: $tenantRootGroupID" -ForegroundColor Yellow
 
 # For each Subscription in Intermediate Root Management Group's hierarchy tree, move it to the Tenant Root Management Group
 $intermediateRootGroupChildSubscriptions | ForEach-Object -Parallel {
