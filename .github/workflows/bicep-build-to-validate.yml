@@ -9,10 +9,10 @@ on:
   workflow_dispatch: {}
 
 env:
-  ResourceGroupName: "rsg-github-prt-${{ github.event.number }}"
-  ManagementGroupPrefix: "PRT-${{ github.event.number }}"
-  TopLevelManagementGroupDisplayName: "PRT ${{ github.event.number }} Azure Landing Zones"
-  SubscriptionName: "sub-unit-test-prt-${{ github.event.number }}"
+  ResourceGroupName: "rsg-github-pr-${{ github.event.number }}"
+  ManagementGroupPrefix: "PR-${{ github.event.number }}"
+  TopLevelManagementGroupDisplayName: "PR ${{ github.event.number }} Azure Landing Zones"
+  SubscriptionName: "sub-unit-test-pr-${{ github.event.number }}"
   Location: "eastus"
 
 jobs:
