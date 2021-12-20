@@ -58,6 +58,8 @@ Azure Cloud | Bicep template | Input parameters file
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
+> If the deployment failed due an error that your alz-log-analytics/Automation resource of type 'Microsoft.OperationalInsights/workspaces/linkedServices' was not found, please retry the deployment step and it would succeed.
+
 ### Azure CLI
 ```bash
 # Set Platform management subscripion ID as the the current subscription 
@@ -78,7 +80,7 @@ az deployment group create \
 
 OR
 
-# For Azure Global regions  
+# For Azure China regions  
 # Create Resource Group - optional when using an existing resource group
 az group create \
   --name alz-logging \

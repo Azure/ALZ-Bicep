@@ -462,11 +462,6 @@ var varCustomPolicySetDefinitionsArray = [
           definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_ascdf_config.parameters.json')).ascExport.parameters
         }
         {
-          definitionReferenceID: 'defenderForContainerRegistry'
-          definitionID: '/providers/Microsoft.Authorization/policyDefinitions/d3d1e68e-49d4-4b56-acff-93cef644b432'
-          definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_ascdf_config.parameters.json')).defenderForContainerRegistry.parameters
-        }
-        {
           definitionReferenceID: 'defenderForSqlPaas'
           definitionID: '/providers/Microsoft.Authorization/policyDefinitions/b99b73e7-074b-4089-9395-b7236f094491'
           definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_ascdf_config.parameters.json')).defenderForSqlPaas.parameters
@@ -1123,6 +1118,7 @@ var varCustomPolicySetDefinitionsArray = [
         }
       ]
   }
+ 
 ]
 
 resource resPolicyDefinitions 'Microsoft.Authorization/policyDefinitions@2020-09-01' = [for policy in varCustomPolicyDefinitionsArray: {

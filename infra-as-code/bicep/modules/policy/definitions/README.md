@@ -34,6 +34,8 @@ The input parameter file `custom-policy-definitions.parameters.example.json` def
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
+> If the deployment provisioning state has failed due to policy definitions could not be found, this is often due to a known replication delay. Please re-run the deployment step below, and the deployment should succeed.
+
 ### Azure CLI
 
 ```bash
