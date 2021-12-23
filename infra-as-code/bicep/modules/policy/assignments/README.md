@@ -36,20 +36,40 @@ In this example, the `Deny-PublicIP` custom policy definition will be deployed/a
 #### Azure CLI - Deny
 
 ```bash
+# For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
   --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-deny.json \
   --location eastus \
   --management-group-id 'alz-landingzones'
 ```
+OR
+```bash
+# For Azure China regions
+az deployment mg create \
+  --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
+  --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-deny.json \
+  --location chinaeast2 \
+  --management-group-id 'alz-landingzones'
+```
 
 #### PowerShell - Deny
 
 ```powershell
+# For Azure global regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-deny.json `
   -Location eastus `
+  -ManagementGroupId 'alz-landingzones'
+```
+OR
+```powershell
+# For Azure China regions
+New-AzManagementGroupDeployment `
+  -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-deny.json `
+  -Location chinaeast2 `
   -ManagementGroupId 'alz-landingzones'
 ```
 

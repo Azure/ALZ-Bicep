@@ -47,7 +47,7 @@ Input parameter file `customRoleDefinitions.parameters.example.json` defines the
 
 ### Azure CLI
 ```bash
-# Deploying into Azure global regions
+# For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep \
   --parameters @infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json \
@@ -56,7 +56,7 @@ az deployment mg create \
 ```
 OR
 ```bash
-# Deploying into Azure China regions
+# For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep \
   --parameters @infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json \
@@ -80,7 +80,7 @@ OR
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json `
-  -Location eastus `
+  -Location chinaeast2 `
   -ManagementGroupId alz
 ```
 
