@@ -22,20 +22,38 @@ In this example, the subscriptions `34b63c8f-1782-42e6-8fb9-ba6ee8b99735` and `4
 
 ### Azure CLI
 ```bash
+# Deploying into Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep \
   --parameters @infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json \
   --location eastus \
+  --management-group-id alz
+
+OR
+# Deploying into Azure China regions
+az deployment mg create \
+  --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep \
+  --parameters @infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json \
+  --location chinaeast2 \
   --management-group-id alz
 ```
 
 ### PowerShell
 
 ```powershell
+# Deploying into Azure global regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json `
   -Location eastus `
+  -ManagementGroupId alz
+
+OR
+# Deploying into Azure China regions
+New-AzManagementGroupDeployment `
+  -TemplateFile infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json `
+  -Location chinaeast2 `
   -ManagementGroupId alz
 ```
 

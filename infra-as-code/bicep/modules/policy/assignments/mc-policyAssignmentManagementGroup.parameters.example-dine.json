@@ -20,7 +20,7 @@
                     "value": "security_contact@replace_me"
                 },
                 "logAnalytics": {
-                    "value": "alz-la"
+                    "value": "alz-log-analytics"
                 },
                 "ascExportResourceGroupName": {
                     "value": "alz-asc-export"
@@ -32,9 +32,6 @@
                     "value": "Disabled"
                 },
                 "enableAscForSql": {
-                    "value": "Disabled"
-                },
-                "enableAscForContainers": {
                     "value": "Disabled"
                 }
             }
