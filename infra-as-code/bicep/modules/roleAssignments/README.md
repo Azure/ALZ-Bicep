@@ -107,16 +107,16 @@ In this example, the built-in Reader role will be asigned to a Service Principal
 ### Azure CLI
 
 ```bash
-# Deploy Role Assignment at Management Group Scope in Azure global regions
+# For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep \
   --parameters @infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.parameters.service-principal.example.json \
   --management-group-id alz-platform \
   --location eastus
-
+```
 OR
-
-# Deploy Role Assignment at Management Group Scope in Azure China regions
+```bash
+# For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep \
   --parameters @infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.parameters.service-principal.example.json \
@@ -127,16 +127,16 @@ az deployment mg create \
 ### PowerShell
 
 ```powershell
-# Deploy Role Assignment at Management Group Scope in Azure global regions
+# For Azure global regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.parameters.service-principal.example.json `
   -ManagementGroupId alz-platform `
   -Location eastus
-
+```
 OR
-
-# Deploy Role Assignment at Management Group Scope in Azure global regions
+```powershell
+# For Azure China regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.parameters.service-principal.example.json `

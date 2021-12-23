@@ -38,16 +38,16 @@ The input parameter file `custom-policy-definitions.parameters.example.json` def
 ### Azure CLI
 
 ```bash
-# Deploying into Azure global regions
+# For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep \
   --parameters @infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json \
   --location eastus \
   --management-group-id alz
-
+```
 OR
-
-# Deploying into Azure China regions
+```bash
+# For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/definitions/mc-custom-policy-definitions.bicep \
   --parameters @infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json \
@@ -58,16 +58,16 @@ az deployment mg create \
 ### PowerShell
 
 ```powershell
-# Deploying into Azure global regions
+# For Azure global regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json `
   -Location eastus `
   -ManagementGroupId alz
-
+```
 OR
-
-# Deploying into Azure China regions
+```powershell
+# For Azure China regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/definitions/mc-custom-policy-definitions.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json `

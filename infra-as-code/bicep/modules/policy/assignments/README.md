@@ -67,16 +67,16 @@ In this example, the `Deploy-ASCDF-Config` custom policy definition will be depl
 #### Azure CLI - DINE
 
 ```bash
-# Deploying into Azure global regions
+# For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
   --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-dine.json \
   --location eastus \
   --management-group-id 'alz-landingzones'
-
+```
 OR
-
-# Deploying into Azure China regions
+```bash
+# For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
   --parameters @infra-as-code/bicep/modules/policy/assignments/mc-policyAssignmentManagementGroup.parameters.example-dine.json \
@@ -87,16 +87,16 @@ az deployment mg create \
 #### PowerShell - DINE
 
 ```powershell
-# Deploying into Azure global regions
+# For Azure global regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-dine.json `
   -Location eastus `
   -ManagementGroupId 'alz-landingzones'
-
+```
 OR
-
-# Deploying into Azure China regions
+```powershell
+# For Azure China regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/mc-policyAssignmentManagementGroup.parameters.example-dine.json `

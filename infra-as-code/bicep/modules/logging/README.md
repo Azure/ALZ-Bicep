@@ -61,11 +61,11 @@ Azure Cloud | Bicep template | Input parameters file
 
 ### Azure CLI
 ```bash
+# For Azure Global regions  
 # Set Platform management subscripion ID as the the current subscription 
 ManagementSubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ManagementSubscriptionId
 
-# For Azure Global regions  
 # Create Resource Group - optional when using an existing resource group
 az group create \
   --name alz-logging \
@@ -76,10 +76,14 @@ az deployment group create \
   --template-file infra-as-code/bicep/modules/logging/logging.bicep \
   --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json \
   --resource-group alz-logging
-
+```
 OR
-
+```bash
 # For Azure China regions  
+# Set Platform management subscripion ID as the the current subscription 
+ManagementSubscriptionId="[your platform management subscription ID]"
+az account set --subscription $ManagementSubscriptionId
+
 # Create Resource Group - optional when using an existing resource group
 az group create \
   --name alz-logging \
@@ -95,32 +99,35 @@ az deployment group create \
 ### PowerShell
 
 ```powershell
+# For Azure Global regions
 # Set Platform management subscripion ID as the the current subscription 
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
 
-# For Azure Global regions
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
   -Name alz-logging `
   -Location eastus
 
-# Deploy Module to Azure global regions
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/logging/logging.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/logging/logging.parameters.example.json `
   -ResourceGroup alz-logging
-
+```
 OR
-
+```powershell
 # For Azure China regions
+# Set Platform management subscripion ID as the the current subscription 
+$ManagementSubscriptionId = "[your platform management subscription ID]"
+
+Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
+
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
   -Name alz-logging `
   -Location chinaeast2
 
-# Deploy Module to Azure global regions
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/logging/logging.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/logging/mc-logging.parameters.example.json `

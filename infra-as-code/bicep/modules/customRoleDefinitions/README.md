@@ -53,9 +53,9 @@ az deployment mg create \
   --parameters @infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json \
   --location eastus \
   --management-group-id alz
-
+```
 OR
-
+```bash
 # Deploying into Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep \
@@ -67,16 +67,16 @@ az deployment mg create \
 ### PowerShell
 
 ```powershell
-# Deploying into Azure global regions
+# For Azure global regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json `
   -Location eastus `
   -ManagementGroupId alz
-
+```
 OR
-
-# Deploying into Azure China regions
+```powershell
+# For Azure China regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json `

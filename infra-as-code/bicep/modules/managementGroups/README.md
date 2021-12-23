@@ -48,13 +48,15 @@ In this example, the management groups are created at the `Tenant Root Group` th
 
 ### Azure CLI
 ```bash
-# Deploying into Azure global regions
+# For Azure global regions
 az deployment tenant create \
   --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
   --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json \
   --location eastus
-
-# Deploying into Azure China regions
+```
+OR
+```bash
+# For Azure China regions
 az deployment tenant create \
   --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
   --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json \
@@ -64,13 +66,15 @@ az deployment tenant create \
 ### PowerShell
 
 ```powershell
-# Deploying into Azure global regions
+# For Azure global regions
 New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json `
   -Location eastus
-
-# Deploying into Azure China regions
+```
+OR
+```powershell
+# For Azure China regions
 New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json `

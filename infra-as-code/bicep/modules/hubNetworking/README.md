@@ -64,7 +64,7 @@ There are two different sets of deployment; one for deploying to Azure global re
 
 ### Azure CLI
 ```bash
-# Deploying into Azure global regions
+# For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription 
 ConnectivitySubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
@@ -79,7 +79,7 @@ az deployment group create \
 ```
 OR
 ```bash
-# Deploying into Azure China regions
+# For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription 
 ConnectivitySubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
@@ -96,7 +96,7 @@ az deployment group create \
 ### PowerShell
 
 ```powershell
-# Deploying into Azure global regions
+# For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription 
 $ConnectivitySubscriptionId = "[your platform management subscription ID]"
 
@@ -111,7 +111,7 @@ New-AzManagementGroupDeployment `
 ```
 OR
 ```powershell
-# Deploying into Azure China regions
+# For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription 
 $ConnectivitySubscriptionId = "[your platform management subscription ID]"
 
@@ -124,10 +124,11 @@ New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/mc-hubNetworking.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/mc-hubNetworking.parameters.example.json
 ```
-## Example Output
+## Example Output in Azure global regions
 
 ![Example Deployment Output](media/hubNetworkExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
 
+## Example Output in Azure China regions
 ![Example Deployment Output](media/mc-hubNetworkExampleDeploymentOutput.png "Example Deployment Output in Azure China")
 
 ## Bicep Visualizer
