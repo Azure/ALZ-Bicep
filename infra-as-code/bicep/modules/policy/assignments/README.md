@@ -55,7 +55,7 @@ New-AzManagementGroupDeployment `
 
 ### DeployIfNotExists Effect
 
-In this example, the `Deploy-ASC-Config` custom policy definition will be deployed/assigned to the `alz-landingzones` management group (intermediate root management group). And the managed identity associated with the policy will also be assigned to the `alz-platform` management group, as defined in the parameter file: `policyAssignmentManagementGroup.parameters.example-dine.json`
+In this example, the `Deploy-ASCDF-Config` custom policy definition will be deployed/assigned to the `alz-landingzones` management group (intermediate root management group). And the managed identity associated with the policy will also be assigned to the `alz-platform` management group, as defined in the parameter file: `policyAssignmentManagementGroup.parameters.example-dine.json`
 #### Azure CLI - DINE
 
 ```bash

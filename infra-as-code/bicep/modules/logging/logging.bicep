@@ -27,7 +27,7 @@ VERSION: 1.2.0
 @description('Log Analytics Workspace name. - DEFAULT VALUE: alz-log-analytics')
 param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 
-@description('Log Analytics region name. - DEFAULT VALUE: resourceGroup().location')
+@description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings - DEFAULT VALUE: resourceGroup().location')
 param parLogAnalyticsWorkspaceRegion string = resourceGroup().location
 
 @minValue(30)
@@ -65,7 +65,7 @@ param parLogAnalyticsWorkspaceSolutions array = [
 @description('Automation account name. - DEFAULT VALUE: alz-automation-account')
 param parAutomationAccountName string = 'alz-automation-account'
 
-@description('Automation Account region name. - DEFAULT VALUE: resourceGroup().location')
+@description('Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings - DEFAULT VALUE: resourceGroup().location')
 param parAutomationAccountRegion string = resourceGroup().location
 
 resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-01' = {

@@ -1,4 +1,4 @@
-# Azure Landing Zones - Bicep - Staging Repo
+# Azure Landing Zones (ALZ) - Bicep
 
 [![Update Policy Library](https://github.com/Azure/ALZ-Bicep/actions/workflows/update-policy.yml/badge.svg?branch=main)](https://github.com/Azure/ALZ-Bicep/actions/workflows/update-policy.yml)
 
@@ -6,7 +6,7 @@
 
 Welcome to the Azure Landing Zones Bicep Staging repo.
 
-This repo will be used only for the development, testing and MVP build of the Azure Landing Zones Bicep implementation. When ready, the code will be migrated into the [Azure/Enterprise-Scale repo](https://github.com/Azure/Enterprise-Scale).
+This repo will be used only for the development, testing and MVP build of the Azure Landing Zones Bicep implementation. When ready, the code may be migrated into the [Azure/Enterprise-Scale repo](https://github.com/Azure/Enterprise-Scale) (yet to be decided upon).
 
 > All work item and tracking will be done in [Azure DevOps](https://dev.azure.com/unifiedactiontracker/Solution%20Engineering/_queries/query/4e77ab8a-78b3-447c-87b6-237ad590219f/)
 

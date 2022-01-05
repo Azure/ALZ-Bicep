@@ -99,6 +99,10 @@ var varCustomPolicyDefinitionsArray = [
     libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_machinelearning_publicaccesswhenbehindvnet.json'))
   }
   {
+    name: 'Deny-MachineLearning-PublicNetworkAccess'
+    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_machinelearning_publicnetworkaccess.json'))
+  }
+  {
     name: 'Deny-MySql-http'
     libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_mysql_http.json'))
   }
@@ -155,46 +159,6 @@ var varCustomPolicyDefinitionsArray = [
     libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_vnet_peering.json'))
   }
   {
-    name: 'Deploy-ASC-Defender-ACR'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_acr.json'))
-  }
-  {
-    name: 'Deploy-ASC-Defender-AKS'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_aks.json'))
-  }
-  {
-    name: 'Deploy-ASC-Defender-AKV'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_akv.json'))
-  }
-  {
-    name: 'Deploy-ASC-Defender-AppSrv'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_appsrv.json'))
-  }
-  {
-    name: 'Deploy-ASC-Defender-ARM'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_arm.json'))
-  }
-  {
-    name: 'Deploy-ASC-Defender-DNS'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_dns.json'))
-  }
-  {
-    name: 'Deploy-ASC-Defender-SA'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_sa.json'))
-  }
-  {
-    name: 'Deploy-ASC-Defender-Sql'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_sql.json'))
-  }
-  {
-    name: 'Deploy-ASC-Defender-SQLVM'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_sqlvm.json'))
-  }
-  {
-    name: 'Deploy-ASC-Defender-VMs'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_defender_vms.json'))
-  }
-  {
     name: 'Deploy-ASC-SecurityContacts'
     libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_asc_securitycontacts.json'))
   }
@@ -203,12 +167,12 @@ var varCustomPolicyDefinitionsArray = [
     libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_budget.json'))
   }
   {
-    name: 'Deploy-DDoSProtection'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_ddosprotection.json'))
+    name: 'Deploy-Custom-Route-Table'
+    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_custom_route_table.json'))
   }
   {
-    name: 'Deploy-Default-Udr'
-    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_default_udr.json'))
+    name: 'Deploy-DDoSProtection'
+    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_ddosprotection.json'))
   }
   {
     name: 'Deploy-Diagnostics-AA'
@@ -523,68 +487,73 @@ var varCustomPolicySetDefinitionsArray = [
     ]
   }
   {
-    name: 'Deploy-ASC-Config'
-    libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.json'))
+    name: 'Deploy-ASCDF-Config'
+    libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.json'))
     libSetChildDefinitions: [
       {
         definitionReferenceID: 'ascExport'
         definitionID: '/providers/Microsoft.Authorization/policyDefinitions/ffb6f416-7bd2-4488-8828-56585fef2be9'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.parameters.json')).ascExport.parameters
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).ascExport.parameters
       }
       {
         definitionReferenceID: 'defenderForAppServices'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AppSrv'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.parameters.json')).defenderForAppServices.parameters
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/b40e7bcd-a1e5-47fe-b9cf-2f534d0bfb7d'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForAppServices.parameters
       }
       {
         definitionReferenceID: 'defenderForArm'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-ARM'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.parameters.json')).defenderForArm.parameters
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/b7021b2b-08fd-4dc0-9de7-3c6ece09faf9'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForArm.parameters
       }
       {
         definitionReferenceID: 'defenderForContainerRegistry'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-ACR'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.parameters.json')).defenderForContainerRegistry.parameters
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/d3d1e68e-49d4-4b56-acff-93cef644b432'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForContainerRegistry.parameters
       }
       {
         definitionReferenceID: 'defenderForDns'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-DNS'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.parameters.json')).defenderForDns.parameters
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/2370a3c1-4a25-4283-a91a-c9c1a145fb2f'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForDns.parameters
       }
       {
         definitionReferenceID: 'defenderForKeyVaults'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AKV'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.parameters.json')).defenderForKeyVaults.parameters
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/1f725891-01c0-420a-9059-4fa46cb770b7'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForKeyVaults.parameters
       }
       {
         definitionReferenceID: 'defenderForKubernetesService'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-AKS'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.parameters.json')).defenderForKubernetesService.parameters
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/64def556-fbad-4622-930e-72d1d5589bf5'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForKubernetesService.parameters
       }
       {
-        definitionReferenceID: 'defenderForSqlServers'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-Sql'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.parameters.json')).defenderForSqlServers.parameters
+        definitionReferenceID: 'defenderForOssDb'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/44433aa3-7ec2-4002-93ea-65c65ff0310a'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForOssDb.parameters
+      }
+      {
+        definitionReferenceID: 'defenderForSqlPaas'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/b99b73e7-074b-4089-9395-b7236f094491'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForSqlPaas.parameters
       }
       {
         definitionReferenceID: 'defenderForSqlServerVirtualMachines'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-SQLVM'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.parameters.json')).defenderForSqlServerVirtualMachines.parameters
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/50ea7265-7d8c-429e-9a7d-ca1f410191c3'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForSqlServerVirtualMachines.parameters
       }
       {
         definitionReferenceID: 'defenderForStorageAccounts'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-SA'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.parameters.json')).defenderForStorageAccounts.parameters
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/74c30959-af11-47b3-9ed2-a26e03f427a3'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForStorageAccounts.parameters
       }
       {
         definitionReferenceID: 'defenderForVM'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Defender-VMs'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.parameters.json')).defenderForVM.parameters
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/8e86a5b6-b9bd-49d1-8e21-4bb8a0862222'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForVM.parameters
       }
       {
         definitionReferenceID: 'securityEmailContact'
         definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-SecurityContacts'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_asc_config.parameters.json')).securityEmailContact.parameters
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).securityEmailContact.parameters
       }
     ]
   }

@@ -17,8 +17,7 @@ The module will deploy the following Log Analytics Workspace solutions by defaul
 - Updates
 - VMInsights
 
- > Only certain regions are supported to link Log Analytics Workspace & Automation Account together.  Reference:  [Supported regions for linked Log Analytics workspace
-](https://docs.microsoft.com/azure/automation/how-to/region-mappings)
+ > Only certain regions are supported to link Log Analytics Workspace & Automation Account together (linked workspaces). Reference:  [Supported regions for linked Log Analytics workspace](https://docs.microsoft.com/azure/automation/how-to/region-mappings)
 
 ## Parameters
 
@@ -50,10 +49,14 @@ outAutomationAccountId | string | /subscriptions/4f9f8765-911a-4a6d-af60-4bc0473
 
 In this example, a Log Analytics Workspace and Automation Account will be deployed to the resource group `alz-logging`.  The inputs for this module are defined in `logging.parameters.example.json`.
 
-> For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
+> For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
 ```bash
+# Set Platform management subscripion ID as the the current subscription 
+ManagementSubscriptionId="[your platform management subscription ID]"
+az account set --subscription $ManagementSubscriptionId
+  
 # Create Resource Group - optional when using an existing resource group
 az group create \
   --name alz-logging \
@@ -69,6 +72,11 @@ az deployment group create \
 ### PowerShell
 
 ```powershell
+# Set Platform management subscripion ID as the the current subscription 
+$ManagementSubscriptionId = "[your platform management subscription ID]"
+
+Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
+
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
   -Name alz-logging `

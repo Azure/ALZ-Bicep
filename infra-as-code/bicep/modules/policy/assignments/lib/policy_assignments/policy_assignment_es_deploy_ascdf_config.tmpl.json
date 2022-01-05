@@ -1,0 +1,64 @@
+{
+  "name": "Deploy-ASCDF-Config",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "Deploy Microsoft Defender for Cloud configuration and Security Contacts",
+    "displayName": "Deploy Microsoft Defender for Cloud configuration",
+    "notScopes": [],
+    "parameters": {
+      "emailSecurityContact": {
+        "value": "security_contact@replace_me"
+      },
+      "logAnalytics": {
+        "value": "${parTopLevelManagementGroupPrefix}-la"
+      },
+      "ascExportResourceGroupName": {
+        "value": "${parTopLevelManagementGroupPrefix}-asc-export"
+      },
+      "ascExportResourceGroupLocation": {
+        "value": "${parDefaultRegion}"
+      },
+      "enableAscForServers": {
+        "value": "Disabled"
+      },
+      "enableAscForSql": {
+        "value": "Disabled"
+      },
+      "enableAscForAppServices": {
+        "value": "Disabled"
+      },
+      "enableAscForStorage": {
+        "value": "Disabled"
+      },
+      "enableAscForRegistries": {
+        "value": "Disabled"
+      },
+      "enableAscForKeyVault": {
+        "value": "Disabled"
+      },
+      "enableAscForSqlOnVm": {
+        "value": "Disabled"
+      },
+      "enableAscForKubernetes": {
+        "value": "Disabled"
+      },
+      "enableAscForArm": {
+        "value": "Disabled"
+      },
+      "enableAscForDns": {
+        "value": "Disabled"
+      },
+      "enableAscForOssDb": {
+        "value": "Disabled"
+      }
+    },
+    "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-ASCDF-Config",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}
