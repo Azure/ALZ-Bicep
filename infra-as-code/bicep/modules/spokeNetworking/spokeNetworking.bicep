@@ -6,7 +6,7 @@ DESCRIPTION: The following components will be options in this deployment
               UDR - if Firewall is enabled
               Private DNS Link
 AUTHOR/S: aultt
-VERSION: 1.0.1
+VERSION: 1.0.0
 */
 
 
