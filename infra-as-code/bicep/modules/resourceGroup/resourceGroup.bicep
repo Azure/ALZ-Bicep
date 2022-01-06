@@ -15,12 +15,17 @@ param parResourceGroupLocation string
 @description('Name of Resource Group to be created.  No Default')
 param parResourceGroupName string
 
+@description('Set Parameter to True to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+var varCuaid = 'b6718c54-b49e-4748-a466-88e3d7c789c8'
+
 resource resResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   location: parResourceGroupLocation
   name: parResourceGroupName
 }
 
-module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdSubscription.bicep' = {
-  name: 'pid-e3fdbe9a-4816-4dc5-993c-a74d3e3761b4-${uniqueString(subscription().subscriptionId)}'
+module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdSubscription.bicep' = if (!parTelemetryOptOut) {
+  name: '${varCuaid}-${uniqueString(subscription().subscriptionId)}'
   params: {}
 }
