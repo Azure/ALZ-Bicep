@@ -6,13 +6,14 @@ DESCRIPTION: The following components will be options in this deployment
               UDR - if Firewall is enabled
               Private DNS Link
 AUTHOR/S: aultt
-VERSION: 1.0.0
-  - Original 
+VERSION: 1.0.1
+  - Changed default value of parNetworkDNSEnableProxy to false. Defaulting to false allow for testing on its own 
+  - Changed default value of parDdosEnabled to false. efaulting to false to allow for testing on its own
 */
 
 
 @description('Switch which allows Azure Firewall deployment to be disabled')
-param parHubNVAEnabled bool = true
+param parHubNVAEnabled bool = false
 
 @description('Switch which allows DDOS deployment to be disabled')
 param parDdosEnabled bool = false
