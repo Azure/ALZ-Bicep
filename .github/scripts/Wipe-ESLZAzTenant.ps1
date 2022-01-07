@@ -78,7 +78,7 @@ param (
 #Toggle to stop warnings with regards to DisplayName and DisplayId
 Set-Item Env:\SuppressAzurePowerShellBreakingChangeWarnings "true"
 
-# Start timerremoving the scope
+# Start timer
 $StopWatch = New-Object -TypeName System.Diagnostics.Stopwatch
 $StopWatch.Start()
 
