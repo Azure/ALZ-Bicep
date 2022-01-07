@@ -53,11 +53,21 @@ outPrivateDnsZones | array | `["name": "privatelink.azurecr.io", "id": "/subscri
 
 In this example, the hub resources will be deployed to the resource group specified. According to the Azure Landing Zone Conceptual Architecture, the hub resources should be deployed into the Platform connectivity subscription. During the deployment step, we will take the default values and not pass any parameters.
 
+There are two different sets of input parameters; one for deploying to Azure global regions, and another for deploying specifically to Azure China regions. This is due to different private DNS zone names for Azure services in Azure global regions and Azure China. The recommended private DNS zone names are available [here](https://docs.microsoft.com/azure/private-link/private-endpoint-dns). Other differences in Azure China regions are as follow:
+- DDoS Protection feature is not available. parDdosEnabled parameter is set as false.
+- The SKUs available for an ExpressRoute virtual network gateway are Standard, HighPerformance and UltraPerformance. Sku is set as "Standard" in the example parameters file.
+
+ Azure Cloud | Bicep template | Input parameters file
+ ----------- | ----------- | -----------
+ Global regions |  hubNetworking.bicep |  hubNetworking.parameters.example.json
+ China regions  |  hubNetworking.bicep |  mc-hubNetworking.parameters.example.json
+
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
 ```bash
-# Set Platform connectivity subscripion ID as the the current subscription 
+# For Azure global regions
+# Set Platform connectivity subscription ID as the the current subscription 
 ConnectivitySubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
@@ -69,11 +79,27 @@ az deployment group create \
    --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
    --parameters @infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json
 ```
+OR
+```bash
+# For Azure China regions
+# Set Platform connectivity subscription ID as the the current subscription 
+ConnectivitySubscriptionId="[your platform management subscription ID]"
+az account set --subscription $ConnectivitySubscriptionId
+
+az group create --location chinaeast2 \
+   --name Hub_Networking_POC
+
+az deployment group create \
+   --resource-group HUB_Networking_POC  \
+   --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
+   --parameters @infra-as-code/bicep/modules/hubNetworking/mc-hubNetworking.parameters.example.json
+```
 
 ### PowerShell
 
 ```powershell
-# Set Platform connectivity subscripion ID as the the current subscription 
+# For Azure global regions
+# Set Platform connectivity subscription ID as the the current subscription 
 $ConnectivitySubscriptionId = "[your platform management subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
@@ -85,10 +111,27 @@ New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json
 ```
+OR
+```powershell
+# For Azure China regions
+# Set Platform connectivity subscription ID as the the current subscription 
+$ConnectivitySubscriptionId = "[your platform management subscription ID]"
 
-## Example Output
+Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-![Example Deployment Output](media/hubNetworkExampleDeploymentOutput.png "Example Deployment Output")
+New-AzResourceGroup -Name 'Hub_Networking_POC' `
+  -Location 'chinaeast2'
+  
+New-AzManagementGroupDeployment `
+  -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/mc-hubNetworking.parameters.example.json
+```
+## Example Output in Azure global regions
+
+![Example Deployment Output](media/hubNetworkExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
+
+## Example Output in Azure China regions
+![Example Deployment Output](media/mc-hubNetworkExampleDeploymentOutput.png "Example Deployment Output in Azure China")
 
 ## Bicep Visualizer
 
