@@ -14,12 +14,11 @@
       "parPrivateDNSZonesEnabled": {
           "value": true
       },
-      "parGatewayArray": {
-          "value": [
-          {
+      "parVpnGatewayConfig": {
+          "value": {
             "name": "alz-Vpn-Gateway",
             "gatewaytype": "Vpn",
-            "sku": "VpnGw1",
+            "sku": "VpnGw2",
             "vpntype": "RouteBased",
             "generation": "Generation2",
             "enableBgp": false,
@@ -33,8 +32,10 @@
               "bgpPeeringAddress": "",
               "peerWeight": "5"
             }
-          },
-          {
+         }
+      },
+      "parExpressRouteGatewayConfig": {
+          "value": {
             "name": "alz-ExpressRoute-Gateway",
             "gatewaytype": "ExpressRoute",
             "sku": "ErGw1AZ",
@@ -51,8 +52,8 @@
               "bgpPeeringAddress": "",
               "peerWeight": "5"
             }
-          }]
-      },
+          }
+      },      
       "parCompanyPrefix":{
           "value": "alz"
       },

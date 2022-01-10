@@ -35,12 +35,14 @@ param  pardisableBGPRoutePropagation bool = false
 param parPrivateDNSZonesEnabled bool = true
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
-@description('Array of Gateways to be deployed. Array will consist of one or two items.  Specifically Vpn and/or ExpressRoute Default: Vpn')
-param parGatewayArray array = [
-  {
+@description('''Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. 
+"parVpnGatewayConfig": {
+  "value": {}
+}''')
+param parVpnGatewayConfig object = {
     name: '${parCompanyPrefix}-Vpn-Gateway'
     gatewaytype: 'Vpn'
-    sku: 'VpnGw1'
+    sku: 'VpnGw2'
     vpntype: 'RouteBased'
     generation: 'Generation2'
     enableBgp: false
@@ -55,26 +57,30 @@ param parGatewayArray array = [
       peerWeight: 5
     }
   }
-  {
-    name: '${parCompanyPrefix}-Gateway-ExpressRoute'
-    gatewaytype: 'ExpressRoute'
-    sku: 'ErGw1AZ'
-    vpntype: 'RouteBased'
-    generation: 'None'
-    enableBgp: false
-    activeActive: false
-    enableBgpRouteTranslationForNat: false
-    enableDnsForwarding: false
-    asn: 65515
-    bgpPeeringAddress: ''
-    bgpsettings: {
-      asn: 65515
-      bgpPeeringAddress: ''
-      peerWeight: 5
-    }
-  }
 
-]
+@description('''Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. 
+"parExpressRouteGatewayConfig": {
+  "value": {}
+}''')
+param parExpressRouteGatewayConfig object = {
+  name: '${parCompanyPrefix}-ExpressRoute-Gateway'
+  gatewaytype: 'ExpressRoute'
+  sku: 'ErGw1AZ'
+  vpntype: 'RouteBased'
+  vpnGatewayGeneration: 'None'
+  enableBgp: false
+  activeActive: false
+  enableBgpRouteTranslationForNat: false
+  enableDnsForwarding: false
+  asn: '65515'
+  bgpPeeringAddress: ''
+  bgpsettings: {
+    asn: '65515'
+    bgpPeeringAddress: ''
+    peerWeight: '5'
+  }
+}
+
 
 @description('Prefix value which will be prepended to all resource names. Default: alz')
 param parCompanyPrefix string = 'alz'
@@ -178,6 +184,14 @@ var varSubnetProperties = [for subnet in parSubnets: {
   }
 }]
 
+var varVpnGWConfig = ((!empty(parVpnGatewayConfig)) ? parVpnGatewayConfig : json('{"name": "noconfigVpn"}'))
+
+var varErGWConfig = ((!empty(parExpressRouteGatewayConfig)) ? parExpressRouteGatewayConfig : json('{"name": "noconfigEr"}'))
+
+var varGwConfig = [
+  varVpnGWConfig
+  varErGWConfig
+]
 
 resource resDDoSProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDDoSEnabled) {
   name: parDDoSPlanName
@@ -258,7 +272,7 @@ resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-
   name: 'GatewaySubnet'
 } 
 
-module modGatewayPublicIP '../publicIp/publicIp.bicep' = [for (gateway,i) in parGatewayArray:{
+module modGatewayPublicIP '../publicIp/publicIp.bicep' = [for (gateway,i) in varGwConfig:{
   name: 'deploy-Gateway-Public-IP-${i}'
   params: {
     parPublicIPName: '${gateway.name}-PublicIP'
@@ -275,7 +289,7 @@ module modGatewayPublicIP '../publicIp/publicIp.bicep' = [for (gateway,i) in par
 }]
 
 //Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
-resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for (gateway,i) in parGatewayArray: {
+resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for (gateway,i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')){
   name: gateway.name
   location: resourceGroup().location
   tags: parTags
