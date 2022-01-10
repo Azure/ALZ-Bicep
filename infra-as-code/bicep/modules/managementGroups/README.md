@@ -44,23 +44,41 @@ outDecommissionedManagementGroupId | string | /providers/Microsoft.Management/ma
 
 In this example, the management groups are created at the `Tenant Root Group` through a tenant-scoped deployment.
 
-> For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
+> For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
 ```bash
+# For Azure global regions
 az deployment tenant create \
   --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
   --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json \
   --location eastus
 ```
+OR
+```bash
+# For Azure China regions
+az deployment tenant create \
+  --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
+  --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json \
+  --location chinaeast2
+```
 
 ### PowerShell
 
 ```powershell
+# For Azure global regions
 New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json `
   -Location eastus
+```
+OR
+```powershell
+# For Azure China regions
+New-AzTenantDeployment `
+  -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json `
+  -Location chinaeast2  
 ```
 
 ![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output")

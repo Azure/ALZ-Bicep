@@ -1,30 +1,118 @@
-# This is just a dummy workflow with the same name so that the workflow will appear in the actions tab, and subsequently I can run the workflow in my dev branch
+---
+name: Update Policy Library for Azure China regions
 
-name: Update Policy Library for Azure China
-
-# Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * 1-5'
+  workflow_dispatch: {}
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+env:
+  remote_repository: "Azure/Enterprise-Scale"
+  branch_name: "patch-policy-library-china"
+  az_accounts_minimum_version: "2.2.3"
+  pr_title: "Update Policy Library for Azure China (automated)"
+  pr_body: "This is an automated 'pull_request' containing updates to the library templates stored in '/infra-as-code/bicep/modules/policy/definitions/lib/china' & '/infra-as-code/bicep/modules/policy/assignments/lib'.\nPlease review the 'files changed' tab to review changes."
+
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  update-templates:
+    name: Update Policy Library
+    if: github.repository == 'azure/ALZ-Bicep'
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Local repository checkout
+        uses: actions/checkout@v2
+        with:
+          path: ${{ github.repository }}
+          fetch-depth: 0
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Remote repository checkout
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ env.remote_repository }}
+          path: ${{ env.remote_repository }}
+          ref: main
+
+      - name: Configure local git
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          git config user.name github-actions
+          git config user.email action@github.com
+        working-directory: ${{ github.repository }}
+
+      - name: Create and checkout branch
+        run: |
+          BRANCH_URL="repos/${{ github.repository }}/branches"
+          JQ_FILTER=".[] | select(.name == \"${{ env.branch_name }}\").name"
+          CHECK_BRANCH_ORIGIN=$(gh api $BRANCH_URL | jq -r "$JQ_FILTER")
+          if [ -z "$CHECK_BRANCH_ORIGIN" ]
+          then
+            echo "Checkout local branch (create new, no origin)..."
+            git checkout -b ${{ env.branch_name }}
+          else
+            echo "Checkout local branch (create new, track from origin)..."
+            git checkout -b ${{ env.branch_name }} --track origin/${{ env.branch_name }}
+          fi
+        working-directory: ${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+
+      - name: Update Policy Library
+        run: |
+          Write-Information "==> Installing Az.Accounts PowerShell Module..." -InformationAction Continue
+          Install-Module -Name "Az.Accounts" -MinimumVersion "${{ env.az_accounts_minimum_version }}" -Force
+          Write-Information "==> Running script..." -InformationAction Continue
+          ${{ github.repository }}/.github/scripts/Invoke-LibraryUpdate-China.ps1 `
+            -TargetModulePath ${{ github.workspace }}/${{ github.repository }} `
+            -SourceModulePath ${{ github.workspace }}/${{ env.remote_repository }} `
+            -UseCacheFromModule `
+            -Reset
+        shell: pwsh
+
+      - name: Update Policy Definition Bicep Input Files
+        run: |
+          Write-Information "==> Running script..." -InformationAction Continue
+          .github/scripts/Invoke-PolicyToBicep-China.ps1
+        shell: pwsh
+        working-directory: ${{ github.repository }}
+
+      - name: Check for changes
+        id: git_status
+        run: |
+          CHECK_GIT_STATUS=($(git status -s))
+          git status -s
+          echo "::set-output name=changes::${#CHECK_GIT_STATUS[@]}"
+        working-directory: ${{ github.repository }}
+
+      - name: Add files, commit and push
+        if: steps.git_status.outputs.changes > 0
+        run: |
+          echo "Pushing changes to origin..."
+          git add infra-as-code/bicep/modules/policy/definitions/lib/china
+          git add infra-as-code/bicep/modules/policy/assignments/lib
+          git commit -m '${{ env.pr_title }}'
+          git push origin ${{ env.branch_name }}
+        working-directory: ${{ github.repository }}
+
+      - name: Create pull request
+        if: steps.git_status.outputs.changes > 0
+        run: |
+          HEAD_LABEL="${{ github.repository_owner }}:${{ env.branch_name }}"
+          BASE_LABEL="${{ github.repository_owner }}:$(echo '${{ github.ref }}' | sed 's:refs/heads/::')"
+          PULL_REQUEST_URL="repos/${{ github.repository }}/pulls"
+          JQ_FILTER=".[] | select(.head.label == \"$HEAD_LABEL\") | select(.base.label == \"$BASE_LABEL\") | .url"
+          CHECK_PULL_REQUEST_URL=$(gh api $PULL_REQUEST_URL | jq -r "$JQ_FILTER")
+          if [ -z "$CHECK_PULL_REQUEST_URL" ]
+          then
+            CHECK_PULL_REQUEST_URL=$(gh pr create \
+            --title "${{ env.pr_title }}" \
+            --body "${{ env.pr_body }}" \
+            --base "${{ github.ref }}" \
+            --head "${{ env.branch_name }}" \
+            --draft)
+            echo "Created new PR: $CHECK_PULL_REQUEST_URL"
+          else
+            echo "Existing PR found: $CHECK_PULL_REQUEST_URL"
+          fi
+        working-directory: ${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
