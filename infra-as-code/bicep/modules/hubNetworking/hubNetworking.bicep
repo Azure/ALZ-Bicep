@@ -309,12 +309,10 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for
   }
 }]
 
-
 resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
   parent: resHubVirtualNetwork
   name: 'AzureFirewallSubnet'
 } 
-
 
 module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if(parAzureFirewallEnabled){
   name: 'deploy-Firewall-Public-IP'
@@ -331,6 +329,7 @@ module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if(parAzureFirewa
     parTags: parTags
   }
 }
+
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.  

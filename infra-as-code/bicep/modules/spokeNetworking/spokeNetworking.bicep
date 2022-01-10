@@ -6,18 +6,20 @@ DESCRIPTION: The following components will be options in this deployment
               UDR - if Firewall is enabled
               Private DNS Link
 AUTHOR/S: aultt
-VERSION: 1.0.0
+VERSION: 1.0.1
+  - Changed default value of parNetworkDNSEnableProxy to false. Defaulting to false allow for testing on its own 
+  - Changed default value of parDdosEnabled to false. Defaulting to false to allow for testing on its own
 */
 
 
 @description('Switch which allows Azure Firewall deployment to be disabled')
-param parHubNVAEnabled bool = true
+param parHubNVAEnabled bool = false
 
 @description('Switch which allows DDOS deployment to be disabled')
-param parDdosEnabled bool = true
+param parDdosEnabled bool = false
 
 @description('Switch which allows DNS Proxy to be disabled')
-param parNetworkDNSEnableProxy bool = true
+param parNetworkDNSEnableProxy bool = false
 
 @description('Switch which allows BGP Route Propogation to be disabled')
 param parBGPRoutePropogation bool = false
@@ -35,10 +37,10 @@ param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 param parSpokeNetworkPrefix string = 'Corp-Spoke'
 
 @description('Array of DNS Server IP addresses.  No Default Value')
-param parDNSServerIPArray array 
+param parDNSServerIPArray array = []
 
 @description('IP Address where network traffic should route to leveraged with DNS Proxy.  No Default Value')
-param parNextHopIPAddress string 
+param parNextHopIPAddress string = ''
 
 @description('Name of Route table to create for the default route of Hub. Default: udr-spoke-to-hub')
 param parSpoketoHubRouteTableName string = 'udr-spoke-to-hub'
@@ -74,7 +76,7 @@ resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
         name: 'udr-default-to-hub-nva'
         properties: {
           addressPrefix: '0.0.0.0/0'
-          nextHopType: 'VirtualAppliance'
+          nextHopType: parNetworkDNSEnableProxy ? 'VirtualAppliance' : 'Internet'
           nextHopIpAddress: parNetworkDNSEnableProxy ? parNextHopIPAddress : ''
         }
       }

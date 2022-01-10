@@ -1,5 +1,4 @@
 
-
 $azureResourceGroup='rsg-private-bicep-registry'
 $azureLocation='EastUs'
 

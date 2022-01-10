@@ -17,7 +17,11 @@ DESCRIPTION:
     * VMInsights
 
 AUTHOR/S: SenthuranSivananthan,aultt
-VERSION: 1.1.1
+VERSION: 1.2.0
+
+# Release notes 11/23/2021 - V1.2:
+    - Changed line 102 from parLogAnalyticsWorkspaceName to resLogAnalyticsWorkspace.name.  
+    - Change is required so the resources are created in the correct order.  Without the change the link would fail sporatically.
 */
 
 @description('Log Analytics Workspace name. - DEFAULT VALUE: alz-log-analytics')
@@ -30,6 +34,7 @@ param parLogAnalyticsWorkspaceRegion string = resourceGroup().location
 @maxValue(730)
 @description('Number of days of log retention for Log Analytics Workspace. - DEFAULT VALUE: 365')
 param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
+
 
 @allowed([
   'AgentHealthAssessment'
@@ -99,7 +104,7 @@ resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solut
 }]
 
 resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2020-08-01' = {
-  name: '${parLogAnalyticsWorkspaceName}/Automation'
+  name: '${resLogAnalyticsWorkspace.name}/Automation'
   properties: {
     resourceId: resAutomationAccount.id
   }
