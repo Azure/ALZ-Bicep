@@ -25,6 +25,12 @@ param parAllowForwardedTraffic bool = true
 @description('Switch to enable/disable forwarded Traffic for the Network Peer. Default = false')
 param parAllowGatewayTransit bool = false
 
+@description('Set Parameter to True to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+// Customer Usage Attribution Id
+var varCuaid = 'ab8e3b12-b0fa-40aa-8630-e3f7699e2142'
+
 resource resVirtualNetworkPeer 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-11-01' = {
   name:  '${parSourceVirtualNetworkName}/peer-to-${parDestinationVirtualNetworkName}'
   properties: {
@@ -35,4 +41,10 @@ resource resVirtualNetworkPeer 'Microsoft.Network/virtualNetworks/virtualNetwork
         id: parDestinationVirtualNetworkID
     }
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  name: '${varCuaid}-${uniqueString(resourceGroup().id)}'
+  params: {}
 }

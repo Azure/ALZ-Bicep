@@ -28,6 +28,12 @@ param parAssigneePrincipalType string
 @description('Object ID of groups, service principals or managed identities. For managed identities use the principal id. For service principals, use the object ID and not the app ID')
 param parAssigneeObjectId string
 
+@description('Set Parameter to True to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+// Customer Usage Attribution Id
+var varCuaid = '59c2ac61-cd36-413b-b999-86a3e0d958fb'
+
 module modRoleAssignment 'roleAssignmentSubscription.bicep' = [for subscriptionId in parSubscriptionIds: {
   name: 'rbac-assign-${uniqueString(subscriptionId, parAssigneeObjectId, parRoleDefinitionId)}'
   scope: subscription(subscriptionId)
@@ -38,3 +44,9 @@ module modRoleAssignment 'roleAssignmentSubscription.bicep' = [for subscriptionI
     parRoleDefinitionId: parRoleDefinitionId
   }
 }]
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
+  name: '${varCuaid}-${uniqueString(deployment().location)}'
+  params: {}
+}

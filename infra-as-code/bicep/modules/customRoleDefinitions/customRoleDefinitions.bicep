@@ -22,6 +22,7 @@ param parAssignableScopeManagementGroupId string = 'alz'
 @description('Set Parameter to True to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
+// Customer Usage Attribution Id
 var varCuaid = '032d0904-3d50-45ef-a6c1-baa9d82e23ff'
 
 module modRolesSubscriptionOwnerRole 'definitions/caf-subscription-owner-role.bicep' = {
@@ -52,6 +53,7 @@ module modRolesSecurityOperationsRole 'definitions/caf-security-operations-role.
   }
 }
 
+// Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
   name: '${varCuaid}-${uniqueString(deployment().location)}'
   params: {}

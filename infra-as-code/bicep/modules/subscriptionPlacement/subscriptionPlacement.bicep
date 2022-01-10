@@ -16,7 +16,19 @@ param parSubscriptionIds array = []
 @description('Target management group for the subscription.  This management group must exist.')
 param parTargetManagementGroupId string
 
+@description('Set Parameter to True to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+// Customer Usage Attribution Id
+var varCuaid = '3dfa9e81-f0cf-4b25-858e-167937fd380b'
+
 resource resSubscriptionPlacement 'Microsoft.Management/managementGroups/subscriptions@2021-04-01' = [for subscriptionId in parSubscriptionIds: {
   scope: tenant()
   name: '${parTargetManagementGroupId}/${subscriptionId}'
 }]
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
+  name: '${varCuaid}-${uniqueString(deployment().location)}'
+  params: {}
+}

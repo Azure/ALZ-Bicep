@@ -21,12 +21,24 @@ param location string = resourceGroup().location
 @description('Tags to be applied to resource when deployed.  Default: None')
 param parTags object
 
+@description('Set Parameter to True to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+// Customer Usage Attribution Id
+var varCuaid = '3f85b84c-6bad-4c42-86bf-11c233241c22'
+
 resource resPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' ={
   name: parPublicIPName
   tags: parTags
   location: location
   sku: parPublicIPSku
   properties: parPublicIPProperties
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  name: '${varCuaid}-${uniqueString(resourceGroup().id)}'
+  params: {}
 }
 
 output outPublicIPID string = resPublicIP.id

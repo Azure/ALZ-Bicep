@@ -43,6 +43,12 @@ param parNextHopIPAddress string
 @description('Name of Route table to create for the default route of Hub. Default: udr-spoke-to-hub')
 param parSpoketoHubRouteTableName string = 'udr-spoke-to-hub'
 
+@description('Set Parameter to True to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+// Customer Usage Attribution Id
+var varCuaid = '0c428583-f2a1-4448-975c-2d6262fd193a'
+
 //If Ddos parameter is true Ddos will be Enabled on the Virtual Network
 //If Azure Firewall is enabled and Network Dns Proxy is enabled dns will be configured to point to AzureFirewall
 resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
@@ -81,6 +87,12 @@ resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
     ]
     disableBgpRoutePropagation: parBGPRoutePropogation
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  name: '${varCuaid}-${uniqueString(resourceGroup().id)}'
+  params: {}
 }
 
 output outSpokeVirtualNetworkName string = resSpokeVirtualNetwork.name

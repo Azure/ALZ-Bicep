@@ -170,6 +170,8 @@ param parPrivateDnsZones array =[
   'privatelink.digitaltwins.azure.net'
 ]
 
+@description('Set Parameter to True to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
 
 var varSubnetProperties = [for subnet in parSubnets: {
   name: subnet.name
@@ -177,6 +179,9 @@ var varSubnetProperties = [for subnet in parSubnets: {
     addressPrefix: subnet.ipAddressRange
   }
 }]
+
+// Customer Usage Attribution Id
+var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
 
 
 resource resDDoSProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDDoSEnabled) {
@@ -432,6 +437,12 @@ resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetwork
   }
 dependsOn: resPrivateDnsZones
 }]
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  name: '${varCuaid}-${uniqueString(resourceGroup().id)}'
+  params: {}
+}
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 output outAzureFirewallPrivateIP string = parAzureFirewallEnabled ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress : ''
