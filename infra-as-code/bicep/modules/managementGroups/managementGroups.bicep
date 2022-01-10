@@ -27,6 +27,9 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @minLength(2)
 param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
 
+@description('Set Parameter to True to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
 // Platform and Child Management Groups
 var varPlatformMG = {
   name: '${parTopLevelManagementGroupPrefix}-platform'
@@ -75,6 +78,9 @@ var varDecommissionedManagementGroup = {
   name: '${parTopLevelManagementGroupPrefix}-decommissioned'
   displayName: 'Decommissioned'
 }
+
+// Customer Usage Attribution Id
+var varCuaid = '9b7965a0-d77c-41d6-85ef-ec3dfea4845b'
 
 // Level 1
 resource resTopLevelMG 'Microsoft.Management/managementGroups@2021-04-01' = {
@@ -193,6 +199,13 @@ resource resLandingZonesOnlineMG 'Microsoft.Management/managementGroups@2021-04-
       }
     }
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+
+module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdTenant.bicep' = if (!parTelemetryOptOut) {
+  name: '${varCuaid}-${uniqueString(deployment().location)}'
+  params: {}
 }
 
 

@@ -18,6 +18,7 @@ param parResourceGroupName string
 @description('Set Parameter to True to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
+// Customer Usage Attribution Id
 var varCuaid = 'b6718c54-b49e-4748-a466-88e3d7c789c8'
 
 resource resResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
