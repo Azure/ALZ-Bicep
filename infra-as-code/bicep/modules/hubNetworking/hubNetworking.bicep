@@ -42,9 +42,9 @@ param parPrivateDNSZonesEnabled bool = true
 param parVpnGatewayConfig object = {
     name: '${parCompanyPrefix}-Vpn-Gateway'
     gatewaytype: 'Vpn'
-    sku: 'VpnGw2'
+    sku: 'VpnGw1'
     vpntype: 'RouteBased'
-    generation: 'Generation2'
+    generation: 'Generation1'
     enableBgp: false
     activeActive: false
     enableBgpRouteTranslationForNat: false
