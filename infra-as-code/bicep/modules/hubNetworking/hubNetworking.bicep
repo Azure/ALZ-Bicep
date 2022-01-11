@@ -272,7 +272,7 @@ resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-
   name: 'GatewaySubnet'
 } 
 
-module modGatewayPublicIP '../publicIp/publicIp.bicep' = [for (gateway,i) in varGwConfig:{
+module modGatewayPublicIP '../publicIp/publicIp.bicep' = [for (gateway,i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')){
   name: 'deploy-Gateway-Public-IP-${i}'
   params: {
     parPublicIPName: '${gateway.name}-PublicIP'
@@ -312,7 +312,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for
         name: 'vnetGatewayConfig'
         properties:{
           publicIPAddress:{
-            id: modGatewayPublicIP[i].outputs.outPublicIPID
+            id: (((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) ? modGatewayPublicIP[i].outputs.outPublicIPID : 'na')
           }
           subnet:{
             id: resGatewaySubnetRef.id
