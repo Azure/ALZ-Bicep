@@ -202,8 +202,8 @@ resource resLandingZonesOnlineMG 'Microsoft.Management/managementGroups@2021-04-
 }
 
 // Optional Deployment for Customer Usage Attribution
-module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdTenant.bicep' = if (!parTelemetryOptOut) {
-  name: '${varCuaid}-${uniqueString(deployment().location)}'
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdTenant.bicep' = if (!parTelemetryOptOut) {
+  name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
   params: {}
 }
 

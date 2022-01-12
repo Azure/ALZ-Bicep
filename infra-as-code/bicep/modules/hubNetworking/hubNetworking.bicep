@@ -439,8 +439,8 @@ dependsOn: resPrivateDnsZones
 }]
 
 // Optional Deployment for Customer Usage Attribution
-module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
-  name: '${varCuaid}-${uniqueString(resourceGroup().id)}'
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().id)}'
   params: {}
 }
 

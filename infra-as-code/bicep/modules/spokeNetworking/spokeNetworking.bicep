@@ -90,8 +90,8 @@ resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
 }
 
 // Optional Deployment for Customer Usage Attribution
-module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
-  name: '${varCuaid}-${uniqueString(resourceGroup().id)}'
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().id)}'
   params: {}
 }
 

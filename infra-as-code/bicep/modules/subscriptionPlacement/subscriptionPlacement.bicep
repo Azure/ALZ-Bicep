@@ -28,7 +28,7 @@ resource resSubscriptionPlacement 'Microsoft.Management/managementGroups/subscri
 }]
 
 // Optional Deployment for Customer Usage Attribution
-module modCustomerUsageAttribution '../customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
-  name: '${varCuaid}-${uniqueString(deployment().location)}'
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
+  name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
   params: {}
 }
