@@ -1,6 +1,6 @@
 # Module: PID
 
-This module creates a blank deployment which will be called from other modules. The purpose of this deployment is to create a deployment name to be used for Azure [customer usage attribution](https://docs.microsoft.com/azure/marketplace/azure-partner-customer-usage-attribution). To disable this, please see [How to disable the customer usage attribution]('../../../../docs/wiki/CustomerUsage.md')
+This module creates a blank deployment which will be called from other modules. The purpose of this deployment is to create a deployment name to be used for Azure [customer usage attribution](https://docs.microsoft.com/azure/marketplace/azure-partner-customer-usage-attribution). To disable this, please see [How to disable customer usage attribution]('../../../../docs/wiki/CustomerUsage.md')
 
 This module does not deploy any resources
 
