@@ -30,10 +30,10 @@ jobs:
         shell: pwsh
         continue-on-error: false
         run: |
-          throw "This is an error."
+          $ErrorActionPreference = 'Stop'
           Get-ChildItem -Recurse -Filter '*.bicep' -Exclude '*docs/scripts/callModuleFromACR.example.bicep' | ForEach-Object {
               Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
-              bicep build $_.FullName
+              bicep build $_.FullName 2>&1
           }
 
       - name: ARM-TTK Bicep Parameter Files for PR
