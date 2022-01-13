@@ -29,9 +29,17 @@ jobs:
       - name: Bicep Build to Test for PR
         shell: pwsh
         run: |
-          Get-ChildItem -Recurse -Filter '*.bicep' -Exclude '*docs/scripts/callModuleFromACR.example.bicep' | ForEach-Object {
+          Get-ChildItem -Recurse -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep' | ForEach-Object {
               Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
-              bicep build $_.FullName
+              $output = bicep build $_.FullName 2>&1
+              if ($LastExitCode -ne 0)
+              {
+                throw $output
+              }
+              Else
+              {
+                echo $output
+              }   
           }
 
       - name: ARM-TTK Bicep Parameter Files for PR
