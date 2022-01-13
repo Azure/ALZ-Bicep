@@ -33,11 +33,14 @@ jobs:
           $ErrorActionPreference = 'Stop'
           Get-ChildItem -Recurse -Filter '*.bicep' -Exclude '/docs/scripts/callModuleFromACR.example.bicep' | ForEach-Object {
               Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
-              $output = bicep build $_.FullName
+              $output = bicep build $_.FullName 2>&1
               if ($LastExitCode -ne 0)
               {
-                echo $output
                 throw $output
+              }
+              Else
+              {
+                echo $output
               }   
           }
 
