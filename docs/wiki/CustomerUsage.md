@@ -3,11 +3,23 @@
 
 Microsoft can identify the deployments of the Azure Resource Manager and Bicep templates with the deployed Azure resources. Microsoft can correlate these resources used to support the deployments. Microsoft collects this information to provide the best experiences with their products and to operate their business. The telemetry is collected through [customer usage attribution](https://docs.microsoft.com/azure/marketplace/azure-partner-customer-usage-attribution). The data is collected and governed by Microsoft's privacy policies, located at the [trust center](https://www.microsoft.com/trustcentery).
 
-To disable this tracking, we have included a parameter value to every module deployment which is a simple True/False. The default value is **"False"** which does not disable this telemetry. If you would like to disable this tracking, then simple set this value to **"True"** and this module will not be run.
+To disable this tracking, we have included a parameter value to every bicep module with a simple True/False boolean flag. The default value is **"False"** which does not disable the telemetry. If you would like to disable this tracking, then simply set this value to **"True"** and this module will not be run. 
+
+For example, in the managementGroups.bicep file, we will see the following 
 
 ```bicep
 @description('Set Parameter to True to Opt-out of deployment telemetry')
-param parTelemetryOptOut bool = false
+param parTelemetryOptOut bool = True
+```
+
+The default value will be False, but by changing this to True and saving this file, when you deploy this module either via PowerShell or AzureCLI, the section below will be ignored
+
+```bicep
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdTenant.bicep' = if (!parTelemetryOptOut) {
+  name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
+  params: {}
+}
 ```
 
 The following are the unique ID's used in all the modules. 
