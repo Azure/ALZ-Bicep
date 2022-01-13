@@ -31,9 +31,14 @@ jobs:
         continue-on-error: false
         run: |
           $ErrorActionPreference = 'Stop'
-          Get-ChildItem -Recurse -Filter '*.bicep' -Exclude '*docs/scripts/callModuleFromACR.example.bicep' | ForEach-Object {
+          Get-ChildItem -Recurse -Filter '*.bicep' -Exclude '/docs/scripts/callModuleFromACR.example.bicep' | ForEach-Object {
               Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
-              bicep build $_.FullName 2>&1
+              $output = bicep build $_.FullName
+              if ($LastExitCode -ne 0)
+              {
+                echo $output
+                throw $output
+              }   
           }
 
       - name: ARM-TTK Bicep Parameter Files for PR
