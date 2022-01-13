@@ -12,7 +12,7 @@ For example, in the managementGroups.bicep file, we will see the following
 param parTelemetryOptOut bool = True
 ```
 
-The default value will be False, but by changing this to True and saving this file, when you deploy this module either via PowerShell or AzureCLI, the section below will be ignored
+The default value will be **"False"**, but by changing this to **"True"** and saving this file, when you deploy this module either via PowerShell or AzureCLI, the section below will be ignored
 
 ```bicep
 // Optional Deployment for Customer Usage Attribution
