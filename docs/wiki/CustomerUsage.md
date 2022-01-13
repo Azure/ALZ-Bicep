@@ -5,7 +5,7 @@ Microsoft can identify the deployments of the Azure Resource Manager and Bicep t
 
 To disable this tracking, we have included a parameter value to every module deployment which is a simple True/False. The default value is **"False"** which does not disable this telemetry. If you would like to disable this tracking, then simple set this value to **"True"** and this module will not be run.
 
-```json
+```bicep
 @description('Set Parameter to True to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 ```
