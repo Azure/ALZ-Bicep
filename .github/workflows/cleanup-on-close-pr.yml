@@ -11,9 +11,9 @@ env:
   SubscriptionName: "sub-unit-test-pr-${{ github.event.number }}"
   
 jobs:
-  merge_job:
-    # this job will only run if the PR has been merged
-    if: github.event.pull_request.merged == true
+  close_job:
+    # this job will run if the PR is closed, regardless of whether it was merged or not.
+    #if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -35,18 +35,11 @@ jobs:
             Install-Module -Name Az.Subscription -Force
             $subscriptionId = (Get-AzSubscription -SubscriptionName ${{ env.SubscriptionName }}).Id
             If($subscriptionId) {
-              echo "PR #${{ github.event.number }} has been merged"
-              echo "${{ env.SubscriptionName }} to be deleted"
+              Write-Information "PR #${{ github.event.number }} has been merged" -InformationAction Continue
+              Write-Information "${{ env.SubscriptionName }} to be deleted" -InformationAction Continue
               Update-AzSubscription -SubscriptionId $subscriptionId -Action 'Cancel'
             }
         azPSVersion: latest
 
-  # close_job:
-  #   # this job will only run if the PR has been closed without being merged
-  #   if: github.event.pull_request.merged == false
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - run: |
-  #       echo PR #${{ github.event.number }} has been closed without being merged
 
 
