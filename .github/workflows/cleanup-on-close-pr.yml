@@ -7,35 +7,46 @@ on:
     branches:
       - main
     types: [ closed ]
-
-
-on:
-  pull_request:
-    
-    paths:
-      - "**.bicep"
-  workflow_dispatch: {}
-
+env:
+  SubscriptionName: "sub-unit-test-pr-${{ github.event.number }}"
+  
 jobs:
   merge_job:
     # this job will only run if the PR has been merged
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    shell: pwsh
-    steps:
-    - run: |
-        echo PR #${{ github.event.number }} has been merged
-        echo sub-unit-test-pr-#${{ github.event.number }} to be deleted
-        $subscriptionName = "sub-unit-test-pr-#${{ github.event.number }}"
-        $subscriptionId = (Get-AzSubscription -SubscriptionName $subscriptionName).Id
-        "Update-AzSubscription -SubscriptionId $subscriptionId -Action 'Cancel'"
-        #fixme check if suceeded?
-    
 
-  close_job:
-    # this job will only run if the PR has been closed without being merged
-    if: github.event.pull_request.merged == false
-    runs-on: ubuntu-latest
     steps:
-    - run: |
-        echo PR #${{ github.event.number }} has been closed without being merged
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.ALZ_AZURE_SECRET_UNIT_TESTS }}
+        enable-AzPSSession: true
+
+    - name: Cancel PR Subscription
+      uses: Azure/powershell@v1
+      with:
+        inlineScript: |
+            Install-Module -Name Az.Subscription -Force
+            $subscriptionId = (Get-AzSubscription -SubscriptionName ${{ env.SubscriptionName }}).Id
+            If($subscriptionId) {
+              echo "PR #${{ github.event.number }} has been merged"
+              echo "${{ env.SubscriptionName }} to be deleted"
+              Update-AzSubscription -SubscriptionId $subscriptionId -Action 'Cancel'
+            }
+        azPSVersion: latest
+
+  # close_job:
+  #   # this job will only run if the PR has been closed without being merged
+  #   if: github.event.pull_request.merged == false
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - run: |
+  #       echo PR #${{ github.event.number }} has been closed without being merged
+
+
