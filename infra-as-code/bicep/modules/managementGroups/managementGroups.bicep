@@ -1,6 +1,6 @@
 /*
 SUMMARY: The Management Groups module deploys a management group hierarchy in a customer's tenant under the 'Tenant Root Group'.
-DESCRIPTION:  Management Group hierarchy is created through a tenant-scoped Azure Resource Manager (ARM) deployment.  The hierarchy is:
+DESCRIPTION: Management Group hierarchy is created through a tenant-scoped Azure Resource Manager (ARM) deployment.  The hierarchy is:
   * Tenant Root Group
     * Top Level Management Group (defined by parameter `parTopLevelManagementGroupPrefix`)
       * Platform
