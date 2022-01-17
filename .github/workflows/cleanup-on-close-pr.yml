@@ -12,8 +12,6 @@ env:
   
 jobs:
   close_job:
-    # this job will run if the PR is closed, regardless of whether it was merged or not.
-    #if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
