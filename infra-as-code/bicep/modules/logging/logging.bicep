@@ -63,7 +63,7 @@ param parAutomationAccountName string = 'alz-automation-account'
 @description('Automation Account region name. - DEFAULT VALUE: resourceGroup().location')
 param parAutomationAccountRegion string = resourceGroup().location
 
-@description('Set Parameter to True to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id
@@ -113,7 +113,7 @@ resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.Operational
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
-  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().id)}'
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
   params: {}
 }
 

@@ -15,7 +15,7 @@ param parResourceGroupLocation string
 @description('Name of Resource Group to be created.  No Default')
 param parResourceGroupName string
 
-@description('Set Parameter to True to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

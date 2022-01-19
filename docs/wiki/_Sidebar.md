@@ -3,4 +3,4 @@
 * [Home](./Home)
 * [Deployment Flow](./DeploymentFlow)
 * [Contributing](./Contributing)
-* [Customer Usage Attribution](./CustomerUsage)
+* [Telemetry Tracking Using Customer Usage Attribution (PID)](./CustomerUsage)

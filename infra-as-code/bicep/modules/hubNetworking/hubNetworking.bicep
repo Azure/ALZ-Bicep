@@ -170,7 +170,7 @@ param parPrivateDnsZones array =[
   'privatelink.digitaltwins.azure.net'
 ]
 
-@description('Set Parameter to True to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
 var varSubnetProperties = [for subnet in parSubnets: {
@@ -440,7 +440,7 @@ dependsOn: resPrivateDnsZones
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
-  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().id)}'
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
   params: {}
 }
 

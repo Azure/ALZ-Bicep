@@ -25,7 +25,7 @@ param parAllowForwardedTraffic bool = true
 @description('Switch to enable/disable forwarded Traffic for the Network Peer. Default = false')
 param parAllowGatewayTransit bool = false
 
-@description('Set Parameter to True to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id
@@ -45,6 +45,6 @@ resource resVirtualNetworkPeer 'Microsoft.Network/virtualNetworks/virtualNetwork
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
-  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().id)}'
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
   params: {}
 }

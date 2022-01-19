@@ -27,7 +27,7 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @minLength(2)
 param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
 
-@description('Set Parameter to True to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
 // Platform and Child Management Groups

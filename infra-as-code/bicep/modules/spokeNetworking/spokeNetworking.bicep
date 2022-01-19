@@ -43,7 +43,7 @@ param parNextHopIPAddress string
 @description('Name of Route table to create for the default route of Hub. Default: udr-spoke-to-hub')
 param parSpoketoHubRouteTableName string = 'udr-spoke-to-hub'
 
-@description('Set Parameter to True to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

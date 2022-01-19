@@ -16,7 +16,7 @@ param parSubscriptionIds array = []
 @description('Target management group for the subscription.  This management group must exist.')
 param parTargetManagementGroupId string
 
-@description('Set Parameter to True to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id
