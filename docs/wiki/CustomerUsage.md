@@ -24,7 +24,7 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdTen
 }
 ```
 ## Module PID Value Mapping
-The following are the unique ID's (also known as PIDs) used in each of the modules. 
+The following are the unique ID's (also known as PIDs) used in each of the modules.
 
 | Module Name            | PID                                  |
 | ---------------------- | ------------------------------------ |
