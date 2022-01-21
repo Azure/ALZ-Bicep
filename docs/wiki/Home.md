@@ -8,7 +8,22 @@ Welcome the wiki of the ALZ Bicep staging repo. This repo and wiki are only for 
 
 ## Navigation
 
-* [Home](./Home)
-* [Deployment Flow](./DeploymentFlow)
-* [Contributing](./Contributing)
-* [Azure Container Registry Deployment - Private Bicep Registry](./ACRDeployment)
+* [Home][wiki_home]
+* [Deployment Flow][wiki_deployment_flow]
+* [Contributing][wiki_contributing]
+* [Azure Container Registry Deployment - Private Bicep Registry][wiki_acrdeploy]
+
+
+ [//]: # (************************)
+ [//]: # (INSERT LINK LABELS BELOW)
+ [//]: # (************************)
+
+<!--
+The following link references should be copied from `_sidebar.md` in the `./docs/wiki/` folder.
+Replace `./` with `https://github.com/Azure/terraform-azurerm-caf-enterprise-scale/wiki/` when copying to here.
+-->
+
+[wiki_home]:                                  https://github.com/Azure/ALZ-Bicep/wiki/home "Wiki - Home"
+[wiki_deployment_flow]:                            https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow "Wiki - Deployment Flow"
+[wiki_contributing]:                          https://github.com/Azure/ALZ-Bicep/wiki/Contributing "Wiki - Contributing"
+[wiki_acrdeploy]:                          https://github.com/Azure/ALZ-Bicep/wiki/ACRDeployment "Wiki - Private Bicep Registry"
