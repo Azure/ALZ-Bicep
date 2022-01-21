@@ -12,7 +12,7 @@ Detailed information about how to use, deploy and extend artifacts found in this
 - [Deployment Flow][wiki_deployment_flow]
 - [Contributing][wiki_contributing]
 
-Overview
+## Overview
 The Azure Landing Zones Bicep repo provides an approach for deploying and managing the core platform capabilities of Cloud Adoption Framework enterprise-scale landing zone architecture using Bicep.
 
 In its current incarnation each module are deployed separately via command line but in future releases are more automated approach is striven for.
