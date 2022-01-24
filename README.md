@@ -4,7 +4,7 @@
 
 ![Bicep Logo](docs/wiki/media/bicep-logo.png)
 
-Welcome to the Azure Landing Zones Bicep public preview repo.
+Welcome to the Azure Landing Zones Bicep repo.
 
 Detailed information about how to use, deploy and extend artifacts found in this repo can be found on our Wiki:
 
@@ -13,9 +13,22 @@ Detailed information about how to use, deploy and extend artifacts found in this
 - [Contributing][wiki_contributing]
 
 ## Overview
-The Azure Landing Zones Bicep repo provides an approach for deploying and managing the core platform capabilities of Cloud Adoption Framework enterprise-scale landing zone architecture using Bicep.
+The Azure Landing Zones Bicep repo provides an approach for deploying and managing the core platform capabilities of Cloud Adoption Framework Azure Landing Zones conceptual architecture using Bicep.
 
-In its current incarnation each module are deployed separately via command line but in future releases a more automated approach is striven for.
+In its current incarnation each module can deployed separately via command line but in future releases a more automated approach, via orchestration modules, will be published; but due to current Bicep & ARM limitations this is not possible today.
+
+## Contributing
+This project welcomes contributions and suggestions. Please review our [Contributing guide][wiki_contributing] in the Wiki. Once your PR is created and submitted a member of the team will triage, review and discuss with you 👍
+Most contributions require you to agree to a
+Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
+the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+When you submit a pull request, a CLA bot will automatically determine whether you need to provide
+a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
+provided by the bot. You will only need to do this once across all repos using our CLA.
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
+contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
 ## Trademarks
 
 This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
