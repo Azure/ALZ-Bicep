@@ -115,7 +115,7 @@ jobs:
 
       - name: Az CLI Create Resource Group for PR
         id: create_rsg
-        if: ${{ env.gitLoggingOUTPUT != '' }}
+        if: ${{ steps.git_management_diff.outputs.diff != '' }} || ${{ env.gitLoggingOUTPUT != '' }} || ${{ env.gitHubOUTPUT != '' }} || ${{ env.gitSpokeOUTPUT != '' }}
         shell: bash
         run: |
             az account set --subscription ${{ env.SUBIDOUTPUT }}
