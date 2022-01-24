@@ -27,6 +27,6 @@ resource resResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 }
 
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdSubscription.bicep' = if (!parTelemetryOptOut) {
-  name: 'pid-${varCuaid}-${uniqueString(subscription().subscriptionId)}'
+  name: 'pid-${varCuaid}-${uniqueString(subscription().subscriptionId, parResourceGroupName)}'
   params: {}
 }
