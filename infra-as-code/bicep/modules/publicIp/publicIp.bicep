@@ -37,7 +37,7 @@ resource resPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' ={
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
-  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location, parPublicIPName)}'
   params: {}
 }
 
