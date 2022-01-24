@@ -1,0 +1,43 @@
+
+name: Close Pull Request
+
+# only trigger on pull request closed events
+on:
+  pull_request:
+    branches:
+      - main
+    types: [ closed ]
+env:
+  SubscriptionName: "sub-unit-test-pr-${{ github.event.number }}"
+  
+jobs:
+  close_job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.ALZ_AZURE_SECRET_UNIT_TESTS }}
+        enable-AzPSSession: true
+
+    - name: Cancel PR Subscription
+      uses: Azure/powershell@v1
+      with:
+        inlineScript: |
+            Install-Module -Name Az.Subscription -Force
+            $subscriptionId = (Get-AzSubscription -SubscriptionName ${{ env.SubscriptionName }}).Id
+            If($subscriptionId) {
+              Write-Information "PR #${{ github.event.number }} has been merged" -InformationAction Continue
+              Write-Information "${{ env.SubscriptionName }} to be deleted" -InformationAction Continue
+              Update-AzSubscription -SubscriptionId $subscriptionId -Action 'Cancel'
+            }
+        azPSVersion: latest
+
+
+

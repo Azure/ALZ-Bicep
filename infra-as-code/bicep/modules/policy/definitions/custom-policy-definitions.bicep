@@ -10,6 +10,9 @@ targetScope = 'managementGroup'
 @description('The management group scope to which the policy definitions are to be created at. DEFAULT VALUE = "alz"')
 param parTargetManagementGroupID string = 'alz'
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
 var varTargetManagementGroupResourceID = tenantResourceId('Microsoft.Management/managementGroups', parTargetManagementGroupID)
 
 // This variable contains a number of objects that load in the custom Azure Policy Defintions that are provided as part of the ESLZ/ALZ reference implementation - this is automatically created in the file 'infra-as-code\bicep\modules\policy\lib\policy_definitions\_policyDefinitionsBicepInput.txt' via a GitHub action, that runs on a daily schedule, and is then manually copied into this variable. 
@@ -1204,6 +1207,9 @@ var varCustomPolicySetDefinitionsArray = [
   }
 ]
 
+// Customer Usage Attribution Id
+var varCuaid = '2b136786-9881-412e-84ba-f4c2822e1ac9'
+
 resource resPolicyDefinitions 'Microsoft.Authorization/policyDefinitions@2020-09-01' = [for policy in varCustomPolicyDefinitionsArray: {
   name: policy.libDefinition.name
   properties: {
@@ -1236,3 +1242,9 @@ resource resPolicySetDefinitions 'Microsoft.Authorization/policySetDefinitions@2
     policyDefinitionGroups: policySet.libSetDefinition.properties.policyDefinitionGroups
   }
 }]
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
+  name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
+  params: {}
+}

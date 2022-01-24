@@ -68,6 +68,12 @@ param parAutomationAccountName string = 'alz-automation-account'
 @description('Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings - DEFAULT VALUE: resourceGroup().location')
 param parAutomationAccountRegion string = resourceGroup().location
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+// Customer Usage Attribution Id
+var varCuaid = 'f8087c67-cc41-46b2-994d-66e4b661860d'
+
 resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-01' = {
   name: parAutomationAccountName
   location: parAutomationAccountRegion
@@ -108,6 +114,12 @@ resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.Operational
   properties: {
     resourceId: resAutomationAccount.id
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
 }
 
 output outLogAnalyticsWorkspaceName string = resLogAnalyticsWorkspace.name

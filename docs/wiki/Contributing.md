@@ -104,13 +104,13 @@ etc...
 
 ### Bicep Elements Naming Standards
 
-| Element Type | Naming Prefix | Example |
-| :------------: | :-------------: | :------- |
-| Parameters | `par` | `parLocation`, `parManagementGroupsNamePrefix` |
-| Variables | `var` | `varConditionExpression`, `varIntermediateRootManagementGroupName` |
-| Resources | `res` | `resIntermediateRootManagementGroup`, `resResourceGroupLogAnalytics` |
-| Modules | `mod` | `modManagementGroups`, `modLogAnalytics` |
-| Outputs | `out` | `outIntermediateRootManagementGroupID`, `outLogAnalyticsWorkspaceID` |
+| Element Type | Naming Prefix | Example                                                              |
+| :----------: | :-----------: | :------------------------------------------------------------------- |
+|  Parameters  |     `par`     | `parLocation`, `parManagementGroupsNamePrefix`                       |
+|  Variables   |     `var`     | `varConditionExpression`, `varIntermediateRootManagementGroupName`   |
+|  Resources   |     `res`     | `resIntermediateRootManagementGroup`, `resResourceGroupLogAnalytics` |
+|   Modules    |     `mod`     | `modManagementGroups`, `modLogAnalytics`                             |
+|   Outputs    |     `out`     | `outIntermediateRootManagementGroupID`, `outLogAnalyticsWorkspaceID` |
 
 ### Bicep File Structure
 
@@ -184,13 +184,22 @@ To author Bicep modules that are in-line with the requirements for this project,
                   "enabled": true,
                   "verbose": true,
                   "rules": {
+                    "adminusername-should-not-be-literal": {
+                      "level": "error"
+                    },
                     "no-hardcoded-env-urls": {
+                      "level": "error"
+                    },
+                    "no-unnecessary-dependson": {
                       "level": "error"
                     },
                     "no-unused-params": {
                       "level": "error"
                     },
                     "no-unused-vars": {
+                      "level": "error"
+                    },
+                    "outputs-should-not-contain-secrets": {
                       "level": "error"
                     },
                     "prefer-interpolation": {
@@ -202,7 +211,10 @@ To author Bicep modules that are in-line with the requirements for this project,
                     "simplify-interpolation": {
                       "level": "error"
                     },
-                    "adminusername-should-not-be-literal": {
+                    "use-protectedsettings-for-commandtoexecute-secrets": {
+                      "level": "error"
+                    },
+                    "use-stable-vm-image": {
                       "level": "error"
                     }
                   }
