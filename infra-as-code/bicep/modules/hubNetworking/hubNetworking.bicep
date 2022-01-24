@@ -62,7 +62,24 @@ param parVpnGatewayConfig object = {
 "parExpressRouteGatewayConfig": {
   "value": {}
 }''')
-param parExpressRouteGatewayConfig object = {}
+param parExpressRouteGatewayConfig object = {
+  name: '${parCompanyPrefix}-ExpressRoute-Gateway'
+  gatewaytype: 'ExpressRoute'
+  sku: 'ErGw1AZ'
+  vpntype: 'RouteBased'
+  vpnGatewayGeneration: 'None'
+  enableBgp: false
+  activeActive: false
+  enableBgpRouteTranslationForNat: false
+  enableDnsForwarding: false
+  asn: '65515'
+  bgpPeeringAddress: ''
+  bgpsettings: {
+    asn: '65515'
+    bgpPeeringAddress: ''
+    peerWeight: '5'
+  }
+}
 
 
 @description('Prefix value which will be prepended to all resource names. Default: alz')
