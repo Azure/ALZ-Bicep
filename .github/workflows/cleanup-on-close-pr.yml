@@ -46,7 +46,7 @@ jobs:
             $resourceGroups = @()
             $resourceGroups += Get-AzResourceGroup
             If ($resourceGroups.Count -gt 0) {
-                $resourceGroups | ForEach-Object {
+                $resourceGroups | ForEach-Object -Parallel {
                     Write-Information "Deleting resource group $($PSItem.ResourceGroupName)"
                     Remove-AzResourceGroup -Name $PSItem.ResourceGroupName -Force
                 }
