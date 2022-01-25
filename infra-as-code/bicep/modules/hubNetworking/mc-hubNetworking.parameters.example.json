@@ -2,141 +2,141 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "parBastionEnabled": {
-        "value": true
-      },
-      "parDdosEnabled":{
-          "value": false
-      },
-      "parAzureFirewallEnabled": {
-          "value": true 
-      },
-      "parPrivateDNSZonesEnabled": {
-          "value": true
-      },
-      "parVpnGatewayConfig": {
-          "value": {
-            "name": "alz-Vpn-Gateway",
-            "gatewaytype": "Vpn",
-            "sku": "VpnGw1",
-            "vpntype": "RouteBased",
-            "generation": "Generation1",
-            "enableBgp": false,
-            "activeActive": false,
-            "enableBgpRouteTranslationForNat": false,
-            "enableDnsForwarding": false,
-            "asn": "65515",
-            "bgpPeeringAddress": "",
-            "bgpsettings": {
-              "asn": "65515",
-              "bgpPeeringAddress": "",
-              "peerWeight": "5"
+        "parBastionEnabled": {
+            "value": true
+        },
+        "parDdosEnabled": {
+            "value": false
+        },
+        "parAzureFirewallEnabled": {
+            "value": true
+        },
+        "parPrivateDNSZonesEnabled": {
+            "value": true
+        },
+        "parVpnGatewayConfig": {
+            "value": {
+                "name": "alz-Vpn-Gateway",
+                "gatewaytype": "Vpn",
+                "sku": "VpnGw1",
+                "vpntype": "RouteBased",
+                "generation": "Generation1",
+                "enableBgp": false,
+                "activeActive": false,
+                "enableBgpRouteTranslationForNat": false,
+                "enableDnsForwarding": false,
+                "asn": "65515",
+                "bgpPeeringAddress": "",
+                "bgpsettings": {
+                    "asn": "65515",
+                    "bgpPeeringAddress": "",
+                    "peerWeight": "5"
+                }
             }
-         }
-      },
-      "parExpressRouteGatewayConfig": {
-          "value": {
-            "name": "alz-ExpressRoute-Gateway",
-            "gatewaytype": "ExpressRoute",
-            "sku": "ErGw1AZ",
-            "vpntype": "RouteBased",
-            "generation": "None",
-            "enableBgp": false,
-            "activeActive": false,
-            "enableBgpRouteTranslationForNat": false,
-            "enableDnsForwarding": false,
-            "asn": "65515",
-            "bgpPeeringAddress": "",
-            "bgpsettings": {
-              "asn": "65515",
-              "bgpPeeringAddress": "",
-              "peerWeight": "5"
+        },
+        "parExpressRouteGatewayConfig": {
+            "value": {
+                "name": "alz-ExpressRoute-Gateway",
+                "gatewaytype": "ExpressRoute",
+                "sku": "ErGw1AZ",
+                "vpntype": "RouteBased",
+                "generation": "None",
+                "enableBgp": false,
+                "activeActive": false,
+                "enableBgpRouteTranslationForNat": false,
+                "enableDnsForwarding": false,
+                "asn": "65515",
+                "bgpPeeringAddress": "",
+                "bgpsettings": {
+                    "asn": "65515",
+                    "bgpPeeringAddress": "",
+                    "peerWeight": "5"
+                }
             }
-          }
-      },
-      "parCompanyPrefix":{
-          "value": "alz"
-      },
-      "parDdosPlanName":{
-          "value":"alz-Ddos-Plan"
-      },
-      "parBastionSku": {
-          "value":"Standard"
-      },
-      "parPublicIPSku":{
-          "value":"Standard"
-      },
-      "parTags":{
-          "value":{
-            "Environment": "POC"
-          }
-      },
-      "parHubNetworkAddressPrefix": {
-          "value": "10.20.0.0/16"
-      },
-      "parHubNetworkName": {
-          "value": "alz-hub-chinaeast2"
-      },
-      "parAzureFirewallName": {
-          "value": "alz-azure-firewall"
-      },
-      "parAzureFirewallTier": {
-        "value": "Standard"
-      },
-      "parHubRouteTableName": {
-          "value": "alz-hub-routetable"
-      },
-      "parSubnets": {
-          "value": [
-            {
-                "name": "AzureBastionSubnet",
-                "ipAddressRange": "10.20.15.0/24" 
-            },
-            {
-                "name": "GatewaySubnet",
-                "ipAddressRange": "10.20.252.0/24" 
-            },
-            {
-                "name": "AzureFirewallSubnet",
-                "ipAddressRange": "10.20.254.0/24" 
+        },
+        "parCompanyPrefix": {
+            "value": "alz"
+        },
+        "parDdosPlanName": {
+            "value": "alz-Ddos-Plan"
+        },
+        "parBastionSku": {
+            "value": "Standard"
+        },
+        "parPublicIPSku": {
+            "value": "Standard"
+        },
+        "parTags": {
+            "value": {
+                "Environment": "POC"
             }
-          ]
-      },
-      "parBastionName": {
-          "value": "alz-bastion"
-      },
-      "parPrivateDnsZones": {
-          "value": [
-              "privatelink.azure-automation.cn",
-              "privatelink.database.chinacloudapi.cn",
-              "privatelink.blob.core.chinacloudapi.cn",
-              "privatelink.table.core.chinacloudapi.cn",
-              "privatelink.queue.core.chinacloudapi.cn",
-              "privatelink.file.core.chinacloudapi.cn",
-              "privatelink.web.core.chinacloudapi.cn",
-              "privatelink.dfs.core.chinacloudapi.cn",
-              "privatelink.documents.azure.cn",
-              "privatelink.mongo.cosmos.azure.cn",
-              "privatelink.cassandra.cosmos.azure.cn",
-              "privatelink.gremlin.cosmos.azure.cn",
-              "privatelink.table.cosmos.azure.cn",
-              "privatelink.postgres.database.chinacloudapi.cn",
-              "privatelink.mysql.database.chinacloudapi.cn",
-              "privatelink.mariadb.database.chinacloudapi.cn",
-              "privatelink.vaultcore.azure.cn",
-              "privatelink.servicebus.chinacloudapi.cn",
-              "privatelink.azure-devices.cn",
-              "privatelink.eventgrid.azure.cn",
-              "privatelink.chinacloudsites.cn",
-              "privatelink.api.ml.azure.cn",
-              "privatelink.notebooks.chinacloudapi.cn",
-              "privatelink.signalr.azure.cn",
-              "privatelink.azurehdinsight.cn",
-              "privatelink.afs.azure.cn",
-              "privatelink.datafactory.azure.cn",
-              "privatelink.adf.azure.cn",
-              "privatelink.redis.cache.chinacloudapi.cn"
+        },
+        "parHubNetworkAddressPrefix": {
+            "value": "10.20.0.0/16"
+        },
+        "parHubNetworkName": {
+            "value": "alz-hub-chinaeast2"
+        },
+        "parAzureFirewallName": {
+            "value": "alz-azure-firewall"
+        },
+        "parAzureFirewallTier": {
+            "value": "Standard"
+        },
+        "parHubRouteTableName": {
+            "value": "alz-hub-routetable"
+        },
+        "parSubnets": {
+            "value": [
+                {
+                    "name": "AzureBastionSubnet",
+                    "ipAddressRange": "10.20.15.0/24"
+                },
+                {
+                    "name": "GatewaySubnet",
+                    "ipAddressRange": "10.20.252.0/24"
+                },
+                {
+                    "name": "AzureFirewallSubnet",
+                    "ipAddressRange": "10.20.254.0/24"
+                }
             ]
-      }
+        },
+        "parBastionName": {
+            "value": "alz-bastion"
+        },
+        "parPrivateDnsZones": {
+            "value": [
+                "privatelink.azure-automation.cn",
+                "privatelink.database.chinacloudapi.cn",
+                "privatelink.blob.core.chinacloudapi.cn",
+                "privatelink.table.core.chinacloudapi.cn",
+                "privatelink.queue.core.chinacloudapi.cn",
+                "privatelink.file.core.chinacloudapi.cn",
+                "privatelink.web.core.chinacloudapi.cn",
+                "privatelink.dfs.core.chinacloudapi.cn",
+                "privatelink.documents.azure.cn",
+                "privatelink.mongo.cosmos.azure.cn",
+                "privatelink.cassandra.cosmos.azure.cn",
+                "privatelink.gremlin.cosmos.azure.cn",
+                "privatelink.table.cosmos.azure.cn",
+                "privatelink.postgres.database.chinacloudapi.cn",
+                "privatelink.mysql.database.chinacloudapi.cn",
+                "privatelink.mariadb.database.chinacloudapi.cn",
+                "privatelink.vaultcore.azure.cn",
+                "privatelink.servicebus.chinacloudapi.cn",
+                "privatelink.azure-devices.cn",
+                "privatelink.eventgrid.azure.cn",
+                "privatelink.chinacloudsites.cn",
+                "privatelink.api.ml.azure.cn",
+                "privatelink.notebooks.chinacloudapi.cn",
+                "privatelink.signalr.azure.cn",
+                "privatelink.azurehdinsight.cn",
+                "privatelink.afs.azure.cn",
+                "privatelink.datafactory.azure.cn",
+                "privatelink.adf.azure.cn",
+                "privatelink.redis.cache.chinacloudapi.cn"
+            ]
+        }
     }
-  }
+}

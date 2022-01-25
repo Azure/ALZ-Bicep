@@ -40,6 +40,9 @@
         },
         "parPolicyAssignmentIdentityRoleDefinitionIDs": {
             "value": []
+        },
+        "parTelemetryOptOut": {
+            "value": "false"
         }
     }
 }

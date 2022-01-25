@@ -13,6 +13,9 @@
     },
     "parAssigneeObjectId": {
       "value": "3a4fa072-cc14-471d-aeac-49afdbde9f7a"
+    },
+    "parTelemetryOptOut": {
+      "value": "false"
     }
   }
 }

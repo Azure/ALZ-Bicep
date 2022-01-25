@@ -30,6 +30,9 @@
     },
     "parAutomationAccountRegion": {
       "value": "eastus2"
+    },
+    "parTelemetryOptOut": {
+      "value": "false"
     }
   }
 }

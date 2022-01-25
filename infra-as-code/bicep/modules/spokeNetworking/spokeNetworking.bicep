@@ -11,7 +11,6 @@ VERSION: 1.0.1
   - Changed default value of parDdosEnabled to false. Defaulting to false to allow for testing on its own
 */
 
-
 @description('Switch which allows Azure Firewall deployment to be disabled')
 param parHubNVAEnabled bool = false
 
@@ -56,23 +55,23 @@ var varCuaid = '0c428583-f2a1-4448-975c-2d6262fd193a'
 resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: '${parSpokeNetworkPrefix}-${resourceGroup().location}'
   location: resourceGroup().location
-  properties:{
-    addressSpace:{
-      addressPrefixes:[
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
         parSpokeNetworkAddressPrefix
       ]
     }
     enableDdosProtection: parDdosEnabled
     ddosProtectionPlan: (parDdosEnabled) ? {
       id: parDdosProtectionPlanId
-      } : null
+    } : null
     dhcpOptions: (parNetworkDNSEnableProxy) ? {
-      dnsServers: parDNSServerIPArray 
-    }:null  
+      dnsServers: parDNSServerIPArray
+    } : null
   }
 }
 
-resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parHubNVAEnabled) {
+resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (parHubNVAEnabled) {
   name: parSpoketoHubRouteTableName
   location: resourceGroup().location
   tags: parTags

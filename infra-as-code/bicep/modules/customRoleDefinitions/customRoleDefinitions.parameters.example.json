@@ -4,6 +4,9 @@
   "parameters": {
     "parAssignableScopeManagementGroupId": {
       "value": "alz"
+    },
+    "parTelemetryOptOut": {
+      "value": "false"
     }
   }
 }
