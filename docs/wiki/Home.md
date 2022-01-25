@@ -11,6 +11,7 @@ Welcome the wiki of the ALZ Bicep staging repo. This repo and wiki are only for 
 * [Home][wiki_home]
 * [Deployment Flow][wiki_deployment_flow]
 * [Contributing][wiki_contributing]
+* [Telemetry Tracking Using Customer Usage Attribution (PID)][wiki_cuaid]
 * [Azure Container Registry Deployment - Private Bicep Registry][wiki_acrdeploy]
 
 
@@ -27,3 +28,4 @@ Replace `./` with `https://github.com/Azure/terraform-azurerm-caf-enterprise-sca
 [wiki_deployment_flow]:                            https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow "Wiki - Deployment Flow"
 [wiki_contributing]:                          https://github.com/Azure/ALZ-Bicep/wiki/Contributing "Wiki - Contributing"
 [wiki_acrdeploy]:                          https://github.com/Azure/ALZ-Bicep/wiki/ACRDeployment "Wiki - Private Bicep Registry"
+[wiki_cuaid]:                          https://github.com/Azure/ALZ-Bicep/wiki/CustomerUsage "Wiki - Telemetry Usage ID"
