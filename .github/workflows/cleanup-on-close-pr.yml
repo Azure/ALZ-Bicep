@@ -26,17 +26,42 @@ jobs:
         creds: ${{ secrets.ALZ_AZURE_SECRET_UNIT_TESTS }}
         enable-AzPSSession: true
 
+    - name: Check if PR has associated subscription
+      uses: Azure/powershell@v1
+      with:
+        inlineScript: |
+            Install-Module -Name Az.Resources -Force
+            $subscription = Get-AzSubscription -SubscriptionName ${{ env.SubscriptionName }} -ErrorAction SilentlyContinue
+            If($subscription) {
+              echo "subscriptionId=$($subscription.Id)" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            }
+        azPSVersion: latest
+
+    - name: Remove existing resource groups
+      if: ${{ env.subscriptionId != '' }}
+      uses: Azure/powershell@v1
+      with:
+        inlineScript: |
+            Select-AzSubscription -SubscriptionId ${{ env.subscriptionId }} 
+            $resourceGroups = @()
+            $resourceGroups += Get-AzResourceGroup
+            If ($resourceGroups.Count -gt 0) {
+                $resourceGroups | ForEach-Object {
+                    Write-Information "Deleting resource group $($PSItem.ResourceGroupName)"
+                    Remove-AzResourceGroup -Name $PSItem.ResourceGroupName -Force
+                }
+            }
+        azPSVersion: latest
+
     - name: Cancel PR Subscription
+      if: ${{ env.subscriptionId != '' }}
       uses: Azure/powershell@v1
       with:
         inlineScript: |
             Install-Module -Name Az.Subscription -Force
-            $subscriptionId = (Get-AzSubscription -SubscriptionName ${{ env.SubscriptionName }}).Id
-            If($subscriptionId) {
-              Write-Information "PR #${{ github.event.number }} has been merged" -InformationAction Continue
-              Write-Information "${{ env.SubscriptionName }} to be deleted" -InformationAction Continue
-              Update-AzSubscription -SubscriptionId $subscriptionId -Action 'Cancel'
-            }
+            Write-Information "PR #${{ github.event.number }} has been merged" -InformationAction Continue
+            Write-Information "${{ env.SubscriptionName }} to be deleted" -InformationAction Continue
+            Update-AzSubscription -SubscriptionId ${{ env.subscriptionId }} -Action 'Cancel'
         azPSVersion: latest
 
 
