@@ -19,6 +19,12 @@ targetScope = 'managementGroup'
 @description('The management group scope to which the role can be assigned.  This management group ID will be used for the assignableScopes property in the role definition.')
 param parAssignableScopeManagementGroupId string = 'alz'
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+// Customer Usage Attribution Id
+var varCuaid = '032d0904-3d50-45ef-a6c1-baa9d82e23ff'
+
 module modRolesSubscriptionOwnerRole 'definitions/caf-subscription-owner-role.bicep' = {
   name: 'deploy-subscription-owner-role'
   params: {
@@ -45,6 +51,12 @@ module modRolesSecurityOperationsRole 'definitions/caf-security-operations-role.
   params: {
     parAssignableScopeManagementGroupId: parAssignableScopeManagementGroupId
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
+  name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
+  params: {}
 }
 
 output outRolesSubscriptionOwnerRoleId string = modRolesSubscriptionOwnerRole.outputs.outRoleDefinitionId

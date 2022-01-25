@@ -35,32 +35,16 @@ param  parDisableBGPRoutePropagation bool = false
 param parPrivateDNSZonesEnabled bool = true
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
-@description('Array of Gateways to be deployed. Array will consist of one or two items.  Specifically Vpn and/or ExpressRoute Default: Vpn')
-param parGatewayArray array = [
-  {
+@description('''Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. 
+"parVpnGatewayConfig": {
+  "value": {}
+}''')
+param parVpnGatewayConfig object = {
     name: '${parCompanyPrefix}-Vpn-Gateway'
     gatewaytype: 'Vpn'
     sku: 'VpnGw1'
     vpntype: 'RouteBased'
-    generation: 'Generation2'
-    enableBgp: false
-    activeActive: false
-    enableBgpRouteTranslationForNat: false
-    enableDnsForwarding: false
-    asn: 65515
-    bgpPeeringAddress: ''
-    bgpsettings: {
-      asn: 65515
-      bgpPeeringAddress: ''
-      peerWeight: 5
-    }
-  }
-  {
-    name: '${parCompanyPrefix}-Gateway-ExpressRoute'
-    gatewaytype: 'ExpressRoute'
-    sku: 'ErGw1AZ'
-    vpntype: 'RouteBased'
-    generation: 'None'
+    generation: 'Generation1'
     enableBgp: false
     activeActive: false
     enableBgpRouteTranslationForNat: false
@@ -74,7 +58,29 @@ param parGatewayArray array = [
     }
   }
 
-]
+@description('''Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. 
+"parExpressRouteGatewayConfig": {
+  "value": {}
+}''')
+param parExpressRouteGatewayConfig object = {
+  name: '${parCompanyPrefix}-ExpressRoute-Gateway'
+  gatewaytype: 'ExpressRoute'
+  sku: 'ErGw1AZ'
+  vpntype: 'RouteBased'
+  vpnGatewayGeneration: 'None'
+  enableBgp: false
+  activeActive: false
+  enableBgpRouteTranslationForNat: false
+  enableDnsForwarding: false
+  asn: '65515'
+  bgpPeeringAddress: ''
+  bgpsettings: {
+    asn: '65515'
+    bgpPeeringAddress: ''
+    peerWeight: '5'
+  }
+}
+
 
 @description('Prefix value which will be prepended to all resource names. Default: alz')
 param parCompanyPrefix string = 'alz'
@@ -179,6 +185,8 @@ param parPrivateDnsZones array =[
 @description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
 param parDNSServerIPArray array = []
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
 
 var varSubnetProperties = [for subnet in parSubnets: {
   name: subnet.name
@@ -186,6 +194,18 @@ var varSubnetProperties = [for subnet in parSubnets: {
     addressPrefix: subnet.ipAddressRange
   }
 }]
+
+var varVpnGWConfig = ((!empty(parVpnGatewayConfig)) ? parVpnGatewayConfig : json('{"name": "noconfigVpn"}'))
+
+var varErGWConfig = ((!empty(parExpressRouteGatewayConfig)) ? parExpressRouteGatewayConfig : json('{"name": "noconfigEr"}'))
+
+var varGwConfig = [
+  varVpnGWConfig
+  varErGWConfig
+]
+
+// Customer Usage Attribution Id
+var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
 
 
 resource resDDoSProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDDoSEnabled) {
@@ -270,7 +290,7 @@ resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-
   name: 'GatewaySubnet'
 } 
 
-module modGatewayPublicIP '../publicIp/publicIp.bicep' = [for (gateway,i) in parGatewayArray:{
+module modGatewayPublicIP '../publicIp/publicIp.bicep' = [for (gateway,i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')){
   name: 'deploy-Gateway-Public-IP-${i}'
   params: {
     parPublicIPName: '${gateway.name}-PublicIP'
@@ -287,7 +307,7 @@ module modGatewayPublicIP '../publicIp/publicIp.bicep' = [for (gateway,i) in par
 }]
 
 //Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
-resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for (gateway,i) in parGatewayArray: {
+resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for (gateway,i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')){
   name: gateway.name
   location: resourceGroup().location
   tags: parTags
@@ -310,7 +330,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for
         name: 'vnetGatewayConfig'
         properties:{
           publicIPAddress:{
-            id: modGatewayPublicIP[i].outputs.outPublicIPID
+            id: (((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) ? modGatewayPublicIP[i].outputs.outPublicIPID : 'na')
           }
           subnet:{
             id: resGatewaySubnetRef.id
@@ -321,12 +341,10 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for
   }
 }]
 
-
 resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
   parent: resHubVirtualNetwork
   name: 'AzureFirewallSubnet'
 } 
-
 
 module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if(parAzureFirewallEnabled){
   name: 'deploy-Firewall-Public-IP'
@@ -343,6 +361,7 @@ module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if(parAzureFirewa
     parTags: parTags
   }
 }
+
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.  
@@ -444,6 +463,12 @@ resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetwork
   }
 dependsOn: resPrivateDnsZones
 }]
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
+}
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 output outAzureFirewallPrivateIP string = parAzureFirewallEnabled ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress : ''

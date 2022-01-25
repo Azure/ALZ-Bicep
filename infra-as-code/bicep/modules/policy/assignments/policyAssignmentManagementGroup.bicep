@@ -56,11 +56,17 @@ param parPolicyAssignmentIdentityRoleAssignmentsSubs array = []
 @description('An array containing a list of RBAC role definition IDs to be assigned to the Managed Identity that is created and associated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects. e.g. [\'/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c\']. DEFAULT VALUE = []')
 param parPolicyAssignmentIdentityRoleDefinitionIDs array = []
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
 var varPolicyAssignmentParametersMerged = union(parPolicyAssignmentParameters, parPolicyAssignmentParameterOverrides)
 
 var varPolicyIdentity = parPolicyAssignmentIdentityType == 'SystemAssigned' ? 'SystemAssigned' : 'None'
 
 var varPolicyAssignmentIdentityRoleAssignmentsMGsConverged = parPolicyAssignmentIdentityType == 'SystemAssigned' ? union(parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs, (array(managementGroup().name))) : []
+
+// Customer Usage Attribution Id
+var varCuaid = '78001e36-9738-429c-a343-45cc84e8a527'
 
 resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-01' = {
   name: parPolicyAssignmentName
@@ -101,3 +107,8 @@ module modPolicyIdentityRoleAssignmentSubsMany '../../roleAssignments/roleAssign
   }
 }]
 
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
+  name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
+  params: {}
+}

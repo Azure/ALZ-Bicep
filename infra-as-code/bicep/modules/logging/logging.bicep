@@ -17,19 +17,24 @@ DESCRIPTION:
     * VMInsights
 
 AUTHOR/S: SenthuranSivananthan,aultt
-VERSION: 1.1.0
+VERSION: 1.2.0
+
+# Release notes 11/23/2021 - V1.2:
+    - Changed line 102 from parLogAnalyticsWorkspaceName to resLogAnalyticsWorkspace.name.  
+    - Change is required so the resources are created in the correct order.  Without the change the link would fail sporatically.
 */
 
 @description('Log Analytics Workspace name. - DEFAULT VALUE: alz-log-analytics')
 param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 
-@description('Log Analytics region name. - DEFAULT VALUE: resourceGroup().location')
+@description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings - DEFAULT VALUE: resourceGroup().location')
 param parLogAnalyticsWorkspaceRegion string = resourceGroup().location
 
 @minValue(30)
 @maxValue(730)
 @description('Number of days of log retention for Log Analytics Workspace. - DEFAULT VALUE: 365')
 param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
+
 
 @allowed([
   'AgentHealthAssessment'
@@ -60,8 +65,14 @@ param parLogAnalyticsWorkspaceSolutions array = [
 @description('Automation account name. - DEFAULT VALUE: alz-automation-account')
 param parAutomationAccountName string = 'alz-automation-account'
 
-@description('Automation Account region name. - DEFAULT VALUE: resourceGroup().location')
+@description('Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings - DEFAULT VALUE: resourceGroup().location')
 param parAutomationAccountRegion string = resourceGroup().location
+
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+// Customer Usage Attribution Id
+var varCuaid = 'f8087c67-cc41-46b2-994d-66e4b661860d'
 
 resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-01' = {
   name: parAutomationAccountName
@@ -99,10 +110,16 @@ resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solut
 }]
 
 resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2020-08-01' = {
-  name: '${parLogAnalyticsWorkspaceName}/Automation'
+  name: '${resLogAnalyticsWorkspace.name}/Automation'
   properties: {
     resourceId: resAutomationAccount.id
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
 }
 
 output outLogAnalyticsWorkspaceName string = resLogAnalyticsWorkspace.name
