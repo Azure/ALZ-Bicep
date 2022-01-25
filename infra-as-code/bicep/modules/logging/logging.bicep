@@ -5,6 +5,7 @@ DESCRIPTION:
   
   The module will deploy the following Log Analytics Workspace solutions by default.  Solutions can be customized as required:
 
+
     * AgentHealthAssessment
     * AntiMalware
     * AzureActivity
