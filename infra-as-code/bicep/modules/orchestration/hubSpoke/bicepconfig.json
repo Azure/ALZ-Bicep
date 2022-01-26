@@ -5,10 +5,10 @@
       "verbose": true,
       "rules": {
         "adminusername-should-not-be-literal": {
-          "level": "error"
+          "level": "off"
         },
         "no-hardcoded-env-urls": {
-          "level": "error",
+          "level": "off",
           "disallowedhosts": [
             "management.core.windows.net",
             "gallery.azure.com",
@@ -37,31 +37,31 @@
           ]
         },
         "no-unnecessary-dependson": {
-          "level": "error"
+          "level": "off"
         },
         "no-unused-params": {
-          "level": "error"
+          "level": "off"
         },
         "no-unused-vars": {
-          "level": "error"
+          "level": "off"
         },
         "outputs-should-not-contain-secrets": {
-          "level": "error"
+          "level": "off"
         },
         "prefer-interpolation": {
-          "level": "error"
+          "level": "off"
         },
         "secure-parameter-default": {
-          "level": "error"
+          "level": "off"
         },
         "simplify-interpolation": {
-          "level": "error"
+          "level": "off"
         },
         "use-protectedsettings-for-commandtoexecute-secrets": {
-          "level": "error"
+          "level": "off"
         },
         "use-stable-vm-image": {
-          "level": "error"
+          "level": "off"
         }
       }
     }

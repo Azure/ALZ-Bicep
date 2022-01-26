@@ -129,7 +129,7 @@ param parPrivateDNSZonesEnabled bool = true
   "value": {}
 }''')
 param parVpnGatewayConfig object = {
-    name: '${parCompanyPrefix}-Vpn-Gateway'
+    name: '${parTopLevelManagementGroupPrefix}-Vpn-Gateway'
     gatewaytype: 'Vpn'
     sku: 'VpnGw1'
     vpntype: 'RouteBased'
@@ -152,7 +152,7 @@ param parVpnGatewayConfig object = {
   "value": {}
 }''')
 param parExpressRouteGatewayConfig object = {
-  name: '${parCompanyPrefix}-ExpressRoute-Gateway'
+  name: '${parTopLevelManagementGroupPrefix}-ExpressRoute-Gateway'
   gatewaytype: 'ExpressRoute'
   sku: 'ErGw1AZ'
   vpntype: 'RouteBased'
