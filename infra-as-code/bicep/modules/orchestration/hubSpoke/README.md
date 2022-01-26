@@ -1,54 +1,16 @@
-# Module: Orchestration - Hub and Spoke (Adventure Works)
+# Module: Orchestration - Hub and Spoke (aka. Adventure Works)
 
-This module deploys the custom Azure Policy Definitions & Initiatives supplied by the Azure Landing Zones conceptual architecture and reference implementation defined [here](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/architecture) to the specified Management Group.
+> 🚨⚠️🚨 **This module does not work today due to the following Bicep/ARM bugs, [5371](https://github.com/Azure/bicep/issues/5371) & [5412](https://github.com/Azure/bicep/issues/5412), that we are working with engineering teams to resolve ASAP** 🚨⚠️🚨
 
-For a list of the custom policy definitions that are deployed, please see the below links:
+This module acts as an orchestration module that glues all the individual module deployments together the deliver the Azure Landing Zone Hub & Spoke architecture *(a.k.a. Adventure Works)* which is also described in the wiki on the [Deployment Flow article](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow).
 
-- [Policies included in Enterprise-Scale Landing Zones reference implementations](https://github.com/Azure/Enterprise-Scale/blob/main/docs/ESLZ-Policies.md)
-- [Enterprise Scale - What's New?](https://github.com/Azure/Enterprise-Scale/wiki/Whats-new)
+As the warning at the top of this `README.md` states this module does not actually work today as a single deployment due to some bugs in Bicep/ARM that we are working closely with the Bicep & ARM engineering teams to resolve. The bugs are for awareness:
 
-## Parameters
+- [5371 - Deployment validation false positive validating tenant-level template deploying a managementGroup](https://github.com/Azure/bicep/issues/5371)
+- [5412 - Multiple issues with json(loadTextContent('...')) resulting in large/bloated built ARM templates that can be larger than 4MB ](https://github.com/Azure/bicep/issues/5412)
 
-The module requires the following inputs:
+## So why provide a non-working orchestration module?
 
- Parameter | Description | Requirement | Example
------------ | ----------- | ----------- | -------
-parTargetManagementGroupID | The management group scope to which the the policy definitions will be stored/deployed to. This management group must already exist before deploying this bicep module. | Mandatory input | `alz`
+Good question! We decided to provide this orchestration module as an example even though it doesn't work itself as it still provides a great example of how to stitch a lot of the modules together. For example, how you use the logging module to deploy a Log Analytics Workspace and then get it's ID as an output and pass it into the required Policy Assignment Parameters.
 
-## Outputs
-
-The module does not generate any outputs.
-
-## Deployment
-
-In this example, the custom roles will be deployed to the `alz` management group (the intermediate root management group).
-
-The input parameter file `custom-policy-definitions.parameters.example.json` defines the target management group to which the custom policy definitions will be deployed to. In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation.
-
-> For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
-
-### Azure CLI
-
-```bash
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json \
-  --location eastus \
-  --management-group-id alz
-```
-
-### PowerShell
-
-```powershell
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json `
-  -Location eastus `
-  -ManagementGroupId alz
-```
-
-![Example Deployment Output](media/example-deployment-output.png "Example Deployment Output")
-
-## Bicep Visualizer
-
-![Bicep Visualizer](media/bicep-visualizer.png "Bicep Visualizer")
+We also realise that many of you using these modules will not want to deploy them in a single deployment and will want to split modules up into multiple deployments/pipelines etc. Hence why it is not critical for this orchestration template to be working to prevent us from getting these modules out to you all👍
