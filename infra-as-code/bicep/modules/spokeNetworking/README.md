@@ -22,7 +22,7 @@ The module requires the following inputs:
  parTags | object| empty array | Array of Tags to be applied to all resources in the Spoke Network | None |
  parDdosProtectionPlanId | string | Empty String | Existing DDoS Protection plan to utilize| Valid DDoS Plan ID |
  parSpokeNetworkAddressPrefix | string | '10.11.0.0/16' | CIDR for Spoke Network | Valid CIDR for Spoke Network | '10.11.0.0/16'
- parSpokeNetworkPrefix | string | Corp-Spoke | Name Prefix which will be leveraged when creating VNet |  2-50 char  | Corp-Spoke
+ parSpokeNetworkName | string | vnet-Spoke | The Name of the Spoke Virtual Network. | None | vnet-Spoke
  parDNSServerIPArray | array | empty array | Array IP DNS Servers to use for VNet DNS Resolution | None | None
  parNextHopIPAddress | string | empty string | IP Address where network traffic should route to leverage DNS Proxy | 192.168.50.1
  parSpokeToHubRouteTableName | string | rtb-spoke-to_hub | Name of Route table to create for the default route of Hub. | rtb-spoke-to_hub

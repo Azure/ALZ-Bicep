@@ -81,7 +81,6 @@ param parExpressRouteGatewayConfig object = {
   }
 }
 
-
 @description('Prefix value which will be prepended to all resource names. Default: alz')
 param parCompanyPrefix string = 'alz'
 

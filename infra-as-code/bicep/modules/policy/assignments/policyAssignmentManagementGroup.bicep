@@ -109,6 +109,6 @@ module modPolicyIdentityRoleAssignmentSubsMany '../../roleAssignments/roleAssign
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
-  name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
+  name: 'pid-${varCuaid}-${uniqueString(deployment().location, parPolicyAssignmentName)}'
   params: {}
 }

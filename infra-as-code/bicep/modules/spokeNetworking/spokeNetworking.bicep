@@ -5,10 +5,11 @@ DESCRIPTION: The following components will be options in this deployment
               Subnets
               UDR - if Firewall is enabled
               Private DNS Link
-AUTHOR/S: aultt
-VERSION: 1.0.1
+AUTHOR/S: aultt, jtracey93
+VERSION: 1.1.0
   - Changed default value of parNetworkDNSEnableProxy to false. Defaulting to false allow for testing on its own 
   - Changed default value of parDdosEnabled to false. Defaulting to false to allow for testing on its own
+  - Added parSpokeNetworkName to allow customer input flexibility
 */
 
 @description('Switch which allows Azure Firewall deployment to be disabled')
@@ -32,8 +33,8 @@ param parDdosProtectionPlanId string = ''
 @description('The IP address range for all virtual networks to use.')
 param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 
-@description('Prefix Used for Naming Spoke Network. Default: corp-spoke')
-param parSpokeNetworkPrefix string = 'corp-spoke'
+@description('The Name of the Spoke Virtual Network. Default: vnet-spoke')
+param parSpokeNetworkName string = 'vnet-spoke'
 
 @description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
 param parDNSServerIPArray array = []
@@ -53,7 +54,7 @@ var varCuaid = '0c428583-f2a1-4448-975c-2d6262fd193a'
 //If Ddos parameter is true Ddos will be Enabled on the Virtual Network
 //If Azure Firewall is enabled and Network Dns Proxy is enabled dns will be configured to point to AzureFirewall
 resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
-  name: '${parSpokeNetworkPrefix}-${resourceGroup().location}'
+  name: parSpokeNetworkName
   location: resourceGroup().location
   properties: {
     addressSpace: {
