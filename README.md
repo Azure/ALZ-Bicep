@@ -33,7 +33,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 ## Telemetry
 When you deploy one or more modules in Azure Landing Zones Bicep repo, Microsoft can identify the installation of said module with the deployed Azure resources. Microsoft can correlate these resources used to support the software. Microsoft collects this information to provide the best experiences with their products and to operate their business. The telemetry is collected through customer usage attribution. The data is collected and governed by [Microsoft's privacy policies](https://www.microsoft.com/trustcenter).
 
-If you don't wish to send usage data to Microsoft, details on how to turn it off can be found [here][wiki_cuaid]. 
+If you don't wish to send usage data to Microsoft, details on how to turn it off can be found [here][wiki_cuaid].
 
 ## Trademarks
 
