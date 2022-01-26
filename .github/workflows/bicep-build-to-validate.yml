@@ -113,6 +113,13 @@ jobs:
             subid=$(az deployment tenant create --name "deploy-${{ env.SubscriptionName }}" --location ${{ env.Location }} --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=${{ secrets.ALZ_AZURE_SECRET_EA_BILLING_ACCOUNT }} parSubscriptionName=${{ env.SubscriptionName }} | jq .properties.outputs.outSubscriptionId.value)
             echo "SUBIDOUTPUT=$subid" >> $GITHUB_ENV
 
+      - name: Az CLI Refresh subscription list
+        id: refresh_subscription
+        if: ${{ steps.git_management_diff.outputs.diff != ''  }} || ${{ env.gitLoggingOUTPUT != '' }} || ${{ env.gitHubOUTPUT != ''  }} || ${{ env.gitSpokeOUTPUT != ''  }}
+        shell: bash
+        run: |
+            az account list --refresh
+            
       - name: Az CLI Create Resource Group for PR
         id: create_rsg
         if: ${{ env.gitLoggingOUTPUT != '' }}
