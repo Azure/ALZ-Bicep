@@ -68,7 +68,7 @@ Replace `./` with `https://github.com/Azure/terraform-azurerm-caf-enterprise-sca
 [wiki_deployment_flow]:                            https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow "Wiki - Deployment Flow"
 [wiki_contributing]:                          https://github.com/Azure/ALZ-Bicep/wiki/Contributing "Wiki - Contributing"
 [wiki_cuaid]:                          https://github.com/Azure/ALZ-Bicep/wiki/CustomerUsage "Wiki - Telemetry Usage ID"
-[wiki_acrdeploy]:                          https://github.com/Azure/ALZ-Bicep/wiki/ACRDeployment "Wiki - Azure Container Registry Deployment - Private Bicep Registry"
+[wiki_acrdeploy]:                          https://github.com/Azure/ALZ-Bicep/wiki/ACRDeployment "Wiki - Private Bicep Registry"
 [vulnerability_reporting]:                          https://github.com/Azure/ALZ-Bicep/blob/main/SECURITY.md "Vulnerability reporting"
 [support_statement]:                          https://github.com/Azure/ALZ-Bicep/blob/main/SUPPORT.md "Microsoft Support Policy"
 
