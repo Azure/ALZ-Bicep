@@ -1,7 +1,6 @@
 /*
 SUMMARY: Deploys Azure Log Analytics Workspace & Automation Account.
 DESCRIPTION:
-
   Deploys Azure Log Analytics Workspace & Automation Account to an existing Resource Group.  Automation Account will be linked to Log Analytics Workspace to provide integration for Inventory, Change Tracking and Update Management.
   
   The module will deploy the following Log Analytics Workspace solutions by default.  Solutions can be customized as required:
