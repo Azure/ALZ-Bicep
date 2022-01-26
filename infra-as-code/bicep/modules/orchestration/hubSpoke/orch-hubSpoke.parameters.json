@@ -6,13 +6,13 @@
             "value": "northeurope"
         },
         "parManagementSubscriptionId": {
-            "value": "" // TODO: Fill in parameter value
+            "value": ""
         },
         "parConnectivitySubscriptionId": {
-            "value": "" // TODO: Fill in parameter value
+            "value": ""
         },
         "parIdentitySubscriptionId": {
-            "value": "" // TODO: Fill in parameter value
+            "value": ""
         },
         "parCorpSubscriptionIds": {
             "value": []
@@ -21,13 +21,13 @@
             "value": []
         },
         "parResourceGroupNameForLogging": {
-            "value": "" // TODO: Fill in parameter value
+            "value": "rsg-mgmt"
         },
         "parResourceGroupNameForHubNetworking": {
-            "value": "" // TODO: Fill in parameter value
+            "value": "rsg-hub-networking"
         },
         "parResourceGroupNameForSpokeNetworking": {
-            "value": "" // TODO: Fill in parameter value
+            "value": "rsg-spoke-networking"
         },
         "parTopLevelManagementGroupPrefix": {
             "value": "alz"
@@ -65,7 +65,7 @@
             "value": true
         },
         "parDDoSPlanName": {
-            "value": "" // TODO: Fill in parameter value
+            "value": "ddos-connectivity"
         },
         "parAzureFirewallEnabled": {
             "value": true
@@ -81,7 +81,7 @@
         },
         "parVpnGatewayConfig": {
             "value": {
-              "name": "[format('{0}-Vpn-Gateway', parameters('parTopLevelManagementGroupPrefix'))]",
+              "name": "alz-vpn-gateway",
               "gatewaytype": "Vpn",
               "sku": "VpnGw1",
               "vpntype": "RouteBased",
@@ -101,7 +101,7 @@
         },
         "parExpressRouteGatewayConfig": {
             "value": {
-              "name": "[format('{0}-ExpressRoute-Gateway', parameters('parTopLevelManagementGroupPrefix'))]",
+              "name": "alz-er-gateway",
               "gatewaytype": "ExpressRoute",
               "sku": "ErGw1AZ",
               "vpntype": "RouteBased",
@@ -132,16 +132,16 @@
             "value": "10.10.0.0/16"
         },
         "parHubNetworkName": {
-            "value": "" // TODO: Fill in parameter value
+            "value": "vnet-hub"
         },
         "parAzureFirewallName": {
-            "value": "" // TODO: Fill in parameter value
+            "value": "azfw-hub"
         },
         "parAzureFirewallTier": {
             "value": "Standard"
         },
         "parHubRouteTableName": {
-            "value": "" // TODO: Fill in parameter value
+            "value": "rtb-hub"
         },
         "parSubnets": {
             "value": [
@@ -160,7 +160,7 @@
             ]
         },
         "parBastionName": {
-            "value": "" // TODO: Fill in parameter value
+            "value": "bst-hub"
         },
         "parPrivateDnsZones": {
             "value": [
@@ -212,7 +212,7 @@
             "value": []
         },
         "parASCEmailSecurityContact": {
-            "value": "" // TODO: Fill in parameter value
+            "value": "replace_me@security_contact.com"
         },
         "parSpokeNetworkName": {
             "value": "vnet-spoke"
