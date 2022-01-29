@@ -172,11 +172,11 @@ Set-AzContext -Subscription $subscription.Id #| Out-Null
 # Get all AAD Tenant level deployments
 $tenantDeployments = Get-AzTenantDeployment
 
-Write-Information "Removing all Tenant level deployments" 
+Write-Information "Removing all Tenant level deployments"
 
 # For each AAD Tenant level deployment, remove it
 $tenantDeployments | ForEach-Object -Parallel {
-    Write-Information "Removing $($_.DeploymentName) ..." 
+    Write-Information "Removing $($_.DeploymentName) ..."
     Remove-AzTenantDeployment -Id $_.Id
 }
 
