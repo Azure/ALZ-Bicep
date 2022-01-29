@@ -217,13 +217,13 @@ jobs:
             install-module -Name "Az.Accounts" -MinimumVersion "2.5.2" -Force
             install-module -Name "Az.Resources" -MinimumVersion "4.3.0" -Force
             install-module -Name "Az.ResourceGraph" -MinimumVersion "0.7.7"-Force
-            .github/scripts/Wipe-ESLZAzTenant.ps1 -tenantRootGroupID "${{ secrets.ALZ_AZURE_SECRET_TENANT_ID }}" -intermediateRootGroupID "${{ env.ManagementGroupPrefix }}"
+            .github/scripts/Wipe-ESLZAzTenant.ps1 -tenantRootGroupID "${{ secrets.ALZ_AZURE_SECRET_TENANT_ID }}" -intermediateRootGroupID "${{ env.ManagementGroupPrefix }}" -subscriptionName "${{ env.SubscriptionName }}"
 
-      - name: Az Remove Resource Group
-        if: always()
-        shell: bash
-        run: |
-          az account set --subscription ${{ needs.bicep_deploy.outputs.subscriptionID}}
-          if [ $(az group exists --name ${{ env.ResourceGroupName }} ) == true ]; then
-            az group delete --name ${{ env.ResourceGroupName }} --yes
-          fi
+      # - name: Az Remove Resource Group
+      #   if: always()
+      #   shell: bash
+      #   run: |
+      #     az account set --subscription ${{ needs.bicep_deploy.outputs.subscriptionID}}
+      #     if [ $(az group exists --name ${{ env.ResourceGroupName }} ) == true ]; then
+      #       az group delete --name ${{ env.ResourceGroupName }} --yes
+      #     fi
