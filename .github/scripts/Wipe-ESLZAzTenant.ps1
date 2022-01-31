@@ -106,28 +106,6 @@ if ($null -ne $intermediateRootGroupChildSubscriptions) {
     Write-Information ""
 }
 
-# Removed because we are running through a pipeline  Can be enabled if running interactively.
-# Generate 8 character random string (combination of lowercase letters and integers)
-#$userConfirmationRandomID = -join ((48..57) + (97..122) | Get-Random -Count 8 | ForEach-Object { [char]$_ })
-#
-#Write-Output "To confirm the removal of the above Management Group hierarchy, moving the Subscriptions back to the Tenant Root Management Group, removing all Resoruces and Resource Groups from the Subscriptions and removing all Tenant, seleted/shown Management Groups, and selected/shown Management Groups deployments." -ForegroundColor Yellow
-#Write-Output ""
-#Write-Output "Please enter the following random string exactly: $userConfirmationRandomID" -ForegroundColor Yellow
-#Write-Output ""
-#
-#Write-Output "Please enter the random string shown above to confirm you wish to contine running this script."
-#$userConfirmationInputString = Read-Host -Prompt "(Leave blank or type anything that doesn't match the string above to cancel/terminate)"
-
-#if ($userConfirmationInputString -eq $userConfirmationRandomID) {
-#    Write-Output ""
-#    Write-Output "Confirmation string entered successfully, proceeding to remove hierarchy and resoruces as shown above..." -ForegroundColor Green
-#    Write-Output ""
-#}
-#else {
-#    Write-Output "Confirmation string not entered or incorrect, terminating script..." -ForegroundColor Red
-#    throw "Confirmation string not entered or incorrectly entered, terminating script..."
-#}
-
 Write-Information "Moving all subscriptions under tenant root management group: $tenantRootGroupID"
 
 # For each Subscription in Intermediate Root Management Group's hierarchy tree, move it to the Tenant Root Management Group
@@ -141,9 +119,6 @@ $intermediateRootGroupChildSubscriptions | ForEach-Object -Parallel {
 
 # For each Subscription in the Intermediate Root Management Group's hierarchy tree, remove all Resources, Resource Groups and Deployments
 Write-Information "Removing all Azure Resources, Resource Groups and Deployments from Subscriptions in scope"
-
-
-# ForEach ($subscription in $intermediateRootGroupChildSubscriptions) {
 $subscription = Get-AzSubscription -SubscriptionName $subscriptionName -ErrorAction SilentlyContinue
 If($subscription){
 Write-Information "Set context to SubscriptionId: '$($subscription.Id)'"
