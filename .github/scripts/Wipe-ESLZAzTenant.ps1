@@ -1,11 +1,12 @@
 ######################
 # Wipe-ESLZAzTenant #
 ######################
-# Version: 1.4
-# Last Modified: 01/10/2021
+# Version: 1.5
+# Last Modified: 2022/01/29
 # Author: Jack Tracey
 # Contributors: Liam F. O'Neill, Paul Grimley, Jeff Mitchell
-# Modified by: aultt
+# Modified by: jfaurskov
+
 
 <#
 .SYNOPSIS
@@ -72,7 +73,11 @@ param (
 
     [Parameter(Mandatory = $false, Position = 3, HelpMessage = "(Optional) Please enter the display name of your Enterprise-scale app registration in Azure AD. If left blank, no app registration is deleted.")]
     [string]
-    $eslzAADSPNName = ""
+    $eslzAADSPNName = "",
+
+    [Parameter(Mandatory = $true, Position = 4, HelpMessage = "Insert the subscription name of the subscription to wipe e.g. sub-unit-test-pr-108")]
+    [string]
+    $subscriptionName = "<Insert the subscription Id of the subscription to wipe e.g. sub-unit-test-pr-108>"
 )
 
 #Toggle to stop warnings with regards to DisplayName and DisplayId
@@ -89,74 +94,52 @@ $userConfirmationMGsToDelete = Get-AzManagementGroup -GroupID $intermediateRootG
 $userConfirmationSubsToMove = $intermediateRootGroupChildSubscriptions | Select-Object subName, subID, subState, aadTenantID
 
 ## Confirm with user that they want to proceed with script removing the hierarchy and resoruces, also prompt them to enter a response to a challenge to confirm
-Write-Output "Before proceeding with wiping of the hierarchy provided as input parameter, please confirm you wish to proceed by removing the below Management Group hierarchy (parent information is shown for assistance in confirming the correct Management Group hierarchy, it will NOT be removed):" -ForegroundColor Cyan
+Write-Information "Before proceeding with wiping of the hierarchy provided as input parameter, please confirm you wish to proceed by removing the below Management Group hierarchy (parent information is shown for assistance in confirming the correct Management Group hierarchy, it will NOT be removed):"
 $userConfirmationMGsToDelete
 
-Write-Output "The above Management Group hierarchy contains the following Subscriptions that will be moved back to the Tenant Root Management Group also as part of this script:" -ForegroundColor Cyan
-Write-Output ""
+Write-Information "The above Management Group hierarchy contains the following Subscriptions that will be moved back to the Tenant Root Management Group also as part of this script:"
+Write-Information ""
 if ($null -ne $intermediateRootGroupChildSubscriptions) {
     $userConfirmationSubsToMove
 } else {
-    Write-Output "No Subscriptions found in selected/entered hierarchy"
-    Write-Output ""
+    Write-Information "No Subscriptions found in selected/entered hierarchy"
+    Write-Information ""
 }
 
-# Removed because we are running through a pipeline  Can be enabled if running interactively.
-# Generate 8 character random string (combination of lowercase letters and integers)
-#$userConfirmationRandomID = -join ((48..57) + (97..122) | Get-Random -Count 8 | ForEach-Object { [char]$_ })
-#
-#Write-Output "To confirm the removal of the above Management Group hierarchy, moving the Subscriptions back to the Tenant Root Management Group, removing all Resoruces and Resource Groups from the Subscriptions and removing all Tenant, seleted/shown Management Groups, and selected/shown Management Groups deployments." -ForegroundColor Yellow
-#Write-Output ""
-#Write-Output "Please enter the following random string exactly: $userConfirmationRandomID" -ForegroundColor Yellow
-#Write-Output ""
-#
-#Write-Output "Please enter the random string shown above to confirm you wish to contine running this script."
-#$userConfirmationInputString = Read-Host -Prompt "(Leave blank or type anything that doesn't match the string above to cancel/terminate)"
-
-#if ($userConfirmationInputString -eq $userConfirmationRandomID) {
-#    Write-Output ""
-#    Write-Output "Confirmation string entered successfully, proceeding to remove hierarchy and resoruces as shown above..." -ForegroundColor Green
-#    Write-Output ""
-#}
-#else {
-#    Write-Output "Confirmation string not entered or incorrect, terminating script..." -ForegroundColor Red
-#    throw "Confirmation string not entered or incorrectly entered, terminating script..."
-#}
-
-Write-Output "Moving all subscriptions under tenant root management group: $tenantRootGroupID" -ForegroundColor Yellow
+Write-Information "Moving all subscriptions under tenant root management group: $tenantRootGroupID"
 
 # For each Subscription in Intermediate Root Management Group's hierarchy tree, move it to the Tenant Root Management Group
 $intermediateRootGroupChildSubscriptions | ForEach-Object -Parallel {
     # The name 'Tenant Root Group' doesn't work. Instead, use the GUID of your Tenant Root Group
     if ($_.subState -ne "Disabled") {
-        Write-Output "Moving Subscription: '$($_.subName)' under Tenant Root Management Group: '$($using:tenantRootGroupID)'" -ForegroundColor Cyan
+        Write-Information "Moving Subscription: '$($_.subName)' under Tenant Root Management Group: '$($using:tenantRootGroupID)'"
         New-AzManagementGroupSubscription -GroupId $using:tenantRootGroupID -SubscriptionId $_.subID
     }
 }
 
 # For each Subscription in the Intermediate Root Management Group's hierarchy tree, remove all Resources, Resource Groups and Deployments
-Write-Output "Removing all Azure Resources, Resource Groups and Deployments from Subscriptions in scope" -ForegroundColor Yellow
-
-ForEach ($subscription in $intermediateRootGroupChildSubscriptions) {
-    Write-Output "Set context to Subscription: '$($subscription.subName)'" -ForegroundColor Cyan
-    Set-AzContext -Subscription $subscription.subID | Out-Null
+Write-Information "Removing all Azure Resources, Resource Groups and Deployments from Subscriptions in scope"
+$subscription = Get-AzSubscription -SubscriptionName $subscriptionName -ErrorAction SilentlyContinue
+If($subscription){
+Write-Information "Set context to SubscriptionId: '$($subscription.Id)'"
+Set-AzContext -Subscription $subscription.Id #| Out-Null
 
     # Get all Resource Groups in Subscription
     $resources = Get-AzResourceGroup
 
     $resources | ForEach-Object -Parallel {
-        Write-Output "Deleting  $_.ResourceGroupName ..." -ForegroundColor Red
+        Write-Information "Deleting  $_.ResourceGroupName ..."
         Remove-AzResourceGroup -Name $_.ResourceGroupName -Force | Out-Null
     }
 
     # Get Deployments for Subscription
     $subDeployments = Get-AzSubscriptionDeployment
 
-    Write-Output "Removing All Subscription Deployments for: $($subscription.subName)" -ForegroundColor Yellow
+    Write-Information "Removing All Subscription Deployments for: $($subscriptionName)"
 
     # For each Subscription level deployment, remove it
     $subDeployments | ForEach-Object -Parallel {
-        Write-Output "Removing $($_.DeploymentName) ..." -ForegroundColor Red
+        Write-Information "Removing $($_.DeploymentName) ..."
         Remove-AzSubscriptionDeployment -Id $_.Id
     }
 }
@@ -164,21 +147,21 @@ ForEach ($subscription in $intermediateRootGroupChildSubscriptions) {
 # Get all AAD Tenant level deployments
 $tenantDeployments = Get-AzTenantDeployment
 
-Write-Output "Removing all Tenant level deployments" -ForegroundColor Yellow
+Write-Information "Removing all Tenant level deployments"
 
 # For each AAD Tenant level deployment, remove it
 $tenantDeployments | ForEach-Object -Parallel {
-    Write-Output "Removing $($_.DeploymentName) ..." -ForegroundColor Red
+    Write-Information "Removing $($_.DeploymentName) ..."
     Remove-AzTenantDeployment -Id $_.Id
 }
 
 # Remove ESLZ SPN, if provided
 if ($eslzAADSPNName -ne "") {
-    Write-Output "Removing Azure AD Application Registration/SPN:" $eslzAADSPNName -ForegroundColor Red
+    Write-Information "Removing Azure AD Application Registration/SPN:" $eslzAADSPNName
     Remove-AzADApplication -DisplayName $eslzAADSPNName -Force
 }
 else {
-    Write-Output "No Azure AD Application/SPN was provided. Therefore no Azure AD Application/SPN will be removed." -ForegroundColor Cyan
+    Write-Information "No Azure AD Application/SPN was provided. Therefore no Azure AD Application/SPN will be removed."
 }
 
 # This function only deletes Management Groups in the Intermediate Root Management Group's hierarchy tree and will NOT delete other Intermediate Root level Management Groups and their children e.g. in the case of "canary"
@@ -186,13 +169,13 @@ function Remove-Recursively {
     [CmdletBinding(SupportsShouldProcess)]
     param($name)
     # Enters the parent Level
-    Write-Output "Entering the scope with $name" -ForegroundColor Green
+    Write-Information "Entering the scope with $name"
     $parent = Get-AzManagementGroup -GroupId $name -Expand -Recurse
 
     # Checks if there is any parent level
     if ($null -ne $parent.Children) {
-        Write-Output "Found the following Children :" -ForegroundColor Yellow
-        Write-Output ($parent.Children | Select-Object Name).Name -ForegroundColor White
+        Write-Information "Found the following Children :"
+        Write-Information ($parent.Children | Select-Object Name).Name
 
         foreach ($children in $parent.Children) {
             # Tries to recur to each child item
@@ -203,8 +186,8 @@ function Remove-Recursively {
     }
 
     # If no children are found at each scope
-    Write-Output "No children found in scope $name" -ForegroundColor Yellow
-    Write-Output "Removing the scope $name" -ForegroundColor Red
+    Write-Information "No children found in scope $name"
+    Write-Information "Removing the scope $name"
 
     Remove-AzManagementGroup -InputObject $parent -ErrorAction SilentlyContinue
 }
@@ -216,5 +199,5 @@ Remove-Recursively($intermediateRootGroupID)
 $StopWatch.Stop()
 
 # Display timer output as table
-Write-Output "Time taken to complete task:" -ForegroundColor Yellow
+Write-Information "Time taken to complete task:"
 $StopWatch.Elapsed | Format-Table
