@@ -4,18 +4,15 @@
 
 This project uses GitHub Issues to track bugs and feature requests. Please search the existing issues before filing new issues to avoid duplicates.  For new issues, file your bug or feature request as a new Issue.
 
-For help and questions about using this project, please **REPO MAINTAINER: INSERT INSTRUCTIONS HERE FOR HOW TO ENGAGE REPO OWNERS OR COMMUNITY FOR HELP. COULD BE A STACK OVERFLOW TAG OR OTHER CHANNEL. WHERE WILL YOU HELP PEOPLE?**.
+Issues can be created and searched through for existing issues here: [https://github.com/Azure/ALZ-Bicep/issues](https://github.com/Azure/ALZ-Bicep/issues)
 
-## Microsoft Support Policy  
+Please provide as much information as possible when filing an issue. Include screenshots or correlation IDs if possible (please redact any sensitive information).
 
-Support for this **PROJECT or PRODUCT** is limited to the resources listed above.
+For instructions on how to get deployments and correlation ID, please follow this link [here](https://docs.microsoft.com/azure/azure-resource-manager/templates/deployment-history?tabs=azure-portal#get-deployments-and-correlation-id).
 
-## TODO: The maintainer of this repo has not yet edited this file
+We may ask you to create an Azure support request once we have triaged the issue following the process documented [here](https://docs.microsoft.com/azure/azure-portal/supportability/how-to-create-azure-support-request)
 
-**REPO OWNER**: Do you want Customer Service & Support (CSS) support for this product/project?
+## Community Support Policy
 
-- **No CSS support:** Fill out this template with information about how to file issues and get help.
-- **Yes CSS support:** Fill out an intake form at [aka.ms/spot](https://aka.ms/spot). CSS will work with/help you to determine next steps. More details also available at [aka.ms/onboardsupport](https://aka.ms/onboardsupport).
-- **Not sure?** Fill out a SPOT intake as though the answer were "Yes". CSS will help you decide.
+Project maintainers will aim to respond within 3 business days to get a meaningful response for any new issues.
 
-*Then remove this first heading from this SUPPORT.MD file before publishing your repo.*
