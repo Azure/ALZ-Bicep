@@ -8,7 +8,7 @@
     "displayName": "Deploy Microsoft Defender for Cloud configuration",
     "description": "Deploy Microsoft Defender for Cloud configuration",
     "metadata": {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "category": "Security Center"
     },
     "parameters": {
@@ -54,6 +54,13 @@
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
         }
+      },
+      "enableAscForContainers": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        }
       }
     },
     "policyDefinitions": [
@@ -73,6 +80,16 @@
         "parameters": {
           "effect": {
             "value": "[[parameters('enableAscForSql')]"
+          }
+        },
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "defenderForContainers",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/c9ddb292-b203-4738-aead-18e2716e858f",
+        "parameters": {
+          "effect": {
+            "value": "[[parameters('enableAscForContainers')]"
           }
         },
         "groupNames": []

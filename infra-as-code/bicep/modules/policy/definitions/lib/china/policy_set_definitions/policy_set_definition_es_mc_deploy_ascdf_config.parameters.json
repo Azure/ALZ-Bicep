@@ -12,6 +12,13 @@
       }
     }
   },
+  "defenderForContainers": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForContainers')]"
+      }
+    }
+  },
   "defenderForSqlPaas": {
     "parameters": {
       "effect": {
