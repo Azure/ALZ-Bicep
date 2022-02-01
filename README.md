@@ -54,12 +54,10 @@ For support on the artifacts contained in this repository please refer to [this 
 
 ## Getting Started
 
-To get started with ALZ Bicep, please refer to the [Deployment Flow wiki page][wiki_deployment_flow] for: 
-1. Prerequisites and dependencies for the overall implementation
-2. High-level deployment flow
-3. Links to more detailed instructions on individual modules. 
-
-
+To get started with ALZ Bicep, please refer to the [Deployment Flow wiki page][wiki_deployment_flow] for:
+1. Prerequisites and dependencies for the overall implementation.
+2. High-level deployment flow.
+3. Links to more detailed instructions on individual modules.
 
 
 
