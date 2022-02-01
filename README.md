@@ -19,6 +19,13 @@ The Azure Landing Zones Bicep repo provides an approach for deploying and managi
 
 In its current incarnation each module can deployed separately via command line but in future releases a more automated approach, via orchestration modules, will be published; but due to current Bicep & ARM limitations this is not possible today.
 
+## Getting Started
+
+To get started with ALZ Bicep, please refer to the [Deployment Flow wiki page][wiki_deployment_flow] for:
+1. Prerequisites and dependencies for the overall implementation.
+2. High-level deployment flow.
+3. Links to more detailed instructions on individual modules.
+
 ## Contributing
 This project welcomes contributions and suggestions. Please review our [Contributing guide][wiki_contributing] in the Wiki. Once your PR is created and submitted a member of the team will triage, review and discuss with you 👍
 Most contributions require you to agree to a
