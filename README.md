@@ -13,11 +13,19 @@ Detailed information about how to use, deploy and extend artifacts found in this
 - [Contributing][wiki_contributing]
 - [Telemetry Tracking Using Customer Usage Attribution (PID)][wiki_cuaid]
 - [Azure Container Registry Deployment - Private Bicep Registry][wiki_acrdeploy]
+- [Frequently Asked Questions][wiki_faq]
 
 ## Overview
 The Azure Landing Zones Bicep repo provides an approach for deploying and managing the core platform capabilities of Cloud Adoption Framework Azure Landing Zones conceptual architecture using Bicep.
 
 In its current incarnation each module can deployed separately via command line but in future releases a more automated approach, via orchestration modules, will be published; but due to current Bicep & ARM limitations this is not possible today.
+
+## Getting Started
+
+To get started with ALZ Bicep, please refer to the [Deployment Flow wiki page][wiki_deployment_flow] for:
+1. Prerequisites and dependencies for the overall implementation.
+2. High-level deployment flow.
+3. Links to more detailed instructions on individual modules.
 
 ## Contributing
 This project welcomes contributions and suggestions. Please review our [Contributing guide][wiki_contributing] in the Wiki. Once your PR is created and submitted a member of the team will triage, review and discuss with you 👍
@@ -71,6 +79,7 @@ Replace `./` with `https://github.com/Azure/terraform-azurerm-caf-enterprise-sca
 [wiki_acrdeploy]:                          https://github.com/Azure/ALZ-Bicep/wiki/ACRDeployment "Wiki - Private Bicep Registry"
 [vulnerability_reporting]:                          https://github.com/Azure/ALZ-Bicep/blob/main/SECURITY.md "Vulnerability reporting"
 [support_statement]:                          https://github.com/Azure/ALZ-Bicep/blob/main/SUPPORT.md "Microsoft Support Policy"
+[wiki_faq]:                          https://github.com/Azure/ALZ-Bicep/wiki/FAQ "Wiki - FAQs"
 
 
 
