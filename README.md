@@ -51,6 +51,14 @@ If you believe you have found a security vulnerability in this repository,please
 
 For support on the artifacts contained in this repository please refer to [this guide][support_statement] for more details.
 
+## Getting Started
+
+To get started with ALZ Bicep, please refer to the [Deployment Flow wiki page][wiki_deployment_flow] for: 
+1. Prerequisites and dependencies for the overall implementation
+2. High-level deployment flow
+3. Links to more detailed instructions on individual modules. 
+
+
 
 
 
