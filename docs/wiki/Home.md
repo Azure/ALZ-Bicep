@@ -4,7 +4,7 @@
 
 ![Bicep Logo](media/bicep-logo.png)
 
-Welcome the wiki of the Azure Landing Zones Bicep repo. This repo and wiki are only for the development of the ALZ Bicep implementation, once we have an MVP agreed and tested the contents of this repo will be migrated to the `Azure/Enteprise-Scale` repo.
+Welcome to the wiki of the Azure Landing Zones Bicep repo. This repo and wiki are only for the development of the ALZ Bicep implementation, once we have an MVP agreed and tested the contents of this repo will be migrated to the `Azure/Enteprise-Scale` repo.
 
 ## Navigation
 
