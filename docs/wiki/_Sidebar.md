@@ -1,6 +1,6 @@
 # Wiki Navigation
 
-* [Home](./Home)
+* [Wiki Home](./Home)
 * [Deployment Flow](./DeploymentFlow)
 * [Contributing](./Contributing)
 * [Telemetry Tracking Using Customer Usage Attribution (PID)](./CustomerUsage)
