@@ -21,7 +21,7 @@ parPolicyAssignmentIdentityType | The type of identity to be created and associa
 parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs | An array containing a list of additional Management Group IDs (as the Management Group deployed to is included automatically) that the System-assigned Managed Identity, associated to the policy assignment, will be assigned to additionally. | Not mandatory | `["alz","alz-sandbox"]` | `[]`
 parPolicyAssignmentIdentityRoleAssignmentsSubs | An array containing a list of Subscription IDs that the System-assigned Managed Identity associated to the policy assignment will be assigned to in addition to the Management Group the policy is deployed/assigned to. | Not mandatory | `["d4417fe6-3370-48e2-ab38-c7b926526fe7","fbec3ec1-292a-4207-831c-bd62fdb7b468"]` | `[]`
 parPolicyAssignmentIdentityRoleDefinitionIDs | An array containing a list of RBAC role definition IDs to be assigned to the Managed Identity that is created and associated with the policy assignment. Only required for `Modify` and `DeployIfNotExists` policy effects | Not mandatory. But required for a `Modify` and `DeployIfNotExists` policy effect assignment. | `alz` | `[]`
-
+parTelemetryOptOut | Set Parameter to true to Opt-out of deployment telemetry | Mandatory input, default: `false` | `false` | `false` |
 ## Outputs
 
 The module does not generate any outputs.

@@ -11,9 +11,10 @@ For a list of the custom policy definitions that are deployed, please see the be
 
 The module requires the following inputs:
 
- Parameter | Description | Requirement | Example
------------ | ----------- | ----------- | -------
-parTargetManagementGroupID | The management group scope to which the the policy definitions will be stored/deployed to. This management group must already exist before deploying this bicep module. | Mandatory input | `alz`
+ | Parameter                  | Description                                                                                                                                                             | Requirement                       | Example |
+ | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ------- |
+ | parTargetManagementGroupID | The management group scope to which the the policy definitions will be stored/deployed to. This management group must already exist before deploying this bicep module. | Mandatory input                   | `alz`   |
+ | parTelemetryOptOut         | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                | Mandatory input, default: `false` | `false` |
 
 ## Outputs
 
@@ -23,10 +24,10 @@ The module does not generate any outputs.
 
 There are two different sets of deployment; one for deploying to Azure global regions, and another for deploying specifically to Azure China regions. This is due to minor difference in services which are available in Azure global and in Azure China, but the feature parity gap is narrowing. As a result, there are no policy definitions for services which are not available in Azure China. Some policy definitions are not built-in in Azure China, hence those policies are defined as custom policy definitions. More details are available [here](https://github.com/Azure/Enterprise-Scale/pull/802).
 
- Azure Cloud | Bicep template | Input parameters file
- ----------- | ----------- | -----------
- Global regions |  custom-policy-definitions.bicep |  custom-policy-definitions.parameters.example.json
- China regions  |  mc-custom-policy-definitions.bicep |  custom-policy-definitions.parameters.example.json
+ | Azure Cloud    | Bicep template                     | Input parameters file                             |
+ | -------------- | ---------------------------------- | ------------------------------------------------- |
+ | Global regions | custom-policy-definitions.bicep    | custom-policy-definitions.parameters.example.json |
+ | China regions  | mc-custom-policy-definitions.bicep | custom-policy-definitions.parameters.example.json |
 
 In this example, the custom policy definitions and policy set definitions will be deployed to the `alz` management group (the intermediate root management group).
 
