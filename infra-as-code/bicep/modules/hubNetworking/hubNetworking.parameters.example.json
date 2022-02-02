@@ -90,15 +90,15 @@
       "value": [
         {
           "name": "AzureBastionSubnet",
-          "ipAddressRange": "10.20.15.0/24"
+          "ipAddressRange": "10.20.0.0/24"
         },
         {
           "name": "GatewaySubnet",
-          "ipAddressRange": "10.20.252.0/24"
+          "ipAddressRange": "10.20.254.0/24"
         },
         {
           "name": "AzureFirewallSubnet",
-          "ipAddressRange": "10.20.254.0/24"
+          "ipAddressRange": "10.20.255.0/24"
         }
       ]
     },
@@ -107,8 +107,48 @@
     },
     "parPrivateDnsZones": {
       "value": [
+        "privatelink.azure-automation.net",
         "privatelink.database.windows.net",
-        "privatelink.blob.core.windows.net"
+        "privatelink.sql.azuresynapse.net",
+        "privatelink.azuresynapse.net",
+        "privatelink.blob.core.windows.net",
+        "privatelink.table.core.windows.net",
+        "privatelink.queue.core.windows.net",
+        "privatelink.file.core.windows.net",
+        "privatelink.web.core.windows.net",
+        "privatelink.dfs.core.windows.net",
+        "privatelink.documents.azure.com",
+        "privatelink.mongo.cosmos.azure.com",
+        "privatelink.cassandra.cosmos.azure.com",
+        "privatelink.gremlin.cosmos.azure.com",
+        "privatelink.table.cosmos.azure.com",
+        "[format('privatelink.{0}.batch.azure.com', resourceGroup().location)]",
+        "privatelink.postgres.database.azure.com",
+        "privatelink.mysql.database.azure.com",
+        "privatelink.mariadb.database.azure.com",
+        "privatelink.vaultcore.azure.net",
+        "[format('privatelink.{0}.azmk8s.io', resourceGroup().location)]",
+        "[format('{0}.privatelink.siterecovery.windowsazure.com', resourceGroup().location)]",
+        "privatelink.servicebus.windows.net",
+        "privatelink.azure-devices.net",
+        "privatelink.eventgrid.azure.net",
+        "privatelink.azurewebsites.net",
+        "privatelink.api.azureml.ms",
+        "privatelink.notebooks.azure.net",
+        "privatelink.service.signalr.net",
+        "privatelink.afs.azure.net",
+        "privatelink.datafactory.azure.net",
+        "privatelink.adf.azure.com",
+        "privatelink.redis.cache.windows.net",
+        "privatelink.redisenterprise.cache.azure.net",
+        "privatelink.purview.azure.com",
+        "privatelink.digitaltwins.azure.net",
+        "privatelink.azconfig.io",
+        "privatelink.webpubsub.azure.com",
+        "privatelink.azure-devices-provisioning.net",
+        "privatelink.cognitiveservices.azure.com",
+        "privatelink.azurecr.io",
+        "privatelink.search.windows.net"
       ]
     },
     "parDNSServerIPArray": {

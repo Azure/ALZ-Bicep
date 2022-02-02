@@ -135,7 +135,7 @@ param parSubnets array = [
 @description('Name Associated with Bastion Service:  Default: {parCompanyPrefix}-bastion')
 param parBastionName string = '${parCompanyPrefix}-bastion'
 
-@description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Privatezones')
+@description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
 param parPrivateDnsZones array =[
   'privatelink.azure-automation.net'
   'privatelink.database.windows.net'
