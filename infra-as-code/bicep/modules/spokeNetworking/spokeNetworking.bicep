@@ -10,16 +10,8 @@ VERSION: 1.1.0
   - Changed default value of parNetworkDNSEnableProxy to false. Defaulting to false allow for testing on its own 
   - Changed default value of parDdosEnabled to false. Defaulting to false to allow for testing on its own
   - Added parSpokeNetworkName to allow customer input flexibility
+  - Removed unrequired bool switches
 */
-
-@description('Switch which allows Azure Firewall deployment to be disabled')
-param parHubNVAEnabled bool = false
-
-@description('Switch which allows DDOS deployment to be disabled')
-param parDdosEnabled bool = false
-
-@description('Switch which allows DNS Proxy to be disabled')
-param parNetworkDNSEnableProxy bool = false
 
 @description('Switch which allows BGP Route Propagation to be disabled on the route table')
 param parBGPRoutePropagation bool = false
@@ -62,17 +54,17 @@ resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' =
         parSpokeNetworkAddressPrefix
       ]
     }
-    enableDdosProtection: parDdosEnabled
-    ddosProtectionPlan: (parDdosEnabled) ? {
+    enableDdosProtection: (!empty(parDdosProtectionPlanId) ? true : false)
+    ddosProtectionPlan: (!empty(parDdosProtectionPlanId) ? true : false) ? {
       id: parDdosProtectionPlanId
     } : null
-    dhcpOptions: (parNetworkDNSEnableProxy) ? {
+    dhcpOptions: (!empty(parDNSServerIPArray) ? true : false) ? {
       dnsServers: parDNSServerIPArray
     } : null
   }
 }
 
-resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (parHubNVAEnabled) {
+resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (!empty(parNextHopIPAddress)) {
   name: parSpoketoHubRouteTableName
   location: resourceGroup().location
   tags: parTags
@@ -82,8 +74,8 @@ resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
         name: 'udr-default-to-hub-nva'
         properties: {
           addressPrefix: '0.0.0.0/0'
-          nextHopType: parNetworkDNSEnableProxy ? 'VirtualAppliance' : 'Internet'
-          nextHopIpAddress: parNetworkDNSEnableProxy ? parNextHopIPAddress : ''
+          nextHopType: 'VirtualAppliance'
+          nextHopIpAddress: parNextHopIPAddress
         }
       }
     ]
