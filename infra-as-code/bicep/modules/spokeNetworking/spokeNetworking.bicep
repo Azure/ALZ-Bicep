@@ -21,8 +21,8 @@ param parDdosEnabled bool = false
 @description('Switch which allows DNS Proxy to be disabled')
 param parNetworkDNSEnableProxy bool = false
 
-@description('Switch which allows BGP Route Propogation to be disabled on the route table')
-param parBGPRoutePropogation bool = false
+@description('Switch which allows BGP Route Propagation to be disabled on the route table')
+param parBGPRoutePropagation bool = false
 
 @description('Tags you would like to be applied to all resources in this module')
 param parTags object = {}
@@ -87,7 +87,7 @@ resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
         }
       }
     ]
-    disableBgpRoutePropagation: parBGPRoutePropogation
+    disableBgpRoutePropagation: parBGPRoutePropagation
   }
 }
 
