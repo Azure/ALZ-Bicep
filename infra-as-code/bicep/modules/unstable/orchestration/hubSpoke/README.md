@@ -7,7 +7,7 @@ This module acts as an orchestration module that glues all the individual module
 As the warning at the top of this `README.md` states this module does not actually work today as a single deployment due to some bugs in Bicep/ARM that we are working closely with the Bicep & ARM engineering teams to resolve. The bugs are for awareness:
 
 - [5371 - Deployment validation false positive validating tenant-level template deploying a managementGroup](https://github.com/Azure/bicep/issues/5371)
-- [5412 - Multiple issues with json(loadTextContent('...')) resulting in large/bloated built ARM templates that can be larger than 4MB ](https://github.com/Azure/bicep/issues/5412)
+- [5412 - Multiple issues with json(loadTextContent('...')) resulting in large/bloated built ARM templates that can be larger than 4MB](https://github.com/Azure/bicep/issues/5412)
 
 ## So why provide a non-working orchestration module?
 
