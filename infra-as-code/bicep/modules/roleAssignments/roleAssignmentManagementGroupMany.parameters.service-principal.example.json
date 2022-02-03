@@ -9,13 +9,13 @@
       ]
     },
     "parRoleDefinitionId": {
-      "value": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+      "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     },
     "parAssigneePrincipalType": {
       "value": "ServicePrincipal"
     },
     "parAssigneeObjectId": {
-      "value": "b10678fe-fca2-4d63-b322-8927bfc76fd1"
+      "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     },
     "parTelemetryOptOut": {
       "value": "false"
