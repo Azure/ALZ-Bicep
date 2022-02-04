@@ -5,24 +5,16 @@ DESCRIPTION: The following components will be options in this deployment
               Subnets
               UDR - if Firewall is enabled
               Private DNS Link
-AUTHOR/S: aultt
-VERSION: 1.0.1
+AUTHOR/S: aultt, jtracey93
+VERSION: 1.1.0
   - Changed default value of parNetworkDNSEnableProxy to false. Defaulting to false allow for testing on its own 
   - Changed default value of parDdosEnabled to false. Defaulting to false to allow for testing on its own
+  - Added parSpokeNetworkName to allow customer input flexibility
+  - Removed unrequired bool switches
 */
 
-
-@description('Switch which allows Azure Firewall deployment to be disabled')
-param parHubNVAEnabled bool = false
-
-@description('Switch which allows DDOS deployment to be disabled')
-param parDdosEnabled bool = false
-
-@description('Switch which allows DNS Proxy to be disabled')
-param parNetworkDNSEnableProxy bool = false
-
-@description('Switch which allows BGP Route Propogation to be disabled')
-param parBGPRoutePropogation bool = false
+@description('Switch which allows BGP Route Propagation to be disabled on the route table')
+param parBGPRoutePropagation bool = false
 
 @description('Tags you would like to be applied to all resources in this module')
 param parTags object = {}
@@ -33,17 +25,17 @@ param parDdosProtectionPlanId string = ''
 @description('The IP address range for all virtual networks to use.')
 param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 
-@description('Prefix Used for Spoke Network')
-param parSpokeNetworkPrefix string = 'Corp-Spoke'
+@description('The Name of the Spoke Virtual Network. Default: vnet-spoke')
+param parSpokeNetworkName string = 'vnet-spoke'
 
-@description('Array of DNS Server IP addresses.  No Default Value')
+@description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
 param parDNSServerIPArray array = []
 
-@description('IP Address where network traffic should route to leveraged with DNS Proxy.  No Default Value')
+@description('IP Address where network traffic should route to leveraged with DNS Proxy. Default: Empty String')
 param parNextHopIPAddress string = ''
 
-@description('Name of Route table to create for the default route of Hub. Default: udr-spoke-to-hub')
-param parSpoketoHubRouteTableName string = 'udr-spoke-to-hub'
+@description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
+param parSpoketoHubRouteTableName string = 'rtb-spoke-to-hub'
 
 @description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
@@ -54,25 +46,25 @@ var varCuaid = '0c428583-f2a1-4448-975c-2d6262fd193a'
 //If Ddos parameter is true Ddos will be Enabled on the Virtual Network
 //If Azure Firewall is enabled and Network Dns Proxy is enabled dns will be configured to point to AzureFirewall
 resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
-  name: '${parSpokeNetworkPrefix}-${resourceGroup().location}'
+  name: parSpokeNetworkName
   location: resourceGroup().location
-  properties:{
-    addressSpace:{
-      addressPrefixes:[
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
         parSpokeNetworkAddressPrefix
       ]
     }
-    enableDdosProtection: parDdosEnabled
-    ddosProtectionPlan: (parDdosEnabled) ? {
+    enableDdosProtection: (!empty(parDdosProtectionPlanId) ? true : false)
+    ddosProtectionPlan: (!empty(parDdosProtectionPlanId) ? true : false) ? {
       id: parDdosProtectionPlanId
-      } : null
-    dhcpOptions: (parNetworkDNSEnableProxy) ? {
-      dnsServers: parDNSServerIPArray 
-    }:null  
+    } : null
+    dhcpOptions: (!empty(parDNSServerIPArray) ? true : false) ? {
+      dnsServers: parDNSServerIPArray
+    } : null
   }
 }
 
-resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parHubNVAEnabled) {
+resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (!empty(parNextHopIPAddress)) {
   name: parSpoketoHubRouteTableName
   location: resourceGroup().location
   tags: parTags
@@ -82,12 +74,12 @@ resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
         name: 'udr-default-to-hub-nva'
         properties: {
           addressPrefix: '0.0.0.0/0'
-          nextHopType: parNetworkDNSEnableProxy ? 'VirtualAppliance' : 'Internet'
-          nextHopIpAddress: parNetworkDNSEnableProxy ? parNextHopIPAddress : ''
+          nextHopType: 'VirtualAppliance'
+          nextHopIpAddress: parNextHopIPAddress
         }
       }
     ]
-    disableBgpRoutePropagation: parBGPRoutePropogation
+    disableBgpRoutePropagation: parBGPRoutePropagation
   }
 }
 

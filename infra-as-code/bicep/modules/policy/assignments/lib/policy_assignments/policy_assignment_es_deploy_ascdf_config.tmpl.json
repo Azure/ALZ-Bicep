@@ -11,49 +11,49 @@
         "value": "security_contact@replace_me"
       },
       "logAnalytics": {
-        "value": "${parTopLevelManagementGroupPrefix}-la"
+        "value": "law-alz"
       },
       "ascExportResourceGroupName": {
-        "value": "${parTopLevelManagementGroupPrefix}-asc-export"
+        "value": "asc-export-alz"
       },
       "ascExportResourceGroupLocation": {
-        "value": "${parDefaultRegion}"
+        "value": "northeurope"
       },
       "enableAscForServers": {
-        "value": "Disabled"
+        "value": "DeployIfNotExists"
       },
       "enableAscForSql": {
-        "value": "Disabled"
+        "value": "DeployIfNotExists"
       },
       "enableAscForAppServices": {
-        "value": "Disabled"
+        "value": "DeployIfNotExists"
       },
       "enableAscForStorage": {
-        "value": "Disabled"
+        "value": "DeployIfNotExists"
       },
       "enableAscForRegistries": {
-        "value": "Disabled"
+        "value": "DeployIfNotExists"
       },
       "enableAscForKeyVault": {
-        "value": "Disabled"
+        "value": "DeployIfNotExists"
       },
       "enableAscForSqlOnVm": {
-        "value": "Disabled"
+        "value": "DeployIfNotExists"
       },
       "enableAscForKubernetes": {
-        "value": "Disabled"
+        "value": "DeployIfNotExists"
       },
       "enableAscForArm": {
-        "value": "Disabled"
+        "value": "DeployIfNotExists"
       },
       "enableAscForDns": {
-        "value": "Disabled"
+        "value": "DeployIfNotExists"
       },
       "enableAscForOssDb": {
-        "value": "Disabled"
+        "value": "DeployIfNotExists"
       }
     },
-    "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-ASCDF-Config",
+    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-ASCDF-Config",
     "scope": null,
     "enforcementMode": "Default"
   },

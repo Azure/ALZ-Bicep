@@ -9,13 +9,16 @@
       ]
     },
     "parRoleDefinitionId": {
-      "value": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+      "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     },
     "parAssigneePrincipalType": {
       "value": "Group"
     },
     "parAssigneeObjectId": {
-      "value": "3a4fa072-cc14-471d-aeac-49afdbde9f7a"
+      "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    },
+    "parTelemetryOptOut": {
+      "value": "false"
     }
   }
 }

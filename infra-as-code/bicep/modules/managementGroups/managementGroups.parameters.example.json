@@ -7,6 +7,9 @@
     },
     "parTopLevelManagementGroupDisplayName": {
       "value": "Azure Landing Zones"
+    },
+    "parTelemetryOptOut": {
+      "value": "false"
     }
   }
 }

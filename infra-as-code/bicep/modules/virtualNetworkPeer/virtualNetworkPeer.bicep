@@ -32,13 +32,13 @@ param parTelemetryOptOut bool = false
 var varCuaid = 'ab8e3b12-b0fa-40aa-8630-e3f7699e2142'
 
 resource resVirtualNetworkPeer 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-11-01' = {
-  name:  '${parSourceVirtualNetworkName}/peer-to-${parDestinationVirtualNetworkName}'
+  name: '${parSourceVirtualNetworkName}/peer-to-${parDestinationVirtualNetworkName}'
   properties: {
     allowVirtualNetworkAccess: parAllowVirtualNetworkAccess
     allowForwardedTraffic: parAllowForwardedTraffic
     allowGatewayTransit: parAllowGatewayTransit
     remoteVirtualNetwork: {
-        id: parDestinationVirtualNetworkID
+      id: parDestinationVirtualNetworkID
     }
   }
 }

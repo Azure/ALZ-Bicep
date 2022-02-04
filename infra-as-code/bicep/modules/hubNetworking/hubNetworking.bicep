@@ -8,8 +8,8 @@ DESCRIPTION: The following components will be options in this deployment
               Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
               DDos Standard Plan
               Bastion
-AUTHOR/S: aultt
-VERSION: 1.0.0
+AUTHOR/S: aultt, jtracey93
+VERSION: 1.1.0
 */
 
 
@@ -29,7 +29,7 @@ param parAzureFirewallEnabled bool = true
 param parNetworkDNSEnableProxy bool = true
 
 @description('Switch which allows BGP Propagation to be disabled on the routes: Default: false')
-param  pardisableBGPRoutePropagation bool = false
+param  parDisableBGPRoutePropagation bool = false
 
 @description('Switch which allows Private DNS Zones to be disabled. Default: true')
 param parPrivateDNSZonesEnabled bool = true
@@ -80,7 +80,6 @@ param parExpressRouteGatewayConfig object = {
     peerWeight: '5'
   }
 }
-
 
 @description('Prefix value which will be prepended to all resource names. Default: alz')
 param parCompanyPrefix string = 'alz'
@@ -136,7 +135,7 @@ param parSubnets array = [
 @description('Name Associated with Bastion Service:  Default: {parCompanyPrefix}-bastion')
 param parBastionName string = '${parCompanyPrefix}-bastion'
 
-@description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Privatezones')
+@description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
 param parPrivateDnsZones array =[
   'privatelink.azure-automation.net'
   'privatelink.database.windows.net'
@@ -174,7 +173,16 @@ param parPrivateDnsZones array =[
   'privatelink.redisenterprise.cache.azure.net'
   'privatelink.purview.azure.com'
   'privatelink.digitaltwins.azure.net'
+  'privatelink.azconfig.io'
+  'privatelink.webpubsub.azure.com'
+  'privatelink.azure-devices-provisioning.net'
+  'privatelink.cognitiveservices.azure.com'
+  'privatelink.azurecr.io'
+  'privatelink.search.windows.net'
 ]
+
+@description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
+param parDNSServerIPArray array = []
 
 @description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
@@ -214,6 +222,9 @@ resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
       addressPrefixes:[
         parHubNetworkAddressPrefix
       ]
+    }
+    dhcpOptions: {
+      dnsServers: parDNSServerIPArray
     }
     subnets: varSubnetProperties
     enableDdosProtection: parDDoSEnabled
@@ -428,7 +439,7 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parAzu
         }
       }
     ]
-    disableBgpRoutePropagation: pardisableBGPRoutePropagation
+    disableBgpRoutePropagation: parDisableBGPRoutePropagation
   }
 }
 

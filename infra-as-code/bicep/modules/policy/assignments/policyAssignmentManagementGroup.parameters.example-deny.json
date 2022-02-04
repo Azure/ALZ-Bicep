@@ -17,6 +17,9 @@
         "parPolicyAssignmentParameters": {
             "value": {}
         },
+        "parPolicyAssignmentParameterOverrides": {
+            "value": {}
+        },
         "parPolicyAssignmentNonComplianceMessages": {
             "value": []
         },
@@ -37,6 +40,9 @@
         },
         "parPolicyAssignmentIdentityRoleDefinitionIDs": {
             "value": []
+        },
+        "parTelemetryOptOut": {
+            "value": "false"
         }
     }
 }
