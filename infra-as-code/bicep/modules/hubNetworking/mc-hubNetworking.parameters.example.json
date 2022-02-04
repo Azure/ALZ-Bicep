@@ -137,6 +137,9 @@
                 "privatelink.adf.azure.cn",
                 "privatelink.redis.cache.chinacloudapi.cn"
             ]
-        }
+        },
+    "parTelemetryOptOut": {
+      "value": false
+    }
     }
 }

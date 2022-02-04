@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "parBGPRoutePropagation": {
+            "value": false
+        },
+        "parDdosProtectionPlanId": {
+            "value": ""
+        },
+        "parSpokeNetworkAddressPrefix": {
+            "value": "10.11.0.0/16"
+        },
+        "parSpokeNetworkName": {
+            "value": "vnet-spoke"
+        },
+        "parDNSServerIPArray": {
+            "value": []
+        },
+        "parNextHopIPAddress": {
+            "value": ""
+        },
+        "parSpoketoHubRouteTableName": {
+            "value": "rtb-spoke-to-hub"
+        },
+        "parTelemetryOptOut": {
+            "value": false
+        }
+    }
+}

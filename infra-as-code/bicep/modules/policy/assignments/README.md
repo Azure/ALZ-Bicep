@@ -47,7 +47,7 @@ az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
   --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-deny.json \
   --location eastus \
-  --management-group-id 'alz-landingzones'
+  --management-group-id alz-landingzones
 ```
 OR
 ```bash
@@ -56,7 +56,7 @@ az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
   --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-deny.json \
   --location chinaeast2 \
-  --management-group-id 'alz-landingzones'
+  --management-group-id alz-landingzones
 ```
 
 #### PowerShell - Deny
@@ -98,7 +98,7 @@ az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
   --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-dine.json \
   --location eastus \
-  --management-group-id 'alz-landingzones'
+  --management-group-id alz-landingzones
 ```
 OR
 ```bash
@@ -107,7 +107,7 @@ az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
   --parameters @infra-as-code/bicep/modules/policy/assignments/mc-policyAssignmentManagementGroup.parameters.example-dine.json \
   --location chinaeast2 \
-  --management-group-id 'alz-landingzones'
+  --management-group-id alz-landingzones
 ```
 
 #### PowerShell - DINE
