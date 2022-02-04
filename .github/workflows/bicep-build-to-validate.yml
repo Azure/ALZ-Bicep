@@ -42,15 +42,6 @@ jobs:
               }   
           }
 
-      - name: ARM-TTK Bicep Parameter Files for PR
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: true
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FILTER_REGEX_EXCLUDE: .*infra-as-code/bicep/modules/policy/definitions/lib/.*
-          VALIDATE_JSON: true
-
   bicep_deploy:
     name: Deploy Bicep Files for PR
     runs-on: ubuntu-latest
