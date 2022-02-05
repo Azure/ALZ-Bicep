@@ -9,7 +9,7 @@
       "value": "Azure Landing Zones"
     },
     "parTelemetryOptOut": {
-      "value": "false"
+      "value": false
     }
   }
 }

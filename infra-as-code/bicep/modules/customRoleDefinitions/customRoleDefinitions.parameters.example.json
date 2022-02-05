@@ -6,7 +6,7 @@
       "value": "alz"
     },
     "parTelemetryOptOut": {
-      "value": "false"
+      "value": false
     }
   }
 }

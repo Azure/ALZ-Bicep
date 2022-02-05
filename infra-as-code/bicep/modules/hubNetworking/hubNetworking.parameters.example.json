@@ -122,13 +122,10 @@
         "privatelink.cassandra.cosmos.azure.com",
         "privatelink.gremlin.cosmos.azure.com",
         "privatelink.table.cosmos.azure.com",
-        "[format('privatelink.{0}.batch.azure.com', resourceGroup().location)]",
         "privatelink.postgres.database.azure.com",
         "privatelink.mysql.database.azure.com",
         "privatelink.mariadb.database.azure.com",
         "privatelink.vaultcore.azure.net",
-        "[format('privatelink.{0}.azmk8s.io', resourceGroup().location)]",
-        "[format('{0}.privatelink.siterecovery.windowsazure.com', resourceGroup().location)]",
         "privatelink.servicebus.windows.net",
         "privatelink.azure-devices.net",
         "privatelink.eventgrid.azure.net",
@@ -155,7 +152,7 @@
       "value": []
     },
     "parTelemetryOptOut": {
-      "value": "false"
+      "value": false
     }
   }
 }

@@ -42,7 +42,7 @@
             "value": []
         },
         "parTelemetryOptOut": {
-            "value": "false"
+            "value": false
         }
     }
 }

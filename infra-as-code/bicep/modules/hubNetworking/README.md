@@ -22,7 +22,7 @@ The module requires the following inputs:
  | parDdosEnabled               | bool   | true                                                                                                 | Switch to enable deployment of distributed denial of service attacks service                                                                                                                                                                                        | None                          | true                         |
  | parAzureFirewallEnabled      | bool   | true                                                                                                 | Switch to enable deployment of Azure Firewall                                                                                                                                                                                                                          | None                          | true                         |
  | parPrivateDNSZonesEnabled    | bool   | true                                                                                                 | Switch to enable deployment of Azure Private DNS Zones                                                                                                                                                                                                              | None                          | true                         |
- | parPrivateDnsZones           | array  | See example parameters file [`hubNetworking.parameters.json`](hubNetworking.parameters.example.json) | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones                                                                                                                                                                  | None                          | See Default                  |
+ | parPrivateDnsZones           | array  | See example parameters file [`hubNetworking.parameters.json`](hubNetworking.parameters.example.json) | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones except for: `privatelink.batch.azure.com`, `privatelink.azmk8s.io` and `privatelink.siterecovery.windowsazure.com` as these are region specific, which you can add to the parameters file with the required region in the zone name that you wish to deploy for. For more details on private DNS Zones please refer to the above link.                                                                                                                                                                 | None                          | See Default                  |
  | parCompanyPrefix             | string | alz                                                                                                  | Prefix value which will be pre-appended to all resource names                                                                                                                                                                                                       | 1-10 char                     | alz                          |
  | parDdosPlanName              | string | ${parCompanyPrefix}-DDos-Plan                                                                        | Name which will be associated with distributed denial of service protection plan                                                                                                                                                                                    | 1-80 char                     | alz-DDos-Plan                |
  | parBastionName               | string | ${parCompanyPrefix}-bastion                                                                          | Name which will be associated with Bastion Service.                                                                                                                                                                                                                 | 1-80 char                     | alz-bastion                  |
@@ -110,9 +110,10 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 New-AzResourceGroup -Name 'Hub_Networking_POC' `
   -Location 'EastUs2'
   
-New-AzManagementGroupDeployment `
+New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json
+  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json `
+  -ResourceGroupName 'Hub_Networking_POC'
 ```
 OR
 ```powershell
@@ -125,9 +126,10 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 New-AzResourceGroup -Name 'Hub_Networking_POC' `
   -Location 'chinaeast2'
   
-New-AzManagementGroupDeployment `
+New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/mc-hubNetworking.parameters.example.json
+  -ResourceGroupName 'Hub_Networking_POC'
 ```
 ## Example Output in Azure global regions
 

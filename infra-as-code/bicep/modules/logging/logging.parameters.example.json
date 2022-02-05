@@ -32,7 +32,7 @@
       "value": "eastus2"
     },
     "parTelemetryOptOut": {
-      "value": "false"
+      "value": false
     }
   }
 }
