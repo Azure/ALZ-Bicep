@@ -104,6 +104,7 @@ New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.parameters.example.json
   -ResourceGroupName 'Spoke_Networking_POC'
+```
 
 ## Bicep Visualizer
 
