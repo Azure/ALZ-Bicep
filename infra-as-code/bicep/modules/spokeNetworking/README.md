@@ -105,6 +105,10 @@ New-AzResourceGroupDeployment `
   -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.parameters.example.json
   -ResourceGroupName 'Spoke_Networking_POC'
 ```
+## Example Output in Azure global regions
+
+![Example Deployment Output](media/spokeNetworkExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
+
 
 ## Bicep Visualizer
 
