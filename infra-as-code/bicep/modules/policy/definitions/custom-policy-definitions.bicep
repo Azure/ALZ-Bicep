@@ -509,9 +509,9 @@ var varCustomPolicySetDefinitionsArray = [
         definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForArm.parameters
       }
       {
-        definitionReferenceID: 'defenderForContainerRegistry'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/d3d1e68e-49d4-4b56-acff-93cef644b432'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForContainerRegistry.parameters
+        definitionReferenceID: 'defenderforContainers'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/c9ddb292-b203-4738-aead-18e2716e858f'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderforContainers.parameters
       }
       {
         definitionReferenceID: 'defenderForDns'
@@ -522,11 +522,6 @@ var varCustomPolicySetDefinitionsArray = [
         definitionReferenceID: 'defenderForKeyVaults'
         definitionID: '/providers/Microsoft.Authorization/policyDefinitions/1f725891-01c0-420a-9059-4fa46cb770b7'
         definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForKeyVaults.parameters
-      }
-      {
-        definitionReferenceID: 'defenderForKubernetesService'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/64def556-fbad-4622-930e-72d1d5589bf5'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForKubernetesService.parameters
       }
       {
         definitionReferenceID: 'defenderForOssDb'
