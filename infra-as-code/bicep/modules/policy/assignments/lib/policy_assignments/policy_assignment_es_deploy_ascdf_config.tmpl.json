@@ -31,16 +31,13 @@
       "enableAscForStorage": {
         "value": "DeployIfNotExists"
       },
-      "enableAscForRegistries": {
+      "enableAscForContainers": {
         "value": "DeployIfNotExists"
       },
       "enableAscForKeyVault": {
         "value": "DeployIfNotExists"
       },
       "enableAscForSqlOnVm": {
-        "value": "DeployIfNotExists"
-      },
-      "enableAscForKubernetes": {
         "value": "DeployIfNotExists"
       },
       "enableAscForArm": {
