@@ -16,9 +16,6 @@
     },
     "parAssigneeObjectId": {
       "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-    },
-    "parTelemetryOptOut": {
-      "value": false
     }
   }
 }

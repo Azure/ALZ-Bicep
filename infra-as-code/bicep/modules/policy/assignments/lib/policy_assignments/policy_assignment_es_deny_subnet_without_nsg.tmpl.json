@@ -8,7 +8,7 @@
     "notScopes": [],
     "parameters": {
       "effect": {
-        "value": "deny"
+        "value": "Deny"
       }
     },
     "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg",
