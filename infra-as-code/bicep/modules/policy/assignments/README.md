@@ -2,7 +2,7 @@
 
 This module deploys Azure Policy Assignments to a specified Management Group and also assigns the relevant RBAC for the system-assigned Managed Identities created for policies that require them (e.g DeployIfNotExist & Modify effect policies).
 
-> If you are looking for the default ALZ policy assignments checkout [`./alzDefaults` directory](alzDefaults/README.md)
+> If you are looking for the default ALZ policy assignments check out [`./alzDefaults` directory](alzDefaults/README.md)
 
 ## Parameters
 

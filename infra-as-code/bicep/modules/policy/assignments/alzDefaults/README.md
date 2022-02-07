@@ -16,7 +16,7 @@ The module requires the following inputs:
  | parLogAnalyticsWorkspaceLogRetentionInDays           | Number of days of log retention for Log Analytics Workspace                        | Yes         | `365`                                                                                                                                                 | `365`                             |
  | parAutomationAccountName                             | Automation Account name                                                            | Yes         | `alz-automation-account`                                                                                                                              | `alz-automation-account`          |
  | parMSDFCEmailSecurityContact                         | An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to. | Yes         | `security_contact@replace_me.com`                                                                                                                     | `security_contact@replace_me.com` |
- | parDdosProtectionPlanId                              | ID of the DDoS Protection Plan which will be applied to the Virtual Networks       | Yes         | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/Hub_Networking_POC/providers/Microsoft.Network/ddosProtectionPlans/alz-Ddos-Plan` | ` ` (empty string)                |
+ | parDdosProtectionPlanId                              | ID of the DDoS Protection Plan which will be applied to the Virtual Networks       | Yes         | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/Hub_Networking_POC/providers/Microsoft.Network/ddosProtectionPlans/alz-Ddos-Plan` | (empty string)                    |
  | parTelemetryOptOut                                   | Set Parameter to true to Opt-out of deployment telemetry                           | Yes         | `false`                                                                                                                                               | `false`                           |
 
 ## Outputs
@@ -24,12 +24,6 @@ The module requires the following inputs:
 The module does not generate any outputs.
 
 ## Deployment
-
-> For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
-
-## Deployment
-
-In this example, the management groups are created at the `Tenant Root Group` through a tenant-scoped deployment.
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
