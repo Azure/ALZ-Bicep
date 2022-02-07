@@ -33,7 +33,7 @@ The module does not generate any outputs.
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep \
   --parameters @infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json \
-  --location eastus
+  --location eastus \
   --management-group-id alz
 ```
 OR
@@ -42,7 +42,7 @@ OR
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep \
   --parameters @infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json \
-  --location chinaeast2
+  --location chinaeast2 \
   --management-group-id alz
 ```
 
@@ -53,7 +53,7 @@ az deployment mg create \
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json `
-  -Location eastus
+  -Location eastus `
   -ManagementGroupId alz
 ```
 OR
@@ -62,7 +62,7 @@ OR
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json `
-  -Location chinaeast2
+  -Location chinaeast2 `
   -ManagementGroupId alz
 ```
 
