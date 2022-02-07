@@ -7,9 +7,6 @@
     "displayName": "Deploy-Resource-Diag",
     "notScopes": [],
     "parameters": {
-      "effect": {
-        "value": "DeployIfNotExists"
-      },
       "logAnalytics": {
         "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/${parTopLevelManagementGroupPrefix}-mgmt/providers/Microsoft.OperationalInsights/workspaces/${parTopLevelManagementGroupPrefix}-la"
       }

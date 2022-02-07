@@ -45,6 +45,6 @@ resource resRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-08-01-p
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdSubscription.bicep' = if (!parTelemetryOptOut) {
-  name: 'pid-${varCuaid}-${uniqueString(subscription().subscriptionId)}'
+  name: 'pid-${varCuaid}-${uniqueString(subscription().subscriptionId, parAssigneeObjectId)}'
   params: {}
 }
