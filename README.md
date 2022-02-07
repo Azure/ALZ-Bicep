@@ -2,6 +2,8 @@
 
 [![Update Policy Library](https://github.com/Azure/ALZ-Bicep/actions/workflows/update-policy.yml/badge.svg?branch=main)](https://github.com/Azure/ALZ-Bicep/actions/workflows/update-policy.yml)
 
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Azure/ALZ-Bicep?style=flat&logo=github)
+
 ![Bicep Logo](docs/wiki/media/bicep-logo.png)
 
 Welcome to the Azure Landing Zones Bicep repo.
