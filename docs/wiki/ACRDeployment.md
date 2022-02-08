@@ -13,7 +13,7 @@ This document outlines the prerequisites, dependencies and flow to setup a Priva
 ## Deployment Flow
 
 1. Clone Bicep Azure Landing Zone Github repository
-    - `git clone https://githubcom/Azure/ALZ-Bicep.git`
+    - `git clone https://github.com/Azure/ALZ-Bicep.git`
 2. Login to Azure leveraging PowerShell or CLI
     - **PowerShell**: `Connect-AzAccount`
     - **CLI**: `az login`
