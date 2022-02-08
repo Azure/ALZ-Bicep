@@ -151,6 +151,12 @@
     "parDNSServerIPArray": {
       "value": []
     },
+    "parNetworkDNSEnableProxy": {
+      "value": true
+    },
+    "parDisableBGPRoutePropagation": {
+      "value": false
+    },
     "parTelemetryOptOut": {
       "value": false
     }
