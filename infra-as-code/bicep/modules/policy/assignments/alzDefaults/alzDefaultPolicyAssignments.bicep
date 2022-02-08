@@ -3,7 +3,7 @@
 SUMMARY: This module deploys the default Azure Landing Zone Azure Policy Assignments to the Management Group Hierarchy and also assigns the relevant RBAC.
 DESCRIPTION: This module deploys the default Azure Landing Zone Azure Policy Assignments to the Management Group Hierarchy and also assigns the relevant RBAC for the system-assigned Managed Identities created for policies that require them (e.g DeployIfNotExist & Modify effect policies).
 AUTHOR/S: jtracey93
-VERSION: 1.0.0
+VERSION: 1.0.1
 
 */
 
@@ -468,7 +468,7 @@ module modPolicyAssignmentIdentDeployVMBackup '../../../policy/assignments/polic
 // Modules - Policy Assignments - Management Management Group 
 // Module - Policy Assignment - Deploy-Log-Analytics
 module modPolicyAssignmentMgmtDeployLogAnalytics '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
-  scope: managementGroup(varManagementGroupIDs.platformIdentity)
+  scope: managementGroup(varManagementGroupIDs.platformManagement)
   name: varModuleDeploymentNames.modPolicyAssignmentMgmtDeployLogAnalytics
   params: {
     parPolicyAssignmentDefinitionID: varPolicyAssignmentDeployLogAnalytics.definitionID
@@ -737,7 +737,7 @@ module modPolicyAssignmentLZsDeploySQLThreat '../../../policy/assignments/policy
 // Modules - Policy Assignments - Corp Management Group
 // Module - Policy Assignment - Deny-Public-Endpoints
 module modPolicyAssignmentLZsDenyPublicEndpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
-  scope: managementGroup(varManagementGroupIDs.landingZones)
+  scope: managementGroup(varManagementGroupIDs.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLZsDenyPublicEndpoints
   params: {
     parPolicyAssignmentDefinitionID: varPolicyAssignmentDenyPublicEndpoints.definitionID
