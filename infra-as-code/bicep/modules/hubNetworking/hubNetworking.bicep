@@ -217,6 +217,7 @@ resource resDDoSProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01
 resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: parHubNetworkName
   location: resourceGroup().location
+  tags: parTags
   properties:{
     addressSpace:{
       addressPrefixes:[
