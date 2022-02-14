@@ -82,6 +82,7 @@ resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-
   identity: {
     type: varPolicyIdentity
   }
+  #disable-next-line no-loc-expr-outside-params
   location: deployment().location
 }
 
@@ -109,6 +110,7 @@ module modPolicyIdentityRoleAssignmentSubsMany '../../roleAssignments/roleAssign
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params
   name: 'pid-${varCuaid}-${uniqueString(deployment().location, parPolicyAssignmentName)}'
   params: {}
 }
