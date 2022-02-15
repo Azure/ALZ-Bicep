@@ -47,6 +47,7 @@ var varCuaid = '98cef979-5a6b-403b-83c7-10c8f04ac9a2'
 // Orchestration Module Variables
 var varDeploymentNameWrappers = {
   basePrefix: 'ALZBicep'
+  #disable-next-line no-loc-expr-outside-params
   baseSuffixTenantAndManagementGroup: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}'
 }
 
@@ -222,6 +223,7 @@ targetScope = 'managementGroup'
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params
   name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
   params: {}
 }

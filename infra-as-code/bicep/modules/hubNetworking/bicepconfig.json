@@ -57,10 +57,31 @@
         "simplify-interpolation": {
           "level": "error"
         },
-        "use-protectedsettings-for-commandtoexecute-secrets": {
+        "protect-commandtoexecute-secrets": {
           "level": "error"
         },
         "use-stable-vm-image": {
+          "level": "error"
+        },
+        "explicit-values-for-loc-params": {
+          "level": "error"
+        },
+        "no-hardcoded-location": {
+          "level": "error"
+        },
+        "no-loc-expr-outside-params": {
+          "level": "error"
+        },
+        "max-outputs": {
+          "level": "error"
+        },
+        "max-params": {
+          "level": "error"
+        },
+        "max-resources": {
+          "level": "error"
+        },
+        "max-variables": {
           "level": "error"
         }
       }

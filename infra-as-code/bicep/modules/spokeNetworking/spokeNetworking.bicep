@@ -6,12 +6,15 @@ DESCRIPTION: The following components will be options in this deployment
               UDR - if Firewall is enabled
               Private DNS Link
 AUTHOR/S: aultt, jtracey93
-VERSION: 1.1.0
+VERSION: 1.2.0
   - Changed default value of parNetworkDNSEnableProxy to false. Defaulting to false allow for testing on its own 
   - Changed default value of parDdosEnabled to false. Defaulting to false to allow for testing on its own
   - Added parSpokeNetworkName to allow customer input flexibility
   - Removed unrequired bool switches
 */
+
+@description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
+param parRegion string = resourceGroup().location
 
 @description('Switch which allows BGP Route Propagation to be disabled on the route table')
 param parBGPRoutePropagation bool = false
@@ -47,7 +50,7 @@ var varCuaid = '0c428583-f2a1-4448-975c-2d6262fd193a'
 //If Azure Firewall is enabled and Network Dns Proxy is enabled dns will be configured to point to AzureFirewall
 resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: parSpokeNetworkName
-  location: resourceGroup().location
+  location: parRegion
   properties: {
     addressSpace: {
       addressPrefixes: [
@@ -66,7 +69,7 @@ resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' =
 
 resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (!empty(parNextHopIPAddress)) {
   name: parSpoketoHubRouteTableName
-  location: resourceGroup().location
+  location: parRegion
   tags: parTags
   properties: {
     routes: [

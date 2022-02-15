@@ -1,5 +1,5 @@
 
-name: Close Pull Request
+name: Cancel Azure Subscription on PR Close
 
 # only trigger on pull request closed events
 on:
@@ -7,6 +7,7 @@ on:
     branches:
       - main
     types: [ closed ]
+
 env:
   SubscriptionName: "sub-unit-test-pr-${{ github.event.number }}"
   
@@ -26,43 +27,37 @@ jobs:
         creds: ${{ secrets.ALZ_AZURE_SECRET_UNIT_TESTS }}
         enable-AzPSSession: true
 
-    - name: Check if PR has associated subscription
-      uses: Azure/powershell@v1
-      with:
-        inlineScript: |
-            Install-Module -Name Az.Resources -Force
-            $subscription = Get-AzSubscription -SubscriptionName ${{ env.SubscriptionName }} -ErrorAction SilentlyContinue
-            If($subscription) {
-              echo "subscriptionId=$($subscription.Id)" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-            }
-        azPSVersion: latest
+    - name: Check if PR has an associated Azure Subscription
+      shell: pwsh
+      run: |
+        Install-Module -Name Az.Resources -Force
+        $subscription = Get-AzSubscription -SubscriptionName ${{ env.SubscriptionName }} -ErrorAction SilentlyContinue
+        If($subscription) {
+          echo "subscriptionId=$($subscription.Id)" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+          Write-Information "==> Azure Subscription Found called: ${{ env.SubscriptionName }}" -InformationAction Continue
+        }
 
-    - name: Remove existing resource groups
+    - name: Remove existing Resource Groups in PR associated Azure Subscription
       if: ${{ env.subscriptionId != '' }}
-      uses: Azure/powershell@v1
-      with:
-        inlineScript: |
-            Select-AzSubscription -SubscriptionId ${{ env.subscriptionId }} 
-            $resourceGroups = @()
-            $resourceGroups += Get-AzResourceGroup
-            If ($resourceGroups.Count -gt 0) {
-                $resourceGroups | ForEach-Object -Parallel {
-                    Write-Information "Deleting resource group $($PSItem.ResourceGroupName)"
-                    Remove-AzResourceGroup -Name $PSItem.ResourceGroupName -Force
-                }
+      shell: pwsh
+      run: |
+        Select-AzSubscription -SubscriptionId ${{ env.subscriptionId }} 
+        $resourceGroups = @()
+        $resourceGroups += Get-AzResourceGroup
+        $resourceGroups | Select-Object -Property ResourceGroupName
+        If ($resourceGroups.Count -gt 0) {
+            $resourceGroups | ForEach-Object -Parallel {
+                Write-Information "==>Deleting resource group $($PSItem.ResourceGroupName)"
+                Remove-AzResourceGroup -Name $PSItem.ResourceGroupName -Force
             }
-        azPSVersion: latest
+        }
 
-    - name: Cancel PR Subscription
+    - name: Cancel PR associated Azure Subscription
       if: ${{ env.subscriptionId != '' }}
-      uses: Azure/powershell@v1
-      with:
-        inlineScript: |
-            Install-Module -Name Az.Subscription -Force
-            Write-Information "PR #${{ github.event.number }} has been merged" -InformationAction Continue
-            Write-Information "${{ env.SubscriptionName }} to be deleted" -InformationAction Continue
-            Update-AzSubscription -SubscriptionId ${{ env.subscriptionId }} -Action 'Cancel'
-        azPSVersion: latest
-
-
+      shell: pwsh
+      run: |
+        Install-Module -Name Az.Subscription -Force
+        Write-Information "==> PR #${{ github.event.number }} has been merged" -InformationAction Continue
+        Write-Information "==> ${{ env.SubscriptionName }} to be deleted" -InformationAction Continue
+        Update-AzSubscription -SubscriptionId ${{ env.subscriptionId }} -Action 'Cancel' -Debug -Confirm:$false
 
