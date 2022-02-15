@@ -2,5 +2,11 @@
   "aliveStatusCodes": [
     200,
     203
+  ],
+  "replacementPatterns": [
+    {
+      "pattern": "^\.\/",
+      "replacement": "https://github.com/Azure/ALZ-Bicep/wiki"
+    }
   ]
 }
