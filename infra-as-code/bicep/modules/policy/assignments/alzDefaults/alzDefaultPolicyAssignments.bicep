@@ -19,7 +19,7 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 param parLogAnalyticsWorkSpaceAndAutomationAccountLocation string = 'eastus'
 
 @description('Log Analytics Workspace Resource ID. - DEFAULT VALUE: Empty String ')
-param parLogAnalyticsWorkspaceResourceID string = '/subscriptions/8200b669-cbc6-4e6c-b6d8-f4797f924074/resourceGroups/alz-logging/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics'
+param parLogAnalyticsWorkspaceResourceID string = ''
 
 @description('Number of days of log retention for Log Analytics Workspace. - DEFAULT VALUE: 365')
 param parLogAnalyticsWorkspaceLogRetentionInDays string = '365'
