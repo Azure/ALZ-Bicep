@@ -203,6 +203,7 @@ resource resLandingZonesOnlineMG 'Microsoft.Management/managementGroups@2021-04-
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdTenant.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params
   name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
   params: {}
 }

@@ -118,6 +118,7 @@ resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.Operational
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params
   name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
   params: {}
 }

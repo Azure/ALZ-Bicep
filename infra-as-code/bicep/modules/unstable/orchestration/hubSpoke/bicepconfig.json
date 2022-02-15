@@ -57,7 +57,7 @@
         "simplify-interpolation": {
           "level": "off"
         },
-        "use-protectedsettings-for-commandtoexecute-secrets": {
+        "protect-commandtoexecute-secrets": {
           "level": "off"
         },
         "use-stable-vm-image": {

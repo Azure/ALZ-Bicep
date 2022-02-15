@@ -2,6 +2,9 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "parRegion": {
+      "value": "eastus"
+    },
     "parBastionEnabled": {
       "value": true
     },
@@ -58,7 +61,7 @@
       "value": "alz"
     },
     "parDdosPlanName": {
-      "value": "alz-Ddos-Plan"
+      "value": "alz-ddos-Plan"
     },
     "parBastionSku": {
       "value": "Standard"
@@ -75,7 +78,7 @@
       "value": "10.20.0.0/16"
     },
     "parHubNetworkName": {
-      "value": "alz-hub-eastus2"
+      "value": "alz-hub-eastus"
     },
     "parAzureFirewallName": {
       "value": "alz-azure-firewall"
