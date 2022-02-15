@@ -57,3 +57,6 @@ jobs:
       continue-on-error: true
       with:
         config-file: '.github/actions-config/mlc_config.json'
+        use-verbose-mode: 'yes'
+        use-quiet-mode: 'yes'
+        
