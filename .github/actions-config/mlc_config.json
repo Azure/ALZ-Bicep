@@ -6,7 +6,7 @@
   "replacementPatterns": [
     {
       "pattern": "^\.\/",
-      "replacement": "https://github.com/Azure/ALZ-Bicep/wiki"
+      "replacement": "https://github.com/Azure/ALZ-Bicep/wikiii"
     }
   ]
 }
