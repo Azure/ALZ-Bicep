@@ -12,28 +12,29 @@ A pipeline is the repeatable process defined in a configuration file that you us
 
 ### Sample Pipelines
 
-The sample pipelines sequentially deploy the nine modules detailed in the [DeploymentFlow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) document in a single pipeline. The pipelines have been configured with manual triggers for learning and experimentation.
+These ALZ sample pipelines sequentially deploy the nine modules detailed in the [DeploymentFlow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) document in a single pipeline job. The pipelines have been configured with manual triggers for learning and experimentation.
 
 ### Sample Pipeline Code
 
-- [GitHub Actions](https://github.com/Azure/ALZ-Bicep/blob/wiki-pipelines/docs/wiki/PipelinesGitHub.md)
-- [Azure DevOps Pipelines](https://github.com/Azure/ALZ-Bicep/blob/wiki-pipelines/docs/wiki/PipelinesADO.md)
+- [GitHub Actions](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub.md)
+- [Azure DevOps Pipelines](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO.md)
 
 ### Sample Pipeline Flowchart
 
 ```mermaid
 flowchart TD
-    A[Deploy Management Groups] --> B[Deploy Custom Policy Definitions];
-    B --> C[Deploy Custom Role Definitions];
-    C --> D[Deploy Logging Resource Group];
-    D --> E[Deploy Logging];
-    E --> F[Deploy Hub Networking Resource Group];
-    F --> G[Deploy Hub Network];
-    G --> H[Deploy Role Assignment];
-    H --> I[Deploy Subscription Placement];
-    I --> J[Deploy Default Policy Assignments];
-    J --> K[Deploy Spoke Networking Resource Group];
-    K --> L[Deploy Spoke Network];
+    A[Pipeline Job] --> B(Deploy Management Groups);
+    B --> C(Deploy Custom Policy Definition)
+    C --> D(Deploy Custom Role Definitions);
+    D --> E(Deploy Logging Resource Group);
+    E --> F(Deploy Logging);
+    F --> G(Deploy Hub Networking Resource Group);
+    G --> H(Deploy Hub Network);
+    H --> I(Deploy Role Assignment);
+    I --> J(Deploy Subscription Placement);
+    J --> K(Deploy Default Policy Assignments);
+    K --> L(Deploy Spoke Networking Resource Group);
+    L --> M(Deploy Spoke Network);
 ```
 
 ### Considerations
