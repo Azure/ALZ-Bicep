@@ -54,9 +54,9 @@ param parVWanName string = '${parCompanyPrefix}-vwan-${resourceGroup().location}
 param parVHubName string = '${parCompanyPrefix}-vhub-${resourceGroup().location}'
 
 @description('Prefix Used for VPN Gateway. Default: {parCompanyPrefix}-vpngw-{resourceGroup().location}')
-param parVPNGwName string = '${parCompanyPrefix}-vpngw-${resourceGroup().location}'
+param parVPNGwName string = '${parCompanyPrefix}-vpngw-${parLocation}'
 
-@description('Prefix Used for ExpressRoute Gateway. Default: {parCompanyPrefix}-ergw-{resourceGroup().location}')
+@description('Prefix Used for ExpressRoute Gateway. Default: {parCompanyPrefix}-ergw-{parLocation}')
 param parERGwName string = '${parCompanyPrefix}-ergw-${parLocation}'
 
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-fw-{parLocation}')
