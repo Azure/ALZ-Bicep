@@ -2,14 +2,7 @@
 ## Azure Landing Zones Bicep - Pipelines
 <!-- markdownlint-restore -->
 
-This document provides high-level guidance for deploying the ALZ modules with pipelines and provides sample code for GitHub Actions and Azure DevOps Pipelines. The sample code leverages the orchestration templates, deployment sequence, and prerequisites described in the [DeploymentFlow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) document.
-
-## Prerequisites
-
-1. Azure Active Directory Tenant.
-2. Minimum 1 subscription.  Subscription(s) are required when configuring `Log Analytics Workspace` & `Hub Networking` services.  Each can be deployed in the same subscription or separate subscriptions based on deployment requirements.
-3. Deployment Identity with `Owner` permission to the `/` root management group.  Owner permission is required to allow the Service Principal Account to create role-based access control assignments.  See [configuration instructions](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow#deployment-identity).
-4. GitHub or Azure DevOps account.
+This document provides high-level guidance for deploying the ALZ modules with pipelines and provides sample code for GitHub Actions and Azure DevOps Pipelines. The sample code leverages the orchestration templates, deployment sequence, and prerequisites described in the [DeploymentFlow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) document. In addition to these prerequisites, a GitHub or Azure DevOps account will be needed to run the pipelines.
 
 ## ALZ Orchestration
 
@@ -45,11 +38,11 @@ flowchart TD
 
 ### Considerations
 
-The sample code provides a simple example of a deployment pipeline. In production environments it will likely be necessary to use more advanced pipelines to meet additional requirements. Often different teams are responsible for the various ALZ components and may need to manage their deployments separately to meet their particular requirements. 
+The sample code provides a simple example of a deployment pipeline. In production environments it will likely be necessary to use more advanced pipelines to meet additional requirements. Often different teams are responsible for the various ALZ components and may need to manage their deployments separately to meet their particular requirements.
 
 The sample code uses manually triggered pipelines for learning purposes. For GitHub Actions we use `on: [workflow_dispatch]` event for a manually triggered workflow. For Azure DevOps we use `trigger: none` for a manually triggered pipeline run. Typically teams will want to take a more automated approach to running workflows based upon events that occur in the repository, such as a pull request to the main branch. For an example of an automated workflow, please review the [bicep-build-to-validate.yml](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/bicep-build-to-validate.yml) file in the workflows directory of this repo.
 
-For many scenarios, it may also make sense to take a more modular approach to ALZ deployment. While a single pipeline is good for learning purposes, separate workflows aligned to ALZ components and the teams that manage them will likely be required for many organizations.
+For many scenarios, it may also make sense to take a more modular approach to ALZ deployment. While a single pipeline is good for learning purposes, separate workflows aligned to ALZ components and the teams that manage them may be required for some organizations.
 
 ## Recommended Learning
 
