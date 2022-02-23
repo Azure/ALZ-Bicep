@@ -47,7 +47,7 @@ The module will generate the following outputs:
 | ------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | outVirtualWANName | string | alz-vwan-eastus                                                                                                                                                                                            |
 | outVirtualWANID      | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus2/providers/Microsoft.Network/virtualWans/alz-vwan-eastus                                                                                                                                                                                          |
-| outVirtualHubName | string | alz-vhub-eastus2                                                                                                                                                                                            |
+| outVirtualHubName | string | alz-vhub-eastus                                                                                                                                                                                            |
 | outVirtualHubID      | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus2/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus2                                                                                                                                                                                          |
 ## Deployment
 
