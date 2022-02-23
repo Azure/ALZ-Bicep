@@ -16,8 +16,8 @@ These ALZ sample pipelines sequentially deploy the nine modules detailed in the 
 
 ### Sample Pipeline Code
 
-- [GitHub Actions](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub.md)
-- [Azure DevOps Pipelines](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO.md)
+- [GitHub Actions](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub)
+- [Azure DevOps Pipelines](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO)
 
 ### Sample Pipeline Flowchart
 
