@@ -1,6 +1,6 @@
 # Module:  Role Assignments for Management Groups & Subscriptions
 
-This module provides role assignment capabilities across Management Group & Subscription scopes. Role assignments are part of [Identity and Access Managemennt (IAM)](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management), which is one of the critical design areas in Enterprise-Scale Architecture. The role assignments can be performed for:
+This module provides role assignment capabilities across Management Group & Subscription scopes. Role assignments are part of [Identity and Access Management (IAM)](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management), which is one of the critical design areas in Enterprise-Scale Architecture. The role assignments can be performed for:
 
 - Managed Identities (System and User Assigned)
 - Service Principals
@@ -104,7 +104,7 @@ Connect-AzureAD
 
 ## Deployment
 
-In this example, the built-in Reader role will be asigned to a Service Principal account at the `alz-platform` management group scope.  The inputs for this module are defined in `roleAssignmentManagementGroup.parameters.*.example.json`.
+In this example, the built-in Reader role will be assigned to a Service Principal account at the `alz-platform` management group scope.  The inputs for this module are defined in `roleAssignmentManagementGroup.parameters.*.example.json`.
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
