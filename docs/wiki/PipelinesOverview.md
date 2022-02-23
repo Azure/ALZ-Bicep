@@ -49,10 +49,11 @@ For many scenarios, it may also make sense to take a more modular approach to AL
 
 ### GitHub Actions
 
-- [Deploy Azure resources by using Bicep and GitHub Actions](https://docs.microsoft.com/en-us/learn/paths/bicep-github-actions/)
-- [How to automatically trigger GitHub Actions workflows](https://docs.github.com/en/actions/using-workflows/triggering-a-workflow)
+- [Deploy Azure resources by using Bicep and GitHub Actions](https://docs.microsoft.com/learn/paths/bicep-github-actions/)
+- [How to automatically trigger GitHub Actions workflows](https://docs.github.com/actions/using-workflows/triggering-a-workflow)
 
 ### Azure DevOps Pipelines
 
-- [Deploy Azure resources by using Bicep and Azure Pipelines](https://docs.microsoft.com/en-us/learn/paths/bicep-azure-pipelines/)
-- [Azure DevOps Pipelines triggers](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azure-devops)
+- [Deploy Azure resources by using Bicep and Azure Pipelines](https://docs.microsoft.com/learn/paths/bicep-azure-pipelines/)
+- [Azure DevOps Pipelines triggers](https://docs.microsoft.com/azure/devops/pipelines/build/triggers?view=azure-devops)
+- [Azure DevOps Pipelines stages, dependencies, and conditions](https://docs.microsoft.com/azure/devops/pipelines/process/stages?view=azure-devops&tabs=yaml)
