@@ -59,7 +59,7 @@ param parVPNGwName string = '${parCompanyPrefix}-vpngw-${resourceGroup().locatio
 @description('Prefix Used for ExpressRoute Gateway. Default: {parCompanyPrefix}-ergw-{resourceGroup().location}')
 param parERGwName string = '${parCompanyPrefix}-ergw-${parLocation}'
 
-@description('Azure Firewall Name. Default: {parCompanyPrefix}-fw-{resourceGroup().location}')
+@description('Azure Firewall Name. Default: {parCompanyPrefix}-fw-{parLocation}')
 param parAzureFirewallName string = '${parCompanyPrefix}-fw-${resourceGroup().location}'
 
 @description('Region in which the resource group was created. Default: {resourceGroup().location}')
