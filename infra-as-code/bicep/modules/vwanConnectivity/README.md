@@ -56,7 +56,7 @@ In this example, the resources required for Virtual WAN connectivity will be dep
  | Azure Cloud    | Bicep template      | Input parameters file                    |
  | -------------- | ------------------- | ---------------------------------------- |
  | All  regions | vwanConnectivity.bicep | vwanConnectivity.bicep.parameters.example.json    |
- 
+
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
