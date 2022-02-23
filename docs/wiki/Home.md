@@ -16,6 +16,7 @@ Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` 
 * [Telemetry Tracking Using Customer Usage Attribution (PID)][wiki_cuaid]
 * [Azure Container Registry Deployment - Private Bicep Registry][wiki_acrdeploy]
 * [Frequently Asked Questions][wiki_faq]
+* [Sample Pipelines][wiki_pipelines]
 
 
  [//]: # (************************)
@@ -33,3 +34,4 @@ Replace `./` with `https://github.com/Azure/terraform-azurerm-caf-enterprise-sca
 [wiki_acrdeploy]:                          https://github.com/Azure/ALZ-Bicep/wiki/ACRDeployment "Wiki - Private Bicep Registry"
 [wiki_cuaid]:                          https://github.com/Azure/ALZ-Bicep/wiki/CustomerUsage "Wiki - Telemetry Usage ID"
 [wiki_faq]:                          https://github.com/Azure/ALZ-Bicep/wiki/FAQ "Wiki - FAQs"
+[wiki_pipelines]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesOverview "Wiki - Sample Pipelines"
