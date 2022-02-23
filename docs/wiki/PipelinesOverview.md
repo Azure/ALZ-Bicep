@@ -51,6 +51,7 @@ For many scenarios, it may also make sense to take a more modular approach to AL
 
 - [Deploy Azure resources by using Bicep and GitHub Actions](https://docs.microsoft.com/learn/paths/bicep-github-actions/)
 - [How to automatically trigger GitHub Actions workflows](https://docs.github.com/actions/using-workflows/triggering-a-workflow)
+- [Using jobs in a GitHub Actions workflow](https://docs.github.com/actions/using-jobs/using-jobs-in-a-workflow)
 
 ### Azure DevOps Pipelines
 
