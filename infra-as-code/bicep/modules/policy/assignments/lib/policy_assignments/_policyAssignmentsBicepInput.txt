@@ -78,11 +78,6 @@ var varPolicyAssignmentDeployASCMonitoring = {
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_asc_monitoring.tmpl.json'))
 }
 
-var varPolicyAssignmentDeployASCDFConfig = {
-	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-ASCDF-Config'
-	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_ascdf_config.tmpl.json'))
-}
-
 var varPolicyAssignmentDeployAzActivityLog = {
 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/2465583e-4e78-4c15-b6be-a36cbc7c8b0f'
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_azactivity_log.tmpl.json'))
@@ -96,6 +91,11 @@ var varPolicyAssignmentDeployLogAnalytics = {
 var varPolicyAssignmentDeployLXArcMonitoring = {
 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/9d2b61b4-1d14-4a63-be30-d4498e7ad2cf'
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_lx_arc_monitoring.tmpl.json'))
+}
+
+var varPolicyAssignmentDeployMDFCConfig = {
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config'
+	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_mdfc_config.tmpl.json'))
 }
 
 var varPolicyAssignmentDeployPrivateDNSZones = {
