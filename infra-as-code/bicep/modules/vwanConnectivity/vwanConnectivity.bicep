@@ -50,13 +50,13 @@ param parAzureFirewallEnabled bool = true
 @description('Switch which enables DNS proxy for Azure Firewall policies. Default: false')
 param parNetworkDNSEnableProxy bool = true
 
-@description('Prefix Used for Virtual WAN. Default: {parCompanyPrefix}-vwan-{resourceGroup().location}')
-param parVWanName string = '${parCompanyPrefix}-vwan-${resourceGroup().location}'
+@description('Prefix Used for Virtual WAN. Default: {parCompanyPrefix}-vwan-{parLocation}')
+param parVWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
 
-@description('Prefix Used for Virtual Hub. Default: {parCompanyPrefix}-hub-{resourceGroup().location}')
-param parVHubName string = '${parCompanyPrefix}-vhub-${resourceGroup().location}'
+@description('Prefix Used for Virtual Hub. Default: {parCompanyPrefix}-hub-{parLocation}')
+param parVHubName string = '${parCompanyPrefix}-vhub-${parLocation}'
 
-@description('Prefix Used for VPN Gateway. Default: {parCompanyPrefix}-vpngw-{resourceGroup().location}')
+@description('Prefix Used for VPN Gateway. Default: {parCompanyPrefix}-vpngw-{parLocation}')
 param parVPNGwName string = '${parCompanyPrefix}-vpngw-${parLocation}'
 
 @description('Prefix Used for ExpressRoute Gateway. Default: {parCompanyPrefix}-ergw-{parLocation}')
@@ -211,7 +211,7 @@ module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if (parVirtualHub
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
-  name: 'pid-${varCuaid}-${uniqueString('${parLocation}')}'
+  name: 'pid-${varCuaid}-${uniqueString(parLocation)}'
   params: {}
 }
 
