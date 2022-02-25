@@ -2,7 +2,7 @@
 ## Azure Landing Zones Bicep - GitHub Actions Pipeline
 <!-- markdownlint-restore -->
 
-## Sample code
+### Sample code
 
 ```yaml
 name: ALZ GitHub Actions deployment pipeline
