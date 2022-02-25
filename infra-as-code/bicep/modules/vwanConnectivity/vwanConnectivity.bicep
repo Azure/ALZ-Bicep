@@ -51,7 +51,7 @@ param parAzureFirewallEnabled bool = true
 param parNetworkDNSEnableProxy bool = true
 
 @description('Prefix Used for Virtual WAN. Default: {parCompanyPrefix}-vwan-{parLocation}')
-param parVWanName string = '${parCompanyPrefix}-vwan-${resourceGroup().location}'
+param parVWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
 
 @description('Prefix Used for Virtual Hub. Default: {parCompanyPrefix}-hub-{resourceGroup().location}')
 param parVHubName string = '${parCompanyPrefix}-vhub-${resourceGroup().location}'
