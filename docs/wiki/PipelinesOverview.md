@@ -41,7 +41,11 @@ flowchart TD
 
 The sample code provides a simple example of a deployment pipeline. In production environments it will likely be necessary to use more advanced pipelines to meet additional requirements. Often different teams are responsible for the various ALZ components and may need to manage their deployments separately to meet their particular requirements.
 
-The sample code uses manually triggered pipelines for learning purposes. For GitHub Actions we use `on: [workflow_dispatch]` event for a manually triggered workflow. For Azure DevOps we use `trigger: none` for a manually triggered pipeline run. Typically teams will want to take a more automated approach to running workflows based upon events that occur in the repository, such as a pull request to the main branch. For an example of an automated workflow, please review the [bicep-build-to-validate.yml](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/bicep-build-to-validate.yml) file in the workflows directory of this repo.
+The sample code uses manually triggered pipelines for learning purposes. For GitHub Actions we use `on: [workflow_dispatch]` event for a manually triggered workflow. For Azure DevOps we use `trigger: none` for a manually triggered pipeline run.
+
+Typically teams will want to take a more automated approach to running workflows based upon events that occur in the repository, such as a pull request to the main branch. Normally protected by a branch policies to enforce all changes to a protected branch (e.g. `main`) must be made via a PR. 
+
+For an example of an automated workflow, please review the [bicep-build-to-validate.yml](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/bicep-build-to-validate.yml) file in the workflows directory of this repo.
 
 For many scenarios, it may also make sense to take a more modular approach to ALZ deployment. While a single pipeline is good for learning purposes, separate workflows aligned to ALZ components and the teams that manage them may be required for some organizations.
 
