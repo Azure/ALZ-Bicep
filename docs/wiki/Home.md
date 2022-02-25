@@ -17,6 +17,8 @@ Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` 
 * [Azure Container Registry Deployment - Private Bicep Registry][wiki_acrdeploy]
 * [Frequently Asked Questions][wiki_faq]
 * [Sample Pipelines][wiki_pipelines]
+    * [GitHub Actions][wiki_pipelines_gh]
+    * [Azure DevOps][wiki_pipelines_ado]
 
 
  [//]: # (************************)
