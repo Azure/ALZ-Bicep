@@ -56,7 +56,7 @@ param parVWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
 @description('Prefix Used for Virtual Hub. Default: {parCompanyPrefix}-hub-{resourceGroup().location}')
 param parVHubName string = '${parCompanyPrefix}-vhub-${parLocation}'
 
-@description('Prefix Used for VPN Gateway. Default: {parCompanyPrefix}-vpngw-{resourceGroup().location}')
+@description('Prefix Used for VPN Gateway. Default: {parCompanyPrefix}-vpngw-{parLocation}')
 param parVPNGwName string = '${parCompanyPrefix}-vpngw-${parLocation}'
 
 @description('Prefix Used for ExpressRoute Gateway. Default: {parCompanyPrefix}-ergw-{parLocation}')
