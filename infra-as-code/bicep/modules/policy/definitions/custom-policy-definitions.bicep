@@ -2,7 +2,7 @@
 SUMMARY: This module deploys the custom Azure Policy Definitions & Initiatives supplied by the Enterprise Scale conceptual architecture and reference implementation to a specified Management Group.
 DESCRIPTION: This module deploys the custom Azure Policy Definitions & Initiatives supplied by the Enterprise Scale conceptual architecture and reference implementation defined here (https://aka.ms/enterprisescale) to a specified Management Group.
 AUTHOR/S: jtracey93
-VERSION: 1.0.0
+VERSION: 1.0.1
 */
 
 targetScope = 'managementGroup'
@@ -490,72 +490,6 @@ var varCustomPolicySetDefinitionsArray = [
     ]
   }
   {
-    name: 'Deploy-ASCDF-Config'
-    libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.json'))
-    libSetChildDefinitions: [
-      {
-        definitionReferenceID: 'ascExport'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/ffb6f416-7bd2-4488-8828-56585fef2be9'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).ascExport.parameters
-      }
-      {
-        definitionReferenceID: 'defenderForAppServices'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/b40e7bcd-a1e5-47fe-b9cf-2f534d0bfb7d'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForAppServices.parameters
-      }
-      {
-        definitionReferenceID: 'defenderForArm'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/b7021b2b-08fd-4dc0-9de7-3c6ece09faf9'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForArm.parameters
-      }
-      {
-        definitionReferenceID: 'defenderforContainers'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/c9ddb292-b203-4738-aead-18e2716e858f'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderforContainers.parameters
-      }
-      {
-        definitionReferenceID: 'defenderForDns'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/2370a3c1-4a25-4283-a91a-c9c1a145fb2f'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForDns.parameters
-      }
-      {
-        definitionReferenceID: 'defenderForKeyVaults'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/1f725891-01c0-420a-9059-4fa46cb770b7'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForKeyVaults.parameters
-      }
-      {
-        definitionReferenceID: 'defenderForOssDb'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/44433aa3-7ec2-4002-93ea-65c65ff0310a'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForOssDb.parameters
-      }
-      {
-        definitionReferenceID: 'defenderForSqlPaas'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/b99b73e7-074b-4089-9395-b7236f094491'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForSqlPaas.parameters
-      }
-      {
-        definitionReferenceID: 'defenderForSqlServerVirtualMachines'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/50ea7265-7d8c-429e-9a7d-ca1f410191c3'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForSqlServerVirtualMachines.parameters
-      }
-      {
-        definitionReferenceID: 'defenderForStorageAccounts'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/74c30959-af11-47b3-9ed2-a26e03f427a3'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForStorageAccounts.parameters
-      }
-      {
-        definitionReferenceID: 'defenderForVM'
-        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/8e86a5b6-b9bd-49d1-8e21-4bb8a0862222'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).defenderForVM.parameters
-      }
-      {
-        definitionReferenceID: 'securityEmailContact'
-        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-SecurityContacts'
-        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_ascdf_config.parameters.json')).securityEmailContact.parameters
-      }
-    ]
-  }
-  {
     name: 'Deploy-Diagnostics-LogAnalytics'
     libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_diagnostics_loganalytics.json'))
     libSetChildDefinitions: [
@@ -868,6 +802,72 @@ var varCustomPolicySetDefinitionsArray = [
         definitionReferenceID: 'WVDWorkspaceDeployDiagnosticLogDeployLogAnalytics'
         definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-WVDWorkspace'
         definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_diagnostics_loganalytics.parameters.json')).WVDWorkspaceDeployDiagnosticLogDeployLogAnalytics.parameters
+      }
+    ]
+  }
+  {
+    name: 'Deploy-MDFC-Config'
+    libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.json'))
+    libSetChildDefinitions: [
+      {
+        definitionReferenceID: 'ascExport'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/ffb6f416-7bd2-4488-8828-56585fef2be9'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.parameters.json')).ascExport.parameters
+      }
+      {
+        definitionReferenceID: 'defenderForAppServices'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/b40e7bcd-a1e5-47fe-b9cf-2f534d0bfb7d'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.parameters.json')).defenderForAppServices.parameters
+      }
+      {
+        definitionReferenceID: 'defenderForArm'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/b7021b2b-08fd-4dc0-9de7-3c6ece09faf9'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.parameters.json')).defenderForArm.parameters
+      }
+      {
+        definitionReferenceID: 'defenderforContainers'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/c9ddb292-b203-4738-aead-18e2716e858f'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.parameters.json')).defenderforContainers.parameters
+      }
+      {
+        definitionReferenceID: 'defenderForDns'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/2370a3c1-4a25-4283-a91a-c9c1a145fb2f'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.parameters.json')).defenderForDns.parameters
+      }
+      {
+        definitionReferenceID: 'defenderForKeyVaults'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/1f725891-01c0-420a-9059-4fa46cb770b7'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.parameters.json')).defenderForKeyVaults.parameters
+      }
+      {
+        definitionReferenceID: 'defenderForOssDb'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/44433aa3-7ec2-4002-93ea-65c65ff0310a'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.parameters.json')).defenderForOssDb.parameters
+      }
+      {
+        definitionReferenceID: 'defenderForSqlPaas'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/b99b73e7-074b-4089-9395-b7236f094491'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.parameters.json')).defenderForSqlPaas.parameters
+      }
+      {
+        definitionReferenceID: 'defenderForSqlServerVirtualMachines'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/50ea7265-7d8c-429e-9a7d-ca1f410191c3'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.parameters.json')).defenderForSqlServerVirtualMachines.parameters
+      }
+      {
+        definitionReferenceID: 'defenderForStorageAccounts'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/74c30959-af11-47b3-9ed2-a26e03f427a3'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.parameters.json')).defenderForStorageAccounts.parameters
+      }
+      {
+        definitionReferenceID: 'defenderForVM'
+        definitionID: '/providers/Microsoft.Authorization/policyDefinitions/8e86a5b6-b9bd-49d1-8e21-4bb8a0862222'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.parameters.json')).defenderForVM.parameters
+      }
+      {
+        definitionReferenceID: 'securityEmailContact'
+        definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-SecurityContacts'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_mdfc_config.parameters.json')).securityEmailContact.parameters
       }
     ]
   }
