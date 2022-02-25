@@ -1,3 +1,10 @@
+/*
+SUMMARY: Module to deploy the Private DNS Zones as per the Azure Landing Zone conceptual architecture 
+DESCRIPTION: The following components will deployed
+              Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
+AUTHOR/S: aultt, jtracey93, cloudchristoph
+VERSION: 1.x.x
+*/
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
 param parRegion string = resourceGroup().location
 
@@ -38,6 +45,7 @@ param parPrivateDnsZones array = [
   'privatelink.redis.cache.windows.net'
   'privatelink.redisenterprise.cache.azure.net'
   'privatelink.purview.azure.com'
+  'privatelink.purviewstudio.azure.com'
   'privatelink.digitaltwins.azure.net'
   'privatelink.azconfig.io'
   'privatelink.webpubsub.azure.com'
@@ -45,6 +53,10 @@ param parPrivateDnsZones array = [
   'privatelink.cognitiveservices.azure.com'
   'privatelink.azurecr.io'
   'privatelink.search.windows.net'
+  'privatelink.azurehdinsight.net'
+  'privatelink.media.azure.net'
+  'privatelink.his.arc.azure.com'
+  'privatelink.guestconfiguration.azure.com'
 ]
 
 @description('Tags you would like to be applied to all resources in this module. Default: empty array')

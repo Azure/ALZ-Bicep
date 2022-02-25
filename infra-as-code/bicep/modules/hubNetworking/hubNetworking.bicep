@@ -8,7 +8,7 @@ DESCRIPTION: The following components will be options in this deployment
               Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
               DDos Standard Plan
               Bastion
-AUTHOR/S: aultt, jtracey93
+AUTHOR/S: aultt, jtracey93, c
 VERSION: 1.2.0
 */
 
@@ -174,6 +174,7 @@ param parPrivateDnsZones array = [
   'privatelink.redis.cache.windows.net'
   'privatelink.redisenterprise.cache.azure.net'
   'privatelink.purview.azure.com'
+  'privatelink.purviewstudio.azure.com'
   'privatelink.digitaltwins.azure.net'
   'privatelink.azconfig.io'
   'privatelink.webpubsub.azure.com'
@@ -181,6 +182,10 @@ param parPrivateDnsZones array = [
   'privatelink.cognitiveservices.azure.com'
   'privatelink.azurecr.io'
   'privatelink.search.windows.net'
+  'privatelink.azurehdinsight.net'
+  'privatelink.media.azure.net'
+  'privatelink.his.arc.azure.com'
+  'privatelink.guestconfiguration.azure.com'
 ]
 
 @description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
