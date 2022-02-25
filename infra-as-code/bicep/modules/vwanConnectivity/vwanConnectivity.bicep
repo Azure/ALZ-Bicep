@@ -50,7 +50,7 @@ param parAzureFirewallEnabled bool = true
 @description('Switch which enables DNS proxy for Azure Firewall policies. Default: false')
 param parNetworkDNSEnableProxy bool = true
 
-@description('Prefix Used for Virtual WAN. Default: {parCompanyPrefix}-vwan-{resourceGroup().location}')
+@description('Prefix Used for Virtual WAN. Default: {parCompanyPrefix}-vwan-{parLocation}')
 param parVWanName string = '${parCompanyPrefix}-vwan-${resourceGroup().location}'
 
 @description('Prefix Used for Virtual Hub. Default: {parCompanyPrefix}-hub-{resourceGroup().location}')
