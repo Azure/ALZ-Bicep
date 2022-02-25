@@ -16,16 +16,21 @@ DESCRIPTION:
     * Updates
     * VMInsights
 
-AUTHOR/S: SenthuranSivananthan,aultt
-VERSION: 1.2.0
+AUTHOR/S: SenthuranSivananthan, aultt, cloudchristoph
+VERSION: 1.x.x
 
 # Release notes 11/23/2021 - V1.2:
     - Changed line 102 from parLogAnalyticsWorkspaceName to resLogAnalyticsWorkspace.name.  
     - Change is required so the resources are created in the correct order.  Without the change the link would fail sporatically.
+# Release notes xx/xx/xxxx - V1.x:
+    - Implemented parCompanyPrefix for Log Analytics Workspace and Automation Account resource
 */
 
-@description('Log Analytics Workspace name. - DEFAULT VALUE: alz-log-analytics')
-param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
+@description('Prefix value which will be prepended to all resource names. Default: alz')
+param parCompanyPrefix string = 'alz'
+
+@description('Log Analytics Workspace name. - DEFAULT VALUE: {parCompanyPrefix}-log-analytics')
+param parLogAnalyticsWorkspaceName string = '${parCompanyPrefix}-log-analytics'
 
 @description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings - DEFAULT VALUE: resourceGroup().location')
 param parLogAnalyticsWorkspaceRegion string = resourceGroup().location
@@ -62,8 +67,8 @@ param parLogAnalyticsWorkspaceSolutions array = [
   'VMInsights'
 ]
 
-@description('Automation account name. - DEFAULT VALUE: alz-automation-account')
-param parAutomationAccountName string = 'alz-automation-account'
+@description('Automation account name. - DEFAULT VALUE: {parCompanyPrefix}-automation-account')
+param parAutomationAccountName string = '${parCompanyPrefix}-automation-account'
 
 @description('Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings - DEFAULT VALUE: resourceGroup().location')
 param parAutomationAccountRegion string = resourceGroup().location
