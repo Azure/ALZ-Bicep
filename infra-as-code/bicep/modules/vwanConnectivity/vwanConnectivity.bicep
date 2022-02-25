@@ -211,7 +211,7 @@ module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if (parVirtualHub
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
-  name: 'pid-${varCuaid}-${uniqueString('${parLocation}')}'
+  name: 'pid-${varCuaid}-${uniqueString(parLocation)}'
   params: {}
 }
 
