@@ -91,7 +91,7 @@ There are two different sets of input parameters files; one for deploying to Azu
  | China regions  | policyAssignmentManagementGroup.bicep | mc-policyAssignmentManagementGroup.parameters.example-dine.json |
 
 
-In this example, the `Deploy-ASCDF-Config` custom policy definition will be deployed/assigned to the `alz-landingzones` management group (intermediate root management group). And the managed identity associated with the policy will also be assigned to the `alz-platform` management group, as defined in the parameter file: `policyAssignmentManagementGroup.parameters.example-dine.json` or `mc-policyAssignmentManagementGroup.parameters.example-dine.json`
+In this example, the `Deploy-MDFC-Config` custom policy definition will be deployed/assigned to the `alz-landingzones` management group (intermediate root management group). And the managed identity associated with the policy will also be assigned to the `alz-platform` management group, as defined in the parameter file: `policyAssignmentManagementGroup.parameters.example-dine.json` or `mc-policyAssignmentManagementGroup.parameters.example-dine.json`
 #### Azure CLI - DINE
 
 ```bash
