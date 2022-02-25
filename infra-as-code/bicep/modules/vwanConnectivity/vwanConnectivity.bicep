@@ -53,7 +53,7 @@ param parNetworkDNSEnableProxy bool = true
 @description('Prefix Used for Virtual WAN. Default: {parCompanyPrefix}-vwan-{parLocation}')
 param parVWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
 
-@description('Prefix Used for Virtual Hub. Default: {parCompanyPrefix}-hub-{resourceGroup().location}')
+@description('Prefix Used for Virtual Hub. Default: {parCompanyPrefix}-hub-{parLocation}')
 param parVHubName string = '${parCompanyPrefix}-vhub-${parLocation}'
 
 @description('Prefix Used for VPN Gateway. Default: {parCompanyPrefix}-vpngw-{parLocation}')
