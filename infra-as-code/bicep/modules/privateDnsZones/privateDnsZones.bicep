@@ -1,9 +1,6 @@
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
 param parRegion string = resourceGroup().location
 
-@description('Switch which allows Private DNS Zones to be disabled. Default: true')
-param parPrivateDNSZonesEnabled bool = true
-
 @description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
 param parPrivateDnsZones array = [
   'privatelink.azure-automation.net'
@@ -57,13 +54,13 @@ param parTags object = {}
 param parHubVirtualNetworkId string
 
 
-resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: if (parPrivateDNSZonesEnabled) {
+resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: {
   name: privateDnsZone
   location: 'global'
   tags: parTags
 }]
 
-resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in parPrivateDnsZones: if (parPrivateDNSZonesEnabled) {
+resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in parPrivateDnsZones: {
   name: '${privateDnsZoneName}/${privateDnsZoneName}'
   location: 'global'
   properties: {

@@ -33,8 +33,8 @@ param parNetworkDNSEnableProxy bool = true
 @description('Switch which allows BGP Propagation to be disabled on the route tables: Default: false')
 param parDisableBGPRoutePropagation bool = false
 
-@description('Switch which allows Private DNS Zones to be disabled. Default: true')
-param parPrivateDNSZonesEnabled bool = true
+@description('Switch which allows and deploys Private DNS Zones in this resource group - use "privateDnsZones" module to deploy to zones to their own resource group. Default: false')
+param parPrivateDNSZonesEnabled bool = false
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
 @description('''Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. 
