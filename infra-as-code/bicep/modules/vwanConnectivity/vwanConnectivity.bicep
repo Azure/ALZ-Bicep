@@ -1,5 +1,5 @@
 /*
-SUMMARY: Module to deploy the Virtual WAN network topology and its components as per the Azure Landing Zone conceptual architecture - https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/virtual-wan-network-topology. This module draws parity with the Enterprise Scale implementation https://github.com/Azure/Enterprise-Scale/blob/main/eslzArm/subscriptionTemplates/vwan-connectivity.json
+SUMMARY: Module to deploy the Virtual WAN network topology and its components as per the Azure Landing Zone conceptual architecture - https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/virtual-wan-network-topology. This module draws parity with the Enterprise Scale implementation defined in https://github.com/Azure/Enterprise-Scale/blob/main/eslzArm/subscriptionTemplates/vwan-connectivity.json
 DESCRIPTION: The following Azure resources will be deployed in a single resource group specified in the deployment parameter:
               Virtual WAN
               Public IP
@@ -17,9 +17,6 @@ param parCompanyPrefix string = 'alz'
 
 @description('The IP address range in CIDR notation for the vWAN virtual Hub to use. Default: 10.100.0.0/23')
 param parVhubAddressPrefix string = '10.100.0.0/23'
-
-@description('Switch which allows Azure Firewall deployment to be disabled. Default: false')
-param parAzureFirewallEnabled bool = false
 
 @description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
 @allowed([
@@ -42,10 +39,16 @@ param parTags object = {}
 param parVirtualHubEnabled bool = true
 
 @description('Switch which allows VPN Gateway. Default: false')
-param parVPNGatewayEnabled bool = false
+param parVPNGatewayEnabled bool = true
 
 @description('Switch which allows ExpressRoute Gateway. Default: false')
-param parERGatewayEnabled bool = false
+param parERGatewayEnabled bool = true
+
+@description('Switch which allows Azure Firewall deployment to be disabled. Default: false')
+param parAzureFirewallEnabled bool = true
+
+@description('Switch which enables DNS proxy for Azure Firewall policies. Default: false')
+param parNetworkDNSEnableProxy bool = true
 
 @description('Prefix Used for Virtual WAN. Default: {parCompanyPrefix}-vwan-{resourceGroup().location}')
 param parVWanName string = '${parCompanyPrefix}-vwan-${resourceGroup().location}'
@@ -61,6 +64,9 @@ param parERGwName string = '${parCompanyPrefix}-ergw-${parLocation}'
 
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-fw-{parLocation}')
 param parAzureFirewallName string = '${parCompanyPrefix}-fw-${parLocation}'
+
+@description('Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}')
+param parFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
 
 @description('Region in which the resource group was created. Default: {resourceGroup().location}')
 param parLocation string = resourceGroup().location
@@ -136,6 +142,20 @@ resource resERGateway 'Microsoft.Network/expressRouteGateways@2021-05-01' = if (
   }
 }
 
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = if (parVirtualHubEnabled && parAzureFirewallEnabled) {
+  name: parFirewallPoliciesName
+  location: parLocation
+  tags: parTags
+  properties: {
+    dnsSettings: {
+      enableProxy: parNetworkDNSEnableProxy
+    }
+    sku: {
+      tier: parAzureFirewallTier
+    }
+  }
+}
+
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.  
 resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (parVirtualHubEnabled && parAzureFirewallEnabled) {
@@ -151,7 +171,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
       publicIPs: {
         addresses: [
           {
-            address: modAzureFirewallPublicIP.outputs.outPublicIPID
+            address: parVirtualHubEnabled && parAzureFirewallEnabled ? modAzureFirewallPublicIP.outputs.outPublicIPID : ''
           }
         ]
         count: 1
@@ -162,13 +182,18 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
       tier: parAzureFirewallTier
     }
     virtualHub: {
-      id: resVHub.id
+      id: parVirtualHubEnabled ? resVHub.id : ''
     }
-    additionalProperties: { }
+    additionalProperties: { 
+      'Network.DNS.EnableProxy': '${parNetworkDNSEnableProxy}'
+    }
+    firewallPolicy: {
+      id: parVirtualHubEnabled && parAzureFirewallEnabled ? resFirewallPolicies.id : ''
+    }
   }
 }
 
-module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = {
+module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if (parVirtualHubEnabled && parAzureFirewallEnabled) {
   name: 'deploy-Firewall-Public-IP'
   params: {
     parPublicIPName: '${parAzureFirewallName}-PublicIP'

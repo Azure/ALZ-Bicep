@@ -5,14 +5,15 @@ This module is used to deploy the Virtual WAN network topology and its component
 Module deploys the following resources:
 
 - Virtual WAN
-- Public IP
 
 The following resources are optional and can be configured by parameters:
 
 - Virtual Hub. The virtual hub is a prerequisite to connect to either a VPN Gateway, an ExpressRoute Gateway or an Azure Firewall to the virtual WAN.
 - VPN Gateway
 - ExpressRoute Gateway
+- Public IP is deployed only if Azure Firewall is enabled. 
 - Azure Firewall
+- Azure Firewall Policies
 
 ## Parameters
 
@@ -24,16 +25,18 @@ The module requires the following inputs:
  | parVPNGatewayEnabled               | bool   | true                                                                                                 | Switch to enable deployment of VPN Gateway service                                                                                                                                                                                        | Virtual Hub                          | true                         |
  | parERGatewayEnabled      | bool   | true                                                                                                 | Switch to enable deployment of ExpressRoute Gateway                                                                                                                                                                                                                          | Virtual Hub                          | true                         |
  | parAzureFirewallEnabled    | bool   | true                                                                                                 | Switch to enable deployment of Azure Firewall                                                                                                                                                                                                              | Virtual Hub                          | true                         |
+ | parNetworkDNSEnableProxy    | bool   | true                                                                                                 | Switch to enable DNS proxy for Azure Firewall policies                                                                                                                                                                                                              | Azure Firewall                          | true                         |
  | parCompanyPrefix             | string | alz                                                                                                  | Prefix value which will be pre-appended to all resource names                                                                                                                                                                                                       | 1-10 char                     | alz                          |
  | parPublicIPSku               | string | Standard                                                                                             | SKU or Tier of Public IP to deploy                                                                                                                                                                                                                                  | Standard or Basic             | Standard                     |
  | parTags                      | object | Empty Array []                                                                                       | List of tags (Key Value Pairs) to be applied to resources                                                                                                                                                                                                           | None                          | environment: 'POC'   |
  | parVhubAddressPrefix   | string | 10.100.0.0/23                                                                                         | CIDR range for the Virtual WAN's Virtual Hub Network                                                                                                                                                                                                                                          | CIDR Notation                 | 10.100.0.0/23                 |
  | parAzureFirewallTier         | string | Standard                                                                                             | Tier associated with the Firewall to be deployed.                                                                                                                                                                                                                   | Standard or Premium           | Standard                      |
- | parVWanName            | string | ${parCompanyPrefix}-vwan-${resourceGroup().location}                                                  | Name prefix for Virtual WAN.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-vwan-eastus2              |
- | parVHubName            | string | ${parCompanyPrefix}-vhub-${resourceGroup().location}                                                  | Name prefix for Virtual Hub.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-vhub-eastus2              |
- | parVPNGwName            | string | ${parCompanyPrefix}-vpngw-${resourceGroup().location}                                                  | Name prefix for VPN Gateway.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-vpngw-eastus2              |
- | parERGwName            | string | ${parCompanyPrefix}-ergw-${resourceGroup().location}                                                  | Name prefix for ExpressRoute Gateway.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-ergw-eastus2              |
-  | parAzureFirewallName         | string | ${parCompanyPrefix}-fw-${resourceGroup().location}                                             | Name associated with Azure Firewall                                                                                                                                                                                                                                  | 1-80 char                     | alz-fw-eastus2           |
+ | parVWanName            | string | ${parCompanyPrefix}-vwan-${resourceGroup().location}                                                  | Name prefix for Virtual WAN.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-vwan-eastus              |
+ | parVHubName            | string | ${parCompanyPrefix}-vhub-${resourceGroup().location}                                                  | Name prefix for Virtual Hub.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-vhub-eastus              |
+ | parVPNGwName            | string | ${parCompanyPrefix}-vpngw-${resourceGroup().location}                                                  | Name prefix for VPN Gateway.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-vpngw-eastus              |
+ | parERGwName            | string | ${parCompanyPrefix}-ergw-${resourceGroup().location}                                                  | Name prefix for ExpressRoute Gateway.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-ergw-eastus              |
+  | parAzureFirewallName         | string | ${parCompanyPrefix}-fw-${resourceGroup().location}                                             | Name associated with Azure Firewall                                                                                                                                                                                                                                  | 1-80 char                     | alz-fw-eastus           |
+  | parFirewallPoliciesName         | string | ${parCompanyPrefix}-azfwpolicy-${resourceGroup().location}                                             | Name associated with Azure Firewall                                                                                                                                                                                                                                  | 1-80 char                     | alz-azfwpolicy-eastus           |
   | parLocation                    | string | `resourceGroup().location` | The Azure Region to deploy the resources into                       | None        | `eastus`                                                                                                                                              |
   | parVPNGwScaleUnit         | int | 1                                                                   | The scale unit for the VPN Gateway                                                                                                                                                                                                                | None                     | 1           |
  | parERGwScaleUnit         | int | 1                                                                   | The scale unit for the ExpressRoute Gateway                                                                                                                                                                                                                | None                     | 1           |
@@ -46,9 +49,9 @@ The module will generate the following outputs:
 | Output                    | Type   | Example                                                                                                                                                                                                  |
 | ------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | outVirtualWANName | string | alz-vwan-eastus                                                                                                                                                                                            |
-| outVirtualWANID      | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus2/providers/Microsoft.Network/virtualWans/alz-vwan-eastus                                                                                                                                                                                          |
+| outVirtualWANID      | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualWans/alz-vwan-eastus                                                                                                                                                                                          |
 | outVirtualHubName | string | alz-vhub-eastus                                                                                                                                                                                            |
-| outVirtualHubID      | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus2/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus                                                                                                                                                                                          |
+| outVirtualHubID      | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus                                                                                                                                                                                          |
 ## Deployment
 
 In this example, the resources required for Virtual WAN connectivity will be deployed to the resource group specified. According to the Azure Landing Zone Conceptual Architecture, the Virtual WAN resources should be deployed into the Platform connectivity subscription. During the deployment step, we will take parameters provided in the example parameters file.
@@ -66,11 +69,11 @@ In this example, the resources required for Virtual WAN connectivity will be dep
 ConnectivitySubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
-az group create --location eastus2 \
-   --name alz-vwan-eastus2
+az group create --location eastus \
+   --name alz-vwan-eastus
 
 az deployment group create \
-   --resource-group alz-vwan-eastus2 \
+   --resource-group alz-vwan-eastus \
    --template-file infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep \
    --parameters @infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json
 ```
@@ -99,13 +102,13 @@ $ConnectivitySubscriptionId = "[your platform management subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzResourceGroup -Name 'alz-vwan-eastus2' `
-  -Location 'EastUs2'
+New-AzResourceGroup -Name 'alz-vwan-eastus' `
+  -Location 'EastUs'
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json `
-  -ResourceGroupName 'alz-vwan-eastus2'
+  -ResourceGroupName 'alz-vwan-eastus'
 ```
 OR
 ```powershell
