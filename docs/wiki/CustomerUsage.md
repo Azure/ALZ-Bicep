@@ -43,4 +43,5 @@ The following are the unique ID's (also known as PIDs) used in each of the modul
 | spokeNetworking             | 0c428583-f2a1-4448-975c-2d6262fd193a |
 | subscriptionPlacement       | 3dfa9e81-f0cf-4b25-858e-167937fd380b |
 | virtualNetworkPeer          | ab8e3b12-b0fa-40aa-8630-e3f7699e2142 |
+| vwanConnectivity            | 7f94f23b-7a59-4a5c-9a8d-2a253a566f61 |
 | hubSpoke - Orchestration    | 50ad3b1a-f72c-4de4-8293-8a6399991beb |
