@@ -2,7 +2,7 @@
 ## Azure Landing Zones Bicep - Azure DevOps Pipeline
 <!-- markdownlint-restore -->
 
-## Sample Code
+### Sample Code
 
 ```yaml
 trigger: none
