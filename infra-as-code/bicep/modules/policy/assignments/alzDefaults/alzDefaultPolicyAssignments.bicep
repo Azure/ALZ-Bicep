@@ -47,7 +47,7 @@ var varCuaid = '98cef979-5a6b-403b-83c7-10c8f04ac9a2'
 // Orchestration Module Variables
 var varDeploymentNameWrappers = {
   basePrefix: 'ALZBicep'
-  #disable-next-line no-loc-expr-outside-params
+  #disable-next-line no-loc-expr-outside-params //Policies resources are not deployed to a region, like other resources, but the metadata is stored in a region hence requiring this to keep input parameters reduced. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
   baseSuffixTenantAndManagementGroup: '${deployment().location}-${uniqueString(deployment().location, parTopLevelManagementGroupPrefix)}'
 }
 
@@ -226,7 +226,7 @@ targetScope = 'managementGroup'
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
-  #disable-next-line no-loc-expr-outside-params
+  #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
   name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
   params: {}
 }
