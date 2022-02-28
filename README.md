@@ -16,6 +16,10 @@ Detailed information about how to use, deploy and extend artifacts found in this
 - [Telemetry Tracking Using Customer Usage Attribution (PID)][wiki_cuaid]
 - [Azure Container Registry Deployment - Private Bicep Registry][wiki_acrdeploy]
 - [Frequently Asked Questions][wiki_faq]
+- [Sample Pipelines][wiki_pipelines]
+  - [GitHub Actions][wiki_pipelines_gh]
+  - [Azure DevOps][wiki_pipelines_ado]
+
 
 ## Overview
 The Azure Landing Zones Bicep repo provides an approach for deploying and managing the core platform capabilities of Cloud Adoption Framework Azure Landing Zones conceptual architecture using Bicep.
@@ -82,6 +86,9 @@ Replace `./` with `https://github.com/Azure/terraform-azurerm-caf-enterprise-sca
 [vulnerability_reporting]:                          https://github.com/Azure/ALZ-Bicep/blob/main/SECURITY.md "Vulnerability reporting"
 [support_statement]:                          https://github.com/Azure/ALZ-Bicep/blob/main/SUPPORT.md "Microsoft Support Policy"
 [wiki_faq]:                          https://github.com/Azure/ALZ-Bicep/wiki/FAQ "Wiki - FAQs"
+[wiki_pipelines]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesOverview "Wiki - Sample Pipelines"
+[wiki_pipelines_gh]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub "Wiki - Sample Pipelines - GitHub Actions"
+[wiki_pipelines_ado]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO "Wiki - Sample Pipelines - Azure DevOps"
 
 
 
