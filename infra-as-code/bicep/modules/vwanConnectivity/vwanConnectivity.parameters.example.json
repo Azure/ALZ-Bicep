@@ -23,11 +23,6 @@
       "parPublicIPSku":{
           "value":"Standard"
       },
-      "parTags":{
-          "value":{
-            "Environment": "POC"
-          }
-      },
       "parVhubAddressPrefix" : {
         "value": "10.100.0.0/23"
       },

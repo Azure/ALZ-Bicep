@@ -156,22 +156,16 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = i
   }
 }
 
-// AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
-// There is a minimum subnet requirement of /26 prefix.  
 resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (parVirtualHubEnabled && parAzureFirewallEnabled) {
   name: parAzureFirewallName
   location: parLocation
   tags: parTags
-  dependsOn: [
-    // putting an explicit dependency because there is an implicit dependency below which produces a deployment error if parAzureFirewallEnabled == false
-    modAzureFirewallPublicIP
-  ]
   properties:{
     hubIPAddresses: {
       publicIPs: {
         addresses: [
           {
-            address: parVirtualHubEnabled && parAzureFirewallEnabled ? modAzureFirewallPublicIP.outputs.outPublicIPID : ''
+            address: (parVirtualHubEnabled && parAzureFirewallEnabled) ? modAzureFirewallPublicIP.outputs.outPublicIPID : ''
           }
         ]
         count: 1
@@ -188,7 +182,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
       'Network.DNS.EnableProxy': '${parNetworkDNSEnableProxy}'
     }
     firewallPolicy: {
-      id: parVirtualHubEnabled && parAzureFirewallEnabled ? resFirewallPolicies.id : ''
+      id: (parVirtualHubEnabled && parAzureFirewallEnabled) ? resFirewallPolicies.id : ''
     }
   }
 }
