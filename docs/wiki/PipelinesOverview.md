@@ -63,3 +63,4 @@ For many scenarios, it may also make sense to take a more modular approach to AL
 - [Deploy Azure resources by using Bicep and Azure Pipelines](https://docs.microsoft.com/learn/paths/bicep-azure-pipelines/)
 - [Azure DevOps Pipelines triggers](https://docs.microsoft.com/azure/devops/pipelines/build/triggers?view=azure-devops)
 - [Azure DevOps Pipelines stages, dependencies, and conditions](https://docs.microsoft.com/azure/devops/pipelines/process/stages?view=azure-devops&tabs=yaml)
+- [Azure DevOps Branch policies and settings](https://docs.microsoft.com/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser)
