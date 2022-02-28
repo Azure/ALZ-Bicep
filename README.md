@@ -17,8 +17,8 @@ Detailed information about how to use, deploy and extend artifacts found in this
 - [Azure Container Registry Deployment - Private Bicep Registry][wiki_acrdeploy]
 - [Frequently Asked Questions][wiki_faq]
 - [Sample Pipelines][wiki_pipelines]
-    - [GitHub Actions][wiki_pipelines_gh]
-    - [Azure DevOps][wiki_pipelines_ado]
+  - [GitHub Actions][wiki_pipelines_gh]
+  - [Azure DevOps][wiki_pipelines_ado]
 
 
 ## Overview
