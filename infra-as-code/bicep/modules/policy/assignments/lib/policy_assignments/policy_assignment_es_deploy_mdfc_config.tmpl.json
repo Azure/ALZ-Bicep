@@ -1,5 +1,5 @@
 {
-  "name": "Deploy-ASCDF-Config",
+  "name": "Deploy-MDFC-Config",
   "type": "Microsoft.Authorization/policyAssignments",
   "apiVersion": "2019-09-01",
   "properties": {
@@ -50,7 +50,7 @@
         "value": "DeployIfNotExists"
       }
     },
-    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-ASCDF-Config",
+    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config",
     "scope": null,
     "enforcementMode": "Default"
   },
