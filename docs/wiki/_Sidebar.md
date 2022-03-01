@@ -6,3 +6,6 @@
 * [Telemetry Tracking Using Customer Usage Attribution (PID)](https://github.com/Azure/ALZ-Bicep/wiki/CustomerUsage)
 * [Azure Container Registry Deployment - Private Bicep Registry](https://github.com/Azure/ALZ-Bicep/wiki/ACRDeployment)
 * [Frequently Asked Questions](https://github.com/Azure/ALZ-Bicep/wiki/FAQ)
+* [Sample Pipelines](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesOverview)
+  * [GitHub Actions](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub)
+  * [Azure DevOps](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO)
