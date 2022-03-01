@@ -28,6 +28,9 @@
       },
       "parAzureFirewallTier": {
         "value": "Standard"
+      },
+      "parTelemetryOptOut": {
+        "value": false
       }
     }
   }
