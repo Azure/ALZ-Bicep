@@ -30,6 +30,11 @@
     },
     "parAutomationAccountRegion": {
       "value": "chinaeast2"
+    },
+    "parTags": {
+      "value": {
+          "Environment": "POC"
+      }
     }
   }
 }
