@@ -31,6 +31,11 @@
     "parAutomationAccountRegion": {
       "value": "eastus2"
     },
+    "parTags": {
+      "value": {
+          "Environment": "POC"
+      }
+    },
     "parTelemetryOptOut": {
       "value": false
     }
