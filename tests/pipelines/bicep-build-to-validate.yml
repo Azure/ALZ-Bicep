@@ -55,6 +55,15 @@ jobs:
           echo "##vso[task.setvariable variable=gitHubOUTPUT]$git_hub"
 
   - task: Bash@3
+    displayName: Check for vwanNetworking Changes
+    name: git_vwannetworking_diff
+    inputs:
+      targetType: 'inline'
+      script: |
+          git_vwan=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep )
+          echo "##vso[task.setvariable variable=gitVwanOUTPUT]$git_vwan"
+
+  - task: Bash@3
     displayName: Check for spokeNetworking Changes
     name: git_spokenetworking_diff
     inputs:
@@ -75,7 +84,7 @@ jobs:
   - task: Bash@3
     displayName: Az CLI Create Subscription for PR
     name: create_subscription
-    condition: or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''))
+    condition: or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -168,6 +177,15 @@ jobs:
       targetType: 'inline'
       script: |
         az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep --parameters @infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json
+
+  - task: Bash@3    
+    displayName: Az CLI Deploy vWan Networking for PR
+    name: create_vwan_network
+    condition: and(ne(variables['gitVwanOUTPUT'], ''), ne(variables['subscriptionId'], ''))
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep --parameters @infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json
 
   - task: Bash@3              
     displayName: Az CLI Deploy Spoke Networking for PR
