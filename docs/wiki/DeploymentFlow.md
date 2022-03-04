@@ -30,7 +30,7 @@ Modules in this reference implementation must be deployed in the following order
 
 ## Network Topology Deployment
 
-The deployment flow above deploys an enterprise-ready platform foundation with all the necessary shared servicies. Next you need decide which network topology to implement that meets your requirements. The following lists examples of network topology deployment based on the recommended enterprise-scale architecture: 
+The deployment flow above deploys an enterprise-ready platform foundation with all the necessary shared servicies. Next you need decide which network topology to implement that meets your requirements. The following lists examples of network topology deployment based on the recommended enterprise-scale architecture:
 
 - [Enterprise-scale hub and spoke](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowHS)
 - [Enterprise-scale Virtual WAN](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowVWAN)

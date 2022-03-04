@@ -6,7 +6,7 @@
 
 This deploys a hub and spoke network [topology with Azure Virtual WAN](https://docs.microsoft.com/en-us/azure/architecture/networking/hub-spoke-vwan-architecture) to the enterprise-scale foundation. This connectivity approach uses Virtual WAN (VWAN) to replace hubs as a managed service. Spoke virtual networks peer with the VWAN virtual hub.
 
-Please review and run the [Deployment Flow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) before running these modules. 
+Please review and run the [Deployment Flow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) before running these modules.
 
 ### Module Deployment Sequence
 
