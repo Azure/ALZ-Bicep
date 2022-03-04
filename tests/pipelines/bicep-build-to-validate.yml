@@ -204,29 +204,14 @@ jobs:
   pool: 
     vmImage: ubuntu-latest
   steps:
-  - task: Bash@3
-    displayName: Login to Azure
-    name: git_azlogin
-    inputs:
-      targetType: 'inline'
-      script: |
-        az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
-  
-  - task: PowerShell@2
-    displayName: Az CLI Remove/Cleanup Deployment
-    condition: ne(variables['isDeployed'], '')
-    inputs:
-      targetType: 'inline'
-      script: |
-        install-module -Name "Az.ResourceGraph" -MinimumVersion "0.7.7"-Force
-
   - task: AzurePowerShell@5
     displayName: Az CLI Remove/Cleanup Deployment
     condition: ne(variables['isDeployed'], '')
     inputs:
       azureSubscription: 'azserviceconnection'
       ScriptType: 'FilePath'
-      ScriptPath: '.github/scripts/Wipe-ESLZAzTenant.ps1'
+      ScriptPath: '.github/scripts/Wipe-AlzTenant.ps1'
       ScriptArguments: '-tenantRootGroupID $(azclitenant) -intermediateRootGroupID "$(ManagementGroupPrefix)" -subscriptionName "$(SubscriptionName)"'
       azurePowerShellVersion: 'LatestVersion'
+      pwsh: true
 
