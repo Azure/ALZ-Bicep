@@ -13,7 +13,7 @@ VERSION: 1.2.0
 */
 
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
-param parRegion string = resourceGroup().location
+param parLocation string = resourceGroup().location
 
 @description('Switch which allows Bastion deployment to be disabled. Default: true')
 param parBastionEnabled bool = true
@@ -102,8 +102,8 @@ param parTags object = {}
 @description('The IP address range for all virtual networks to use. Default: 10.10.0.0/16')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
-@description('Prefix Used for Hub Network. Default: {parCompanyPrefix}-hub-{parRegion}')
-param parHubNetworkName string = '${parCompanyPrefix}-hub-${parRegion}'
+@description('Prefix Used for Hub Network. Default: {parCompanyPrefix}-hub-{parLocation}')
+param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
 param parAzureFirewallName string = '${parCompanyPrefix}-azure-firewall'
@@ -154,13 +154,13 @@ param parPrivateDnsZones array = [
   'privatelink.cassandra.cosmos.azure.com'
   'privatelink.gremlin.cosmos.azure.com'
   'privatelink.table.cosmos.azure.com'
-  'privatelink.${parRegion}.batch.azure.com'
+  'privatelink.${parLocation}.batch.azure.com'
   'privatelink.postgres.database.azure.com'
   'privatelink.mysql.database.azure.com'
   'privatelink.mariadb.database.azure.com'
   'privatelink.vaultcore.azure.net'
-  'privatelink.${parRegion}.azmk8s.io'
-  '${parRegion}.privatelink.siterecovery.windowsazure.com'
+  'privatelink.${parLocation}.azmk8s.io'
+  '${parLocation}.privatelink.siterecovery.windowsazure.com'
   'privatelink.servicebus.windows.net'
   'privatelink.azure-devices.net'
   'privatelink.eventgrid.azure.net'
@@ -210,14 +210,14 @@ var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
 
 resource resDDoSProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if (parDDoSEnabled) {
   name: parDDoSPlanName
-  location: parRegion
+  location: parLocation
   tags: parTags
 }
 
 //DDos Protection plan will only be enabled if parDDoSEnabled is true.  
 resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: parHubNetworkName
-  location: parRegion
+  location: parLocation
   tags: parTags
   properties: {
     addressSpace: {
@@ -239,7 +239,7 @@ resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
 module modBastionPublicIP '../publicIp/publicIp.bicep' = if (parBastionEnabled) {
   name: 'deploy-Bastion-Public-IP'
   params: {
-    parLocation: parRegion
+    parLocation: parLocation
     parPublicIPName: '${parBastionName}-PublicIP'
     parPublicIPSku: {
       name: parPublicIPSku
@@ -262,7 +262,7 @@ resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-
 // There is a minimum subnet requirement of /27 prefix.  
 // If you are deploying standard this needs to be larger. https://docs.microsoft.com/en-us/azure/bastion/configuration-settings#subnet
 resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if (parBastionEnabled) {
-  location: parRegion
+  location: parLocation
   name: parBastionName
   tags: parTags
   sku: {
@@ -294,7 +294,7 @@ resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-
 module modGatewayPublicIP '../publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: 'deploy-Gateway-Public-IP-${i}'
   params: {
-    parLocation: parRegion
+    parLocation: parLocation
     parPublicIPName: '${gateway.name}-PublicIP'
     parPublicIPProperties: {
       publicIPAddressVersion: 'IPv4'
@@ -311,7 +311,7 @@ module modGatewayPublicIP '../publicIp/publicIp.bicep' = [for (gateway, i) in va
 //Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
 resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: gateway.name
-  location: parRegion
+  location: parLocation
   tags: parTags
   properties: {
     activeActive: gateway.activeActive
@@ -351,7 +351,7 @@ resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@20
 module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if (parAzureFirewallEnabled) {
   name: 'deploy-Firewall-Public-IP'
   params: {
-    parLocation: parRegion
+    parLocation: parLocation
     parPublicIPName: '${parAzureFirewallName}-PublicIP'
     parPublicIPProperties: {
       publicIPAddressVersion: 'IPv4'
@@ -369,7 +369,7 @@ module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if (parAzureFirew
 // There is a minimum subnet requirement of /26 prefix.  
 resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (parAzureFirewallEnabled) {
   name: parAzureFirewallName
-  location: parRegion
+  location: parLocation
   tags: parTags
   properties: {
     networkRuleCollections: [
@@ -429,7 +429,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (parAzureFirewallEnabled) {
   name: parHubRouteTableName
-  location: parRegion
+  location: parLocation
   tags: parTags
   properties: {
     routes: [
