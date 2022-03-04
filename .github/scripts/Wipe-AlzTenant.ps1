@@ -19,8 +19,6 @@ param (
 $StopWatch = New-Object -TypeName System.Diagnostics.Stopwatch
 $StopWatch.Start()
 
-
-$userConfirmationMGsToDelete = Get-AzManagementGroup -GroupID $intermediateRootGroupID -Expand -Recurse | Select-Object Id, DisplayName, Name, TenantId, ParentId, ParentDisplayName, ParentName, Children
 $subToMove = Get-AzSubscription -SubscriptionName $subscriptionName
 
 if ($subToMove.State -ne "Disabled") {
