@@ -37,7 +37,7 @@ Modules in this reference implementation must be deployed in the following order
 You can decide which network topology to implement that meets your requirements. Please review the network topologies [here](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/hub-spoke-network-topology). The following lists examples of network topology deployment based on the recommended enterprise-scale architecture:
 
 - [Traditional VNet Hub and Spoke](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowHS) - Supports communication, shared resources and centralized security policy.
-- [Enterprise-scale Virtual WAN](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowVWAN) - Supports large-scale branch-to-branch and branch-to-Azure communications.
+- [Virtual WAN](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowVWAN) - Supports large-scale branch-to-branch and branch-to-Azure communications.
 
 ## Deployment Identity
 
