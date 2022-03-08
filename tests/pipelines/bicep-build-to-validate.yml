@@ -96,7 +96,7 @@ jobs:
   - task: Bash@3
     displayName: Az CLI Refresh subscription list
     name: refresh_subscription
-    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -105,7 +105,7 @@ jobs:
   - task: Bash@3    
     displayName: Az CLI Create Resource Group for PR
     name: create_rsg
-    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -118,7 +118,7 @@ jobs:
   - task: Bash@3     
     displayName: Az CLI Deploy Management Groups for PR
     name: create_mgs
-    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -163,7 +163,7 @@ jobs:
   - task: Bash@3    
     displayName: Az CLI Subscription Placement for PR
     name: move_sub
-    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -204,29 +204,14 @@ jobs:
   pool: 
     vmImage: ubuntu-latest
   steps:
-  - task: Bash@3
-    displayName: Login to Azure
-    name: git_azlogin
-    inputs:
-      targetType: 'inline'
-      script: |
-        az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
-  
-  - task: PowerShell@2
-    displayName: Az CLI Remove/Cleanup Deployment
-    condition: ne(variables['isDeployed'], '')
-    inputs:
-      targetType: 'inline'
-      script: |
-        install-module -Name "Az.ResourceGraph" -MinimumVersion "0.7.7"-Force
-
   - task: AzurePowerShell@5
     displayName: Az CLI Remove/Cleanup Deployment
     condition: ne(variables['isDeployed'], '')
     inputs:
       azureSubscription: 'azserviceconnection'
       ScriptType: 'FilePath'
-      ScriptPath: '.github/scripts/Wipe-ESLZAzTenant.ps1'
+      ScriptPath: '.github/scripts/Wipe-AlzTenant.ps1'
       ScriptArguments: '-tenantRootGroupID $(azclitenant) -intermediateRootGroupID "$(ManagementGroupPrefix)" -subscriptionName "$(SubscriptionName)"'
       azurePowerShellVersion: 'LatestVersion'
+      pwsh: true
 
