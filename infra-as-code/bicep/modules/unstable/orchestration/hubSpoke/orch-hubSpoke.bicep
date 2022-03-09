@@ -590,10 +590,10 @@ module modLogging '../../logging/logging.bicep' = {
   name: varModuleDeploymentNames.modLogging
   params: {
     parAutomationAccountName: parAutomationAccountName
-    parAutomationAccountRegion: parLocation
+    parAutomationAccountLocation: parLocation
     parLogAnalyticsWorkspaceLogRetentionInDays: parLogAnalyticsWorkspaceLogRetentionInDays
     parLogAnalyticsWorkspaceName: parLogAnalyticsWorkspaceName
-    parLogAnalyticsWorkspaceRegion: parLocation
+    parLogAnalyticsWorkspaceLocation: parLocation
     parLogAnalyticsWorkspaceSolutions: parLogAnalyticsWorkspaceSolutions
     parTelemetryOptOut: parTelemetryOptOut
   }
