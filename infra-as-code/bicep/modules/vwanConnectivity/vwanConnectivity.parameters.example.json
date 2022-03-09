@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "parVirtualHubEnabled": {
+        "value": true
+      },
+      "parVPNGatewayEnabled":{
+          "value": true
+      },
+      "parERGatewayEnabled":{
+        "value": true
+      },      
+      "parAzureFirewallEnabled": {
+          "value": true
+      },
+      "parNetworkDNSEnableProxy": {
+        "value": true
+    },      
+      "parCompanyPrefix":{
+          "value": "alz"
+      },
+      "parPublicIPSku":{
+          "value":"Standard"
+      },
+      "parVhubAddressPrefix" : {
+        "value": "10.100.0.0/23"
+      },
+      "parAzureFirewallTier": {
+        "value": "Standard"
+      },
+      "parTelemetryOptOut": {
+        "value": false
+      }
+    }
+  }
