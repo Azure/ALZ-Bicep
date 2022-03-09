@@ -89,7 +89,7 @@ var varModuleDeploymentNames = {
 
 var varPolicyAssignmentDenyDataBPip = {
 	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-NoPublicIp'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databrick_public_ip.tmpl.json'))
+	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_public_ip.tmpl.json'))
 }
 
 var varPolicyAssignmentDenyDataBSku = {
