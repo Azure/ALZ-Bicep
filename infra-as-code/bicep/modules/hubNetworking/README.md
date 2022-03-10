@@ -131,7 +131,7 @@ New-AzResourceGroup -Name 'Hub_Networking_POC' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/mc-hubNetworking.parameters.example.json
+  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/mc-hubNetworking.parameters.example.json `
   -ResourceGroupName 'Hub_Networking_POC'
 ```
 ## Example Output in Azure global regions
