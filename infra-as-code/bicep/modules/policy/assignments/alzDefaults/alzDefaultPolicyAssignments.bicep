@@ -30,7 +30,7 @@ param parAutomationAccountName string = 'alz-automation-account'
 @description('An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.')
 param parMSDFCEmailSecurityContact string = 'security_contact@replace_me.com'
 
-@description('ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at corp or landing zone Management Groups to avoid VNET deployment issues. Default: Empty String')
+@description('ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues. Default: Empty String')
 param parDdosProtectionPlanId string = ''
 
 @description('Set Parameter to true to Opt-out of deployment telemetry')
