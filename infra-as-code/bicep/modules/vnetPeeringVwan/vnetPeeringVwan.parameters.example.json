@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "parCompanyPrefix":{
+          "value": "alz"
+      },
+      "parSpokeNetworkAddressPrefix" : {
+        "value": "10.110.0.0/24"
+      },
+      "parVwanResourceId": {
+        "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualWans/alz-vwan-eastus"
+      },
+      "parDNSServerIPArray": {
+        "value": []
+      },      
+      "parTelemetryOptOut": {
+        "value": false
+      }
+    }
+  }
