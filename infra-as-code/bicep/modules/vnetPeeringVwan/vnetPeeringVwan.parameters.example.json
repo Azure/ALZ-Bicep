@@ -8,8 +8,8 @@
       "parSpokeNetworkAddressPrefix" : {
         "value": "10.110.0.0/24"
       },
-      "parVwanResourceId": {
-        "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualWans/alz-vwan-eastus"
+      "parVirtualHubResourceId": {
+        "value": "/subscriptions/8d599126-99a6-4102-8473-5679bcac3ede/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus"
       },
       "parDNSServerIPArray": {
         "value": []
@@ -18,4 +18,4 @@
         "value": false
       }
     }
-  }
+}

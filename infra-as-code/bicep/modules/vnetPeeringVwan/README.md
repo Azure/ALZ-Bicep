@@ -1,11 +1,11 @@
 # Module:  VNet Peering with vWAN
 
-This module is used to deploy virtual network peering with the Virtual WAN virtual hub based on this network topology according to the Azure Landing Zone conceptual architecture which can be found [here](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/virtual-wan-network-topology) and the hub-spoke network topology with Virtual WAN [here](https://docs.microsoft.com/en-us/azure/architecture/networking/hub-spoke-vwan-architecture). Once peered, virtual networks exchange traffic by using the Azure backbone. Virtual WAN enables transitivity among hubs which is not possible solely by using peering. This module draws parity with the Enterprise Scale implementation in the ARM template [here](https://github.com/Azure/Enterprise-Scale/blob/main/eslzArm/subscriptionTemplates/vnetPeeringVwan.json).
+This module is used to deploy virtual network peering with the Virtual WAN virtual hub. This network topology is based on the Azure Landing Zone conceptual architecture which can be found [here](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/virtual-wan-network-topology) and the hub-spoke network topology with Virtual WAN [here](https://docs.microsoft.com/en-us/azure/architecture/networking/hub-spoke-vwan-architecture). Once peered, virtual networks exchange traffic by using the Azure backbone network. Virtual WAN enables transitivity among hubs which is not possible solely by using peering. This module draws parity with the Enterprise Scale implementation in the ARM template [here](https://github.com/Azure/Enterprise-Scale/blob/main/eslzArm/subscriptionTemplates/vnetPeeringVwan.json).
 
 Module deploys the following resources which can be configured by parameters:
 
 - Spoke virtual network
-- Virtual network peering with Virtual WAN
+- Virtual network peering with Virtual WAN virtual hub
 
 ## Parameters
 
@@ -13,25 +13,13 @@ The module requires the following inputs:
 
  | Parameter                    | Type   | Default                                                                                              | Description                                                                                                                                                                                                                                                         | Requirement                   | Example                      |
  | ---------------------------- | ------ | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ---------------------------- |
- | parVirtualHubEnabled            | bool   | true                                                                                                 | Switch to enable deployment of Virtual Hub                                                                                                                                                                                                                         | None                          | true                         |
- | parVPNGatewayEnabled               | bool   | true                                                                                                 | Switch to enable deployment of VPN Gateway service                                                                                                                                                                                        | Virtual Hub                          | true                         |
- | parERGatewayEnabled      | bool   | true                                                                                                 | Switch to enable deployment of ExpressRoute Gateway                                                                                                                                                                                                                          | Virtual Hub                          | true                         |
- | parAzureFirewallEnabled    | bool   | true                                                                                                 | Switch to enable deployment of Azure Firewall                                                                                                                                                                                                              | Virtual Hub                          | true                         |
- | parNetworkDNSEnableProxy    | bool   | true                                                                                                 | Switch to enable DNS proxy for Azure Firewall policies                                                                                                                                                                                                              | Azure Firewall                          | true                         |
  | parCompanyPrefix             | string | alz                                                                                                  | Prefix value which will be pre-appended to all resource names                                                                                                                                                                                                       | 1-10 char                     | alz                          |
- | parPublicIPSku               | string | Standard                                                                                             | SKU or Tier of Public IP to deploy                                                                                                                                                                                                                                  | Standard or Basic             | Standard                     |
- | parTags                      | object | Empty Array []                                                                                       | List of tags (Key Value Pairs) to be applied to resources                                                                                                                                                                                                           | None                          | environment: 'POC'   |
- | parVhubAddressPrefix   | string | 10.100.0.0/23                                                                                         | CIDR range for the Virtual WAN's Virtual Hub Network                                                                                                                                                                                                                                          | CIDR Notation                 | 10.100.0.0/23                 |
- | parAzureFirewallTier         | string | Standard                                                                                             | Tier associated with the Firewall to be deployed.                                                                                                                                                                                                                   | Standard or Premium           | Standard                      |
- | parVWanName            | string | ${parCompanyPrefix}-vwan-${resourceGroup().location}                                                  | Name prefix for Virtual WAN.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-vwan-eastus              |
- | parVHubName            | string | ${parCompanyPrefix}-vhub-${resourceGroup().location}                                                  | Name prefix for Virtual Hub.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-vhub-eastus              |
- | parVPNGwName            | string | ${parCompanyPrefix}-vpngw-${resourceGroup().location}                                                  | Name prefix for VPN Gateway.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-vpngw-eastus              |
- | parERGwName            | string | ${parCompanyPrefix}-ergw-${resourceGroup().location}                                                  | Name prefix for ExpressRoute Gateway.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-ergw-eastus              |
-  | parAzureFirewallName         | string | ${parCompanyPrefix}-fw-${resourceGroup().location}                                             | Name associated with Azure Firewall                                                                                                                                                                                                                                  | 1-80 char                     | alz-fw-eastus           |
-  | parFirewallPoliciesName         | string | ${parCompanyPrefix}-azfwpolicy-${resourceGroup().location}                                             | Name associated with Azure Firewall                                                                                                                                                                                                                                  | 1-80 char                     | alz-azfwpolicy-eastus           |
-  | parLocation                    | string | `resourceGroup().location` | The Azure Region to deploy the resources into                       | None        | `eastus`                                                                                                                                              |
-  | parVPNGwScaleUnit         | int | 1                                                                   | The scale unit for the VPN Gateway                                                                                                                                                                                                                | None                     | 1           |
- | parERGwScaleUnit         | int | 1                                                                   | The scale unit for the ExpressRoute Gateway                                                                                                                                                                                                                | None                     | 1           |
+ | parTags                      | object | Empty Array []                                                                                       | List of tags (Key Value Pairs) to be applied to resources                                                                                                                                                                                                           | None                          | environment: 'POC'   | 
+ | parLocation           | string | resourceGroup().location | Location where spoke virtual network will be deployed        | Valid Azure Region | `westus`                         |
+ | parSpokeNetworkName          | string | ${parCompanyPrefix}-spokevnet-${resourceGroup().location}                                                  | Name prefix for spoke virtual network.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-spokevnet-westus              |
+ | parSpokeNetworkAddressPrefix   | string | 10.110.0.0/24                                                                                         | CIDR range for the spoke virtual network                                                                                                                                                                                                                                           | CIDR Notation                 | 10.110.0.0/24                 |
+ | parVirtualHubResourceId        | string | Empty string                                                  | Name prefix for spoke virtual network.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus              |
+ | parDNSServerIPArray          | array  | Empty array `[]`           | Array IP DNS Servers to use for VNet DNS Resolution                 | None        | `['10.10.1.4', '10.20.1.5']`                                                                                                                          |
  | parTelemetryOptOut           | bool   | false                                                                                                | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                                                                                                            | None                          | false                        |
 
 ## Outputs
@@ -40,95 +28,87 @@ The module will generate the following outputs:
 
 | Output                    | Type   | Example                                                                                                                                                                                                  |
 | ------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| outVirtualWANName | string | alz-vwan-eastus                                                                                                                                                                                            |
-| outVirtualWANID      | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualWans/alz-vwan-eastus                                                                                                                                                                                          |
-| outVirtualHubName | string | alz-vhub-eastus                                                                                                                                                                                            |
-| outVirtualHubID      | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus                                                                                                                                                                                          |
+| outSpokeVnetName | string | alz-vnet-westus                                                                                                                                                                                            |
+| outSpokeVnetResourceId      | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-spokevnet-westus/providers/Microsoft.Network/virtualNetworks/alz-vnet-westus                                                                                                                                                                                          |
+| outHubVirtualNetworkConnectionResourceId | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus/hubVirtualNetworkConnections/alz-vnet-westus                                                                                                                                                                                            |
 ## Deployment
 
-In this example, the resources required for Virtual WAN connectivity will be deployed to the resource group specified. According to the Azure Landing Zone Conceptual Architecture, the Virtual WAN resources should be deployed into the Platform connectivity subscription. During the deployment step, we will take parameters provided in the example parameters file.
+In this example, the resources required for spoke Vnet and its peering with the Vwan Virtual Hub will be deployed to the resource group specified. According to the Azure Landing Zone Conceptual Architecture, the spoke Vnet resources should be deployed into the Corp Connected Landing Zone subscription. During the deployment step, we will take parameters provided in the example parameters file.
 
  | Azure Cloud    | Bicep template      | Input parameters file                    |
  | -------------- | ------------------- | ---------------------------------------- |
- | All  regions | vwanConnectivity.bicep | vwanConnectivity.bicep.parameters.example.json    |
+ | All  regions | vnetPeeringVwan.bicep | vnetPeeringVwan.parameters.example.json    |
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
 ```bash
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
-ConnectivitySubscriptionId="[your platform management subscription ID]"
-az account set --subscription $ConnectivitySubscriptionId
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+CorpConnectedLZSubscriptionId="[your corp connected landing zone subscription ID]"
+az account set --subscription $CorpConnectedLZSubscriptionId
 
-az group create --location eastus \
-   --name alz-vwan-eastus
+az group create --location westus \
+   --name alz-spokevnet-westus
 
 az deployment group create \
-   --resource-group alz-vwan-eastus \
-   --template-file infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep \
-   --parameters @infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json
+   --resource-group alz-spokevnet-westus \
+   --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep \
+   --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json
 ```
 OR
 ```bash
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
-ConnectivitySubscriptionId="[your platform management subscription ID]"
-az account set --subscription $ConnectivitySubscriptionId
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+CorpConnectedLZSubscriptionId="[your corp connected landing zone subscription ID]"
+az account set --subscription $CorpConnectedLZSubscriptionId
 
-az group create --location chinaeast2 \
-   --name alz-vwan-chinaeast2
+az group create --location chinanorth2 \
+   --name alz-spokevnet-chinanorth2
 
 az deployment group create \
-   --resource-group alz-vwan-chinaeast2 \
-   --template-file infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep \
-   --parameters @infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json
+   --resource-group alz-spokevnet-chinanorth2 \
+   --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep \
+   --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
-$ConnectivitySubscriptionId = "[your platform management subscription ID]"
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+$CorpConnectedLZSubscriptionId = "[your corp connected landing zone subscription ID]"
 
-Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+Select-AzSubscription -SubscriptionId $CorpConnectedLZSubscriptionId
 
-New-AzResourceGroup -Name 'alz-vwan-eastus' `
-  -Location 'EastUs'
+New-AzResourceGroup -Name 'alz-spokevnet-westus' `
+  -Location 'WestUs'
   
 New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json `
-  -ResourceGroupName 'alz-vwan-eastus'
+  -TemplateFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json `
+  -ResourceGroupName 'alz-spokevnet-westus'
 ```
 OR
 ```powershell
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
-$ConnectivitySubscriptionId = "[your platform management subscription ID]"
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+$CorpConnectedLZSubscriptionId = "[your corp connected landing zone subscription ID]"
 
-Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+Select-AzSubscription -SubscriptionId $CorpConnectedLZSubscriptionId
 
-New-AzResourceGroup -Name 'alz-vwan-chinaeast2' `
-  -Location 'chinaeast2'
+New-AzResourceGroup -Name 'alz-spokevnet-chinanorth2' `
+  -Location 'chinanorth2'
   
 New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json `
-  -ResourceGroupName 'alz-vwan-chinaeast2'
+  -TemplateFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep `
+  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json `
+  -ResourceGroupName 'alz-spokevnet-chinanorth2'
 ```
 ## Example Output in Azure global regions
 
-![Example Deployment Output](media/vwanConnectivityExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
-
-![Example Virtual WAN Deployment Output](media/vwanExampleDeploymentOutput.png "Example Virtual WAN Deployment Output in Azure global regions")
-
-## Example Output in Azure China regions
-![Example Deployment Output](media/mc-vwanConnectivityExampleDeploymentOutput.png "Example Deployment Output in Azure China")
-
-![Example Virtual WAN Deployment Output](media/mc-vwanExampleDeploymentOutput.png "Example Virtual WAN Deployment Output in Azure China")
+![Example Deployment Output](media/vnetPeeringVwanExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
 
 ## Bicep Visualizer
 
-![Bicep Visualizer](media/vwanConnectivityBicepVisualizer.png "Bicep Visualizer")
+![Bicep Visualizer](media/vnetPeeringVwanBicepVisualizer.png "Bicep Visualizer")
