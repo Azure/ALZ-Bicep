@@ -167,7 +167,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg create --template-file infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep --parameters @infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) parLogAnalyticsWorkSpaceAndAutomationAccountLocation=$(Location) parLogAnalyticsWorkspaceResourceID="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" parDdosProtectionPlanId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-Ddos-Plan" --location $(Location) --management-group-id "$(ManagementGroupPrefix)-platform"
+        az deployment mg create --template-file infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep --parameters @infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) parLogAnalyticsWorkSpaceAndAutomationAccountLocation=$(Location) parLogAnalyticsWorkspaceResourceID="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" parDdosProtectionPlanId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-Ddos-Plan" --location $(Location) --management-group-id "$(ManagementGroupPrefix)"
 
   - task: Bash@3    
     displayName: Az CLI Deploy Hub Networking for PR
