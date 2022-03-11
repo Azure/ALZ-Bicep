@@ -26,6 +26,11 @@
         "parSpoketoHubRouteTableName": {
             "value": "rtb-spoke-to-hub"
         },
+        "parTags": {
+            "value": {
+              "Environment": "POC"
+            }
+          },
         "parTelemetryOptOut": {
             "value": false
         }

@@ -3,7 +3,7 @@
 SUMMARY: This module deploys the default Azure Landing Zone Azure Policy Assignments to the Management Group Hierarchy and also assigns the relevant RBAC.
 DESCRIPTION: This module deploys the default Azure Landing Zone Azure Policy Assignments to the Management Group Hierarchy and also assigns the relevant RBAC for the system-assigned Managed Identities created for policies that require them (e.g DeployIfNotExist & Modify effect policies).
 AUTHOR/S: jtracey93
-VERSION: 1.0.3
+VERSION: 1.0.4
 
 */
 
@@ -30,7 +30,7 @@ param parAutomationAccountName string = 'alz-automation-account'
 @description('An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.')
 param parMSDFCEmailSecurityContact string = 'security_contact@replace_me.com'
 
-@description('ID of the DdosProtectionPlan which will be applied to the Virtual Networks.  Default: Empty String')
+@description('ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues. Default: Empty String')
 param parDdosProtectionPlanId string = ''
 
 @description('Set Parameter to true to Opt-out of deployment telemetry')
@@ -397,7 +397,7 @@ module modPolicyAssignmentIntRootDeployVMSSMonitoring '../../../policy/assignmen
 
 // // Modules - Policy Assignments - Connectivity Management Group
 // Module - Policy Assignment - Enable-DDoS-VNET
-module modPolicyAssignmentConnEnableDDoSVNET '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
+module modPolicyAssignmentConnEnableDDoSVNET '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!empty(parDdosProtectionPlanId)) {
   scope: managementGroup(varManagementGroupIDs.platformConnectivity)
   name: varModuleDeploymentNames.modPolicyAssignmentConnEnableDDoSVNET
   params: {
@@ -597,7 +597,7 @@ module modPolicyAssignmentLZsDeployVMBackup '../../../policy/assignments/policyA
 }
 
 // Module - Policy Assignment - Enable-DDoS-VNET
-module modPolicyAssignmentLZsEnableDDoSVNET '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
+module modPolicyAssignmentLZsEnableDDoSVNET '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!empty(parDdosProtectionPlanId)) {
   scope: managementGroup(varManagementGroupIDs.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLZsEnableDDoSVNET
   params: {
