@@ -26,8 +26,11 @@ The module does not generate any outputs.
 ## Deployment
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
-
-> **Important:** If you decide to not use a DDoS Standard plan in your environment and therefore leave the parameter `parDdosProtectionPlanId` as an empty string (`''`) then the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues. However, if you later do decide to deploy an DDoS Standard Plan, you will need to remember to come back and update the parameter `parDdosProtectionPlanId` with the resource ID of the DDoS Standard Plan to ensure the policy is applied to the relevant Management Groups. You can then use a policy [remediation task](https://docs.microsoft.com/azure/governance/policy/how-to/remediate-resources) to bring all non-compliant VNETs back into compliance, once a [compliance scan](https://docs.microsoft.com/azure/governance/policy/how-to/get-compliance-data#evaluation-triggers) has taken place.
+<!-- markdownlint-disable -->
+> **Important:** If you decide to not use a DDoS Standard plan in your environment and therefore leave the parameter `parDdosProtectionPlanId` as an empty string (`''`) then the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues. 
+> 
+> However, if you later do decide to deploy an DDoS Standard Plan, you will need to remember to come back and update the parameter `parDdosProtectionPlanId` with the resource ID of the DDoS Standard Plan to ensure the policy is applied to the relevant Management Groups. You can then use a policy [remediation task](https://docs.microsoft.com/azure/governance/policy/how-to/remediate-resources) to bring all non-compliant VNETs back into compliance, once a [compliance scan](https://docs.microsoft.com/azure/governance/policy/how-to/get-compliance-data#evaluation-triggers) has taken place.
+<!-- markdownlint-restore -->
 
 ### Azure CLI
 ```bash
