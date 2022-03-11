@@ -162,7 +162,7 @@ jobs:
 
   - task: Bash@3    
     displayName: Az CLI Policy Assignment DINE for PR
-    name: create_policy_assignment_dine
+    name: alz_default_policy_assignments
     condition: and(ne(variables['gitManagementOUTPUT'], ''), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
