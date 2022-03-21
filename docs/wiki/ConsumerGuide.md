@@ -56,7 +56,7 @@ Whilst customizing the modules on the whole is straightforward and simple, there
 
 ### Management Groups
 
-Whilst most of the module rely upon the Intermediate Root Management Group (e.g. `alz` or `contoso`) some of the modules, like [`alzDefaultPolicyAssignments`](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) rely upon other Management Groups existing like `corp` to make policy assignments at this scope.
+Whilst most of the modules rely upon the Intermediate Root Management Group (e.g. `alz` or `contoso`) some of the modules, like [`alzDefaultPolicyAssignments`](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) rely upon other Management Groups existing like `corp` to make policy assignments at this scope.
 
 So if you customize the Management Group hierarchy you must also change references in other modules, as shown above. These are generally held in `variables` within each module to make it easier to customize in a single location per module, rather than multiple places per module.
 
