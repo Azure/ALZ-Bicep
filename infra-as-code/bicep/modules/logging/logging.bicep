@@ -28,7 +28,7 @@ VERSION: 1.2.0
 param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 
 @description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings - DEFAULT VALUE: resourceGroup().location')
-param parLogAnalyticsWorkspaceRegion string = resourceGroup().location
+param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 
 @minValue(30)
 @maxValue(730)
@@ -66,7 +66,7 @@ param parLogAnalyticsWorkspaceSolutions array = [
 param parAutomationAccountName string = 'alz-automation-account'
 
 @description('Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings - DEFAULT VALUE: resourceGroup().location')
-param parAutomationAccountRegion string = resourceGroup().location
+param parAutomationAccountLocation string = resourceGroup().location
 
 @description('Tags you would like to be applied to all resources in this module')
 param parTags object = {}
@@ -79,7 +79,7 @@ var varCuaid = 'f8087c67-cc41-46b2-994d-66e4b661860d'
 
 resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-01' = {
   name: parAutomationAccountName
-  location: parAutomationAccountRegion
+  location: parAutomationAccountLocation
   tags: parTags
   properties: {
     sku: {
@@ -90,7 +90,7 @@ resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-0
 
 resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
   name: parLogAnalyticsWorkspaceName
-  location: parLogAnalyticsWorkspaceRegion
+  location: parLogAnalyticsWorkspaceLocation
   tags: parTags
   properties: {
     sku: {
@@ -102,7 +102,7 @@ resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020
 
 resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solutions@2015-11-01-preview' = [for solution in parLogAnalyticsWorkspaceSolutions: {
   name: '${solution}(${resLogAnalyticsWorkspace.name})'
-  location: parLogAnalyticsWorkspaceRegion
+  location: parLogAnalyticsWorkspaceLocation
   tags: parTags
   properties: {
     workspaceResourceId: resLogAnalyticsWorkspace.id
