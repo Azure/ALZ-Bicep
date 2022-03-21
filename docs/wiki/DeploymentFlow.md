@@ -57,3 +57,7 @@ A service principal account is required to automate through Azure DevOps or GitH
 - Azure DevOps: [Setup Service Connection](https://docs.microsoft.com/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml)
 
 - GitHub: [Connect GitHub Actions to Azure](https://docs.microsoft.com/azure/developer/github/connect-from-azure)
+
+## Consumption Methods
+
+The `ALZ-Bicep` modules can be consumed and used in a manner of different ways. For more information see the [Consumer Guide](https://github.com/Azure/ALZ-Bicep/wiki/ConsumerGuide)
