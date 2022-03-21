@@ -13,7 +13,7 @@ Detailed information about how to use, deploy and extend artifacts found in this
 - [Home][wiki_home]
 - [Deployment Flow][wiki_deployment_flow]
   - [Network Topology: Hub and Spoke][wiki_deployment_flow_hs]
-  - [Network Topology: Virtual WAN][wiki_deployment_flow_vwan] 
+  - [Network Topology: Virtual WAN][wiki_deployment_flow_vwan]
 - [Consumer Guide][wiki_consumer_guide]
 - [Contributing][wiki_contributing]
 - [Telemetry Tracking Using Customer Usage Attribution (PID)][wiki_cuaid]

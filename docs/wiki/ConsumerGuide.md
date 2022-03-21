@@ -2,7 +2,7 @@
 ## How to Consume `ALZ-Bicep`
 <!-- markdownlint-restore -->
 
-## Background 
+## Background
 
 > This guidance supports the [Deployment Flow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) guidance, it is not a replacement
 
@@ -28,7 +28,7 @@ There are various ways to consume the Bicep modules included in `ALZ-Bicep`. The
   - Template Specs
     - See:
       - [Azure Resource Manager template specs in Bicep](https://docs.microsoft.com/azure/azure-resource-manager/bicep/template-specs)
-- Use and reference the modules directly from the Microsoft Public Bicep Registry - ***Coming Soon (awaiting feature release in Bicep)*** 
+- Use and reference the modules directly from the Microsoft Public Bicep Registry - ***Coming Soon (awaiting feature release in Bicep)***
 
 The option to use will be different per consumer based on their experience and skill levels with the various pieces of technology and their features.
 
@@ -38,13 +38,15 @@ The option to use will be different per consumer based on their experience and s
 
 Whatever way you may choose to consume the modules we do do expect, and want, customers and partners to customize the modules to suit their needs and requirements for their design in their local copies of the modules.
 
-For example, if you want to change the names of the Management Groups, outside of what the parameters allow you to change and customize, then by opening up the `managementGroups.bicep` module you should be able to read, understand and customize the required lines to meet your requirements easily; due to the way the modules have been authored as shared above. 
+For example, if you want to change the names of the Management Groups, outside of what the parameters allow you to change and customize, then by opening up the `managementGroups.bicep` module you should be able to read, understand and customize the required lines to meet your requirements easily; due to the way the modules have been authored as shared above.
 
 This customized module can then be deployed into your environment to deliver the desired changes and architecture.
 
+<!-- markdownlint-disable -->
 > **IMPORTANT:** If you believe the changes you have made should be more easily available to be customized by a parameter etc. in the module, then please raise an [issue](https://github.com/Azure/ALZ-Bicep/issues) for a 'Feature Request' on the repository 👍
 > 
 > If you wish to, also feel free to submit a pull request relating to the issue which we can review and work with you to potentially implement the suggestion/feature request 👍
+<!-- markdownlint-restore -->
 
 ## Considerations when Customizing the `ALZ-Bicep` Module
 
