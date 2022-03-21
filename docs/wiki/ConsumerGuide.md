@@ -8,7 +8,7 @@
 
 The `ALZ-Bicep` repository (this repository) has been created to help customers and partners to deploy and deliver the [Azure Landing Zones (ALZ) conceptual architecture](https://aka.ms/alz#azure-landing-zone-conceptual-architecture) into an Azure AD Tenant utilizing [Bicep](https://aka.ms/bicep) as the Infrastructure-as-Code (IaC) tooling and language.
 
-The style in which the Bicep modules have been authored in this repo are aimed at consumers of all skill levels. This is in an effort to make the modules as accessible as possible; especially for those that are newer to the world of IaC and/or Bicep. 
+The style in which the Bicep modules have been authored in this repo are aimed at consumers of all skill levels. This is in an effort to make the modules as accessible as possible; especially for those that are newer to the world of IaC and/or Bicep.
 
 We authored the modules with this in mind to help consumers accelerate their journey to Azure, as ALZ is likely to be one of the key first pieces of Azure a customer or partner will deploy and configure to establish the platform guardrails, connectivity and security elements to enable the future success of workloads within Azure.
 
