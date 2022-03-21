@@ -25,6 +25,9 @@ param parSpokeNetworkAddressPrefix string = '10.110.0.0/24'
 @description('Virtual Hub resource ID. Default: Empty String')
 param parVirtualHubResourceId string = ''
 
+@description('Remote Spoke virtual network resource ID. Default: Empty String')
+param parRemoteVirtualNetworkResourceId string = ''
+
 @description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
 param parDNSServerIPArray array = []
 
@@ -38,7 +41,7 @@ var varVwanSubscriptionId = split(parVirtualHubResourceId, '/')[2]
 
 var varVwanResourceGroup = split(parVirtualHubResourceId, '/')[4]
 
-resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = if (!empty(parVirtualHubResourceId)) {
+resource resNewSpokeVnet 'Microsoft.Network/virtualNetworks@2021-02-01' = if (empty(parRemoteVirtualNetworkResourceId) && !empty(parVirtualHubResourceId)) {
   name: parSpokeNetworkName
   location: parLocation
   tags: parTags
@@ -60,7 +63,7 @@ module modhubVirtualNetworkConnection 'hubVirtualNetworkConnection.bicep' = if (
   name: 'deploy-Vnet-Peering-Vwan'
   params: {
     parVirtualHubResourceId: parVirtualHubResourceId
-    parRemoteVirtualNetworkResourceId: resSpokeVirtualNetwork.id
+    parRemoteVirtualNetworkResourceId: !empty(parRemoteVirtualNetworkResourceId) ? parRemoteVirtualNetworkResourceId : resNewSpokeVnet.id
   }
 }
 
@@ -70,5 +73,5 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdRes
   params: {}
 }
 
-output outSpokeVnetName string = resSpokeVirtualNetwork.name
-output outSpokeVnetResourceId string = resSpokeVirtualNetwork.id
+output outHubVirtualNetworkConnectionName string = modhubVirtualNetworkConnection.name
+output outHubVirtualNetworkConnectionResourceId string = modhubVirtualNetworkConnection.outputs.outHubVirtualNetworkConnectionResourceId
