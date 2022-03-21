@@ -8,7 +8,9 @@
 
 The `ALZ-Bicep` repository (this repository) has been created to help customers and partners to deploy and deliver the [Azure Landing Zones (ALZ) conceptual architecture](https://aka.ms/alz#azure-landing-zone-conceptual-architecture) into an Azure AD Tenant utilizing [Bicep](https://aka.ms/bicep) as the Infrastructure-as-Code (IaC) tooling and language.
 
-The style in which the Bicep modules have been authored in this repo are aimed at consumers of all skill levels. This is in an effort to make the modules as accessible as possible; especially for those that are newer to the world of IaC and/or Bicep. This is to help consumers accelerate their journey to Azure as ALZ is likely to be one of the key first pieces of Azure a customer or partner will deploy and configure to establish the platform guardrails, connectivity and security elements to enable the future success of workloads within Azure.
+The style in which the Bicep modules have been authored in this repo are aimed at consumers of all skill levels. This is in an effort to make the modules as accessible as possible; especially for those that are newer to the world of IaC and/or Bicep. 
+
+We authored the modules with this in mind to help consumers accelerate their journey to Azure, as ALZ is likely to be one of the key first pieces of Azure a customer or partner will deploy and configure to establish the platform guardrails, connectivity and security elements to enable the future success of workloads within Azure.
 
 > More on the style of the modules can be seen in the [Contribution Guide](https://github.com/Azure/ALZ-Bicep/wiki/Contributing)
 
@@ -36,7 +38,7 @@ The option to use will be different per consumer based on their experience and s
 
 ## Customizing the `ALZ-Bicep` Modules
 
-Whatever way you may choose to consume the modules we do do expect, and want, customers and partners to customize the modules to suit their needs and requirements for their design in their local copies of the modules.
+Whatever way you may choose to consume the modules we do expect, and want, customers and partners to customize the modules to suit their needs and requirements for their design in their local copies of the modules.
 
 For example, if you want to change the names of the Management Groups, outside of what the parameters allow you to change and customize, then by opening up the `managementGroups.bicep` module you should be able to read, understand and customize the required lines to meet your requirements easily; due to the way the modules have been authored as shared above.
 
@@ -52,7 +54,7 @@ This customized module can then be deployed into your environment to deliver the
 
 Whilst customizing the modules on the whole is straightforward and simple, there are some key things to consider depending on which modules you customize.
 
-> See something missing from here? Please raise an [issue](https://github.com/Azure/ALZ-Bicep/issues) on the repo and let us know and feel free to contribute a pull request also 👍
+> See a topic or something missing from this section? Please raise an [issue](https://github.com/Azure/ALZ-Bicep/issues) on the repo and let us know and feel free to contribute a pull request also 👍
 
 ### Management Groups
 
