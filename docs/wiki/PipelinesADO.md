@@ -89,7 +89,7 @@ jobs:
         az account set --subscription $(LoggingSubId)
         az deployment sub create \
         --template-file infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep \
-        --parameters parResourceGroupName=$(LoggingResourceGroupName) parResourceGroupLocation=$(Location) \
+        --parameters parResourceGroupName=$(LoggingResourceGroupName) parLocation=$(Location) \
         --location $(Location) \
         --name create_logging_rg-$(RunNumber)
 
@@ -119,7 +119,7 @@ jobs:
         az account set --subscription $(HubNetworkSubId)
         az deployment sub create \
         --template-file infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep \
-        --parameters parResourceGroupName=$(HubNetworkResourceGroupName) parResourceGroupLocation=$(Location) \
+        --parameters parResourceGroupName=$(HubNetworkResourceGroupName) parLocation=$(Location) \
         --location $(Location) \
         --name create_hub_network_rg-$(RunNumber)
 
@@ -194,7 +194,7 @@ jobs:
         az account set --subscription $(SpokeNetworkSubId)
         az deployment sub create \
         --template-file infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep \
-        --parameters parResourceGroupName=$(SpokeNetworkResourceGroupName) parResourceGroupLocation=$(Location) \
+        --parameters parResourceGroupName=$(SpokeNetworkResourceGroupName) parLocation=$(Location) \
         --location $(Location) \
         --name create_spoke_network_rg-$(RunNumber)
 

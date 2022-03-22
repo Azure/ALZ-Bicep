@@ -13,6 +13,7 @@ resource resRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-p
   properties: {
     roleName: varRole.name
     description: varRole.description
+    type: 'CustomRole'
     permissions: [
       {
         actions: [

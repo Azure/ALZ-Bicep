@@ -80,7 +80,7 @@ jobs:
           subscriptionId: ${{ env.LoggingSubId }}
           region: ${{ env.Location }}
           template: infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep
-          parameters: parResourceGroupName=${{ env.LoggingResourceGroupName }} parResourceGroupLocation=${{ env.Location }}
+          parameters: parResourceGroupName=${{ env.LoggingResourceGroupName }} parLocation=${{ env.Location }}
           deploymentName: create_logging_rg-${{ env.runNumber }}
           failOnStdErr: false
 
@@ -103,7 +103,7 @@ jobs:
           subscriptionId: ${{ env.HubNetworkSubId }}
           region: ${{ env.Location }}
           template: infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep
-          parameters: parResourceGroupName=${{ env.HubNetworkResourceGroupName }} parResourceGroupLocation=${{ env.Location }}
+          parameters: parResourceGroupName=${{ env.HubNetworkResourceGroupName }} parLocation=${{ env.Location }}
           deploymentName: create_hub_network_rg-${{ env.runNumber }}
           failOnStdErr: false
 
@@ -162,7 +162,7 @@ jobs:
           subscriptionId: ${{ env.SpokeNetworkSubId }}
           region: ${{ env.Location }}
           template: infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep
-          parameters: parResourceGroupName=${{ env.SpokeNetworkResourceGroupName }} parResourceGroupLocation=${{ env.Location }}
+          parameters: parResourceGroupName=${{ env.SpokeNetworkResourceGroupName }} parLocation=${{ env.Location }}
           deploymentName: create_spoke_network_rg-${{ env.runNumber }}
           failOnStdErr: false
 
