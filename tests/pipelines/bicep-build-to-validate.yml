@@ -160,14 +160,17 @@ jobs:
       script: |
         az deployment mg create --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep --parameters @infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json parTargetManagementGroupId=$(ManagementGroupPrefix)-platform-connectivity parSubscriptionIds='[$(subscriptionId)]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
 
-  - task: Bash@3    
+  - task: AzurePowerShell@5
     displayName: Az CLI Policy Assignment DINE for PR
     name: create_policy_assignment_dine
     condition: and(ne(variables['gitManagementOUTPUT'], ''), ne(variables['subscriptionId'], ''))
     inputs:
-      targetType: 'inline'
-      script: |
-        az deployment mg create --template-file infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep --parameters @infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) parLogAnalyticsWorkSpaceAndAutomationAccountLocation=$(Location) parLogAnalyticsWorkspaceResourceID="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" parDdosProtectionPlanId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-Ddos-Plan" --location $(Location) --management-group-id "$(ManagementGroupPrefix)-platform"
+      azureSubscription: 'azserviceconnection'
+      ScriptType: 'FilePath'
+      ScriptPath: '.github/scripts/Set-AlzDefaultPolicyAssignment.ps1'
+      ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\alzDefaults\alzDefaultPolicyAssignments.parameters.example.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix) -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $(Location) -parLogAnalyticsWorkspaceResourceID "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" -parDdosProtectionPlanId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-Ddos-Plan"'
+      azurePowerShellVersion: 'LatestVersion'
+      pwsh: true
 
   - task: Bash@3    
     displayName: Az CLI Deploy Hub Networking for PR
