@@ -1,10 +1,9 @@
 # Module:  VNet Peering with vWAN
 
-This module is used to deploy virtual network peering with the Virtual WAN virtual hub. This network topology is based on the Azure Landing Zone conceptual architecture which can be found [here](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/virtual-wan-network-topology) and the hub-spoke network topology with Virtual WAN [here](https://docs.microsoft.com/en-us/azure/architecture/networking/hub-spoke-vwan-architecture). Once peered, virtual networks exchange traffic by using the Azure backbone network. Virtual WAN enables transitivity among hubs which is not possible solely by using peering. This module draws parity with the Enterprise Scale implementation in the ARM template [here](https://github.com/Azure/Enterprise-Scale/blob/main/eslzArm/subscriptionTemplates/vnetPeeringVwan.json).
+This module is used to perform virtual network peering with the Virtual WAN virtual hub. This network topology is based on the Azure Landing Zone conceptual architecture which can be found [here](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/virtual-wan-network-topology) and the hub-spoke network topology with Virtual WAN [here](https://docs.microsoft.com/en-us/azure/architecture/networking/hub-spoke-vwan-architecture). Once peered, virtual networks exchange traffic by using the Azure backbone network. Virtual WAN enables transitivity among hubs which is not possible solely by using peering. This module draws parity with the Enterprise Scale implementation in the ARM template [here](https://github.com/Azure/Enterprise-Scale/blob/main/eslzArm/subscriptionTemplates/vnetPeeringVwan.json).
 
 Module deploys the following resources which can be configured by parameters:
 
-- Spoke virtual network
 - Virtual network peering with Virtual WAN virtual hub
 
 ## Parameters
@@ -13,14 +12,9 @@ The module requires the following inputs:
 
  | Parameter                    | Type   | Default                                                                                              | Description                                                                                                                                                                                                                                                         | Requirement                   | Example                      |
  | ---------------------------- | ------ | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ---------------------------- |
- | parCompanyPrefix             | string | alz                                                                                                  | Prefix value which will be pre-appended to all resource names                                                                                                                                                                                                       | 1-10 char                     | alz                          |
- | parTags                      | object | Empty Array []                                                                                       | List of tags (Key Value Pairs) to be applied to resources                                                                                                                                                                                                           | None                          | environment: 'POC'   |
- | parLocation           | string | resourceGroup().location | Location where spoke virtual network will be deployed        | Valid Azure Region | `westus`                         |
- | parSpokeNetworkName          | string | ${parCompanyPrefix}-spokevnet-${resourceGroup().location}                                                  | Name prefix for spoke virtual network.  Prefix will be appended with the region.                                                                                                                                                                                          | 2-50 char                     | alz-spokevnet-westus              |
- | parSpokeNetworkAddressPrefix   | string | 10.110.0.0/24                                                                                         | CIDR range for the spoke virtual network                                                                                                                                                                                                                                           | CIDR Notation                 | 10.110.0.0/24                 |
+  | parLocation           | string | deployment().location | Location where spoke virtual network will be deployed        | Valid Azure Region | `eastus`                         |
  | parVirtualHubResourceId        | string | Empty string                                                  | Resource Id for Vwan Virtual Hub.                                                                                                                                                                                          | 2-50 char                     | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus              |
 | parRemoteVirtualNetworkResourceId        | string | Empty string                                                  | Resource Id for remote spoke virtual network.                                                                                                                                                                                          | 2-50 char                     | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualNetworks/alz-spokevnet-westus              |
- | parDNSServerIPArray          | array  | Empty array `[]`           | Array IP DNS Servers to use for VNet DNS Resolution                 | None        | `['10.10.1.4', '10.20.1.5']`                                                                                                                          |
  | parTelemetryOptOut           | bool   | false                                                                                                | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                                                                                                            | None                          | false                        |
 
 ## Outputs
@@ -34,7 +28,7 @@ The module will generate the following outputs:
 
 ## Deployment
 
-In this example, the resources required for spoke Vnet and its peering with the Vwan Virtual Hub will be deployed to the resource group specified. According to the Azure Landing Zone Conceptual Architecture, the spoke Vnet resources should be deployed into the Corp Connected Landing Zone subscription. During the deployment step, we will take parameters provided in the example parameters file.
+In this example, the remote spoke Vnet will be peered with the Vwan Virtual Hub in the Connectivity subscription. During the deployment step, we will take parameters provided in the example parameters file.
 
  | Azure Cloud    | Bicep template      | Input parameters file                    |
  | -------------- | ------------------- | ---------------------------------------- |
@@ -45,66 +39,54 @@ In this example, the resources required for spoke Vnet and its peering with the 
 ### Azure CLI
 ```bash
 # For Azure global regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
-CorpConnectedLZSubscriptionId="[your corp connected landing zone subscription ID]"
-az account set --subscription $CorpConnectedLZSubscriptionId
+# Set your Connectivity subscription ID as the the current subscription 
+$ConnectivitySubscriptionId="[your Connectivity subscription ID]"
+az account set --subscription $ConnectivitySubscriptionId
 
-az group create --location westus \
-   --name alz-spokevnet-westus
-
-az deployment group create \
-   --resource-group alz-spokevnet-westus \
+az deployment sub create \
    --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep \
-   --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json \
+   --location eastus
 ```
 OR
 ```bash
 # For Azure China regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription 
-CorpConnectedLZSubscriptionId="[your corp connected landing zone subscription ID]"
-az account set --subscription $CorpConnectedLZSubscriptionId
+$ConnectivitySubscriptionId="[your Connectivity subscription ID]"
+az account set --subscription $ConnectivitySubscriptionId
 
-az group create --location chinanorth2 \
-   --name alz-spokevnet-chinanorth2
-
-az deployment group create \
-   --resource-group alz-spokevnet-chinanorth2 \
+az deployment sub create \
    --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep \
-   --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json \
+   --location chinaeast2
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
-$CorpConnectedLZSubscriptionId = "[your corp connected landing zone subscription ID]"
+# Set your Connectivity subscription ID as the the current subscription 
+$ConnectivitySubscriptionId = "[your Connectivity subscription ID]"
 
-Select-AzSubscription -SubscriptionId $CorpConnectedLZSubscriptionId
+Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzResourceGroup -Name 'alz-spokevnet-westus' `
-  -Location 'WestUs'
-  
-New-AzResourceGroupDeployment `
+New-AzDeployment `
   -TemplateFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json `
-  -ResourceGroupName 'alz-spokevnet-westus'
+  -Location 'eastus'
 ```
 OR
 ```powershell
 # For Azure China regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
-$CorpConnectedLZSubscriptionId = "[your corp connected landing zone subscription ID]"
+# Set your Connectivity subscription ID as the the current subscription 
+$ConnectivitySubscriptionId = "[your Connectivity subscription ID]"
 
-Select-AzSubscription -SubscriptionId $CorpConnectedLZSubscriptionId
+Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzResourceGroup -Name 'alz-spokevnet-chinanorth2' `
-  -Location 'chinanorth2'
-  
-New-AzResourceGroupDeployment `
+New-AzDeployment `
   -TemplateFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json `
-  -ResourceGroupName 'alz-spokevnet-chinanorth2'
+  -Location 'chinaeast2'
 ```
 ## Example Output in Azure global regions
 
