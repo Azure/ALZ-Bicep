@@ -117,6 +117,14 @@ etc...
 |   Modules    |     `mod`     | `modManagementGroups`, `modLogAnalytics`                             |
 |   Outputs    |     `out`     | `outIntermediateRootManagementGroupID`, `outLogAnalyticsWorkspaceID` |
 
+### Bicep Common Parameters Naming Standards
+
+The below guidelines should be adhered to whilst contributing to this projects Bicep code.
+
+- `parLocation`
+  - Shall be used for all module parameters specifying the Azure region to which a resource or module will be deployed.
+  - The only exception to this is when two inter-related services do not have region parity and need to be deployed to different regions. (i.e. Log Analytics and Automation Accounts in China. See logging module for an example)
+
 ### Bicep File Structure
 
 For all Bicep files created as part of this project they will follow the structure pattern of being grouped by element type, this is shown in the image below:

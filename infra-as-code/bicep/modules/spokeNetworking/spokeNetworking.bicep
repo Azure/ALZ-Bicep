@@ -14,7 +14,7 @@ VERSION: 1.2.0
 */
 
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
-param parRegion string = resourceGroup().location
+param parLocation string = resourceGroup().location
 
 @description('Switch which allows BGP Route Propagation to be disabled on the route table')
 param parBGPRoutePropagation bool = false
@@ -50,7 +50,7 @@ var varCuaid = '0c428583-f2a1-4448-975c-2d6262fd193a'
 //If Azure Firewall is enabled and Network Dns Proxy is enabled dns will be configured to point to AzureFirewall
 resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: parSpokeNetworkName
-  location: parRegion
+  location: parLocation
   properties: {
     addressSpace: {
       addressPrefixes: [
@@ -69,7 +69,7 @@ resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' =
 
 resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (!empty(parNextHopIPAddress)) {
   name: parSpoketoHubRouteTableName
-  location: parRegion
+  location: parLocation
   tags: parTags
   properties: {
     routes: [

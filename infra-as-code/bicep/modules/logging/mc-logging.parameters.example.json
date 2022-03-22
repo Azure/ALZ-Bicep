@@ -5,7 +5,7 @@
     "parLogAnalyticsWorkspaceName": {
       "value": "alz-log-analytics"
     },
-    "parLogAnalyticsWorkspaceRegion": {
+    "parLogAnalyticsWorkspaceLocation": {
       "value": "chinaeast2"
     },
     "parLogAnalyticsWorkspaceLogRetentionInDays": {
@@ -28,7 +28,7 @@
     "parAutomationAccountName": {
       "value": "alz-automation-account"
     },
-    "parAutomationAccountRegion": {
+    "parAutomationAccountLocation": {
       "value": "chinaeast2"
     },
     "parTags": {
