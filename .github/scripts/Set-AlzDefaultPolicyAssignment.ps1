@@ -22,6 +22,11 @@ while ($i -lt 4 -and $state -eq 'fail') {
     Catch {
         $i++
         Write-Output "Default policy assignment failed with $error"
+        Write-Output "Iteration number $i"
+        Write-Output "Will retry in 30 seconds"
         Start-Sleep -Seconds 30
     }
+}
+If ($state -eq 'fail') {
+    Throw "Default policy assignment failed"
 }
