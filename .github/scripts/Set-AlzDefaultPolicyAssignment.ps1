@@ -13,7 +13,7 @@ param (
 $state = 'fail'
 $i = 0
 $err.clear
-while ($i -lt 9 -and $state -eq 'fail') {
+while ($i -lt 4 -and $state -eq 'fail') {
     $ErrorActionPreference = "Stop"
     Try {
         New-AzManagementGroupDeployment -Managementgroupid $ManagementGroupId -Location $parLocation -TemplateFile $templateFile -TemplateParameterFile $parameterFile -parTopLevelManagementGroupPrefix $parTopLevelManagementGroupPrefix -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $parLocation -parLogAnalyticsWorkspaceResourceID $parLogAnalyticsWorkspaceResourceID -parDdosProtectionPlanId $parDdosProtectionPlanId
@@ -22,6 +22,6 @@ while ($i -lt 9 -and $state -eq 'fail') {
     Catch {
         $i++
         Write-Output "Default policy assignment failed with $error"
-        Start-Sleep -Seconds 60
+        Start-Sleep -Seconds 30
     }
 }
