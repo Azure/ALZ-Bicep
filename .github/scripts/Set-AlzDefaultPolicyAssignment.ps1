@@ -16,7 +16,7 @@ $err.clear
 while ($i -lt 4 -and $state -eq 'fail') {
     $ErrorActionPreference = "Stop"
     Try {
-        New-AzManagementGroupDeployment -Managementgroupid $ManagementGroupId -Location $parLocation -TemplateFile $templateFile -TemplateParameterFile $parameterFile -parTopLevelManagementGroupPrefix $parTopLevelManagementGroupPrefix -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $parLocation -parLogAnalyticsWorkspaceResourceID $parLogAnalyticsWorkspaceResourceID -parDdosProtectionPlanId $parDdosProtectionPlanId
+        New-AzManagementGroupDeployment -Managementgroupid $ManagementGroupId -Location $parLocation -TemplateFile $templateFile -TemplateParameterFile $parameterFile -parTopLevelManagementGroupPrefix $parTopLevelManagementGroupPrefix -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $parLogAnalyticsWorkSpaceAndAutomationAccountLocation -parLogAnalyticsWorkspaceResourceID $parLogAnalyticsWorkspaceResourceID -parDdosProtectionPlanId $parDdosProtectionPlanId
         $state = 'success'
     }
     Catch {
