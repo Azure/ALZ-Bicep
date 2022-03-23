@@ -162,7 +162,7 @@ jobs:
         az deployment mg create --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep --parameters @infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json parTargetManagementGroupId=$(ManagementGroupPrefix)-platform-connectivity parSubscriptionIds='[$(subscriptionId)]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
 
   - task: AzurePowerShell@5
-    displayName: Az CLI Policy Assignment DINE for PR
+    displayName: Az CLI alzDefaultPolicyAssignments for PR
     name: alz_default_policy_assignments
     condition: and(ne(variables['gitManagementOUTPUT'], ''), ne(variables['subscriptionId'], ''))
     inputs:
