@@ -28,10 +28,11 @@ jobs:
           git_diff1=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/managementGroups/managementGroups.bicep)
           git_diff2=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep)
           git_diff3=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep)
-          git_diff4=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep)
-          git_diff5=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep)
-          git_diff6=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep)
-          if [[ $git_diff1 != '' ]] || [[ $git_diff2 != '' ]] || [[ $git_diff3 != '' ]] || [[ $git_diff4 != '' ]] || [[ $git_diff5 != '' ]] || [[ $git_diff6 != '' ]]
+          git_diff4=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep)
+          git_diff5=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep)
+          git_diff6=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep)
+          git_diff7=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep)
+          if [[ $git_diff1 != '' ]] || [[ $git_diff2 != '' ]] || [[ $git_diff3 != '' ]] || [[ $git_diff4 != '' ]] || [[ $git_diff5 != '' ]] || [[ $git_diff6 != '' ]] || [[ $git_diff7 != '' ]]
             then echo "##vso[task.setvariable variable=gitManagementOutput]setmgmt"
           fi
           echo 
