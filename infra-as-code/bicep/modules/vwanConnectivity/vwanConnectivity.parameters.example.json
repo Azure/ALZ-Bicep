@@ -6,10 +6,10 @@
         "value": true
       },
       "parVPNGatewayEnabled":{
-          "value": false
+          "value": true
       },
       "parERGatewayEnabled":{
-        "value": false
+        "value": true
       },      
       "parAzureFirewallEnabled": {
           "value": true

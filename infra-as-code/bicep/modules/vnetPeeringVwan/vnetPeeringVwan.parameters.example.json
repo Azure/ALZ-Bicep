@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "parVirtualHubResourceId": {
-      "value": "/subscriptions/8d599126-99a6-4102-8473-5679bcac3ede/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus"
+      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus"
     },
     "parRemoteVirtualNetworkResourceId": {
-      "value": "/subscriptions/8d599126-99a6-4102-8473-5679bcac3ede/resourceGroups/alz-vwan-westus/providers/Microsoft.Network/virtualNetworks/alz-spokevnet-westus"
+      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/remotevnet-rg/providers/Microsoft.Network/virtualNetworks/vnet-spoke"
     },
     "parTelemetryOptOut": {
       "value": false
