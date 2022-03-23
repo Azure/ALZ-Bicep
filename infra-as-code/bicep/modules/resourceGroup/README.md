@@ -21,8 +21,10 @@ The module requires the following inputs:
 
 The module will generate the following outputs:
 
-| Output | Type | Example |
-| ------ | ---- | ------- |
+| Output                      | Type   | Example                                                                                                                                             |
+| --------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| outResourceGroupName | string | corp-hubservices-rg                                                                                                                                   |
+| outResourceGroupId    | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxxx-xxxxxxxxx/resourceGroups/corp-hubservices-rg |
 
 ## Deployment
 

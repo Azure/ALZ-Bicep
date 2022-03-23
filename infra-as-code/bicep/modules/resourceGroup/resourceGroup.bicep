@@ -3,8 +3,9 @@ SUMMARY: Module to deploy a resource group to the subscription specified.
 DESCRIPTION: The following components will be required parameters in this deployment
     parLocation
     parResourceGroupName
-AUTHOR/S: aultt
-VERSION: 1.0.0
+AUTHOR/S: aultt, KiZach
+VERSION: 1.0.1
+  - added outputs to make depends-on support better for sub modules deploying into the created resource group.
 */
 
 targetScope = 'subscription'
@@ -34,3 +35,6 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdSub
   name: 'pid-${varCuaid}-${uniqueString(subscription().subscriptionId, parResourceGroupName)}'
   params: {}
 }
+
+output outResourceGroupName string = resResourceGroup.name
+output outResourceGroupId string = resResourceGroup.id
