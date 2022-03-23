@@ -21,7 +21,7 @@ while ($i -lt 4 -and $state -eq 'fail') {
     }
     Catch {
         $i++
-        Write-Output "Default policy assignment failed with $error"
+        Write-Output "ALZ Default Policy Assignments module failed to deploy with $error"
         Write-Output "Iteration number $i"
         Write-Output "Will retry in 30 seconds"
         Start-Sleep -Seconds 30
