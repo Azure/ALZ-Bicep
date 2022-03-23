@@ -28,5 +28,5 @@ while ($i -lt 4 -and $state -eq 'fail') {
     }
 }
 If ($state -eq 'fail') {
-    Throw "Default policy assignment failed"
+    Throw "ALZ Default Policy Assignments module failed to deploy after $i attempts"
 }
