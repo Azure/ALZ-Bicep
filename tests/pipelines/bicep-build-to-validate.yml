@@ -29,9 +29,10 @@ jobs:
           git_diff2=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep)
           git_diff3=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep)
           git_diff4=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep)
-          git_diff5=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep)
-          git_diff6=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep)
-          if [[ $git_diff1 != '' ]] || [[ $git_diff2 != '' ]] || [[ $git_diff3 != '' ]] || [[ $git_diff4 != '' ]] || [[ $git_diff5 != '' ]] || [[ $git_diff6 != '' ]]
+          git_diff5=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep)
+          git_diff6=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep)
+          git_diff7=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep)
+          if [[ $git_diff1 != '' ]] || [[ $git_diff2 != '' ]] || [[ $git_diff3 != '' ]] || [[ $git_diff4 != '' ]] || [[ $git_diff5 != '' ]] || [[ $git_diff6 != '' ]] || [[ $git_diff7 != '' ]]
             then echo "##vso[task.setvariable variable=gitManagementOutput]setmgmt"
           fi
           echo 
@@ -88,7 +89,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value)
+        subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
         echo $subId
         echo "##vso[task.setvariable variable=subscriptionId]$subid"
         echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
@@ -152,22 +153,25 @@ jobs:
         az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json
 
   - task: Bash@3    
-    displayName: Az CLI Policy Assignment DINE for PR
-    name: create_policy_assignment_dine
-    condition: and(ne(variables['gitManagementOUTPUT'], ''), ne(variables['subscriptionId'], ''))
-    inputs:
-      targetType: 'inline'
-      script: |
-        az deployment mg create --template-file infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep --parameters @infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) parLogAnalyticsWorkSpaceAndAutomationAccountLocation=$(Location) parLogAnalyticsWorkspaceResourceID="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" parDdosProtectionPlanId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-Ddos-Plan" --location $(Location) --management-group-id "$(ManagementGroupPrefix)-platform"
-
-  - task: Bash@3    
     displayName: Az CLI Subscription Placement for PR
     name: move_sub
     condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg create --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep --parameters @infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json parTargetManagementGroupId=$(ManagementGroupPrefix)-platform-connectivity parSubscriptionIds='[$(subscriptionId)]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
+        az deployment mg create --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep --parameters @infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json parTargetManagementGroupId=$(ManagementGroupPrefix)-platform-connectivity parSubscriptionIds='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
+
+  - task: AzurePowerShell@5
+    displayName: Az PwSh alzDefaultPolicyAssignments for PR
+    name: alz_default_policy_assignments
+    condition: and(ne(variables['gitManagementOUTPUT'], ''), ne(variables['subscriptionId'], ''))
+    inputs:
+      azureSubscription: 'azserviceconnection'
+      ScriptType: 'FilePath'
+      ScriptPath: '.github/scripts/Set-AlzDefaultPolicyAssignment.ps1'
+      ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\alzDefaults\alzDefaultPolicyAssignments.parameters.example.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix) -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $(Location) -parLogAnalyticsWorkspaceResourceID "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" -parDdosProtectionPlanId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-Ddos-Plan"'
+      azurePowerShellVersion: 'LatestVersion'
+      pwsh: true
 
   - task: Bash@3    
     displayName: Az CLI Deploy Hub Networking for PR
