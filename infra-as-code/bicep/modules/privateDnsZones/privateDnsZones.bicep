@@ -8,8 +8,19 @@ VERSION: 1.x.x
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
 param parRegion string = resourceGroup().location
 
-@description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
-param parPrivateDnsZones array = [
+@description('Deploy all known Azure Private DNS Zones. Default: true')
+param parDeployAllZones bool = true
+
+@description('Array of custom DNS Zones to provision in Hub Virtual Network. Default: empty array, all known zones deployed')
+param parPrivateDnsZones array = []
+
+@description('Tags you would like to be applied to all resources in this module. Default: empty array')
+param parTags object = {}
+
+@description('Resource ID of Hub VNet for Private DNS Zone VNet Links')
+param parHubVirtualNetworkId string
+
+var varKnownDnsZones = [
   'privatelink.azure-automation.net'
   'privatelink.database.windows.net'
   'privatelink.sql.azuresynapse.net'
@@ -59,20 +70,15 @@ param parPrivateDnsZones array = [
   'privatelink.guestconfiguration.azure.com'
 ]
 
-@description('Tags you would like to be applied to all resources in this module. Default: empty array')
-param parTags object = {}
+var varPrivateDnsZones = parDeployAllZones ? varKnownDnsZones : parPrivateDnsZones
 
-@description('Resource ID of Hub VNet for Private DNS Zone VNet Links')
-param parHubVirtualNetworkId string
-
-
-resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: {
+resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in varPrivateDnsZones: {
   name: privateDnsZone
   location: 'global'
   tags: parTags
 }]
 
-resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in parPrivateDnsZones: {
+resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in varPrivateDnsZones: {
   name: '${privateDnsZoneName}/${privateDnsZoneName}'
   location: 'global'
   properties: {
@@ -84,7 +90,7 @@ resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetwork
   dependsOn: resPrivateDnsZones
 }]
 
-output outPrivateDnsZones array = [for i in range(0, length(parPrivateDnsZones)): {
+output outPrivateDnsZones array = [for i in range(0, length(varKnownDnsZones)): {
   name: resPrivateDnsZones[i].name
   id: resPrivateDnsZones[i].id
 }]
