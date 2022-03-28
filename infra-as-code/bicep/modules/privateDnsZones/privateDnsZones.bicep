@@ -20,6 +20,9 @@ param parTags object = {}
 @description('Resource ID of Hub VNet for Private DNS Zone VNet Links')
 param parHubVirtualNetworkId string
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
 var varKnownDnsZones = [
   'privatelink.azure-automation.net'
   'privatelink.database.windows.net'
@@ -72,6 +75,9 @@ var varKnownDnsZones = [
 
 var varPrivateDnsZones = parDeployAllZones ? varKnownDnsZones : parPrivateDnsZones
 
+// Customer Usage Attribution Id
+var varCuaid = '981733dd-3195-4fda-a4ee-605ab959edb6'
+
 resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in varPrivateDnsZones: {
   name: privateDnsZone
   location: 'global'
@@ -89,6 +95,12 @@ resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetwork
   }
   dependsOn: resPrivateDnsZones
 }]
+
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
+}
 
 output outPrivateDnsZones array = [for i in range(0, length(varKnownDnsZones)): {
   name: resPrivateDnsZones[i].name
