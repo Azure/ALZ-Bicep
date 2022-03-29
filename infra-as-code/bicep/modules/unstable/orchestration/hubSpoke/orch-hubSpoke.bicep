@@ -887,7 +887,7 @@ module modPolicyAssignmentConnEnableDDoSVNET '../../policy/assignments/policyAss
     parPolicyAssignmentParameters: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       ddosPlan: {
-        value: modHubNetworking.outputs.outDDoSPlanResourceID
+        value: modHubNetworking.outputs.outDdosPlanResourceID
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnableDDoSVNET.libDefinition.identity.type
