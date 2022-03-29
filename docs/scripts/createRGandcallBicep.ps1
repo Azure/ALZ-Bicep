@@ -1,6 +1,6 @@
 
 $azureResourceGroup='rsg-private-bicep-registry'
-$azureLocation='EastUs'
+$azureLocation='eastus'
 
 #Create resource group
 New-AzResourceGroup -Name $azureResourceGroup -Location $azureLocation
@@ -15,7 +15,7 @@ $azureContainerRegistryName=$deploymentOutput.Outputs.outLoginServer.Value
 #Leverage Powershell too loop through all bicep modules within the repository
 #convert the filename to lower case as Azure Container Registry doesnt support Camelcase
 #Leverage az bicep to publish module to Azure Container Registry created above
-$files = $(Get-ChildItem("$pwd/infra-as-code/bicep/modules/*/*.bicep"))
+$files = $(Get-ChildItem -path "$pwd/infra-as-code/bicep/modules" -Recurse -Include *.bicep -exclude *orch-hubSpoke.bicep)
 
 foreach ($file in $files)
 {
