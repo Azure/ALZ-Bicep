@@ -60,10 +60,10 @@ param parBastionName string = '${parCompanyPrefix}-bastion'
 param parBastionSku string = 'Standard'
 
 @description('Switch which allows DDOS deployment to be disabled. Default: true')
-param parDDoSEnabled bool = true
+param parDdosEnabled bool = true
 
 @description('DDOS Plan Name. Default: {parCompanyPrefix}-DDos-Plan')
-param parDDoSPlanName string = '${parCompanyPrefix}-DDoS-Plan'
+param parDdosPlanName string = '${parCompanyPrefix}-DDoS-Plan'
 
 @description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
 param parAzureFirewallEnabled bool = true
@@ -208,13 +208,13 @@ var varGwConfig = [
 // Customer Usage Attribution Id
 var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
 
-resource resDDoSProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if (parDDoSEnabled) {
-  name: parDDoSPlanName
+resource resDDoSProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if (parDdosEnabled) {
+  name: parDdosPlanName
   location: parLocation
   tags: parTags
 }
 
-//DDos Protection plan will only be enabled if parDDoSEnabled is true.  
+//DDos Protection plan will only be enabled if parDdosEnabled is true.  
 resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: parHubNetworkName
   location: parLocation
@@ -229,8 +229,8 @@ resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
       dnsServers: parDNSServerIPArray
     }
     subnets: varSubnetProperties
-    enableDdosProtection: parDDoSEnabled
-    ddosProtectionPlan: (parDDoSEnabled) ? {
+    enableDdosProtection: parDdosEnabled
+    ddosProtectionPlan: (parDdosEnabled) ? {
       id: resDDoSProtectionPlan.id
     } : null
   }
