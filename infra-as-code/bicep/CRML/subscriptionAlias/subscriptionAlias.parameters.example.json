@@ -21,6 +21,9 @@
     },
     "parSubscriptionOfferType": {
       "value": "Production"
+    },
+    "parTenantId": {
+      "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"
     }
   }
 }

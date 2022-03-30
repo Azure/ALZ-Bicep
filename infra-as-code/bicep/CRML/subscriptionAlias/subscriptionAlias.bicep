@@ -1,7 +1,7 @@
 /*
 SUMMARY: The Subscription Alias module deploys an EA, MCA or MPA Subscription into the tenants default Management Group
 DESCRIPTION:  The Subscription Alias module deploys an EA, MCA or MPA Subscription into the tenants default Management Group as per the docs here: https://docs.microsoft.com/azure/cost-management-billing/manage/programmatically-create-subscription
-AUTHOR/S: jtracey93
+AUTHOR/S: jtracey93, johnlokerse
 VERSION: 1.1.0
   - Updated version of the API
   - Added additional properties: parTags, parManagementGroupId, parSubscriptionOwnerId and subscriptionTenantId
@@ -15,13 +15,13 @@ param parSubscriptionName string
 @description('The full resource ID of billing scope associated to the EA, MCA or MPA account you wish to create the subscription in.')
 param parSubscriptionBillingScope string
 
-@description('Tags you would like to be applied')
+@description('Tags you would like to be applied.')
 param parTags object = {}
 
 @description('The ID of the management group where the subscription will be placed. Also known as the parent management group.')
 param parManagementGroupId string
 
-@description('The ID of the responsible user for the subscription.')
+@description('The object ID of a responsible user, AAD group or service principal.')
 param parSubscriptionOwnerId string
 
 @allowed([
@@ -31,6 +31,9 @@ param parSubscriptionOwnerId string
 @description('The offer type of the EA, MCA or MPA subscription to be created. Defaults to = Production')
 param parSubscriptionOfferType string = 'Production'
 
+@description('The ID of the tenant. Defaults to = tenant().tenantId')
+param parTenantId string = tenant().tenantId
+
 resource resSubscription 'Microsoft.Subscription/aliases@2021-10-01' = {
   name: parSubscriptionName
   properties: {
@@ -38,7 +41,7 @@ resource resSubscription 'Microsoft.Subscription/aliases@2021-10-01' = {
       tags: parTags
       managementGroupId: parManagementGroupId
       subscriptionOwnerId: parSubscriptionOwnerId
-      subscriptionTenantId: tenant().tenantId
+      subscriptionTenantId: parTenantId
     }
     displayName: parSubscriptionName
     billingScope: parSubscriptionBillingScope
