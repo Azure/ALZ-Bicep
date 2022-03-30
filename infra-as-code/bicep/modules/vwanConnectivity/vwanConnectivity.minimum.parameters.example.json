@@ -23,47 +23,11 @@
       "parPublicIPSku":{
           "value":"Standard"
       },
-      "parTags": {
-        "value": {
-          "Environment": "POC"
-        }
-      },
       "parVhubAddressPrefix" : {
         "value": "10.100.0.0/23"
       },
       "parAzureFirewallTier": {
         "value": "Standard"
-      },
-      "parVWanName": {
-        "value": "alz-vwan"
-      },
-      "parVHubName": {
-        "value": "alz-vhub"
-      },
-      "parVPNGwName": {
-        "value": "alz-vpngw"
-      },      
-      "parERGwName": {
-        "value": "alz-ergw"
-      },      
-      "parAzureFirewallName": {
-        "value": "alz-fw"
-      },    
-      "parFirewallPoliciesName": {
-        "value": "alz-azfwpolicy"
-      },     
-      "parLocation": {
-        "value": "eastus"
-      }, 
-      "parVPNGwScaleUnit": {
-        "value": 1
-      }, 
-      "parERGwScaleUnit": {
-        "value": 1
-      }, 
-      "parTelemetryOptOut": {
-        "value": false
       }
     }
   }
-
