@@ -49,7 +49,7 @@
       "value": true
     },
     "parDdosPlanName": {
-      "value": "alz-ddos-Plan"
+      "value": "alz-ddos-plan"
     },
     "parAzureFirewallEnabled": {
       "value": true
