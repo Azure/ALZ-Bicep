@@ -106,10 +106,10 @@ param parAutomationAccountName string = 'alz-automation-account'
 param parBastionEnabled bool = true
 
 @description('Switch which allows DDOS deployment to be disabled. Default: true')
-param parDDoSEnabled bool = true
+param parDdosEnabled bool = true
 
-@description('DDOS Plan Name. Default: {parTopLevelManagementGroupPrefix}-DDos-Plan')
-param parDDoSPlanName string = '${parTopLevelManagementGroupPrefix}-DDoS-Plan'
+@description('DDOS Plan Name. Default: {parTopLevelManagementGroupPrefix}-ddos-plan')
+param parDdosPlanName string = '${parTopLevelManagementGroupPrefix}-ddos-plan'
 
 @description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
 param parAzureFirewallEnabled bool = true
