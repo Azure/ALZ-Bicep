@@ -8,6 +8,17 @@
     "parSubscriptionBillingScope": {
       "value": "/providers/Microsoft.Billing/billingAccounts/XXXXXXX/enrollmentAccounts/XXXXXX"
     },
+    "parTags": {
+      "value": {
+        "Environment": "POC"
+      }
+    },
+    "parManagementGroupId": {
+      "value": "mg-example-001"
+    },
+    "parSubscriptionOwnerId": {
+      "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"
+    },
     "parSubscriptionOfferType": {
       "value": "Production"
     }
