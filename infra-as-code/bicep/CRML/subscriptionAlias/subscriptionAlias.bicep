@@ -20,7 +20,7 @@ param parSubscriptionBillingScope string
 @description('The offer type of the EA, MCA or MPA subscription to be created. Defaults to = Production')
 param parSubscriptionOfferType string = 'Production'
 
-resource resSubscription 'Microsoft.Subscription/aliases@2019-10-01-preview' = {
+resource resSubscription 'Microsoft.Subscription/aliases@2021-10-01' = {
   name: parSubscriptionName
   properties: {
     displayName: parSubscriptionName
