@@ -2,7 +2,9 @@
 SUMMARY: The Subscription Alias module deploys an EA, MCA or MPA Subscription into the tenants default Management Group
 DESCRIPTION:  The Subscription Alias module deploys an EA, MCA or MPA Subscription into the tenants default Management Group as per the docs here: https://docs.microsoft.com/azure/cost-management-billing/manage/programmatically-create-subscription
 AUTHOR/S: jtracey93
-VERSION: 1.0.0
+VERSION: 1.1.0
+  - Updated version of the API
+  - Added additional properties: parTags, parManagementGroupId, parSubscriptionOwnerId and subscriptionTenantId
 */
 
 targetScope = 'tenant'
@@ -12,6 +14,15 @@ param parSubscriptionName string
 
 @description('The full resource ID of billing scope associated to the EA, MCA or MPA account you wish to create the subscription in.')
 param parSubscriptionBillingScope string
+
+@description('Tags you would like to be applied')
+param parTags object = {}
+
+@description('The ID of the management group where the subscription will be placed. Also known as the parent management group.')
+param parManagementGroupId string
+
+@description('The ID of the responsible user for the subscription.')
+param parSubscriptionOwnerId string
 
 @allowed([
   'DevTest'
@@ -23,6 +34,12 @@ param parSubscriptionOfferType string = 'Production'
 resource resSubscription 'Microsoft.Subscription/aliases@2021-10-01' = {
   name: parSubscriptionName
   properties: {
+    additionalProperties: {
+      tags: parTags
+      managementGroupId: parManagementGroupId
+      subscriptionOwnerId: parSubscriptionOwnerId
+      subscriptionTenantId: tenant().tenantId
+    }
     displayName: parSubscriptionName
     billingScope: parSubscriptionBillingScope
     workload: parSubscriptionOfferType
