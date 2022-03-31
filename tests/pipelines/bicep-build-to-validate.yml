@@ -123,7 +123,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location)
+        az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.example.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location)
   
   - task: Bash@3  
     displayName: Az CLI Deploy Custom Role Definitions for PR
@@ -132,7 +132,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg create --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
+        az deployment mg create --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.example.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
   
   - task: Bash@3    
     displayName: Az CLI Deploy Custom Policy Definitions for PR
@@ -141,7 +141,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json parTargetManagementGroupID=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix) 
+        az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/custom-policy-definitions.parameters.example.json parTargetManagementGroupID=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix) 
   
   - task: Bash@3    
     displayName: Az CLI Deploy Logging for PR
@@ -150,7 +150,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json
+        az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/parameters/logging.parameters.example.json
 
   - task: Bash@3    
     displayName: Az CLI Subscription Placement for PR
@@ -159,7 +159,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg create --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep --parameters @infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json parTargetManagementGroupId=$(ManagementGroupPrefix)-platform-connectivity parSubscriptionIds='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
+        az deployment mg create --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep --parameters @infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.example.json parTargetManagementGroupId=$(ManagementGroupPrefix)-platform-connectivity parSubscriptionIds='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
 
   - task: AzurePowerShell@5
     displayName: Az PwSh alzDefaultPolicyAssignments for PR
@@ -169,7 +169,7 @@ jobs:
       azureSubscription: 'azserviceconnection'
       ScriptType: 'FilePath'
       ScriptPath: '.github/scripts/Set-AlzDefaultPolicyAssignment.ps1'
-      ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\alzDefaults\alzDefaultPolicyAssignments.parameters.example.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix) -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $(Location) -parLogAnalyticsWorkspaceResourceID "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" -parDdosProtectionPlanId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan"'
+      ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\alzDefaults\parameters\alzDefaultPolicyAssignments.parameters.example.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix) -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $(Location) -parLogAnalyticsWorkspaceResourceID "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" -parDdosProtectionPlanId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan"'
       azurePowerShellVersion: 'LatestVersion'
       pwsh: true
 
@@ -180,7 +180,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep --parameters @infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json
+        az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep --parameters @infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.example.json
 
   - task: Bash@3    
     displayName: Az CLI Deploy vWan Networking for PR
@@ -189,7 +189,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep --parameters @infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json
+        az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep --parameters @infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.example.json
 
   - task: Bash@3              
     displayName: Az CLI Deploy Spoke Networking for PR

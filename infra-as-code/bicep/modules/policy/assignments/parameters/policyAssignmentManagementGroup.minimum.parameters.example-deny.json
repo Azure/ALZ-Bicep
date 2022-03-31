@@ -22,9 +22,6 @@
         },
         "parPolicyAssignmentNotScopes": {
             "value": []
-        },
-        "parTelemetryOptOut": {
-            "value": false
         }
     }
 }
