@@ -7,14 +7,6 @@
         },
         "parResourceGroupName": {
             "value": "alz-rg"
-        },
-        "parTags": {
-            "value": {
-              "Environment": "POC"
-            }
-        },
-        "parTelemetryOptOut": {
-            "value": false
         }
     }
 }
