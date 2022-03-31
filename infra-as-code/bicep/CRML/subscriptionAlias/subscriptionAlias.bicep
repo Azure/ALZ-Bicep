@@ -18,11 +18,11 @@ param parSubscriptionBillingScope string
 @description('Tags you would like to be applied.')
 param parTags object = {}
 
-@description('The ID of the management group where the subscription will be placed. Also known as the parent management group.')
-param parManagementGroupId string
+@description('The ID of the management group where the subscription will be placed. Also known as the parent management group. (Optional)')
+param parManagementGroupId string = ''
 
-@description('The object ID of a responsible user, AAD group or service principal.')
-param parSubscriptionOwnerId string
+@description('The object ID of a responsible user, AAD group or service principal. (Optional)')
+param parSubscriptionOwnerId string = ''
 
 @allowed([
   'DevTest'
@@ -39,8 +39,8 @@ resource resSubscription 'Microsoft.Subscription/aliases@2021-10-01' = {
   properties: {
     additionalProperties: {
       tags: parTags
-      managementGroupId: managementGroup(parManagementGroupId)
-      subscriptionOwnerId: parSubscriptionOwnerId
+      managementGroupId: empty(parManagementGroupId) ? managementGroup(parManagementGroupId) : json('null')
+      subscriptionOwnerId: empty(parSubscriptionOwnerId) ? parSubscriptionOwnerId : json('null')
       subscriptionTenantId: parTenantId
     }
     displayName: parSubscriptionName

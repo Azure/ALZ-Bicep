@@ -14,9 +14,9 @@ The module requires the following inputs:
 | ----------- | ---- | ----------- | ------------ | ------- | -------- |
 parSubscriptionName | string | Name of the subscription to be created. Will also be used as the alias name. Whilst you can use any name you like we recommend it to be: all lowercase, no spaces, alphanumeric and hyphens only. | Yes  | `sub-example-001` | None, must be provided. |
 parSubscriptionBillingScope | string | The full resource ID of billing scope associated to the EA, MCA or MPA account you wish to create the subscription in. | Yes | EA - `/providers/Microsoft.Billing/BillingAccounts/1234567/enrollmentAccounts/7654321` <br> MCA - `/providers/Microsoft.Billing/billingAccounts/5e98e158-xxxx-xxxx-xxxx-xxxxxxxxxxxx:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx_xxxx-xx-xx/billingProfiles/AW4F-xxxx-xxx-xxx/invoiceSections/SH3V-xxxx-xxx-xxx` <br> MPA - `/providers/Microsoft.Billing/billingAccounts/99a13315-xxxx-xxxx-xxxx-xxxxxxxxxxxx:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx_xxxx-xx-xx/customers/2281f543-xxxx-xxxx-xxxx-xxxxxxxxxxxx` | None, must be provided. |
-parTags | object | Tags you would like to be applied. | Yes | `{"key": "value"}` | Empty object `{}` |
-parManagementGroupId | string | The ID of the management group where the subscription will be placed. Also known as the parent management group.| Yes | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx` |  |
-parSubscriptionOwnerId | string | The object ID of a responsible user, AAD group or service principal. | Yes | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx` | |
+parTags | object | Tags you would like to be applied. | No | `{"key": "value"}` | Empty object `{}` |
+parManagementGroupId | string | The ID of the management group where the subscription will be placed. Also known as the parent management group.| No | `mg-root` | Empty string |
+parSubscriptionOwnerId | string | The object ID of a responsible user, AAD group or service principal. | No | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx` | Empty string |
 parSubscriptionOfferType | string | The offer type of the EA, MCA or MPA subscription to be created. | No | `DevTest` | `Production` |
 parTenantId | string | The ID of the tenant. | No | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx` | `tenant().tenantId` |
 
