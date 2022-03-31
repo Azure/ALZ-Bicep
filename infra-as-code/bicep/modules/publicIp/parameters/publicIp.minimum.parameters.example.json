@@ -19,17 +19,6 @@
                 "idleTimeoutInMinutes": 4
 
             }
-        },
-        "parLocation": {
-            "value": "eastus"
-        },
-        "parTags": {
-            "value": {
-              "Environment": "POC"
-            }
-          },
-        "parTelemetryOptOut": {
-            "value": false
         }
     }
 }

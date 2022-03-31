@@ -19,7 +19,7 @@ param parPublicIPProperties object
 param parLocation string = resourceGroup().location
 
 @description('Tags to be applied to resource when deployed.  Default: None')
-param parTags object
+param parTags object = {}
 
 @description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
