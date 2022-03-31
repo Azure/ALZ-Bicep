@@ -18,7 +18,7 @@ param parSubscriptionBillingScope string
 @description('Tags you would like to be applied.')
 param parTags object = {}
 
-@description('The ID of the management group where the subscription will be placed. Also known as the parent management group. (Optional)')
+@description('The ID of the existing management group where the subscription will be placed. Also known as its parent management group. (Optional)')
 param parManagementGroupId string = ''
 
 @description('The object ID of a responsible user, AAD group or service principal. (Optional)')
