@@ -89,7 +89,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
+        subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.minimum.example.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
         echo $subId
         echo "##vso[task.setvariable variable=subscriptionId]$subid"
         echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
