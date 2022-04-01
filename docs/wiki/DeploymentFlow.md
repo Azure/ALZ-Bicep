@@ -14,6 +14,8 @@ This document outlines the prerequisites, dependencies and flow to help orchestr
 
 ![High Level Deployment Flow](media/high-level-deployment-flow.png)
 
+<sup>*</sup>To use with the network topology of your choice. See [network topology deployment instructions below](#network-topology-deployment).
+
 ## Module Deployment Sequence
 
 Modules in this reference implementation must be deployed in the following order to ensure consistency across the environment:
@@ -24,11 +26,18 @@ Modules in this reference implementation must be deployed in the following order
 |   2   | Custom Policy Definitions              | Configures Custom Policy Definitions at the `organization management group`.                                                                                                               | Management Groups.                                                     | [infra-as-code/bicep/modules/policy/definitions](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions)                         |
 |   3   | Custom Role Definitions                | Configures custom roles based on Cloud Adoption Framework's recommendations at the `organization management group`.                                                                        | Management Groups.                                                     | [infra-as-code/bicep/modules/customRoleDefinitions](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/customRoleDefinitions)                   |
 |   4   | Logging & Sentinel                     | Configures a centrally managed Log Analytics Workspace, Automation Account and Sentinel in the `Logging` subscription.                                                                     | Management Groups & Subscription for Log Analytics and Sentinel.       | [infra-as-code/bicep/modules/logging](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/logging)                                               |
-|   5   | Hub Networking                         | Creates Hub networking infrastructure with Azure Firewall to support Hub & Spoke network topology in the `Connectivity` subscription.                                                      | Management Groups, Subscription for Hub Networking.                    | [infra-as-code/bicep/modules/hubNetworking](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/hubNetworking)                                   |
+|   5   | Hub Networking                         | Azure supports two types of hub-and-spoke design, VNet hub and Virtual WAN hub. Creates resources in the `Connectivity` subscription.                                                      | Management Groups, Subscription for Hub Networking.                    | [See network topology deployment below](#network-topology-deployment)                                   |
 |   6   | Role Assignments                       | Creates role assignments using built-in and custom role definitions.                                                                                                                       | Management Groups & Subscriptions.                                     | [infra-as-code/bicep/modules/roleAssignments](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/roleAssignments)                               |
 |   7   | Subscription Placement                 | Moves one or more subscriptions to the target management group.                                                                                                                            | Management Groups & Subscriptions.                                     | [infra-as-code/bicep/modules/subscriptionPlacement](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/subscriptionPlacement)                   |
 |   8   | Built-In and Custom Policy Assignments | Creates policy assignments to provide governance at scale.                                                                                                                                 | Management Groups, Log Analytics Workspace & Custom Policy Definitions | [infra-as-code/bicep/modules/policy/assignments/alzDefaults](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) |
-|   9   | Corp Connected Spoke Network           | Creates Spoke networking infrastructure with Virtual Network Peering to support Hub & Spoke network topology.  Spoke subscriptions are used for deploying construction sets and workloads. | Management Groups, Hub Networking & Subscription for spoke networking  | [infra-as-code/bicep/modules/spokeNetworking](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/spokeNetworking)                               |
+|   9   | Corp Connected Spoke Network           | Creates Spoke networking infrastructure with Virtual Network Peering to support Hub & Spoke network topology.  Spoke subscriptions are used for deploying construction sets and workloads. | Management Groups, Hub Networking & Subscription for spoke networking  | [See network topology deployment below](#network-topology-deployment)                               |
+
+## Network Topology Deployment
+
+You can decide which network topology to implement that meets your requirements. Please review the network topologies [here](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/define-an-azure-network-topology). The following lists examples of network topology deployment based on the recommended enterprise-scale architecture:
+
+- [Traditional VNet Hub and Spoke](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowHS) - Supports communication, shared resources and centralized security policy.
+- [Virtual WAN](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowVWAN) - Supports large-scale branch-to-branch and branch-to-Azure communications.
 
 ## Deployment Identity
 
@@ -48,3 +57,7 @@ A service principal account is required to automate through Azure DevOps or GitH
 - Azure DevOps: [Setup Service Connection](https://docs.microsoft.com/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml)
 
 - GitHub: [Connect GitHub Actions to Azure](https://docs.microsoft.com/azure/developer/github/connect-from-azure)
+
+## Consumption Methods
+
+The `ALZ-Bicep` modules can be consumed and used in a manner of different ways. For more information see the [Consumer Guide](https://github.com/Azure/ALZ-Bicep/wiki/ConsumerGuide)

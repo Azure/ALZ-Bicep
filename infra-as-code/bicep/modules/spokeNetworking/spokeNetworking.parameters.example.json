@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "parRegion": {
+        "parLocation": {
             "value": "eastus"
         },
         "parBGPRoutePropagation": {
@@ -26,6 +26,11 @@
         "parSpoketoHubRouteTableName": {
             "value": "rtb-spoke-to-hub"
         },
+        "parTags": {
+            "value": {
+              "Environment": "POC"
+            }
+          },
         "parTelemetryOptOut": {
             "value": false
         }

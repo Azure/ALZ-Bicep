@@ -2,20 +2,78 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "parRegion": {
+    "parLocation": {
       "value": "eastus"
+    },
+    "parCompanyPrefix": {
+      "value": "alz"
+    },
+    "parHubNetworkName": {
+      "value": "alz-hub-eastus"
+    },
+    "parHubNetworkAddressPrefix": {
+      "value": "10.20.0.0/16"
+    },
+    "parSubnets": {
+      "value": [
+        {
+          "name": "AzureBastionSubnet",
+          "ipAddressRange": "10.20.0.0/24"
+        },
+        {
+          "name": "GatewaySubnet",
+          "ipAddressRange": "10.20.254.0/24"
+        },
+        {
+          "name": "AzureFirewallSubnet",
+          "ipAddressRange": "10.20.255.0/24"
+        }
+      ]
+    },
+    "parDNSServerIPArray": {
+      "value": []
+    },
+    "parPublicIPSku": {
+      "value": "Standard"
     },
     "parBastionEnabled": {
       "value": true
     },
+    "parBastionName": {
+      "value": "alz-bastion"
+    },
+    "parBastionSku": {
+      "value": "Standard"
+    },
     "parDdosEnabled": {
       "value": true
+    },
+    "parDdosPlanName": {
+      "value": "alz-ddos-plan"
     },
     "parAzureFirewallEnabled": {
       "value": true
     },
+    "parAzureFirewallName": {
+      "value": "alz-azure-firewall"
+    },
+    "parAzureFirewallTier": {
+      "value": "Standard"
+    },
+    "parNetworkDNSEnableProxy": {
+      "value": true
+    },
+    "parHubRouteTableName": {
+      "value": "alz-hub-routetable"
+    },
+    "parDisableBGPRoutePropagation": {
+      "value": false
+    },
     "parPrivateDNSZonesEnabled": {
       "value": true
+    },
+    "parPrivateDnsZones": {
+      "value": []
     },
     "parVpnGatewayConfig": {
       "value": {
@@ -57,68 +115,10 @@
         }
       }
     },
-    "parCompanyPrefix": {
-      "value": "alz"
-    },
-    "parDdosPlanName": {
-      "value": "alz-ddos-Plan"
-    },
-    "parBastionSku": {
-      "value": "Standard"
-    },
-    "parPublicIPSku": {
-      "value": "Standard"
-    },
     "parTags": {
       "value": {
         "Environment": "POC"
       }
-    },
-    "parHubNetworkAddressPrefix": {
-      "value": "10.20.0.0/16"
-    },
-    "parHubNetworkName": {
-      "value": "alz-hub-eastus"
-    },
-    "parAzureFirewallName": {
-      "value": "alz-azure-firewall"
-    },
-    "parAzureFirewallTier": {
-      "value": "Standard"
-    },
-    "parHubRouteTableName": {
-      "value": "alz-hub-routetable"
-    },
-    "parSubnets": {
-      "value": [
-        {
-          "name": "AzureBastionSubnet",
-          "ipAddressRange": "10.20.0.0/24"
-        },
-        {
-          "name": "GatewaySubnet",
-          "ipAddressRange": "10.20.254.0/24"
-        },
-        {
-          "name": "AzureFirewallSubnet",
-          "ipAddressRange": "10.20.255.0/24"
-        }
-      ]
-    },
-    "parBastionName": {
-      "value": "alz-bastion"
-    },
-    "parPrivateDnsZones": {
-      "value": []
-    },
-    "parDNSServerIPArray": {
-      "value": []
-    },
-    "parNetworkDNSEnableProxy": {
-      "value": true
-    },
-    "parDisableBGPRoutePropagation": {
-      "value": false
     },
     "parTelemetryOptOut": {
       "value": false

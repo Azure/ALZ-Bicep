@@ -106,10 +106,10 @@ param parAutomationAccountName string = 'alz-automation-account'
 param parBastionEnabled bool = true
 
 @description('Switch which allows DDOS deployment to be disabled. Default: true')
-param parDDoSEnabled bool = true
+param parDdosEnabled bool = true
 
-@description('DDOS Plan Name. Default: {parTopLevelManagementGroupPrefix}-DDos-Plan')
-param parDDoSPlanName string = '${parTopLevelManagementGroupPrefix}-DDoS-Plan'
+@description('DDOS Plan Name. Default: {parTopLevelManagementGroupPrefix}-ddos-plan')
+param parDdosPlanName string = '${parTopLevelManagementGroupPrefix}-ddos-plan'
 
 @description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
 param parAzureFirewallEnabled bool = true
@@ -590,10 +590,10 @@ module modLogging '../../logging/logging.bicep' = {
   name: varModuleDeploymentNames.modLogging
   params: {
     parAutomationAccountName: parAutomationAccountName
-    parAutomationAccountRegion: parLocation
+    parAutomationAccountLocation: parLocation
     parLogAnalyticsWorkspaceLogRetentionInDays: parLogAnalyticsWorkspaceLogRetentionInDays
     parLogAnalyticsWorkspaceName: parLogAnalyticsWorkspaceName
-    parLogAnalyticsWorkspaceRegion: parLocation
+    parLogAnalyticsWorkspaceLocation: parLocation
     parLogAnalyticsWorkspaceSolutions: parLogAnalyticsWorkspaceSolutions
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -887,7 +887,7 @@ module modPolicyAssignmentConnEnableDDoSVNET '../../policy/assignments/policyAss
     parPolicyAssignmentParameters: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       ddosPlan: {
-        value: modHubNetworking.outputs.outDDoSPlanResourceID
+        value: modHubNetworking.outputs.outDdosPlanResourceID
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnableDDoSVNET.libDefinition.identity.type

@@ -2,80 +2,57 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "parBastionEnabled": {
-            "value": true
-        },
-        "parDdosEnabled": {
-            "value": false
-        },
-        "parAzureFirewallEnabled": {
-            "value": true
-        },
-        "parPrivateDNSZonesEnabled": {
-            "value": true
-        },
-        "parVpnGatewayConfig": {
-            "value": {
-                "name": "alz-Vpn-Gateway",
-                "gatewaytype": "Vpn",
-                "sku": "VpnGw1",
-                "vpntype": "RouteBased",
-                "generation": "Generation1",
-                "enableBgp": false,
-                "activeActive": false,
-                "enableBgpRouteTranslationForNat": false,
-                "enableDnsForwarding": false,
-                "asn": "65515",
-                "bgpPeeringAddress": "",
-                "bgpsettings": {
-                    "asn": "65515",
-                    "bgpPeeringAddress": "",
-                    "peerWeight": "5"
-                }
-            }
-        },
-        "parExpressRouteGatewayConfig": {
-            "value": {
-                "name": "alz-ExpressRoute-Gateway",
-                "gatewaytype": "ExpressRoute",
-                "sku": "ErGw1AZ",
-                "vpntype": "RouteBased",
-                "generation": "None",
-                "enableBgp": false,
-                "activeActive": false,
-                "enableBgpRouteTranslationForNat": false,
-                "enableDnsForwarding": false,
-                "asn": "65515",
-                "bgpPeeringAddress": "",
-                "bgpsettings": {
-                    "asn": "65515",
-                    "bgpPeeringAddress": "",
-                    "peerWeight": "5"
-                }
-            }
+        "parLocation": {
+            "value": "chinaeast2 "
         },
         "parCompanyPrefix": {
             "value": "alz"
         },
-        "parDdosPlanName": {
-            "value": "alz-Ddos-Plan"
-        },
-        "parBastionSku": {
-            "value": "Standard"
-        },
-        "parPublicIPSku": {
-            "value": "Standard"
-        },
-        "parTags": {
-            "value": {
-                "Environment": "POC"
-            }
+        "parHubNetworkName": {
+            "value": "alz-hub-chinaeast2"
         },
         "parHubNetworkAddressPrefix": {
             "value": "10.20.0.0/16"
         },
-        "parHubNetworkName": {
-            "value": "alz-hub-chinaeast2"
+        "parSubnets": {
+            "value": [
+                {
+                    "name": "AzureBastionSubnet",
+                    "ipAddressRange": "10.20.0.0/24"
+                },
+                {
+                    "name": "GatewaySubnet",
+                    "ipAddressRange": "10.20.254.0/24"
+                },
+                {
+                    "name": "AzureFirewallSubnet",
+                    "ipAddressRange": "10.20.255.0/24"
+                }
+            ]
+        },
+        "parDNSServerIPArray": {
+            "value": []
+        },
+        "parPublicIPSku": {
+            "value": "Standard"
+        },
+        "parBastionEnabled": {
+            "value": true
+        },
+        "parBastionName": {
+            "value": "alz-bastion"
+        },
+        "parBastionSku": {
+            "value": "Standard"
+        },
+        "parDdosEnabled": {
+            "value": false
+        },
+        "parDdosPlanName": {
+            "value": "alz-ddos-plan"
+        },
+        "parAzureFirewallEnabled": {
+            "value": true
         },
         "parAzureFirewallName": {
             "value": "alz-azure-firewall"
@@ -83,27 +60,17 @@
         "parAzureFirewallTier": {
             "value": "Standard"
         },
+        "parNetworkDNSEnableProxy": {
+            "value": true
+        },
         "parHubRouteTableName": {
             "value": "alz-hub-routetable"
         },
-        "parSubnets": {
-            "value": [
-                {
-                    "name": "AzureBastionSubnet",
-                    "ipAddressRange": "10.20.15.0/24"
-                },
-                {
-                    "name": "GatewaySubnet",
-                    "ipAddressRange": "10.20.252.0/24"
-                },
-                {
-                    "name": "AzureFirewallSubnet",
-                    "ipAddressRange": "10.20.254.0/24"
-                }
-            ]
+        "parDisableBGPRoutePropagation": {
+            "value": false
         },
-        "parBastionName": {
-            "value": "alz-bastion"
+        "parPrivateDNSZonesEnabled": {
+            "value": true
         },
         "parPrivateDnsZones": {
             "value": [
@@ -138,8 +105,53 @@
                 "privatelink.redis.cache.chinacloudapi.cn"
             ]
         },
-    "parTelemetryOptOut": {
-      "value": false
-    }
+        "parVpnGatewayConfig": {
+            "value": {
+                "name": "alz-Vpn-Gateway",
+                "gatewaytype": "Vpn",
+                "sku": "VpnGw1",
+                "vpntype": "RouteBased",
+                "generation": "Generation1",
+                "enableBgp": false,
+                "activeActive": false,
+                "enableBgpRouteTranslationForNat": false,
+                "enableDnsForwarding": false,
+                "asn": "65515",
+                "bgpPeeringAddress": "",
+                "bgpsettings": {
+                    "asn": "65515",
+                    "bgpPeeringAddress": "",
+                    "peerWeight": "5"
+                }
+            }
+        },
+        "parExpressRouteGatewayConfig": {
+            "value": {
+                "name": "alz-ExpressRoute-Gateway",
+                "gatewaytype": "ExpressRoute",
+                "sku": "Standard",
+                "vpntype": "RouteBased",
+                "generation": "None",
+                "enableBgp": false,
+                "activeActive": false,
+                "enableBgpRouteTranslationForNat": false,
+                "enableDnsForwarding": false,
+                "asn": "65515",
+                "bgpPeeringAddress": "",
+                "bgpsettings": {
+                    "asn": "65515",
+                    "bgpPeeringAddress": "",
+                    "peerWeight": "5"
+                }
+            }
+        },
+        "parTags": {
+            "value": {
+                "Environment": "POC"
+            }
+        },
+        "parTelemetryOptOut": {
+            "value": false
+        }
     }
 }
