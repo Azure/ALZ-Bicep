@@ -35,11 +35,13 @@ In this example, the Subscription is created upon an EA Account through a tenant
 
 > For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
+> **Important Note:** There are 2 parameter files examples provided in the `/parameters` folder of this module. One that contains examples of all possible parameters and another that only contains the minimum required parameters. The minimum version is used in the below examples.
+
 ### Azure CLI
 ```bash
 az deployment tenant create \
   --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep \
-  --parameters @infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json \
+  --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.minimum.example.json \
   --location eastus
 ```
 
@@ -48,7 +50,7 @@ az deployment tenant create \
 ```powershell
 New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep `
-  -TemplateParameterFile infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.minimum.example.json `
   -Location eastus
 ```
 
