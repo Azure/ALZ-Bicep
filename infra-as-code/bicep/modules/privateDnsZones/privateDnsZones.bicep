@@ -6,7 +6,7 @@ AUTHOR/S: aultt, jtracey93, cloudchristoph
 VERSION: 1.x.x
 */
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
-param parRegion string = resourceGroup().location
+param parLocation string = resourceGroup().location
 
 @description('Deploy all known Azure Private DNS Zones. Default: true')
 param parDeployAllZones bool = true
@@ -39,13 +39,13 @@ var varKnownDnsZones = [
   'privatelink.cassandra.cosmos.azure.com'
   'privatelink.gremlin.cosmos.azure.com'
   'privatelink.table.cosmos.azure.com'
-  'privatelink.${parRegion}.batch.azure.com'
+  'privatelink.${parLocation}.batch.azure.com'
   'privatelink.postgres.database.azure.com'
   'privatelink.mysql.database.azure.com'
   'privatelink.mariadb.database.azure.com'
   'privatelink.vaultcore.azure.net'
-  'privatelink.${parRegion}.azmk8s.io'
-  '${parRegion}.privatelink.siterecovery.windowsazure.com'
+  'privatelink.${parLocation}.azmk8s.io'
+  '${parLocation}.privatelink.siterecovery.windowsazure.com'
   'privatelink.servicebus.windows.net'
   'privatelink.azure-devices.net'
   'privatelink.eventgrid.azure.net'

@@ -410,7 +410,7 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
   name: 'deploy-Private-DNS-Zones'
   scope: resourceGroup(parPrivateDNSZonesResourceGroup)
   params: {
-    parRegion: parRegion
+    parLocation: parLocation
     parTags: parTags
     parHubVirtualNetworkId: resHubVirtualNetwork.id
     parDeployAllZones: empty(parPrivateDnsZones)
