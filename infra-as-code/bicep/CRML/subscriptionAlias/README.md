@@ -31,9 +31,11 @@ outSubscriptionId | string | `5583f55f-65b2-4a3a-87c9-e499c1c587c0`
 
 ## Deployment
 
-In this example, the Subscription is created upon an EA Account through a tenant-scoped deployment. For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
-
 > **Important Note:** There are 2 parameter files examples provided in the `/parameters` folder of this module. One that contains examples of all possible parameters and another that only contains the minimum required parameters. The minimum version is used in the below examples.
+
+In this example, the Subscription is created upon an EA Account through a tenant-scoped deployment.
+
+> For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
 ```bash
