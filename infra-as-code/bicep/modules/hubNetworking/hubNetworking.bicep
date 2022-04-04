@@ -88,10 +88,10 @@ param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 param parDisableBGPRoutePropagation bool = false
 
 @description('Switch which allows and deploys Private DNS Zones. Default: true')
-param parPrivateDNSZonesEnabled bool = true
+param parPrivateDnsZonesEnabled bool = true
 
 @description('Resource Group Name for Private DNS Zones. Default: same resource group')
-param parPrivateDNSZonesResourceGroup string = resourceGroup().name
+param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 
 @description('Custom Array of DNS Zones to provision in Hub Virtual Network. Default: empty array - All known Zones')
 param parPrivateDnsZones array = []
@@ -406,9 +406,9 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (parAz
   }
 }
 
-module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPrivateDNSZonesEnabled) {
+module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones'
-  scope: resourceGroup(parPrivateDNSZonesResourceGroup)
+  scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
     parLocation: parLocation
     parTags: parTags
@@ -430,7 +430,7 @@ output outAzureFirewallPrivateIP string = parAzureFirewallEnabled ? resAzureFire
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 output outAzureFirewallName string = parAzureFirewallEnabled ? parAzureFirewallName : ''
 
-output outPrivateDnsZones array = (parPrivateDNSZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : []) 
+output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : []) 
 
 output outDdosPlanResourceID string = resDdosProtectionPlan.id
 output outHubVirtualNetworkName string = resHubVirtualNetwork.name
