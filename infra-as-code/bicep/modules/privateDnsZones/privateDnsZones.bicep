@@ -8,22 +8,8 @@ VERSION: 1.x.x
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
 param parLocation string = resourceGroup().location
 
-@description('Deploy all known Azure Private DNS Zones. Default: true')
-param parDeployAllZones bool = true
-
 @description('Array of custom DNS Zones to provision in Hub Virtual Network. Default: empty array, all known zones deployed')
-param parPrivateDnsZones array = []
-
-@description('Tags you would like to be applied to all resources in this module. Default: empty array')
-param parTags object = {}
-
-@description('Resource ID of Hub VNet for Private DNS Zone VNet Links')
-param parHubVirtualNetworkId string
-
-@description('Set Parameter to true to Opt-out of deployment telemetry')
-param parTelemetryOptOut bool = false
-
-var varKnownDnsZones = [
+param parPrivateDnsZones array = [
   'privatelink.azure-automation.net'
   'privatelink.database.windows.net'
   'privatelink.sql.azuresynapse.net'
@@ -73,18 +59,25 @@ var varKnownDnsZones = [
   'privatelink.guestconfiguration.azure.com'
 ]
 
-var varPrivateDnsZones = parDeployAllZones ? varKnownDnsZones : parPrivateDnsZones
+@description('Tags you would like to be applied to all resources in this module. Default: empty array')
+param parTags object = {}
+
+@description('Resource ID of Hub VNet for Private DNS Zone VNet Links')
+param parHubVirtualNetworkId string
+
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id
 var varCuaid = '981733dd-3195-4fda-a4ee-605ab959edb6'
 
-resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in varPrivateDnsZones: {
+resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: {
   name: privateDnsZone
   location: 'global'
   tags: parTags
 }]
 
-resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in varPrivateDnsZones: {
+resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in parPrivateDnsZones: {
   name: '${privateDnsZoneName}/${privateDnsZoneName}'
   location: 'global'
   properties: {
@@ -102,7 +95,7 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdRes
   params: {}
 }
 
-output outPrivateDnsZones array = [for i in range(0, length(varKnownDnsZones)): {
+output outPrivateDnsZones array = [for i in range(0, length(parPrivateDnsZones)): {
   name: resPrivateDnsZones[i].name
   id: resPrivateDnsZones[i].id
 }]

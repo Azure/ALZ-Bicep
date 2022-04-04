@@ -5,9 +5,6 @@
     "parLocation": {
       "value": "eastus"
     },
-    "parDeployAllZones": {
-      "value": true
-    },
     "parPrivateDnsZones": {
       "value": [
         "privatelink.azure-automation.cn",

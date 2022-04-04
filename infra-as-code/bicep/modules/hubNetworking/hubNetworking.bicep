@@ -413,7 +413,6 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
     parLocation: parLocation
     parTags: parTags
     parHubVirtualNetworkId: resHubVirtualNetwork.id
-    parDeployAllZones: empty(parPrivateDnsZones)
     parPrivateDnsZones: parPrivateDnsZones
   }
 }
