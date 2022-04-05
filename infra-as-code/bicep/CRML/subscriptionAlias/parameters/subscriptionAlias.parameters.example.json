@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parSubscriptionName": {
+      "value": "sub-example-001"
+    },
+    "parSubscriptionBillingScope": {
+      "value": "/providers/Microsoft.Billing/billingAccounts/XXXXXXX/enrollmentAccounts/XXXXXX"
+    },
+    "parTags": {
+      "value": {
+        "Environment": "POC"
+      }
+    },
+    "parManagementGroupId": {
+      "value": "mg-example-001"
+    },
+    "parSubscriptionOwnerId": {
+      "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"
+    },
+    "parSubscriptionOfferType": {
+      "value": "Production"
+    },
+    "parTenantId": {
+      "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"
+    }
+  }
+}

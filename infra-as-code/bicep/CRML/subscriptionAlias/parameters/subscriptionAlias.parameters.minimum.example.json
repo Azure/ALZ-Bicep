@@ -7,9 +7,6 @@
     },
     "parSubscriptionBillingScope": {
       "value": "/providers/Microsoft.Billing/billingAccounts/XXXXXXX/enrollmentAccounts/XXXXXX"
-    },
-    "parSubscriptionOfferType": {
-      "value": "Production"
     }
   }
 }
