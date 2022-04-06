@@ -65,6 +65,15 @@ jobs:
           echo "##vso[task.setvariable variable=gitVwanOUTPUT]$git_vwan"
 
   - task: Bash@3
+    displayName: Check for vwanNetwork Connection Changes
+    name: git_vwannetworkconnection_diff
+    inputs:
+      targetType: 'inline'
+      script: |
+          git_vwannwc=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/vnetPeeringVwan ':(exclude)*.md' ':(exclude)*.png' )
+          echo "##vso[task.setvariable variable=gitVwanNwcOUTPUT]$git_vwannwc"
+
+  - task: Bash@3
     displayName: Check for spokeNetworking Changes
     name: git_spokenetworking_diff
     inputs:
