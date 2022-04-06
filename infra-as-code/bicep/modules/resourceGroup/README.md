@@ -23,6 +23,8 @@ The module will generate the following outputs:
 
 | Output | Type | Example |
 | ------ | ---- | ------- |
+| outResourceGroupName | string | `Hub` |
+| outResourceGroupId | string | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx/resourceGroups/Hub` |
 
 ## Deployment
 

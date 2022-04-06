@@ -3,8 +3,9 @@ SUMMARY: Module to deploy a resource group to the subscription specified.
 DESCRIPTION: The following components will be required parameters in this deployment
     parLocation
     parResourceGroupName
-AUTHOR/S: aultt
-VERSION: 1.0.0
+AUTHOR/S: aultt, johnlokerse
+VERSION: 1.0.1
+  - Added outputs
 */
 
 targetScope = 'subscription'
