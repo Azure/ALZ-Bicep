@@ -4,8 +4,8 @@ DESCRIPTION: The following components will be required parameters in this deploy
     parLocation
     parResourceGroupName
 AUTHOR/S: aultt, johnlokerse
-VERSION: 1.0.1
-  - Added outputs
+VERSION: 1.1.0
+  - Added outputs for resource group name and resource group id
 */
 
 targetScope = 'subscription'
