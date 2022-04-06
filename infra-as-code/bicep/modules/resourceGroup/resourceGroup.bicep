@@ -34,3 +34,6 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdSub
   name: 'pid-${varCuaid}-${uniqueString(subscription().subscriptionId, parResourceGroupName)}'
   params: {}
 }
+
+output outResourceGroupName string = resResourceGroup.name
+output outResourceGroupId string = resResourceGroup.id
