@@ -216,7 +216,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json -parVirtualHubResourceId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualHubs/alz-vhub-$(Location)"  -parRemoteVirtualNetworkResourceId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke"
+        az deployment sub create --location $(Location) --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json parVirtualHubResourceId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualHubs/alz-vhub-$(Location)"  parRemoteVirtualNetworkResourceId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke"
 
 - job: bicep_cleanup
   dependsOn: bicep_deploy
