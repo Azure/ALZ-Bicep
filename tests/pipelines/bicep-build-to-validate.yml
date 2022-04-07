@@ -94,7 +94,7 @@ jobs:
   - task: Bash@3
     displayName: Az CLI Create Subscription for PR
     name: create_subscription
-    condition: or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''))
+    condition: or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -106,7 +106,7 @@ jobs:
   - task: Bash@3
     displayName: Az CLI Refresh subscription list
     name: refresh_subscription
-    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -115,7 +115,7 @@ jobs:
   - task: Bash@3    
     displayName: Az CLI Create Resource Group for PR
     name: create_rsg
-    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -128,7 +128,7 @@ jobs:
   - task: Bash@3     
     displayName: Az CLI Deploy Management Groups for PR
     name: create_mgs
-    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -164,7 +164,7 @@ jobs:
   - task: Bash@3    
     displayName: Az CLI Subscription Placement for PR
     name: move_sub
-    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
