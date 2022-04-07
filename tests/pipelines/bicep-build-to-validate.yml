@@ -194,7 +194,7 @@ jobs:
   - task: Bash@3    
     displayName: Az CLI Deploy vWan Networking for PR
     name: create_vwan_network
-    condition: and(ne(variables['gitVwanOUTPUT'], ''), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
