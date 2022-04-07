@@ -203,7 +203,7 @@ jobs:
   - task: Bash@3              
     displayName: Az CLI Deploy Spoke Networking for PR
     name: create_spoke_network
-    condition: and(or(ne(variables['gitSpokeOUTPUT'], ''),(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
