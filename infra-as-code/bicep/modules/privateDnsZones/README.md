@@ -134,9 +134,6 @@ New-AzResourceGroupDeployment `
 
 ![Example Deployment Output](media/privateDnsZonesExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
 
-## Example Output in Azure China regions
-![Example Deployment Output](media/mc-privateDnsZonesExampleDeploymentOutput.png "Example Deployment Output in Azure China")
-
 ## Bicep Visualizer
 
 ![Bicep Visualizer](media/privateDnsZonesBicepVisualizer.png "Bicep Visualizer")
