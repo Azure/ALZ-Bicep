@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+
+      # TODO: Branch for integration testing, to be removed before integration into main.
+      - ps-rule
     paths:
       - "**.bicep"
   workflow_dispatch: {}
@@ -34,3 +37,11 @@ jobs:
                 echo $output
               }   
           }
+
+      # Add pipeline tests for Azure Well-Architected Framework
+      - name: Run PSRule analysis
+        uses: Microsoft/ps-rule@v2.0.0
+        with:
+          modules: PSRule.Rules.Azure
+          baseline: Azure.GA_2022_03
+        continue-on-error: true
