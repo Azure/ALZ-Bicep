@@ -40,6 +40,17 @@ jobs:
               }   
           }
 
+  azure_waf:
+    name: Test Azure Well-Architected Framework
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       # Add pipeline tests for Azure Well-Architected Framework
       - name: Run PSRule analysis
         uses: Microsoft/ps-rule@v2.0.0
