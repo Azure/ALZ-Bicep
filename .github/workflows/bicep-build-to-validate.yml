@@ -9,6 +9,8 @@ on:
       - ps-rule
     paths:
       - "**.bicep"
+      - "ps-rule.yaml"
+      - ".ps-rule/*"
   workflow_dispatch: {}
 
 jobs:
