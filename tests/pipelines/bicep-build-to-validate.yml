@@ -65,6 +65,15 @@ jobs:
           echo "##vso[task.setvariable variable=gitVwanOUTPUT]$git_vwan"
 
   - task: Bash@3
+    displayName: Check for vwanNetwork Connection Changes
+    name: git_vwannetworkconnection_diff
+    inputs:
+      targetType: 'inline'
+      script: |
+          git_vwannwc=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/vnetPeeringVwan ':(exclude)*.md' ':(exclude)*.png')
+          echo "##vso[task.setvariable variable=gitVwanNwcOUTPUT]$git_vwannwc"
+
+  - task: Bash@3
     displayName: Check for spokeNetworking Changes
     name: git_spokenetworking_diff
     inputs:
@@ -85,7 +94,7 @@ jobs:
   - task: Bash@3
     displayName: Az CLI Create Subscription for PR
     name: create_subscription
-    condition: or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''))
+    condition: or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -97,7 +106,7 @@ jobs:
   - task: Bash@3
     displayName: Az CLI Refresh subscription list
     name: refresh_subscription
-    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -106,7 +115,7 @@ jobs:
   - task: Bash@3    
     displayName: Az CLI Create Resource Group for PR
     name: create_rsg
-    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -119,7 +128,7 @@ jobs:
   - task: Bash@3     
     displayName: Az CLI Deploy Management Groups for PR
     name: create_mgs
-    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -155,7 +164,7 @@ jobs:
   - task: Bash@3    
     displayName: Az CLI Subscription Placement for PR
     name: move_sub
-    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -185,7 +194,7 @@ jobs:
   - task: Bash@3    
     displayName: Az CLI Deploy vWan Networking for PR
     name: create_vwan_network
-    condition: and(ne(variables['gitVwanOUTPUT'], ''), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
@@ -194,11 +203,20 @@ jobs:
   - task: Bash@3              
     displayName: Az CLI Deploy Spoke Networking for PR
     name: create_spoke_network
-    condition: and(ne(variables['gitSpokeOUTPUT'], ''), ne(variables['subscriptionId'], ''))
+    condition: and(or(ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
         az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
+
+  - task: Bash@3    
+    displayName: Az CLI Deploy vWan Network connection for PR
+    name: create_vwan_network_connection
+    condition: and(ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['subscriptionId'], ''))
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment sub create --location $(Location) --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json parVirtualHubResourceId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualHubs/alz-vhub-$(Location)"  parRemoteVirtualNetworkResourceId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke"
 
 - job: bicep_cleanup
   dependsOn: bicep_deploy
