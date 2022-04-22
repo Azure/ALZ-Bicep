@@ -2,7 +2,6 @@
 ## Code Tour
 <!-- markdownlint-restore -->
 
-- [E2E Testing pipeline tour](#e2e-testing-pipeline-tour)
 
 
 As part of the ongoing development of ALZ-Bicep, we are beginning to add [CodeTour](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour) tours of the code, where appropriate. Tours can be found in [tours_repo]. 
