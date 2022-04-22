@@ -8,7 +8,7 @@
 As part of the ongoing development of ALZ-Bicep, we are beginning to add [CodeTour](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour) tours of the code, where appropriate. Tours can be found in [tours_repo]. 
 
 
-## E2E Testing pipeline tour
+## E2E Testing Pipeline Tour
 
 The tour for the E2E testing Azure Devops pipeline, found in [e2etest-pipeline], can be found in [e2etest-tour].
 
