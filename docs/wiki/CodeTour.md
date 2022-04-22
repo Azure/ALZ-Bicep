@@ -2,7 +2,6 @@
 ## Code Tour
 <!-- markdownlint-restore -->
 
-- [Contents](#contents)
 - [E2E Testing pipeline tour](#e2e-testing-pipeline-tour)
 
 ---
