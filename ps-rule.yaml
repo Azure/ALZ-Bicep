@@ -47,8 +47,8 @@ input:
   - 'infra-as-code/bicep/modules/**/*.bicep'
   - 'infra-as-code/bicep/CRML/**/*.bicep'
 
-  # Include test files from modules
-  - '!infra-as-code/bicep/modules/**/*.tests.bicep'
+  # Include samples/ test files from modules
+  - '!infra-as-code/bicep/modules/**/samples/*.bicep'
 
 rule:
   exclude:
