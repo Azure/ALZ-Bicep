@@ -1,4 +1,4 @@
-# Module: Virtual Network Peer
+# Module: VNet Peering
 
 This module creates a virtual network peer between two virtual networks and is to be utilized by other modules.  Module will need to be called twice to create the completed peering.  Each time with a peering direction. This allows for peering between different subscriptions.  
 
