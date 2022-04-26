@@ -60,7 +60,7 @@ param parBastionName string = '${parCompanyPrefix}-bastion'
 param parBastionSku string = 'Standard'
 
 @description('Switch which allows DDOS deployment to be disabled. Default: true')
-param parDdosEnabled bool = true
+param parDdosEnabled bool = false
 
 @description('DDOS Plan Name. Default: {parCompanyPrefix}-ddos-plan')
 param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
