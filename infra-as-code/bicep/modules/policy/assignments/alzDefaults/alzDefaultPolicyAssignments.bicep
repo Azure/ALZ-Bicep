@@ -1,15 +1,3 @@
-/*
-
-SUMMARY: This module deploys the default Azure Landing Zone Azure Policy Assignments to the Management Group Hierarchy and also assigns the relevant RBAC.
-DESCRIPTION: This module deploys the default Azure Landing Zone Azure Policy Assignments to the Management Group Hierarchy and also assigns the relevant RBAC for the system-assigned Managed Identities created for policies that require them (e.g DeployIfNotExist & Modify effect policies).
-AUTHOR/S: jtracey93
-VERSION: 1.0.4
-
-*/
-
-// **Parameters**
-// Parameters are used to pass in values to the various policy assignment modules.
-
 @description('Prefix for the management group hierarchy. DEFAULT VALUE = alz')
 @minLength(2)
 @maxLength(10)

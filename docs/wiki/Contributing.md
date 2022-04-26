@@ -93,14 +93,6 @@ Throughout the development of Bicep code you should follow the [Bicep Best Pract
 - Each bicep file must contain the below multi-line comment at the very top of the file, with its details filled out:
 
 ```bicep
-/*
-SUMMARY: A short summary of what the Bicep file does/deploys.
-DESCRIPTION: A slightly longer description of what the Bicep file does/deploys and any other important information that should be known upfront.
-AUTHOR/S: GitHub Usernames
-VERSION: 1.0.0
-*/
-
-<REST OF BICEP FILE BELOW...>
 
 targetScope = ...
 
@@ -138,14 +130,6 @@ For all Bicep files created as part of this project they will follow the structu
 Below is an example of Bicep file complying with the structure and styling guidelines specified above:
 
 ```bicep
-/*
-SUMMARY: An example deployment of a resource group.
-DESCRIPTION: Deploy a resource group to UK south taking a naming prefix as it's only parameter.
-AUTHOR/S: jtracey93
-VERSION: 1.0.0
-*/
-
-
 // SCOPE
 targetScope = 'subscription' //Deploying at Subscription scope to allow resource groups to be created and resources in one deployment
 

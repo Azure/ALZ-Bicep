@@ -1,11 +1,3 @@
-/*
-SUMMARY: Module to perform spoke network peering with the Virtual WAN virtual hub as per the Azure Landing Zone conceptual architecture - https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/virtual-wan-network-topology. This module draws parity with the Enterprise Scale implementation defined in https://github.com/Azure/Enterprise-Scale/blob/main/eslzArm/subscriptionTemplates/vwan-connectivity.json
-DESCRIPTION: The peering can be configured using the parameters file:
-            Virtual network peering with Virtual WAN virtual hub
-AUTHOR/S: faister, jtracey93
-VERSION: 1.0.1
-*/
-
 targetScope = 'subscription'
 
 @description('Virtual WAN Hub resource ID. No default')

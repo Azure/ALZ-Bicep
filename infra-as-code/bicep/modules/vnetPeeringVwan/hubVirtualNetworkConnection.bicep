@@ -1,11 +1,3 @@
-/*
-SUMMARY: Module to connect your spoke virtual network to your Virtual WAN virtual hub/ 
-DESCRIPTION: The following components will be options in this deployment
-              Virtual Hub network connection
-AUTHOR/S: faister, jtracey93
-VERSION: 1.0.2
-*/
-
 @description('Virtual WAN Hub resource ID. No default')
 param parVirtualHubResourceId string
 
