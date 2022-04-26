@@ -1,18 +1,3 @@
-/*
-
-SUMMARY: Module create network peer from one virtual network to another
-DESCRIPTION: The following components will be required parameters in this deployment
-    parResourceGroupLocation
-    parResourceGroupName
-AUTHOR/S: aultt, KiZach
-VERSION: 1.1.0
-
-# Release notes 03/13/2022 - V1.1:
-    - Added support for useRemoteGateways property.
-    - Change is required to support a correct Hub/Spoke network peering with gateway support from spoke. 
-      Without the change Spoke netwotk will not be able to be peered and user VPN/ER from the Hub network.
-*/
-
 @description('Virtual Network ID of Virtual Network destination. No default')
 param parDestinationVirtualNetworkID string
 
