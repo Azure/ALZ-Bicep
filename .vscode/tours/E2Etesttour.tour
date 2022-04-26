@@ -29,73 +29,87 @@
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Step to check for changes to the bicep module for Virtual WAN. Sets gitVwanOUTPUT if anything has changed. Similar to management groups checking this will be updated to look more broadly to parameter file changes as well.\r\n\r\n",
-      "line": 58
+      "description": "Step to check for changes to the bicep module for vnet peering. Sets gitVnetPeerOUTPUT if anything has changed. ",
+      "line": 58,
+      "selection": {
+        "start": {
+          "line": 65,
+          "character": 49
+        },
+        "end": {
+          "line": 65,
+          "character": 66
+        }
+      }
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Step to check for changes to the bicep module for Virtual WAN network connections as well as any parameter files. Sets gitVwanNwcOUTPUT if anything has changed. ",
+      "description": "Step to check for changes to the bicep module for Virtual WAN. Sets gitVwanOUTPUT if anything has changed. Similar to management groups checking this will be updated to look more broadly to parameter file changes as well.\r\n\r\n",
       "line": 67
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Step to check for changes to the bicep module for Spoke Vnet. Sets gitSpokeOUTPUT if anything has changed. Similar to management groups checking this will be updated to look more broadly to parameter file changes as well.\r\n\r\n",
+      "description": "Step to check for changes to the bicep module for Virtual WAN network connections as well as any parameter files. Sets gitVwanNwcOUTPUT if anything has changed. ",
       "line": 76
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "description": "Step to check for changes to the bicep module for Spoke Vnet. Sets gitSpokeOUTPUT if anything has changed. Similar to management groups checking this will be updated to look more broadly to parameter file changes as well.\r\n\r\n",
+      "line": 85
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Login to Azure with SPN with Owner privileges at Tenant root group level",
-      "line": 86
+      "line": 95
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Subscription is created if one or more of the output variables has been set. ",
-      "line": 97
+      "line": 106
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "This step is run if one or more of the output variables has been set and if subscription id is not empty.",
-      "line": 109
-    },
-    {
-      "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "This step is run if one or more of the output variables has been set and if subscription id is not empty.\r\n",
       "line": 118
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "description": "This step is run if one or more of the output variables has been set and if subscription id is not empty.\r\n",
+      "line": 127
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "If no resource group exists this step will wait for 300 seconds and then create it. This is due to possible lag of subscription availability.",
-      "line": 123
+      "line": 132
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Set pipeline variable containing the subscription id.",
-      "line": 103
+      "line": 112
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Set output pipeline variable indicating that subscription has been created for use when doing cleanup.",
-      "line": 104
-    },
-    {
-      "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Refresh subscription list or next step may not be able to set context to the recently created subscription.",
       "line": 113
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "description": "Refresh subscription list or next step may not be able to set context to the recently created subscription.",
+      "line": 116
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "This step is run if one or more of the output variables has been set and if subscription id is not empty.",
-      "line": 131
+      "line": 140
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Run bicep deployment to create PR specific management group hierachy. Pseudo Root will be PR-<pr number> etc.. Note that command line parameters are added to override what's in the parameter file.",
-      "line": 135
+      "line": 144
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "This step is run if gitManagementOUTPUT has been set and if subscription id is not empty.",
-      "line": 140,
       "selection": {
         "start": {
           "line": 140,
@@ -105,17 +119,18 @@
           "line": 140,
           "character": 53
         }
-      }
+      },
+      "line": 149
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Run bicep deployment to create custom roles at the pseudo root level. Note that command line parameters are added to override what's in the parameter file.\r\n",
-      "line": 144
+      "line": 153
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "This step is run if gitManagementOUTPUT has been set and if subscription id is not empty.",
-      "line": 149,
+      "line": 158,
       "selection": {
         "start": {
           "line": 149,
@@ -130,12 +145,12 @@
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Run bicep deployment to create custom policies and initiatives at the pseudo root level. Note that command line parameters are added to override what's in the parameter file.\r\n\r\n",
-      "line": 153
+      "line": 162
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "This step is run if gitLoggingOUTPUT has been set and if subscription id is not empty.\r\n",
-      "line": 158,
+      "line": 167,
       "selection": {
         "start": {
           "line": 158,
@@ -150,17 +165,17 @@
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Run bicep deployment to create Log Analytics workspace and automation account in specified resource group.\r\n\r\n",
-      "line": 162
+      "line": 171
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "This step is run if one or more of the output variables has been set and if subscription id is not empty.",
-      "line": 167
+      "line": 176
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Run bicep deployment to move subscription to the Connectivity Management group in the created ALZ MG structure. Note that command line parameters are added to override what's in the parameter file.\r\n",
-      "line": 171,
+      "line": 180,
       "selection": {
         "start": {
           "line": 171,
@@ -175,7 +190,7 @@
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "This step is run if gitManagementOUTPUT has been set and if subscription id is not empty.\r\n",
-      "line": 176,
+      "line": 185,
       "selection": {
         "start": {
           "line": 176,
@@ -190,12 +205,12 @@
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Run PowerShell script to deploy default ALZ policy assignments. A PowerShell script is used for retry purposes. Since policy definitions/initiatives are recently created update lag may lead to assignment failures.",
-      "line": 180
+      "line": 189
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "This step is run if gitHubOUTPUT has been set and if subscription id is not empty.\r\n",
-      "line": 188,
+      "line": 197,
       "selection": {
         "start": {
           "line": 188,
@@ -209,13 +224,7 @@
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Run bicep deployment to create HUB VNet and associated artifacts in the specified resource group. Note that command line parameters are added to override what's in the parameter file.\r\n",
-      "line": 192
-    },
-    {
-      "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "This step is run if gitVwanOUTPUT or gitVwanNwcOUTPUT has been set and if subscription id is not empty. This is done to ensure that any changes to vWan network connections are not missing a vWan to test against.\r\n",
-      "line": 197,
+      "description": "This step is run if gitHubOUTPUT or gitVnetPeerOUTPUT has been set and if subscription id is not empty. This is done to ensure that any changes to virtual network peering is not missing a hub network to test against\r\n",
       "selection": {
         "start": {
           "line": 197,
@@ -229,38 +238,53 @@
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Run bicep deployment to create VWAN and associated artifacts in the specified resource group. Note that command line parameters are added to override what's in the parameter file.\r\n\r\n",
+      "description": "Run bicep deployment to create hub network and associated artifacts in the specified resource group. Note that command line parameters are added to override what's in the parameter file.\r\n\r\n",
       "line": 201
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Run bicep deployment to create VwAN and associated artifacts in the specified resource group. Note that command line parameters are added to override what's in the parameter file.\r\n\r\n",
-      "line": 201
-    },
-    {
-      "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "This step is run if gitSpokeOUTPUT or gitVwanNwcOUTPUT has been set and if subscription id is not empty. This is done to ensure that any changes to vWan network connections are not missing a Spoke VNet to test against.\r\n\r\n",
+      "description": "This step is run if gitVwanOUTPUT or gitVwanNwcOUTPUT has been set and if subscription id is not empty. This is done to ensure that any changes to virtual network peering is not missing a hub network to test against\r\n\r\n",
       "line": 206,
       "selection": {
         "start": {
           "line": 206,
-          "character": 37
+          "character": 73
         },
         "end": {
           "line": 206,
-          "character": 51
+          "character": 89
         }
       }
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Run bicep deployment to create spoke vnet in the specified resource group. \r\n\r\n",
+      "description": "Run bicep deployment to create virtual WAN and associated artifacts in the specified resource group. Note that command line parameters are added to override what's in the parameter file.\r\n",
       "line": 210
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "description": "This step is run if gitSpokeOUTPUT or gitVwanNwcOUTPUT or gitVnetPeerOUTPUT has been set and if subscription id is not empty. This is done to ensure that any changes to vWan network connections are not missing a Spoke VNet to test against.\r\n\r\n",
+      "selection": {
+        "start": {
+          "line": 215,
+          "character": 113
+        },
+        "end": {
+          "line": 215,
+          "character": 130
+        }
+      },
+      "line": 215
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "description": "Run bicep deployment to create spoke vnet in the specified resource group. \r\n\r\n",
+      "line": 219
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "This step is run if gitVwanNwcOUTPUT has been set and if subscription id is not empty.\r\n",
-      "line": 215,
+      "line": 224,
       "selection": {
         "start": {
           "line": 215,
@@ -275,23 +299,52 @@
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Run bicep deployment to create VwAN network connection using previously created vWan and spoke vnet. Note that command line parameters are added to override what's in the parameter file.\r\n\r\n",
-      "line": 219
+      "line": 228
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "description": "This step is run if gitVnetPeerOUTPUT has been set and if subscription id is not empty.\r\n\r\n",
+      "line": 233,
+      "selection": {
+        "start": {
+          "line": 233,
+          "character": 34
+        },
+        "end": {
+          "line": 233,
+          "character": 51
+        }
+      }
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "description": "Run bicep deployment to create spoke to hub virtual network peering using previously created hub and spoke vnet.",
+      "line": 237
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "description": "This step is run if gitVnetPeerOUTPUT has been set and if subscription id is not empty.\r\n",
+      "line": 242
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "description": "Run bicep deployment to create hub to spoke virtual network peering using previously created hub and spoke vnet.\r\n\r\n",
+      "line": 246
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Takes output variable from previous job to later determine if anything was deployed. ",
-      "line": 224
+      "line": 251
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Run cleanup if anything was deployed.",
-      "line": 231
+      "line": 258
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
       "description": "Run PowerShell script to do the following (in order):\r\n- Move subscription from connectivity management group to tenant root group.\r\n- Delete all resource groups in subscription\r\n- Remove all subscription scope deployments\r\n- Remove all tenant scope deployments\r\n- Remove management group structure\r\n",
-      "line": 235
+      "line": 262
     }
-  ],
-  "ref": "E2ETestForVWAnConnection"
+  ]
 }
