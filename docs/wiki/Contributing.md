@@ -90,10 +90,8 @@ Throughout the development of Bicep code you should follow the [Bicep Best Pract
   - Default values should also be documented in the appropriate location
 - Tab indents should be set to `2` for all Bicep files
 - Double line-breaks should exist between each element type section
-- Each bicep file must contain the below multi-line comment at the very top of the file, with its details filled out:
 
 ```bicep
-
 targetScope = ...
 
 etc...
