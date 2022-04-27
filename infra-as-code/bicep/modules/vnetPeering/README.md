@@ -35,11 +35,11 @@ The module will generate the following outputs:
 
 ## Deployment
 
-In this example, the remote spoke Vnet will be peered with the HUB Vnet in the Connectivity subscription. 
+In this example, the remote spoke Vnet will be peered with the HUB Vnet in the Connectivity subscription.
 
-> Note that the example configures the peering only one way, to complete the peering you will need to repeat the process with a separate parameter file with reverse parameters. 
+> Note that the example configures the peering only one way, to complete the peering you will need to repeat the process with a separate parameter file with reverse parameters.
 
-During the deployment step, we will take parameters provided in the example parameters file. 
+During the deployment step, we will take parameters provided in the example parameters file.
 
  | Azure Cloud    | Bicep template      | Input parameters file                    |
  | -------------- | ------------------- | ---------------------------------------- |
