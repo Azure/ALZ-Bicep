@@ -90,42 +90,7 @@ Throughout the development of Bicep code you should follow the [Bicep Best Pract
   - Default values should also be documented in the appropriate location
 - Tab indents should be set to `2` for all Bicep files
 - Double line-breaks should exist between each element type section
-
-```bicep
-targetScope = ...
-
-etc...
-```
-
-### Bicep Elements Naming Standards
-
-| Element Type | Naming Prefix | Example                                                              |
-| :----------: | :-----------: | :------------------------------------------------------------------- |
-|  Parameters  |     `par`     | `parLocation`, `parManagementGroupsNamePrefix`                       |
-|  Variables   |     `var`     | `varConditionExpression`, `varIntermediateRootManagementGroupName`   |
-|  Resources   |     `res`     | `resIntermediateRootManagementGroup`, `resResourceGroupLogAnalytics` |
-|   Modules    |     `mod`     | `modManagementGroups`, `modLogAnalytics`                             |
-|   Outputs    |     `out`     | `outIntermediateRootManagementGroupID`, `outLogAnalyticsWorkspaceID` |
-
-### Bicep Common Parameters Naming Standards
-
-The below guidelines should be adhered to whilst contributing to this projects Bicep code.
-
-- `parLocation`
-  - Shall be used for all module parameters specifying the Azure region to which a resource or module will be deployed.
-  - The only exception to this is when two inter-related services do not have region parity and need to be deployed to different regions. (i.e. Log Analytics and Automation Accounts in China. See logging module for an example)
-
-### Bicep File Structure
-
-For all Bicep files created as part of this project they will follow the structure pattern of being grouped by element type, this is shown in the image below:
-
-![Bicep File Structure By Element Type Image](media/bicep-structure.png)
-
-> Parameters, Variables, Resources, Modules & Outputs are all types of elements.
-
-### Bicep File Structure Example
-
-Below is an example of Bicep file complying with the structure and styling guidelines specified above:
+- When intended for scopes above resource group deployment, targetScope should be indicated at the beginning of the file.
 
 ```bicep
 // SCOPE
