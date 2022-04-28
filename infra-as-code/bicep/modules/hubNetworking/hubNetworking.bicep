@@ -409,7 +409,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
   name: parAzureFirewallName
   location: parLocation
   tags: parTags
-  zones: (empty(parAzureFirewallAvailabilityZones) ? parAzureFirewallAvailabilityZones : json('null'))
+  zones: (!empty(parAzureFirewallAvailabilityZones) ? parAzureFirewallAvailabilityZones : json('null'))
   properties: {
     ipConfigurations: [
       {
