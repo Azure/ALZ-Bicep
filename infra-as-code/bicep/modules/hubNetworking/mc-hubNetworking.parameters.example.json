@@ -60,6 +60,9 @@
         "parAzureFirewallTier": {
             "value": "Standard"
         },
+        "parAzureFirewallAvailabilityZones": {
+            "value": []
+        },
         "parNetworkDNSEnableProxy": {
             "value": true
         },

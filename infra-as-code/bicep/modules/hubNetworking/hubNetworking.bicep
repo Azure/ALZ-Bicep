@@ -71,12 +71,23 @@ param parAzureFirewallEnabled bool = true
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
 param parAzureFirewallName string = '${parCompanyPrefix}-azure-firewall'
 
+@description('Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}')
+param parFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
+
 @description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
 @allowed([
   'Standard'
   'Premium'
 ])
 param parAzureFirewallTier string = 'Standard'
+
+@allowed([
+  '1'
+  '2'
+  '3'
+])
+@description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
+param parAzureFirewallAvailabilityZones array = []
 
 @description('Switch which enables DNS Proxy to be enabled on the Azure Firewall. Default: true')
 param parNetworkDNSEnableProxy bool = true
@@ -378,43 +389,28 @@ module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if (parAzureFirew
   }
 }
 
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = if (parAzureFirewallEnabled) {
+  name: parFirewallPoliciesName
+  location: parLocation
+  tags: parTags
+  properties: {
+    dnsSettings: {
+      enableProxy: parNetworkDNSEnableProxy
+    }
+    sku: {
+      tier: parAzureFirewallTier
+    }
+  }
+}
+
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.  
 resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (parAzureFirewallEnabled) {
   name: parAzureFirewallName
   location: parLocation
   tags: parTags
+  zones: (empty(parAzureFirewallAvailabilityZones) ? parAzureFirewallAvailabilityZones : json('null'))
   properties: {
-    networkRuleCollections: [
-      {
-        name: 'VmInternetAccess'
-        properties: {
-          priority: 101
-          action: {
-            type: 'Allow'
-          }
-          rules: [
-            {
-              name: 'AllowVMAppAccess'
-              description: 'Allows VM access to the web'
-              protocols: [
-                'TCP'
-              ]
-              sourceAddresses: [
-                parHubNetworkAddressPrefix
-              ]
-              destinationAddresses: [
-                '*'
-              ]
-              destinationPorts: [
-                '80'
-                '443'
-              ]
-            }
-          ]
-        }
-      }
-    ]
     ipConfigurations: [
       {
         name: 'ipconfig1'
@@ -428,13 +424,15 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
         }
       }
     ]
-    threatIntelMode: 'Alert'
     sku: {
       name: 'AZFW_VNet'
       tier: parAzureFirewallTier
     }
     additionalProperties: {
       'Network.DNS.EnableProxy': '${parNetworkDNSEnableProxy}'
+    }
+    firewallPolicy: {
+      id: resFirewallPolicies.id
     }
   }
 }
@@ -465,7 +463,7 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
   params: {
     parLocation: parLocation
     parTags: parTags
-    parHubVirtualNetworkId: resHubVirtualNetwork.id
+    parVirtualNetworkIdToLink: resHubVirtualNetwork.id
     parPrivateDnsZones: parPrivateDnsZones
   }
 }

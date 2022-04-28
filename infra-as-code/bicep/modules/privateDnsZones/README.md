@@ -11,13 +11,13 @@ Module deploys the following resources:
 
 The module requires the following inputs:
 
- | Parameter              | Type   | Default                                                                                                          | Description                                                                                                                                    | Requirement                              | Example                                                                                                                                                |
- | ---------------------- | ------ | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
- | parLocation            | string | `resourceGroup().location`                                                                                       | The Azure Region to deploy the resources into                                                                                                  | None                                     | `eastus`                                                                                                                                               |
- | parPrivateDnsZones     | array  | See example parameters file [`privateDnsZones.parameters.example.json`](privateDnsZones.parameters.example.json) | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones - See [DNS Zones](#dns-zones) for more info | None                                     | See Default                                                                                                                                            |
- | parTags                | object | Empty Array []                                                                                                   | List of tags (Key Value Pairs) to be applied to resources                                                                                      | None                                     | environment: 'development'                                                                                                                             |
- | parHubVirtualNetworkId | string |                                                                                                                  | Resource ID of the Hub Virtual Network                                                                                                         | Valid Resource ID of the Virtual Network | /subscriptions/[your platform management subscription ID]/resourceGroups/Hub_PrivateDNS_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus |
- | parTelemetryOptOut     | bool   | false                                                                                                            | Set Parameter to true to Opt-out of deployment telemetry                                                                                       | None                                     | false                                                                                                                                                  |
+ | Parameter                 | Type   | Default                                                                                                          | Description                                                                                                                                    | Requirement                              | Example                                                                                                                                                |
+ | ------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+ | parLocation               | string | `resourceGroup().location`                                                                                       | The Azure Region to deploy the resources into                                                                                                  | None                                     | `eastus`                                                                                                                                               |
+ | parPrivateDnsZones        | array  | See example parameters file [`privateDnsZones.parameters.example.json`](privateDnsZones.parameters.example.json) | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones - See [DNS Zones](#dns-zones) for more info | None                                     | See Default                                                                                                                                            |
+ | parTags                   | object | Empty Array []                                                                                                   | List of tags (Key Value Pairs) to be applied to resources                                                                                      | None                                     | environment: 'development'                                                                                                                             |
+ | parVirtualNetworkIdToLink | string | Empty String                                                                                                     | Resource ID of VNet for Private DNS Zone VNet Links                                                                                            | Valid Resource ID of the Virtual Network | /subscriptions/[your platform connectivity subscription ID]/resourceGroups/Hub_PrivateDNS_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus |
+ | parTelemetryOptOut        | bool   | false                                                                                                            | Set Parameter to true to Opt-out of deployment telemetry                                                                                       | None                                     | false                                                                                                                                                  |
 
 ## DNS Zones
 
@@ -70,7 +70,7 @@ There are two different sets of input parameters; one for deploying to Azure glo
 ```bash
 # For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription 
-ConnectivitySubscriptionId="[your platform management subscription ID]"
+ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
 az group create --location eastus \
@@ -85,7 +85,7 @@ OR
 ```bash
 # For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription 
-ConnectivitySubscriptionId="[your platform management subscription ID]"
+ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
 az group create --location chinaeast2 \
@@ -102,7 +102,7 @@ az deployment group create \
 ```powershell
 # For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription 
-$ConnectivitySubscriptionId = "[your platform management subscription ID]"
+$ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
@@ -118,7 +118,7 @@ OR
 ```powershell
 # For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription 
-$ConnectivitySubscriptionId = "[your platform management subscription ID]"
+$ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 

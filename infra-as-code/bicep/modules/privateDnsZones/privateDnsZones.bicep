@@ -67,8 +67,8 @@ param parPrivateDnsZones array = [
 @description('Tags you would like to be applied to all resources in this module. Default: empty array')
 param parTags object = {}
 
-@description('Resource ID of Hub VNet for Private DNS Zone VNet Links')
-param parHubVirtualNetworkId string
+@description('Resource ID of VNet for Private DNS Zone VNet Links')
+param parVirtualNetworkIdToLink string = ''
 
 @description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
@@ -82,13 +82,13 @@ resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [fo
   tags: parTags
 }]
 
-resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in parPrivateDnsZones: {
+resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in parPrivateDnsZones: if (!empty(parVirtualNetworkIdToLink)) {
   name: '${privateDnsZoneName}/${privateDnsZoneName}'
   location: 'global'
   properties: {
     registrationEnabled: false
     virtualNetwork: {
-      id: parHubVirtualNetworkId
+      id: parVirtualNetworkIdToLink
     }
   }
   dependsOn: resPrivateDnsZones
