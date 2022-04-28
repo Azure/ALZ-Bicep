@@ -138,12 +138,6 @@ New-AzResourceGroupDeployment `
   -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/mc-hubNetworking.parameters.example.json `
   -ResourceGroupName 'Hub_Networking_POC'
 ```
-## Example Output in Azure global regions
-
-![Example Deployment Output](media/hubNetworkExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
-
-## Example Output in Azure China regions
-![Example Deployment Output](media/mc-hubNetworkExampleDeploymentOutput.png "Example Deployment Output in Azure China")
 
 ## Bicep Visualizer
 
