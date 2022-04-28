@@ -69,7 +69,7 @@ param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
 param parAzureFirewallEnabled bool = true
 
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
-param parAzureFirewallName string = '${parCompanyPrefix}-azure-firewall'
+param parAzureFirewallName string = '${parCompanyPrefix}-azfw-${parLocation}'
 
 @description('Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}')
 param parFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
@@ -427,9 +427,6 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
     sku: {
       name: 'AZFW_VNet'
       tier: parAzureFirewallTier
-    }
-    additionalProperties: {
-      'Network.DNS.EnableProxy': '${parNetworkDNSEnableProxy}'
     }
     firewallPolicy: {
       id: resFirewallPolicies.id

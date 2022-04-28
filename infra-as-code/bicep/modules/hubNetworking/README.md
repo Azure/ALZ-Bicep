@@ -33,7 +33,7 @@ The module requires the following inputs:
  | parTags                           | object | Empty Array []                                                                                       | List of tags (Key Value Pairs) to be applied to resources                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | None                          | environment: 'development'                     |
  | parHubNetworkAddressPrefix        | string | 10.10.0.0/16                                                                                         | CIDR range for Hub Network                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | CIDR Notation                 | 10.10.0.0/16                                   |
  | parHubNetworkName                 | string | `${parCompanyPrefix}-hub-${parLocation}`                                                             | Name prefix for Virtual Network.  Prefix will be appended with the region.                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | 2-50 char                     | alz-hub-eastus                                 |
- | parAzureFirewallName              | string | `${parCompanyPrefix}-azure-firewall`                                                                 | Name associated with Azure Firewall                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | 1-80 char                     | alz-azure-firewall                             |
+ | parAzureFirewallName              | string | `${parCompanyPrefix}-azfw-${parLocation}`                                                                 | Name associated with Azure Firewall                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | 1-80 char                     | alz-azfw-eastus                             |
  | parFirewallPoliciesName           | string | `${parCompanyPrefix}-azfwpolicy-${resourceGroup().location}`                                         | Name associated with Azure Firewall Policy                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | 1-80 char                     | alz-azfwpolicy-eastus                          |
  | parAzureFirewallTier              | string | Standard                                                                                             | Tier associated with the Firewall to be deployed.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Standard or Premium           | Premium                                        |
  | parAzureFirewallAvailabilityZones | array  | Empty Array []                                                                                       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.                                                                                                                                                                                                                                                                                                                                                                                                     | None                          | `['1']` or `['1' ,'2', '3']`                   |
@@ -78,7 +78,7 @@ There are two different sets of input parameters; one for deploying to Azure glo
 ```bash
 # For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription 
-ConnectivitySubscriptionId="[your platform management subscription ID]"
+ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
 az group create --location eastus \
@@ -93,7 +93,7 @@ OR
 ```bash
 # For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription 
-ConnectivitySubscriptionId="[your platform management subscription ID]"
+ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
 az group create --location chinaeast2 \
@@ -110,7 +110,7 @@ az deployment group create \
 ```powershell
 # For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription 
-$ConnectivitySubscriptionId = "[your platform management subscription ID]"
+$ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
@@ -126,7 +126,7 @@ OR
 ```powershell
 # For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription 
-$ConnectivitySubscriptionId = "[your platform management subscription ID]"
+$ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 

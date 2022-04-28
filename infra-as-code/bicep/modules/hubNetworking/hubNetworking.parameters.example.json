@@ -55,7 +55,7 @@
       "value": true
     },
     "parAzureFirewallName": {
-      "value": "alz-azure-firewall"
+      "value": "alz-azfw-eastus"
     },
     "parAzureFirewallTier": {
       "value": "Standard"
