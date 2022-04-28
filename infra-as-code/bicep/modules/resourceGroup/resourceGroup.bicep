@@ -1,13 +1,3 @@
-/*
-SUMMARY: Module to deploy a resource group to the subscription specified. 
-DESCRIPTION: The following components will be required parameters in this deployment
-    parLocation
-    parResourceGroupName
-AUTHOR/S: aultt, johnlokerse
-VERSION: 1.1.0
-  - Added outputs for resource group name and resource group id
-*/
-
 targetScope = 'subscription'
 
 @description('Azure Region where Resource Group will be created.  No Default')
