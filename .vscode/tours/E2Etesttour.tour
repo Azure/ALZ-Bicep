@@ -318,7 +318,7 @@
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Run bicep deployment to create spoke to hub virtual network peering using previously created hub and spoke vnet.",
+      "description": "Run bicep deployment to create spoke to hub virtual network peering using previously created hub and spoke vnet. Note that command line parameters are added to override what's in the parameter file.",
       "line": 237
     },
     {
@@ -328,7 +328,7 @@
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Run bicep deployment to create hub to spoke virtual network peering using previously created hub and spoke vnet.\r\n\r\n",
+      "description": "Run bicep deployment to create hub to spoke virtual network peering using previously created hub and spoke vnet. Note that command line parameters are added to override what's in the parameter file.",
       "line": 246
     },
     {

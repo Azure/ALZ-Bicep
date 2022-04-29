@@ -1,17 +1,3 @@
-/*
-SUMMARY: Module to deploy the Hub Network and it's components as per the Azure Landing Zone conceptual architecture 
-DESCRIPTION: The following components will be options in this deployment
-              Virtual Network (Vnet)
-              Subnets
-              VPN Gateway/ExpressRoute Gateway
-              Azure Firewall
-              Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
-              DDos Standard Plan
-              Bastion
-AUTHOR/S: aultt, jtracey93, cloudchristoph
-VERSION: 1.x.x
-*/
-
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
 param parLocation string = resourceGroup().location
 

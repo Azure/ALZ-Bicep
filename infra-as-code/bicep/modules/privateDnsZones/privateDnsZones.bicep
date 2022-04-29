@@ -1,10 +1,3 @@
-/*
-SUMMARY: Module to deploy the Private DNS Zones as per the Azure Landing Zone conceptual architecture 
-DESCRIPTION: The following components will deployed
-              Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
-AUTHOR/S: aultt, jtracey93, cloudchristoph
-VERSION: 1.x.x
-*/
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
 param parLocation string = resourceGroup().location
 

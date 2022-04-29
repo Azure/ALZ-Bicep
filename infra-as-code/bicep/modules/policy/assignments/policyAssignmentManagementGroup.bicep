@@ -1,10 +1,3 @@
-/*
-SUMMARY: This module assigns Azure Policies to a specified Management Group as well as assigning the Managed Identity to various Management Groups 
-DESCRIPTION: This module assigns Azure Policies to a specified Management Group.
-AUTHOR/S: jtracey93
-VERSION: 1.2.0
-*/
-
 targetScope = 'managementGroup'
 
 @minLength(1)
