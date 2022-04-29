@@ -154,7 +154,7 @@ resource resVWAN 'Microsoft.Network/virtualWans@2021-05-01' = {
   }
 }
 
-resource resVHub 'Microsoft.Network/virtualHubs@2021-05-01' = if(parVirtualHubEnabled && !empty(parVhubAddressPrefix)) {
+resource resVHub 'Microsoft.Network/virtualHubs@2021-05-01' = if (parVirtualHubEnabled && !empty(parVhubAddressPrefix)) {
   name: parVHubName
   location: parLocation
   tags: parTags
@@ -167,7 +167,28 @@ resource resVHub 'Microsoft.Network/virtualHubs@2021-05-01' = if(parVirtualHubEn
   }
 }
 
-resource resVPNGateway 'Microsoft.Network/vpnGateways@2021-05-01' = if(parVirtualHubEnabled && parVPNGatewayEnabled) {
+resource resVHubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2021-05-01' = if (parVirtualHubEnabled && parAzureFirewallEnabled) {
+  parent: resVHub
+  name: 'defaultRouteTable'
+  properties: {
+    labels: [
+      'default'
+    ]
+    routes: [
+      {
+        name: 'default-to-azfw'
+        destinations: [
+          '0.0.0.0/0'
+        ]
+        destinationType: 'CIDR'
+        nextHop: (parVirtualHubEnabled && parAzureFirewallEnabled) ? resAzureFirewall.id : ''
+        nextHopType: 'ResourceID'
+      }
+    ]
+  }
+}
+
+resource resVPNGateway 'Microsoft.Network/vpnGateways@2021-05-01' = if (parVirtualHubEnabled && parVPNGatewayEnabled) {
   name: parVPNGwName
   location: parLocation
   tags: parTags
@@ -177,7 +198,7 @@ resource resVPNGateway 'Microsoft.Network/vpnGateways@2021-05-01' = if(parVirtua
       bgpPeeringAddress: ''
       peerWeight: 5
     }
-    virtualHub:{
+    virtualHub: {
       id: resVHub.id
     }
     vpnGatewayScaleUnit: parVPNGwScaleUnit
@@ -189,7 +210,7 @@ resource resERGateway 'Microsoft.Network/expressRouteGateways@2021-05-01' = if (
   location: parLocation
   tags: parTags
   properties: {
-    virtualHub:{
+    virtualHub: {
       id: resVHub.id
     }
     autoScaleConfiguration: {
@@ -218,13 +239,13 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
   name: parAzureFirewallName
   location: parLocation
   tags: parTags
-  zones: (empty(parAzureFirewallAvailabilityZones) ? parAzureFirewallAvailabilityZones : json('null'))
-  properties:{
+  zones: (!empty(parAzureFirewallAvailabilityZones) ? parAzureFirewallAvailabilityZones : json('null'))
+  properties: {
     hubIPAddresses: {
       publicIPs: {
         count: 1
       }
-    }    
+    }
     sku: {
       name: 'AZFW_Hub'
       tier: parAzureFirewallTier
@@ -232,7 +253,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
     virtualHub: {
       id: parVirtualHubEnabled ? resVHub.id : ''
     }
-    additionalProperties: { 
+    additionalProperties: {
       'Network.DNS.EnableProxy': '${parNetworkDNSEnableProxy}'
     }
     firewallPolicy: {
@@ -278,4 +299,4 @@ output outVirtualHubID string = resVHub.id
 output outDdosPlanResourceID string = resDdosProtectionPlan.id
 
 // Output Private DNS Zones
-output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : []) 
+output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])

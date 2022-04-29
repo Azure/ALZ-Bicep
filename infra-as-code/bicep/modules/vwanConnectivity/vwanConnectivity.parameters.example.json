@@ -26,9 +26,6 @@
     "parCompanyPrefix": {
       "value": "alz"
     },
-    "parPublicIPSku": {
-      "value": "Standard"
-    },
     "parVhubAddressPrefix": {
       "value": "10.100.0.0/23"
     },
