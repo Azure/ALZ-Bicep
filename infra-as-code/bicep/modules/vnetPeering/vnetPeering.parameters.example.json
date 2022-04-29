@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "parDestinationVirtualNetworkID": {
-      "value": "/subscriptions/d33663d8-8346-4835-915e-e6ab5d7c5d3b/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
+      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
     },
     "parSourceVirtualNetworkName": {
       "value": "vnet-spoke"
