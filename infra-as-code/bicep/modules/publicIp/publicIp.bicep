@@ -10,6 +10,14 @@ param parPublicIPProperties object
 @description('Azure Region to deploy Public IP Address to. Default: Current Resource Group')
 param parLocation string = resourceGroup().location
 
+@allowed([
+  '1'
+  '2'
+  '3'
+])
+@description('Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty.')
+param parAvailabilityZones array = []
+
 @description('Tags to be applied to resource when deployed.  Default: None')
 param parTags object
 
@@ -19,10 +27,11 @@ param parTelemetryOptOut bool = false
 // Customer Usage Attribution Id
 var varCuaid = '3f85b84c-6bad-4c42-86bf-11c233241c22'
 
-resource resPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' ={
+resource resPublicIP 'Microsoft.Network/publicIPAddresses@2021-05-01' ={
   name: parPublicIPName
   tags: parTags
   location: parLocation
+  zones: parAvailabilityZones
   sku: parPublicIPSku
   properties: parPublicIPProperties
 }
