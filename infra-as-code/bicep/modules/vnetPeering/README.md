@@ -35,7 +35,7 @@ The module will generate the following outputs:
 
 ## Deployment
 
-In this example, the remote spoke Vnet will be peered with the HUB Vnet in the Connectivity subscription.
+In this example, the remote spoke VNet will be peered with the Hub VNet in the Connectivity subscription.
 
 > Note that the example configures the peering only one way, to complete the peering you will need to repeat the process with a separate parameter file with reverse parameters.
 
