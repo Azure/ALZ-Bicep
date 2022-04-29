@@ -1,18 +1,3 @@
-/*
-SUMMARY: Module to deploy ALZ Spoke Network 
-DESCRIPTION: The following components will be options in this deployment
-              VirtualNetwork(Spoke Vnet)
-              Subnets
-              UDR - if Firewall is enabled
-              Private DNS Link
-AUTHOR/S: aultt, jtracey93
-VERSION: 1.2.0
-  - Changed default value of parNetworkDNSEnableProxy to false. Defaulting to false allow for testing on its own 
-  - Changed default value of parDdosEnabled to false. Defaulting to false to allow for testing on its own
-  - Added parSpokeNetworkName to allow customer input flexibility
-  - Removed unrequired bool switches
-*/
-
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
 param parLocation string = resourceGroup().location
 

@@ -1,15 +1,3 @@
-/*
-SUMMARY: Role Assignments for 1 or more Management Groups
-DESCRIPTION:
-  Module provides role assignment capabilities for Management Groups.  The role assignments can be performed for:
-
-  * Managed Identities (System and User Assigned)
-  * Service Principals
-  * Security Groups
-
-AUTHOR/S: SenthuranSivananthan, jtracey93
-VERSION: 1.1.0
-*/
 targetScope = 'managementGroup'
 
 @description('A list of management group scopes that will be used for role assignment (i.e. [alz-platform-connectivity, alz-platform-identity]).  Default = []')
