@@ -362,6 +362,7 @@ module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if (parAzureFirew
   name: 'deploy-Firewall-Public-IP'
   params: {
     parLocation: parLocation
+    parAvailabilityZones: parAzureFirewallAvailabilityZones
     parPublicIPName: '${parAzureFirewallName}-PublicIP'
     parPublicIPProperties: {
       publicIPAddressVersion: 'IPv4'
@@ -391,7 +392,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = i
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.  
-resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (parAzureFirewallEnabled) {
+resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-05-01' = if (parAzureFirewallEnabled) {
   name: parAzureFirewallName
   location: parLocation
   tags: parTags
