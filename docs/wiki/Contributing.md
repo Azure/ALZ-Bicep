@@ -55,7 +55,8 @@ The following tooling/extensions are recommended to assist you developing for th
 - [CodeTour extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour)
 - [ARM Tools extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools)
 - [ARM Template Viewer extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bencoleman.armview)
-
+- For visibility of Bracket Pairs:
+  - Inside Visual Studio Code, add "editor.bracketPairColorization.enabled": true to your settings.json, to enable bracket pair colorization.
 
 ## Bicep Formatting Guidelines
 
