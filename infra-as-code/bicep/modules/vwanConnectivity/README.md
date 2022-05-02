@@ -72,7 +72,7 @@ az group create --location eastus \
 az deployment group create \
    --resource-group alz-vwan-eastus \
    --template-file infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep \
-   --parameters @infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json
 ```
 OR
 ```bash
@@ -87,7 +87,7 @@ az group create --location chinaeast2 \
 az deployment group create \
    --resource-group alz-vwan-chinaeast2 \
    --template-file infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep \
-   --parameters @infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json
 ```
 
 ### PowerShell
@@ -104,7 +104,7 @@ New-AzResourceGroup -Name 'alz-vwan-eastus' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json `
   -ResourceGroupName 'alz-vwan-eastus'
 ```
 OR
@@ -120,7 +120,7 @@ New-AzResourceGroup -Name 'alz-vwan-chinaeast2' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json `
   -ResourceGroupName 'alz-vwan-chinaeast2'
 ```
 ## Example Output in Azure global regions
