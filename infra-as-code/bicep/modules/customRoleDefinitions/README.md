@@ -51,7 +51,7 @@ Input parameter file `customRoleDefinitions.parameters.example.json` defines the
 # For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep \
-  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json \
   --location eastus \
   --management-group-id alz
 ```
@@ -60,7 +60,7 @@ OR
 # For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep \
-  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json \
   --location chinaeast2 \
   --management-group-id alz
 ```
@@ -71,7 +71,7 @@ az deployment mg create \
 # For Azure global regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json `
   -Location eastus `
   -ManagementGroupId alz
 ```
@@ -80,7 +80,7 @@ OR
 # For Azure China regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json `
   -Location chinaeast2 `
   -ManagementGroupId alz
 ```
