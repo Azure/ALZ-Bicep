@@ -114,7 +114,7 @@ In this example, the built-in Reader role will be assigned to a Service Principa
 # For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.parameters.service-principal.example.json \
+  --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json \
   --management-group-id alz-platform \
   --location eastus
 ```
@@ -123,7 +123,7 @@ OR
 # For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.parameters.service-principal.example.json \
+  --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json \
   --management-group-id alz-platform \
   --location chinaeast2
 ```
@@ -134,7 +134,7 @@ az deployment mg create \
 # For Azure global regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.parameters.service-principal.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json `
   -ManagementGroupId alz-platform `
   -Location eastus
 ```
@@ -143,7 +143,7 @@ OR
 # For Azure China regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.parameters.service-principal.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json `
   -ManagementGroupId alz-platform `
   -Location chinaeast2
 ```
@@ -152,16 +152,16 @@ New-AzManagementGroupDeployment `
 
 ### Single Management Group Role Assignment
 
-![Bicep Visualizer - Single Management Group Role Assignment](media/bicep-visualizer-mg.PNG "Bicep Visualizer - Single Management Group Role Assignment")
+![Bicep Visualizer - Single Management Group Role Assignment](media/bicepVisualizerMg.png "Bicep Visualizer - Single Management Group Role Assignment")
 
 ### Many Management Group Role Assignments
 
-![Bicep Visualizer - Many Management Group Role Assignments](media/bicep-visualizer-mg-many.PNG "Bicep Visualizer - Many Management Group Role Assignments")
+![Bicep Visualizer - Many Management Group Role Assignments](media/bicepVisualizerMgMany.png "Bicep Visualizer - Many Management Group Role Assignments")
 
 ### Single Subscription Role Assignment
 
-![Bicep Visualizer - Single Subscription Role Assignment](media/bicep-visualizer-sub.PNG "Bicep Visualizer - Single Subscription Role Assignment")
+![Bicep Visualizer - Single Subscription Role Assignment](media/bicepVisualizerSub.png "Bicep Visualizer - Single Subscription Role Assignment")
 
 ### Many Subscription Role Assignments
 
-![Bicep Visualizer - Many Subscription Role Assignments](media/bicep-visualizer-sub-many.PNG "Bicep Visualizer - Many Subscription Role Assignments")
+![Bicep Visualizer - Many Subscription Role Assignments](media/bicepVisualizerSubMany.png "Bicep Visualizer - Many Subscription Role Assignments")
