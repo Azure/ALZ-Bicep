@@ -79,7 +79,7 @@ az group create --location eastus \
 az deployment group create \
    --resource-group Hub_PrivateDNS_POC  \
    --template-file infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep \
-   --parameters @infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json
 ```
 OR
 ```bash
@@ -94,7 +94,7 @@ az group create --location chinaeast2 \
 az deployment group create \
    --resource-group Hub_PrivateDNS_POC  \
    --template-file infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep \
-   --parameters @infra-as-code/bicep/modules/privateDnsZones/mc-privateDnsZones.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/privateDnsZones/parameters/mc-privateDnsZones.parameters.all.json
 ```
 
 ### PowerShell
@@ -111,7 +111,7 @@ New-AzResourceGroup -Name 'Hub_PrivateDNS_POC' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json `
   -ResourceGroupName 'Hub_PrivateDNS_POC'
 ```
 OR
@@ -127,13 +127,13 @@ New-AzResourceGroup -Name 'Hub_PrivateDNS_POC' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/privateDnsZones/mc-privateDnsZones.parameters.example.json
+  -TemplateParameterFile infra-as-code/bicep/modules/privateDnsZones/parameters/mc-privateDnsZones.parameters.all.json
   -ResourceGroupName 'Hub_PrivateDNS_POC'
 ```
 ## Example Output in Azure global regions
 
-![Example Deployment Output](media/privateDnsZonesExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
+![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
 
 ## Bicep Visualizer
 
-![Bicep Visualizer](media/privateDnsZonesBicepVisualizer.png "Bicep Visualizer")
+![Bicep Visualizer](media/bicepVisualizer.png "Bicep Visualizer")
