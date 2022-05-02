@@ -55,7 +55,7 @@ az group create --location eastus \
 az deployment group create \
    --resource-group Spoke_Networking_POC  \
    --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json
 ```
 OR
 ```bash
@@ -70,7 +70,7 @@ az group create --location chinaeast2 \
 az deployment group create \
    --resource-group Spoke_Networking_POC  \
    --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json
 ```
 
 ### PowerShell
@@ -87,7 +87,7 @@ New-AzResourceGroup -Name 'Spoke_Networking_POC' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json `
   -ResourceGroupName 'Spoke_Networking_POC'
 ```
 OR
@@ -103,20 +103,14 @@ New-AzResourceGroup -Name 'Spoke_Networking_POC' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.parameters.example.json
+  -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json
   -ResourceGroupName 'Spoke_Networking_POC'
 ```
 ## Example Output in Azure global regions
 
-![Example Deployment Output](media/spokeNetworkExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
+![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
 
 
 ## Bicep Visualizer
 
 ![Bicep Visualizer](media/bicepVisualizer.png "Bicep Visualizer")
-
-
-
-
-
-
