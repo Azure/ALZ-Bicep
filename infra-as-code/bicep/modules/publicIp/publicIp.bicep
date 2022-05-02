@@ -1,11 +1,3 @@
-/*
-SUMMARY: Module to deploy create a public IP address
-DESCRIPTION: The following components will be options in this deployment
-              Public IP Address
-AUTHOR/S: aultt, jtracey93
-VERSION: 1.0.1
-*/
-
 @description('Name of Public IP to create in Azure. Default: None')
 param parPublicIPName string
 

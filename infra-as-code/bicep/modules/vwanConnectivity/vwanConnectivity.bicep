@@ -1,18 +1,3 @@
-/*
-SUMMARY: Module to deploy the Virtual WAN network topology and its components as per the Azure Landing Zone conceptual architecture - https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/virtual-wan-network-topology. This module draws parity with the Enterprise Scale implementation defined in https://github.com/Azure/Enterprise-Scale/blob/main/eslzArm/subscriptionTemplates/vwan-connectivity.json
-DESCRIPTION: The following Azure resources will be deployed in a single resource group, all of which can be configured using the parameters file:
-
-            Virtual WAN
-            Virtual Hub. The virtual hub is a prerequisite to connect to either a VPN Gateway, an ExpressRoute Gateway or an Azure Firewall to the virtual WAN
-            VPN Gateway
-            ExpressRoute Gateway
-            Public IP is deployed only if Azure Firewall is enabled
-            Azure Firewall
-            Azure Firewall policy              
-AUTHOR/S: Fai Lai @faister
-VERSION: 1.0.0
-*/
-
 @description('Prefix value which will be prepended to all resource names. Default: alz')
 param parCompanyPrefix string = 'alz'
 

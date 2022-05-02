@@ -1,10 +1,3 @@
-/*
-SUMMARY: This module deploys the custom Azure Policy Definitions & Initiatives specific to Azure China regions supplied by the Enterprise Scale conceptual architecture and reference implementation to a specified Management Group.
-DESCRIPTION: This module deploys the custom Azure Policy Definitions & Initiatives specific to Azure China regions supplied by the Enterprise Scale conceptual architecture and reference implementation defined here (https://aka.ms/enterprisescale) to a specified Management Group.
-AUTHOR/S: faister
-VERSION: 1.0.0
-*/
-
 targetScope = 'managementGroup'
 
 @description('The management group scope to which the policy definitions are to be created at. DEFAULT VALUE = "alz"')
