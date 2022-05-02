@@ -42,7 +42,7 @@ az group create --location eastus2 \
 az deployment group create \
    --resource-group Bicep_Acr  \
    --template-file infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep \
-   --parameters @infra-as-code/bicep/CRML/containerRegistry/containerRegistry.parameters.example.json
+   --parameters @infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json
 ```
 
 ### PowerShell
@@ -53,7 +53,7 @@ New-AzResourceGroup -Name 'Bicep_ACR' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep `
-  -TemplateParameterFile infra-as-code/bicep/CRML/containerRegistry/containerRegistry.parameters.example.json
+  -TemplateParameterFile infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json
 ```
 
 ## Bicep Visualizer
