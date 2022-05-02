@@ -75,7 +75,7 @@ az group create \
 # Deploy Module 
 az deployment group create \
   --template-file infra-as-code/bicep/modules/logging/logging.bicep \
-  --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json \
   --resource-group alz-logging
 ```
 OR
@@ -93,7 +93,7 @@ az group create \
 # Deploy Module 
 az deployment group create \
   --template-file infra-as-code/bicep/modules/logging/logging.bicep \
-  --parameters @infra-as-code/bicep/modules/logging/mc-logging.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json \
   --resource-group alz-logging
 ```
 
@@ -113,7 +113,7 @@ New-AzResourceGroup `
 
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/logging/logging.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/logging/logging.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json `
   -ResourceGroup alz-logging
 ```
 OR
@@ -131,7 +131,7 @@ New-AzResourceGroup `
 
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/logging/logging.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/logging/mc-logging.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json `
   -ResourceGroup alz-logging
 ```
 
