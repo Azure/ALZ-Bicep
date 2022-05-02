@@ -57,7 +57,7 @@ az account set --subscription $ConnectivitySubscriptionId
 az deployment group create \
    --resource-group Spoke_Networking_POC  \
    --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep \
-   --parameters @infra-as-code/bicep/modules/vnetPeering/vnetPeering.parameters.example.json 
+   --parameters @infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json
 ```
 OR
 ```bash
@@ -69,7 +69,7 @@ az account set --subscription $ConnectivitySubscriptionId
 az deployment group create \
     --resource-group Spoke_Networking_POC  \
    --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep \
-   --parameters @infra-as-code/bicep/modules/vnetPeering/vnetPeering.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json
 ```
 
 ### PowerShell
@@ -84,7 +84,7 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 New-AzResourceGroupDeployment `
   -ResourceGroupName Spoke_Networking_POC `
   -TemplateFile infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeering/vnetPeering.parameters.example.json 
+  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json
 ```
 OR
 ```powershell
@@ -97,12 +97,12 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 New-AzResourceGroupDeployment `
   -ResourceGroupName Spoke_Networking_POC `
   -TemplateFile infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeering/vnetPeering.parameters.example.json
+  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json
 ```
 
 ## Example output in Azure global regions
 
-![Example Deployment Output](media/vnetPeeringExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
+![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
 
 ## Bicep Visualizer
 
