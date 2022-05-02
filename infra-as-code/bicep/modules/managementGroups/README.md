@@ -62,7 +62,7 @@ In this example, the management groups are created at the `Tenant Root Group` th
 # For Azure global regions
 az deployment tenant create \
   --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
-  --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json \
   --location eastus
 ```
 OR
@@ -70,7 +70,7 @@ OR
 # For Azure China regions
 az deployment tenant create \
   --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
-  --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json \
   --location chinaeast2
 ```
 
@@ -80,7 +80,7 @@ az deployment tenant create \
 # For Azure global regions
 New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json `
   -Location eastus
 ```
 OR
@@ -88,7 +88,7 @@ OR
 # For Azure China regions
 New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json `
   -Location chinaeast2  
 ```
 
