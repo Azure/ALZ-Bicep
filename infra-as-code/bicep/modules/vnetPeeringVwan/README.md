@@ -44,7 +44,7 @@ az account set --subscription $ConnectivitySubscriptionId
 
 az deployment sub create \
    --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep \
-   --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json \
+   --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json \
    --location eastus
 ```
 OR
@@ -56,7 +56,7 @@ az account set --subscription $ConnectivitySubscriptionId
 
 az deployment sub create \
    --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep \
-   --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json \
+   --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json \
    --location chinaeast2
 ```
 
@@ -71,7 +71,7 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 New-AzDeployment `
   -TemplateFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json `
   -Location 'eastus'
 ```
 OR
@@ -84,13 +84,13 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 New-AzDeployment `
   -TemplateFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json `
   -Location 'chinaeast2'
 ```
 ## Example Output in Azure global regions
 
-![Example Deployment Output](media/vnetPeeringVwanExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
+![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
 
 ## Bicep Visualizer
 
-![Bicep Visualizer](media/vnetPeeringVwanBicepVisualizer.png "Bicep Visualizer")
+![Bicep Visualizer](media/bicepVisualizer.png "Bicep Visualizer")
