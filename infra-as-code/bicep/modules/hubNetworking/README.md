@@ -84,7 +84,7 @@ az group create --location eastus \
 az deployment group create \
    --resource-group HUB_Networking_POC  \
    --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json
 ```
 OR
 ```bash
@@ -99,7 +99,7 @@ az group create --location chinaeast2 \
 az deployment group create \
    --resource-group HUB_Networking_POC  \
    --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/hubNetworking/mc-hubNetworking.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json
 ```
 
 ### PowerShell
@@ -116,7 +116,7 @@ New-AzResourceGroup -Name 'Hub_Networking_POC' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json `
   -ResourceGroupName 'Hub_Networking_POC'
 ```
 OR
@@ -132,16 +132,16 @@ New-AzResourceGroup -Name 'Hub_Networking_POC' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/mc-hubNetworking.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json `
   -ResourceGroupName 'Hub_Networking_POC'
 ```
 ## Example Output in Azure global regions
 
-![Example Deployment Output](media/hubNetworkExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
+![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
 
 ## Example Output in Azure China regions
-![Example Deployment Output](media/mc-hubNetworkExampleDeploymentOutput.png "Example Deployment Output in Azure China")
+![Example Deployment Output](media/mc-exampleDeploymentOutput.png "Example Deployment Output in Azure China")
 
 ## Bicep Visualizer
 
-![Bicep Visualizer](media/hubNetworkingBicepVisualizer.png "Bicep Visualizer")
+![Bicep Visualizer](media/bicepVisualizer.png "Bicep Visualizer")
