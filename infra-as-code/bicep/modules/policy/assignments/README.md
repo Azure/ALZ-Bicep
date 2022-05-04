@@ -47,7 +47,7 @@ In this example, the `Deny-PublicIP` custom policy definition will be deployed/a
 # For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-deny.json \
+  --parameters @infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json \
   --location eastus \
   --management-group-id alz-landingzones
 ```
@@ -56,7 +56,7 @@ OR
 # For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-deny.json \
+  --parameters @infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json \
   --location chinaeast2 \
   --management-group-id alz-landingzones
 ```
@@ -67,7 +67,7 @@ az deployment mg create \
 # For Azure global regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-deny.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json `
   -Location eastus `
   -ManagementGroupId 'alz-landingzones'
 ```
@@ -76,7 +76,7 @@ OR
 # For Azure China regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-deny.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json `
   -Location chinaeast2 `
   -ManagementGroupId 'alz-landingzones'
 ```
@@ -98,7 +98,7 @@ In this example, the `Deploy-MDFC-Config` custom policy definition will be deplo
 # For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-dine.json \
+  --parameters @infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json \
   --location eastus \
   --management-group-id alz-landingzones
 ```
@@ -107,7 +107,7 @@ OR
 # For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/assignments/mc-policyAssignmentManagementGroup.parameters.example-dine.json \
+  --parameters @infra-as-code/bicep/modules/policy/assignments/parameters/mc-policyAssignmentManagementGroup.dine.parameters.all.json \
   --location chinaeast2 \
   --management-group-id alz-landingzones
 ```
@@ -118,7 +118,7 @@ az deployment mg create \
 # For Azure global regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.parameters.example-dine.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json `
   -Location eastus `
   -ManagementGroupId 'alz-landingzones'
 ```
@@ -127,7 +127,7 @@ OR
 # For Azure China regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/mc-policyAssignmentManagementGroup.parameters.example-dine.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/parameters/mc-policyAssignmentManagementGroup.dine.parameters.all.json `
   -Location chinaeast2 `
   -ManagementGroupId 'alz-landingzones'
 ```
