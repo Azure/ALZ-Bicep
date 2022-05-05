@@ -52,7 +52,7 @@ resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' =
   }
 }
 
-resource resSpoketoHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (!empty(parNextHopIPAddress)) {
+resource resSpokeToHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (!empty(parNextHopIPAddress)) {
   name: parSpokeToHubRouteTableName
   location: parLocation
   tags: parTags
