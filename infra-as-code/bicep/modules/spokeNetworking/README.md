@@ -5,7 +5,6 @@ This module defines spoke networking based on the recommendations from the Azure
 Module deploys the following resources:
 
 - Virtual Network (Spoke VNet)
-- Subnets
 - UDR - if Firewall is enabled
 
 ## Parameters
