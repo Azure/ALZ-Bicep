@@ -1,3 +1,5 @@
+targetScope = 'managementGroup'
+
 // **Parameters**
 // Generic Parameters - Used in multiple modules
 @description('The region to deploy all resoruces into. DEFAULTS TO deployment().location')
@@ -92,9 +94,6 @@ var varVirtualHubResourceGroup = (!empty(parHubVirtualNetworkId) && contains(par
 
 var varVirtualHubSubscriptionId = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualHubs/') ? split(parHubVirtualNetworkId, '/')[2] : '' )
 
-// **Scope**
-targetScope = 'managementGroup'
-
 // **Modules**
 // Module - Customer Usage Attribution - Telemtry
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
@@ -139,9 +138,9 @@ module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' 
     parSpokeNetworkName: parSpokeNetworkName
     parSpokeNetworkAddressPrefix: parSpokeNetworkAddressPrefix
     parDdosProtectionPlanId: parDdosProtectionPlanId
-    parDNSServerIPArray: parDnsServerIpArray 
+    parDnsServerIPs: parDnsServerIpArray
     parNextHopIPAddress: varNextHopIPAddress
-    parSpoketoHubRouteTableName: parSpoketoHubRouteTableName
+    parSpokeToHubRouteTableName: parSpoketoHubRouteTableName
     parBGPRoutePropagation: parBgpRoutePropagation
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
@@ -154,7 +153,7 @@ module modHubPeeringToSpoke '../../modules/vnetPeering/vnetPeering.bicep' = if (
   scope: resourceGroup(varHubVirtualNetworkSubscriptionId,varHubVirtualNetworkResourceGroup)
   name: varModuleDeploymentNames.modSpokePeeringFromHub
   params: {
-    parDestinationVirtualNetworkID: (!empty(varHubVirtualNetworkName) ? modSpokeNetworking.outputs.outSpokeVirtualNetworkid : '')
+    parDestinationVirtualNetworkID: (!empty(varHubVirtualNetworkName) ? modSpokeNetworking.outputs.outSpokeVirtualNetworkId : '')
     parDestinationVirtualNetworkName: (!empty(varHubVirtualNetworkName) ? modSpokeNetworking.outputs.outSpokeVirtualNetworkName : '')
     parSourceVirtualNetworkName: varHubVirtualNetworkName
     parAllowForwardedTraffic: parAllowSpokeForwardedTraffic
@@ -182,9 +181,9 @@ module modhubVirtualNetworkConnection '../../modules/vnetPeeringVwan/hubVirtualN
   name: varModuleDeploymentNames.modVnetPeeringVwan
   params: {
     parVirtualHubResourceId: varVirtualHubResourceId
-    parRemoteVirtualNetworkResourceId: modSpokeNetworking.outputs.outSpokeVirtualNetworkid
+    parRemoteVirtualNetworkResourceId: modSpokeNetworking.outputs.outSpokeVirtualNetworkId
   }
 }
 
 output outSpokeVirtualNetworkName string = modSpokeNetworking.outputs.outSpokeVirtualNetworkName
-output outSpokeVirtualNetworkid string = modSpokeNetworking.outputs.outSpokeVirtualNetworkid
+output outSpokeVirtualNetworkid string = modSpokeNetworking.outputs.outSpokeVirtualNetworkId
