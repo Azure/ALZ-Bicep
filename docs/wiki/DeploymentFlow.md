@@ -41,7 +41,11 @@ You can decide which network topology to implement that meets your requirements.
 
 ## Deployment Identity
 
+> When first working with Management Groups, the Azure AD Global Administrator must assign the User Access Administrator role to themselves on at the `/` scope first before being able to further delegate. See [Elevate access to manage all Azure subscriptions and management groups](https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin) documentation for further information.
+
 ### Service Principal Account
+
+A service principal account is required to automate through Azure DevOps or GitHub Workflows. This can be created through the [Portal](https://docs.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal), [Azure PowerShell](https://docs.microsoft.com/azure/active-directory/develop/howto-authenticate-service-principal-powershell) or [Azure CLI](https://docs.microsoft.com/cli/azure/create-an-azure-service-principal-azure-cli). 
 
 A service principal account is required to automate through Azure DevOps or GitHub Workflows.
 
