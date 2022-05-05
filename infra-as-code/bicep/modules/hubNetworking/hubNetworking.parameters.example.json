@@ -55,10 +55,13 @@
       "value": true
     },
     "parAzureFirewallName": {
-      "value": "alz-azure-firewall"
+      "value": "alz-azfw-eastus"
     },
     "parAzureFirewallTier": {
       "value": "Standard"
+    },
+    "parAzureFirewallAvailabilityZones": {
+      "value": []
     },
     "parNetworkDNSEnableProxy": {
       "value": true
