@@ -11,8 +11,8 @@
       "parPeeredVnetSubscriptionId": {
         "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
       },
-      "parPeeredVnetSubscriptionMGPlacement": {
-        "value": "connectivity"
+      "parPeeredVnetSubscriptionMgPlacement": {
+        "value": "alz-platform-connectivity"
       },
       "parDdosProtectionPlanId": {
         "value": ""
@@ -23,19 +23,19 @@
       "parSpokeNetworkAddressPrefix": {
         "value": "10.202.0.0/24"
       },
-      "parDNSServerIPArray": {
+      "parDnsServerIpArray": {
         "value": []
       },
-      "parNextHopIPAddress": {
+      "parNextHopIpAddress": {
         "value": "10.20.255.4"
       },
-      "parBGPRoutePrapogation": {
+      "parBgpRoutePropagation": {
         "value": false
       },      
       "parSpoketoHubRouteTableName": {
         "value": "rtb-spoke-to-hub"
       },
-      "parHubVirtualNetworkID": {
+      "parHubVirtualNetworkId": {
         "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-westeurope-hub-networking/providers/Microsoft.Network/virtualHubs/alz-vhub-westeurope"
       },
       "parAllowSpokeForwardedTraffic": {

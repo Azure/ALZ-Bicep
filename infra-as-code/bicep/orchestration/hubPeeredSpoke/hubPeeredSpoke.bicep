@@ -1,15 +1,7 @@
-/*
-SUMMARY: This module acts as an orchestration module that create and configures a spoke network to deliver the Azure Landing Zone Hub & Spoke architecture
-DESCRIPTION:
-
-AUTHOR/S: KiZach
-VERSION: 1.0.0
-*/
-
 // **Parameters**
 // Generic Parameters - Used in multiple modules
-@description('The region to deploy all resoruces into. DEFAULTS TO = northeurope')
-param parLocation string = 'westeurope'
+@description('The region to deploy all resoruces into. DEFAULTS TO deployment().location')
+param parLocation string = deployment().location
 
 @description('Prefix for the management group hierarchy. DEFAULTS TO = alz')
 @minLength(2)
@@ -27,13 +19,7 @@ param parTelemetryOptOut bool = true
 
 // Subscription Module Parameters
 @description('The Management Group Id to place the subscription in. DEFAULTS TO empty')
-@allowed([
-  'landingZonesCorp'
-  'identity'
-  'connectivity'
-  ''
-])
-param parPeeredVnetSubscriptionMGPlacement string = ''
+param parPeeredVnetSubscriptionMgPlacement string = ''
 
 // Resource Group Module Parameters
 @description('Name of Resource Group to be created to contain spoke networking resources like the virtual network.  Default: {parTopLevelManagementGroupPrefix}-{parLocation}-spoke-networking')
@@ -50,34 +36,32 @@ param parSpokeNetworkName string = 'vnet-spoke'
 param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 
 @description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
-param parDNSServerIPArray array = []
+param parDnsServerIpArray  array = []
 
 @description('IP Address where network traffic should route to. Default: Empty string')
-param parNextHopIPAddress string = ''
+param parNextHopIpAddress string = ''
 
 @description('Switch which allows BGP Route Propogation to be disabled on the route table')
-param parBGPRoutePrapogation bool = false
+param parBgpRoutePropagation bool = false
 
 @description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
 param parSpoketoHubRouteTableName string = 'rtb-spoke-to-hub'
 
 // Peering Modules Parameters
 @description('Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID. No default')
-param parHubVirtualNetworkID string
+param parHubVirtualNetworkId string
 
 @description('Switch to enable/disable forwarded Traffic from outside spoke network. Default = false')
 param parAllowSpokeForwardedTraffic bool = false
 
 @description('Switch to enable/disable VPN Gateway for the hub network peering. Default = false')
-param parAllowHubVPNGatewayTransit bool = false
+param parAllowHubVpnGatewayTransit bool = false
 
 // **Variables**
 // Customer Usage Attribution Id
 var varCuaid = '8ea6f19a-d698-4c00-9afb-5c92d4766fd2'
 
 // Orchestration Module Variables
-var varTargetManagementGroupID = (parPeeredVnetSubscriptionMGPlacement =='connectivity' ? '${parTopLevelManagementGroupPrefix}-platform-connectivity' : (parPeeredVnetSubscriptionMGPlacement =='identity' ? '${parTopLevelManagementGroupPrefix}-platform-identity' : '${parTopLevelManagementGroupPrefix}-landingzones-corp'))
-
 var varDeploymentNameWrappers = {
   basePrefix: 'ALZBicep'
   baseSuffixManagementGroup: '${parLocation}-${uniqueString(parLocation, parTopLevelManagementGroupPrefix)}-mg'
@@ -86,7 +70,7 @@ var varDeploymentNameWrappers = {
 }
 
 var varModuleDeploymentNames = {
-  modSubscriptionPlacement: take('${varDeploymentNameWrappers.basePrefix}-modSubscriptionPlacement-${varTargetManagementGroupID}-${varDeploymentNameWrappers.baseSuffixManagementGroup}', 64)
+  modSubscriptionPlacement: take('${varDeploymentNameWrappers.basePrefix}-modSubscriptionPlacement-${parPeeredVnetSubscriptionMgPlacement}-${varDeploymentNameWrappers.baseSuffixManagementGroup}', 64)
   modResourceGroup: take('${varDeploymentNameWrappers.basePrefix}-modResourceGroup-${varDeploymentNameWrappers.baseSuffixSubscription}', 64)
   modSpokeNetworking: take('${varDeploymentNameWrappers.basePrefix}-modSpokeNetworking-${varDeploymentNameWrappers.baseSuffixResourceGroup}', 61)
   modSpokePeeringToHub: take('${varDeploymentNameWrappers.basePrefix}-modVnetPeering-ToHub-${varDeploymentNameWrappers.baseSuffixResourceGroup}', 61)
@@ -94,19 +78,19 @@ var varModuleDeploymentNames = {
   modVnetPeeringVwan: take('${varDeploymentNameWrappers.basePrefix}-modVnetPeeringVwan-${varDeploymentNameWrappers.baseSuffixResourceGroup}', 61)
 }
 
-var varHubVirtualNetworkName = (!empty(parHubVirtualNetworkID) && contains(parHubVirtualNetworkID, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkID, '/')[8] : '' )
+var varHubVirtualNetworkName = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkId, '/')[8] : '' )
 
-var varHubVirtualNetworkResourceGroup = (!empty(parHubVirtualNetworkID) && contains(parHubVirtualNetworkID, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkID, '/')[4] : '' )
+var varHubVirtualNetworkResourceGroup = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkId, '/')[4] : '' )
 
-var varHubVirtualNetworkSubscriptionId = (!empty(parHubVirtualNetworkID) && contains(parHubVirtualNetworkID, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkID, '/')[2] : '' )
+var varHubVirtualNetworkSubscriptionId = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkId, '/')[2] : '' )
 
-var varNextHopIPAddress = (!empty(parHubVirtualNetworkID) && contains(parHubVirtualNetworkID, '/providers/Microsoft.Network/virtualNetworks/') ? parNextHopIPAddress : '' )
+var varNextHopIPAddress = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? parNextHopIpAddress : '' )
 
-var varVirtualHubResourceId = (!empty(parHubVirtualNetworkID) && contains(parHubVirtualNetworkID, '/providers/Microsoft.Network/virtualHubs/') ? parHubVirtualNetworkID : '' )
+var varVirtualHubResourceId = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualHubs/') ? parHubVirtualNetworkId : '' )
 
-var varVirtualHubResourceGroup = (!empty(parHubVirtualNetworkID) && contains(parHubVirtualNetworkID, '/providers/Microsoft.Network/virtualHubs/') ? split(parHubVirtualNetworkID, '/')[4] : '' )
+var varVirtualHubResourceGroup = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualHubs/') ? split(parHubVirtualNetworkId, '/')[4] : '' )
 
-var varVirtualHubSubscriptionId = (!empty(parHubVirtualNetworkID) && contains(parHubVirtualNetworkID, '/providers/Microsoft.Network/virtualHubs/') ? split(parHubVirtualNetworkID, '/')[2] : '' )
+var varVirtualHubSubscriptionId = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualHubs/') ? split(parHubVirtualNetworkId, '/')[2] : '' )
 
 // **Scope**
 targetScope = 'managementGroup'
@@ -115,16 +99,16 @@ targetScope = 'managementGroup'
 // Module - Customer Usage Attribution - Telemtry
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
   scope: managementGroup(parTopLevelManagementGroupPrefix)
-  name: 'pid-${varCuaid}-${uniqueString(parLocation)}'
+  name: 'pid-${varCuaid}-${uniqueString(parLocation, parPeeredVnetSubscriptionId)}'
   params: {}
 }
 
 // Module - Subscription Placement - Management
-module modSubscriptionPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = if (!empty(parPeeredVnetSubscriptionMGPlacement)) {
+module modSubscriptionPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = if (!empty(parPeeredVnetSubscriptionMgPlacement)) {
   scope: managementGroup(parTopLevelManagementGroupPrefix)
   name: varModuleDeploymentNames.modSubscriptionPlacement
   params: {
-    parTargetManagementGroupId: varTargetManagementGroupID
+    parTargetManagementGroupId: parPeeredVnetSubscriptionMgPlacement
     parSubscriptionIds: [
       parPeeredVnetSubscriptionId
     ]
@@ -155,10 +139,10 @@ module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' 
     parSpokeNetworkName: parSpokeNetworkName
     parSpokeNetworkAddressPrefix: parSpokeNetworkAddressPrefix
     parDdosProtectionPlanId: parDdosProtectionPlanId
-    parDNSServerIPArray: parDNSServerIPArray
+    parDNSServerIPArray: parDnsServerIpArray 
     parNextHopIPAddress: varNextHopIPAddress
     parSpoketoHubRouteTableName: parSpoketoHubRouteTableName
-    parBGPRoutePropagation: parBGPRoutePrapogation
+    parBGPRoutePropagation: parBgpRoutePropagation
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
     parLocation: parLocation
@@ -174,7 +158,7 @@ module modHubPeeringToSpoke '../../modules/vnetPeering/vnetPeering.bicep' = if (
     parDestinationVirtualNetworkName: (!empty(varHubVirtualNetworkName) ? modSpokeNetworking.outputs.outSpokeVirtualNetworkName : '')
     parSourceVirtualNetworkName: varHubVirtualNetworkName
     parAllowForwardedTraffic: parAllowSpokeForwardedTraffic
-    parAllowGatewayTransit: parAllowHubVPNGatewayTransit
+    parAllowGatewayTransit: parAllowHubVpnGatewayTransit
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -184,10 +168,10 @@ module modSpokePeeringToHub '../../modules/vnetPeering/vnetPeering.bicep' = if (
   scope: resourceGroup(parPeeredVnetSubscriptionId,parResourceGroupNameForSpokeNetworking)
   name: varModuleDeploymentNames.modSpokePeeringToHub
   params: {
-    parDestinationVirtualNetworkID: parHubVirtualNetworkID
+    parDestinationVirtualNetworkID: parHubVirtualNetworkId
     parDestinationVirtualNetworkName: varHubVirtualNetworkName
     parSourceVirtualNetworkName: (!empty(varHubVirtualNetworkName) ? modSpokeNetworking.outputs.outSpokeVirtualNetworkName : '')
-    parUseRemoteGateways: parAllowHubVPNGatewayTransit
+    parUseRemoteGateways: parAllowHubVpnGatewayTransit
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
