@@ -22,13 +22,13 @@
         "parSpokeNetworkName": {
             "value": "vnet-spoke"
         },
-        "parDNSServerIPArray": {
+        "parDnsServerIPs": {
             "value": []
         },
         "parNextHopIPAddress": {
             "value": ""
         },
-        "parSpoketoHubRouteTableName": {
+        "parSpokeToHubRouteTableName": {
             "value": "rtb-spoke-to-hub"
         },
         "parTelemetryOptOut": {

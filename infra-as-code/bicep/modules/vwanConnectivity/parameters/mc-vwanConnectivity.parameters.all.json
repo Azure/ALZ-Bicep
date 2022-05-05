@@ -2,8 +2,41 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "parLocation": {
-      "value": "eastus"
+    "parVirtualHubEnabled": {
+      "value": true
+    },
+    "parVPNGatewayEnabled": {
+      "value": true
+    },
+    "parERGatewayEnabled": {
+      "value": true
+    },
+    "parAzureFirewallEnabled": {
+      "value": true
+    },
+    "parNetworkDNSEnableProxy": {
+      "value": true
+    },
+    "parDdosEnabled": {
+      "value": false
+    },
+    "parDdosPlanName": {
+      "value": "alz-ddos-plan"
+    },
+    "parCompanyPrefix": {
+      "value": "alz"
+    },
+    "parVhubAddressPrefix": {
+      "value": "10.100.0.0/23"
+    },
+    "parAzureFirewallTier": {
+      "value": "Standard"
+    },
+    "parAzureFirewallAvailabilityZones": {
+      "value": []
+    },
+    "parPrivateDnsZonesEnabled": {
+      "value": true
     },
     "parPrivateDnsZones": {
       "value": [
@@ -37,14 +70,6 @@
         "privatelink.adf.azure.cn",
         "privatelink.redis.cache.chinacloudapi.cn"
       ]
-    },
-    "parTags": {
-      "value": {
-        "Environment": "POC"
-      }
-    },
-    "parVirtualNetworkIdToLink": {
-      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/xxxxxxxxxxx/providers/Microsoft.Network/virtualNetworks/xxxxxxxxxxx"
     },
     "parTelemetryOptOut": {
       "value": false
