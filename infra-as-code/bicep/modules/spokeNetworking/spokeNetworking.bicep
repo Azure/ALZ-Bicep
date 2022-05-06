@@ -36,6 +36,7 @@ var varCuaid = '0c428583-f2a1-4448-975c-2d6262fd193a'
 resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: parSpokeNetworkName
   location: parLocation
+  tags: parTags
   properties: {
     addressSpace: {
       addressPrefixes: [
