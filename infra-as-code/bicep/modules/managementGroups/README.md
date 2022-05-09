@@ -30,7 +30,7 @@ The module will generate the following outputs:
 
 | Output                        | Type   | Example                                                                    |
 | ----------------------------- | ------ | -------------------------------------------------------------------------- |
-| outTopLevelMGId               | string | /providers/Microsoft.Management/managementGroups/alz                       |
+| outTopLevelManagementGroupId               | string | /providers/Microsoft.Management/managementGroups/alz                       |
 | outPlatformMGId               | string | /providers/Microsoft.Management/managementGroups/alz-platform              |
 | outPlatformManagementMGId     | string | /providers/Microsoft.Management/managementGroups/alz-platform-management   |
 | outPlatformConnectivityMGId   | string | /providers/Microsoft.Management/managementGroups/alz-platform-connectivity |
