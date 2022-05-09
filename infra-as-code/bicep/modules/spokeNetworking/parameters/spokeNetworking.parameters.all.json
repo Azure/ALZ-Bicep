@@ -5,13 +5,8 @@
         "parLocation": {
             "value": "eastus"
         },
-        "parBGPRoutePropagation": {
+        "parBgpRoutePropagation": {
             "value": false
-        },
-        "parTags": {
-            "value": {
-              "Environment": "POC"
-            }
         },
         "parDdosProtectionPlanId": {
             "value": ""
@@ -22,14 +17,19 @@
         "parSpokeNetworkName": {
             "value": "vnet-spoke"
         },
-        "parDnsServerIPs": {
+        "parDnsServerIps": {
             "value": []
         },
-        "parNextHopIPAddress": {
+        "parNextHopIpAddress": {
             "value": ""
         },
         "parSpokeToHubRouteTableName": {
             "value": "rtb-spoke-to-hub"
+        },
+        "parTags": {
+            "value": {
+              "Environment": "POC"
+            }
         },
         "parTelemetryOptOut": {
             "value": false

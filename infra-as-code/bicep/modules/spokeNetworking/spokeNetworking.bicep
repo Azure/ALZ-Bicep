@@ -2,10 +2,7 @@
 param parLocation string = resourceGroup().location
 
 @description('Switch which allows BGP Route Propagation to be disabled on the route table. Default: false')
-param parBGPRoutePropagation bool = false
-
-@description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
-param parTags object = {}
+param parBgpRoutePropagation bool = false
 
 @description('Id of the DdosProtectionPlan which will be applied to the Virtual Network.  Default: Empty String')
 param parDdosProtectionPlanId string = ''
@@ -17,13 +14,16 @@ param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 param parSpokeNetworkName string = 'vnet-spoke'
 
 @description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
-param parDnsServerIPs array = []
+param parDnsServerIps array = []
 
 @description('IP Address where network traffic should route to leveraged with DNS Proxy. Default: Empty String')
-param parNextHopIPAddress string = ''
+param parNextHopIpAddress string = ''
 
 @description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
 param parSpokeToHubRouteTableName string = 'rtb-spoke-to-hub'
+
+@description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
+param parTags object = {}
 
 @description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
@@ -46,13 +46,13 @@ resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' =
     ddosProtectionPlan: (!empty(parDdosProtectionPlanId) ? true : false) ? {
       id: parDdosProtectionPlanId
     } : null
-    dhcpOptions: (!empty(parDnsServerIPs) ? true : false) ? {
-      dnsServers: parDnsServerIPs
+    dhcpOptions: (!empty(parDnsServerIps) ? true : false) ? {
+      dnsServers: parDnsServerIps
     } : null
   }
 }
 
-resource resSpokeToHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (!empty(parNextHopIPAddress)) {
+resource resSpokeToHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (!empty(parNextHopIpAddress)) {
   name: parSpokeToHubRouteTableName
   location: parLocation
   tags: parTags
@@ -63,11 +63,11 @@ resource resSpokeToHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
         properties: {
           addressPrefix: '0.0.0.0/0'
           nextHopType: 'VirtualAppliance'
-          nextHopIpAddress: parNextHopIPAddress
+          nextHopIpAddress: parNextHopIpAddress
         }
       }
     ]
-    disableBgpRoutePropagation: parBGPRoutePropagation
+    disableBgpRoutePropagation: parBgpRoutePropagation
   }
 }
 
