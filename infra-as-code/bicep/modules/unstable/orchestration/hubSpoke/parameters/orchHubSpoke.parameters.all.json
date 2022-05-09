@@ -70,13 +70,13 @@
         "parAzureFirewallEnabled": {
             "value": true
         },
-        "parNetworkDNSEnableProxy": {
+        "parNetworkDnsEnableProxy": {
             "value": true
         },
-        "parDisableBGPRoutePropagation": {
+        "parDisableBgpRoutePropagation": {
             "value": false
         },
-        "parPrivateDNSZonesEnabled": {
+        "parPrivateDnsZonesEnabled": {
             "value": true
         },
         "parVpnGatewayConfig": {
@@ -122,7 +122,7 @@
         "parBastionSku": {
             "value": "Standard"
         },
-        "parPublicIPSku": {
+        "parPublicIpSku": {
             "value": "Standard"
         },
         "parTags": {
@@ -208,16 +208,16 @@
               "privatelink.search.windows.net"
             ]
         },
-        "parDNSServerIPArray": {
+        "parDnsServerIpArray": {
             "value": []
         },
-        "parASCEmailSecurityContact": {
+        "parAscEmailSecurityContact": {
             "value": "replace_me@security_contact.com"
         },
         "parSpokeNetworkName": {
             "value": "vnet-spoke"
         },
-        "parBGPRoutePropogation": {
+        "parBgpRoutePropagation": {
             "value": false
         },
         "parSpoketoHubRouteTableName": {
