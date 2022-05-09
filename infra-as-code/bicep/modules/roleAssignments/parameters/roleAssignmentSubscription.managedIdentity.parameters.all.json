@@ -16,6 +16,9 @@
     },
     "parTelemetryOptOut": {
       "value": false
+    },
+    "parTelemetryOptOut": {
+      "value": false
     }
   }
 }

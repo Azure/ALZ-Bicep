@@ -104,7 +104,7 @@ Connect-AzureAD
 
 ## Deployment
 
-In this example, the built-in Reader role will be assigned to a Service Principal account at the `alz-platform` management group scope.  The inputs for this module are defined in `roleAssignmentManagementGroup.parameters.*.example.json`.
+In this example, the built-in Reader role will be assigned to a Service Principal account at the `alz-platform` management group scope.  The inputs for this module are defined in `parameters/roleAssignmentManagementGroup.*.parameters.all.json`.
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 

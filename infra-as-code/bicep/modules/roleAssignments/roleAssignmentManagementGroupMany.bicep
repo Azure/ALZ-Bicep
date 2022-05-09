@@ -16,6 +16,9 @@ param parAssigneePrincipalType string
 @description('Object ID of groups, service principals or managed identities. For managed identities use the principal id. For service principals, use the object ID and not the app ID')
 param parAssigneeObjectId string
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
 module modRoleAssignment 'roleAssignmentManagementGroup.bicep' = [for parManagementGroupId in parManagementGroupIds: {
   name: 'rbac-assign-${uniqueString(parManagementGroupId, parAssigneeObjectId, parRoleDefinitionId)}'
   scope: managementGroup(parManagementGroupId)
@@ -24,5 +27,6 @@ module modRoleAssignment 'roleAssignmentManagementGroup.bicep' = [for parManagem
     parAssigneeObjectId: parAssigneeObjectId
     parAssigneePrincipalType: parAssigneePrincipalType
     parRoleDefinitionId: parRoleDefinitionId
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }]
