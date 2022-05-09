@@ -2,29 +2,34 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "parPublicIPName": {
+        "parLocation": {
+            "value": "eastus"
+        },
+        "parPublicIpName": {
             "value": "alz"
         },
-        "parPublicIPSku": {
+        "parPublicIpSku": {
             "value": {
                 "name": "Standard",
                 "tier": "Regional"
             }
         },
-        "parPublicIPProperties": {
+        "parPublicIpProperties": {
             "value": {
                 "publicIPAddressVersion": "IPv4",
                 "publicIPAllocationMethod": "Dynamic",
                 "deleteOption": "Delete",
                 "idleTimeoutInMinutes": 4
-
             }
+        },
+        "parAvailabilityZones": {
+            "value": []
         },
         "parTags": {
             "value": {
-              "Environment": "POC"
+                "Environment": "POC"
             }
-          },
+        },
         "parTelemetryOptOut": {
             "value": false
         }
