@@ -159,7 +159,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.min.json parTargetManagementGroupID=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix) 
+        az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.min.json parTargetManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix) 
   
   - task: Bash@3    
     displayName: Az CLI Deploy Logging for PR
@@ -187,7 +187,7 @@ jobs:
       azureSubscription: 'azserviceconnection'
       ScriptType: 'FilePath'
       ScriptPath: '.github/scripts/Set-AlzDefaultPolicyAssignment.ps1'
-      ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\alzDefaults\parameters\alzDefaultPolicyAssignments.parameters.min.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix) -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $(Location) -parLogAnalyticsWorkspaceResourceID "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" -parDdosProtectionPlanId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan"'
+      ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\alzDefaults\parameters\alzDefaultPolicyAssignments.parameters.min.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix) -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $(Location) -parLogAnalyticsWorkspaceResourceId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" -parDdosProtectionPlanId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan"'
       azurePowerShellVersion: 'LatestVersion'
       pwsh: true
 
@@ -234,7 +234,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep --parameters @infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.min.json parDestinationVirtualNetworkID="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
+        az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep --parameters @infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.min.json parDestinationVirtualNetworkId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
 
   - task: Bash@3    
     displayName: Az CLI Deploy vNet Peer for PR hub to spoke
@@ -243,7 +243,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep --parameters @infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.min.json parDestinationVirtualNetworkID="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke" parSourceVirtualNetworkName="alz-hub-eastus" parDestinationVirtualNetworkName="vnet-spoke"
+        az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep --parameters @infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.min.json parDestinationVirtualNetworkId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke" parSourceVirtualNetworkName="alz-hub-eastus" parDestinationVirtualNetworkName="vnet-spoke"
 
 - job: bicep_cleanup
   dependsOn: bicep_deploy
