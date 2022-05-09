@@ -51,8 +51,8 @@ During the deployment step, we will take parameters provided in the example para
 ```bash
 # For Azure global regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription 
-$ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
-az account set --subscription $ConnectivitySubscriptionId
+LandingZoneSubscriptionId="[your Landing Zone subscription ID]"
+az account set --subscription $LandingZoneSubscriptionId
 
 az deployment group create \
    --resource-group Spoke_Networking_POC  \
@@ -63,8 +63,8 @@ OR
 ```bash
 # For Azure China regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription 
-$ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
-az account set --subscription $ConnectivitySubscriptionId
+LandingZoneSubscriptionId="[your Landing Zone subscription ID]"
+az account set --subscription $LandingZoneSubscriptionId
 
 az deployment group create \
     --resource-group Spoke_Networking_POC  \
@@ -77,9 +77,9 @@ az deployment group create \
 ```powershell
 # For Azure global regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription 
-$ConnectivitySubscriptionId = "[your Landing Zone subscription ID]"
+$LandingZoneSubscriptionId = "[your Landing Zone subscription ID]"
 
-Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
 
 New-AzResourceGroupDeployment `
   -ResourceGroupName Spoke_Networking_POC `
@@ -90,9 +90,9 @@ OR
 ```powershell
 # For Azure China regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription 
-$ConnectivitySubscriptionId = "[your Landing Zone subscription ID]"
+$LandingZoneSubscriptionId = "[your Landing Zone subscription ID]"
 
-Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
 
 New-AzResourceGroupDeployment `
   -ResourceGroupName Spoke_Networking_POC `
