@@ -8,7 +8,7 @@
         "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
             "value": "eastus"
         },
-        "parLogAnalyticsWorkspaceResourceID": {
+        "parLogAnalyticsWorkspaceResourceId": {
             "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics"
         },
         "parLogAnalyticsWorkspaceLogRetentionInDays": {

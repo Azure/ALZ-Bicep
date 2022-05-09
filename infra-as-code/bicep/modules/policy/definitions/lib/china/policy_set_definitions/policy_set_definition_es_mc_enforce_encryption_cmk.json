@@ -283,7 +283,7 @@
       },
       {
         "policyDefinitionReferenceId": "MySQLCMKEffect",
-        "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-MySQLCMKEffect",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-MySQLCMKEffect",
         "parameters": {
           "effect": {
             "value": "[[parameters('MySQLCMKEffect')]"
@@ -293,7 +293,7 @@
       },
       {
         "policyDefinitionReferenceId": "PostgreSQLCMKEffect",
-        "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-PostgreSQLCMKEffect",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-PostgreSQLCMKEffect",
         "parameters": {
           "effect": {
             "value": "[[parameters('PostgreSQLCMKEffect')]"

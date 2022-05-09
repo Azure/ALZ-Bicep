@@ -11,7 +11,7 @@
         "parPolicyAssignmentDescription": {
             "value": "This policy denies creation of Public IPs under the assigned scope."
         },
-        "parPolicyAssignmentDefinitionID": {
+        "parPolicyAssignmentDefinitionId": {
             "value": "/providers/Microsoft.Management/managementGroups/alz/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP"
         },
         "parPolicyAssignmentParameters": {
@@ -32,13 +32,13 @@
         "parPolicyAssignmentIdentityType": {
             "value": "None"
         },
-        "parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs": {
+        "parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs": {
             "value": []
         },
         "parPolicyAssignmentIdentityRoleAssignmentsSubs": {
             "value": []
         },
-        "parPolicyAssignmentIdentityRoleDefinitionIDs": {
+        "parPolicyAssignmentIdentityRoleDefinitionIds": {
             "value": []
         },
         "parTelemetryOptOut": {

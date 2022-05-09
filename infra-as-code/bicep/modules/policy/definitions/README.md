@@ -16,7 +16,7 @@ The module requires the following inputs:
 
  | Parameter                  | Description                                                                                                                                                             | Requirement                       | Example |
  | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ------- |
- | parTargetManagementGroupID | The management group scope to which the the policy definitions will be stored/deployed to. This management group must already exist before deploying this bicep module. | Mandatory input                   | `alz`   |
+ | parTargetManagementGroupId | The management group scope to which the the policy definitions will be stored/deployed to. This management group must already exist before deploying this bicep module. | Mandatory input                   | `alz`   |
  | parTelemetryOptOut         | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                | Mandatory input, default: `false` | `false` |
 
 ## Outputs
@@ -29,12 +29,12 @@ There are two different sets of deployment; one for deploying to Azure global re
 
  | Azure Cloud    | Bicep template                     | Input parameters file                             |
  | -------------- | ---------------------------------- | ------------------------------------------------- |
- | Global regions | custom-policy-definitions.bicep    | custom-policy-definitions.parameters.example.json |
- | China regions  | mc-custom-policy-definitions.bicep | custom-policy-definitions.parameters.example.json |
+ | Global regions | customPolicyDefinitions.bicep    | parameters/customPolicyDefinitions.parameters.all.json |
+ | China regions  | mc-customPolicyDefinitions.bicep | parameters/customPolicyDefinitions.parameters.all.json |
 
 In this example, the custom policy definitions and policy set definitions will be deployed to the `alz` management group (the intermediate root management group).
 
-The input parameter file `custom-policy-definitions.parameters.example.json` defines the target management group to which the custom policy definitions will be deployed to. In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation. There is no change in the input parameter file for different Azure clouds because there is no change to the intermediate root management group.
+The input parameter file `parameters/customPolicyDefinitions.parameters.all.json` defines the target management group to which the custom policy definitions will be deployed to. In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation. There is no change in the input parameter file for different Azure clouds because there is no change to the intermediate root management group.
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 > If the deployment provisioning state has failed due to policy definitions could not be found, this is often due to a known replication delay. Please re-run the deployment step below, and the deployment should succeed.

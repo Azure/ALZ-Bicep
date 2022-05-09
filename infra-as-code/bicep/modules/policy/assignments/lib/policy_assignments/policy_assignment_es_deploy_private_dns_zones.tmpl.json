@@ -71,7 +71,7 @@
         "value": "${private_dns_zone_prefix}privatelink.search.windows.net"
       }
     },
-    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Private-DNS-Zones",
+    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelManagementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Private-DNS-Zones",
     "scope": null,
     "enforcementMode": "Default"
   },

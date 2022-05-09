@@ -11,7 +11,7 @@
         "parPolicyAssignmentDescription": {
             "value": "Deploy Microsoft Defender for Cloud configuration and Security Contacts"
         },
-        "parPolicyAssignmentDefinitionID": {
+        "parPolicyAssignmentDefinitionId": {
             "value": "/providers/Microsoft.Management/managementGroups/alz/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config"
         },
         "parPolicyAssignmentParameters": {
@@ -75,7 +75,7 @@
         "parPolicyAssignmentIdentityType": {
             "value": "SystemAssigned"
         },
-        "parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs": {
+        "parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs": {
             "value": [
                 "alz-platform"
             ]
@@ -83,7 +83,7 @@
         "parPolicyAssignmentIdentityRoleAssignmentsSubs": {
             "value": []
         },
-        "parPolicyAssignmentIdentityRoleDefinitionIDs": {
+        "parPolicyAssignmentIdentityRoleDefinitionIds": {
             "value": [
                 "8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
             ]
