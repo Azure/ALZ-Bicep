@@ -1,5 +1,5 @@
 @description('Virtual Network ID of Virtual Network destination. No default')
-param parDestinationVirtualNetworkID string
+param parDestinationVirtualNetworkId string
 
 @description('Name of source Virtual Network we are peering. No default')
 param parSourceVirtualNetworkName string
@@ -33,7 +33,7 @@ resource resVirtualNetworkPeer 'Microsoft.Network/virtualNetworks/virtualNetwork
     allowGatewayTransit: parAllowGatewayTransit
     useRemoteGateways: parUseRemoteGateways
     remoteVirtualNetwork: {
-      id: parDestinationVirtualNetworkID
+      id: parDestinationVirtualNetworkId
     }
   }
 }
