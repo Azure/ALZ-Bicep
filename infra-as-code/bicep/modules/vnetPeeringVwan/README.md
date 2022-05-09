@@ -31,15 +31,15 @@ In this example, the remote spoke Vnet will be peered with the Vwan Virtual Hub 
 
  | Azure Cloud    | Bicep template      | Input parameters file                    |
  | -------------- | ------------------- | ---------------------------------------- |
- | All  regions | vnetPeeringVwan.bicep | vnetPeeringVwan.parameters.example.json    |
+ | All  regions | vnetPeeringVwan.bicep | parameters/vnetPeeringVwan.parameters.all.json    |
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
 ```bash
 # For Azure global regions
-# Set your Connectivity subscription ID as the the current subscription 
-$ConnectivitySubscriptionId="[your Connectivity subscription ID]"
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+$ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
 az deployment sub create \
@@ -51,7 +51,7 @@ OR
 ```bash
 # For Azure China regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription 
-$ConnectivitySubscriptionId="[your Connectivity subscription ID]"
+$ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
 az deployment sub create \
@@ -64,8 +64,8 @@ az deployment sub create \
 
 ```powershell
 # For Azure global regions
-# Set your Connectivity subscription ID as the the current subscription 
-$ConnectivitySubscriptionId = "[your Connectivity subscription ID]"
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+$ConnectivitySubscriptionId = "[your Landing Zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
@@ -77,8 +77,8 @@ New-AzDeployment `
 OR
 ```powershell
 # For Azure China regions
-# Set your Connectivity subscription ID as the the current subscription 
-$ConnectivitySubscriptionId = "[your Connectivity subscription ID]"
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+$ConnectivitySubscriptionId = "[your Landing Zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
