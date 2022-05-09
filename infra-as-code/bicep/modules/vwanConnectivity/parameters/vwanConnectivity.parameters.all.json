@@ -2,38 +2,65 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "parLocation": {
+      "value": "eastus"
+    },
+    "parCompanyPrefix": {
+      "value": "alz"
+    },
+    "parVirtualHubAddressPrefix": {
+      "value": "10.100.0.0/23"
+    },
+    "parAzureFirewallTier": {
+      "value": "Standard"
+    },
     "parVirtualHubEnabled": {
       "value": true
     },
-    "parVPNGatewayEnabled": {
+    "parVpnGatewayEnabled": {
       "value": true
     },
-    "parERGatewayEnabled": {
+    "parExpressRouteGatewayEnabled": {
       "value": true
     },
     "parAzureFirewallEnabled": {
       "value": true
     },
-    "parNetworkDNSEnableProxy": {
+    "parNetworkDnsEnableProxy": {
       "value": true
+    },
+    "parVirtualWanName": {
+      "value": "alz-vwan-eastus"
+    },
+    "parVirtualHubName": {
+      "value": "alz-vhub-eastus"
+    },
+    "parVpnGatewayName": {
+      "value": "alz-vpngw-eastus"
+    },
+    "parExpressRouteGatewayName": {
+      "value": "alz-ergw-eastus"
+    },
+    "parAzureFirewallName": {
+      "value": "alz-fw-eastus"
+    },
+    "parAzureFirewallAvailabilityZones": {
+      "value": []
+    },
+    "parFirewallPoliciesName": {
+      "value": "alz-azfwpolicy-eastus"
+    },
+    "parVpnGatewayScaleUnit": {
+      "value": 1
+    },
+    "parExpressRouteGatewayScaleUnit": {
+      "value": 1
     },
     "parDdosEnabled": {
       "value": true
     },
     "parDdosPlanName": {
       "value": "alz-ddos-plan"
-    },
-    "parCompanyPrefix": {
-      "value": "alz"
-    },
-    "parVhubAddressPrefix": {
-      "value": "10.100.0.0/23"
-    },
-    "parAzureFirewallTier": {
-      "value": "Standard"
-    },
-    "parAzureFirewallAvailabilityZones": {
-      "value": []
     },
     "parPrivateDnsZonesEnabled": {
       "value": true
@@ -56,11 +83,14 @@
         "privatelink.cassandra.cosmos.azure.com",
         "privatelink.gremlin.cosmos.azure.com",
         "privatelink.table.cosmos.azure.com",
+        "privatelink.eastus.batch.azure.com",
         "privatelink.postgres.database.azure.com",
         "privatelink.mysql.database.azure.com",
         "privatelink.mariadb.database.azure.com",
         "privatelink.vaultcore.azure.net",
         "privatelink.managedhsm.azure.net",
+        "privatelink.eastus.azmk8s.io",
+        "privatelink.eastus.backup.windowsazure.com",
         "privatelink.siterecovery.windowsazure.com",
         "privatelink.servicebus.windows.net",
         "privatelink.azure-devices.net",
@@ -90,6 +120,14 @@
         "privatelink.his.arc.azure.com",
         "privatelink.guestconfiguration.azure.com"
       ]
+    },
+    "parVirtualNetworkIdToLink": {
+      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
+    },
+    "parTags": {
+      "value": {
+        "Environment": "POC"
+      }
     },
     "parTelemetryOptOut": {
       "value": false
