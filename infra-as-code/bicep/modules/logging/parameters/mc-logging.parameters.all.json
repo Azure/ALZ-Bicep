@@ -35,6 +35,9 @@
       "value": {
           "Environment": "POC"
       }
+    },
+    "parTelemetryOptOut": {
+        "value": false
     }
   }
 }
