@@ -157,7 +157,7 @@ jobs:
 - job: bicep_cleanup
   dependsOn: bicep_validate
   variables:
-    isDeployed: $[ dependencies.bicep_deploy.outputs['create_subscription.IsDeployed'] ]  
+    isDeployed: $[ dependencies.bicep_validate.outputs['create_subscription.IsDeployed'] ]  
   displayName: Cleanup Bicep Validate Deployment for PR
   pool: 
     vmImage: ubuntu-latest
