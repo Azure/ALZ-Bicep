@@ -1,29 +1,3 @@
-/*
-SUMMARY: Deploys Azure Log Analytics Workspace & Automation Account.
-DESCRIPTION:
-  Deploys Azure Log Analytics Workspace & Automation Account to an existing Resource Group.  Automation Account will be linked to Log Analytics Workspace to provide integration for Inventory, Change Tracking and Update Management.
-  
-  The module will deploy the following Log Analytics Workspace solutions by default.  Solutions can be customized as required:
-
-    * AgentHealthAssessment
-    * AntiMalware
-    * AzureActivity
-    * ChangeTracking
-    * Security
-    * SecurityInsights (Azure Sentinel)
-    * ServiceMap
-    * SQLAssessment
-    * Updates
-    * VMInsights
-
-AUTHOR/S: SenthuranSivananthan,aultt
-VERSION: 1.2.0
-
-# Release notes 11/23/2021 - V1.2:
-    - Changed line 102 from parLogAnalyticsWorkspaceName to resLogAnalyticsWorkspace.name.  
-    - Change is required so the resources are created in the correct order.  Without the change the link would fail sporatically.
-*/
-
 @description('Log Analytics Workspace name. - DEFAULT VALUE: alz-log-analytics')
 param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 
