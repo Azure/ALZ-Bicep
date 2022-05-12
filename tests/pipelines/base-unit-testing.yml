@@ -14,7 +14,7 @@ variables:
     value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)"
 
 jobs:
-- job: bicep_deploy
+- job: bicep_validate
   displayName: Validate Bicep Files for PR
   pool: 
     vmImage: ubuntu-latest
