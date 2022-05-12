@@ -1,4 +1,4 @@
-name: "ALZ-Bicep unit tests"
+name: "ALZ-Bicep - Unit Tests - Validate All Modules"
 
 trigger: none
 
