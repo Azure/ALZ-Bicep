@@ -155,7 +155,7 @@ jobs:
         az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep --parameters parDestinationVirtualNetworkID="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke"  parSourceVirtualNetworkName="alz-hub-eastus" parDestinationVirtualNetworkName="vnet-spoke" --name $(ManagementGroupPrefix)
 
 - job: bicep_cleanup
-  dependsOn: bicep_deploy
+  dependsOn: bicep_validate
   variables:
     isDeployed: $[ dependencies.bicep_deploy.outputs['create_subscription.IsDeployed'] ]  
   displayName: Cleanup Bicep Deployment for PR
