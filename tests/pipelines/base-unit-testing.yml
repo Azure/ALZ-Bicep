@@ -1,0 +1,175 @@
+name: "ALZ-Bicep unit tests"
+
+trigger: none
+
+variables:
+  - group: csu-bicep-environment
+  - name: ResourceGroupName
+    value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
+  - name: ManagementGroupPrefix
+    value: "PR-$(System.PullRequest.PullRequestNumber)"
+  - name: TopLevelManagementGroupDisplayName
+    value: "PR $(System.PullRequest.PullRequestNumber) Azure Landing Zones"
+  - name: SubscriptionName
+    value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)"
+
+jobs:
+- job: bicep_deploy
+  displayName: Deploy Bicep Files for PR
+  pool: 
+    vmImage: ubuntu-latest
+  steps:
+  - task: Bash@3
+    displayName: Login to Azure
+    name: git_azlogin
+    inputs:
+      targetType: 'inline'
+      script: |
+        az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+
+  - task: Bash@3
+    displayName: Az CLI Create Subscription for PR
+    name: create_subscription
+    inputs:
+      targetType: 'inline'
+      script: |
+        subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.minimum.example.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
+        echo $subId
+        echo "##vso[task.setvariable variable=subscriptionId]$subid"
+        echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
+
+  - task: Bash@3
+    displayName: Az CLI Refresh subscription list
+    name: refresh_subscription
+    inputs:
+      targetType: 'inline'
+      script: |
+        az account list --refresh        
+        
+  - task: Bash@3    
+    displayName: Az CLI Create Resource Group for PR
+    name: create_rsg
+    inputs:
+      targetType: 'inline'
+      script: |
+        az account set --subscription $(subscriptionId)
+        if [ $(az group exists --name $(ResourceGroupName) ) == false ]; then
+            sleep 300
+        fi
+        az group create --name $(ResourceGroupName) --location $(Location)
+
+  - task: Bash@3     
+    displayName: Az CLI Deploy Management Groups for PR
+    name: create_mgs
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location) --name $(ManagementGroupPrefix)
+  
+  - task: Bash@3  
+    displayName: Az CLI Validate Custom Role Definitions for PR
+    name: validate_rbac_roles
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment mg validate --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
+  
+  - task: Bash@3    
+    displayName: Az CLI Validate Custom Policy Definitions for PR
+    name: validate_policy_defs
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment mg validate --template-file infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json parTargetManagementGroupID=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
+  
+  - task: Bash@3    
+    displayName: Az CLI Validate Logging for PR
+    name: validate_logging
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json --name $(ManagementGroupPrefix)
+
+  - task: Bash@3    
+    displayName: Az CLI Validate Subscription Placement for PR
+    name: move_sub
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment mg validate --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep --parameters @infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json parTargetManagementGroupId=$(ManagementGroupPrefix)-platform-connectivity parSubscriptionIds='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
+
+  - task: Bash@3    
+    displayName: Az CLI Validate Alz Default policy assignments
+    name: validate_alz_default_policy_assign
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment mg validate --template-file infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep --parameters @infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
+
+  - task: Bash@3    
+    displayName: Az CLI Validate Hub Networking for PR
+    name: validate_hub_network
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep --parameters @infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json --name $(ManagementGroupPrefix)
+
+  - task: Bash@3    
+    displayName: Az CLI Validate vWan Networking for PR
+    name: validate_vwan_network
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep --parameters @infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.parameters.example.json --name $(ManagementGroupPrefix)
+
+  - task: Bash@3              
+    displayName: Az CLI Validate Spoke Networking for PR
+    name: validate_spoke_network
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep --name $(ManagementGroupPrefix)
+
+  - task: Bash@3    
+    displayName: Az CLI Validate vWan Network connection for PR
+    name: validate_vwan_network_connection
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment sub validate --location $(Location) --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.parameters.example.json parVirtualHubResourceId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualHubs/alz-vhub-$(Location)"  parRemoteVirtualNetworkResourceId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke" --name $(ManagementGroupPrefix)
+
+  - task: Bash@3    
+    displayName: Az CLI Validate vNet Peer for PR spoke to hub
+    name: validate_vnet_peer_spoke_2_hub
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep --parameters parDestinationVirtualNetworkID="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"  parSourceVirtualNetworkName="vnet-spoke" parDestinationVirtualNetworkName="alz-hub-eastus" --name $(ManagementGroupPrefix)
+
+  - task: Bash@3    
+    displayName: Az CLI Validate vNet Peer for PR hub to spoke
+    name: validate_vnet_peer_hub_2_spoke
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep --parameters parDestinationVirtualNetworkID="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke"  parSourceVirtualNetworkName="alz-hub-eastus" parDestinationVirtualNetworkName="vnet-spoke" --name $(ManagementGroupPrefix)
+
+- job: bicep_cleanup
+  dependsOn: bicep_deploy
+  variables:
+    isDeployed: $[ dependencies.bicep_deploy.outputs['create_subscription.IsDeployed'] ]  
+  displayName: Cleanup Bicep Deployment for PR
+  pool: 
+    vmImage: ubuntu-latest
+  steps:
+  - task: AzurePowerShell@5
+    displayName: Az CLI Remove/Cleanup Deployment
+    condition: ne(variables['isDeployed'], '')
+    inputs:
+      azureSubscription: 'azserviceconnection'
+      ScriptType: 'FilePath'
+      ScriptPath: '.github/scripts/Wipe-AlzTenant.ps1'
+      ScriptArguments: '-tenantRootGroupID $(azclitenant) -intermediateRootGroupID "$(ManagementGroupPrefix)" -subscriptionName "$(SubscriptionName)"'
+      azurePowerShellVersion: 'LatestVersion'
+      pwsh: true
+
