@@ -54,6 +54,7 @@ jobs:
 
     - name: Check links in markdown files 
       uses: gaurav-nelson/github-action-markdown-link-check@1.0.13
+      continue-on-error: true
       with:
         config-file: '.github/actions-config/mlc_config.json'
         use-verbose-mode: 'yes'
