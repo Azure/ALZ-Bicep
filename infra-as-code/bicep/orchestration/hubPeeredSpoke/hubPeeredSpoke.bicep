@@ -153,7 +153,7 @@ module modHubPeeringToSpoke '../../modules/vnetPeering/vnetPeering.bicep' = if (
   scope: resourceGroup(varHubVirtualNetworkSubscriptionId,varHubVirtualNetworkResourceGroup)
   name: varModuleDeploymentNames.modSpokePeeringFromHub
   params: {
-    parDestinationVirtualNetworkID: (!empty(varHubVirtualNetworkName) ? modSpokeNetworking.outputs.outSpokeVirtualNetworkId : '')
+    parDestinationVirtualNetworkId: (!empty(varHubVirtualNetworkName) ? modSpokeNetworking.outputs.outSpokeVirtualNetworkId : '')
     parDestinationVirtualNetworkName: (!empty(varHubVirtualNetworkName) ? modSpokeNetworking.outputs.outSpokeVirtualNetworkName : '')
     parSourceVirtualNetworkName: varHubVirtualNetworkName
     parAllowForwardedTraffic: parAllowSpokeForwardedTraffic
@@ -167,7 +167,7 @@ module modSpokePeeringToHub '../../modules/vnetPeering/vnetPeering.bicep' = if (
   scope: resourceGroup(parPeeredVnetSubscriptionId,parResourceGroupNameForSpokeNetworking)
   name: varModuleDeploymentNames.modSpokePeeringToHub
   params: {
-    parDestinationVirtualNetworkID: parHubVirtualNetworkId
+    parDestinationVirtualNetworkId: parHubVirtualNetworkId
     parDestinationVirtualNetworkName: varHubVirtualNetworkName
     parSourceVirtualNetworkName: (!empty(varHubVirtualNetworkName) ? modSpokeNetworking.outputs.outSpokeVirtualNetworkName : '')
     parUseRemoteGateways: parAllowHubVpnGatewayTransit

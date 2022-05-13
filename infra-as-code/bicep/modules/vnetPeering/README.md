@@ -17,7 +17,7 @@ The module requires the following inputs:
 
  | Parameter                        | Type   | Default | Description                                                     | Requirement                                  | Example         |
  | -------------------------------- | ------ | ------- | --------------------------------------------------------------- | -------------------------------------------- | --------------- |
- | parDestinationVirtualNetworkID   | string | None    | ID of the Destination Virtual Network                           | Valid Virtual Network ID                     |
+ | parDestinationVirtualNetworkId   | string | None    | ID of the Destination Virtual Network                           | Valid Virtual Network ID                     |
  | parSourceVirtualNetworkName      | string | None    | Name of Source Virtual Network                                  | Valid Azure Region                           | alz-spk-eastus2 |
  | parDestinationVirtualNetworkName | string | None    | Virtual Network Name of the destination/target Virtual Network. | 2-64 char, letters, numbers, and underscores | alz-hub-eastus2 |
  | parAllowVirtualNetworkAccess     | bool   | true    | Switch to enable virtual Network Access                         | None                                         | true            |
