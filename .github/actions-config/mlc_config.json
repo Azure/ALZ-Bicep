@@ -2,6 +2,9 @@
   "ignorePatterns": [
     {
       "pattern": "^http://localhost"
+    },
+    {
+      "pattern": "^(https:\\/\\/)?([www.]?)+(microsoft.com\\/)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+$"
     }
   ],
   "httpHeaders": [
@@ -15,7 +18,7 @@
       }
     }
   ],
-  "timeout": "5s",
+  "timeout": "10s",
   "retryOn429": true,
   "retryCount": 5,
   "fallbackRetryDelay": "30s",
