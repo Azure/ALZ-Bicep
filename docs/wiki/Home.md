@@ -6,7 +6,7 @@
 
 Welcome to the wiki of the Azure Landing Zones Bicep repo. This repo contains the Azure Landing Zone Bicep modules that help you create and implement the [Azure Landing Zone Conceptual Architecture](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/#azure-landing-zone-conceptual-architecture) in a modular approach.
 
-Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` repo](https://github.com/Azure/Enterprise-Scalekihwefiuvb) to ensure the choice of tooling to implement the architecture, produce the same outputs.
+Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` repo](https://github.com/Azure/Enterprise-Scale) to ensure the choice of tooling to implement the architecture, produce the same outputs.
 
 ## Navigation
 
