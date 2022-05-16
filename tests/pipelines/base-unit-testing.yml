@@ -56,7 +56,7 @@ jobs:
         if [ $(az group exists --name $(ResourceGroupName) ) == false ]; then
             sleep 300
         fi
-        az group create --name $(ResourceGroupName) --location $(Location)
+        az deployment sub create --template-file infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep --parameters parLocation=$(Location) parResourceGroupName=$(ResourceGroupName)
 
   - task: Bash@3     
     displayName: Az CLI Deploy Management Groups for PR
