@@ -5,13 +5,17 @@ trigger: none
 variables:
   - group: csu-bicep-environment
   - name: ResourceGroupName
-    value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
+    #value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
+    value: "rsg-github-pr-233"
   - name: ManagementGroupPrefix
-    value: "PR-$(System.PullRequest.PullRequestNumber)"
+    #value: "PR-$(System.PullRequest.PullRequestNumber)"
+    value: "PR-233"
   - name: TopLevelManagementGroupDisplayName
-    value: "PR $(System.PullRequest.PullRequestNumber) Azure Landing Zones"
+    #value: "PR $(System.PullRequest.PullRequestNumber) Azure Landing Zones"
+    value: "PR 233 Azure Landing Zones"
   - name: SubscriptionName
-    value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)"
+    #value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)"
+    value: "sub-unit-test-pr-233"
 
 jobs:
 - job: bicep_validate
