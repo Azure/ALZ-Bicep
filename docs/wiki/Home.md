@@ -31,7 +31,7 @@ Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` 
 
 <!--
 The following link references should be copied from `_sidebar.md` in the `./docs/wiki/` folder.
-Replace `./` with `https://github.com/Azure/terraform-azurerm-caf-enterprise-scale/wiki/` when copying to here.
+Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to here.
 -->
 
 [wiki_home]:                                  https://github.com/Azure/ALZ-Bicep/wiki/home "Wiki - Home"
