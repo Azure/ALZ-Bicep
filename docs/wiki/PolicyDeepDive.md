@@ -36,3 +36,28 @@ AzAdvertizer also updates once per day!
 
 ## How do the `lib` folders in the `ALZ-Bicep` Azure Policy modules stay up-to-date?
 
+As mentioned above in Azure Landing Zones (Enterprise-Scale) we have a single source of truth for all of the custom Azure Policy Definitions and Initiatives which is the [`Enterprise-Scale` repo](https://github.com/Azure/Enterprise-Scale). This is done so we only have a single location to update the policies in and then we can use automation in the Bicep and Terraform implementations of ALZ to pull these policies from the [`Enterprise-Scale` repo](https://github.com/Azure/Enterprise-Scale).
+
+The ALZ-Bicep repo uses a GitHub Action with a couple of PowerShell scripts/modules to pull all of the custom Azure Policy Definitions and Initiatives from the [`Enterprise-Scale` repo](https://github.com/Azure/Enterprise-Scale) and split them into individual files, make some minor changes replacing some placeholder values and generating a couple of `.txt` files that contain a Bicep friendly block of variables for all of the custom definitions with references to their new paths.
+
+The GitHub action runs every weekday at 0800 UTC.
+
+**Useful Links**:
+
+- [`update-policy.yml` - GitHub Action](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/update-policy.yml)
+- [`Invoke-LibraryUpdate.ps1` - PowerShell Script](https://github.com/Azure/ALZ-Bicep/blob/main/.github/scripts/Invoke-LibraryUpdate.ps1)
+- [`Invoke-PolicyToBicep.ps1` - PowerShell Script](https://github.com/Azure/ALZ-Bicep/blob/main/.github/scripts/Invoke-PolicyToBicep.ps1)
+
+We will explain this process further below in a series of diagrams:
+
+![ALZ-Bicep Policy Update Step 1](media/alzBicepPolicyUpdate1.PNG)
+
+![ALZ-Bicep Policy Update Step 2](media/alzBicepPolicyUpdate2.PNG)
+
+![ALZ-Bicep Policy Update Step 3](media/alzBicepPolicyUpdate3.PNG)
+
+![ALZ-Bicep Policy Update Step 4](media/alzBicepPolicyUpdate4.PNG)
+
+![ALZ-Bicep Policy Update Step 5](media/alzBicepPolicyUpdate5.PNG)
+
+![ALZ-Bicep Policy Update Step 6](media/alzBicepPolicyUpdate6.PNG)
