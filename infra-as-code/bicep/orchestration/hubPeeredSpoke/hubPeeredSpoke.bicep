@@ -138,10 +138,10 @@ module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' 
     parSpokeNetworkName: parSpokeNetworkName
     parSpokeNetworkAddressPrefix: parSpokeNetworkAddressPrefix
     parDdosProtectionPlanId: parDdosProtectionPlanId
-    parDnsServerIPs: parDnsServerIpArray
-    parNextHopIPAddress: varNextHopIPAddress
+    parDnsServerIps: parDnsServerIpArray
+    parNextHopIpAddress: varNextHopIPAddress
     parSpokeToHubRouteTableName: parSpoketoHubRouteTableName
-    parBGPRoutePropagation: parBgpRoutePropagation
+    parBgpRoutePropagation: parBgpRoutePropagation
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
     parLocation: parLocation
