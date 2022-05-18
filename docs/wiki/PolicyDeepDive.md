@@ -50,6 +50,8 @@ The GitHub action runs every weekday at 0800 UTC.
 
 We will explain this process further below in a series of diagrams:
 
+> A [Code Tour](https://github.com/Azure/ALZ-Bicep/wiki/CodeTour) for this process can also be found [here](https://github.com/Azure/ALZ-Bicep/blob/main/.vscode/tours/upstreamPolicyUpdateProcess.tour)
+
 ![ALZ-Bicep Policy Update Step 1](media/alzBicepPolicyUpdate1.PNG)
 
 ![ALZ-Bicep Policy Update Step 2](media/alzBicepPolicyUpdate2.PNG)
