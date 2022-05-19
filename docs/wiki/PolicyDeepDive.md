@@ -63,3 +63,11 @@ We will explain this process further below in a series of diagrams:
 ![ALZ-Bicep Policy Update Step 5](media/alzBicepPolicyUpdate5.PNG)
 
 ![ALZ-Bicep Policy Update Step 6](media/alzBicepPolicyUpdate6.PNG)
+
+## How do we add a custom Azure Policy definition or initiative?
+
+Please see the following wiki article that explains this process further: [Adding Custom Azure Policy Definitions](https://github.com/Azure/ALZ-Bicep/wiki/AddingPolicyDefs)
+
+## How do we assign a built-in or custom Azure Policy?
+
+Please see the following wiki article that explains this process further: [Assigning Azure Policies](https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies)
