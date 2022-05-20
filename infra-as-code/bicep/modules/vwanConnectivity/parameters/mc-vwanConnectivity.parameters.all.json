@@ -11,7 +11,7 @@
     "parVirtualHubAddressPrefix": {
       "value": "10.100.0.0/23"
     },
-    "parAzureFirewallTier": {
+    "parAzFirewallTier": {
       "value": "Standard"
     },
     "parVirtualHubEnabled": {
@@ -23,16 +23,16 @@
     "parExpressRouteGatewayEnabled": {
       "value": true
     },
-    "parAzureFirewallEnabled": {
+    "parAzFirewallEnabled": {
       "value": true
     },
-    "parNetworkDnsEnableProxy": {
+    "parAzFirewallDnsProxyEnabled": {
       "value": true
     },
     "parVirtualWanName": {
       "value": "alz-vwan-chinaeast2"
     },
-    "parVirtualHubName": {
+    "parVirtualWanHubName": {
       "value": "alz-vhub-chinaeast2"
     },
     "parVpnGatewayName": {
@@ -41,13 +41,13 @@
     "parExpressRouteGatewayName": {
       "value": "alz-ergw-chinaeast2"
     },
-    "parAzureFirewallName": {
+    "parAzFirewallName": {
       "value": "alz-fw-chinaeast2"
     },
-    "parAzureFirewallAvailabilityZones": {
+    "parAzFirewallAvailabilityZones": {
       "value": []
     },
-    "parFirewallPoliciesName": {
+    "parAzFirewallPoliciesName": {
       "value": "alz-azfwpolicy-chinaeast2"
     },
     "parVpnGatewayScaleUnit": {

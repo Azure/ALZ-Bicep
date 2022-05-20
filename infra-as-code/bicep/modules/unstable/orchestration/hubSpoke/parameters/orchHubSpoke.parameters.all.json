@@ -58,7 +58,7 @@
         "parAutomationAccountName": {
             "value": "alz-automation-account"
         },
-        "parBastionEnabled": {
+        "parAzBastionEnabled": {
             "value": true
         },
         "parDDoSEnabled": {
@@ -67,13 +67,13 @@
         "parDDoSPlanName": {
             "value": "ddos-connectivity"
         },
-        "parAzureFirewallEnabled": {
+        "parAzFirewallEnabled": {
             "value": true
         },
-        "parNetworkDnsEnableProxy": {
+        "parAzFirewallDnsProxyEnabled": {
             "value": true
         },
-        "parDisableBgpRoutePropagation": {
+        "parBgpRoutePropagationDisabled": {
             "value": false
         },
         "parPrivateDnsZonesEnabled": {
@@ -82,9 +82,9 @@
         "parVpnGatewayConfig": {
             "value": {
               "name": "alz-vpn-gateway",
-              "gatewaytype": "Vpn",
+              "gatewayType": "Vpn",
               "sku": "VpnGw1",
-              "vpntype": "RouteBased",
+              "vpnType": "RouteBased",
               "generation": "Generation1",
               "enableBgp": false,
               "activeActive": false,
@@ -102,9 +102,9 @@
         "parExpressRouteGatewayConfig": {
             "value": {
               "name": "alz-er-gateway",
-              "gatewaytype": "ExpressRoute",
+              "gatewayType": "ExpressRoute",
               "sku": "ErGw1AZ",
-              "vpntype": "RouteBased",
+              "vpnType": "RouteBased",
               "vpnGatewayGeneration": "None",
               "enableBgp": false,
               "activeActive": false,
@@ -119,7 +119,7 @@
               }
             }
         },
-        "parBastionSku": {
+        "parAzBastionSku": {
             "value": "Standard"
         },
         "parPublicIpSku": {
@@ -134,10 +134,10 @@
         "parHubNetworkName": {
             "value": "vnet-hub"
         },
-        "parAzureFirewallName": {
+        "parAzFirewallName": {
             "value": "azfw-hub"
         },
-        "parAzureFirewallTier": {
+        "parAzFirewallTier": {
             "value": "Standard"
         },
         "parHubRouteTableName": {
@@ -159,7 +159,7 @@
               }
             ]
         },
-        "parBastionName": {
+        "parAzBastionName": {
             "value": "bst-hub"
         },
         "parPrivateDnsZones": {

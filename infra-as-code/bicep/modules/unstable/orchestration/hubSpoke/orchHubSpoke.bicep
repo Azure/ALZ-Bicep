@@ -81,25 +81,25 @@ param parLogAnalyticsWorkspaceSolutions array = [
 param parAutomationAccountName string = 'alz-automation-account'
 
 // Hub Networking Module Parameters
-@description('Switch which allows Bastion deployment to be disabled. Default: true')
-param parBastionEnabled bool = true
+@description('Switch to enable/disable Azure Bastion deployment. Default: true')
+param parAzBastionEnabled bool = true
 
-@description('Switch which allows DDOS deployment to be disabled. Default: true')
+@description('Switch to enable/disable DDoS Standard deployment. Default: true')
 param parDdosEnabled bool = true
 
-@description('DDOS Plan Name. Default: {parTopLevelManagementGroupPrefix}-ddos-plan')
+@description('DDoS Plan Name. Default: {parTopLevelManagementGroupPrefix}-ddos-plan')
 param parDdosPlanName string = '${parTopLevelManagementGroupPrefix}-ddos-plan'
 
-@description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
-param parAzureFirewallEnabled bool = true
+@description('Switch to enable/disable Azure Firewall deployment. Default: true')
+param parAzFirewallEnabled bool = true
 
-@description('Switch which allos DNS Proxy to be enabled on the virtual network. Default: true')
-param parNetworkDnsEnableProxy bool = true
+@description('Switch to enable/disable Azure Firewall DNS Proxy. Default: true')
+param parAzFirewallDnsProxyEnabled bool = true
 
-@description('Switch which allows BGP Propagation to be disabled on the routes: Default: false')
-param parDisableBgpRoutePropagation bool = false
+@description('Switch to enable/disable BGP Propagation on route table. Default: false')
+param parBgpRoutePropagationDisabled bool = false
 
-@description('Switch which allows Private DNS Zones to be disabled. Default: true')
+@description('Switch to enable/disable Private DNS Zones deployment. Default: true')
 param parPrivateDnsZonesEnabled bool = true
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
@@ -109,9 +109,9 @@ param parPrivateDnsZonesEnabled bool = true
 }''')
 param parVpnGatewayConfig object = {
     name: '${parTopLevelManagementGroupPrefix}-Vpn-Gateway'
-    gatewaytype: 'Vpn'
+    gatewayType: 'Vpn'
     sku: 'VpnGw1'
-    vpntype: 'RouteBased'
+    vpnType: 'RouteBased'
     generation: 'Generation1'
     enableBgp: false
     activeActive: false
@@ -132,9 +132,9 @@ param parVpnGatewayConfig object = {
 }''')
 param parExpressRouteGatewayConfig object = {
   name: '${parTopLevelManagementGroupPrefix}-ExpressRoute-Gateway'
-  gatewaytype: 'ExpressRoute'
+  gatewayType: 'ExpressRoute'
   sku: 'ErGw1AZ'
-  vpntype: 'RouteBased'
+  vpnType: 'RouteBased'
   vpnGatewayGeneration: 'None'
   enableBgp: false
   activeActive: false
@@ -150,7 +150,7 @@ param parExpressRouteGatewayConfig object = {
 }
 
 @description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard')
-param parBastionSku string = 'Standard'
+param parAzBastionSku string = 'Standard'
 
 @description('Public IP Address SKU. Default: Standard')
 @allowed([
@@ -169,14 +169,14 @@ param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 param parHubNetworkName string = '${parTopLevelManagementGroupPrefix}-hub-${parLocation}'
 
 @description('Azure Firewall Name. Default: {parTopLevelManagementGroupPrefix}-azure-firewall ')
-param parAzureFirewallName string = '${parTopLevelManagementGroupPrefix}-azure-firewall'
+param parAzFirewallName string = '${parTopLevelManagementGroupPrefix}-azure-firewall'
 
 @description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
 @allowed([
   'Standard'
   'Premium'
 ])
-param parAzureFirewallTier string = 'Standard'
+param parAzFirewallTier string = 'Standard'
 
 @description('Name of Route table to create for the default route of Hub. Default: {parTopLevelManagementGroupPrefix}-hub-routetable')
 param parHubRouteTableName string = '${parTopLevelManagementGroupPrefix}-hub-routetable'
@@ -198,7 +198,7 @@ param parSubnets array = [
 ]
 
 @description('Name Associated with Bastion Service:  Default: {parTopLevelManagementGroupPrefix}-bastion')
-param parBastionName string = '${parTopLevelManagementGroupPrefix}-bastion'
+param parAzBastionName string = '${parTopLevelManagementGroupPrefix}-bastion'
 
 @description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Privatezones')
 param parPrivateDnsZones array = [
@@ -597,26 +597,26 @@ module modHubNetworking '../../../hubNetworking/hubNetworking.bicep' = {
   scope: resourceGroup(parConnectivitySubscriptionId, parResourceGroupNameForHubNetworking)
   name: varModuleDeploymentNames.modHubNetworking
   params: {
-    parBastionEnabled: parBastionEnabled
+    parAzBastionEnabled: parAzBastionEnabled
     parDdosEnabled: parDdosEnabled
     parDdosPlanName: parDdosPlanName
-    parAzureFirewallEnabled: parAzureFirewallEnabled
-    parNetworkDnsEnableProxy: parNetworkDnsEnableProxy
-    parDisableBgpRoutePropagation: parDisableBgpRoutePropagation
+    parAzFirewallEnabled: parAzFirewallEnabled
+    parAzFirewallDnsProxyEnabled: parAzFirewallDnsProxyEnabled
+    parBgpRoutePropagationDisabled: parBgpRoutePropagationDisabled
     parPrivateDnsZonesEnabled: parPrivateDnsZonesEnabled
     parExpressRouteGatewayConfig: parExpressRouteGatewayConfig
     parVpnGatewayConfig: parVpnGatewayConfig
     parCompanyPrefix: parTopLevelManagementGroupPrefix
-    parBastionSku: parBastionSku
+    parAzBastionSku: parAzBastionSku
     parPublicIpSku: parPublicIpSku
     parTags: parTags
     parHubNetworkAddressPrefix: parHubNetworkAddressPrefix
     parHubNetworkName: parHubNetworkName
-    parAzureFirewallName: parAzureFirewallName
-    parAzureFirewallTier: parAzureFirewallTier
+    parAzFirewallName: parAzFirewallName
+    parAzFirewallTier: parAzFirewallTier
     parHubRouteTableName: parHubRouteTableName
     parSubnets: parSubnets
-    parBastionName: parBastionName
+    parAzBastionName: parAzBastionName
     parPrivateDnsZones: parPrivateDnsZones
     parDnsServerIpArray: parDnsServerIpArray
     parTelemetryOptOut: parTelemetryOptOut
@@ -1412,10 +1412,10 @@ module modSpokeNetworking '../../../spokeNetworking/spokeNetworking.bicep' = [fo
     parSpokeNetworkAddressPrefix: corpSub.vnetCIDR
     parDdosEnabled: parDDoSEnabled
     parDdosProtectionPlanId: modHubNetworking.outputs.outDdosPlanResourceId
-    parNetworkDnsEnableProxy: parNetworkDnsEnableProxy
-    parHubNVAEnabled: parAzureFirewallEnabled
+    parAzFirewallDnsProxyEnabled: parAzFirewallDnsProxyEnabled
+    parHubNVAEnabled: parAzFirewallEnabled
     parDnsServerIpArray: parDnsServerIpArray
-    parNextHopIpAddress: parAzureFirewallEnabled ? modHubNetworking.outputs.outAzureFirewallPrivateIp : ''
+    parNextHopIpAddress: parAzFirewallEnabled ? modHubNetworking.outputs.outAzFirewallPrivateIp : ''
     parSpoketoHubRouteTableName: parSpoketoHubRouteTableName
     parBgpRoutePropagation: parBgpRoutePropagation
     parTags: parTags

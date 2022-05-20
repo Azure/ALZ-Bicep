@@ -36,13 +36,13 @@
     "parPublicIpSku": {
       "value": "Standard"
     },
-    "parBastionEnabled": {
+    "parAzBastionEnabled": {
       "value": true
     },
-    "parBastionName": {
+    "parAzBastionName": {
       "value": "alz-bastion"
     },
-    "parBastionSku": {
+    "parAzBastionSku": {
       "value": "Standard"
     },
     "parDdosEnabled": {
@@ -51,28 +51,28 @@
     "parDdosPlanName": {
       "value": "alz-ddos-plan"
     },
-    "parAzureFirewallEnabled": {
+    "parAzFirewallEnabled": {
       "value": true
     },
-    "parAzureFirewallName": {
+    "parAzFirewallName": {
       "value": "alz-azfw-eastus"
     },
-    "parFirewallPoliciesName": {
+    "parAzFirewallPoliciesName": {
       "value": "alz-azfwpolicy-eastus"
     },
-    "parAzureFirewallTier": {
+    "parAzFirewallTier": {
       "value": "Standard"
     },
-    "parAzureFirewallAvailabilityZones": {
+    "parAzFirewallAvailabilityZones": {
       "value": []
     },
-    "parNetworkDnsEnableProxy": {
+    "parAzFirewallDnsProxyEnabled": {
       "value": true
     },
     "parHubRouteTableName": {
       "value": "alz-hub-routetable"
     },
-    "parDisableBgpRoutePropagation": {
+    "parBgpRoutePropagationDisabled": {
       "value": false
     },
     "parPrivateDnsZonesEnabled": {
@@ -96,14 +96,14 @@
         "privatelink.cassandra.cosmos.azure.com",
         "privatelink.gremlin.cosmos.azure.com",
         "privatelink.table.cosmos.azure.com",
-        "privatelink.eastus.batch.azure.com",
+        "privatelink.xxxxxx.batch.azure.com", // Replace xxxxxx with target region (i.e. eastus)
         "privatelink.postgres.database.azure.com",
         "privatelink.mysql.database.azure.com",
         "privatelink.mariadb.database.azure.com",
         "privatelink.vaultcore.azure.net",
         "privatelink.managedhsm.azure.net",
-        "privatelink.eastus.azmk8s.io",
-        "privatelink.eastus.backup.windowsazure.com",
+        "privatelink.xxxxxx.azmk8s.io", // Replace xxxxxx with target region (i.e. eastus)
+        "privatelink.xxxxxx.backup.windowsazure.com", // Replace xxxxxx with target region (i.e. eastus)
         "privatelink.siterecovery.windowsazure.com",
         "privatelink.servicebus.windows.net",
         "privatelink.azure-devices.net",
@@ -137,9 +137,9 @@
     "parVpnGatewayConfig": {
       "value": {
         "name": "alz-Vpn-Gateway",
-        "gatewaytype": "Vpn",
+        "gatewayType": "Vpn",
         "sku": "VpnGw1",
-        "vpntype": "RouteBased",
+        "vpnType": "RouteBased",
         "generation": "Generation1",
         "enableBgp": false,
         "activeActive": false,
@@ -157,9 +157,9 @@
     "parExpressRouteGatewayConfig": {
       "value": {
         "name": "alz-ExpressRoute-Gateway",
-        "gatewaytype": "ExpressRoute",
+        "gatewayType": "ExpressRoute",
         "sku": "ErGw1AZ",
-        "vpntype": "RouteBased",
+        "vpnType": "RouteBased",
         "generation": "None",
         "enableBgp": false,
         "activeActive": false,

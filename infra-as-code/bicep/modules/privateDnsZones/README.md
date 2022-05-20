@@ -29,7 +29,7 @@ The following DNS Zones are region specific and will be deployed with the provid
 - `privatelink.azmk8s.io`
 - `privatelink.siterecovery.windowsazure.com`
 
-**Note:** The region specific zones are not included in the example parameters files.
+**Note:** The region specific zones are included in the parameters files with the region set as `xxxxxx`. For these zones to deploy properly, replace `xxxxxx` with the target region. For example: `privatelink.xxxxxx.azmk8s.io` would become `privatelink.eastus.azmk8s.io` for a deployment targeting the East US region.
 
 ### Prefixed DNS Zone
 

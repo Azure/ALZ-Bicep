@@ -11,7 +11,7 @@
     "parVirtualHubAddressPrefix": {
       "value": "10.100.0.0/23"
     },
-    "parAzureFirewallTier": {
+    "parAzFirewallTier": {
       "value": "Standard"
     },
     "parVirtualHubEnabled": {
@@ -23,16 +23,16 @@
     "parExpressRouteGatewayEnabled": {
       "value": true
     },
-    "parAzureFirewallEnabled": {
+    "parAzFirewallEnabled": {
       "value": true
     },
-    "parNetworkDnsEnableProxy": {
+    "parAzFirewallDnsProxyEnabled": {
       "value": true
     },
     "parVirtualWanName": {
       "value": "alz-vwan-eastus"
     },
-    "parVirtualHubName": {
+    "parVirtualWanHubName": {
       "value": "alz-vhub-eastus"
     },
     "parVpnGatewayName": {
@@ -41,13 +41,13 @@
     "parExpressRouteGatewayName": {
       "value": "alz-ergw-eastus"
     },
-    "parAzureFirewallName": {
+    "parAzFirewallName": {
       "value": "alz-fw-eastus"
     },
-    "parAzureFirewallAvailabilityZones": {
+    "parAzFirewallAvailabilityZones": {
       "value": []
     },
-    "parFirewallPoliciesName": {
+    "parAzFirewallPoliciesName": {
       "value": "alz-azfwpolicy-eastus"
     },
     "parVpnGatewayScaleUnit": {
@@ -83,14 +83,14 @@
         "privatelink.cassandra.cosmos.azure.com",
         "privatelink.gremlin.cosmos.azure.com",
         "privatelink.table.cosmos.azure.com",
-        "privatelink.eastus.batch.azure.com",
+        "privatelink.xxxxxx.batch.azure.com", // Replace xxxxxx with target region (i.e. eastus)
         "privatelink.postgres.database.azure.com",
         "privatelink.mysql.database.azure.com",
         "privatelink.mariadb.database.azure.com",
         "privatelink.vaultcore.azure.net",
         "privatelink.managedhsm.azure.net",
-        "privatelink.eastus.azmk8s.io",
-        "privatelink.eastus.backup.windowsazure.com",
+        "privatelink.xxxxxx.azmk8s.io", // Replace xxxxxx with target region (i.e. eastus)
+        "privatelink.xxxxxx.backup.windowsazure.com", // Replace xxxxxx with target region (i.e. eastus)
         "privatelink.siterecovery.windowsazure.com",
         "privatelink.servicebus.windows.net",
         "privatelink.azure-devices.net",

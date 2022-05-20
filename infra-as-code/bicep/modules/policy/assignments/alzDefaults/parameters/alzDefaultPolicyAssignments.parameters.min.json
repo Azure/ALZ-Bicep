@@ -17,7 +17,7 @@
         "parAutomationAccountName": {
             "value": "alz-automation-account"
         },
-        "parMSDFCEmailSecurityContact": {
+        "parMsDefenderForCloudEmailSecurityContact": {
             "value": "security_contact@replace_me.com"
         },
         "parDdosProtectionPlanId": {

@@ -16,7 +16,7 @@ param parLogAnalyticsWorkspaceLogRetentionInDays string = '365'
 param parAutomationAccountName string = 'alz-automation-account'
 
 @description('An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.')
-param parMSDFCEmailSecurityContact string = 'security_contact@replace_me.com'
+param parMsDefenderForCloudEmailSecurityContact string = 'security_contact@replace_me.com'
 
 @description('ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues. Default: Empty String')
 param parDdosProtectionPlanId string = ''
@@ -250,7 +250,7 @@ module modPolicyAssignmentIntRootDeployMdfcConfig '../../../policy/assignments/p
     parPolicyAssignmentParameters: varPolicyAssignmentDeployMdfcConfig.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       emailSecurityContact: {
-        value: parMSDFCEmailSecurityContact
+        value: parMsDefenderForCloudEmailSecurityContact
       }
       ascExportResourceGroupLocation: {
         value: parLogAnalyticsWorkSpaceAndAutomationAccountLocation

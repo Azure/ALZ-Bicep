@@ -180,7 +180,7 @@ module modhubVirtualNetworkConnection '../../modules/vnetPeeringVwan/hubVirtualN
   scope: resourceGroup(varVirtualHubSubscriptionId, varVirtualHubResourceGroup)  
   name: varModuleDeploymentNames.modVnetPeeringVwan
   params: {
-    parVirtualHubResourceId: varVirtualHubResourceId
+    parVirtualWanHubResourceId: varVirtualHubResourceId
     parRemoteVirtualNetworkResourceId: modSpokeNetworking.outputs.outSpokeVirtualNetworkId
   }
 }

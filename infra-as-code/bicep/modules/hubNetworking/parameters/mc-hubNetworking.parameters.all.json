@@ -36,13 +36,13 @@
       "parPublicIpSku": {
         "value": "Standard"
       },
-      "parBastionEnabled": {
+      "parAzBastionEnabled": {
         "value": true
       },
-      "parBastionName": {
+      "parAzBastionName": {
         "value": "alz-bastion"
       },
-      "parBastionSku": {
+      "parAzBastionSku": {
         "value": "Standard"
       },
       "parDdosEnabled": {
@@ -51,28 +51,28 @@
       "parDdosPlanName": {
         "value": "alz-ddos-plan"
       },
-      "parAzureFirewallEnabled": {
+      "parAzFirewallEnabled": {
         "value": true
       },
-      "parAzureFirewallName": {
+      "parAzFirewallName": {
         "value": "alz-azfw-chinaeast2"
       },
-      "parFirewallPoliciesName": {
+      "parAzFirewallPoliciesName": {
         "value": "alz-azfwpolicy-chinaeast2"
       },
-      "parAzureFirewallTier": {
+      "parAzFirewallTier": {
         "value": "Standard"
       },
-      "parAzureFirewallAvailabilityZones": {
+      "parAzFirewallAvailabilityZones": {
         "value": []
       },
-      "parNetworkDnsEnableProxy": {
+      "parAzFirewallDnsProxyEnabled": {
         "value": true
       },
       "parHubRouteTableName": {
         "value": "alz-hub-routetable"
       },
-      "parDisableBgpRoutePropagation": {
+      "parBgpRoutePropagationDisabled": {
         "value": false
       },
       "parPrivateDnsZonesEnabled": {
@@ -114,9 +114,9 @@
       "parVpnGatewayConfig": {
         "value": {
           "name": "alz-Vpn-Gateway",
-          "gatewaytype": "Vpn",
+          "gatewayType": "Vpn",
           "sku": "VpnGw1",
-          "vpntype": "RouteBased",
+          "vpnType": "RouteBased",
           "generation": "Generation1",
           "enableBgp": false,
           "activeActive": false,
@@ -134,9 +134,9 @@
       "parExpressRouteGatewayConfig": {
         "value": {
           "name": "alz-ExpressRoute-Gateway",
-          "gatewaytype": "ExpressRoute",
+          "gatewayType": "ExpressRoute",
           "sku": "Standard",
-          "vpntype": "RouteBased",
+          "vpnType": "RouteBased",
           "generation": "None",
           "enableBgp": false,
           "activeActive": false,

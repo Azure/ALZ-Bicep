@@ -1,8 +1,8 @@
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
 param parLocation string = resourceGroup().location
 
-@description('Switch which allows BGP Route Propagation to be disabled on the route table. Default: false')
-param parBgpRoutePropagation bool = false
+@description('Switch to enable/disable BGP Propagation on route table. Default: false')
+param parBgpRoutePropagationDisabled bool = false
 
 @description('Id of the DdosProtectionPlan which will be applied to the Virtual Network.  Default: Empty String')
 param parDdosProtectionPlanId string = ''
@@ -32,7 +32,7 @@ param parTelemetryOptOut bool = false
 var varCuaid = '0c428583-f2a1-4448-975c-2d6262fd193a'
 
 //If Ddos parameter is true Ddos will be Enabled on the Virtual Network
-//If Azure Firewall is enabled and Network Dns Proxy is enabled dns will be configured to point to AzureFirewall
+//If Azure Firewall is enabled and Network DNS Proxy is enabled DNS will be configured to point to AzureFirewall
 resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: parSpokeNetworkName
   location: parLocation
@@ -68,7 +68,7 @@ resource resSpokeToHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
         }
       }
     ]
-    disableBgpRoutePropagation: parBgpRoutePropagation
+    disableBgpRoutePropagation: parBgpRoutePropagationDisabled
   }
 }
 
