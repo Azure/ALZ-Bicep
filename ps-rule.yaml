@@ -12,7 +12,8 @@ include:
 
 # Require a minimum version of modules that include referenced baseline.
 requires:
-  PSRule.Rules.Azure: '@pre >=1.14.2'
+  PSRule: '@pre >=2.1.0'
+  PSRule.Rules.Azure: '@pre >=1.15.2'
 
 # Reference the repository in output.
 repository:
@@ -50,6 +51,12 @@ input:
   # Include samples/ test files from modules
   - '!infra-as-code/bicep/modules/**/samples/*.bicep'
 
+binding:
+  preferTargetInfo: true
+  targetType:
+  - resourceType
+  - type
+
 rule:
   exclude:
   # Ignore these recommendations for this repo.
@@ -57,3 +64,6 @@ rule:
   - Azure.ACR.MinSku
   - Azure.ACR.ContentTrust
   - Azure.Policy.AssignmentAssignedBy
+
+  # Currently a bug as of v1.15.2. Review in the next release.
+  - Azure.PublicIP.Name

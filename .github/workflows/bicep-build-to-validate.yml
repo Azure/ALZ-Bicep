@@ -53,7 +53,7 @@ jobs:
 
       # Add pipeline tests for Azure Well-Architected Framework
       - name: Run PSRule analysis
-        uses: Microsoft/ps-rule@v2.0.0
+        uses: Microsoft/ps-rule@v2.1.0
         with:
           modules: PSRule.Rules.Azure
           baseline: Azure.GA_2022_03
