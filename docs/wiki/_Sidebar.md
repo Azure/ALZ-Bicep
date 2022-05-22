@@ -12,3 +12,4 @@
 * [Sample Pipelines](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesOverview)
   * [GitHub Actions](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub)
   * [Azure DevOps](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO)
+* [Code tours](https://github.com/Azure/ALZ-Bicep/wiki/CodeTour)

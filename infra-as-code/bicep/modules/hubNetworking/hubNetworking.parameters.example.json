@@ -55,10 +55,13 @@
       "value": true
     },
     "parAzureFirewallName": {
-      "value": "alz-azure-firewall"
+      "value": "alz-azfw-eastus"
     },
     "parAzureFirewallTier": {
       "value": "Standard"
+    },
+    "parAzureFirewallAvailabilityZones": {
+      "value": []
     },
     "parNetworkDNSEnableProxy": {
       "value": true
@@ -69,7 +72,7 @@
     "parDisableBGPRoutePropagation": {
       "value": false
     },
-    "parPrivateDNSZonesEnabled": {
+    "parPrivateDnsZonesEnabled": {
       "value": true
     },
     "parPrivateDnsZones": {
@@ -77,6 +80,7 @@
         "privatelink.azure-automation.net",
         "privatelink.database.windows.net",
         "privatelink.sql.azuresynapse.net",
+        "privatelink.dev.azuresynapse.net",
         "privatelink.azuresynapse.net",
         "privatelink.blob.core.windows.net",
         "privatelink.table.core.windows.net",
@@ -93,6 +97,8 @@
         "privatelink.mysql.database.azure.com",
         "privatelink.mariadb.database.azure.com",
         "privatelink.vaultcore.azure.net",
+        "privatelink.managedhsm.azure.net",
+        "privatelink.siterecovery.windowsazure.com",
         "privatelink.servicebus.windows.net",
         "privatelink.azure-devices.net",
         "privatelink.eventgrid.azure.net",
@@ -100,19 +106,26 @@
         "privatelink.api.azureml.ms",
         "privatelink.notebooks.azure.net",
         "privatelink.service.signalr.net",
+        "privatelink.monitor.azure.com",
+        "privatelink.oms.opinsights.azure.com",
+        "privatelink.ods.opinsights.azure.com",
+        "privatelink.agentsvc.azure-automation.net",
         "privatelink.afs.azure.net",
         "privatelink.datafactory.azure.net",
         "privatelink.adf.azure.com",
         "privatelink.redis.cache.windows.net",
         "privatelink.redisenterprise.cache.azure.net",
         "privatelink.purview.azure.com",
+        "privatelink.purviewstudio.azure.com",
         "privatelink.digitaltwins.azure.net",
         "privatelink.azconfig.io",
-        "privatelink.webpubsub.azure.com",
-        "privatelink.azure-devices-provisioning.net",
         "privatelink.cognitiveservices.azure.com",
         "privatelink.azurecr.io",
-        "privatelink.search.windows.net"
+        "privatelink.search.windows.net",
+        "privatelink.azurehdinsight.net",
+        "privatelink.media.azure.net",
+        "privatelink.his.arc.azure.com",
+        "privatelink.guestconfiguration.azure.com"
       ]
     },
     "parVpnGatewayConfig": {

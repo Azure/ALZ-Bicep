@@ -20,8 +20,12 @@ Replace this with any testing evidence to show that your Pull Request works/fixe
 
 ## As part of this Pull Request I have
 
+- [ ] Read the [Contribution Guide](https://github.com/Azure/ALZ-Bicep/wiki/Contributing) and ensured this PR is compliant with the guide
 - [ ] Checked for duplicate [Pull Requests](https://github.com/Azure/ALZ-Bicep/pulls)
-- [ ] Associated it with relevant [ADO items](https://dev.azure.com/unifiedactiontracker/Solution%20Engineering/_backlogs/backlog/Azure%20Landing%20Zone%20Bicep/Backlog%20Bugs%20Feedback)
+- [ ] Associated it with relevant [GitHub Issues](https://github.com/Azure/ALZ-Bicep/issues)
+- [ ] *(ALZ Bicep Core Team Only)* Associated it with relevant [ADO Items](https://aka.ms/alz/bicep/backlog)
 - [ ] Ensured my code/branch is up-to-date with the latest changes in the `main` [branch](https://github.com/Azure/ALZ-Bicep/tree/main)
 - [ ] Performed testing and provided evidence.
-- [ ] Updated relevant and associated documentation.
+- [ ] Updated tests *(if required)* [Unit](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/bicep-build-to-validate.yml) - [Linting](https://github.com/Azure/ALZ-Bicep/tree/main/.github/workflows) - [E2E (End-To-End)](https://github.com/Azure/ALZ-Bicep/blob/main/tests/pipelines/bicep-build-to-validate.yml)
+- [ ] Updated relevant and associated documentation (e.g. Contribution Guide, Module READMEs, Wiki Docs etc.)
+- [ ] If relevant, created or updated Code Tours [here](https://github.com/Azure/ALZ-Bicep/blob/main/.vscode/tours)

@@ -1,24 +1,3 @@
-/*
-
-SUMMARY: This module provides orchestration of all the required module deployments to achevie a Azure Landing Zones Hub and Spoke network topology deployment (also known as Adventure Works)
-DESCRIPTION: This module provides orchestration of all the required module deployments to achevie a Azure Landing Zones Hub and Spoke network topology deployment (also known as Adventure Works).
-             It will handle the sequencing and ordering of the following modules:
-             - Management Groups
-             - Custom RBAC Role Definitions
-             - Custom Policy Definitions
-             - Logging
-             - Policy Assignments
-             - Subscription Placement
-             - Hub Networking
-             - Spoke Networking (corp connected)
-             All as outlined in the Deployment Flow wiki page here: https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow
-AUTHOR/S: jtracey93
-VERSION: 1.0.0
-
-*/
-
-// **Parameters**
-// Generic Parameters - Used in multiple modules
 @description('The region to deploy all resoruces into. DEFAULTS TO = northeurope')
 param parLocation string = 'northeurope'
 

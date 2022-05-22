@@ -1,17 +1,3 @@
-/*
-SUMMARY: Module to deploy the Hub Network and it's components as per the Azure Landing Zone conceptual architecture 
-DESCRIPTION: The following components will be options in this deployment
-              Virtual Network (Vnet)
-              Subnets
-              VPN Gateway/ExpressRoute Gateway
-              Azure Firewall
-              Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
-              DDos Standard Plan
-              Bastion
-AUTHOR/S: aultt, jtracey93
-VERSION: 1.2.0
-*/
-
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
 param parLocation string = resourceGroup().location
 
@@ -69,7 +55,10 @@ param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
 param parAzureFirewallEnabled bool = true
 
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
-param parAzureFirewallName string = '${parCompanyPrefix}-azure-firewall'
+param parAzureFirewallName string = '${parCompanyPrefix}-azfw-${parLocation}'
+
+@description('Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}')
+param parFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
 
 @description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
 @allowed([
@@ -77,6 +66,14 @@ param parAzureFirewallName string = '${parCompanyPrefix}-azure-firewall'
   'Premium'
 ])
 param parAzureFirewallTier string = 'Standard'
+
+@allowed([
+  '1'
+  '2'
+  '3'
+])
+@description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
+param parAzureFirewallAvailabilityZones array = []
 
 @description('Switch which enables DNS Proxy to be enabled on the Azure Firewall. Default: true')
 param parNetworkDNSEnableProxy bool = true
@@ -87,14 +84,18 @@ param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 @description('Switch which allows BGP Propagation to be disabled on the route tables: Default: false')
 param parDisableBGPRoutePropagation bool = false
 
-@description('Switch which allows Private DNS Zones to be disabled. Default: true')
-param parPrivateDNSZonesEnabled bool = true
+@description('Switch which allows and deploys Private DNS Zones. Default: true')
+param parPrivateDnsZonesEnabled bool = true
+
+@description('Resource Group Name for Private DNS Zones. Default: same resource group')
+param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 
 @description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
 param parPrivateDnsZones array = [
   'privatelink.azure-automation.net'
   'privatelink.database.windows.net'
   'privatelink.sql.azuresynapse.net'
+  'privatelink.dev.azuresynapse.net'
   'privatelink.azuresynapse.net'
   'privatelink.blob.core.windows.net'
   'privatelink.table.core.windows.net'
@@ -112,8 +113,10 @@ param parPrivateDnsZones array = [
   'privatelink.mysql.database.azure.com'
   'privatelink.mariadb.database.azure.com'
   'privatelink.vaultcore.azure.net'
+  'privatelink.managedhsm.azure.net'
   'privatelink.${parLocation}.azmk8s.io'
-  '${parLocation}.privatelink.siterecovery.windowsazure.com'
+  'privatelink.${parLocation}.backup.windowsazure.com'
+  'privatelink.siterecovery.windowsazure.com'
   'privatelink.servicebus.windows.net'
   'privatelink.azure-devices.net'
   'privatelink.eventgrid.azure.net'
@@ -121,19 +124,26 @@ param parPrivateDnsZones array = [
   'privatelink.api.azureml.ms'
   'privatelink.notebooks.azure.net'
   'privatelink.service.signalr.net'
+  'privatelink.monitor.azure.com'
+  'privatelink.oms.opinsights.azure.com'
+  'privatelink.ods.opinsights.azure.com'
+  'privatelink.agentsvc.azure-automation.net'
   'privatelink.afs.azure.net'
   'privatelink.datafactory.azure.net'
   'privatelink.adf.azure.com'
   'privatelink.redis.cache.windows.net'
   'privatelink.redisenterprise.cache.azure.net'
   'privatelink.purview.azure.com'
+  'privatelink.purviewstudio.azure.com'
   'privatelink.digitaltwins.azure.net'
   'privatelink.azconfig.io'
-  'privatelink.webpubsub.azure.com'
-  'privatelink.azure-devices-provisioning.net'
   'privatelink.cognitiveservices.azure.com'
   'privatelink.azurecr.io'
   'privatelink.search.windows.net'
+  'privatelink.azurehdinsight.net'
+  'privatelink.media.azure.net'
+  'privatelink.his.arc.azure.com'
+  'privatelink.guestconfiguration.azure.com'
 ]
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
@@ -352,6 +362,7 @@ module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if (parAzureFirew
   name: 'deploy-Firewall-Public-IP'
   params: {
     parLocation: parLocation
+    parAvailabilityZones: parAzureFirewallAvailabilityZones
     parPublicIPName: '${parAzureFirewallName}-PublicIP'
     parPublicIPProperties: {
       publicIPAddressVersion: 'IPv4'
@@ -365,43 +376,28 @@ module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if (parAzureFirew
   }
 }
 
-// AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
-// There is a minimum subnet requirement of /26 prefix.  
-resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (parAzureFirewallEnabled) {
-  name: parAzureFirewallName
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = if (parAzureFirewallEnabled) {
+  name: parFirewallPoliciesName
   location: parLocation
   tags: parTags
   properties: {
-    networkRuleCollections: [
-      {
-        name: 'VmInternetAccess'
-        properties: {
-          priority: 101
-          action: {
-            type: 'Allow'
-          }
-          rules: [
-            {
-              name: 'AllowVMAppAccess'
-              description: 'Allows VM access to the web'
-              protocols: [
-                'TCP'
-              ]
-              sourceAddresses: [
-                parHubNetworkAddressPrefix
-              ]
-              destinationAddresses: [
-                '*'
-              ]
-              destinationPorts: [
-                '80'
-                '443'
-              ]
-            }
-          ]
-        }
-      }
-    ]
+    dnsSettings: {
+      enableProxy: parNetworkDNSEnableProxy
+    }
+    sku: {
+      tier: parAzureFirewallTier
+    }
+  }
+}
+
+// AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
+// There is a minimum subnet requirement of /26 prefix.  
+resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-05-01' = if (parAzureFirewallEnabled) {
+  name: parAzureFirewallName
+  location: parLocation
+  tags: parTags
+  zones: (!empty(parAzureFirewallAvailabilityZones) ? parAzureFirewallAvailabilityZones : json('null'))
+  properties: {
     ipConfigurations: [
       {
         name: 'ipconfig1'
@@ -415,13 +411,12 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
         }
       }
     ]
-    threatIntelMode: 'Alert'
     sku: {
       name: 'AZFW_VNet'
       tier: parAzureFirewallTier
     }
-    additionalProperties: {
-      'Network.DNS.EnableProxy': '${parNetworkDNSEnableProxy}'
+    firewallPolicy: {
+      id: resFirewallPolicies.id
     }
   }
 }
@@ -446,23 +441,16 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (parAz
   }
 }
 
-resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: if (parPrivateDNSZonesEnabled) {
-  name: privateDnsZone
-  location: 'global'
-  tags: parTags
-}]
-
-resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in parPrivateDnsZones: if (parPrivateDNSZonesEnabled) {
-  name: '${privateDnsZoneName}/${privateDnsZoneName}'
-  location: 'global'
-  properties: {
-    registrationEnabled: false
-    virtualNetwork: {
-      id: resHubVirtualNetwork.id
-    }
+module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPrivateDnsZonesEnabled) {
+  name: 'deploy-Private-DNS-Zones'
+  scope: resourceGroup(parPrivateDnsZonesResourceGroup)
+  params: {
+    parLocation: parLocation
+    parTags: parTags
+    parVirtualNetworkIdToLink: resHubVirtualNetwork.id
+    parPrivateDnsZones: parPrivateDnsZones
   }
-  dependsOn: resPrivateDnsZones
-}]
+}
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
@@ -477,10 +465,7 @@ output outAzureFirewallPrivateIP string = parAzureFirewallEnabled ? resAzureFire
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 output outAzureFirewallName string = parAzureFirewallEnabled ? parAzureFirewallName : ''
 
-output outPrivateDnsZones array = [for i in range(0, length(parPrivateDnsZones)): {
-  name: resPrivateDnsZones[i].name
-  id: resPrivateDnsZones[i].id
-}]
+output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : []) 
 
 output outDdosPlanResourceID string = resDdosProtectionPlan.id
 output outHubVirtualNetworkName string = resHubVirtualNetwork.name

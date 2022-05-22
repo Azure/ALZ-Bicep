@@ -22,12 +22,13 @@ Detailed information about how to use, deploy and extend artifacts found in this
 - [Sample Pipelines][wiki_pipelines]
   - [GitHub Actions][wiki_pipelines_gh]
   - [Azure DevOps][wiki_pipelines_ado]
+- [Code Tours][code_tours]
 
 
 ## Overview
 The Azure Landing Zones Bicep repo provides an approach for deploying and managing the core platform capabilities of Cloud Adoption Framework Azure Landing Zones conceptual architecture using Bicep.
 
-In its current incarnation each module can deployed separately via command line but in future releases a more automated approach, via orchestration modules, will be published; but due to current Bicep & ARM limitations this is not possible today.
+In its current incarnation each module can be deployed separately via command line but in future releases a more automated approach, via orchestration modules, will be published; but due to current Bicep & ARM limitations this is not possible today.
 
 ## Getting Started
 
@@ -63,11 +64,11 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 
 ## Security
 
-If you believe you have found a security vulnerability in this repository,please refer to [this guide][vulnerability_reporting] on how to report it.
+If you believe you have found a security vulnerability in this repository, please refer to [this guide][vulnerability_reporting] on how to report it.
 
 ## Support
 
-For support on the artifacts contained in this repository please refer to [this guide][support_statement] for more details.
+For support on the artifacts contained in this repository, please refer to [this guide][support_statement] for more details.
 
 
 
@@ -95,6 +96,7 @@ Replace `./` with `https://github.com/Azure/terraform-azurerm-caf-enterprise-sca
 [wiki_pipelines]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesOverview "Wiki - Sample Pipelines"
 [wiki_pipelines_gh]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub "Wiki - Sample Pipelines - GitHub Actions"
 [wiki_pipelines_ado]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO "Wiki - Sample Pipelines - Azure DevOps"
+[code_tours]:                                   https://github.com/Azure/ALZ-Bicep/wiki/CodeTour "Wiki - Code tours"
 
 
 

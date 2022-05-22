@@ -57,9 +57,7 @@ The following tooling/extensions are recommended to assist you developing for th
 - [ARM Template Viewer extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bencoleman.armview)
 - [PSRule extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bewhite.psrule-vscode)
 - For visibility of Bracket Pairs:
-  - Use an Extension: [Bracket Pair Colorizer 2 extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)
-  - Use Native capability:
-    - Inside Visual Studio Code, add `"editor.bracketPairColorization.enabled": true` to your settings.json, to enable bracket pair colorization.
+  - Inside Visual Studio Code, add "editor.bracketPairColorization.enabled": true to your settings.json, to enable bracket pair colorization.
 
 ## Bicep Formatting Guidelines
 
@@ -91,22 +89,8 @@ Throughout the development of Bicep code you should follow the [Bicep Best Pract
   - Default values should also be documented in the appropriate location
 - Tab indents should be set to `2` for all Bicep files
 - Double line-breaks should exist between each element type section
-- Each bicep file must contain the below multi-line comment at the very top of the file, with its details filled out:
+- When intended for scopes above resource group deployment, targetScope should be indicated at the beginning of the file
 
-```bicep
-/*
-SUMMARY: A short summary of what the Bicep file does/deploys.
-DESCRIPTION: A slightly longer description of what the Bicep file does/deploys and any other important information that should be known upfront.
-AUTHOR/S: GitHub Usernames
-VERSION: 1.0.0
-*/
-
-<REST OF BICEP FILE BELOW...>
-
-targetScope = ...
-
-etc...
-```
 
 ### Bicep Elements Naming Standards
 
@@ -139,14 +123,6 @@ For all Bicep files created as part of this project they will follow the structu
 Below is an example of Bicep file complying with the structure and styling guidelines specified above:
 
 ```bicep
-/*
-SUMMARY: An example deployment of a resource group.
-DESCRIPTION: Deploy a resource group to UK south taking a naming prefix as it's only parameter.
-AUTHOR/S: jtracey93
-VERSION: 1.0.0
-*/
-
-
 // SCOPE
 targetScope = 'subscription' //Deploying at Subscription scope to allow resource groups to be created and resources in one deployment
 
