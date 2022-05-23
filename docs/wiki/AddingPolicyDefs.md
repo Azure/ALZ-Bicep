@@ -58,4 +58,4 @@ To get around this, split the policy definitions into 2 or more Bicep files.
 
 For example, you could leave the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions) from `ALZ-Bicep` as is and then copy/clone this module and add your own custom Policy Definitions and Initiatives into this separate module.
 
-> Still ensure you deploy all of your Custom Policy Definitions at the correct stage of your deployment as per the guidance in the [Deployment Flow wiki article](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow).
+> Ensure you deploy all of your Custom Policy Definitions at the correct stage of your deployment as per the guidance in the [Deployment Flow wiki article](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow).
