@@ -35,3 +35,27 @@ To extend the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bi
    - **Important:** The file name of the `.json` file is not important. It can be anything you like as long as it ends `.json`
 3. Amend contents of new file to values for the new policy definition/initiative
    - Common properties to change: `name`, `mode`, `displayName`, `description`, `metadata`, `parameters`, `policyRule`, `then`, `effect`
+4. Run the [`Invoke-PolicyToBicep.ps1`](https://github.com/Azure/ALZ-Bicep/blob/main/.github/scripts/Invoke-PolicyToBicep.ps1) script to update the `_policyDefinitionsBicepInput.txt` and/or `_policySetDefinitionsBicepInput.txt` files in the `lib` folders
+   1. Copy the entire contents of the relevant `.txt` file and replace the contents of the associated variable in the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions)
+      - Policy Definition = `_policyDefinitionsBicepInput.txt` placed into variable named `varCustomPolicyDefinitionsArray` (place copied contents inside of array `[]`)
+      - Policy Initiative (Set) = `_policySetDefinitionsBicepInput.txt` placed into variable named `varCustomPolicySetDefinitionsArray` (place copied contents inside of array `[]`)
+5. Redeploy the updated [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions) via your configured method (locally via Azure CLI or PowerShell or via Azure DevOps pipeline or GitHub action)
+6. New Policy Definitions now deployed to intermediate root Management Group (e.g. `Contoso`)
+
+> For step 4 you could also manually copy and add the object for your new Policy Definitions into the array variables of `varCustomPolicyDefinitionsArray` or `varCustomPolicySetDefinitionsArray` following the defined schema already inside the array of objects.
+
+## Handling a large amount of additional custom Policy Definitions
+
+As Bicep is ultimately just compiling ARM templates behind the scenes, deployments of Bicep files/modules are still subject to the same limits as ARM Templates. The main limit to be aware of here is the `4 MB` total size limit for a single ARM Template. 
+
+Today the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions) from `ALZ-Bicep` results in a `2.56 MB` ARM Template file `JSON` file being created.
+
+This has plenty of room for expansion but it is worth keeping in mind as you may hit the 4MB limit and see the errors of `JobSizeExceededException` or `DeploymentJobSizeExceededException`.
+
+### The fix
+
+To get around this, split the policy definitions into 2 or more Bicep files.
+
+For example, you could leave the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions) from `ALZ-Bicep` as is and then copy/clone this module and add your own custom Policy Definitions and Initiatives into this separate module.
+
+> Still ensure you deploy all of your Custom Policy Definitions at the correct stage of your deployment as per the guidance in the [Deployment Flow wiki article](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow).
