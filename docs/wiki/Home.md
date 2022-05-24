@@ -22,6 +22,7 @@ Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` 
 * [Sample Pipelines][wiki_pipelines]
   * [GitHub Actions][wiki_pipelines_gh]
   * [Azure DevOps][wiki_pipelines_ado]
+* [Code Tours][code_tours]
 
 
  [//]: # (************************)
@@ -30,7 +31,7 @@ Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` 
 
 <!--
 The following link references should be copied from `_sidebar.md` in the `./docs/wiki/` folder.
-Replace `./` with `https://github.com/Azure/terraform-azurerm-caf-enterprise-scale/wiki/` when copying to here.
+Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to here.
 -->
 
 [wiki_home]:                                  https://github.com/Azure/ALZ-Bicep/wiki/home "Wiki - Home"
@@ -45,3 +46,4 @@ Replace `./` with `https://github.com/Azure/terraform-azurerm-caf-enterprise-sca
 [wiki_pipelines]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesOverview "Wiki - Sample Pipelines"
 [wiki_pipelines_gh]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub "Wiki - Sample Pipelines - GitHub Actions"
 [wiki_pipelines_ado]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO "Wiki - Sample Pipelines - Azure DevOps"
+[code_tours]:                                   https://github.com/Azure/ALZ-Bicep/wiki/CodeTour "Wiki - Code tours"
