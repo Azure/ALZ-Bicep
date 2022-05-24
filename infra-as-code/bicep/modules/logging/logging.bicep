@@ -4,8 +4,18 @@ param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 @description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings - DEFAULT VALUE: resourceGroup().location')
 param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 
-@description('Log Analytics Workspace sku name. - DEFAULT VALUE: PerNode')
-param parLogAnalyticsWorkspaceSkuName string = 'PerNode'
+@allowed([
+  'CapacityReservation'
+  'Free'
+  'LACluster'
+  'PerGB2018'
+  'PerNode'
+  'Premium'
+  'Standalone'
+  'Standard'
+])
+@description('Log Analytics Workspace sku name. - DEFAULT VALUE: PerGB2018')
+param parLogAnalyticsWorkspaceSkuName string = 'PerGB2018'
 
 @minValue(30)
 @maxValue(730)
@@ -48,10 +58,10 @@ param parAutomationAccountLocation string = resourceGroup().location
 @description('Tags you would like to be applied to all resources in this module')
 param parTags object = {}
 
-@description('Tags you would like to be applied to Automation Account. - DEFAULT VALUE: tags specific on parTags')
+@description('Tags you would like to be applied to Automation Account. - DEFAULT VALUE: parTags value')
 param parAutomationAccountTags object = parTags
 
-@description('Tags you would like to be applied to Log Analytics Workspace. - DEFAULT VALUE: tags specific on parTags')
+@description('Tags you would like to be applied to Log Analytics Workspace. - DEFAULT VALUE: parTags value')
 param parLogAnalyticsWorkspaceTags object = parTags
 
 @description('Set Parameter to true to Opt-out of deployment telemetry')
