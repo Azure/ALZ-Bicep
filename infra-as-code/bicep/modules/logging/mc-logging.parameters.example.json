@@ -8,6 +8,9 @@
     "parLogAnalyticsWorkspaceLocation": {
       "value": "chinaeast2"
     },
+    "parLogAnalyticsWorkspaceSkuName": {
+      "value": "PerGB2018"
+    },
     "parLogAnalyticsWorkspaceLogRetentionInDays": {
       "value": 365
     },
@@ -32,6 +35,16 @@
       "value": "chinaeast2"
     },
     "parTags": {
+      "value": {
+          "Environment": "POC"
+      }
+    },
+    "parAutomationAccountTags": {
+      "value": {
+          "Environment": "POC"
+      }
+    },
+    "parLogAnalyticsWorkspaceTags": {
       "value": {
           "Environment": "POC"
       }

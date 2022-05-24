@@ -8,6 +8,9 @@
     "parLogAnalyticsWorkspaceLocation": {
       "value": "eastus"
     },
+    "parLogAnalyticsWorkspaceSkuName": {
+      "value": "PerGB2018"
+    },
     "parLogAnalyticsWorkspaceLogRetentionInDays": {
       "value": 365
     },
@@ -32,6 +35,16 @@
       "value": "eastus2"
     },
     "parTags": {
+      "value": {
+          "Environment": "POC"
+      }
+    },
+    "parAutomationAccountTags": {
+      "value": {
+          "Environment": "POC"
+      }
+    },
+    "parLogAnalyticsWorkspaceTags": {
       "value": {
           "Environment": "POC"
       }
