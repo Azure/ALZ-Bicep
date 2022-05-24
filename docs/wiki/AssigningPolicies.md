@@ -40,6 +40,16 @@ We recommend were possible to use option 1 or 2 and extend the current `ALZ-Bice
 
 To extend the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) from `ALZ-Bicep` follow the below process.
 
+1. Navigate to the Policy Assignments `lib` directory: `infra-as-code\bicep\modules\policy\assignments\lib\policy_assignments`
+2. Copy/clone an existing `.json` file and rename it to something appropriate
+   - Try to copy a policy with the same effect as the policy you are wanting to add
+   - **Important:** The file name of the `.json` file is not important. It can be anything you like as long as it ends `.json`
+3. Amend contents of new file to values for the new policy assignment
+   - Common properties to change: `name`, `displayName`, `description`, `metadata`, `parameters`, `policyDefinitionId`, `enforcementMode`, `identity`
+4. Run the [`Invoke-PolicyToBicep.ps1`](https://github.com/Azure/ALZ-Bicep/blob/main/.github/scripts/Invoke-PolicyToBicep.ps1) script to update the `_policyAssignmentsBicepInput.txt` files in the `lib` folder
+   1. Copy the entire contents of the relevant `.txt` file and replace the variables for the policy assignments metadata ([lines 78 to 202 today in the `alzDefaultPolicyAssignments.bicep` module](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep#L78-L202))
+5. g
+
 ## What about if I want to follow option 2?
 
 The steps explained in the above section to extend the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) still apply and should be followed however you will do this in a separate Bicep file instead.
