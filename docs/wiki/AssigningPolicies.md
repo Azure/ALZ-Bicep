@@ -26,11 +26,8 @@ There are a few options for you to make additional Policy Assignments using Bice
    - Need to ensure you make the required RBAC Role Assignments also as a separate resource declaration for policies that use Managed Identities for remediation tasks like `DeployIfNotExists` and `Modify`
      - Using API schema for [RBAC Role Assignments](https://docs.microsoft.com/azure/templates/microsoft.authorization/roleassignments?tabs=bicep)
 
-<!-- markdownlint-disable -->
-> For options 1 & 2 the use of `.json` files in the lib is completely optional, you can also call the [Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments) and pass in the parameter values in a "hardcoded" fashion. You can even mix these approaches and pass in some parameter values from the `.json` files in the `lib` and others via "hardcoded" values.
-> 
+> For options 1 & 2 the use of `.json` files in the lib is completely optional, you can also call the [Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments) and pass in the parameter values in a "hardcoded" fashion. You can even mix these approaches and pass in some parameter values from the `.json` files in the `lib` and others via "hardcoded" values. <br><br>
 > When mixing policy assignment parameter values from `.json` files in the `lib` and also "hardcoded" values ensure you use the module parameter of [`parPolicyAssignmentParameterOverrides`](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments#parameters) to ensure your "hardcoded" values take precedence over those values from the `.json` files in the `lib` referenced via the associated variables for each policy assignment.
-<!-- markdownlint-restore -->
 
 We recommend were possible to use option 1 or 2 and extend the current `ALZ-Bicep` approach for assigning additional policies. Option 1 is more suited to those customers that only need to add a handful of additional policies to the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults). Where as option 2 is better suited for those customers that want assign a significant amount of additional policies or want to maintain the separation between the ALZ default policy assignments and their own additional assignments.
 
