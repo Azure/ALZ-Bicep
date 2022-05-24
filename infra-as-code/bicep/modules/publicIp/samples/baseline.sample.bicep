@@ -6,8 +6,16 @@
 
 targetScope = 'resourceGroup'
 
+// ----------
+// PARAMETERS
+// ----------
+
 @description('The Azure location to deploy to.')
 param location string = resourceGroup().location
+
+// ---------
+// RESOURCES
+// ---------
 
 @description('Baseline resource configuration')
 module baseline_public_ip '../publicIp.bicep' = {
@@ -21,5 +29,10 @@ module baseline_public_ip '../publicIp.bicep' = {
       tier: 'Regional'
     }
     parTags: {}
+    parAvailabilityZones: [
+      '1'
+      '2'
+      '3'
+    ]
   }
 }

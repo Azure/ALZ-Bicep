@@ -45,11 +45,10 @@ input:
   - docs/scripts/callModuleFromACR.example.bicep
 
   # Exclude Bicep module files
-  - 'infra-as-code/bicep/modules/**/*.bicep'
-  - 'infra-as-code/bicep/CRML/**/*.bicep'
+  - 'infra-as-code/bicep/**/*.bicep'
 
   # Include samples/ test files from modules
-  - '!infra-as-code/bicep/modules/**/samples/*.bicep'
+  - '!infra-as-code/bicep/**/samples/*.bicep'
 
 binding:
   preferTargetInfo: true
