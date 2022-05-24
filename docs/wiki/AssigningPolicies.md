@@ -37,8 +37,7 @@ We recommend were possible to use option 1 or 2 and extend the current `ALZ-Bice
 
 To extend the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) from `ALZ-Bicep` follow the below process.
 
-> ⚠️ Before assigning a policy its definition must already exist, please review the [Deployment Flow wiki article](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) for orchestration guidance and [How Does ALZ-Bicep Implement Azure Policies?](https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive) for policy specific guidance ⚠️
-
+> ⚠️ Before assigning a policy its definition must already exist, please review the [Deployment Flow wiki article](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) for orchestration guidance and [How Does ALZ-Bicep Implement Azure Policies?](https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive) for policy specific guidance ⚠️ <br><br>
 > If you do not wish to use a `.json` file in the `lib` for the assignment then please start at step 5 of the below process 👍
 
 1. Navigate to the Policy Assignments `lib` directory: `infra-as-code\bicep\modules\policy\assignments\lib\policy_assignments`
