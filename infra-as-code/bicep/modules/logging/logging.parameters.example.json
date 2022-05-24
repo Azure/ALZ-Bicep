@@ -39,16 +39,6 @@
           "Environment": "POC"
       }
     },
-    "parAutomationAccountTags": {
-      "value": {
-          "Environment": "POC"
-      }
-    },
-    "parLogAnalyticsWorkspaceTags": {
-      "value": {
-          "Environment": "POC"
-      }
-    },
     "parTelemetryOptOut": {
       "value": false
     }

@@ -38,16 +38,6 @@
       "value": {
           "Environment": "POC"
       }
-    },
-    "parAutomationAccountTags": {
-      "value": {
-          "Environment": "POC"
-      }
-    },
-    "parLogAnalyticsWorkspaceTags": {
-      "value": {
-          "Environment": "POC"
-      }
     }
   }
 }
