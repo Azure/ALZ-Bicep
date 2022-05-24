@@ -22,7 +22,7 @@ Great question! Put simply this is because Bicep itself is not on a v1.X.X relea
 
 This however, does not mean you shouldn't use ALZ-Bicep or Bicep as they are fully supported and ready for production usage.
 
-As we use GitHub releases and tags you can clone and pin to a specific version in your codebase and upgrade when you are ready too and if you want to 👍
+As we use GitHub releases and tags you can clone and pin to a specific version in your codebase and upgrade when you are ready and willing to do so 👍
 
 In summary, `ALZ-Bicep` will go v1.x.x when Bicep itself goes v1.x.x, give or take a few weeks for us to make any changes required in `ALZ-Bicep` upon the release of Bicep v1.x.x 👍
 
