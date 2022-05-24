@@ -4,6 +4,19 @@ param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 @description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings - DEFAULT VALUE: resourceGroup().location')
 param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 
+@allowed([
+  'CapacityReservation'
+  'Free'
+  'LACluster'
+  'PerGB2018'
+  'PerNode'
+  'Premium'
+  'Standalone'
+  'Standard'
+])
+@description('Log Analytics Workspace sku name. - DEFAULT VALUE: PerGB2018')
+param parLogAnalyticsWorkspaceSkuName string = 'PerGB2018'
+
 @minValue(30)
 @maxValue(730)
 @description('Number of days of log retention for Log Analytics Workspace. - DEFAULT VALUE: 365')
@@ -45,6 +58,12 @@ param parAutomationAccountLocation string = resourceGroup().location
 @description('Tags you would like to be applied to all resources in this module')
 param parTags object = {}
 
+@description('Tags you would like to be applied to Automation Account. - DEFAULT VALUE: parTags value')
+param parAutomationAccountTags object = parTags
+
+@description('Tags you would like to be applied to Log Analytics Workspace. - DEFAULT VALUE: parTags value')
+param parLogAnalyticsWorkspaceTags object = parTags
+
 @description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
@@ -54,7 +73,7 @@ var varCuaid = 'f8087c67-cc41-46b2-994d-66e4b661860d'
 resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-01' = {
   name: parAutomationAccountName
   location: parAutomationAccountLocation
-  tags: parTags
+  tags: parAutomationAccountTags
   properties: {
     sku: {
       name: 'Basic'
@@ -65,10 +84,10 @@ resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-0
 resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
   name: parLogAnalyticsWorkspaceName
   location: parLogAnalyticsWorkspaceLocation
-  tags: parTags
+  tags: parLogAnalyticsWorkspaceTags
   properties: {
     sku: {
-      name: 'PerNode'
+      name: parLogAnalyticsWorkspaceSkuName
     }
     retentionInDays: parLogAnalyticsWorkspaceLogRetentionInDays
   }
