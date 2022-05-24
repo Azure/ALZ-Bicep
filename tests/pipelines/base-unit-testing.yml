@@ -196,7 +196,15 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment sub validate --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentSubscriptionMany.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/roleAssignmentSubscriptionMany.parameters.managed-identity.example.json parSubscriptionIds="($(subscriptionId))" --location $(Location) --name $(ManagementGroupPrefix)
+        az deployment sub validate --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentSubscriptionMany.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/roleAssignmentSubscriptionMany.parameters.managed-identity.example.json parSubscriptionIds="('$(subscriptionId)'')" --location $(Location) --name $(ManagementGroupPrefix)
+
+  - task: Bash@3    
+    displayName: Az CLI Validate hub peered spoke orchestration module
+    name: validate_hub_peer_spoke
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment mg validate --template-file infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep --parameters @infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.parameters.example.json parPeeredVnetSubscriptionId="$(subscriptionId)" parHubVirtualNetworkId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus" parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
 
 
 - job: bicep_cleanup
