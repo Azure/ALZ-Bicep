@@ -46,9 +46,13 @@ To extend the [ALZ Default Policy Assignments module](https://github.com/Azure/A
    - **Important:** The file name of the `.json` file is not important. It can be anything you like as long as it ends `.json`
 3. Amend contents of new file to values for the new policy assignment
    - Common properties to change: `name`, `displayName`, `description`, `metadata`, `parameters`, `policyDefinitionId`, `enforcementMode`, `identity`
-4. Run the [`Invoke-PolicyToBicep.ps1`](https://github.com/Azure/ALZ-Bicep/blob/main/.github/scripts/Invoke-PolicyToBicep.ps1) script to update the `_policyAssignmentsBicepInput.txt` files in the `lib` folder
-   1. Copy the entire contents of the relevant `.txt` file and replace the variables for the policy assignments metadata ([lines 78 to 202 today in the `alzDefaultPolicyAssignments.bicep` module](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep#L78-L202))
-5. g
+4. Run the [`Invoke-PolicyToBicep.ps1`](https://github.com/Azure/ALZ-Bicep/blob/main/.github/scripts/Invoke-PolicyToBicep.ps1) script to update the `_policyAssignmentsBicepInput.txt` file in the `lib` folder
+   1. Copy the entire contents of the relevant `_policyAssignmentsBicepInput.txt` file and replace the variables for the policy assignments metadata ([lines 78 to 202 today in the `alzDefaultPolicyAssignments.bicep` module](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep#L78-L202))
+5. Define a new module declaration using the [Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments) in the [`alzDefaultPolicyAssignments.bicep` module](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep)
+   - You could also copy an existing [`alzDefaultPolicyAssignments.bicep` module](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep) policy assignment module declaration that uses the same effect as you require in your new assignment
+     - [`DeployIfNotExists` effect example - `Deploy-MDFC-Config` policy assignment - `modPolicyAssignmentIntRootDeployMDFCConfig` (lines 242 to 269)](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep#L242-L269)
+       - *Note the use of `parPolicyAssignmentParameterOverrides`*
+     - [`Deny` effect example - `Deny-Subnet-Without-Nsg` policy assignment - `modPolicyAssignmentIdentDenySubnetWithoutNSG` (lines 445 to 458)](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep#L445-L458)
 
 ## What about if I want to follow option 2?
 
