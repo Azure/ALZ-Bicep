@@ -8,6 +8,9 @@
     "parLogAnalyticsWorkspaceLocation": {
       "value": "eastus"
     },
+    "parLogAnalyticsWorkspaceSkuName": {
+      "value": "PerGB2018"
+    },
     "parLogAnalyticsWorkspaceLogRetentionInDays": {
       "value": 365
     },
