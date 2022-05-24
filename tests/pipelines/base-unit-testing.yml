@@ -158,13 +158,13 @@ jobs:
       script: |
         az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep --parameters @infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.parameters.example.json --name $(ManagementGroupPrefix)
 
-  - task: Bash@3    
-    displayName: Az CLI Validate Public IP
-    name: validate_public_ip
-    inputs:
-      targetType: 'inline'
-      script: |
-        az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/publicIp/publicIp.bicep --parameters @infra-as-code/bicep/modules/publicIp/parameters/publicIp.parameters.min.json --name $(ManagementGroupPrefix)
+  # - task: Bash@3    
+  #   displayName: Az CLI Validate Public IP
+  #   name: validate_public_ip
+  #   inputs:
+  #     targetType: 'inline'
+  #     script: |
+  #       az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/publicIp/publicIp.bicep --parameters @infra-as-code/bicep/modules/publicIp/parameters/publicIp.parameters.min.json --name $(ManagementGroupPrefix)
 
   - task: Bash@3    
     displayName: Az CLI Validate Role Assignment to single Management Group
