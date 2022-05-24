@@ -40,6 +40,10 @@ We recommend were possible to use option 1 or 2 and extend the current `ALZ-Bice
 
 To extend the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) from `ALZ-Bicep` follow the below process.
 
+> ⚠️ Before assigning a policy its definition must already exist, please review the [Deployment Flow wiki article](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) for orchestration guidance and [How Does ALZ-Bicep Implement Azure Policies?](https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive) for policy specific guidance ⚠️
+
+> If you do not wish to use a `.json` file in the `lib` for the assignment then please start at step 5 of the below process 👍
+
 1. Navigate to the Policy Assignments `lib` directory: `infra-as-code\bicep\modules\policy\assignments\lib\policy_assignments`
 2. Copy/clone an existing `.json` file and rename it to something appropriate
    - Try to copy a policy with the same effect as the policy you are wanting to add
@@ -53,6 +57,11 @@ To extend the [ALZ Default Policy Assignments module](https://github.com/Azure/A
      - [`DeployIfNotExists` effect example - `Deploy-MDFC-Config` policy assignment - `modPolicyAssignmentIntRootDeployMDFCConfig` (lines 242 to 269)](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep#L242-L269)
        - *Note the use of `parPolicyAssignmentParameterOverrides`*
      - [`Deny` effect example - `Deny-Subnet-Without-Nsg` policy assignment - `modPolicyAssignmentIdentDenySubnetWithoutNSG` (lines 445 to 458)](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep#L445-L458)
+   - Change the parameter input values to the desired values to assign your new policy
+     - Refer to the [Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments) documentation for parameter information
+     - These can be "hardcoded" **or** from the associated `.json` file in the `lib`, referenced via a variable generated in step 4, that you have created in the previous steps
+6. Redeploy the updated [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) via your configured method (locally via Azure CLI or PowerShell or via Azure DevOps pipeline or GitHub action)
+7. New Policy Assignments now deployed to specified scopes with associated Managed Identities and RBAC Role Assignments, if required.
 
 ## What about if I want to follow option 2?
 
