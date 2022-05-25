@@ -6,8 +6,16 @@
 
 targetScope = 'resourceGroup'
 
+// ----------
+// PARAMETERS
+// ----------
+
 @description('The Azure location to deploy to.')
 param location string = resourceGroup().location
+
+// ---------
+// RESOURCES
+// ---------
 
 @description('Minimum resource configuration')
 module minimum_public_ip '../publicIp.bicep' = {
