@@ -1,0 +1,92 @@
+{
+  "ascExport": {
+    "parameters": {
+      "resourceGroupName": {
+        "value": "[[parameters('ascExportResourceGroupName')]"
+      },
+      "resourceGroupLocation": {
+        "value": "[[parameters('ascExportResourceGroupLocation')]"
+      },
+      "workspaceResourceId": {
+        "value": "[[parameters('logAnalytics')]"
+      }
+    }
+  },
+  "defenderForAppServices": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForAppServices')]"
+      }
+    }
+  },
+  "defenderForArm": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForArm')]"
+      }
+    }
+  },
+  "defenderforContainers": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForContainers')]"
+      }
+    }
+  },
+  "defenderForDns": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForDns')]"
+      }
+    }
+  },
+  "defenderForKeyVaults": {
+    "parameters": {
+      "Effect": {
+        "value": "[[parameters('enableAscForKeyVault')]"
+      }
+    }
+  },
+  "defenderForOssDb": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForOssDb')]"
+      }
+    }
+  },
+  "defenderForSqlPaas": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForSql')]"
+      }
+    }
+  },
+  "defenderForSqlServerVirtualMachines": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForSqlOnVm')]"
+      }
+    }
+  },
+  "defenderForStorageAccounts": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForStorage')]"
+      }
+    }
+  },
+  "defenderForVM": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForServers')]"
+      }
+    }
+  },
+  "securityEmailContact": {
+    "parameters": {
+      "emailSecurityContact": {
+        "value": "[[parameters('emailSecurityContact')]"
+      }
+    }
+  }
+}

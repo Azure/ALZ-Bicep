@@ -4,6 +4,9 @@
     "parameters": {
         "parTargetManagementGroupID": {
             "value": "alz"
+        },
+        "parTelemetryOptOut": {
+            "value": false
         }
     }
 }

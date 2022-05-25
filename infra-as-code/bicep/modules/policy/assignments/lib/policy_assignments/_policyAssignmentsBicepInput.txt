@@ -1,6 +1,21 @@
 var varPolicyAssignmentDenyAppGWWithoutWAF = {
-	definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF'
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF'
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_appgw_without_waf.tmpl.json'))
+}
+
+var varPolicyAssignmentDenyDataBPip = {
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-NoPublicIp'
+	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_public_ip.tmpl.json'))
+}
+
+var varPolicyAssignmentDenyDataBSku = {
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-Sku'
+	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_sku.tmpl.json'))
+}
+
+var varPolicyAssignmentDenyDataBVnet = {
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-VirtualNetwork'
+	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_vnet.tmpl.json'))
 }
 
 var varPolicyAssignmentEnforceAKSHTTPS = {
@@ -24,17 +39,17 @@ var varPolicyAssignmentDenyPrivEscalationAKS = {
 }
 
 var varPolicyAssignmentDenyPublicEndpoints = {
-	definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicPaaSEndpoints'
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicPaaSEndpoints'
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_endpoints.tmpl.json'))
 }
 
 var varPolicyAssignmentDenyPublicIP = {
-	definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP'
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP'
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json'))
 }
 
 var varPolicyAssignmentDenyRDPFromInternet = {
-	definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-RDP-From-Internet'
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policyDefinitions/Deny-RDP-From-Internet'
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_rdp_from_internet.tmpl.json'))
 }
 
@@ -59,12 +74,12 @@ var varPolicyAssignmentDenyStoragehttp = {
 }
 
 var varPolicyAssignmentDenySubnetWithoutNsg = {
-	definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg'
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg'
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_subnet_without_nsg.tmpl.json'))
 }
 
 var varPolicyAssignmentDenySubnetWithoutUdr = {
-	definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Udr'
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Udr'
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_subnet_without_udr.tmpl.json'))
 }
 
@@ -76,11 +91,6 @@ var varPolicyAssignmentDeployAKSPolicy = {
 var varPolicyAssignmentDeployASCMonitoring = {
 	definitionID: '/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8'
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_asc_monitoring.tmpl.json'))
-}
-
-var varPolicyAssignmentDeployASCDFConfig = {
-	definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-ASCDF-Config'
-	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_ascdf_config.tmpl.json'))
 }
 
 var varPolicyAssignmentDeployAzActivityLog = {
@@ -98,13 +108,18 @@ var varPolicyAssignmentDeployLXArcMonitoring = {
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_lx_arc_monitoring.tmpl.json'))
 }
 
+var varPolicyAssignmentDeployMDFCConfig = {
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config'
+	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_mdfc_config.tmpl.json'))
+}
+
 var varPolicyAssignmentDeployPrivateDNSZones = {
-	definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Private-DNS-Zones'
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Private-DNS-Zones'
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_private_dns_zones.tmpl.json'))
 }
 
 var varPolicyAssignmentDeployResourceDiag = {
-	definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diagnostics-LogAnalytics'
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diagnostics-LogAnalytics'
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_resource_diag.tmpl.json'))
 }
 
@@ -149,7 +164,7 @@ var varPolicyAssignmentEnableDDoSVNET = {
 }
 
 var varPolicyAssignmentEnforceTLSSSL = {
-	definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-EncryptTransit'
+	definitionID: '${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-EncryptTransit'
 	libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_tls_ssl.tmpl.json'))
 }
 

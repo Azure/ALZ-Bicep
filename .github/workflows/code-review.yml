@@ -15,7 +15,7 @@ on:
 ###############
 jobs:
 
-  build:
+  lint:
     name: Lint code base
     runs-on: ubuntu-latest
 
@@ -40,3 +40,22 @@ jobs:
         VALIDATE_MARKDOWN: true
         VALIDATE_POWERSHELL: true
         VALIDATE_YAML: true
+
+  markdown-link-check:
+    name: Markdown Link Check
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+
+    - name: Check links in markdown files 
+      uses: gaurav-nelson/github-action-markdown-link-check@1.0.13
+      with:
+        config-file: '.github/actions-config/mlc_config.json'
+        use-verbose-mode: 'yes'
+        use-quiet-mode: 'yes'
+        

@@ -1,121 +1,20 @@
-/*
-SUMMARY: Module to deploy the Hub Network and it's components as per the Azure Landing Zone conceptual architecture 
-DESCRIPTION: The following components will be options in this deployment
-              Virtual Network (Vnet)
-              Subnets
-              VPN Gateway/ExpressRoute Gateway
-              Azure Firewall
-              Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
-              DDos Standard Plan
-              Bastion
-AUTHOR/S: aultt
-VERSION: 1.0.0
-*/
-
-
-@description('Switch which allows Bastion deployment to be disabled. Default: true')
-param parBastionEnabled bool = true
-
-@description('Switch which allows DDOS deployment to be disabled. Default: true')
-param parDDoSEnabled bool = true
-
-@description('DDOS Plan Name. Default: {parCompanyPrefix}-DDos-Plan')
-param parDDoSPlanName string = '${parCompanyPrefix}-DDoS-Plan'
-
-@description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
-param parAzureFirewallEnabled bool = true
-
-@description('Switch which allos DNS Proxy to be enabled on the virtual network. Default: true')
-param parNetworkDNSEnableProxy bool = true
-
-@description('Switch which allows BGP Propagation to be disabled on the routes: Default: false')
-param  pardisableBGPRoutePropagation bool = false
-
-@description('Switch which allows Private DNS Zones to be disabled. Default: true')
-param parPrivateDNSZonesEnabled bool = true
-
-//ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
-@description('Array of Gateways to be deployed. Array will consist of one or two items.  Specifically Vpn and/or ExpressRoute Default: Vpn')
-param parGatewayArray array = [
-  {
-    name: '${parCompanyPrefix}-Vpn-Gateway'
-    gatewaytype: 'Vpn'
-    sku: 'VpnGw1'
-    vpntype: 'RouteBased'
-    generation: 'Generation2'
-    enableBgp: false
-    activeActive: false
-    enableBgpRouteTranslationForNat: false
-    enableDnsForwarding: false
-    asn: 65515
-    bgpPeeringAddress: ''
-    bgpsettings: {
-      asn: 65515
-      bgpPeeringAddress: ''
-      peerWeight: 5
-    }
-  }
-  {
-    name: '${parCompanyPrefix}-Gateway-ExpressRoute'
-    gatewaytype: 'ExpressRoute'
-    sku: 'ErGw1AZ'
-    vpntype: 'RouteBased'
-    generation: 'None'
-    enableBgp: false
-    activeActive: false
-    enableBgpRouteTranslationForNat: false
-    enableDnsForwarding: false
-    asn: 65515
-    bgpPeeringAddress: ''
-    bgpsettings: {
-      asn: 65515
-      bgpPeeringAddress: ''
-      peerWeight: 5
-    }
-  }
-
-]
+@description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
+param parLocation string = resourceGroup().location
 
 @description('Prefix value which will be prepended to all resource names. Default: alz')
 param parCompanyPrefix string = 'alz'
 
-@description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard')
-param parBastionSku string = 'Standard'
-
-@description('Public IP Address SKU. Default: Standard')
-@allowed([
-  'Basic'
-  'Standard'
-])
-param parPublicIPSku string = 'Standard'
-
-@description('Tags you would like to be applied to all resources in this module. Default: empty array')
-param parTags object = {}
+@description('Prefix Used for Hub Network. Default: {parCompanyPrefix}-hub-{parLocation}')
+param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 
 @description('The IP address range for all virtual networks to use. Default: 10.10.0.0/16')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
-
-@description('Prefix Used for Hub Network. Default: {parCompanyPrefix}-hub-{resourceGroup().location}')
-param parHubNetworkName string = '${parCompanyPrefix}-hub-${resourceGroup().location}'
-
-@description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
-param parAzureFirewallName string ='${parCompanyPrefix}-azure-firewall'
-
-@description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
-@allowed([
-  'Standard'
-  'Premium'
-])
-param parAzureFirewallTier string = 'Standard'
-
-@description('Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable')
-param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 
 @description('The name and IP address range for each subnet in the virtual networks. Default: AzureBastionSubnet, GatewaySubnet, AzureFirewall Subnet')
 param parSubnets array = [
   {
     name: 'AzureBastionSubnet'
-    ipAddressRange: '10.10.15.0/24' 
+    ipAddressRange: '10.10.15.0/24'
   }
   {
     name: 'GatewaySubnet'
@@ -127,14 +26,76 @@ param parSubnets array = [
   }
 ]
 
+@description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
+param parDNSServerIPArray array = []
+
+@description('Public IP Address SKU. Default: Standard')
+@allowed([
+  'Basic'
+  'Standard'
+])
+param parPublicIPSku string = 'Standard'
+
+@description('Switch which allows Bastion deployment to be disabled. Default: true')
+param parBastionEnabled bool = true
+
 @description('Name Associated with Bastion Service:  Default: {parCompanyPrefix}-bastion')
 param parBastionName string = '${parCompanyPrefix}-bastion'
 
-@description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Privatezones')
-param parPrivateDnsZones array =[
+@description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard')
+param parBastionSku string = 'Standard'
+
+@description('Switch which allows DDOS deployment to be disabled. Default: true')
+param parDdosEnabled bool = true
+
+@description('DDOS Plan Name. Default: {parCompanyPrefix}-ddos-plan')
+param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
+
+@description('Switch which allows Azure Firewall deployment to be disabled. Default: true')
+param parAzureFirewallEnabled bool = true
+
+@description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
+param parAzureFirewallName string = '${parCompanyPrefix}-azfw-${parLocation}'
+
+@description('Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}')
+param parFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
+
+@description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
+@allowed([
+  'Standard'
+  'Premium'
+])
+param parAzureFirewallTier string = 'Standard'
+
+@allowed([
+  '1'
+  '2'
+  '3'
+])
+@description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
+param parAzureFirewallAvailabilityZones array = []
+
+@description('Switch which enables DNS Proxy to be enabled on the Azure Firewall. Default: true')
+param parNetworkDNSEnableProxy bool = true
+
+@description('Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable')
+param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
+
+@description('Switch which allows BGP Propagation to be disabled on the route tables: Default: false')
+param parDisableBGPRoutePropagation bool = false
+
+@description('Switch which allows and deploys Private DNS Zones. Default: true')
+param parPrivateDnsZonesEnabled bool = true
+
+@description('Resource Group Name for Private DNS Zones. Default: same resource group')
+param parPrivateDnsZonesResourceGroup string = resourceGroup().name
+
+@description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
+param parPrivateDnsZones array = [
   'privatelink.azure-automation.net'
   'privatelink.database.windows.net'
   'privatelink.sql.azuresynapse.net'
+  'privatelink.dev.azuresynapse.net'
   'privatelink.azuresynapse.net'
   'privatelink.blob.core.windows.net'
   'privatelink.table.core.windows.net'
@@ -147,13 +108,15 @@ param parPrivateDnsZones array =[
   'privatelink.cassandra.cosmos.azure.com'
   'privatelink.gremlin.cosmos.azure.com'
   'privatelink.table.cosmos.azure.com'
-  'privatelink.${resourceGroup().location}.batch.azure.com'
+  'privatelink.${parLocation}.batch.azure.com'
   'privatelink.postgres.database.azure.com'
   'privatelink.mysql.database.azure.com'
   'privatelink.mariadb.database.azure.com'
   'privatelink.vaultcore.azure.net'
-  'privatelink.${resourceGroup().location}.azmk8s.io'
-  '${resourceGroup().location}.privatelink.siterecovery.windowsazure.com'
+  'privatelink.managedhsm.azure.net'
+  'privatelink.${parLocation}.azmk8s.io'
+  'privatelink.${parLocation}.backup.windowsazure.com'
+  'privatelink.siterecovery.windowsazure.com'
   'privatelink.servicebus.windows.net'
   'privatelink.azure-devices.net'
   'privatelink.eventgrid.azure.net'
@@ -161,15 +124,80 @@ param parPrivateDnsZones array =[
   'privatelink.api.azureml.ms'
   'privatelink.notebooks.azure.net'
   'privatelink.service.signalr.net'
+  'privatelink.monitor.azure.com'
+  'privatelink.oms.opinsights.azure.com'
+  'privatelink.ods.opinsights.azure.com'
+  'privatelink.agentsvc.azure-automation.net'
   'privatelink.afs.azure.net'
   'privatelink.datafactory.azure.net'
   'privatelink.adf.azure.com'
   'privatelink.redis.cache.windows.net'
   'privatelink.redisenterprise.cache.azure.net'
   'privatelink.purview.azure.com'
+  'privatelink.purviewstudio.azure.com'
   'privatelink.digitaltwins.azure.net'
+  'privatelink.azconfig.io'
+  'privatelink.cognitiveservices.azure.com'
+  'privatelink.azurecr.io'
+  'privatelink.search.windows.net'
+  'privatelink.azurehdinsight.net'
+  'privatelink.media.azure.net'
+  'privatelink.his.arc.azure.com'
+  'privatelink.guestconfiguration.azure.com'
 ]
 
+//ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
+@description('''Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. 
+"parVpnGatewayConfig": {
+  "value": {}
+}''')
+param parVpnGatewayConfig object = {
+  name: '${parCompanyPrefix}-Vpn-Gateway'
+  gatewaytype: 'Vpn'
+  sku: 'VpnGw1'
+  vpntype: 'RouteBased'
+  generation: 'Generation1'
+  enableBgp: false
+  activeActive: false
+  enableBgpRouteTranslationForNat: false
+  enableDnsForwarding: false
+  asn: 65515
+  bgpPeeringAddress: ''
+  bgpsettings: {
+    asn: 65515
+    bgpPeeringAddress: ''
+    peerWeight: 5
+  }
+}
+
+@description('''Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. 
+"parExpressRouteGatewayConfig": {
+  "value": {}
+}''')
+param parExpressRouteGatewayConfig object = {
+  name: '${parCompanyPrefix}-ExpressRoute-Gateway'
+  gatewaytype: 'ExpressRoute'
+  sku: 'ErGw1AZ'
+  vpntype: 'RouteBased'
+  vpnGatewayGeneration: 'None'
+  enableBgp: false
+  activeActive: false
+  enableBgpRouteTranslationForNat: false
+  enableDnsForwarding: false
+  asn: '65515'
+  bgpPeeringAddress: ''
+  bgpsettings: {
+    asn: '65515'
+    bgpPeeringAddress: ''
+    peerWeight: '5'
+  }
+}
+
+@description('Tags you would like to be applied to all resources in this module. Default: empty array')
+param parTags object = {}
+
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
 
 var varSubnetProperties = [for subnet in parSubnets: {
   name: subnet.name
@@ -178,108 +206,124 @@ var varSubnetProperties = [for subnet in parSubnets: {
   }
 }]
 
+var varVpnGWConfig = ((!empty(parVpnGatewayConfig)) ? parVpnGatewayConfig : json('{"name": "noconfigVpn"}'))
 
-resource resDDoSProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if(parDDoSEnabled) {
-  name: parDDoSPlanName
-  location: resourceGroup().location
-  tags: parTags 
+var varErGWConfig = ((!empty(parExpressRouteGatewayConfig)) ? parExpressRouteGatewayConfig : json('{"name": "noconfigEr"}'))
+
+var varGwConfig = [
+  varVpnGWConfig
+  varErGWConfig
+]
+
+// Customer Usage Attribution Id
+var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
+
+resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if (parDdosEnabled) {
+  name: parDdosPlanName
+  location: parLocation
+  tags: parTags
 }
 
-//DDos Protection plan will only be enabled if parDDoSEnabled is true.  
+//DDos Protection plan will only be enabled if parDdosEnabled is true.  
 resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: parHubNetworkName
-  location: resourceGroup().location
-  properties:{
-    addressSpace:{
-      addressPrefixes:[
+  location: parLocation
+  tags: parTags
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
         parHubNetworkAddressPrefix
       ]
     }
+    dhcpOptions: {
+      dnsServers: parDNSServerIPArray
+    }
     subnets: varSubnetProperties
-    enableDdosProtection: parDDoSEnabled
-    ddosProtectionPlan: (parDDoSEnabled) ? {
-      id: resDDoSProtectionPlan.id
-      } : null
+    enableDdosProtection: parDdosEnabled
+    ddosProtectionPlan: (parDdosEnabled) ? {
+      id: resDdosProtectionPlan.id
+    } : null
   }
 }
 
-module modBastionPublicIP '../publicIp/publicIp.bicep' ={
+module modBastionPublicIP '../publicIp/publicIp.bicep' = if (parBastionEnabled) {
   name: 'deploy-Bastion-Public-IP'
-  params:{
+  params: {
+    parLocation: parLocation
     parPublicIPName: '${parBastionName}-PublicIP'
     parPublicIPSku: {
       name: parPublicIPSku
     }
     parPublicIPProperties: {
       publicIPAddressVersion: 'IPv4'
-      publicIPAllocationMethod: 'Static' 
+      publicIPAllocationMethod: 'Static'
     }
     parTags: parTags
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
-
 
 resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
   parent: resHubVirtualNetwork
   name: 'AzureBastionSubnet'
-} 
+}
 
 // AzureBastionSubnet is required to deploy Bastion service. This subnet must exist in the parsubnets array if you enable Bastion Service.
 // There is a minimum subnet requirement of /27 prefix.  
 // If you are deploying standard this needs to be larger. https://docs.microsoft.com/en-us/azure/bastion/configuration-settings#subnet
-resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if(parBastionEnabled){
-  location: resourceGroup().location
+resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if (parBastionEnabled) {
+  location: parLocation
   name: parBastionName
   tags: parTags
-  sku:{
+  sku: {
     name: parBastionSku
   }
   properties: {
-      dnsName: uniqueString(resourceGroup().id)
-      ipConfigurations: [
-          {
-              name: 'IpConf'
-              properties: {
-                  subnet: {
-                    id: resBastionSubnetRef.id
-                  }
-                  publicIPAddress: {
-                      id: modBastionPublicIP.outputs.outPublicIPID
-                  }
-              }
+    dnsName: uniqueString(resourceGroup().id)
+    ipConfigurations: [
+      {
+        name: 'IpConf'
+        properties: {
+          subnet: {
+            id: resBastionSubnetRef.id
           }
-      ]
+          publicIPAddress: {
+            id: parBastionEnabled ? modBastionPublicIP.outputs.outPublicIPID : ''
+          }
+        }
+      }
+    ]
   }
 }
-
 
 resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
   parent: resHubVirtualNetwork
   name: 'GatewaySubnet'
-} 
+}
 
-module modGatewayPublicIP '../publicIp/publicIp.bicep' = [for (gateway,i) in parGatewayArray:{
+module modGatewayPublicIP '../publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: 'deploy-Gateway-Public-IP-${i}'
   params: {
+    parLocation: parLocation
     parPublicIPName: '${gateway.name}-PublicIP'
-    location: resourceGroup().location
     parPublicIPProperties: {
       publicIPAddressVersion: 'IPv4'
       publicIPAllocationMethod: 'Static'
     }
     parPublicIPSku: {
-        name: parPublicIPSku
+      name: parPublicIPSku
     }
     parTags: parTags
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }]
 
 //Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
-resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for (gateway,i) in parGatewayArray: {
+resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: gateway.name
-  location: resourceGroup().location
+  location: parLocation
   tags: parTags
-  properties:{
+  properties: {
     activeActive: gateway.activeActive
     enableBgp: gateway.enableBgp
     enableBgpRouteTranslationForNat: gateway.enableBgpRouteTranslationForNat
@@ -288,19 +332,19 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for
     gatewayType: gateway.gatewayType
     vpnGatewayGeneration: (gateway.gatewayType == 'VPN') ? gateway.generation : 'None'
     vpnType: gateway.vpntype
-    sku:{
-      name: gateway.sku  
+    sku: {
+      name: gateway.sku
       tier: gateway.sku
     }
-    ipConfigurations:[
+    ipConfigurations: [
       {
         id: resHubVirtualNetwork.id
         name: 'vnetGatewayConfig'
-        properties:{
-          publicIPAddress:{
-            id: modGatewayPublicIP[i].outputs.outPublicIPID
+        properties: {
+          publicIPAddress: {
+            id: (((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) ? modGatewayPublicIP[i].outputs.outPublicIPID : 'na')
           }
-          subnet:{
+          subnet: {
             id: resGatewaySubnetRef.id
           }
         }
@@ -312,62 +356,48 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for
 resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
   parent: resHubVirtualNetwork
   name: 'AzureFirewallSubnet'
-} 
+}
 
-module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if(parAzureFirewallEnabled){
+module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if (parAzureFirewallEnabled) {
   name: 'deploy-Firewall-Public-IP'
   params: {
+    parLocation: parLocation
+    parAvailabilityZones: parAzureFirewallAvailabilityZones
     parPublicIPName: '${parAzureFirewallName}-PublicIP'
-    location: resourceGroup().location
     parPublicIPProperties: {
       publicIPAddressVersion: 'IPv4'
       publicIPAllocationMethod: 'Static'
     }
     parPublicIPSku: {
-        name: parPublicIPSku
+      name: parPublicIPSku
     }
     parTags: parTags
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = if (parAzureFirewallEnabled) {
+  name: parFirewallPoliciesName
+  location: parLocation
+  tags: parTags
+  properties: {
+    dnsSettings: {
+      enableProxy: parNetworkDNSEnableProxy
+    }
+    sku: {
+      tier: parAzureFirewallTier
+    }
+  }
+}
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.  
-resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(parAzureFirewallEnabled){
+resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-05-01' = if (parAzureFirewallEnabled) {
   name: parAzureFirewallName
-  location: resourceGroup().location
+  location: parLocation
   tags: parTags
-  properties:{
-    networkRuleCollections: [
-      {
-        name: 'VmInternetAccess'
-        properties: {
-          priority: 101
-          action: {
-            type: 'Allow'
-          }
-          rules: [
-            {
-              name: 'AllowVMAppAccess'
-              description: 'Allows VM access to the web'
-              protocols: [
-                'TCP'
-              ]
-              sourceAddresses: [
-                parHubNetworkAddressPrefix
-              ]
-              destinationAddresses: [
-                '*'
-              ]
-              destinationPorts: [
-                '80'
-                '443'
-              ]
-            }
-          ]
-        }
-      }
-    ]
+  zones: (!empty(parAzureFirewallAvailabilityZones) ? parAzureFirewallAvailabilityZones : json('null'))
+  properties: {
     ipConfigurations: [
       {
         name: 'ipconfig1'
@@ -376,26 +406,25 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if(par
             id: resAzureFirewallSubnetRef.id
           }
           publicIPAddress: {
-            id: modAzureFirewallPublicIP.outputs.outPublicIPID
+            id: parAzureFirewallEnabled ? modAzureFirewallPublicIP.outputs.outPublicIPID : ''
           }
         }
       }
     ]
-    threatIntelMode: 'Alert'
     sku: {
       name: 'AZFW_VNet'
       tier: parAzureFirewallTier
     }
-    additionalProperties: {
-       'Network.DNS.EnableProxy': '${parNetworkDNSEnableProxy}'
+    firewallPolicy: {
+      id: resFirewallPolicies.id
     }
   }
 }
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
-resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parAzureFirewallEnabled) {
+resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (parAzureFirewallEnabled) {
   name: parHubRouteTableName
-  location: resourceGroup().location
+  location: parLocation
   tags: parTags
   properties: {
     routes: [
@@ -408,29 +437,27 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if(parAzu
         }
       }
     ]
-    disableBgpRoutePropagation: pardisableBGPRoutePropagation
+    disableBgpRoutePropagation: parDisableBGPRoutePropagation
   }
 }
 
-
-resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: if(parPrivateDNSZonesEnabled) {
-  name: privateDnsZone
-  location: 'global'
-  tags: parTags
-}]
-
-
-resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in parPrivateDnsZones: if(parPrivateDNSZonesEnabled) {
-  name: '${privateDnsZoneName}/${privateDnsZoneName}'
-  location: 'global'
-  properties: {
-    registrationEnabled: false
-    virtualNetwork: {
-      id: resHubVirtualNetwork.id
-    }
+module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPrivateDnsZonesEnabled) {
+  name: 'deploy-Private-DNS-Zones'
+  scope: resourceGroup(parPrivateDnsZonesResourceGroup)
+  params: {
+    parLocation: parLocation
+    parTags: parTags
+    parVirtualNetworkIdToLink: resHubVirtualNetwork.id
+    parPrivateDnsZones: parPrivateDnsZones
   }
-dependsOn: resPrivateDnsZones
-}]
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
+}
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 output outAzureFirewallPrivateIP string = parAzureFirewallEnabled ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress : ''
@@ -438,11 +465,8 @@ output outAzureFirewallPrivateIP string = parAzureFirewallEnabled ? resAzureFire
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 output outAzureFirewallName string = parAzureFirewallEnabled ? parAzureFirewallName : ''
 
-output outPrivateDnsZones array = [for i in range(0,length(parPrivateDnsZones)): {
-  name: resPrivateDnsZones[i].name
-  id: resPrivateDnsZones[i].id
-}]
+output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : []) 
 
-output outDDoSPlanResourceID string = resDDoSProtectionPlan.id
+output outDdosPlanResourceID string = resDdosProtectionPlan.id
 output outHubVirtualNetworkName string = resHubVirtualNetwork.name
 output outHubVirtualNetworkID string = resHubVirtualNetwork.id

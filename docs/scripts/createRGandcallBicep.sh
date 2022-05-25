@@ -1,7 +1,7 @@
 #!/bin/bash
 
 azureResourceGroup='rsg-private-bicep-registry'
-azureLocation='EastUs'
+azureLocation='eastus'
 
 #Create resource group
 az group create --name $azureResourceGroup --location $azureLocation
@@ -16,7 +16,7 @@ azureContainerRegistryName=$(az deployment group show -n deployACR -g $azureReso
 #Leverage Bash utilities too loop through all bicep modules within the repository
 #convert the filename to lower case as Azure Container Registry doesnt support Camelcase
 #Leverage az bicep to publish module to Azure Container Registry created above
-for file in infra-as-code/bicep/modules/*/*.bicep
+for file in $(find ./infra-as-code/bicep/modules -type f -name "*.bicep" ! -path "./infra-as-code/bicep/modules/unstable*")
 do
   f=$(echo "${file##*/}");
   filename=$(echo $f| cut  -d'.' -f 1| tr '[:upper:]' '[:lower:]')

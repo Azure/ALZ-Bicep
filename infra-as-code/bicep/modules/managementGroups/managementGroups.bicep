@@ -1,21 +1,3 @@
-/*
-SUMMARY: The Management Groups module deploys a management group hierarchy in a customer's tenant under the 'Tenant Root Group'.
-DESCRIPTION:  Management Group hierarchy is created through a tenant-scoped Azure Resource Manager (ARM) deployment.  The hierarchy is:
-  * Tenant Root Group
-    * Top Level Management Group (defined by parameter `parTopLevelManagementGroupPrefix`)
-      * Platform
-          * Management
-          * Connectivity
-          * Identity
-      * Landing Zones
-          * Corp
-          * Online
-      * Sandbox
-      * Decommissioned
-AUTHOR/S: SenthuranSivananthan
-VERSION: 1.0.0
-*/
-
 targetScope = 'tenant'
 
 @description('Prefix for the management group hierarchy.  This management group will be created as part of the deployment.')
@@ -26,6 +8,9 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @description('Display name for top level management group.  This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter.')
 @minLength(2)
 param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
+
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
 
 // Platform and Child Management Groups
 var varPlatformMG = {
@@ -75,6 +60,9 @@ var varDecommissionedManagementGroup = {
   name: '${parTopLevelManagementGroupPrefix}-decommissioned'
   displayName: 'Decommissioned'
 }
+
+// Customer Usage Attribution Id
+var varCuaid = '9b7965a0-d77c-41d6-85ef-ec3dfea4845b'
 
 // Level 1
 resource resTopLevelMG 'Microsoft.Management/managementGroups@2021-04-01' = {
@@ -195,7 +183,14 @@ resource resLandingZonesOnlineMG 'Microsoft.Management/managementGroups@2021-04-
   }
 }
 
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdTenant.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
+  name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
+  params: {}
+}
 
+// Output Management Group IDs
 output outTopLevelMGId string = resTopLevelMG.id
 
 output outPlatformMGId string = resPlatformMG.id
@@ -207,6 +202,22 @@ output outLandingZonesMGId string = resLandingZonesMG.id
 output outLandingZonesCorpMGId string = resLandingZonesCorpMG.id
 output outLandingZonesOnlineMGId string = resLandingZonesOnlineMG.id
 
-output outSandboxManagementGroupId string = resSandboxMG.id
+output outSandboxMGId string = resSandboxMG.id
 
-output outDecommissionedManagementGroupId string = resDecommissionedMG.id
+output outDecommissionedMGId string = resDecommissionedMG.id
+
+// Output Management Group Names
+output outTopLevelMGName string = resTopLevelMG.name
+
+output outPlatformMGName string = resPlatformMG.name
+output outPlatformManagementMGName string = resPlatformManagementMG.name
+output outPlatformConnectivityMGName string = resPlatformConnectivityMG.name
+output outPlatformIdentityMGName string = resPlatformIdentityMG.name
+
+output outLandingZonesMGName string = resLandingZonesMG.name
+output outLandingZonesCorpMGName string = resLandingZonesCorpMG.name
+output outLandingZonesOnlineMGName string = resLandingZonesOnlineMG.name
+
+output outSandboxMGName string = resSandboxMG.name
+
+output outDecommissionedMGName string = resDecommissionedMG.name

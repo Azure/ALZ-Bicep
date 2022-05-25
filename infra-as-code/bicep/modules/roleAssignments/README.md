@@ -1,6 +1,6 @@
 # Module:  Role Assignments for Management Groups & Subscriptions
 
-This module provides role assignment capabilities across Management Group & Subscription scopes. Role assignments are part of [Identity and Access Managemennt (IAM)](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management), which is one of the critical design areas in Enterprise-Scale Architecture. The role assignments can be performed for:
+This module provides role assignment capabilities across Management Group & Subscription scopes. Role assignments are part of [Identity and Access Management (IAM)](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management), which is one of the critical design areas in Enterprise-Scale Architecture. The role assignments can be performed for:
 
 - Managed Identities (System and User Assigned)
 - Service Principals
@@ -8,12 +8,12 @@ This module provides role assignment capabilities across Management Group & Subs
 
 This module contains 4 Bicep templates, you may optionally choose one of these modules to deploy depending on which scope you want to assign roles from broad to narrow; management group to subscription:
 
-Template | Description | Deployment Scope
--------- | ----------- | ----------------
-roleAssignmentManagementGroup.bicep | Performs role assignment on one management group | Management Group
-roleAssignmentManagementGroupMany.bicep | Performs role assignment on one or more management groups.  This template uses `roleAssignmentManagementGroup.bicep` for the deployments. | Management Group
-roleAssignmentSubscription.bicep | Performs role assignment on one subscription | Subscription
-roleAssignmentSubscriptionMany.bicep | Performs role assignment on one or more subscriptions.  This template uses `roleAssignmentSubscription.bicep` for the deployments. | Management Group
+| Template                                | Description                                                                                                                               | Deployment Scope |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| roleAssignmentManagementGroup.bicep     | Performs role assignment on one management group                                                                                          | Management Group |
+| roleAssignmentManagementGroupMany.bicep | Performs role assignment on one or more management groups.  This template uses `roleAssignmentManagementGroup.bicep` for the deployments. | Management Group |
+| roleAssignmentSubscription.bicep        | Performs role assignment on one subscription                                                                                              | Subscription     |
+| roleAssignmentSubscriptionMany.bicep    | Performs role assignment on one or more subscriptions.  This template uses `roleAssignmentSubscription.bicep` for the deployments.        | Management Group |
 
 ## Parameters
 
@@ -60,39 +60,43 @@ Connect-AzureAD
 
 ### roleAssignmentManagementGroup.bicep
 
-Parameter | Type | Description | Requirement | Example
------------ | ---- | ----------- | ----------- | -------
-parRoleAssignmentNameGuid | string | A GUID representing the role assignment name.  Default:  guid(parRoleDefinitionId, parAssigneeObjectId) | Unique GUID | `f3b171da-2023-4508-b467-042a53f4cd5d`
-parRoleDefinitionId | string | Role Definition ID(i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7) | Must exist | `acdd72a7-3385-48ef-bd42-f606fba81ae7`
-parAssigneePrincipalType | string | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity) | One of [Group, ServicePrincipal] | `ServicePrincipal`
-parAssigneeObjectId | string | Object ID of groups, service principals or  managed identities. For managed identities use the principal ID. For service principals, use the object id and not the app ID | Must exist | `a86fe549-7f87-4873-8b0e-82f0081a0034`
+| Parameter                 | Type   | Description                                                                                                                                                               | Requirement                      | Example                                |
+| ------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------------------------------------- |
+| parRoleAssignmentNameGuid | string | A GUID representing the role assignment name.  Default:  guid(managmentGroup().name, parRoleDefinitionId, parAssigneeObjectId)                                                                   | Unique GUID                      | `f3b171da-2023-4508-b467-042a53f4cd5d` |
+| parRoleDefinitionId       | string | Role Definition ID(i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)                                                                           | Must exist                       | `acdd72a7-3385-48ef-bd42-f606fba81ae7` |
+| parAssigneePrincipalType  | string | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity)            | One of [Group, ServicePrincipal] | `ServicePrincipal`                     |
+| parAssigneeObjectId       | string | Object ID of groups, service principals or  managed identities. For managed identities use the principal ID. For service principals, use the object id and not the app ID | Must exist                       | `a86fe549-7f87-4873-8b0e-82f0081a0034` |
+| parTelemetryOptOut        | bool   | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                  | none                             | `false`                                |
 
 ### roleAssignmentManagementGroupMany.bicep
 
-Parameter | Type | Description | Requirement | Example
------------ | ---- | ----------- | ----------- | -------
-parManagementGroupIds | Array of string | A list of management group scopes that will be used for role assignment (i.e. [alz-platform-connectivity, alz-platform-identity]).  Default = [] | Must exist | `['alz-platform-connectivity', 'alz-platform-identity']`
-parRoleDefinitionId | string | Role Definition ID(i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7) | Must exist | `acdd72a7-3385-48ef-bd42-f606fba81ae7`
-parAssigneePrincipalType | string | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity) | One of [Group, ServicePrincipal] | `ServicePrincipal`
-parAssigneeObjectId | string | Object ID of groups, service principals or managed identities. For managed identities use the principal ID. For service principals, use the object ID and not the app ID | Must exist | `a86fe549-7f87-4873-8b0e-82f0081a0034`
+| Parameter                | Type            | Description                                                                                                                                                              | Requirement                      | Example                                                  |
+| ------------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------------------------------------------------------- |
+| parManagementGroupIds    | Array of string | A list of management group scopes that will be used for role assignment (i.e. [alz-platform-connectivity, alz-platform-identity]).  Default = []                         | Must exist                       | `['alz-platform-connectivity', 'alz-platform-identity']` |
+| parRoleDefinitionId      | string          | Role Definition ID(i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)                                                                          | Must exist                       | `acdd72a7-3385-48ef-bd42-f606fba81ae7`                   |
+| parAssigneePrincipalType | string          | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity)           | One of [Group, ServicePrincipal] | `ServicePrincipal`                                       |
+| parAssigneeObjectId      | string          | Object ID of groups, service principals or managed identities. For managed identities use the principal ID. For service principals, use the object ID and not the app ID | Must exist                       | `a86fe549-7f87-4873-8b0e-82f0081a0034`                   |
+| parTelemetryOptOut       | bool            | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                 | none                             | `false`                                                  |
 
 ### roleAssignmentSubscription.bicep
 
-Parameter | Type | Description | Requirement | Example
------------ | ---- | ----------- | ----------- | -------
-parRoleAssignmentNameGuid | string | A GUID representing the role assignment name.  Default:  guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId) | Unique GUID | `f3b171da-2023-4508-b467-042a53f4cd5d`
-parRoleDefinitionId | string | Role Definition Id (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7) | Must exist | `acdd72a7-3385-48ef-bd42-f606fba81ae7`
-parAssigneePrincipalType | string | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity) | One of [Group, ServicePrincipal] | `ServicePrincipal`
-parAssigneeObjectId | string | Object ID of groups, service principals or managed identities. For managed identities use the principal ID. For service principals, use the object ID and not the app ID | Must exist | `a86fe549-7f87-4873-8b0e-82f0081a0034`
+| Parameter                 | Type   | Description                                                                                                                                                              | Requirement                      | Example                                |
+| ------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------------------------------------- |
+| parRoleAssignmentNameGuid | string | A GUID representing the role assignment name.  Default:  guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId)                                   | Unique GUID                      | `f3b171da-2023-4508-b467-042a53f4cd5d` |
+| parRoleDefinitionId       | string | Role Definition Id (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)                                                                         | Must exist                       | `acdd72a7-3385-48ef-bd42-f606fba81ae7` |
+| parAssigneePrincipalType  | string | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity)           | One of [Group, ServicePrincipal] | `ServicePrincipal`                     |
+| parAssigneeObjectId       | string | Object ID of groups, service principals or managed identities. For managed identities use the principal ID. For service principals, use the object ID and not the app ID | Must exist                       | `a86fe549-7f87-4873-8b0e-82f0081a0034` |
+| parTelemetryOptOut        | bool   | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                 | none                             | `false`                                |
 
 ### roleAssignmentSubscriptionMany.bicep
 
-Parameter | Type | Description | Requirement | Example
------------ | ---- | ----------- | ----------- | -------
-parSubscriptionIds | Array of string | A list of subscription ids that will be used for role assignment (i.e. 4f9f8765-911a-4a6d-af60-4bc0473268c0)  Default = [] | Must exist | `['4f9f8765-911a-4a6d-af60-4bc0473268c0','82f7705e-3386-427b-95b7-cbed91ab29a7']`
-parRoleDefinitionId | string | Role Definition ID(i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7) | Must exist | `acdd72a7-3385-48ef-bd42-f606fba81ae7`
-parAssigneePrincipalType | string | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity) | One of [Group, ServicePrincipal] | `ServicePrincipal`
-parAssigneeObjectId | string | Object ID of groups, service principals or managed identities. For managed identities use the principal ID. For service principals, use the object ID and not the app ID | Must exist | `a86fe549-7f87-4873-8b0e-82f0081a0034`
+| Parameter                | Type            | Description                                                                                                                                                              | Requirement                      | Example                                                                           |
+| ------------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | --------------------------------------------------------------------------------- |
+| parSubscriptionIds       | Array of string | A list of subscription ids that will be used for role assignment (i.e. 4f9f8765-911a-4a6d-af60-4bc0473268c0)  Default = []                                               | Must exist                       | `['4f9f8765-911a-4a6d-af60-4bc0473268c0','82f7705e-3386-427b-95b7-cbed91ab29a7']` |
+| parRoleDefinitionId      | string          | Role Definition ID(i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)                                                                          | Must exist                       | `acdd72a7-3385-48ef-bd42-f606fba81ae7`                                            |
+| parAssigneePrincipalType | string          | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity)           | One of [Group, ServicePrincipal] | `ServicePrincipal`                                                                |
+| parAssigneeObjectId      | string          | Object ID of groups, service principals or managed identities. For managed identities use the principal ID. For service principals, use the object ID and not the app ID | Must exist                       | `a86fe549-7f87-4873-8b0e-82f0081a0034`                                            |
+| parTelemetryOptOut       | bool            | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                 | none                             | `false`                                                                           |
 
 ## Outputs
 
@@ -100,7 +104,7 @@ parAssigneeObjectId | string | Object ID of groups, service principals or manage
 
 ## Deployment
 
-In this example, the built-in Reader role will be asigned to a Service Principal account at the `alz-platform` management group scope.  The inputs for this module are defined in `roleAssignmentManagementGroup.parameters.*.example.json`.
+In this example, the built-in Reader role will be assigned to a Service Principal account at the `alz-platform` management group scope.  The inputs for this module are defined in `roleAssignmentManagementGroup.parameters.*.example.json`.
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 

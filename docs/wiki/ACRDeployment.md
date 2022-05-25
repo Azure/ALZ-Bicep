@@ -4,6 +4,8 @@
 
 This document outlines the prerequisites, dependencies and flow to setup a Private/Organizational Azure Container Registry.  Once deployed, you can then upload the modules contained within this repository, and deploy.
 
+> This is based on the official Bicep docs here: [Create private registry for Bicep modules](https://docs.microsoft.com/azure/azure-resource-manager/bicep/private-module-registry)
+
 ## Prerequisites
 
 1. Azure Active Directory Tenant.
@@ -13,7 +15,7 @@ This document outlines the prerequisites, dependencies and flow to setup a Priva
 ## Deployment Flow
 
 1. Clone Bicep Azure Landing Zone Github repository
-    - `git clone https://githubcom/Azure/ALZ-Bicep.git`
+    - `git clone https://github.com/Azure/ALZ-Bicep.git`
 2. Login to Azure leveraging PowerShell or CLI
     - **PowerShell**: `Connect-AzAccount`
     - **CLI**: `az login`

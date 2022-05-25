@@ -3,16 +3,16 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "parPolicyAssignmentName": {
-            "value": "Deploy-ASCDF-Config"
+            "value": "Deploy-MDFC-Config"
         },
         "parPolicyAssignmentDisplayName": {
-            "value": "Deploy Azure Security Center configuration"
+            "value": "Deploy Microsoft Defender for Cloud configuration"
         },
         "parPolicyAssignmentDescription": {
-            "value": "Deploy ASC configuration for Azure Defender and Security Contacts"
+            "value": "Deploy Microsoft Defender for Cloud configuration and Security Contacts"
         },
         "parPolicyAssignmentDefinitionID": {
-            "value": "/providers/Microsoft.Management/managementGroups/alz/providers/Microsoft.Authorization/policySetDefinitions/Deploy-ASCDF-Config"
+            "value": "/providers/Microsoft.Management/managementGroups/alz/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config"
         },
         "parPolicyAssignmentParameters": {
             "value": {
@@ -29,39 +29,39 @@
                     "value": "${parDefaultRegion}"
                 },
                 "enableAscForServers": {
-                    "value": "Disabled"
+                    "value": "DeployIfNotExists"
                 },
                 "enableAscForSql": {
                     "value": "Disabled"
                 },
                 "enableAscForAppServices": {
-                    "value": "Disabled"
+                    "value": "DeployIfNotExists"
                 },
                 "enableAscForStorage": {
-                    "value": "Disabled"
+                    "value": "DeployIfNotExists"
                 },
-                "enableAscForRegistries": {
-                    "value": "Disabled"
+                "enableAscForContainers": {
+                    "value": "DeployIfNotExists"
                 },
                 "enableAscForKeyVault": {
-                    "value": "Disabled"
+                    "value": "DeployIfNotExists"
                 },
                 "enableAscForSqlOnVm": {
                     "value": "Disabled"
                 },
-                "enableAscForKubernetes": {
-                    "value": "Disabled"
-                },
                 "enableAscForArm": {
-                    "value": "Disabled"
+                    "value": "DeployIfNotExists"
                 },
                 "enableAscForDns": {
-                    "value": "Disabled"
+                    "value": "DeployIfNotExists"
                 },
                 "enableAscForOssDb": {
                     "value": "Disabled"
                 }
             }
+        },
+        "parPolicyAssignmentParameterOverrides": {
+            "value": {}
         },
         "parPolicyAssignmentNonComplianceMessages": {
             "value": []
@@ -87,6 +87,9 @@
             "value": [
                 "8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
             ]
+        },
+        "parTelemetryOptOut": {
+            "value": false
         }
     }
 }

@@ -5,8 +5,11 @@
     "parLogAnalyticsWorkspaceName": {
       "value": "alz-log-analytics"
     },
-    "parLogAnalyticsWorkspaceRegion": {
+    "parLogAnalyticsWorkspaceLocation": {
       "value": "eastus"
+    },
+    "parLogAnalyticsWorkspaceSkuName": {
+      "value": "PerGB2018"
     },
     "parLogAnalyticsWorkspaceLogRetentionInDays": {
       "value": 365
@@ -28,8 +31,16 @@
     "parAutomationAccountName": {
       "value": "alz-automation-account"
     },
-    "parAutomationAccountRegion": {
+    "parAutomationAccountLocation": {
       "value": "eastus2"
+    },
+    "parTags": {
+      "value": {
+          "Environment": "POC"
+      }
+    },
+    "parTelemetryOptOut": {
+      "value": false
     }
   }
 }

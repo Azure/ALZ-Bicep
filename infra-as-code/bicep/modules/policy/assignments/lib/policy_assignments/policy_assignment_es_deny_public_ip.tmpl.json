@@ -8,10 +8,10 @@
     "notScopes": [],
     "parameters": {
       "effect": {
-        "value": "deny"
+        "value": "Deny"
       }
     },
-    "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP",
+    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP",
     "scope": null,
     "enforcementMode": "Default"
   },

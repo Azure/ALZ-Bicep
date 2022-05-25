@@ -1,0 +1,9 @@
+{
+    // Recommended extensions for ALZ Bicep
+    "recommendations": [
+        "ms-azuretools.vscode-bicep",
+        "vsls-contrib.codetour",
+        "msazurermtools.azurerm-vscode-tools",
+        "bencoleman.armview"
+    ]
+}

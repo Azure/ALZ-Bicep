@@ -2,6 +2,7 @@
 ## Contents
 <!-- markdownlint-restore -->
 
+- [Contents](#contents)
 - [Recommended Learning](#recommended-learning)
   - [Bicep](#bicep)
   - [Git](#git)
@@ -13,6 +14,7 @@
   - [Bicep Code Styling](#bicep-code-styling)
   - [Bicep Elements Naming Standards](#bicep-elements-naming-standards)
   - [Bicep File Structure](#bicep-file-structure)
+  - [Bicep File Structure Example](#bicep-file-structure-example)
 - [Constructing a Bicep Module](#constructing-a-bicep-module)
 
 ---
@@ -53,7 +55,8 @@ The following tooling/extensions are recommended to assist you developing for th
 - [CodeTour extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour)
 - [ARM Tools extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools)
 - [ARM Template Viewer extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bencoleman.armview)
-- [Bracket Pair Colorizer 2 extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)
+- For visibility of Bracket Pairs:
+  - Inside Visual Studio Code, add "editor.bracketPairColorization.enabled": true to your settings.json, to enable bracket pair colorization.
 
 ## Bicep Formatting Guidelines
 
@@ -85,32 +88,26 @@ Throughout the development of Bicep code you should follow the [Bicep Best Pract
   - Default values should also be documented in the appropriate location
 - Tab indents should be set to `2` for all Bicep files
 - Double line-breaks should exist between each element type section
-- Each bicep file must contain the below multi-line comment at the very top of the file, with its details filled out:
+- When intended for scopes above resource group deployment, targetScope should be indicated at the beginning of the file
 
-```bicep
-/*
-SUMMARY: A short summary of what the Bicep file does/deploys.
-DESCRIPTION: A slightly longer description of what the Bicep file does/deploys and any other important information that should be known upfront.
-AUTHOR/S: GitHub Usernames
-VERSION: 1.0.0
-*/
-
-<REST OF BICEP FILE BELOW...>
-
-targetScope = ...
-
-etc...
-```
 
 ### Bicep Elements Naming Standards
 
-| Element Type | Naming Prefix | Example |
-| :------------: | :-------------: | :------- |
-| Parameters | `par` | `parLocation`, `parManagementGroupsNamePrefix` |
-| Variables | `var` | `varConditionExpression`, `varIntermediateRootManagementGroupName` |
-| Resources | `res` | `resIntermediateRootManagementGroup`, `resResourceGroupLogAnalytics` |
-| Modules | `mod` | `modManagementGroups`, `modLogAnalytics` |
-| Outputs | `out` | `outIntermediateRootManagementGroupID`, `outLogAnalyticsWorkspaceID` |
+| Element Type | Naming Prefix | Example                                                              |
+| :----------: | :-----------: | :------------------------------------------------------------------- |
+|  Parameters  |     `par`     | `parLocation`, `parManagementGroupsNamePrefix`                       |
+|  Variables   |     `var`     | `varConditionExpression`, `varIntermediateRootManagementGroupName`   |
+|  Resources   |     `res`     | `resIntermediateRootManagementGroup`, `resResourceGroupLogAnalytics` |
+|   Modules    |     `mod`     | `modManagementGroups`, `modLogAnalytics`                             |
+|   Outputs    |     `out`     | `outIntermediateRootManagementGroupID`, `outLogAnalyticsWorkspaceID` |
+
+### Bicep Common Parameters Naming Standards
+
+The below guidelines should be adhered to whilst contributing to this projects Bicep code.
+
+- `parLocation`
+  - Shall be used for all module parameters specifying the Azure region to which a resource or module will be deployed.
+  - The only exception to this is when two inter-related services do not have region parity and need to be deployed to different regions. (i.e. Log Analytics and Automation Accounts in China. See logging module for an example)
 
 ### Bicep File Structure
 
@@ -125,14 +122,6 @@ For all Bicep files created as part of this project they will follow the structu
 Below is an example of Bicep file complying with the structure and styling guidelines specified above:
 
 ```bicep
-/*
-SUMMARY: An example deployment of a resource group.
-DESCRIPTION: Deploy a resource group to UK south taking a naming prefix as it's only parameter.
-AUTHOR/S: jtracey93
-VERSION: 1.0.0
-*/
-
-
 // SCOPE
 targetScope = 'subscription' //Deploying at Subscription scope to allow resource groups to be created and resources in one deployment
 
@@ -184,13 +173,22 @@ To author Bicep modules that are in-line with the requirements for this project,
                   "enabled": true,
                   "verbose": true,
                   "rules": {
+                    "adminusername-should-not-be-literal": {
+                      "level": "error"
+                    },
                     "no-hardcoded-env-urls": {
+                      "level": "error"
+                    },
+                    "no-unnecessary-dependson": {
                       "level": "error"
                     },
                     "no-unused-params": {
                       "level": "error"
                     },
                     "no-unused-vars": {
+                      "level": "error"
+                    },
+                    "outputs-should-not-contain-secrets": {
                       "level": "error"
                     },
                     "prefer-interpolation": {
@@ -202,7 +200,31 @@ To author Bicep modules that are in-line with the requirements for this project,
                     "simplify-interpolation": {
                       "level": "error"
                     },
-                    "adminusername-should-not-be-literal": {
+                    "protect-commandtoexecute-secrets": {
+                      "level": "error"
+                    },
+                    "use-stable-vm-image": {
+                      "level": "error"
+                    },
+                    "explicit-values-for-loc-params": {
+                      "level": "error"
+                    },
+                    "no-hardcoded-location": {
+                      "level": "error"
+                    },
+                    "no-loc-expr-outside-params": {
+                      "level": "error"
+                    },
+                    "max-outputs": {
+                      "level": "error"
+                    },
+                    "max-params": {
+                      "level": "error"
+                    },
+                    "max-resources": {
+                      "level": "error"
+                    },
+                    "max-variables": {
                       "level": "error"
                     }
                   }

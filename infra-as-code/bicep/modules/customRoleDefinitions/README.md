@@ -13,20 +13,21 @@ Module supports the following custom roles:
 
 The module requires the following inputs:
 
- Paramenter | Description | Requirement | Example
------------ | ----------- | ----------- | -------
-parAssignableScopeManagementGroupId | The management group scope to which the role can be assigned.  This management group ID will be used for the [assignableScopes](https://docs.microsoft.com/azure/role-based-access-control/role-definitions#assignablescopes) property in the role definition. | Mandatory input | `alz`
+ | Parameter                           | Description                                                                                                                                                                                                                                                    | Requirement     | Example |
+ | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ------- |
+ | parAssignableScopeManagementGroupId | The management group scope to which the role can be assigned.  This management group ID will be used for the [assignableScopes](https://docs.microsoft.com/azure/role-based-access-control/role-definitions#assignablescopes) property in the role definition. | Mandatory input | `alz`   |
+ | parTelemetryOptOut                  | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                                                                                                       | None            | `false` |
 
 ## Outputs
 
 The module will generate the following outputs:
 
-Output | Type | Example
------- | ---- | --------
-outRolesSubscriptionOwnerRoleId | string | Microsoft.Authorization/roleDefinitions/8736d87d-8d31-53be-b952-a04c8d470f69
-outRolesApplicationOwnerRoleId | string | Microsoft.Authorization/roleDefinitions/4308c4e6-07d5-534f-9e18-32769872a3f4
-outRolesNetworkManagementRoleId | string | Microsoft.Authorization/roleDefinitions/4a200286-e2a0-5239-aa8f-fe0a90dd2eb5
-outRolesSecurityOperationsRoleId | string | Microsoft.Authorization/roleDefinitions/b2960c40-d3db-5190-94c1-5b07c9547956
+| Output                           | Type   | Example                                                                      |
+| -------------------------------- | ------ | ---------------------------------------------------------------------------- |
+| outRolesSubscriptionOwnerRoleId  | string | Microsoft.Authorization/roleDefinitions/8736d87d-8d31-53be-b952-a04c8d470f69 |
+| outRolesApplicationOwnerRoleId   | string | Microsoft.Authorization/roleDefinitions/4308c4e6-07d5-534f-9e18-32769872a3f4 |
+| outRolesNetworkManagementRoleId  | string | Microsoft.Authorization/roleDefinitions/4a200286-e2a0-5239-aa8f-fe0a90dd2eb5 |
+| outRolesSecurityOperationsRoleId | string | Microsoft.Authorization/roleDefinitions/b2960c40-d3db-5190-94c1-5b07c9547956 |
 
 ## Deployment
 
@@ -34,10 +35,10 @@ There are two different sets of deployment; one for deploying to Azure global re
 
 > Microsoft.Support resource provider is not supported because Azure support in China regions is independently operated and provided by 21Vianet.
 
- Azure Cloud | Bicep template | Input parameters file
- ----------- | ----------- | -----------
- Global regions |  customRoleDefinitions.bicep |  custom-policy-definitions.parameters.example.json
- China regions  |  mc-customRoleDefinitions.bicep |  custom-policy-definitions.parameters.example.json
+ | Azure Cloud    | Bicep template                 | Input parameters file                             |
+ | -------------- | ------------------------------ | ------------------------------------------------- |
+ | Global regions | customRoleDefinitions.bicep    | custom-policy-definitions.parameters.example.json |
+ | China regions  | mc-customRoleDefinitions.bicep | custom-policy-definitions.parameters.example.json |
 
 In this example, the custom roles will be deployed to the `alz` management group (the intermediate root management group).
 

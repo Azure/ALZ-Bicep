@@ -18,27 +18,38 @@ The Management Groups module deploys a management group hierarchy in a customer'
 
 The module requires the following inputs:
 
-Parameter | Type | Description | Requirements | Example
------------ | ---- | ----------- | ------------ | -------
-parTopLevelManagementGroupPrefix | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment. | 2-10 characters | `alz` |
-parTopLevelManagementGroupDisplayName | string | Display name for top level management group.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter. | Minimum two characters | `Azure Landing Zones` |
+| Parameter                             | Type   | Description                                                                                                                                                     | Requirements                      | Example               |
+| ------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | --------------------- |
+| parTopLevelManagementGroupPrefix      | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment.                                                    | 2-10 characters                   | `alz`                 |
+| parTopLevelManagementGroupDisplayName | string | Display name for top level management group.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter. | Minimum two characters            | `Azure Landing Zones` |
+| parTelemetryOptOut                    | bool   | Set Parameter to true to Opt-out of deployment telemetry                                                                                                        | Mandatory input, default: `false` | `false`               |
 
 ## Outputs
 
 The module will generate the following outputs:
 
-Output | Type | Example
------- | ---- | --------
-outTopLevelMGId | string | /providers/Microsoft.Management/managementGroups/alz
-outPlatformMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform
-outPlatformManagementMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform-management
-outPlatformConnectivityMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform-connectivity
-outPlatformIdentityMGId | string | /providers/Microsoft.Management/managementGroups/alz-platform-identity
-outLandingZonesMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones
-outLandingZonesCorpMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-corp
-outLandingZonesOnlineMGId | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-online
-outSandboxManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-sandbox
-outDecommissionedManagementGroupId | string | /providers/Microsoft.Management/managementGroups/alz-decommissioned
+| Output                        | Type   | Example                                                                    |
+| ----------------------------- | ------ | -------------------------------------------------------------------------- |
+| outTopLevelMGId               | string | /providers/Microsoft.Management/managementGroups/alz                       |
+| outPlatformMGId               | string | /providers/Microsoft.Management/managementGroups/alz-platform              |
+| outPlatformManagementMGId     | string | /providers/Microsoft.Management/managementGroups/alz-platform-management   |
+| outPlatformConnectivityMGId   | string | /providers/Microsoft.Management/managementGroups/alz-platform-connectivity |
+| outPlatformIdentityMGId       | string | /providers/Microsoft.Management/managementGroups/alz-platform-identity     |
+| outLandingZonesMGId           | string | /providers/Microsoft.Management/managementGroups/alz-landingzones          |
+| outLandingZonesCorpMGId       | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-corp     |
+| outLandingZonesOnlineMGId     | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-online   |
+| outSandboxMGId                | string | /providers/Microsoft.Management/managementGroups/alz-sandbox               |
+| outDecommissionedMGId         | string | /providers/Microsoft.Management/managementGroups/alz-decommissioned        |
+| outTopLevelMGName             | string | alz                                                                        |
+| outPlatformMGName             | string | alz-platform                                                               |
+| outPlatformManagementMGName   | string | alz-platform-management                                                    |
+| outPlatformConnectivityMGName | string | alz-platform-connectivity                                                  |
+| outPlatformIdentityMGName     | string | alz-platform-identity                                                      |
+| outLandingZonesMGName         | string | alz-landingzones                                                           |
+| outLandingZonesCorpMGName     | string | alz-landingzones-corp                                                      |
+| outLandingZonesOnlineMGName   | string | alz-landingzones-online                                                    |
+| outSandboxMGName              | string | alz-sandbox                                                                |
+| outDecommissionedMGName       | string | alz-decommissioned                                                         |
 
 ## Deployment
 

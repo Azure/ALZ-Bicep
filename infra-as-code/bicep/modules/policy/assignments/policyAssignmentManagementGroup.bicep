@@ -1,10 +1,3 @@
-/*
-SUMMARY: This module assigns Azure Policies to a specified Management Group as well as assigning the Managed Identity to various Management Groups 
-DESCRIPTION: This module assigns Azure Policies to a specified Management Group.
-AUTHOR/S: jtracey93
-VERSION: 1.0.0
-*/
-
 targetScope = 'managementGroup'
 
 @minLength(1)
@@ -23,6 +16,9 @@ param parPolicyAssignmentDefinitionID string
 
 @description('An object containing the parameter values for the policy to be assigned. DEFAULT VALUE = {}')
 param parPolicyAssignmentParameters object = {}
+
+@description('An object containing parameter values that override those provided to parPolicyAssignmentParameters, usually via a JSON file and json(loadTextContent(FILE_PATH)). This is only useful when wanting to take values from a source like a JSON file for the majority of the parameters but override specific parameter inputs from other sources or hardcoded. If duplicate parameters exist between parPolicyAssignmentParameters & parPolicyAssignmentParameterOverrides, inputs provided to parPolicyAssignmentParameterOverrides will win. DEFAULT VALUE = {}')
+param parPolicyAssignmentParameterOverrides object = {}
 
 @description('An array containing object/s for the non-compliance messages for the policy to be assigned. See https://docs.microsoft.com/en-us/azure/governance/policy/concepts/assignment-structure#non-compliance-messages for more details on use. DEFAULT VALUE = []')
 param parPolicyAssignmentNonComplianceMessages array = []
@@ -53,11 +49,17 @@ param parPolicyAssignmentIdentityRoleAssignmentsSubs array = []
 @description('An array containing a list of RBAC role definition IDs to be assigned to the Managed Identity that is created and associated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects. e.g. [\'/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c\']. DEFAULT VALUE = []')
 param parPolicyAssignmentIdentityRoleDefinitionIDs array = []
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+var varPolicyAssignmentParametersMerged = union(parPolicyAssignmentParameters, parPolicyAssignmentParameterOverrides)
+
 var varPolicyIdentity = parPolicyAssignmentIdentityType == 'SystemAssigned' ? 'SystemAssigned' : 'None'
 
-var varPolicyIdentityLocation = parPolicyAssignmentIdentityType == 'SystemAssigned' ? deployment().location : deployment().location
+var varPolicyAssignmentIdentityRoleAssignmentsMGsConverged = parPolicyAssignmentIdentityType == 'SystemAssigned' ? union(parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs, (array(managementGroup().name))) : []
 
-var varPolicyAssignmentIdentityRoleAssignmentsMGsConverged = union(parPolicyAssignmentIdentityRoleAssignmentsAdditionalMGs, (array(modGetManagementGroupName.outputs.outManagementGroupName)))
+// Customer Usage Attribution Id
+var varCuaid = '78001e36-9738-429c-a343-45cc84e8a527'
 
 resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-01' = {
   name: parPolicyAssignmentName
@@ -65,7 +67,7 @@ resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-
     displayName: parPolicyAssignmentDisplayName 
     description: parPolicyAssignmentDescription
     policyDefinitionId: parPolicyAssignmentDefinitionID
-    parameters: parPolicyAssignmentParameters
+    parameters: varPolicyAssignmentParametersMerged
     nonComplianceMessages: parPolicyAssignmentNonComplianceMessages
     notScopes: parPolicyAssignmentNotScopes
     enforcementMode: parPolicyAssignmentEnforcementMode
@@ -73,7 +75,8 @@ resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-
   identity: {
     type: varPolicyIdentity
   }
-  location: varPolicyIdentityLocation
+  #disable-next-line no-loc-expr-outside-params //Policies resources are not deployed to a region, like other resources, but the metadata is stored in a region hence requiring this to keep input parameters reduced. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
+  location: deployment().location
 }
 
 // Handle Managed Identity RBAC Assignments to Management Group scopes based on parameter inputs, if they are not empty and a policy assignment with an identity is required.
@@ -98,8 +101,9 @@ module modPolicyIdentityRoleAssignmentSubsMany '../../roleAssignments/roleAssign
   }
 }]
 
-// Get current deployment Management Group name where this module is being deployed to.
-module modGetManagementGroupName '../../getManagementGroupName/getManagementGroupName.bicep' = {
-  name: 'getManagementGroupName'
-  scope: managementGroup()
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
+  name: 'pid-${varCuaid}-${uniqueString(deployment().location, parPolicyAssignmentName)}'
+  params: {}
 }
