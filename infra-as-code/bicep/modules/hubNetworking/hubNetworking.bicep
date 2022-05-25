@@ -218,14 +218,14 @@ var varGwConfig = [
 // Customer Usage Attribution Id
 var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
 
-resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if (parDdosEnabled) {
+resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-08-01' = if (parDdosEnabled) {
   name: parDdosPlanName
   location: parLocation
   tags: parTags
 }
 
 //DDos Protection plan will only be enabled if parDdosEnabled is true.  
-resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
+resource resHubVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-08-01' = {
   name: parHubNetworkName
   location: parLocation
   tags: parTags
@@ -263,7 +263,7 @@ module modBastionPublicIP '../publicIp/publicIp.bicep' = if (parBastionEnabled) 
   }
 }
 
-resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
+resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-08-01' existing = {
   parent: resHubVirtualNetwork
   name: 'AzureBastionSubnet'
 }
@@ -271,7 +271,7 @@ resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-
 // AzureBastionSubnet is required to deploy Bastion service. This subnet must exist in the parsubnets array if you enable Bastion Service.
 // There is a minimum subnet requirement of /27 prefix.  
 // If you are deploying standard this needs to be larger. https://docs.microsoft.com/en-us/azure/bastion/configuration-settings#subnet
-resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if (parBastionEnabled) {
+resource resBastion 'Microsoft.Network/bastionHosts@2021-08-01' = if (parBastionEnabled) {
   location: parLocation
   name: parBastionName
   tags: parTags
@@ -296,7 +296,7 @@ resource resBastion 'Microsoft.Network/bastionHosts@2021-02-01' = if (parBastion
   }
 }
 
-resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
+resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-08-01' existing = {
   parent: resHubVirtualNetwork
   name: 'GatewaySubnet'
 }
@@ -353,7 +353,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' = [for
   }
 }]
 
-resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
+resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-08-01' existing = {
   parent: resHubVirtualNetwork
   name: 'AzureFirewallSubnet'
 }
@@ -376,7 +376,7 @@ module modAzureFirewallPublicIP '../publicIp/publicIp.bicep' = if (parAzureFirew
   }
 }
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = if (parAzureFirewallEnabled) {
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-08-01' = if (parAzureFirewallEnabled) {
   name: parFirewallPoliciesName
   location: parLocation
   tags: parTags
@@ -392,7 +392,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = i
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.  
-resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-05-01' = if (parAzureFirewallEnabled) {
+resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-08-01' = if (parAzureFirewallEnabled) {
   name: parAzureFirewallName
   location: parLocation
   tags: parTags
@@ -422,7 +422,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-05-01' = if (pa
 }
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
-resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (parAzureFirewallEnabled) {
+resource resHubRouteTable 'Microsoft.Network/routeTables@2021-08-01' = if (parAzureFirewallEnabled) {
   name: parHubRouteTableName
   location: parLocation
   tags: parTags

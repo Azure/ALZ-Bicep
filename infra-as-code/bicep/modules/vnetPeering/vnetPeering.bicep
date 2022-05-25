@@ -25,7 +25,7 @@ param parTelemetryOptOut bool = false
 // Customer Usage Attribution Id
 var varCuaId = 'ab8e3b12-b0fa-40aa-8630-e3f7699e2142'
 
-resource resVirtualNetworkPeer 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-11-01' = {
+resource resVirtualNetworkPeer 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2021-08-01' = {
   name: '${parSourceVirtualNetworkName}/peer-to-${parDestinationVirtualNetworkName}'
   properties: {
     allowVirtualNetworkAccess: parAllowVirtualNetworkAccess

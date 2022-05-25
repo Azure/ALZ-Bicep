@@ -142,7 +142,7 @@ param parTelemetryOptOut bool = false
 var varCuaid = '7f94f23b-7a59-4a5c-9a8d-2a253a566f61'
 
 // Virtual WAN resource
-resource resVWAN 'Microsoft.Network/virtualWans@2021-05-01' = {
+resource resVWAN 'Microsoft.Network/virtualWans@2021-08-01' = {
   name: parVWanName
   location: parLocation
   tags: parTags
@@ -154,7 +154,7 @@ resource resVWAN 'Microsoft.Network/virtualWans@2021-05-01' = {
   }
 }
 
-resource resVHub 'Microsoft.Network/virtualHubs@2021-05-01' = if (parVirtualHubEnabled && !empty(parVhubAddressPrefix)) {
+resource resVHub 'Microsoft.Network/virtualHubs@2021-08-01' = if (parVirtualHubEnabled && !empty(parVhubAddressPrefix)) {
   name: parVHubName
   location: parLocation
   tags: parTags
@@ -167,7 +167,7 @@ resource resVHub 'Microsoft.Network/virtualHubs@2021-05-01' = if (parVirtualHubE
   }
 }
 
-resource resVHubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2021-05-01' = if (parVirtualHubEnabled && parAzureFirewallEnabled) {
+resource resVHubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2021-08-01' = if (parVirtualHubEnabled && parAzureFirewallEnabled) {
   parent: resVHub
   name: 'defaultRouteTable'
   properties: {
@@ -221,7 +221,7 @@ resource resERGateway 'Microsoft.Network/expressRouteGateways@2021-05-01' = if (
   }
 }
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = if (parVirtualHubEnabled && parAzureFirewallEnabled) {
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-08-01' = if (parVirtualHubEnabled && parAzureFirewallEnabled) {
   name: parFirewallPoliciesName
   location: parLocation
   tags: parTags
@@ -263,7 +263,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
 }
 
 // DDoS plan is deployed even though not supported to attach to Virtual WAN today as per https://docs.microsoft.com/azure/firewall-manager/overview#known-issues - However, it can still be linked via policy to spoke VNets etc.
-resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01' = if (parDdosEnabled) {
+resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-08-01' = if (parDdosEnabled) {
   name: parDdosPlanName
   location: parLocation
   tags: parTags
