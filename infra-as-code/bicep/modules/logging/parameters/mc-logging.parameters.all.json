@@ -8,6 +8,9 @@
     "parLogAnalyticsWorkspaceLocation": {
       "value": "chinaeast2"
     },
+    "parLogAnalyticsWorkspaceSkuName": {
+      "value": "PerGB2018"
+    },
     "parLogAnalyticsWorkspaceLogRetentionInDays": {
       "value": 365
     },
