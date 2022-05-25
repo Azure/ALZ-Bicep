@@ -95,6 +95,10 @@
 	libDefinition: json(loadTextContent('lib/china/policy_definitions/policy_definition_es_mc_deny_vnet_peer_cross_sub.json'))
 }
 {
+	name: 'Deny-VNET-Peering-To-Non-Approved-VNETs'
+	libDefinition: json(loadTextContent('lib/china/policy_definitions/policy_definition_es_mc_deny_vnet_peering_to_non_approved_vnets.json'))
+}
+{
 	name: 'Deny-VNet-Peering'
 	libDefinition: json(loadTextContent('lib/china/policy_definitions/policy_definition_es_mc_deny_vnet_peering.json'))
 }
