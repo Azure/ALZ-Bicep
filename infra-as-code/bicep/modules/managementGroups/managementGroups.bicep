@@ -1,5 +1,8 @@
 targetScope = 'tenant'
 
+@description('Optional Tenant Root Group ID. Used as top level management group parent.')
+param parTopLevelManagementGroupParentId string = '/providers/Microsoft.Management/managementGroups/${tenant().tenantId}'
+
 @description('Prefix for the management group hierarchy.  This management group will be created as part of the deployment.')
 @minLength(2)
 @maxLength(10)
@@ -69,6 +72,11 @@ resource resTopLevelMg 'Microsoft.Management/managementGroups@2021-04-01' = {
   name: parTopLevelManagementGroupPrefix
   properties: {
     displayName: parTopLevelManagementGroupDisplayName
+    details: {
+      parent: {
+        id: parTopLevelManagementGroupParentId
+      }
+    }
   }
 }
 
