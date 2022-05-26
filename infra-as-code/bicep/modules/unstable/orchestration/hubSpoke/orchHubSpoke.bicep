@@ -258,7 +258,7 @@ param parAscEmailSecurityContact string
 param parSpokeNetworkName string = 'vnet-spoke'
 
 @description('Switch which allows BGP Route Propagation to be disabled on the route table')
-param parBgpRoutePropagation bool = false
+param parBgpRoutePropagationDisabled bool = false
 
 @description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
 param parSpoketoHubRouteTableName string = 'rtb-spoke-to-hub'
@@ -1417,7 +1417,7 @@ module modSpokeNetworking '../../../spokeNetworking/spokeNetworking.bicep' = [fo
     parDnsServerIpArray: parDnsServerIpArray
     parNextHopIpAddress: parAzFirewallEnabled ? modHubNetworking.outputs.outAzFirewallPrivateIp : ''
     parSpoketoHubRouteTableName: parSpoketoHubRouteTableName
-    parBgpRoutePropagation: parBgpRoutePropagation
+    parBgpRoutePropagationDisabled: parBgpRoutePropagationDisabled
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
   }

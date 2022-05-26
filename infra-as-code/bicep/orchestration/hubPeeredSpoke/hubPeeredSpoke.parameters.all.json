@@ -29,7 +29,7 @@
       "parNextHopIpAddress": {
         "value": "10.20.255.4"
       },
-      "parBgpRoutePropagation": {
+      "parBgpRoutePropagationDisabled": {
         "value": false
       },      
       "parSpoketoHubRouteTableName": {

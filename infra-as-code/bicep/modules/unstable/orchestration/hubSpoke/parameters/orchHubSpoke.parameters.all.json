@@ -217,7 +217,7 @@
         "parSpokeNetworkName": {
             "value": "vnet-spoke"
         },
-        "parBgpRoutePropagation": {
+        "parBgpRoutePropagationDisabled": {
             "value": false
         },
         "parSpoketoHubRouteTableName": {
