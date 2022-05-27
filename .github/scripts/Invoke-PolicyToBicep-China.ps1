@@ -114,7 +114,7 @@ Write-Information "====> Policy Set/Initiative Definitions Total: $policyDefCoun
 # Policy Asssignments - separate policy assignments for Azure China due to different policy definitions - missing built-in policies, and features
 
 Write-Information "====> Creating/Emptying '_policyAssignmentsBicepInput.txt'" -InformationAction Continue
-Set-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments/_policyAssignmentsBicepInput.txt" -Value $null -Encoding "utf8"
+Set-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments/_mc_policyAssignmentsBicepInput.txt" -Value $null -Encoding "utf8"
 
 Write-Information "====> Looping Through Policy Assignments:" -InformationAction Continue
 Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments" -Filter "*.json" | ForEach-Object {
@@ -127,8 +127,8 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/l
     # Remove hyphens from Policy Assignment Name
     $policyAssignmentNameNoHyphens = $policyAssignmentName.replace("-","")
 
-    Write-Information "==> Adding '$policyAssignmentName' to '$PWD/_policyAssignmentsBicepInput.txt'" -InformationAction Continue
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments/_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionID: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/$fileName'))`r`n}`r`n"
+    Write-Information "==> Adding '$policyAssignmentName' to '$PWD/_mc_policyAssignmentsBicepInput.txt'" -InformationAction Continue
+    Add-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments/_mc_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionID: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: json(loadTextContent('../../policy/assignments/lib/china/policy_assignments/$fileName'))`r`n}`r`n"
 }
 
 $policyAssignmentCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments" -Filter "*.json" | Measure-Object
