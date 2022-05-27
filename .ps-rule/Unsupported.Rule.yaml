@@ -18,8 +18,8 @@ spec:
   - Azure.PublicIP.AvailabilityZone
   if:
     allOf:
-    - name: '.'
-      contains: '-bastion-'
+    - field: tags.'resource-usage'
+      equals: azure-bastion
     - type: '.'
       in:
       - Microsoft.Network/publicIPAddresses
