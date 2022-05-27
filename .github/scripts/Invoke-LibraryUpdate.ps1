@@ -2,7 +2,7 @@
 
 #
 # PowerShell Script
-# - Update template library in terraform-azurerm-caf-enterprise-scale repository
+# - Update template library for Azure China in terraform-azurerm-caf-enterprise-scale repository
 #
 # Valid object schema for Export-LibraryArtifact function loop:
 #
@@ -50,7 +50,7 @@ if ($UseCacheFromModule -and (Test-Path "$esltModuleDirectory/ProviderApiVersion
 $defaultConfig = @{
     inputFilter    = "*.json"
     typeFilter     = @()
-    outputPath     = $TargetModulePath + "/infra-as-code/bicep/modules/policy/definitions/lib"
+    outputPath     = $TargetModulePath + "/infra-as-code/bicep/modules/policy/definitions/lib/china"
     fileNamePrefix = ""
     fileNameSuffix = ".json"
     asTemplate     = $true
@@ -59,8 +59,9 @@ $defaultConfig = @{
 
 # File locations from Enterprise-scale repository for
 # resources, organised by type
-$policyDefinitionFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyDefinitions"
-$policySetDefinitionFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyDefinitions"
+$policyDefinitionFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyDefinitions/china"
+$policySetDefinitionFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyDefinitions/china"
+$policyAssignmentFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyAssignments/china"
 
 # The esltConfig array controls the foreach loop used to run
 # Export-LibraryArtifact. Each object provides a set of values
@@ -74,7 +75,7 @@ $esltConfig += $policyDefinitionFilePaths | ForEach-Object {
     [PsCustomObject]@{
         inputPath      = $_
         typeFilter     = "Microsoft.Authorization/policyDefinitions"
-        fileNamePrefix = "policy_definitions/policy_definition_es_"
+        fileNamePrefix = "policy_definitions/policy_definition_es_mc_"
     }
 }
 # Add Policy Set Definition source files to $esltConfig
@@ -82,7 +83,17 @@ $esltConfig += $policySetDefinitionFilePaths | ForEach-Object {
     [PsCustomObject]@{
         inputPath      = $_
         typeFilter     = "Microsoft.Authorization/policySetDefinitions"
-        fileNamePrefix = "policy_set_definitions/policy_set_definition_es_"
+        fileNamePrefix = "policy_set_definitions/policy_set_definition_es_mc_"
+        fileNameSuffix = ".json"
+    }
+}
+
+# Add Policy Assignment source files to $esltConfig
+$esltConfig += $policyAssignmentFilePaths | ForEach-Object {
+    [PsCustomObject]@{
+        inputPath      = $_
+        typeFilter     = "Microsoft.Authorization/policyAssignments"
+        fileNamePrefix = "policy_assignments/policy_assignment_es_mc_"
         fileNameSuffix = ".json"
     }
 }
@@ -91,9 +102,11 @@ $esltConfig += $policySetDefinitionFilePaths | ForEach-Object {
 # artefacts (by resource type) from the library
 if ($Reset) {
     Write-Information "Deleting existing Policy Definitions from library." -InformationAction Continue
-    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions/" -Recurse -Force
+    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/china/policy_definitions/" -Recurse -Force
     Write-Information "Deleting existing Policy Set Definitions from library." -InformationAction Continue
-    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/" -Recurse -Force
+    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/china/policy_set_definitions/" -Recurse -Force
+    Write-Information "Deleting existing Policy Assignments from library." -InformationAction Continue
+    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments/" -Recurse -Force    
 }
 
 # Process the files added to $esltConfig, to add content
@@ -110,4 +123,3 @@ foreach ($config in $esltConfig) {
         -Recurse:($config.recurse ?? $defaultConfig.recurse) `
         -WhatIf:$WhatIfPreference
 }
-
