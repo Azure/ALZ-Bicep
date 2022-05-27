@@ -4,9 +4,6 @@ on:
   pull_request:
     branches:
       - main
-
-      # TODO: Branch for integration testing, to be removed before integration into main.
-      - ps-rule
     paths:
       - "**.bicep"
       - "ps-rule.yaml"
