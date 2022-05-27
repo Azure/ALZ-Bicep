@@ -113,7 +113,7 @@ Write-Information "====> Policy Set/Initiative Definitions Total: $policyDefCoun
 
 # Policy Asssignments - separate policy assignments for Azure China due to different policy definitions - missing built-in policies, and features
 
-Write-Information "====> Creating/Emptying '_policyAssignmentsBicepInput.txt'" -InformationAction Continue
+Write-Information "====> Creating/Emptying '_mc_policyAssignmentsBicepInput.txt'" -InformationAction Continue
 Set-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments/_mc_policyAssignmentsBicepInput.txt" -Value $null -Encoding "utf8"
 
 Write-Information "====> Looping Through Policy Assignments:" -InformationAction Continue
