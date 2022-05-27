@@ -111,13 +111,13 @@ $policyDefCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/po
 $policyDefCountString = $policyDefCount.Count
 Write-Information "====> Policy Set/Initiative Definitions Total: $policyDefCountString" -InformationAction Continue
 
-# Policy Asssignments - no separate policy assignments for Azure China, reusing the same assignments as Azure global regions
+# Policy Asssignments - separate policy assignments for Azure China due to different policy definitions - missing built-in policies, and features
 
 Write-Information "====> Creating/Emptying '_policyAssignmentsBicepInput.txt'" -InformationAction Continue
-Set-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Value $null -Encoding "utf8"
+Set-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments/_policyAssignmentsBicepInput.txt" -Value $null -Encoding "utf8"
 
 Write-Information "====> Looping Through Policy Assignments:" -InformationAction Continue
-Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments" -Filter "*.json" | ForEach-Object {
+Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments" -Filter "*.json" | ForEach-Object {
     $policyAssignment = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
 
     $policyAssignmentName = $policyAssignment.name
@@ -128,9 +128,9 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/l
     $policyAssignmentNameNoHyphens = $policyAssignmentName.replace("-","")
 
     Write-Information "==> Adding '$policyAssignmentName' to '$PWD/_policyAssignmentsBicepInput.txt'" -InformationAction Continue
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionID: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/$fileName'))`r`n}`r`n"
+    Add-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments/_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionID: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/$fileName'))`r`n}`r`n"
 }
 
-$policyAssignmentCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments" -Filter "*.json" | Measure-Object
+$policyAssignmentCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments" -Filter "*.json" | Measure-Object
 $policyAssignmentCountString = $policyAssignmentCount.Count
 Write-Information "====> Policy Assignments Total: $policyAssignmentCountString" -InformationAction Continue
