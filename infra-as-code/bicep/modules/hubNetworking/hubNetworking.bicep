@@ -258,7 +258,9 @@ module modBastionPublicIP '../publicIp/publicIp.bicep' = if (parBastionEnabled) 
       publicIPAddressVersion: 'IPv4'
       publicIPAllocationMethod: 'Static'
     }
-    parTags: parTags
+    parTags: union({
+      'resource-usage': 'azure-bastion'
+    }, parTags)
     parTelemetryOptOut: parTelemetryOptOut
   }
 }

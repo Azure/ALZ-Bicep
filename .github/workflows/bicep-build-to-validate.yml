@@ -51,7 +51,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Add pipeline tests for Azure Well-Architected Framework
+      # Add pipeline tests for Azure Well-Architected Framework.
+      # See https://aka.ms/ps-rule-action for configuration options.
       - name: Run PSRule analysis
         uses: Microsoft/ps-rule@v2.1.0
         with:
