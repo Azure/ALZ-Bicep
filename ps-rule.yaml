@@ -4,6 +4,9 @@
 
 # Please see the documentation for all configuration options:
 # https://aka.ms/ps-rule-azure
+# https://aka.ms/ps-rule-azure/options
+# https://aka.ms/ps-rule/options
+# https://aka.ms/ps-rule-azure/bicep
 
 # Use rules from the following modules/
 include:
