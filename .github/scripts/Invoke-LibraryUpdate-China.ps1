@@ -105,8 +105,8 @@ if ($Reset) {
     Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/china/policy_definitions/" -Recurse -Force
     Write-Information "Deleting existing Policy Set Definitions from library." -InformationAction Continue
     Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/china/policy_set_definitions/" -Recurse -Force
-    Write-Information "Deleting existing Policy Assignments from library." -InformationAction Continue
-    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments/" -Recurse -Force    
+    #Write-Information "Deleting existing Policy Assignments from library." -InformationAction Continue
+    #Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments/" -Recurse -Force    
 }
 
 # Process the files added to $esltConfig, to add content
