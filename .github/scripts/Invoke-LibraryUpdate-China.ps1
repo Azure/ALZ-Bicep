@@ -61,7 +61,6 @@ $defaultConfig = @{
 # resources, organised by type
 $policyDefinitionFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyDefinitions/china"
 $policySetDefinitionFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyDefinitions/china"
-$policyAssignmentFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyAssignments"
 
 # The esltConfig array controls the foreach loop used to run
 # Export-LibraryArtifact. Each object provides a set of values
@@ -88,16 +87,6 @@ $esltConfig += $policySetDefinitionFilePaths | ForEach-Object {
     }
 }
 
-# Add Policy Assignment source files to $esltConfig
-$esltConfig += $policyAssignmentFilePaths | ForEach-Object {
-    [PsCustomObject]@{
-        inputPath      = $_
-        typeFilter     = "Microsoft.Authorization/policyAssignments"
-        fileNamePrefix = "policy_assignments/policy_assignment_es_mc_"
-        fileNameSuffix = ".json"
-    }
-}
-
 # If the -Reset parameter is set, delete all existing
 # artefacts (by resource type) from the library
 if ($Reset) {
@@ -105,8 +94,6 @@ if ($Reset) {
     Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/china/policy_definitions/" -Recurse -Force
     Write-Information "Deleting existing Policy Set Definitions from library." -InformationAction Continue
     Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/china/policy_set_definitions/" -Recurse -Force
-    #Write-Information "Deleting existing Policy Assignments from library." -InformationAction Continue
-    #Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments/" -Recurse -Force    
 }
 
 # Process the files added to $esltConfig, to add content
