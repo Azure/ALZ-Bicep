@@ -61,7 +61,7 @@ $defaultConfig = @{
 # resources, organised by type
 $policyDefinitionFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyDefinitions/china"
 $policySetDefinitionFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyDefinitions/china"
-$policyAssignmentFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyAssignments/china"
+$policyAssignmentFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyAssignments"
 
 # The esltConfig array controls the foreach loop used to run
 # Export-LibraryArtifact. Each object provides a set of values
