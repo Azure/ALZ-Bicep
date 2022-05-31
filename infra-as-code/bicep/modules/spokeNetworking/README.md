@@ -104,7 +104,7 @@ New-AzResourceGroup -Name 'Spoke_Networking_POC' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json
+  -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json `
   -ResourceGroupName 'Spoke_Networking_POC'
 ```
 ## Example Output in Azure global regions
