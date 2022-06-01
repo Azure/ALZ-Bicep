@@ -23,7 +23,7 @@ globals:
 ###############
 # Parser vars #
 ###############
-parser: '@typescript-eslint/parser'
+parser: "@typescript-eslint/parser"
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
@@ -32,18 +32,17 @@ parserOptions:
 # Plugins #
 ###########
 plugins:
-  - '@typescript-eslint'
+  - "@typescript-eslint"
 
 #########
 # Rules #
 #########
-rules: { }
+rules: {}
 
 ##############################
 # Overrides for JSON parsing #
 ##############################
 overrides:
-
   # JSON files
   - files:
       - "*.json"
