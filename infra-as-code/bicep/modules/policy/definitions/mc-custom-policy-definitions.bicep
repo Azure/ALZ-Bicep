@@ -3,6 +3,9 @@ targetScope = 'managementGroup'
 @description('The management group scope to which the policy definitions are to be created at. DEFAULT VALUE = "alz"')
 param parTargetManagementGroupID string = 'alz'
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
 var varTargetManagementGroupResourceID = tenantResourceId('Microsoft.Management/managementGroups', parTargetManagementGroupID)
 
 // This variable contains a number of objects that load in the custom Azure Policy Defintions that are provided as part of the ESLZ/ALZ reference implementation - this is automatically created in the file 'infra-as-code\bicep\modules\policy\lib\policy_definitions\_policyDefinitionsBicepInput.txt' via a GitHub action, that runs on a daily schedule, and is then manually copied into this variable. 
@@ -446,28 +449,33 @@ var varCustomPolicySetDefinitionsArray = [
       ]
   }
   {
-    name: 'Deploy-ASCDF-Config'
-    libSetDefinition: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_ascdf_config.json'))
+    name: 'Deploy-MDFC-Config'
+    libSetDefinition: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_mdfc_config.json'))
     libSetChildDefinitions: [
         {
           definitionReferenceID: 'ascExport'
           definitionID: '/providers/Microsoft.Authorization/policyDefinitions/ffb6f416-7bd2-4488-8828-56585fef2be9'
-          definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_ascdf_config.parameters.json')).ascExport.parameters
+          definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_mdfc_config.parameters.json')).ascExport.parameters
         }
+        {
+          definitionReferenceID: 'defenderForContainers'
+          definitionID: '/providers/Microsoft.Authorization/policyDefinitions/c9ddb292-b203-4738-aead-18e2716e858f'
+          definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_mdfc_config.parameters.json')).defenderForContainers.parameters
+        }        
         {
           definitionReferenceID: 'defenderForSqlPaas'
           definitionID: '/providers/Microsoft.Authorization/policyDefinitions/b99b73e7-074b-4089-9395-b7236f094491'
-          definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_ascdf_config.parameters.json')).defenderForSqlPaas.parameters
+          definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_mdfc_config.parameters.json')).defenderForSqlPaas.parameters
         }
         {
           definitionReferenceID: 'defenderForVM'
           definitionID: '/providers/Microsoft.Authorization/policyDefinitions/8e86a5b6-b9bd-49d1-8e21-4bb8a0862222'
-          definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_ascdf_config.parameters.json')).defenderForVM.parameters
+          definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_mdfc_config.parameters.json')).defenderForVM.parameters
         }
         {
           definitionReferenceID: 'securityEmailContact'
           definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-SecurityContacts'
-          definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_ascdf_config.parameters.json')).securityEmailContact.parameters
+          definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_mdfc_config.parameters.json')).securityEmailContact.parameters
         }
       ]
   }
@@ -1114,6 +1122,9 @@ var varCustomPolicySetDefinitionsArray = [
  
 ]
 
+// Customer Usage Attribution Id
+var varCuaid = '2b136786-9881-412e-84ba-f4c2822e1ac9'
+
 resource resPolicyDefinitions 'Microsoft.Authorization/policyDefinitions@2020-09-01' = [for policy in varCustomPolicyDefinitionsArray: {
   name: policy.libDefinition.name
   properties: {
@@ -1146,3 +1157,10 @@ resource resPolicySetDefinitions 'Microsoft.Authorization/policySetDefinitions@2
     policyDefinitionGroups: policySet.libSetDefinition.properties.policyDefinitionGroups
   }
 }]
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
+  name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
+  params: {}
+}
