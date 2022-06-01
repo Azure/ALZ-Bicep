@@ -59,28 +59,26 @@ In this example, the spoke resources will be deployed to the resource group spec
 # For Azure global regions
 # Set Azure Corp Landing zone subscription ID as the the current subscription 
 $LandingZoneSubscriptionId="[your landing zone subscription ID]"
-$Location="[your landing zone subscription ID]"
-$TopLevelManagemetGroupID="alz"
 az account set --subscription $LandingZoneSubscriptionId
 
 az deployment mg create \
-    --location $Location --management-group-id $TopLevelManagemetGroupID \
-    --template-file .\infra-as-code\bicep\orchestration\hubPeeredSpoke\hubPeeredSpoke.bicep \
-    --parameters @infra-as-code\bicep\orchestration\hubPeeredSpoke\hubPeeredSpoke.parameters.example.json
+    --template-file infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep \
+    --parameters @infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json \
+    --location eastus \
+    --management-group-id alz
 ```
 OR
 ```bash
 # For Azure China regions
 # Set Azure Corp Landing zone subscription ID as the the current subscription
 $LandingZoneSubscriptionId="[your landing zone subscription ID]"
-$Location="[your landing zone subscription ID]"
-$TopLevelManagemetGroupID="alz"
 az account set --subscription $LandingZoneSubscriptionId
 
 az deployment mg create \
-    --location $Location --management-group-id $TopLevelManagemetGroupID \
-    --template-file .\infra-as-code\bicep\orchestration\hubPeeredSpoke\hubPeeredSpoke.bicep \
-    --parameters @infra-as-code\bicep\orchestration\hubPeeredSpoke\hubPeeredSpoke.parameters.example.json
+    --template-file infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep \
+    --parameters @infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json \
+    --location chinaeast2 \
+    --management-group-id alz
 ```
 
 ### PowerShell
@@ -89,30 +87,28 @@ az deployment mg create \
 # For Azure global regions
 # Set Azure Corp Landing zone subscription ID as the the current subscription 
 $LandingZoneSubscriptionId="[your landing zone subscription ID]"
-$Location="[your landing zone subscription ID]"
-$TopLevelManagemetGroupID="alz"
-
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
   
 New-AzManagementGroupDeployment `
-  -Location $Location -ManagementGroupId $TopLevelManagemetGroupID `
-  -TemplateFile infra-as-code\bicep\orchestration\hubPeeredSpoke\hubPeeredSpoke.bicep `
-  -TemplateParameterFile infra-as-code\bicep\orchestration\hubPeeredSpoke\hubPeeredSpoke.parameters.example.json `
+  -TemplateFile infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep `
+  -TemplateParameterFile infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json `
+  -Location eastus `
+  -ManagementGroupId alz
 ```
 OR
 ```powershell
 # For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription 
 $LandingZoneSubscriptionId="[your landing zone subscription ID]"
-$Location="[your landing zone subscription ID]"
 $TopLevelManagemetGroupID="alz"
 
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
   
 New-AzManagementGroupDeployment `
-  -Location $Location -ManagementGroupId $TopLevelManagemetGroupID `
-  -TemplateFile infra-as-code\bicep\orchestration\hubPeeredSpoke\hubPeeredSpoke.bicep `
-  -TemplateParameterFile infra-as-code\bicep\orchestration\hubPeeredSpoke\hubPeeredSpoke.parameters.example.json `
+  -TemplateFile infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep `
+  -TemplateParameterFile infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json `
+  -Location chinaeast2 `
+  -ManagementGroupId alz
 
 ```
 
