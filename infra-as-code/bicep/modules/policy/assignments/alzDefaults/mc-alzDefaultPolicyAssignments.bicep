@@ -75,11 +75,6 @@ var varModuleDeploymentNames = {
 
 // Policy Assignments Modules Variables
 
-// var varPolicyAssignmentDenyAppGWWithoutWAF = {
-// 	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF'
-// 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_appgw_without_waf.tmpl.json'))
-// }
-
 var varPolicyAssignmentEnforceAKSHTTPS = {
 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d'
 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_http_ingress_aks.tmpl.json'))
@@ -115,21 +110,6 @@ var varPolicyAssignmentDenyRDPFromInternet = {
 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_rdp_from_internet.tmpl.json'))
 }
 
-// var varPolicyAssignmentDenyResourceLocations = {
-// 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c'
-// 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_resource_locations.tmpl.json'))
-// }
-
-// var varPolicyAssignmentDenyResourceTypes = {
-// 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/6c112d4e-5bc7-47ae-a041-ea2d9dccd749'
-// 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_resource_types.tmpl.json'))
-// }
-
-// var varPolicyAssignmentDenyRSGLocations = {
-// 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988'
-// 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_rsg_locations.tmpl.json'))
-// }
-
 var varPolicyAssignmentDenyStoragehttp = {
 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9'
 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_storage_http.tmpl.json'))
@@ -139,11 +119,6 @@ var varPolicyAssignmentDenySubnetWithoutNsg = {
 	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg'
 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_subnet_without_nsg.tmpl.json'))
 }
-
-// var varPolicyAssignmentDenySubnetWithoutUdr = {
-// 	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Udr'
-// 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_subnet_without_udr.tmpl.json'))
-// }
 
 var varPolicyAssignmentDeployAKSPolicy = {
 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/a8eff44f-8c92-45c3-a3fb-9880802d67a7'
@@ -160,20 +135,10 @@ var varPolicyAssignmentDeployLogAnalytics = {
 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_log_analytics.tmpl.json'))
 }
 
-// var varPolicyAssignmentDeployLXArcMonitoring = {
-// 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/9d2b61b4-1d14-4a63-be30-d4498e7ad2cf'
-// 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_lx_arc_monitoring.tmpl.json'))
-// }
-
 var varPolicyAssignmentDeployMDFCConfig = {
 	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config'
 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_mdfc_config.tmpl.json'))
 }
-
-// var varPolicyAssignmentDeployPrivateDNSZones = {
-// 	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Private-DNS-Zones'
-// 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_private_dns_zones.tmpl.json'))
-// }
 
 var varPolicyAssignmentDeployResourceDiag = {
 	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diagnostics-LogAnalytics'
@@ -184,11 +149,6 @@ var varPolicyAssignmentDeploySQLDBAuditing = {
 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9'
 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_sql_db_auditing.tmpl.json'))
 }
-
-// var varPolicyAssignmentDeploySQLSecurity = {
-// 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/86a912f6-9a06-4e26-b447-11b16ba8659f'
-// 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_sql_security.tmpl.json'))
-// }
 
 var varPolicyAssignmentDeploySQLThreat = {
 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/36d49e87-48c4-4f2e-beed-ba4ed02b71f5'
@@ -209,11 +169,6 @@ var varPolicyAssignmentDeployVMSSMonitoring = {
 	definitionID: '/providers/Microsoft.Authorization/policySetDefinitions/75714362-cae7-409e-9b99-a8e5075b7fad'
 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_vmss_monitoring.tmpl.json'))
 }
-
-// var varPolicyAssignmentDeployWSArcMonitoring = {
-// 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/69af7d4a-7b18-4044-93a9-2651498ef203'
-// 	libDefinition: json(loadTextContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_ws_arc_monitoring.tmpl.json'))
-// }
 
 var varPolicyAssignmentEnableDDoSVNET = {
 	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d'
@@ -289,30 +244,6 @@ module modPolicyAssignmentIntRootDeployMDFCConfig '../../../policy/assignments/p
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
-
-// Module - Policy Assignment - Deploy-AzActivity-Log - Not available as build-in policy definition in Azure China
-// module modPolicyAssignmentIntRootDeployAzActivityLog '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
-//   scope: managementGroup(varManagementGroupIDs.intRoot)
-//   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployAzActivityLog
-//   params: {
-//     parPolicyAssignmentDefinitionID: varPolicyAssignmentDeployAzActivityLog.definitionID
-//     parPolicyAssignmentName: varPolicyAssignmentDeployAzActivityLog.libDefinition.name
-//     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployAzActivityLog.libDefinition.properties.displayName
-//     parPolicyAssignmentDescription: varPolicyAssignmentDeployAzActivityLog.libDefinition.properties.description
-//     parPolicyAssignmentParameters: varPolicyAssignmentDeployAzActivityLog.libDefinition.properties.parameters
-//     parPolicyAssignmentParameterOverrides: {
-//       logAnalytics: {
-//         value: parLogAnalyticsWorkspaceResourceID
-//       }
-//     }
-//     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployAzActivityLog.libDefinition.identity.type
-//     parPolicyAssignmentIdentityRoleDefinitionIDs: [
-//       varRBACRoleDefinitionIDs.owner
-//     ]
-//     parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployAzActivityLog.libDefinition.properties.enforcementMode
-//     parTelemetryOptOut: parTelemetryOptOut
-//   }
-// }
 
 // Module - Policy Assignment - Deploy-ASC-Monitoring 
 module modPolicyAssignmentIntRootDeployASCMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
@@ -799,51 +730,3 @@ module modPolicyAssignmentLZsDenyPublicIP '../../../policy/assignments/policyAss
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
-
-// Module - Policy Assignment - Deny-DataB-Pip
-// module modPolicyAssignmentLZsDenyDataBPip '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
-//   scope: managementGroup(varManagementGroupIDs.landingZonesCorp)
-//   name: varModuleDeploymentNames.modPolicyAssignmentLZsDenyDataBPip
-//   params: {
-//     parPolicyAssignmentDefinitionID: varPolicyAssignmentDenyDataBPip.definitionID
-//     parPolicyAssignmentName: varPolicyAssignmentDenyDataBPip.libDefinition.name
-//     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyDataBPip.libDefinition.properties.displayName
-//     parPolicyAssignmentDescription: varPolicyAssignmentDenyDataBPip.libDefinition.properties.description
-//     parPolicyAssignmentParameters: varPolicyAssignmentDenyDataBPip.libDefinition.properties.parameters
-//     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyDataBPip.libDefinition.identity.type
-//     parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyDataBPip.libDefinition.properties.enforcementMode
-//     parTelemetryOptOut: parTelemetryOptOut
-//   }
-// }
-
-// Module - Policy Assignment - Deny-DataB-Sku
-// module modPolicyAssignmentLZsDenyDataBSku '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
-//   scope: managementGroup(varManagementGroupIDs.landingZonesCorp)
-//   name: varModuleDeploymentNames.modPolicyAssignmentLZsDenyDataBSku
-//   params: {
-//     parPolicyAssignmentDefinitionID: varPolicyAssignmentDenyDataBSku.definitionID
-//     parPolicyAssignmentName: varPolicyAssignmentDenyDataBSku.libDefinition.name
-//     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyDataBSku.libDefinition.properties.displayName
-//     parPolicyAssignmentDescription: varPolicyAssignmentDenyDataBSku.libDefinition.properties.description
-//     parPolicyAssignmentParameters: varPolicyAssignmentDenyDataBSku.libDefinition.properties.parameters
-//     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyDataBSku.libDefinition.identity.type
-//     parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyDataBSku.libDefinition.properties.enforcementMode
-//     parTelemetryOptOut: parTelemetryOptOut
-//   }
-// }
-
-// Module - Policy Assignment - Deny-DataB-Vnet
-// module modPolicyAssignmentLZsDenyDataBVnet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
-//   scope: managementGroup(varManagementGroupIDs.landingZonesCorp)
-//   name: varModuleDeploymentNames.modPolicyAssignmentLZsDenyDataBVnet
-//   params: {
-//     parPolicyAssignmentDefinitionID: varPolicyAssignmentDenyDataBVnet.definitionID
-//     parPolicyAssignmentName: varPolicyAssignmentDenyDataBVnet.libDefinition.name
-//     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyDataBVnet.libDefinition.properties.displayName
-//     parPolicyAssignmentDescription: varPolicyAssignmentDenyDataBVnet.libDefinition.properties.description
-//     parPolicyAssignmentParameters: varPolicyAssignmentDenyDataBVnet.libDefinition.properties.parameters
-//     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyDataBVnet.libDefinition.identity.type
-//     parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyDataBVnet.libDefinition.properties.enforcementMode
-//     parTelemetryOptOut: parTelemetryOptOut
-//   }
-// }
