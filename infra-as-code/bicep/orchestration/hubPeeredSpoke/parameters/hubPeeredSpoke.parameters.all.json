@@ -50,7 +50,7 @@
         }
       },
       "parTelemetryOptOut": {
-        "value": true
+        "value": false
       }
     }
   }
