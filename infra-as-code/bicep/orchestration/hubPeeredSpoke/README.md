@@ -58,7 +58,7 @@ In this example, the spoke resources will be deployed to the resource group spec
 ```bash
 # For Azure global regions
 # Set Azure Corp Landing zone subscription ID as the the current subscription 
-$LandingZoneSubscriptionId="[your landing zone subscription ID]"
+LandingZoneSubscriptionId="[your landing zone subscription ID]"
 az account set --subscription $LandingZoneSubscriptionId
 
 az deployment mg create \
@@ -71,7 +71,7 @@ OR
 ```bash
 # For Azure China regions
 # Set Azure Corp Landing zone subscription ID as the the current subscription
-$LandingZoneSubscriptionId="[your landing zone subscription ID]"
+LandingZoneSubscriptionId="[your landing zone subscription ID]"
 az account set --subscription $LandingZoneSubscriptionId
 
 az deployment mg create \
