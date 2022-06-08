@@ -47,7 +47,7 @@ param parNextHopIpAddress string = ''
 param parDisableBgpRoutePropagation bool = false
 
 @description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
-param parSpoketoHubRouteTableName string = 'rtb-spoke-to-hub'
+param parSpokeToHubRouteTableName string = 'rtb-spoke-to-hub'
 
 // Peering Modules Parameters
 @description('Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID. No default')
@@ -140,7 +140,7 @@ module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' 
     parDdosProtectionPlanId: parDdosProtectionPlanId
     parDnsServerIps: parDnsServerIpArray
     parNextHopIpAddress: varNextHopIPAddress
-    parSpokeToHubRouteTableName: parSpoketoHubRouteTableName
+    parSpokeToHubRouteTableName: parSpokeToHubRouteTableName
     parDisableBgpRoutePropagation: parDisableBgpRoutePropagation
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
@@ -186,4 +186,4 @@ module modhubVirtualNetworkConnection '../../modules/vnetPeeringVwan/hubVirtualN
 }
 
 output outSpokeVirtualNetworkName string = modSpokeNetworking.outputs.outSpokeVirtualNetworkName
-output outSpokeVirtualNetworkid string = modSpokeNetworking.outputs.outSpokeVirtualNetworkId
+output outSpokeVirtualNetworkId string = modSpokeNetworking.outputs.outSpokeVirtualNetworkId
