@@ -97,7 +97,7 @@ param parAzFirewallEnabled bool = true
 param parAzFirewallDnsProxyEnabled bool = true
 
 @description('Switch to enable/disable BGP Propagation on route table. Default: false')
-param parBgpRoutePropagationDisabled bool = false
+param parDisableBgpRoutePropagation bool = false
 
 @description('Switch to enable/disable Private DNS Zones deployment. Default: true')
 param parPrivateDnsZonesEnabled bool = true
@@ -258,7 +258,7 @@ param parAscEmailSecurityContact string
 param parSpokeNetworkName string = 'vnet-spoke'
 
 @description('Switch which allows BGP Route Propagation to be disabled on the route table')
-param parBgpRoutePropagationDisabled bool = false
+param parDisableBgpRoutePropagation bool = false
 
 @description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
 param parSpoketoHubRouteTableName string = 'rtb-spoke-to-hub'
@@ -602,7 +602,7 @@ module modHubNetworking '../../../hubNetworking/hubNetworking.bicep' = {
     parDdosPlanName: parDdosPlanName
     parAzFirewallEnabled: parAzFirewallEnabled
     parAzFirewallDnsProxyEnabled: parAzFirewallDnsProxyEnabled
-    parBgpRoutePropagationDisabled: parBgpRoutePropagationDisabled
+    parDisableBgpRoutePropagation: parDisableBgpRoutePropagation
     parPrivateDnsZonesEnabled: parPrivateDnsZonesEnabled
     parExpressRouteGatewayConfig: parExpressRouteGatewayConfig
     parVpnGatewayConfig: parVpnGatewayConfig
@@ -1417,7 +1417,7 @@ module modSpokeNetworking '../../../spokeNetworking/spokeNetworking.bicep' = [fo
     parDnsServerIpArray: parDnsServerIpArray
     parNextHopIpAddress: parAzFirewallEnabled ? modHubNetworking.outputs.outAzFirewallPrivateIp : ''
     parSpoketoHubRouteTableName: parSpoketoHubRouteTableName
-    parBgpRoutePropagationDisabled: parBgpRoutePropagationDisabled
+    parDisableBgpRoutePropagation: parDisableBgpRoutePropagation
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
   }

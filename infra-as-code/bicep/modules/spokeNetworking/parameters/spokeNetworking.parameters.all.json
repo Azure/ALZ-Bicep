@@ -5,7 +5,7 @@
         "parLocation": {
             "value": "eastus"
         },
-        "parBgpRoutePropagationDisabled": {
+        "parDisableBgpRoutePropagation": {
             "value": false
         },
         "parDdosProtectionPlanId": {

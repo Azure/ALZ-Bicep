@@ -72,7 +72,7 @@
     "parHubRouteTableName": {
       "value": "alz-hub-routetable"
     },
-    "parBgpRoutePropagationDisabled": {
+    "parDisableBgpRoutePropagation": {
       "value": false
     },
     "parPrivateDnsZonesEnabled": {

@@ -82,7 +82,7 @@ param parAzFirewallDnsProxyEnabled bool = true
 param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 
 @description('Switch to enable/disable BGP Propagation on route table. Default: false')
-param parBgpRoutePropagationDisabled bool = false
+param parDisableBgpRoutePropagation bool = false
 
 @description('Switch to enable/disable Private DNS Zones deployment. Default: true')
 param parPrivateDnsZonesEnabled bool = true
@@ -437,7 +437,7 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (parAz
         }
       }
     ]
-    disableBgpRoutePropagation: parBgpRoutePropagationDisabled
+    disableBgpRoutePropagation: parDisableBgpRoutePropagation
   }
 }
 

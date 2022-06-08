@@ -73,7 +73,7 @@
         "parAzFirewallDnsProxyEnabled": {
             "value": true
         },
-        "parBgpRoutePropagationDisabled": {
+        "parDisableBgpRoutePropagation": {
             "value": false
         },
         "parPrivateDnsZonesEnabled": {

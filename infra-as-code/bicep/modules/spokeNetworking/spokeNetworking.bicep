@@ -2,7 +2,7 @@
 param parLocation string = resourceGroup().location
 
 @description('Switch to enable/disable BGP Propagation on route table. Default: false')
-param parBgpRoutePropagationDisabled bool = false
+param parDisableBgpRoutePropagation bool = false
 
 @description('Id of the DdosProtectionPlan which will be applied to the Virtual Network.  Default: Empty String')
 param parDdosProtectionPlanId string = ''
@@ -68,7 +68,7 @@ resource resSpokeToHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if
         }
       }
     ]
-    disableBgpRoutePropagation: parBgpRoutePropagationDisabled
+    disableBgpRoutePropagation: parDisableBgpRoutePropagation
   }
 }
 

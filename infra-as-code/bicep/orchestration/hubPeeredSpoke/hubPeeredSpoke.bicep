@@ -44,7 +44,7 @@ param parDnsServerIpArray  array = []
 param parNextHopIpAddress string = ''
 
 @description('Switch which allows BGP Route Propogation to be disabled on the route table')
-param parBgpRoutePropagationDisabled bool = false
+param parDisableBgpRoutePropagation bool = false
 
 @description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
 param parSpoketoHubRouteTableName string = 'rtb-spoke-to-hub'
@@ -141,7 +141,7 @@ module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' 
     parDnsServerIps: parDnsServerIpArray
     parNextHopIpAddress: varNextHopIPAddress
     parSpokeToHubRouteTableName: parSpoketoHubRouteTableName
-    parBgpRoutePropagationDisabled: parBgpRoutePropagationDisabled
+    parDisableBgpRoutePropagation: parDisableBgpRoutePropagation
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
     parLocation: parLocation
