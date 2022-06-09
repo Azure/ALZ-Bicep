@@ -247,7 +247,7 @@ param parPrivateDnsZones array = [
 ]
 
 @description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
-param parDnsServerIpArray array = []
+param parDnsServerIps array = []
 
 // Policy Assignments Module Parameters
 @description('An e-mail address that you want Azure Security Center alerts to be sent to.')
@@ -618,7 +618,7 @@ module modHubNetworking '../../../hubNetworking/hubNetworking.bicep' = {
     parSubnets: parSubnets
     parAzBastionName: parAzBastionName
     parPrivateDnsZones: parPrivateDnsZones
-    parDnsServerIpArray: parDnsServerIpArray
+    parDnsServerIps: parDnsServerIps
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1414,7 +1414,7 @@ module modSpokeNetworking '../../../spokeNetworking/spokeNetworking.bicep' = [fo
     parDdosProtectionPlanId: modHubNetworking.outputs.outDdosPlanResourceId
     parAzFirewallDnsProxyEnabled: parAzFirewallDnsProxyEnabled
     parHubNVAEnabled: parAzFirewallEnabled
-    parDnsServerIpArray: parDnsServerIpArray
+    parDnsServerIps: parDnsServerIps
     parNextHopIpAddress: parAzFirewallEnabled ? modHubNetworking.outputs.outAzFirewallPrivateIp : ''
     parSpoketoHubRouteTableName: parSpoketoHubRouteTableName
     parDisableBgpRoutePropagation: parDisableBgpRoutePropagation

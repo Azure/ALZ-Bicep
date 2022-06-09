@@ -208,7 +208,7 @@
               "privatelink.search.windows.net"
             ]
         },
-        "parDnsServerIpArray": {
+        "parDnsServerIps": {
             "value": []
         },
         "parAscEmailSecurityContact": {

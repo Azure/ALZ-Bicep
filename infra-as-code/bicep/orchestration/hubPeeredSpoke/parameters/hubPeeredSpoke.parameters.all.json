@@ -23,7 +23,7 @@
       "parSpokeNetworkAddressPrefix": {
         "value": "10.202.0.0/24"
       },
-      "parDnsServerIpArray": {
+      "parDnsServerIps": {
         "value": []
       },
       "parNextHopIpAddress": {

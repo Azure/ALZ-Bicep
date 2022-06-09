@@ -38,7 +38,7 @@ param parSpokeNetworkName string = 'vnet-spoke'
 param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 
 @description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
-param parDnsServerIpArray  array = []
+param parDnsServerIps  array = []
 
 @description('IP Address where network traffic should route to. Default: Empty string')
 param parNextHopIpAddress string = ''
@@ -138,7 +138,7 @@ module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' 
     parSpokeNetworkName: parSpokeNetworkName
     parSpokeNetworkAddressPrefix: parSpokeNetworkAddressPrefix
     parDdosProtectionPlanId: parDdosProtectionPlanId
-    parDnsServerIps: parDnsServerIpArray
+    parDnsServerIps: parDnsServerIps
     parNextHopIpAddress: varNextHopIPAddress
     parSpokeToHubRouteTableName: parSpokeToHubRouteTableName
     parDisableBgpRoutePropagation: parDisableBgpRoutePropagation

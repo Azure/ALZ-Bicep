@@ -27,7 +27,7 @@ param parSubnets array = [
 ]
 
 @description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
-param parDnsServerIpArray array = []
+param parDnsServerIps array = []
 
 @description('Public IP Address SKU. Default: Standard')
 @allowed([
@@ -236,7 +236,7 @@ resource resHubVnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
       ]
     }
     dhcpOptions: {
-      dnsServers: parDnsServerIpArray
+      dnsServers: parDnsServerIps
     }
     subnets: varSubnetProperties
     enableDdosProtection: parDdosEnabled
