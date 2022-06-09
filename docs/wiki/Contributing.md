@@ -242,4 +242,4 @@ To author Bicep modules that are in-line with the requirements for this project,
     - `<module>` denotes the current module (and scope when necessary), for example: `roleAssignmentManagementGroup`
     - `<parameterSet>` denotes a set of parameters with similar characteristics, for example: `securityGroup`
     - `parameters` constant to denote the file as a parameters file
-    - `<min|all>.json` denotes whether a parameter file contains all possible parameters or only minimum necessary for deployment 
+    - `<min|all>.json` denotes whether a parameter file contains all possible parameters or only minimum necessary for deployment
