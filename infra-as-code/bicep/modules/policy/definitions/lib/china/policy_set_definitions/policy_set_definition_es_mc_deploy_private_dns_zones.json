@@ -200,7 +200,7 @@
     "policyDefinitions": [
       {
         "policyDefinitionReferenceId": "Deploy-Private-DNS-Azure-File-Sync",
-        "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Private-DNS-Azure-File-Sync",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Private-DNS-Azure-File-Sync",
         "parameters": {
           "privateDnsZoneId": {
             "value": "[[parameters('azureFileprivateDnsZoneId')]"
@@ -213,7 +213,7 @@
       },
       {
         "policyDefinitionReferenceId": "Deploy-Private-DNS-Azure-Web",
-        "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Private-DNS-Azure-Web",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Private-DNS-Azure-Web",
         "parameters": {
           "privateDnsZoneId": {
             "value": "[[parameters('azureWebPrivateDnsZoneId')]"
@@ -278,7 +278,7 @@
       },
       {
         "policyDefinitionReferenceId": "Deploy-Private-DNS-Azure-KeyVault",
-        "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Private-DNS-Azure-KeyVault",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Private-DNS-Azure-KeyVault",
         "parameters": {
           "privateDnsZoneId": {
             "value": "[[parameters('azureKeyVaultPrivateDnsZoneId')]"

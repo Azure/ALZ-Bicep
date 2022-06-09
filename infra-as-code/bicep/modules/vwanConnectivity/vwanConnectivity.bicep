@@ -1,48 +1,48 @@
+@description('Region in which the resource group was created. Default: {resourceGroup().location}')
+param parLocation string = resourceGroup().location
+
 @description('Prefix value which will be prepended to all resource names. Default: alz')
 param parCompanyPrefix string = 'alz'
 
 @description('The IP address range in CIDR notation for the vWAN virtual Hub to use. Default: 10.100.0.0/23')
-param parVhubAddressPrefix string = '10.100.0.0/23'
+param parVirtualHubAddressPrefix string = '10.100.0.0/23'
 
 @description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
 @allowed([
   'Standard'
   'Premium'
 ])
-param parAzureFirewallTier string = 'Standard'
+param parAzFirewallTier string = 'Standard'
 
-@description('Tags you would like to be applied to all resources in this module. Default: empty array')
-param parTags object = {}
-
-@description('Switch which allows Virtual Hub. Default: true')
+@description('Switch to enable/disable Virtual Hub deployment. Default: true')
 param parVirtualHubEnabled bool = true
 
-@description('Switch which allows VPN Gateway. Default: false')
-param parVPNGatewayEnabled bool = true
+@description('Switch to enable/disable VPN Gateway deployment. Default: false')
+param parVpnGatewayEnabled bool = true
 
-@description('Switch which allows ExpressRoute Gateway. Default: false')
-param parERGatewayEnabled bool = true
+@description('Switch to enable/disable ExpressRoute Gateway deployment. Default: false')
+param parExpressRouteGatewayEnabled bool = true
 
-@description('Switch which allows Azure Firewall deployment to be disabled. Default: false')
-param parAzureFirewallEnabled bool = true
+@description('Switch to enable/disable Azure Firewall deployment. Default: false')
+param parAzFirewallEnabled bool = true
 
-@description('Switch which enables DNS proxy for Azure Firewall policies. Default: false')
-param parNetworkDNSEnableProxy bool = true
+@description('Switch to enable/disable Azure Firewall DNS Proxy. Default: false')
+param parAzFirewallDnsProxyEnabled bool = true
 
 @description('Prefix Used for Virtual WAN. Default: {parCompanyPrefix}-vwan-{parLocation}')
-param parVWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
+param parVirtualWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
 
-@description('Prefix Used for Virtual Hub. Default: {parCompanyPrefix}-hub-{parLocation}')
-param parVHubName string = '${parCompanyPrefix}-vhub-${parLocation}'
+@description('Prefix Used for Virtual WAN Hub. Default: {parCompanyPrefix}-hub-{parLocation}')
+param parVirtualWanHubName string = '${parCompanyPrefix}-vhub-${parLocation}'
 
 @description('Prefix Used for VPN Gateway. Default: {parCompanyPrefix}-vpngw-{parLocation}')
-param parVPNGwName string = '${parCompanyPrefix}-vpngw-${parLocation}'
+param parVpnGatewayName string = '${parCompanyPrefix}-vpngw-${parLocation}'
 
 @description('Prefix Used for ExpressRoute Gateway. Default: {parCompanyPrefix}-ergw-{parLocation}')
-param parERGwName string = '${parCompanyPrefix}-ergw-${parLocation}'
+param parExpressRouteGatewayName string = '${parCompanyPrefix}-ergw-${parLocation}'
 
 @description('Azure Firewall Name. Default: {parCompanyPrefix}-fw-{parLocation}')
-param parAzureFirewallName string = '${parCompanyPrefix}-fw-${parLocation}'
+param parAzFirewallName string = '${parCompanyPrefix}-fw-${parLocation}'
 
 @allowed([
   '1'
@@ -50,27 +50,24 @@ param parAzureFirewallName string = '${parCompanyPrefix}-fw-${parLocation}'
   '3'
 ])
 @description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
-param parAzureFirewallAvailabilityZones array = []
+param parAzFirewallAvailabilityZones array = []
 
 @description('Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}')
-param parFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
-
-@description('Region in which the resource group was created. Default: {resourceGroup().location}')
-param parLocation string = resourceGroup().location
+param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
 
 @description('The scale unit for this VPN Gateway: Default: 1')
-param parVPNGwScaleUnit int = 1
+param parVpnGatewayScaleUnit int = 1
 
 @description('The scale unit for this ExpressRoute Gateway: Default: 1')
-param parERGwScaleUnit int = 1
+param parExpressRouteGatewayScaleUnit int = 1
 
-@description('Switch which allows DDOS deployment to be disabled. Default: true')
+@description('Switch to enable/disable DDoS Standard deployment. Default: true')
 param parDdosEnabled bool = true
 
-@description('DDOS Plan Name. Default: {parCompanyPrefix}-ddos-plan')
+@description('DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan')
 param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
 
-@description('Switch which allows and deploys Private DNS Zones. Default: true')
+@description('Switch to enable/disable Private DNS Zones deployment. Default: true')
 param parPrivateDnsZonesEnabled bool = true
 
 @description('Resource Group Name for Private DNS Zones. Default: same resource group')
@@ -135,6 +132,9 @@ param parPrivateDnsZones array = [
 @description('Resource ID of VNet for Private DNS Zone VNet Links')
 param parVirtualNetworkIdToLink string = ''
 
+@description('Tags you would like to be applied to all resources in this module. Default: empty array')
+param parTags object = {}
+
 @description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
@@ -142,8 +142,8 @@ param parTelemetryOptOut bool = false
 var varCuaid = '7f94f23b-7a59-4a5c-9a8d-2a253a566f61'
 
 // Virtual WAN resource
-resource resVWAN 'Microsoft.Network/virtualWans@2021-05-01' = {
-  name: parVWanName
+resource resVwan 'Microsoft.Network/virtualWans@2021-05-01' = {
+  name: parVirtualWanName
   location: parLocation
   tags: parTags
   properties: {
@@ -154,21 +154,21 @@ resource resVWAN 'Microsoft.Network/virtualWans@2021-05-01' = {
   }
 }
 
-resource resVHub 'Microsoft.Network/virtualHubs@2021-05-01' = if (parVirtualHubEnabled && !empty(parVhubAddressPrefix)) {
-  name: parVHubName
+resource resVhub 'Microsoft.Network/virtualHubs@2021-05-01' = if (parVirtualHubEnabled && !empty(parVirtualHubAddressPrefix)) {
+  name: parVirtualWanHubName
   location: parLocation
   tags: parTags
   properties: {
-    addressPrefix: parVhubAddressPrefix
+    addressPrefix: parVirtualHubAddressPrefix
     sku: 'Standard'
     virtualWan: {
-      id: resVWAN.id
+      id: resVwan.id
     }
   }
 }
 
-resource resVHubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2021-05-01' = if (parVirtualHubEnabled && parAzureFirewallEnabled) {
-  parent: resVHub
+resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2021-05-01' = if (parVirtualHubEnabled && parAzFirewallEnabled) {
+  parent: resVhub
   name: 'defaultRouteTable'
   properties: {
     labels: [
@@ -181,15 +181,15 @@ resource resVHubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2021-05
           '0.0.0.0/0'
         ]
         destinationType: 'CIDR'
-        nextHop: (parVirtualHubEnabled && parAzureFirewallEnabled) ? resAzureFirewall.id : ''
+        nextHop: (parVirtualHubEnabled && parAzFirewallEnabled) ? resAzureFirewall.id : ''
         nextHopType: 'ResourceID'
       }
     ]
   }
 }
 
-resource resVPNGateway 'Microsoft.Network/vpnGateways@2021-05-01' = if (parVirtualHubEnabled && parVPNGatewayEnabled) {
-  name: parVPNGwName
+resource resVpnGateway 'Microsoft.Network/vpnGateways@2021-05-01' = if (parVirtualHubEnabled && parVpnGatewayEnabled) {
+  name: parVpnGatewayName
   location: parLocation
   tags: parTags
   properties: {
@@ -199,47 +199,47 @@ resource resVPNGateway 'Microsoft.Network/vpnGateways@2021-05-01' = if (parVirtu
       peerWeight: 5
     }
     virtualHub: {
-      id: resVHub.id
+      id: resVhub.id
     }
-    vpnGatewayScaleUnit: parVPNGwScaleUnit
+    vpnGatewayScaleUnit: parVpnGatewayScaleUnit
   }
 }
 
-resource resERGateway 'Microsoft.Network/expressRouteGateways@2021-05-01' = if (parVirtualHubEnabled && parERGatewayEnabled) {
-  name: parERGwName
+resource resErGateway 'Microsoft.Network/expressRouteGateways@2021-05-01' = if (parVirtualHubEnabled && parExpressRouteGatewayEnabled) {
+  name: parExpressRouteGatewayName
   location: parLocation
   tags: parTags
   properties: {
     virtualHub: {
-      id: resVHub.id
+      id: resVhub.id
     }
     autoScaleConfiguration: {
       bounds: {
-        min: parERGwScaleUnit
+        min: parExpressRouteGatewayScaleUnit
       }
     }
   }
 }
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = if (parVirtualHubEnabled && parAzureFirewallEnabled) {
-  name: parFirewallPoliciesName
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = if (parVirtualHubEnabled && parAzFirewallEnabled) {
+  name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
   properties: {
     dnsSettings: {
-      enableProxy: parNetworkDNSEnableProxy
+      enableProxy: parAzFirewallDnsProxyEnabled
     }
     sku: {
-      tier: parAzureFirewallTier
+      tier: parAzFirewallTier
     }
   }
 }
 
-resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (parVirtualHubEnabled && parAzureFirewallEnabled) {
-  name: parAzureFirewallName
+resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (parVirtualHubEnabled && parAzFirewallEnabled) {
+  name: parAzFirewallName
   location: parLocation
   tags: parTags
-  zones: (!empty(parAzureFirewallAvailabilityZones) ? parAzureFirewallAvailabilityZones : json('null'))
+  zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : json('null'))
   properties: {
     hubIPAddresses: {
       publicIPs: {
@@ -248,16 +248,16 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
     }
     sku: {
       name: 'AZFW_Hub'
-      tier: parAzureFirewallTier
+      tier: parAzFirewallTier
     }
     virtualHub: {
-      id: parVirtualHubEnabled ? resVHub.id : ''
+      id: parVirtualHubEnabled ? resVhub.id : ''
     }
     additionalProperties: {
-      'Network.DNS.EnableProxy': '${parNetworkDNSEnableProxy}'
+      'Network.DNS.EnableProxy': '${parAzFirewallDnsProxyEnabled}'
     }
     firewallPolicy: {
-      id: (parVirtualHubEnabled && parAzureFirewallEnabled) ? resFirewallPolicies.id : ''
+      id: (parVirtualHubEnabled && parAzFirewallEnabled) ? resFirewallPolicies.id : ''
     }
   }
 }
@@ -288,15 +288,15 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdRes
 }
 
 // Output Virtual WAN name and ID
-output outVirtualWANName string = resVWAN.name
-output outVirtualWANID string = resVWAN.id
+output outVirtualWanName string = resVwan.name
+output outVirtualWanId string = resVwan.id
 
-// Output Virtual Hub name and ID
-output outVirtualHubName string = resVHub.name
-output outVirtualHubID string = resVHub.id
+// Output Virtual WAN Hub name and ID
+output outVirtualHubName string = resVhub.name
+output outVirtualHubId string = resVhub.id
 
 // Output DDoS Plan ID
-output outDdosPlanResourceID string = resDdosProtectionPlan.id
+output outDdosPlanResourceId string = resDdosProtectionPlan.id
 
 // Output Private DNS Zones
 output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])

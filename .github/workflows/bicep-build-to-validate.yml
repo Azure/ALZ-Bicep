@@ -22,7 +22,7 @@ jobs:
       - name: Bicep Build & Lint All Modules
         shell: pwsh
         run: |
-          Get-ChildItem -Recurse -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orch-hubSpoke.bicep' | ForEach-Object {
+          Get-ChildItem -Recurse -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
               Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
               $output = bicep build $_.FullName 2>&1
               if ($LastExitCode -ne 0)

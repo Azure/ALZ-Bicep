@@ -12,7 +12,7 @@ The module requires the following inputs:
 
  | Parameter                | Type   | Default | Description                                              | Requirement                                  | Example |
  | ------------------------ | ------ | ------- | -------------------------------------------------------- | -------------------------------------------- | ------- |
- | parResourceGroupLocation | string | None    | Location where Resource Group will be deployed           | Valid Azure Region                           | eastus2 |
+ | parLocation | string | None    | Location where Resource Group will be deployed           | Valid Azure Region                           | eastus2 |
  | parResourceGroupName     | string | None    | Name of Resource Group to create in the specified region | 2-64 char, letters, numbers, and underscores | Hub     |
  | parTags                      | object | Empty object `{}`          | Array of Tags to be applied to Resource Group   | None        | `{"key": "value"}`                                                                                                                                    |
  | parTelemetryOptOut       | bool   | `false` | Set Parameter to true to Opt-out of deployment telemetry | none                                         | `false` |

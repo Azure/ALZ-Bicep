@@ -70,13 +70,15 @@ Throughout the development of Bicep code you should follow the [Bicep Best Pract
 
 ### Bicep Code Styling
 
-- Camel Casing must be used for all elements:
+- Strict `camelCasing` must be used for all elements:
   - Symbolic names for:
     - Parameters
     - Variables
     - Resource
     - Modules
     - Outputs
+- All `par` and `out` values in Bicep templates should include full product name instead of `camelCased` abbreviation, for example: `parExpressRouteGwName` instead of `parErGwName`
+- Services with "Azure" in the name are abbreviated "Az", for example: `parAzBastionName` instead of `parAzureBastionName`
 - Use [parameter decorators](https://docs.microsoft.com/azure/azure-resource-manager/bicep/parameters#decorators) to ensure integrity of user inputs are complete and therefore enable successful deployment
   - Only use the [`@secure()` parameter decorator](https://docs.microsoft.com/azure/azure-resource-manager/bicep/parameters#secure-parameters) for inputs. Never for outputs as this is not stored securely and will be stored/shown as plain-text!
 - Comments should be provided where additional information/description of what is happening is required, except when a decorator like `@description('Example description')` is providing adequate coverage
@@ -233,4 +235,11 @@ To author Bicep modules that are in-line with the requirements for this project,
             }
       ```
 
-  - The Bicep module file & parameters file, complete with default values.
+  - The Bicep module file
+  - A `parameters` folder that will contain the parameters files for the module
+  - Parameters `...all.json` and `...min.json` files based on file naming convention below
+  - Parameter files should be named according to the convention: `<module>.<parameterSet>.parameters.<min|all>.json`
+    - `<module>` denotes the current module (and scope when necessary), for example: `roleAssignmentManagementGroup`
+    - `<parameterSet>` denotes a set of parameters with similar characteristics, for example: `securityGroup`
+    - `parameters` constant to denote the file as a parameters file
+    - `<min|all>.json` denotes whether a parameter file contains all possible parameters or only minimum necessary for deployment
