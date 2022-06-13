@@ -196,7 +196,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg validate --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentSubscriptionMany.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentSubscriptionMany.parameters.managed-identity.all.json parSubscriptionIds='("$(subscriptionId)", "$(subscriptionId)")' --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
+        az deployment mg validate --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentSubscriptionMany.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentSubscriptionMany.parameters.managed-identity.all.json parSubscriptionIds='("$(subscriptionId)")' --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
 
   - task: Bash@3    
     displayName: Az CLI Validate hub peered spoke orchestration module
