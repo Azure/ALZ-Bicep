@@ -38,16 +38,16 @@ param parSpokeNetworkName string = 'vnet-spoke'
 param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 
 @description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
-param parDnsServerIpArray  array = []
+param parDnsServerIps  array = []
 
 @description('IP Address where network traffic should route to. Default: Empty string')
 param parNextHopIpAddress string = ''
 
 @description('Switch which allows BGP Route Propogation to be disabled on the route table')
-param parBgpRoutePropagation bool = false
+param parDisableBgpRoutePropagation bool = false
 
 @description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
-param parSpoketoHubRouteTableName string = 'rtb-spoke-to-hub'
+param parSpokeToHubRouteTableName string = 'rtb-spoke-to-hub'
 
 // Peering Modules Parameters
 @description('Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID. No default')
@@ -138,10 +138,10 @@ module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' 
     parSpokeNetworkName: parSpokeNetworkName
     parSpokeNetworkAddressPrefix: parSpokeNetworkAddressPrefix
     parDdosProtectionPlanId: parDdosProtectionPlanId
-    parDnsServerIPs: parDnsServerIpArray
-    parNextHopIPAddress: varNextHopIPAddress
-    parSpokeToHubRouteTableName: parSpoketoHubRouteTableName
-    parBGPRoutePropagation: parBgpRoutePropagation
+    parDnsServerIps: parDnsServerIps
+    parNextHopIpAddress: varNextHopIPAddress
+    parSpokeToHubRouteTableName: parSpokeToHubRouteTableName
+    parDisableBgpRoutePropagation: parDisableBgpRoutePropagation
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
     parLocation: parLocation
@@ -180,10 +180,10 @@ module modhubVirtualNetworkConnection '../../modules/vnetPeeringVwan/hubVirtualN
   scope: resourceGroup(varVirtualHubSubscriptionId, varVirtualHubResourceGroup)  
   name: varModuleDeploymentNames.modVnetPeeringVwan
   params: {
-    parVirtualHubResourceId: varVirtualHubResourceId
+    parVirtualWanHubResourceId: varVirtualHubResourceId
     parRemoteVirtualNetworkResourceId: modSpokeNetworking.outputs.outSpokeVirtualNetworkId
   }
 }
 
 output outSpokeVirtualNetworkName string = modSpokeNetworking.outputs.outSpokeVirtualNetworkName
-output outSpokeVirtualNetworkid string = modSpokeNetworking.outputs.outSpokeVirtualNetworkId
+output outSpokeVirtualNetworkId string = modSpokeNetworking.outputs.outSpokeVirtualNetworkId

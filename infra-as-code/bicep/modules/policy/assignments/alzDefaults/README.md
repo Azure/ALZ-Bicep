@@ -2,6 +2,8 @@
 
 This module deploys the default Azure Landing Zone Azure Policy Assignments to the Management Group Hierarchy and also assigns the relevant RBAC for the system-assigned Managed Identities created for policies that require them (e.g DeployIfNotExist & Modify effect policies).
 
+If you wish to add your own additional Azure Policy Assignments please review [How Does ALZ-Bicep Implement Azure Policies?](https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive) and more specifically [Adding Custom Azure Policy Definitions](https://github.com/Azure/ALZ-Bicep/wiki/AddingPolicyDefs)
+
 ## Parameters
 
 > Please use the scroll horizontal scroll bar at the bottom of this table to scroll along to see the other columns!
@@ -12,10 +14,10 @@ The module requires the following inputs:
  | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
  | parTopLevelManagementGroupPrefix                     | Prefix for the management group hierarchy.                                                                                                                                                                                       | Yes         | `alz`                                                                                                                                                 | `alz`                             |
  | parLogAnalyticsWorkSpaceAndAutomationAccountLocation | The region where the Log Analytics Workspace & Automation Account are deployed.                                                                                                                                                  | Yes         | `eastus`                                                                                                                                              | `eastus`                          |
- | parLogAnalyticsWorkspaceResourceID                   | Log Analytics Workspace Resource ID                                                                                                                                                                                              | Yes         | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics` | None                              |
+ | parLogAnalyticsWorkspaceResourceId                   | Log Analytics Workspace Resource ID                                                                                                                                                                                              | Yes         | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics` | None                              |
  | parLogAnalyticsWorkspaceLogRetentionInDays           | Number of days of log retention for Log Analytics Workspace                                                                                                                                                                      | Yes         | `365`                                                                                                                                                 | `365`                             |
  | parAutomationAccountName                             | Automation Account name                                                                                                                                                                                                          | Yes         | `alz-automation-account`                                                                                                                              | `alz-automation-account`          |
- | parMSDFCEmailSecurityContact                         | An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.                                                                                                                                               | Yes         | `security_contact@replace_me.com`                                                                                                                     | `security_contact@replace_me.com` |
+ | parMsDefenderForCloudEmailSecurityContact                         | An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.                                                                                                                                               | Yes         | `security_contact@replace_me.com`                                                                                                                     | `security_contact@replace_me.com` |
  | parDdosProtectionPlanId                              | ID of the DDoS Protection Plan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues. | Yes         | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/Hub_Networking_POC/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan` | (empty string)                    |
  | parTelemetryOptOut                                   | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                                                                         | Yes         | `false`                                                                                                                                               | `false`                           |
 
@@ -37,7 +39,7 @@ The module does not generate any outputs.
 # For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json \
   --location eastus \
   --management-group-id alz
 ```
@@ -46,7 +48,7 @@ OR
 # For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json \
   --location chinaeast2 \
   --management-group-id alz
 ```
@@ -57,7 +59,7 @@ az deployment mg create \
 # For Azure global regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json `
   -Location eastus `
   -ManagementGroupId alz
 ```
@@ -66,7 +68,7 @@ OR
 # For Azure China regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json `
   -Location chinaeast2 `
   -ManagementGroupId alz
 ```

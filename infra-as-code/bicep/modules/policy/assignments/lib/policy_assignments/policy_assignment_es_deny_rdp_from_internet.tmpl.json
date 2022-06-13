@@ -11,7 +11,7 @@
         "value": "Deny"
       }
     },
-    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policyDefinitions/Deny-RDP-From-Internet",
+    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelManagementGroupId}/providers/Microsoft.Authorization/policyDefinitions/Deny-RDP-From-Internet",
     "scope": null,
     "enforcementMode": "Default"
   },

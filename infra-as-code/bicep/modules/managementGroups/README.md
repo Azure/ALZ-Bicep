@@ -28,28 +28,28 @@ The module requires the following inputs:
 
 The module will generate the following outputs:
 
-| Output                        | Type   | Example                                                                    |
-| ----------------------------- | ------ | -------------------------------------------------------------------------- |
-| outTopLevelMGId               | string | /providers/Microsoft.Management/managementGroups/alz                       |
-| outPlatformMGId               | string | /providers/Microsoft.Management/managementGroups/alz-platform              |
-| outPlatformManagementMGId     | string | /providers/Microsoft.Management/managementGroups/alz-platform-management   |
-| outPlatformConnectivityMGId   | string | /providers/Microsoft.Management/managementGroups/alz-platform-connectivity |
-| outPlatformIdentityMGId       | string | /providers/Microsoft.Management/managementGroups/alz-platform-identity     |
-| outLandingZonesMGId           | string | /providers/Microsoft.Management/managementGroups/alz-landingzones          |
-| outLandingZonesCorpMGId       | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-corp     |
-| outLandingZonesOnlineMGId     | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-online   |
-| outSandboxMGId                | string | /providers/Microsoft.Management/managementGroups/alz-sandbox               |
-| outDecommissionedMGId         | string | /providers/Microsoft.Management/managementGroups/alz-decommissioned        |
-| outTopLevelMGName             | string | alz                                                                        |
-| outPlatformMGName             | string | alz-platform                                                               |
-| outPlatformManagementMGName   | string | alz-platform-management                                                    |
-| outPlatformConnectivityMGName | string | alz-platform-connectivity                                                  |
-| outPlatformIdentityMGName     | string | alz-platform-identity                                                      |
-| outLandingZonesMGName         | string | alz-landingzones                                                           |
-| outLandingZonesCorpMGName     | string | alz-landingzones-corp                                                      |
-| outLandingZonesOnlineMGName   | string | alz-landingzones-online                                                    |
-| outSandboxMGName              | string | alz-sandbox                                                                |
-| outDecommissionedMGName       | string | alz-decommissioned                                                         |
+| Output                                     | Type   | Example                                                                    |
+| ------------------------------------------ | ------ | -------------------------------------------------------------------------- |
+| outTopLevelManagementGroupId               | string | /providers/Microsoft.Management/managementGroups/alz                       |
+| outPlatformManagementGroupId               | string | /providers/Microsoft.Management/managementGroups/alz-platform              |
+| outPlatformManagementManagementGroupId     | string | /providers/Microsoft.Management/managementGroups/alz-platform-management   |
+| outPlatformConnectivityManagementGroupId   | string | /providers/Microsoft.Management/managementGroups/alz-platform-connectivity |
+| outPlatformIdentityManagementGroupId       | string | /providers/Microsoft.Management/managementGroups/alz-platform-identity     |
+| outLandingZonesManagementGroupId           | string | /providers/Microsoft.Management/managementGroups/alz-landingzones          |
+| outLandingZonesCorpManagementGroupId       | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-corp     |
+| outLandingZonesOnlineManagementGroupId     | string | /providers/Microsoft.Management/managementGroups/alz-landingzones-online   |
+| outSandboxManagementGroupId                | string | /providers/Microsoft.Management/managementGroups/alz-sandbox               |
+| outDecommissionedManagementGroupId         | string | /providers/Microsoft.Management/managementGroups/alz-decommissioned        |
+| outTopLevelManagementGroupName             | string | alz                                                                        |
+| outPlatformManagementGroupName             | string | alz-platform                                                               |
+| outPlatformManagementManagementGroupName   | string | alz-platform-management                                                    |
+| outPlatformConnectivityManagementGroupName | string | alz-platform-connectivity                                                  |
+| outPlatformIdentityManagementGroupName     | string | alz-platform-identity                                                      |
+| outLandingZonesManagementGroupName         | string | alz-landingzones                                                           |
+| outLandingZonesCorpManagementGroupName     | string | alz-landingzones-corp                                                      |
+| outLandingZonesOnlineManagementGroupName   | string | alz-landingzones-online                                                    |
+| outSandboxManagementGroupName              | string | alz-sandbox                                                                |
+| outDecommissionedManagementGroupName       | string | alz-decommissioned                                                         |
 
 ## Deployment
 
@@ -62,7 +62,7 @@ In this example, the management groups are created at the `Tenant Root Group` th
 # For Azure global regions
 az deployment tenant create \
   --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
-  --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json \
   --location eastus
 ```
 OR
@@ -70,7 +70,7 @@ OR
 # For Azure China regions
 az deployment tenant create \
   --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
-  --parameters @infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json \
   --location chinaeast2
 ```
 
@@ -80,7 +80,7 @@ az deployment tenant create \
 # For Azure global regions
 New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json `
   -Location eastus
 ```
 OR
@@ -88,7 +88,7 @@ OR
 # For Azure China regions
 New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/managementGroups.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json `
   -Location chinaeast2  
 ```
 

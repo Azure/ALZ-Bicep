@@ -7,6 +7,8 @@ Module deploys the following resources:
 - Virtual Network (Spoke VNet)
 - UDR - if Firewall is enabled
 
+> Consider using the `hubPeeredSpoke` orchestration module instead to simplify spoke networking deployment, VNET Peering, UDR configuration and Subscription placement in a single module. [infra-as-code/bicep/orchestration/hubPeeredSpoke](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/orchestration/hubPeeredSpoke)
+
 ## Parameters
 
 The module requires the following inputs:
@@ -14,13 +16,13 @@ The module requires the following inputs:
  | Parameter                    | Type   | Default                    | Description                                                         | Requirement | Example                                                                                                                                               |
  | ---------------------------- | ------ | -------------------------- | ------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
  | parLocation                    | string | `resourceGroup().location` | The Azure Region to deploy the resources into                       | None        | `eastus`                                                                                                                                              |
- | parBGPRoutePropagation       | bool   | false                      | Switch to enable BGP Route Propagation on VNet Route Table          | None        | false                                                                                                                                                 |
+ | parDisableBgpRoutePropagation | bool   | false                      | Switch which allows BGP Propagation to be disabled on the route table          | None        | false                                                                                                                                                 |
  | parTags                      | object | Empty object `{}`          | Array of Tags to be applied to all resources in the Spoke Network   | None        | `{"key": "value"}`                                                                                                                                    |
  | parDdosProtectionPlanId      | string | Empty string `''`          | Existing DDoS Protection plan to utilize                            | None        | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/Hub_Networking_POC/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan` |
  | parSpokeNetworkAddressPrefix | string | '10.11.0.0/16'             | CIDR for Spoke Network                                              | None        | '10.11.0.0/16'                                                                                                                                        |
  | parSpokeNetworkName          | string | 'vnet-spoke'               | The Name of the Spoke Virtual Network.                              | None        | 'vnet-spoke'                                                                                                                                          |
- | parDnsServerIPs          | array  | Empty array `[]`           | DNS Servers to use for VNet DNS Resolution                 | None        | `['10.10.1.4', '10.20.1.5']`                                                                                                                          |
- | parNextHopIPAddress          | string | Empty string `''`          | IP Address where network traffic should route to leverage DNS Proxy | None        | '192.168.50.4'                                                                                                                                        |
+ | parDnsServerIps          | array  | Empty array `[]`           | DNS Servers to use for VNet DNS Resolution                 | None        | `['10.10.1.4', '10.20.1.5']`                                                                                                                          |
+ | parNextHopIpAddress          | string | Empty string `''`          | IP Address where network traffic should route to leverage DNS Proxy | None        | '192.168.50.4'                                                                                                                                        |
  | parSpokeToHubRouteTableName  | string | 'rtb-spoke-to-hub'         | Name of Route table to create for the default route of Hub.         | None        | 'rtb-spoke-to-hub '                                                                                                                                   |
  | parTelemetryOptOut           | bool   | false                      | Set Parameter to true to Opt-out of deployment telemetry            | None        | false                                                                                                                                                 |
 
@@ -54,7 +56,7 @@ az group create --location eastus \
 az deployment group create \
    --resource-group Spoke_Networking_POC  \
    --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json
 ```
 OR
 ```bash
@@ -69,7 +71,7 @@ az group create --location chinaeast2 \
 az deployment group create \
    --resource-group Spoke_Networking_POC  \
    --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json
 ```
 
 ### PowerShell
@@ -86,7 +88,7 @@ New-AzResourceGroup -Name 'Spoke_Networking_POC' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json `
   -ResourceGroupName 'Spoke_Networking_POC'
 ```
 OR
@@ -102,20 +104,14 @@ New-AzResourceGroup -Name 'Spoke_Networking_POC' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.parameters.example.json
+  -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json `
   -ResourceGroupName 'Spoke_Networking_POC'
 ```
 ## Example Output in Azure global regions
 
-![Example Deployment Output](media/spokeNetworkExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
+![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
 
 
 ## Bicep Visualizer
 
 ![Bicep Visualizer](media/bicepVisualizer.png "Bicep Visualizer")
-
-
-
-
-
-

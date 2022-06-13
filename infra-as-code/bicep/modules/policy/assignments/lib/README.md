@@ -8,7 +8,7 @@ This directory contains the default policy assignments we make as part of the Az
 For example:
 
 ```bicep
-var varPolicyAssignmentDenyPublicIP = json(loadTextContent('infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json'))
+var varPolicyAssignmentDenyPublicIp = json(loadTextContent('infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json'))
 ```
 
 Or you can use the export available in `_policyAssignmentsBicepInput.txt` to copy and paste into a variable to then use to assign policies but manage their properties from the JSON files, like below:
@@ -17,13 +17,13 @@ Or you can use the export available in `_policyAssignmentsBicepInput.txt` to cop
 targetScope = 'tenant'
 
 @description('The management group scope to which the policy assignments are to be created at. DEFAULT VALUE = "alz"')
-param parTargetManagementGroupID string = 'alz'
+param parTargetManagementGroupId string = 'alz'
 
-var varTargetManagementGroupResourceID = tenantResourceId('Microsoft.Management/managementGroups', parTargetManagementGroupID)
+var varTargetManagementGroupResourceId = tenantResourceId('Microsoft.Management/managementGroups', parTargetManagementGroupId)
 
-var varPolicyAssignmentDenyPublicIP = {
+var varPolicyAssignmentDenyPublicIp = {
   name: 'Deny-Public-IP'
-  definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP'
+  definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP'
   libDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json'))
 }
 
@@ -31,10 +31,10 @@ module modPolicyAssignmentDenyPublicIP '../../policyAssignments/policyAssignment
   name: 'PolicyAssignmentDenyPublicIP'
   scope: managementGroup('alz')
   params: {
-    parPolicyAssignmentDefinitionID: varPolicyAssignmentDenyPublicIP.definitionID
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyPublicIP.libDefinition.properties.description
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPublicIP.libDefinition.properties.displayName
-    parPolicyAssignmentName: varPolicyAssignmentDenyPublicIP.libDefinition.name
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPublicIp.definitionId
+    parPolicyAssignmentDescription: varPolicyAssignmentDenyPublicIp.libDefinition.properties.description
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPublicIp.libDefinition.properties.displayName
+    parPolicyAssignmentName: varPolicyAssignmentDenyPublicIp.libDefinition.name
   }
 }
 ```

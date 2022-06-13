@@ -41,7 +41,7 @@ In this example, the Subscription is created upon an EA Account through a tenant
 ```bash
 az deployment tenant create \
   --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep \
-  --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.minimum.example.json \
+  --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json \
   --location eastus
 ```
 
@@ -50,7 +50,7 @@ az deployment tenant create \
 ```powershell
 New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep `
-  -TemplateParameterFile infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.minimum.example.json `
+  -TemplateParameterFile infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json `
   -Location eastus
 ```
 
