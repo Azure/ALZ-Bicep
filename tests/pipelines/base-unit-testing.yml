@@ -84,7 +84,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg validate --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json parTargetManagementGroupID=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
+        az deployment mg validate --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json parTargetManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
   
   - task: Bash@3    
     displayName: Az CLI Validate Logging for PR
@@ -172,7 +172,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg validate --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.parameters.managed-identity.all.json --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
+        az deployment mg validate --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.managedIdentity.parameters.all.json --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
 
   - task: Bash@3    
     displayName: Az CLI Validate Role Assignment to multiple Management Groups
@@ -180,7 +180,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg validate --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroupMany.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroupMany.parameters.managed-identity.all.json parManagementGroupIds='("$(ManagementGroupPrefix)-landingzones", "$(ManagementGroupPrefix)-platform")' --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
+        az deployment mg validate --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroupMany.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroupMany.managedIdentity.parameters.all.json parManagementGroupIds='("$(ManagementGroupPrefix)-landingzones", "$(ManagementGroupPrefix)-platform")' --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
 
   - task: Bash@3    
     displayName: Az CLI Validate Role Assignment to single subscription
@@ -188,7 +188,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment sub validate --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentSubscription.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentSubscription.parameters.managed-identity.all.json --location $(Location) --name $(ManagementGroupPrefix)
+        az deployment sub validate --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentSubscription.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentSubscription.managedIdentity.parameters.all.json --location $(Location) --name $(ManagementGroupPrefix)
 
   - task: Bash@3    
     displayName: Az CLI Validate Role Assignment to multiple subscriptions
@@ -196,7 +196,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg validate --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentSubscriptionMany.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentSubscriptionMany.parameters.managed-identity.all.json parSubscriptionIds='("$(subscriptionId)")' --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
+        az deployment mg validate --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentSubscriptionMany.bicep --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentSubscription.managedIdentity.parameters.all.json parSubscriptionIds='("$(subscriptionId)")' --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
 
   - task: Bash@3    
     displayName: Az CLI Validate hub peered spoke orchestration module
