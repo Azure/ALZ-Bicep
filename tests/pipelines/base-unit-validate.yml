@@ -36,8 +36,7 @@ jobs:
         subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
         echo $subId
         echo "##vso[task.setvariable variable=subscriptionId]$subid"
-        echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
-
+        
   - task: Bash@3
     displayName: Az CLI Refresh subscription list
     name: refresh_subscription
@@ -202,18 +201,15 @@ jobs:
       script: |
         az deployment mg validate --template-file infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep --parameters @infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json parPeeredVnetSubscriptionId="$(subscriptionId)" parHubVirtualNetworkId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus" parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
 
-
 - job: bicep_cleanup
   dependsOn: bicep_validate
   variables:
-    isDeployed: $[ dependencies.bicep_validate.outputs['create_subscription.IsDeployed'] ]  
   displayName: Cleanup Bicep Validate Deployment for PR
   pool: 
     vmImage: ubuntu-latest
   steps:
   - task: AzurePowerShell@5
     displayName: Az CLI Remove/Cleanup Deployment
-    condition: ne(variables['isDeployed'], '')
     inputs:
       azureSubscription: 'azserviceconnection'
       ScriptType: 'FilePath'
