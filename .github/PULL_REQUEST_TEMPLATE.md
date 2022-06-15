@@ -27,9 +27,9 @@ Replace this with any testing evidence to show that your Pull Request works/fixe
 - [ ] Ensured my code/branch is up-to-date with the latest changes in the `main` [branch](https://github.com/Azure/ALZ-Bicep/tree/main)
 - [ ] Performed testing and provided evidence.
 - [ ] Updated one or more of the following tests *(if required)* 
-    - [Unit](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/bicep-build-to-validate.yml) 
-    - [Linting](https://github.com/Azure/ALZ-Bicep/tree/main/.github/workflows) 
-    - [E2E (End-To-End)](https://github.com/Azure/ALZ-Bicep/blob/main/tests/pipelines/bicep-build-to-validate.yml) 
-    - [ValidateAzCloud (Base validation in Azure Cloud)](https://github.com/Azure/ALZ-Bicep/blob/main/tests/pipelines/base-unit-validate.yml)
+  - [Unit](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/bicep-build-to-validate.yml)
+  - [Linting](https://github.com/Azure/ALZ-Bicep/tree/main/.github/workflows)
+  - [E2E (End-To-End)](https://github.com/Azure/ALZ-Bicep/blob/main/tests/pipelines/bicep-build-to-validate.yml)
+  - [ValidateAzCloud (Base validation in Azure Cloud)](https://github.com/Azure/ALZ-Bicep/blob/main/tests/pipelines/base-unit-validate.yml)
 - [ ] Updated relevant and associated documentation (e.g. Contribution Guide, Module READMEs, Wiki Docs etc.)
 - [ ] If relevant, created or updated Code Tours [here](https://github.com/Azure/ALZ-Bicep/blob/main/.vscode/tours)
