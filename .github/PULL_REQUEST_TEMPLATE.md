@@ -26,7 +26,7 @@ Replace this with any testing evidence to show that your Pull Request works/fixe
 - [ ] *(ALZ Bicep Core Team Only)* Associated it with relevant [ADO Items](https://aka.ms/alz/bicep/backlog)
 - [ ] Ensured my code/branch is up-to-date with the latest changes in the `main` [branch](https://github.com/Azure/ALZ-Bicep/tree/main)
 - [ ] Performed testing and provided evidence.
-- [ ] Updated one or more of the following tests *(if required)* 
+- [ ] Updated one or more of the following tests *(if required)*
   - [Unit](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/bicep-build-to-validate.yml)
   - [Linting](https://github.com/Azure/ALZ-Bicep/tree/main/.github/workflows)
   - [E2E (End-To-End)](https://github.com/Azure/ALZ-Bicep/blob/main/tests/pipelines/bicep-build-to-validate.yml)
