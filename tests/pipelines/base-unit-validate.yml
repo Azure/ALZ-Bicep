@@ -15,7 +15,7 @@ variables:
 
 jobs:
 - job: bicep_validate
-  displayName: Validate Bicep Files for PR
+  displayName: Validate Bicep Module Deployments for PR
   pool: 
     vmImage: ubuntu-latest
   steps:
