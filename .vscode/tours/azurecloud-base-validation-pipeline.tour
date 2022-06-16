@@ -1,0 +1,126 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "AzureCloud base validation pipeline",
+  "steps": [
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Get and expand all variables. ",
+      "line": 5
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Log in to Azure",
+      "line": 28
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Create a subscription to test against. This step is required for some of the following steps (create resource group, subscription deployments etc.)",
+      "line": 30
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Refresh subscription list after creation to avoid timing issues when trying to create resource group. ",
+      "line": 41
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Create a resource group to test against. This step is required for some of the following steps (all resource group scoped deployments)\r\n\r\n",
+      "line": 49
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Create a management groups to test against. This step is required for some of the following steps (all management group scoped deployments)\r\n\r\n",
+      "line": 61
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ custom role definitions deployment. Depends on management groups previously created.",
+      "line": 69
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ custom policy and policyset definitions deployment. Depends on management groups previously created.",
+      "line": 77
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ logging component deployment. Depends on resource group previously created.",
+      "line": 85
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ subscription placement into management group deployment. Depends on management groups previously created.",
+      "line": 93
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ default policy assignments deployment. Depends on management groups previously created.",
+      "line": 101
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ HUB Networking deployment. Depends on resource group previously created.",
+      "line": 109
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ VWAN deployment. Depends on resource group previously created.\r\n\r\n",
+      "line": 117
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ Spoke Network deployment. Depends on resource group previously created.\r\n\r\n",
+      "line": 125
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ VWAN Network connection deployment. Depends on subscription previously created.\r\n\r\n",
+      "line": 133
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ Vnet Peer from spoke to HUB deployment. Depends on resource group previously created.\r\n\r\n",
+      "line": 141
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ Private DNS Zones deployment. Depends on resource group previously created.\r\n\r\n",
+      "line": 149
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ Public IP deployment. Depends on resource group previously created.\r\n\r\n",
+      "line": 157
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ RBAC assignment to single management group deployment. Depends on management groups previously created.\r\n\r\n",
+      "line": 165
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ RBAC assignment to multiple management group deployment. Depends on management groups previously created.\r\n\r\n",
+      "line": 173
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ RBAC assignment to single subscription deployment. Depends on subscription previously created.\r\n\r\n",
+      "line": 181
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ RBAC assignment to multiple subscription deployment. Depends on subscription previously created.\r\n",
+      "line": 190
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Validate ALZ hub peered spoke orchestration module deployment. Depends on management groups previously created.\r\n\r\n",
+      "line": 197
+    },
+    {
+      "file": "tests/pipelines/base-unit-validate.yml",
+      "description": "Job to clean up tenant after deploy -> remove management group structure specific to this PR, delete resources in created subscription. ",
+      "line": 205
+    }
+  ]
+}
