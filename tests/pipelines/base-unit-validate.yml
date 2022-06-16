@@ -203,7 +203,6 @@ jobs:
 
 - job: bicep_cleanup
   dependsOn: bicep_validate
-  variables:
   displayName: Cleanup Bicep Validate Deployment for PR
   pool: 
     vmImage: ubuntu-latest
