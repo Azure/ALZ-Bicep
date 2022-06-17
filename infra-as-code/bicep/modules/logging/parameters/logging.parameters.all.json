@@ -23,6 +23,8 @@
         "Security",
         "SecurityInsights",
         "ServiceMap",
+        "SQLAdvancedThreatProtection",
+        "SQLVulnerabilityAssessment",
         "SQLAssessment",
         "Updates",
         "VMInsights"
@@ -36,7 +38,7 @@
     },
     "parTags": {
       "value": {
-          "Environment": "POC"
+        "Environment": "POC"
       }
     },
     "parTelemetryOptOut": {
