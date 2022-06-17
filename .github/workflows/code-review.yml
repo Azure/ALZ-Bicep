@@ -23,7 +23,7 @@ jobs:
     - name: Run github/super-linter
       uses: github/super-linter@v4
       env:
-        # Lint all code
+        # Lint all code - disabled in as part of #262
         VALIDATE_ALL_CODEBASE: false
         # Need to define main branch as default is set to master in super-linter
         DEFAULT_BRANCH: main
