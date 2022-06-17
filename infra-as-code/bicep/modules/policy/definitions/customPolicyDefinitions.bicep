@@ -151,6 +151,10 @@ var varCustomPolicyDefinitionsArray = [
     libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_vnet_peer_cross_sub.json'))
   }
   {
+    name: 'Deny-VNET-Peering-To-Non-Approved-VNETs'
+    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_vnet_peering_to_non_approved_vnets.json'))
+  }
+  {
     name: 'Deny-VNet-Peering'
     libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deny_vnet_peering.json'))
   }
@@ -197,6 +201,14 @@ var varCustomPolicyDefinitionsArray = [
   {
     name: 'Deploy-Diagnostics-ApplicationGateway'
     libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_diagnostics_applicationgateway.json'))
+  }
+  {
+    name: 'Deploy-Diagnostics-AVDScalingPlans'
+    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_diagnostics_avdscalingplans.json'))
+  }
+  {
+    name: 'Deploy-Diagnostics-Bastion'
+    libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_diagnostics_bastion.json'))
   }
   {
     name: 'Deploy-Diagnostics-CDNEndpoints'
@@ -535,6 +547,16 @@ var varCustomPolicySetDefinitionsArray = [
         definitionReferenceId: 'AutomationDeployDiagnosticLogDeployLogAnalytics'
         definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AA'
         definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_diagnostics_loganalytics.parameters.json')).AutomationDeployDiagnosticLogDeployLogAnalytics.parameters
+      }
+      {
+        definitionReferenceId: 'AVDScalingPlansDeployDiagnosticLogDeployLogAnalytics'
+        definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AVDScalingPlans'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_diagnostics_loganalytics.parameters.json')).AVDScalingPlansDeployDiagnosticLogDeployLogAnalytics.parameters
+      }
+      {
+        definitionReferenceId: 'BastionDeployDiagnosticLogDeployLogAnalytics'
+        definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Bastion'
+        definitionParameters: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_deploy_diagnostics_loganalytics.parameters.json')).BastionDeployDiagnosticLogDeployLogAnalytics.parameters
       }
       {
         definitionReferenceId: 'BatchDeployDiagnosticLogDeployLogAnalytics'

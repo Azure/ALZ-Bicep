@@ -191,6 +191,14 @@
 	libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_diagnostics_applicationgateway.json'))
 }
 {
+	name: 'Deploy-Diagnostics-AVDScalingPlans'
+	libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_diagnostics_avdscalingplans.json'))
+}
+{
+	name: 'Deploy-Diagnostics-Bastion'
+	libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_diagnostics_bastion.json'))
+}
+{
 	name: 'Deploy-Diagnostics-CDNEndpoints'
 	libDefinition: json(loadTextContent('lib/policy_definitions/policy_definition_es_deploy_diagnostics_cdnendpoints.json'))
 }
