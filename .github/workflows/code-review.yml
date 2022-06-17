@@ -30,7 +30,7 @@ jobs:
       uses: github/super-linter@v4
       env:
         # Lint all code
-        VALIDATE_ALL_CODEBASE: true
+        VALIDATE_ALL_CODEBASE: false
         # Need to define main branch as default is set to master in super-linter
         DEFAULT_BRANCH: main
         # Enable setting the status of each individual linter run in the Checks section of a pull request
@@ -58,4 +58,5 @@ jobs:
         config-file: '.github/actions-config/mlc_config.json'
         use-verbose-mode: 'yes'
         use-quiet-mode: 'yes'
-        
+        base-branch: 'main'
+        check-modified-files-only: 'yes'
