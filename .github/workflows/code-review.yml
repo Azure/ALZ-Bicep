@@ -1,18 +1,12 @@
 ---
-name: Code Review
+name: Code Review - Linting & Link Checks
 
-##########################################
-# Start the job on push for all branches #
-##########################################
 on:
   pull_request:
     branches:
     - main
   workflow_dispatch: {}
 
-###############
-# Set the Job #
-###############
 jobs:
 
   lint:
