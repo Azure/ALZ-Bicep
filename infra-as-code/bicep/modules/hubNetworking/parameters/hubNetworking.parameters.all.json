@@ -45,6 +45,9 @@
     "parAzBastionSku": {
       "value": "Standard"
     },
+    "parAzBastionNsgName": {
+      "value": "nsg-AzureBastionSubnet"
+    },
     "parDdosEnabled": {
       "value": true
     },
