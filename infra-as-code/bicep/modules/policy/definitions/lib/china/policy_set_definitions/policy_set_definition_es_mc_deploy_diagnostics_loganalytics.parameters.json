@@ -129,6 +129,32 @@
       }
     }
   },
+  "AVDHostPoolsDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('WVDHostPoolsLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "BastionDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('BastionLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
   "BatchDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
@@ -770,19 +796,6 @@
       },
       "effect": {
         "value": "[[parameters('WVDAppGroupsLogAnalyticsEffect')]"
-      },
-      "profileName": {
-        "value": "[[parameters('profileName')]"
-      }
-    }
-  },
-  "WVDHostPoolsDeployDiagnosticLogDeployLogAnalytics": {
-    "parameters": {
-      "logAnalytics": {
-        "value": "[[parameters('logAnalytics')]"
-      },
-      "effect": {
-        "value": "[[parameters('WVDHostPoolsLogAnalyticsEffect')]"
       },
       "profileName": {
         "value": "[[parameters('profileName')]"
