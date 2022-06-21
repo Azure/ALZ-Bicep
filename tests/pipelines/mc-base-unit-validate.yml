@@ -194,7 +194,7 @@ jobs:
     vmImage: ubuntu-latest
   steps:
   - task: AzurePowerShell@5
-    displayName: Az CLI Remove/Cleanup Deployment
+    displayName: Az PowerShell Remove/Cleanup Deployment
     inputs:
       azureSubscription: 'mcserviceconnection'
       ScriptType: 'FilePath'
