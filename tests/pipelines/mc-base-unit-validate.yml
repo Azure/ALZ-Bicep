@@ -185,7 +185,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg validate --template-file infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep --parameters @infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json parPeeredVnetSubscriptionId="$(subscriptionId)" parHubVirtualNetworkId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus" parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
+        az deployment mg validate --template-file infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep --parameters @infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json parPeeredVnetSubscriptionId="$(subscriptionId)" parHubVirtualNetworkId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus" parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parLocation=$(Location) --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
 
 # - job: bicep_cleanup
 #   dependsOn: bicep_validate
