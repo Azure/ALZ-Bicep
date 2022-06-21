@@ -23,7 +23,7 @@ $subToMove = Get-AzSubscription -SubscriptionName $subscriptionName
 
 if ($subToMove.State -ne "Disabled") {
     Write-Host "Moving Subscription: '$($subscriptionName)' under Tenant Root Management Group: '$tenantRootGroupID'"
-    #New-AzManagementGroupSubscription -GroupId $tenantRootGroupID -SubscriptionId $subToMove.Id
+    New-AzManagementGroupSubscription -GroupId $tenantRootGroupID -SubscriptionId $subToMove.Id
 }
 
 
@@ -36,7 +36,7 @@ Set-AzContext -Subscription $subToMove.Id #| Out-Null
 $resources = Get-AzResourceGroup
 
 $resources | ForEach-Object -Parallel {
-    Write-Host "Deleting  $_.ResourceGroupName ..."
+    Write-Host "Deleting  $($_.ResourceGroupName) ..."
     #Remove-AzResourceGroup -Name $_.ResourceGroupName -Force | Out-Null
 }
 
