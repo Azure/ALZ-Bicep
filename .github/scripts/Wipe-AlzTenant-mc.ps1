@@ -37,7 +37,7 @@ $resources = Get-AzResourceGroup
 
 $resources | ForEach-Object -Parallel {
     Write-Host "Deleting  $($_.ResourceGroupName) ..."
-    #Remove-AzResourceGroup -Name $_.ResourceGroupName -Force | Out-Null
+    Remove-AzResourceGroup -Name $_.ResourceGroupName -Force | Out-Null
 }
 
 # Get Deployments for Subscription
@@ -48,7 +48,7 @@ Write-Host "Removing All Subscription Deployments for: $($subscriptionName)"
 # For each Subscription level deployment, remove it
 $subDeployments | ForEach-Object -Parallel {
     Write-Host "Removing $($_.DeploymentName) ..."
-    #Remove-AzSubscriptionDeployment -Id $_.Id
+    Remove-AzSubscriptionDeployment -Id $_.Id
 }
 
 
@@ -60,7 +60,7 @@ Write-Host "Removing all Tenant level deployments"
 # For each AAD Tenant level deployment, remove it
 $tenantDeployments | ForEach-Object -Parallel {
     Write-Host "Removing $($_.DeploymentName) ..."
-    # Remove-AzTenantDeployment -Id $_.Id
+    Remove-AzTenantDeployment -Id $_.Id
 }
 
 # This function only deletes Management Groups in the Intermediate Root Management Group's hierarchy tree and will NOT delete other Intermediate Root level Management Groups and their children e.g. in the case of "canary"
@@ -88,7 +88,7 @@ function Remove-Recursively {
     Write-Host "No children found in scope $name"
     Write-Host "Removing the scope $name"
 
-    # Remove-AzManagementGroup -InputObject $parent -ErrorAction SilentlyContinue
+    Remove-AzManagementGroup -InputObject $parent -ErrorAction SilentlyContinue
 }
 
 # Remove all the Management Groups in Intermediate Root Management Group's hierarchy tree, including itself
