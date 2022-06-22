@@ -53,7 +53,7 @@ $subDeployments | ForEach-Object -Parallel {
 
 
 # Get all AAD Tenant level deployments
-$tenantDeployments = Get-AzTenantDeployment | where {$PSItem.DeploymentName -like "$intermediateRootGroupID*"}
+$tenantDeployments = Get-AzTenantDeployment | Where-Object {$PSItem.DeploymentName -like "$intermediateRootGroupID*"}
 
 Write-Output "Removing all Tenant level deployments"
 
