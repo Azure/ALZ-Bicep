@@ -31,5 +31,6 @@ Replace this with any testing evidence to show that your Pull Request works/fixe
   - [Linting](https://github.com/Azure/ALZ-Bicep/tree/main/.github/workflows)
   - [E2E (End-To-End)](https://github.com/Azure/ALZ-Bicep/blob/main/tests/pipelines/bicep-build-to-validate.yml)
   - [ValidateAzCloud (Base validation in Azure Cloud)](https://github.com/Azure/ALZ-Bicep/blob/main/tests/pipelines/base-unit-validate.yml)
+  - [ValidateMcCloud (Base validation in Azure China Cloud)](https://github.com/Azure/ALZ-Bicep/blob/main/tests/pipelines/mc-base-unit-validate.yml)
 - [ ] Updated relevant and associated documentation (e.g. Contribution Guide, Module READMEs, Wiki Docs etc.)
 - [ ] If relevant, created or updated Code Tours [here](https://github.com/Azure/ALZ-Bicep/blob/main/.vscode/tours)
