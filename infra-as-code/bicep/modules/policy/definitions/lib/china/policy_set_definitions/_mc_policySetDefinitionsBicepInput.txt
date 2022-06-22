@@ -99,6 +99,16 @@
 			definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_diagnostics_loganalytics.parameters.json')).AutomationDeployDiagnosticLogDeployLogAnalytics.parameters
 		}
 		{
+			definitionReferenceID: 'AVDHostPoolsDeployDiagnosticLogDeployLogAnalytics'
+			definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-WVDHostPools'
+			definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_diagnostics_loganalytics.parameters.json')).AVDHostPoolsDeployDiagnosticLogDeployLogAnalytics.parameters
+		}
+		{
+			definitionReferenceID: 'BastionDeployDiagnosticLogDeployLogAnalytics'
+			definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Bastion'
+			definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_diagnostics_loganalytics.parameters.json')).BastionDeployDiagnosticLogDeployLogAnalytics.parameters
+		}
+		{
 			definitionReferenceID: 'BatchDeployDiagnosticLogDeployLogAnalytics'
 			definitionID: '/providers/Microsoft.Authorization/policyDefinitions/c84e5349-db6d-4769-805e-e14037dab9b5'
 			definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_diagnostics_loganalytics.parameters.json')).BatchDeployDiagnosticLogDeployLogAnalytics.parameters
@@ -347,11 +357,6 @@
 			definitionReferenceID: 'WVDAppGroupDeployDiagnosticLogDeployLogAnalytics'
 			definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-WVDAppGroup'
 			definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_diagnostics_loganalytics.parameters.json')).WVDAppGroupDeployDiagnosticLogDeployLogAnalytics.parameters
-		}
-		{
-			definitionReferenceID: 'WVDHostPoolsDeployDiagnosticLogDeployLogAnalytics'
-			definitionID: '${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-WVDHostPools'
-			definitionParameters: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deploy_diagnostics_loganalytics.parameters.json')).WVDHostPoolsDeployDiagnosticLogDeployLogAnalytics.parameters
 		}
 		{
 			definitionReferenceID: 'WVDWorkspaceDeployDiagnosticLogDeployLogAnalytics'
