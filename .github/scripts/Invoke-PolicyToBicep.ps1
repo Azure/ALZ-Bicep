@@ -96,9 +96,9 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/l
     if (($policySetDefinitionsOutputForBicep.Count) -ne 0) {
         $policySetDefinitionsOutputForBicep.Keys | Sort-Object | ForEach-Object {
             $definitionReferenceId = $_
-            $definitionID = $($policySetDefinitionsOutputForBicep[$_])
+            $definitionId = $($policySetDefinitionsOutputForBicep[$_])
             # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
-            Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t`t{`r`n`t`t`tdefinitionReferenceID: '$definitionReferenceId'`r`n`t`t`tdefinitionID: '$definitionID'`r`n`t`t`tdefinitionParameters: json(loadTextContent('lib/policy_set_definitions/$parametersFileName')).$definitionReferenceId.parameters`r`n`t`t}"
+            Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t`t{`r`n`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`tdefinitionId: '$definitionId'`r`n`t`t`tdefinitionParameters: json(loadTextContent('lib/policy_set_definitions/$parametersFileName')).$definitionReferenceId.parameters`r`n`t`t}"
         }
     }
 
@@ -128,7 +128,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/l
     $policyAssignmentNameNoHyphens = $policyAssignmentName.replace("-","")
 
     Write-Information "==> Adding '$policyAssignmentName' to '$PWD/_policyAssignmentsBicepInput.txt'" -InformationAction Continue
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionID: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/$fileName'))`r`n}`r`n"
+    Add-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionId: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/$fileName'))`r`n}`r`n"
 }
 
 $policyAssignmentCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments" -Filter "*.json" | Measure-Object

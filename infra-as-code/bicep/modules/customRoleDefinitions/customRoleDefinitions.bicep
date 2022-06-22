@@ -9,28 +9,28 @@ param parTelemetryOptOut bool = false
 // Customer Usage Attribution Id
 var varCuaid = '032d0904-3d50-45ef-a6c1-baa9d82e23ff'
 
-module modRolesSubscriptionOwnerRole 'definitions/caf-subscription-owner-role.bicep' = {
+module modRolesSubscriptionOwnerRole 'definitions/cafSubscriptionOwnerRole.bicep' = {
   name: 'deploy-subscription-owner-role'
   params: {
     parAssignableScopeManagementGroupId: parAssignableScopeManagementGroupId
   }
 }
 
-module modRolesApplicationOwnerRole 'definitions/caf-application-owner-role.bicep' = {
+module modRolesApplicationOwnerRole 'definitions/cafApplicationOwnerRole.bicep' = {
   name: 'deploy-application-owner-role'
   params: {
     parAssignableScopeManagementGroupId: parAssignableScopeManagementGroupId
   }
 }
 
-module modRolesNetworkManagementRole 'definitions/caf-network-management-role.bicep' = {
+module modRolesNetworkManagementRole 'definitions/cafNetworkManagementRole.bicep' = {
   name: 'deploy-network-management-role'
   params: {
     parAssignableScopeManagementGroupId: parAssignableScopeManagementGroupId
   }
 }
 
-module modRolesSecurityOperationsRole 'definitions/caf-security-operations-role.bicep' = {
+module modRolesSecurityOperationsRole 'definitions/cafSecurityOperationsRole.bicep' = {
   name: 'deploy-security-operations-role'
   params: {
     parAssignableScopeManagementGroupId: parAssignableScopeManagementGroupId

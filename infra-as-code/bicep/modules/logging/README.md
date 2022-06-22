@@ -52,13 +52,13 @@ The module will generate the following outputs:
 
 ## Deployment
 
-In this example, a Log Analytics Workspace and Automation Account will be deployed to the resource group `alz-logging`.  The inputs for this module are defined in `logging.parameters.example.json`.
+In this example, a Log Analytics Workspace and Automation Account will be deployed to the resource group `alz-logging`.  The inputs for this module are defined in `logging.parameters.all.json`.
 
 There are separate input parameters files depending on which Azure cloud you are deploying because this module deploys resources into an existing resource group under the specified region. There is no change to the Bicep template file.
 | Azure Cloud    | Bicep template | Input parameters file              |
 | -------------- | -------------- | ---------------------------------- |
-| Global regions | logging.bicep  | logging.parameters.example.json    |
-| China regions  | logging.bicep  | mc-logging.parameters.example.json |
+| Global regions | logging.bicep  | parameters/logging.parameters.all.json    |
+| China regions  | logging.bicep  | parameters/mc-logging.parameters.all.json |
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 > If the deployment failed due an error that your alz-log-analytics/Automation resource of type 'Microsoft.OperationalInsights/workspaces/linkedServices' was not found, please retry the deployment step and it would succeed.
@@ -78,7 +78,7 @@ az group create \
 # Deploy Module 
 az deployment group create \
   --template-file infra-as-code/bicep/modules/logging/logging.bicep \
-  --parameters @infra-as-code/bicep/modules/logging/logging.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json \
   --resource-group alz-logging
 ```
 OR
@@ -96,7 +96,7 @@ az group create \
 # Deploy Module 
 az deployment group create \
   --template-file infra-as-code/bicep/modules/logging/logging.bicep \
-  --parameters @infra-as-code/bicep/modules/logging/mc-logging.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json \
   --resource-group alz-logging
 ```
 
@@ -116,7 +116,7 @@ New-AzResourceGroup `
 
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/logging/logging.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/logging/logging.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json `
   -ResourceGroup alz-logging
 ```
 OR
@@ -134,7 +134,7 @@ New-AzResourceGroup `
 
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/logging/logging.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/logging/mc-logging.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json `
   -ResourceGroup alz-logging
 ```
 

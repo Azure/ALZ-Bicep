@@ -37,12 +37,12 @@ There are two different sets of deployment; one for deploying to Azure global re
 
  | Azure Cloud    | Bicep template                 | Input parameters file                             |
  | -------------- | ------------------------------ | ------------------------------------------------- |
- | Global regions | customRoleDefinitions.bicep    | custom-policy-definitions.parameters.example.json |
- | China regions  | mc-customRoleDefinitions.bicep | custom-policy-definitions.parameters.example.json |
+ | Global regions | customRoleDefinitions.bicep    | parameters/customRoleDefinitions.parameters.all.json |
+ | China regions  | mc-customRoleDefinitions.bicep | parameters/customRoleDefinitions.parameters.all.json |
 
 In this example, the custom roles will be deployed to the `alz` management group (the intermediate root management group).
 
-Input parameter file `customRoleDefinitions.parameters.example.json` defines the assignable scope for the roles.  In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation. There is no change in the input parameter file for different Azure clouds because there is no change to the intermediate root management group.
+Input parameter file `parameters/customRoleDefinitions.parameters.all.json` defines the assignable scope for the roles.  In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation. There is no change in the input parameter file for different Azure clouds because there is no change to the intermediate root management group.
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
@@ -51,7 +51,7 @@ Input parameter file `customRoleDefinitions.parameters.example.json` defines the
 # For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep \
-  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json \
   --location eastus \
   --management-group-id alz
 ```
@@ -60,7 +60,7 @@ OR
 # For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep \
-  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json \
+  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json \
   --location chinaeast2 \
   --management-group-id alz
 ```
@@ -71,7 +71,7 @@ az deployment mg create \
 # For Azure global regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json `
   -Location eastus `
   -ManagementGroupId alz
 ```
@@ -80,7 +80,7 @@ OR
 # For Azure China regions
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json `
   -Location chinaeast2 `
   -ManagementGroupId alz
 ```
