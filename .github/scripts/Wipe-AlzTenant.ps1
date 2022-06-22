@@ -22,44 +22,44 @@ $StopWatch.Start()
 $subToMove = Get-AzSubscription -SubscriptionName $subscriptionName
 
 if ($subToMove.State -ne "Disabled") {
-    Write-Information "Moving Subscription: '$($subscriptionName)' under Tenant Root Management Group: '$tenantRootGroupID'"
+    Write-Host "Moving Subscription: '$($subscriptionName)' under Tenant Root Management Group: '$tenantRootGroupID'"
     New-AzManagementGroupSubscription -GroupId $tenantRootGroupID -SubscriptionId $subToMove.Id
 }
 
 
 # For each Subscription in the Intermediate Root Management Group's hierarchy tree, remove all Resources, Resource Groups and Deployments
-Write-Information "Removing all Azure Resources, Resource Groups and Deployments from subscription $($subscriptionName)"
-Write-Information "Set context to SubscriptionId: '$($subToMove.Id)'"
+Write-Host "Removing all Azure Resources, Resource Groups and Deployments from subscription $($subscriptionName)"
+Write-Host "Set context to SubscriptionId: '$($subToMove.Id)'"
 Set-AzContext -Subscription $subToMove.Id #| Out-Null
 
 # Get all Resource Groups in Subscription
 $resources = Get-AzResourceGroup
 
 $resources | ForEach-Object -Parallel {
-    Write-Information "Deleting  $_.ResourceGroupName ..."
+    Write-Host "Deleting  $($_.ResourceGroupName) ..."
     Remove-AzResourceGroup -Name $_.ResourceGroupName -Force | Out-Null
 }
 
 # Get Deployments for Subscription
 $subDeployments = Get-AzSubscriptionDeployment
 
-Write-Information "Removing All Subscription Deployments for: $($subscriptionName)"
+Write-Host "Removing All Subscription Deployments for: $($subscriptionName)"
 
 # For each Subscription level deployment, remove it
 $subDeployments | ForEach-Object -Parallel {
-    Write-Information "Removing $($_.DeploymentName) ..."
+    Write-Host "Removing $($_.DeploymentName) ..."
     Remove-AzSubscriptionDeployment -Id $_.Id
 }
 
 
 # Get all AAD Tenant level deployments
-$tenantDeployments = Get-AzTenantDeployment
+$tenantDeployments = Get-AzTenantDeployment | where {$PSItem.DeploymentName -like "$intermediateRootGroupID*"}
 
-Write-Information "Removing all Tenant level deployments"
+Write-Host "Removing all Tenant level deployments"
 
 # For each AAD Tenant level deployment, remove it
 $tenantDeployments | ForEach-Object -Parallel {
-    Write-Information "Removing $($_.DeploymentName) ..."
+    Write-Host "Removing $($_.DeploymentName) ..."
     Remove-AzTenantDeployment -Id $_.Id
 }
 
@@ -68,13 +68,13 @@ function Remove-Recursively {
     [CmdletBinding(SupportsShouldProcess)]
     param($name)
     # Enters the parent Level
-    Write-Information "Entering the scope with $name"
+    Write-Host "Entering the scope with $name"
     $parent = Get-AzManagementGroup -GroupId $name -Expand -Recurse
 
     # Checks if there is any parent level
     if ($null -ne $parent.Children) {
-        Write-Information "Found the following Children :"
-        Write-Information ($parent.Children | Select-Object Name).Name
+        Write-Host "Found the following Children :"
+        Write-Host ($parent.Children | Select-Object Name).Name
 
         foreach ($children in $parent.Children) {
             # Tries to recur to each child item
@@ -85,8 +85,8 @@ function Remove-Recursively {
     }
 
     # If no children are found at each scope
-    Write-Information "No children found in scope $name"
-    Write-Information "Removing the scope $name"
+    Write-Host "No children found in scope $name"
+    Write-Host "Removing the scope $name"
 
     Remove-AzManagementGroup -InputObject $parent -ErrorAction SilentlyContinue
 }
@@ -98,5 +98,5 @@ Remove-Recursively($intermediateRootGroupID)
 $StopWatch.Stop()
 
 # Display timer output as table
-Write-Information "Time taken to complete task:"
+Write-Host "Time taken to complete task:"
 $StopWatch.Elapsed | Format-Table

@@ -198,7 +198,7 @@ jobs:
     inputs:
       azureSubscription: 'mcserviceconnection'
       ScriptType: 'FilePath'
-      ScriptPath: '.github/scripts/Wipe-AlzTenant-mc.ps1'
+      ScriptPath: '.github/scripts/Wipe-AlzTenant.ps1'
       ScriptArguments: '-tenantRootGroupID $(azclitenant) -intermediateRootGroupID "$(ManagementGroupPrefix)" -subscriptionName "$(subscriptionName)"'
       azurePowerShellVersion: 'LatestVersion'
       pwsh: true
