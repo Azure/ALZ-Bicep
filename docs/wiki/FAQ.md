@@ -10,6 +10,8 @@ Some FAQ questions that relate more to the architecture are based over in the CA
 
 ## List of Frequently Asked Questions
 
+- [Why isn't `ALZ-Bicep` v1.x.x yet?](#why-isnt-alz-bicep-v1xx-yet)
+- [How do I get notified of the latest releases in `ALZ-Bicep`?](#how-do-i-get-notified-of-the-latest-releases-in-alz-bicep)
 - [Why are some linter rules disabled via the `#disable-next-line` Bicep function?](#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function)
 
 ---
@@ -25,6 +27,17 @@ This however, does not mean you shouldn't use ALZ-Bicep or Bicep as they are ful
 As we use GitHub releases and tags you can clone and pin to a specific version in your codebase and upgrade when you are ready and willing to do so 👍
 
 In summary, `ALZ-Bicep` will go v1.x.x when Bicep itself goes v1.x.x, give or take a few weeks for us to make any changes required in `ALZ-Bicep` upon the release of Bicep v1.x.x 👍
+
+## How do I get notified of the latest releases in `ALZ-Bicep`?
+
+There are a couple of ways you can ensure you get notified of the latest releases on the `ALZ-Bicep` repo.
+
+1. Configure your "Watch" settings on the repo to notify you on "Releases"
+    - See GitHub Docs on how to do this [here](https://docs.github.com/account-and-profile/managing-subscriptions-and-notifications-on-github/setting-up-notifications/configuring-notifications#configuring-your-watch-settings-for-an-individual-repository)
+
+![GIF showing how to configure watch notification settings](media/alz-bicep-watch-demo.gif)
+
+2. Sign-up to and use [newreleases.io](https://newreleases.io), add this repo `Azure/ALZ-Bicep` and select your email frequency.
 
 ## Why are some linter rules disabled via the `#disable-next-line` Bicep function?
 

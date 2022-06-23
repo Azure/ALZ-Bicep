@@ -30,6 +30,8 @@ param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
   'Security'
   'SecurityInsights'
   'ServiceMap'
+  'SQLAdvancedThreatProtection'
+  'SQLVulnerabilityAssessment'
   'SQLAssessment'
   'Updates'
   'VMInsights'
@@ -43,6 +45,8 @@ param parLogAnalyticsWorkspaceSolutions array = [
   'Security'
   'SecurityInsights'
   'ServiceMap'
+  'SQLAdvancedThreatProtection'
+  'SQLVulnerabilityAssessment'
   'SQLAssessment'
   'Updates'
   'VMInsights'
@@ -69,7 +73,7 @@ param parTelemetryOptOut bool = false
 // Customer Usage Attribution Id
 var varCuaid = 'f8087c67-cc41-46b2-994d-66e4b661860d'
 
-resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-01' = {
+resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' = {
   name: parAutomationAccountName
   location: parAutomationAccountLocation
   tags: parAutomationAccountTags
@@ -80,7 +84,7 @@ resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2019-06-0
   }
 }
 
-resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
+resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
   name: parLogAnalyticsWorkspaceName
   location: parLogAnalyticsWorkspaceLocation
   tags: parLogAnalyticsWorkspaceTags

@@ -45,6 +45,9 @@ param parAzBastionName string = '${parCompanyPrefix}-bastion'
 @description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard')
 param parAzBastionSku string = 'Standard'
 
+@description('NSG Name for Azure Bastion Subnet NSG. Default: nsg-AzureBastionSubnet')
+param parAzBastionNsgName string = 'nsg-AzureBastionSubnet'
+
 @description('Switch to enable/disable DDoS Standard deployment. Default: true')
 param parDdosEnabled bool = true
 
@@ -203,6 +206,9 @@ var varSubnetProperties = [for subnet in parSubnets: {
   name: subnet.name
   properties: {
     addressPrefix: subnet.ipAddressRange
+    networkSecurityGroup: subnet.name != 'AzureBastionSubnet' ? null : {
+      id: '${resourceGroup().id}/providers/Microsoft.Network/networkSecurityGroups/${parAzBastionNsgName}'
+    }
   }
 }]
 
@@ -226,6 +232,9 @@ resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-02-01
 
 //DDos Protection plan will only be enabled if parDdosEnabled is true.  
 resource resHubVnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
+  dependsOn: [
+    resBastionNsg
+  ]
   name: parHubNetworkName
   location: parLocation
   tags: parTags
@@ -266,6 +275,132 @@ module modBastionPublicIp '../publicIp/publicIp.bicep' = if (parAzBastionEnabled
 resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
   parent: resHubVnet
   name: 'AzureBastionSubnet'
+}
+
+resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
+  name: parAzBastionNsgName
+  location: parLocation
+  tags: parTags
+
+  properties: {
+    securityRules: [
+      // Inbound Rules
+      {
+        name: 'AllowHttpsInbound'
+        properties: {
+          access: 'Allow'
+          direction: 'Inbound'
+          priority: 120
+          sourceAddressPrefix: 'Internet'
+          destinationAddressPrefix: '*'
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          destinationPortRange: '443'
+        }
+      }
+      {
+        name: 'AllowGatewayManagerInbound'
+        properties: {
+          access: 'Allow'
+          direction: 'Inbound'
+          priority: 130
+          sourceAddressPrefix: 'GatewayManager'
+          destinationAddressPrefix: '*'
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          destinationPortRange: '443'
+        }
+      }
+      {
+        name: 'AllowAzureLoadBalancerInbound'
+        properties: {
+          access: 'Allow'
+          direction: 'Inbound'
+          priority: 140
+          sourceAddressPrefix: 'AzureLoadBalancer'
+          destinationAddressPrefix: '*'
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          destinationPortRange: '443'
+        }
+      }
+      {
+        name: 'AllowBastionHostCommunication'
+        properties: {
+          access: 'Allow'
+          direction: 'Inbound'
+          priority: 150
+          sourceAddressPrefix: 'VirtualNetwork'
+          destinationAddressPrefix: 'VirtualNetwork'
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          destinationPortRanges: [
+            '8080'
+            '5701'
+          ]
+        }
+      }
+      // Outbound Rules
+      {
+        name: 'AllowSshRDPOutbound'
+        properties: {
+          access: 'Allow'
+          direction: 'Outbound'
+          priority: 100
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: 'VirtualNetwork'
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRanges: [
+            '22'
+            '3389'
+          ]
+        }
+      }
+      {
+        name: 'AllowAzureCloudOutbound'
+        properties: {
+          access: 'Allow'
+          direction: 'Outbound'
+          priority: 110
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: 'AzureCloud'
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          destinationPortRange: '443'
+        }
+      }
+      {
+        name: 'AllowBastionCommunication'
+        properties: {
+          access: 'Allow'
+          direction: 'Outbound'
+          priority: 120
+          sourceAddressPrefix: 'VirtualNetwork'
+          destinationAddressPrefix: 'VirtualNetwork'
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRanges: [
+            '8080'
+            '5701'
+          ]
+        }
+      }
+      {
+        name: 'AllowGetSessionInformation'
+        properties: {
+          access: 'Allow'
+          direction: 'Outbound'
+          priority: 130
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: 'Internet'
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRange: '80'
+        }
+      }
+    ]
+  }
 }
 
 // AzureBastionSubnet is required to deploy Bastion service. This subnet must exist in the parsubnets array if you enable Bastion Service.
@@ -465,7 +600,7 @@ output outAzFirewallPrivateIp string = parAzFirewallEnabled ? resAzureFirewall.p
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 output outAzFirewallName string = parAzFirewallEnabled ? parAzFirewallName : ''
 
-output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : []) 
+output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
 
 output outDdosPlanResourceId string = resDdosProtectionPlan.id
 output outHubVirtualNetworkName string = resHubVnet.name
