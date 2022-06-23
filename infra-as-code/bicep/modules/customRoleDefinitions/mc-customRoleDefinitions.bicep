@@ -9,11 +9,7 @@ param parTelemetryOptOut bool = false
 // Customer Usage Attribution Id
 var varCuaid = '032d0904-3d50-45ef-a6c1-baa9d82e23ff'
 
-<<<<<<< HEAD
-module modRolesSubscriptionOwnerRole 'definitions/caf-subscription-owner-role.bicep' = {
-=======
 module modRolesSubscriptionOwnerRole 'definitions/cafSubscriptionOwnerRole.bicep' = {
->>>>>>> b75a185e373a72b28637c0bcb90e3fd93501261d
   name: 'deploy-subscription-owner-role'
   params: {
     parAssignableScopeManagementGroupId: parAssignableScopeManagementGroupId
