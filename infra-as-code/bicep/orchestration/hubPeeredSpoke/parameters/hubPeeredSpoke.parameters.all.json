@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "parLocation": {
-        "value": "chinaeast2"
+        "value": "westeurope"
       },
       "parTopLevelManagementGroupPrefix": {
-        "value": "mc-alz"
+        "value": "alz"
       },
       "parPeeredVnetSubscriptionId": {
         "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
