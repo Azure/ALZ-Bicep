@@ -57,10 +57,6 @@ In this example, the spoke resources will be deployed to the resource group spec
 ### Azure CLI
 ```bash
 # For Azure global regions
-# Set Azure Corp Landing zone subscription ID as the the current subscription 
-LandingZoneSubscriptionId="[your landing zone subscription ID]"
-az account set --subscription $LandingZoneSubscriptionId
-
 az deployment mg create \
     --template-file infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep \
     --parameters @infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json \
@@ -70,10 +66,6 @@ az deployment mg create \
 OR
 ```bash
 # For Azure China regions
-# Set Azure Corp Landing zone subscription ID as the the current subscription
-LandingZoneSubscriptionId="[your landing zone subscription ID]"
-az account set --subscription $LandingZoneSubscriptionId
-
 az deployment mg create \
     --template-file infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep \
     --parameters @infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json \
@@ -85,10 +77,6 @@ az deployment mg create \
 
 ```powershell
 # For Azure global regions
-# Set Azure Corp Landing zone subscription ID as the the current subscription 
-$LandingZoneSubscriptionId="[your landing zone subscription ID]"
-Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
-  
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep `
   -TemplateParameterFile infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json `
@@ -98,12 +86,6 @@ New-AzManagementGroupDeployment `
 OR
 ```powershell
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
-$LandingZoneSubscriptionId="[your landing zone subscription ID]"
-$TopLevelManagemetGroupID="alz"
-
-Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
-  
 New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep `
   -TemplateParameterFile infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json `
