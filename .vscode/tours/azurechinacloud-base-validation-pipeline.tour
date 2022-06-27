@@ -1,0 +1,116 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Azure China Cloud base validation pipeline",
+  "steps": [
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Get and expand all variables. ",
+      "line": 5
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Log in to Azure",
+      "line": 25
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Create a resource group to test against. This step is required for some of the following steps (all resource group scoped deployments)\r\n\r\n",
+      "line": 34
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Create a management groups to test against. This step is required for some of the following steps (all management group scoped deployments)\r\n\r\n",
+      "line": 46
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ custom role definitions deployment. Depends on management groups previously created.",
+      "line": 54
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ custom policy and policyset definitions deployment. Depends on management groups previously created.",
+      "line": 62
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ logging component deployment. Depends on resource group previously created.",
+      "line": 70
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ subscription placement into management group deployment. Depends on management groups previously created.",
+      "line": 78
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ default policy assignments deployment. Depends on management groups previously created.",
+      "line": 86
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ HUB Networking deployment. Depends on resource group previously created.",
+      "line": 94
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ VWAN deployment. Depends on resource group previously created.\r\n\r\n",
+      "line": 102
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ Spoke Network deployment. Depends on resource group previously created.\r\n\r\n",
+      "line": 110
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ VWAN Network connection deployment. Depends on subscription previously created.\r\n\r\n",
+      "line": 118
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ Vnet Peer from spoke to HUB deployment. Depends on resource group previously created.\r\n\r\n",
+      "line": 126
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ Private DNS Zones deployment. Depends on resource group previously created.\r\n\r\n",
+      "line": 134
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ Public IP deployment. Depends on resource group previously created.\r\n\r\n",
+      "line": 142
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ RBAC assignment to single management group deployment. Depends on management groups previously created.\r\n\r\n",
+      "line": 150
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ RBAC assignment to multiple management group deployment. Depends on management groups previously created.\r\n\r\n",
+      "line": 158
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ RBAC assignment to single subscription deployment. Depends on subscription previously created.\r\n\r\n",
+      "line": 166
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ RBAC assignment to multiple subscription deployment. Depends on subscription previously created.\r\n",
+      "line": 174
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ hub peered spoke orchestration module deployment. Depends on management groups previously created.\r\n\r\n",
+      "line": 182
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Job to clean up tenant after deploy -> remove management group structure specific to this PR, delete resources in created subscription. ",
+      "line": 190
+    }
+  ]
+}
