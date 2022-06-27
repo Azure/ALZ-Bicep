@@ -4,18 +4,13 @@ trigger: none
 
 variables:
   - group: csu-bicep-environment-mc
-    #Add subscriptionName and subscriptionId to keyvault as subscriptionName and subscriptionId and include in variable group
-    #verify mctenant, mcLocation in key vault and variable group
   - name: ResourceGroupName
-    #value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
-    value: "rsg-github-pr-233"
+    value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
   - name: ManagementGroupPrefix
-    #value: "PR-$(System.PullRequest.PullRequestNumber)"
-    value: "PR-233"
+    value: "PR-$(System.PullRequest.PullRequestNumber)"
   - name: TopLevelManagementGroupDisplayName
-    #value: "PR $(System.PullRequest.PullRequestNumber) Azure Landing Zones"
-    value: "PR 233 Azure Landing Zones"
-
+    value: "PR $(System.PullRequest.PullRequestNumber) Azure Landing Zones"
+ 
 jobs:
 - job: bicep_validate
   displayName: Validate Bicep Files for PR
@@ -198,7 +193,7 @@ jobs:
     inputs:
       azureSubscription: 'mcserviceconnection'
       ScriptType: 'FilePath'
-      ScriptPath: '.github/scripts/Wipe-AlzTenant.ps1'
+      ScriptPath: '.github/scripts/mc-Wipe-AlzTenant.ps1'
       ScriptArguments: '-tenantRootGroupID $(azclitenant) -intermediateRootGroupID "$(ManagementGroupPrefix)" -subscriptionName "$(subscriptionName)"'
       azurePowerShellVersion: 'LatestVersion'
       pwsh: true
