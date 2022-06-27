@@ -1,5 +1,5 @@
 {
-	name: 'Deny-PublicPaaSEndpoints1'
+	name: 'Deny-PublicPaaSEndpoints'
 	libSetDefinition: json(loadTextContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_deny_publicpaasendpoints.json'))
 	libSetChildDefinitions: [
 		{
