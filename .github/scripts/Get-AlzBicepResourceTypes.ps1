@@ -5,8 +5,8 @@ Get-ChildItem -Path '.\infra-as-code\bicep\modules' -Recurse -Filter '*.bicep' -
     throw $output
   }
   Else {
-    echo $output
-  }   
+    Write-Output $output
+  }
 }
 
 $resourceTypesFullList = @{}
@@ -26,7 +26,7 @@ Get-ChildItem -Path '.\infra-as-code\bicep\modules' -Recurse -Filter '*.json' -E
 }
 
 Write-Information "==> Remove nested deployments resource type" -InformationAction Continue
-$resourceTypesFullList.Remove('Microsoft.Resources/Deployments') 
+$resourceTypesFullList.Remove('Microsoft.Resources/Deployments')
 
 Write-Information "==> List of resource types in ALZ-Bicep modules" -InformationAction Continue
 $resourceTypesFullList.Keys | Sort-Object
