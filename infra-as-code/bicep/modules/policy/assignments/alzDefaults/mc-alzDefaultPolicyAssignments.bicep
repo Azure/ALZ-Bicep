@@ -340,7 +340,7 @@ module modPolicyAssignmentIntRootDeployVMSSMonitoring '../../../policy/assignmen
 // Module - Policy Assignment - Enable-DDoS-VNET
 module modPolicyAssignmentConnEnableDDoSVNET '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!empty(parDdosProtectionPlanId)) {
   scope: managementGroup(varManagementGroupIDs.platformConnectivity)
-  name: varModuleDeploymentNames.modPolicyAssignmentConnEnableDDoSVNET
+  name: varModuleDeploymentNames.modPolicyAssignmentConnEnableDdosVnet
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnableDDoSVNET.definitionID
     parPolicyAssignmentName: varPolicyAssignmentEnableDDoSVNET.libDefinition.name
