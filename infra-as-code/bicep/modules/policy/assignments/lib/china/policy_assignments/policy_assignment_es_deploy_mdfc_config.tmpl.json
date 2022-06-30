@@ -1,0 +1,40 @@
+{
+  "name": "Deploy-MDFC-Config",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "Deploy Microsoft Defender for Cloud configuration and Security Contacts",
+    "displayName": "Deploy Microsoft Defender for Cloud configuration",
+    "notScopes": [],
+    "parameters": {
+      "emailSecurityContact": {
+        "value": "security_contact@replace_me"
+      },
+      "logAnalytics": {
+        "value": "law-alz"
+      },
+      "ascExportResourceGroupName": {
+        "value": "asc-export-alz"
+      },
+      "ascExportResourceGroupLocation": {
+        "value": "chinaeast2"
+      },
+      "enableAscForServers": {
+        "value": "DeployIfNotExists"
+      },
+      "enableAscForSql": {
+        "value": "DeployIfNotExists"
+      },
+      "enableAscForContainers": {
+        "value": "DeployIfNotExists"
+      }
+    },
+    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

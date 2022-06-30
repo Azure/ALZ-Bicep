@@ -88,7 +88,7 @@ jobs:
         run: |
           echo "Pushing changes to origin..."
           git add infra-as-code/bicep/modules/policy/definitions/lib/china
-          git add infra-as-code/bicep/modules/policy/assignments/lib
+          git add infra-as-code/bicep/modules/policy/assignments/lib/china
           git commit -m '${{ env.pr_title }}'
           git push origin ${{ env.branch_name }}
         working-directory: ${{ github.repository }}
