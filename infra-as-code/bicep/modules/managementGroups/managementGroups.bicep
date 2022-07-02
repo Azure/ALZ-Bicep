@@ -9,6 +9,15 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @minLength(2)
 param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
 
+@description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
+param parLandingZoneMgAlzDefaultsEnable bool = true
+
+@description('Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.')
+param parLandingZoneMgConfidentialEnable bool = false
+
+@description('Dictionary Object to allow additional or different child Management Groups of Landing Zones Management Group to be deployed.')
+param parLandingZoneMgChildren object = {}
+
 @description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
@@ -39,15 +48,29 @@ var varLandingZoneMg = {
   displayName: 'Landing Zones'
 }
 
-var varLandingZoneCorpMg = {
-  name: '${parTopLevelManagementGroupPrefix}-landingzones-corp'
-  displayName: 'Corp'
+// Used if parLandingZoneMgAlzDefaultsEnable == true
+var varLandingZoneMgChildrenAlzDefault = {
+  corp: {
+    displayName: 'Corp'
+  }
+  online: {
+    displayName: 'Online'
+  }
 }
 
-var varLandingZoneOnlineMg = {
-  name: '${parTopLevelManagementGroupPrefix}-landingzones-online'
-  displayName: 'Online'
+// Used if parLandingZoneMgConfidentialEnable == true
+var varLandingZoneMgChildrenConfidential = {
+  'confidential-corp': {
+    displayName: 'Confidential Corp'
+  }
+  'confidential-online': {
+    displayName: 'Confidential Online'
+  }
 }
+
+// Build final onject based on input parameters for child MGs of LZs
+var varLandingZoneMgChildrenUnioned = (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential, parLandingZoneMgChildren) : (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenAlzDefault, parLandingZoneMgChildren) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? varLandingZoneMgChildrenAlzDefault : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenConfidential, parLandingZoneMgChildren) : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? varLandingZoneMgChildrenConfidential : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? parLandingZoneMgChildren : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? {} : {}
+
 
 // Sandbox Management Group
 var varSandboxMg = {
@@ -159,29 +182,18 @@ resource resPlatformIdentityMg 'Microsoft.Management/managementGroups@2021-04-01
 }
 
 // Level 3 - Child Management Groups under Landing Zones MG
-resource resLandingZonesCorpMg 'Microsoft.Management/managementGroups@2021-04-01' = {
-  name: varLandingZoneCorpMg.name
-  properties: {
-    displayName: varLandingZoneCorpMg.displayName
-    details: {
-      parent: {
-        id: resLandingZonesMg.id
-      }
-    }
-  }
-}
 
-resource resLandingZonesOnlineMg 'Microsoft.Management/managementGroups@2021-04-01' = {
-  name: varLandingZoneOnlineMg.name
+resource resLandingZonesChildMgs 'Microsoft.Management/managementGroups@2021-04-01' = [for mg in items(varLandingZoneMgChildrenUnioned): if (!empty(varLandingZoneMgChildrenUnioned)) {
+  name: '${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}'
   properties: {
-    displayName: varLandingZoneOnlineMg.displayName
+    displayName: mg.value.displayName
     details: {
       parent: {
         id: resLandingZonesMg.id
       }
     }
   }
-}
+}]
 
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdTenant.bicep' = if (!parTelemetryOptOut) {
@@ -199,8 +211,7 @@ output outPlatformConnectivityManagementGroupId string = resPlatformConnectivity
 output outPlatformIdentityManagementGroupId string = resPlatformIdentityMg.id
 
 output outLandingZonesManagementGroupId string = resLandingZonesMg.id
-output outLandingZonesCorpManagementGroupId string = resLandingZonesCorpMg.id
-output outLandingZonesOnlineManagementGroupId string = resLandingZonesOnlineMg.id
+output outLandingZoneChildrenMangementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}' ]
 
 output outSandboxManagementGroupId string = resSandboxMg.id
 
@@ -215,8 +226,7 @@ output outPlatformConnectivityManagementGroupName string = resPlatformConnectivi
 output outPlatformIdentityManagementGroupName string = resPlatformIdentityMg.name
 
 output outLandingZonesManagementGroupName string = resLandingZonesMg.name
-output outLandingZonesCorpManagementGroupName string = resLandingZonesCorpMg.name
-output outLandingZonesOnlineManagementGroupName string = resLandingZonesOnlineMg.name
+output outLandingZoneChildrenMangementGroupNames array = [for mg in items(varLandingZoneMgChildrenUnioned): mg.value.displayName ]
 
 output outSandboxManagementGroupName string = resSandboxMg.name
 

@@ -8,6 +8,15 @@
     "parTopLevelManagementGroupDisplayName": {
       "value": "Azure Landing Zones"
     },
+    "parLandingZoneMgAlzDefaultsEnable": {
+      "value": true
+    },
+    "parLandingZoneMgConfidentialEnable": {
+      "value": false
+    },
+    "parLandingZoneMgChildren": {
+      "value": {}
+    },
     "parTelemetryOptOut": {
       "value": false
     }
