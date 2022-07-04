@@ -333,18 +333,101 @@
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Takes output variable from previous job to later determine if anything was deployed. ",
-      "line": 251
+      "selection": {
+        "start": {
+          "line": 248,
+          "character": 1
+        },
+        "end": {
+          "line": 249,
+          "character": 1
+        }
+      },
+      "description": "Start ARM WhatIf checks to confirm no false positives from whats just been deployed"
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Run cleanup if anything was deployed.",
-      "line": 258
+      "selection": {
+        "start": {
+          "line": 252,
+          "character": 1
+        },
+        "end": {
+          "line": 253,
+          "character": 1
+        }
+      },
+      "description": "Only runs if Management Groups were deployed, using same condition"
     },
     {
       "file": "tests/pipelines/bicep-build-to-validate.yml",
-      "description": "Run PowerShell script to do the following (in order):\r\n- Move subscription from connectivity management group to tenant root group.\r\n- Delete all resource groups in subscription\r\n- Remove all subscription scope deployments\r\n- Remove all tenant scope deployments\r\n- Remove management group structure\r\n",
-      "line": 262
+      "selection": {
+        "start": {
+          "line": 256,
+          "character": 1
+        },
+        "end": {
+          "line": 257,
+          "character": 1
+        }
+      },
+      "description": "Run WhatIf deployment and only report on changes, if any."
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "selection": {
+        "start": {
+          "line": 259,
+          "character": 11
+        },
+        "end": {
+          "line": 261,
+          "character": 17
+        }
+      },
+      "description": "If there are any changes fail the step and report as output to Azure DevOps Pipeline"
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "selection": {
+        "start": {
+          "line": 267,
+          "character": 1
+        },
+        "end": {
+          "line": 268,
+          "character": 1
+        }
+      },
+      "description": "Takes output variable from previous job to later determine if anything was deployed. "
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "selection": {
+        "start": {
+          "line": 274,
+          "character": 1
+        },
+        "end": {
+          "line": 275,
+          "character": 1
+        }
+      },
+      "description": "Run cleanup if anything was deployed."
+    },
+    {
+      "file": "tests/pipelines/bicep-build-to-validate.yml",
+      "selection": {
+        "start": {
+          "line": 275,
+          "character": 5
+        },
+        "end": {
+          "line": 281,
+          "character": 17
+        }
+      },
+      "description": "Run PowerShell script to do the following (in order):\r\n- Move subscription from connectivity management group to tenant root group.\r\n- Delete all resource groups in subscription\r\n- Remove all subscription scope deployments\r\n- Remove all tenant scope deployments\r\n- Remove management group structure"
     }
   ]
 }
