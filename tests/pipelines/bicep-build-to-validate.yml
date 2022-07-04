@@ -245,6 +245,22 @@ jobs:
       script: |
         az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep --parameters @infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.min.json parDestinationVirtualNetworkId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke" parSourceVirtualNetworkName="alz-hub-eastus" parDestinationVirtualNetworkName="vnet-spoke"
 
+  # Verify that WhatIf does not find differences between code and environment thats just been deployed
+  - task: Bash@3     
+    displayName: Az CLI After Deployment What-If Management Groups for PR
+    name: whatif_mgs
+    condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+    inputs:
+      targetType: 'inline'
+      script: |
+        result=$(az deployment tenant what-if --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.min.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location) --exclude-change-types Ignore NoChange --only-show-errors)
+        if [[ $result != *'Resource changes: no change.'* ]]
+        then
+          echo "##vso[task.logissue type=error]WhatIf reports difference between code and environment thats just been deployed"
+          echo "$result"
+          exit 1
+        fi
+
 - job: bicep_cleanup
   dependsOn: bicep_deploy
   variables:
