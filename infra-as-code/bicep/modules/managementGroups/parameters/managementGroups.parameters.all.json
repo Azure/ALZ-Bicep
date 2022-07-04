@@ -18,11 +18,7 @@
       "value": false
     },
     "parLandingZoneMgChildren": {
-      "value": {
-        "test-mg": {
-          "displayName": "Test Management Group"
-        }
-      }
+      "value": {}
     },
     "parTelemetryOptOut": {
       "value": false
