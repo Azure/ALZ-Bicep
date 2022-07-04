@@ -9,6 +9,9 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @minLength(2)
 param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
 
+@description('Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group.')
+param parTopLevelManagementGroupParentId string = ''
+
 @description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
 param parLandingZoneMgAlzDefaultsEnable bool = true
 
@@ -92,6 +95,11 @@ resource resTopLevelMg 'Microsoft.Management/managementGroups@2021-04-01' = {
   name: parTopLevelManagementGroupPrefix
   properties: {
     displayName: parTopLevelManagementGroupDisplayName
+    details: {
+      parent: {
+        id: (empty(parTopLevelManagementGroupParentId) ? '/providers/Microsoft.Management/managementGroups/${tenant().tenantId}' : parTopLevelManagementGroupParentId)
+      }
+    }
   }
 }
 

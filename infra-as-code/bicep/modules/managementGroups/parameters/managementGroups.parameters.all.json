@@ -8,6 +8,9 @@
     "parTopLevelManagementGroupDisplayName": {
       "value": "Azure Landing Zones"
     },
+    "parTopLevelManagementGroupParentId": {
+      "value": ""
+    },
     "parLandingZoneMgAlzDefaultsEnable": {
       "value": true
     },
@@ -15,7 +18,11 @@
       "value": false
     },
     "parLandingZoneMgChildren": {
-      "value": {}
+      "value": {
+        "test-mg": {
+          "displayName": "Test Management Group"
+        }
+      }
     },
     "parTelemetryOptOut": {
       "value": false
