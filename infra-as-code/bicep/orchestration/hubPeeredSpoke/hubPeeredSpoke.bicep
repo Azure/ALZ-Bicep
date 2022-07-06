@@ -2,7 +2,7 @@ targetScope = 'managementGroup'
 
 // **Parameters**
 // Generic Parameters - Used in multiple modules
-@description('The region to deploy all resoruces into. DEFAULTS TO deployment().location')
+@description('The region to deploy all resources into. DEFAULTS TO deployment().location')
 param parLocation string = deployment().location
 
 @description('Prefix for the management group hierarchy. DEFAULTS TO = alz')
@@ -95,7 +95,7 @@ var varVirtualHubResourceGroup = (!empty(parHubVirtualNetworkId) && contains(par
 var varVirtualHubSubscriptionId = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualHubs/') ? split(parHubVirtualNetworkId, '/')[2] : '' )
 
 // **Modules**
-// Module - Customer Usage Attribution - Telemtry
+// Module - Customer Usage Attribution - Telemetry
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
   scope: managementGroup(parTopLevelManagementGroupPrefix)
   name: 'pid-${varCuaid}-${uniqueString(parLocation, parPeeredVnetSubscriptionId)}'
