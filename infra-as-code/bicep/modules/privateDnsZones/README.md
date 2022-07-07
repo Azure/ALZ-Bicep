@@ -25,11 +25,20 @@ The module requires the following inputs:
 
 The following DNS Zones are region specific and will be deployed with the provided region in the `parLocation` parameter by default:
 
-- `privatelink.batch.azure.com`
-- `privatelink.azmk8s.io`
-- `privatelink.siterecovery.windowsazure.com`
+- `privatelink.xxxxxx.batch.azure.com`
+- `privatelink.xxxxxx.azmk8s.io`
 
 **Note:** The region specific zones are included in the parameters files with the region set as `xxxxxx`. For these zones to deploy properly, replace `xxxxxx` with the target region. For example: `privatelink.xxxxxx.azmk8s.io` would become `privatelink.eastus.azmk8s.io` for a deployment targeting the East US region.
+
+### Geo Code Zones
+
+The following DNS Zone use a geo code associated to the Azure Region.
+
+- `privatelink.xxx.backup.windowsazure.com`
+
+If the Azure Region entered in `parLocation` matches a lookup to the map in `varAzBackupGeoCodes` we will append Geo Codes (value) used to generate region-specific DNS zone names for Azure Backup private endpoints. then insert Azure Backup Private DNS Zone with appropriate geo code inserted alongside zones in `parPrivateDnsZones` into a new array called `varPrivateDnsZonesMerge`. If not just return `parPrivateDnsZones` as the only values in `varPrivateDnsZonesMerge`.
+
+> For more information on Azure Backup and Private Link, or geo codes, please refer to: [Create and use private endpoints for Azure Backup](https://docs.microsoft.com/azure/backup/private-endpoints#when-using-custom-dns-server-or-host-files)
 
 ### Prefixed DNS Zone
 
