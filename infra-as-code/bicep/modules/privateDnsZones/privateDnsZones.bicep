@@ -19,14 +19,13 @@ param parPrivateDnsZones array = [
   'privatelink.cassandra.cosmos.azure.com'
   'privatelink.gremlin.cosmos.azure.com'
   'privatelink.table.cosmos.azure.com'
-  'privatelink.${parLocation}.batch.azure.com'
+  'privatelink.${toLower(parLocation)}.batch.azure.com'
   'privatelink.postgres.database.azure.com'
   'privatelink.mysql.database.azure.com'
   'privatelink.mariadb.database.azure.com'
   'privatelink.vaultcore.azure.net'
   'privatelink.managedhsm.azure.net'
-  'privatelink.${parLocation}.azmk8s.io'
-  'privatelink.${parLocation}.backup.windowsazure.com'
+  'privatelink.${toLower(parLocation)}.azmk8s.io'
   'privatelink.siterecovery.windowsazure.com'
   'privatelink.servicebus.windows.net'
   'privatelink.azure-devices.net'
@@ -66,16 +65,78 @@ param parVirtualNetworkIdToLink string = ''
 @description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
+var varAzBackupGeoCodes = {
+  australiacentral: 'acl'
+  australiacentral2: 'acl2'
+  australiaeast: 'ae'
+  australiasoutheast: 'ase'
+  brazilsouth: 'brs'
+  centraluseuap: 'ccy'
+  canadacentral: 'cnc'
+  canadaeast: 'cne'
+  centralus: 'cus'
+  eastasia: 'ea'
+  eastus2euap: 'ecy'
+  eastus: 'eus'
+  eastus2: 'eus2'
+  francecentral: 'frc'
+  francesouth: 'frs'
+  germanynorth: 'gn'
+  germanywestcentral: 'gwc'
+  centralindia: 'inc'
+  southindia: 'ins'
+  westindia: 'inw'
+  japaneast: 'jpe'
+  japanwest: 'jpw'
+  koreacentral: 'krc'
+  koreasouth: 'krs'
+  northcentralus: 'ncus'
+  northeurope: 'ne'
+  norwayeast: 'nwe'
+  norwaywest: 'nww'
+  southafricanorth: 'san'
+  southafricawest: 'saw'
+  southcentralus: 'scus'
+  swedencentral: 'sdc'
+  swedensouth: 'sds'
+  southeastasia: 'sea'
+  switzerlandnorth: 'szn'
+  switzerlandwest: 'szw'
+  uaecentral: 'uac'
+  uaenorth: 'uan'
+  uksouth: 'uks'
+  ukwest: 'ukw'
+  westcentralus: 'wcus'
+  westeurope: 'we'
+  westus: 'wus'
+  westus2: 'wus2'
+  usdodcentral: 'udc'
+  usdodeast: 'ude'
+  usgovarizona: 'uga'
+  usgoviowa: 'ugi'
+  usgovtexas: 'ugt'
+  usgovvirginia: 'ugv'
+  chinanorth: 'bjb'
+  chinanorth2: 'bjb2'
+  chinaeast: 'sha'
+  chinaeast2: 'sha2'
+  germanycentral: 'gec'
+  germanynortheast: 'gne'
+}
+
+// If region entered in parLocation and matches a lookup to varAzBackupGeoCodes then insert Azure Backup Private DNS Zone with appropriate geo code inserted alongside zones in parPrivateDnsZones. If not just return parPrivateDnsZones
+var varPrivateDnsZonesMerge = contains(varAzBackupGeoCodes, parLocation) ? union(parPrivateDnsZones, ['privatelink.${varAzBackupGeoCodes[toLower(parLocation)]}.backup.windowsazure.com']) : parPrivateDnsZones
+
 // Customer Usage Attribution Id
 var varCuaid = '981733dd-3195-4fda-a4ee-605ab959edb6'
 
-resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in parPrivateDnsZones: {
+resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [for privateDnsZone in varPrivateDnsZonesMerge: {
   name: privateDnsZone
   location: 'global'
   tags: parTags
 }]
 
-resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in parPrivateDnsZones: if (!empty(parVirtualNetworkIdToLink)) {
+resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLink)) {
   name: '${privateDnsZoneName}/${privateDnsZoneName}'
   location: 'global'
   properties: {
@@ -93,7 +154,7 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdRes
   params: {}
 }
 
-output outPrivateDnsZones array = [for i in range(0, length(parPrivateDnsZones)): {
+output outPrivateDnsZones array = [for i in range(0, length(varPrivateDnsZonesMerge)): {
   name: resPrivateDnsZones[i].name
   id: resPrivateDnsZones[i].id
 }]

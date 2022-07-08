@@ -111,14 +111,13 @@ param parPrivateDnsZones array = [
   'privatelink.cassandra.cosmos.azure.com'
   'privatelink.gremlin.cosmos.azure.com'
   'privatelink.table.cosmos.azure.com'
-  'privatelink.${parLocation}.batch.azure.com'
+  'privatelink.${toLower(parLocation)}.batch.azure.com'
   'privatelink.postgres.database.azure.com'
   'privatelink.mysql.database.azure.com'
   'privatelink.mariadb.database.azure.com'
   'privatelink.vaultcore.azure.net'
   'privatelink.managedhsm.azure.net'
-  'privatelink.${parLocation}.azmk8s.io'
-  'privatelink.${parLocation}.backup.windowsazure.com'
+  'privatelink.${toLower(parLocation)}.azmk8s.io'
   'privatelink.siterecovery.windowsazure.com'
   'privatelink.servicebus.windows.net'
   'privatelink.azure-devices.net'
@@ -584,6 +583,7 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
     parTags: parTags
     parVirtualNetworkIdToLink: resHubVnet.id
     parPrivateDnsZones: parPrivateDnsZones
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
