@@ -32,7 +32,7 @@ jobs:
               Else
               {
                 echo $output
-              }   
+              }
           }
 
       - name: List Azure Resource Types
@@ -55,7 +55,7 @@ jobs:
           }
 
           Write-Information "==> Remove nested deployments resource type" -InformationAction Continue
-          $resourceTypesFullList.Remove('Microsoft.Resources/Deployments') 
+          $resourceTypesFullList.Remove('Microsoft.Resources/Deployments')
 
           Write-Information "***** List of resource types in ALZ-Bicep modules *****" -InformationAction Continue
           $resourceTypesFullList.Keys | Sort-Object
