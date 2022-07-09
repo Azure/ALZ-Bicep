@@ -10,7 +10,7 @@ on:
 
 env:
   SubscriptionName: "sub-unit-test-pr-${{ github.event.number }}"
-  
+
 jobs:
   close_job:
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
       if: ${{ env.subscriptionId != '' }}
       shell: pwsh
       run: |
-        Select-AzSubscription -SubscriptionId ${{ env.subscriptionId }} 
+        Select-AzSubscription -SubscriptionId ${{ env.subscriptionId }}
         $resourceGroups = @()
         $resourceGroups += Get-AzResourceGroup
         $resourceGroups | Select-Object -Property ResourceGroupName
