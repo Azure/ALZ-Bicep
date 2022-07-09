@@ -50,7 +50,7 @@ az deployment group create \
 ```powershell
 New-AzResourceGroup -Name 'Bicep_ACR' `
   -Location 'EastUs2'
-  
+
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep `
   -TemplateParameterFile infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json

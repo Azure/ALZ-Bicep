@@ -1,0 +1,6 @@
+root = true
+
+[*]
+trim_trailing_whitespace = true
+end_of_line = lf
+charset = utf-8

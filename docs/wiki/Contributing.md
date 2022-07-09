@@ -137,13 +137,13 @@ param parExampleResourceGroupNamePrefix string = 'TEST'
 var varExampleResourceGroupName = 'rsg-${parExampleResourceGroupNamePrefix}' // Create name for the example resource group
 
 
-// RESOURCE DEPLOYMENTS 
+// RESOURCE DEPLOYMENTS
 resource resExampleResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: varExampleResourceGroupName
   location: 'uksouth' // Hardcoded as an example of commenting inside a resource
 }
 
-/* 
+/*
 No modules being deployed in this example
 */
 

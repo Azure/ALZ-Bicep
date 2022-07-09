@@ -1,6 +1,6 @@
 # Module: Resource Group
 
-This module creates a Resource group to be utilized by other modules.  
+This module creates a Resource group to be utilized by other modules.
 
 Module deploys the following resources:
 

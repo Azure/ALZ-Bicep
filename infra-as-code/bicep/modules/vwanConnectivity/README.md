@@ -83,7 +83,7 @@ In this example, the resources required for Virtual WAN connectivity will be dep
 ### Azure CLI
 ```bash
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
@@ -98,7 +98,7 @@ az deployment group create \
 OR
 ```bash
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
@@ -115,14 +115,14 @@ az deployment group create \
 
 ```powershell
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 New-AzResourceGroup -Name 'alz-vwan-eastus' `
   -Location 'EastUs'
-  
+
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json `
@@ -131,14 +131,14 @@ New-AzResourceGroupDeployment `
 OR
 ```powershell
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 New-AzResourceGroup -Name 'alz-vwan-chinaeast2' `
   -Location 'chinaeast2'
-  
+
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json `

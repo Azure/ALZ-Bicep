@@ -177,7 +177,7 @@ module modSpokePeeringToHub '../../modules/vnetPeering/vnetPeering.bicep' = if (
 
 // Module -  Spoke to Azure Virtual WAN Hub peering.
 module modhubVirtualNetworkConnection '../../modules/vnetPeeringVwan/hubVirtualNetworkConnection.bicep' = if (!empty(varVirtualHubResourceId)) {
-  scope: resourceGroup(varVirtualHubSubscriptionId, varVirtualHubResourceGroup)  
+  scope: resourceGroup(varVirtualHubSubscriptionId, varVirtualHubResourceGroup)
   name: varModuleDeploymentNames.modVnetPeeringVwan
   params: {
     parVirtualWanHubResourceId: varVirtualHubResourceId

@@ -149,7 +149,7 @@ OR
 New-AzTenantDeployment `
   -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json `
-  -Location chinaeast2  
+  -Location chinaeast2
 ```
 
 ![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output")

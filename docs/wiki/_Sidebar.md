@@ -3,7 +3,7 @@
 * [Wiki Home](https://github.com/Azure/ALZ-Bicep/wiki/Home)
 * [Deployment Flow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow)
   * [Network Topology: Hub and Spoke](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowHS)
-  * [Network Topology: Virtual WAN](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowVWAN)  
+  * [Network Topology: Virtual WAN](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowVWAN)
 * [Consumer Guide](https://github.com/Azure/ALZ-Bicep/wiki/ConsumerGuide)
 * [How Does ALZ-Bicep Implement Azure Policies?](https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive)
   * [Adding Custom Azure Policy Definitions](https://github.com/Azure/ALZ-Bicep/wiki/AddingPolicyDefs)

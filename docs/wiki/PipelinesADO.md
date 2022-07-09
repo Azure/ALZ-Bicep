@@ -211,5 +211,5 @@ jobs:
         --resource-group $(SpokeNetworkResourceGroupName) \
         --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep \
         --parameters @infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json \
-        --name create_spoke_network-$(RunNumber)    
+        --name create_spoke_network-$(RunNumber)
 ```

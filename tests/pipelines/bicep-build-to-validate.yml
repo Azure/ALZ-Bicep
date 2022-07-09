@@ -16,7 +16,7 @@ variables:
 jobs:
 - job: bicep_deploy
   displayName: Deploy Bicep Files for PR
-  pool: 
+  pool:
     vmImage: ubuntu-latest
   steps:
   - task: Bash@3
@@ -35,7 +35,7 @@ jobs:
           if [[ $git_diff1 != '' ]] || [[ $git_diff2 != '' ]] || [[ $git_diff3 != '' ]] || [[ $git_diff4 != '' ]] || [[ $git_diff5 != '' ]] || [[ $git_diff6 != '' ]] || [[ $git_diff7 != '' ]]
             then echo "##vso[task.setvariable variable=gitManagementOutput]setmgmt"
           fi
-          echo 
+          echo
 
   - task: Bash@3
     displayName: Check for logging Changes
@@ -119,9 +119,9 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az account list --refresh        
-        
-  - task: Bash@3    
+        az account list --refresh
+
+  - task: Bash@3
     displayName: Az CLI Create Resource Group for PR
     name: create_rsg
     condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
@@ -134,7 +134,7 @@ jobs:
         fi
         az group create --name $(ResourceGroupName) --location $(Location)
 
-  - task: Bash@3     
+  - task: Bash@3
     displayName: Az CLI Deploy Management Groups for PR
     name: create_mgs
     condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
@@ -142,8 +142,8 @@ jobs:
       targetType: 'inline'
       script: |
         az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.min.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location)
-  
-  - task: Bash@3  
+
+  - task: Bash@3
     displayName: Az CLI Deploy Custom Role Definitions for PR
     name: create_rbac_roles
     condition: and(ne(variables['gitManagementOUTPUT'], ''), ne(variables['subscriptionId'], ''))
@@ -151,17 +151,17 @@ jobs:
       targetType: 'inline'
       script: |
         az deployment mg create --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.min.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
-  
-  - task: Bash@3    
+
+  - task: Bash@3
     displayName: Az CLI Deploy Custom Policy Definitions for PR
     name: create_policy_defs
     condition: and(ne(variables['gitManagementOUTPUT'], ''), ne(variables['subscriptionId'], ''))
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.min.json parTargetManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix) 
-  
-  - task: Bash@3    
+        az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.min.json parTargetManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
+
+  - task: Bash@3
     displayName: Az CLI Deploy Logging for PR
     name: create_logging
     condition: and(ne(variables['gitLoggingOUTPUT'], ''), ne(variables['subscriptionId'], ''))
@@ -170,7 +170,7 @@ jobs:
       script: |
         az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/parameters/logging.parameters.min.json
 
-  - task: Bash@3    
+  - task: Bash@3
     displayName: Az CLI Subscription Placement for PR
     name: move_sub
     condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
@@ -191,7 +191,7 @@ jobs:
       azurePowerShellVersion: 'LatestVersion'
       pwsh: true
 
-  - task: Bash@3    
+  - task: Bash@3
     displayName: Az CLI Deploy Hub Networking for PR
     name: create_hub_network
     condition: and(or(ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
@@ -200,7 +200,7 @@ jobs:
       script: |
         az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep --parameters @infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.min.json
 
-  - task: Bash@3    
+  - task: Bash@3
     displayName: Az CLI Deploy vWan Networking for PR
     name: create_vwan_network
     condition: and(or(ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
@@ -209,7 +209,7 @@ jobs:
       script: |
         az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep --parameters @infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.min.json
 
-  - task: Bash@3              
+  - task: Bash@3
     displayName: Az CLI Deploy Spoke Networking for PR
     name: create_spoke_network
     condition: and(or(ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
@@ -218,7 +218,7 @@ jobs:
       script: |
         az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep --parameters @infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.min.json
 
-  - task: Bash@3    
+  - task: Bash@3
     displayName: Az CLI Deploy vWan Network connection for PR
     name: create_vwan_network_connection
     condition: and(ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['subscriptionId'], ''))
@@ -227,7 +227,7 @@ jobs:
       script: |
         az deployment sub create --location $(Location) --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.min.json parVirtualWanHubResourceId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualHubs/alz-vhub-$(Location)"  parRemoteVirtualNetworkResourceId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke"
 
-  - task: Bash@3    
+  - task: Bash@3
     displayName: Az CLI Deploy vNet Peer for PR spoke to hub
     name: create_vnet_peer_spoke_2_hub
     condition: and(ne(variables['gitVnetPeerOUTPUT'], ''), ne(variables['subscriptionId'], ''))
@@ -236,7 +236,7 @@ jobs:
       script: |
         az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep --parameters @infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.min.json parDestinationVirtualNetworkId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
 
-  - task: Bash@3    
+  - task: Bash@3
     displayName: Az CLI Deploy vNet Peer for PR hub to spoke
     name: create_vnet_peer_hub_2_spoke
     condition: and(ne(variables['gitVnetPeerOUTPUT'], ''), ne(variables['subscriptionId'], ''))
@@ -246,7 +246,7 @@ jobs:
         az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep --parameters @infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.min.json parDestinationVirtualNetworkId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke" parSourceVirtualNetworkName="alz-hub-eastus" parDestinationVirtualNetworkName="vnet-spoke"
 
   # Verify that WhatIf does not find differences between code and environment thats just been deployed
-  - task: Bash@3     
+  - task: Bash@3
     displayName: Az CLI After Deployment What-If Management Groups for PR
     name: whatif_mgs
     condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
@@ -264,9 +264,9 @@ jobs:
 - job: bicep_cleanup
   dependsOn: bicep_deploy
   variables:
-    isDeployed: $[ dependencies.bicep_deploy.outputs['create_subscription.IsDeployed'] ]  
+    isDeployed: $[ dependencies.bicep_deploy.outputs['create_subscription.IsDeployed'] ]
   displayName: Cleanup Bicep Deployment for PR
-  pool: 
+  pool:
     vmImage: ubuntu-latest
   steps:
   - task: AzurePowerShell@5

@@ -22,7 +22,7 @@ var varModhubVirtualNetworkConnectionDeploymentName = take('deploy-vnet-peering-
 
 // The hubVirtualNetworkConnection resource is implemented as a separate module because the deployment scope could be on a different subscription and resource group
 module modhubVirtualNetworkConnection 'hubVirtualNetworkConnection.bicep' = if (!empty(parVirtualWanHubResourceId) && !empty(parRemoteVirtualNetworkResourceId)) {
-  scope: resourceGroup(varVwanSubscriptionId, varVwanResourceGroup)  
+  scope: resourceGroup(varVwanSubscriptionId, varVwanResourceGroup)
   name: varModhubVirtualNetworkConnectionDeploymentName
     params: {
     parVirtualWanHubResourceId: parVirtualWanHubResourceId
