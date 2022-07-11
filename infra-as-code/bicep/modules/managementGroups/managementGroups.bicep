@@ -1,3 +1,4 @@
+// test comment for pr trigger
 targetScope = 'tenant'
 
 @description('Prefix for the management group hierarchy.  This management group will be created as part of the deployment.')
