@@ -1,7 +1,7 @@
 @description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
 param parLocation string = resourceGroup().location
 
-@description('Array of custom DNS Zones to provision in Hub Virtual Network. Default: empty array, all known zones deployed')
+@description('Array of custom DNS Zones to provision in Hub Virtual Network. Default: all known private link DNS zones deployed')
 param parPrivateDnsZones array = [
   'privatelink.azure-automation.net'
   'privatelink.database.windows.net'
@@ -56,7 +56,7 @@ param parPrivateDnsZones array = [
   'privatelink.guestconfiguration.azure.com'
 ]
 
-@description('Tags you would like to be applied to all resources in this module. Default: empty array')
+@description('Tags you would like to be applied to all resources in this module. Default: empty object')
 param parTags object = {}
 
 @description('Resource ID of VNet for Private DNS Zone VNet Links')
