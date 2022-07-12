@@ -1,12 +1,2 @@
-# QueueTrigger - PowerShell
-
-The `QueueTrigger` makes it incredibly easy to react to new Queues inside of [Azure Queue Storage](https://azure.microsoft.com/en-us/services/storage/queues/).
-This sample demonstrates a simple use case of processing data from a given Queue using PowerShell.
-
-## How it works
-
-For a `QueueTrigger` to work, you provide a path which dictates where the queue messages are located inside your container.
-
-## Learn more
-
-<TODO> Documentation
+# Overview
+This function is triggered by items arriving on the startjob queue as defined in input bindings in the function.json file. Upon triggering the function will get a number of the latest closed pull requests on the ALZ-Bicep GitHub repo. This is all specified in the run.ps1 file, currently it's set to the last 20 on page 1 (latest). Note that Github API have a maximum of 100 items per page pulled so if a greater number was required, more pages would need to be queried. For each PR the title, PR number and state is placed in the queue closedPullRequests on associated storage as specified in output bindings in the function.json file. 

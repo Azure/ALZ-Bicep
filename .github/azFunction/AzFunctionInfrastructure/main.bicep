@@ -18,8 +18,6 @@ param storageSku string = 'Standard_LRS'
 
 var functionRuntime = 'powerShell'
 
-var keyVaultName = 'kv${uniqueString(resourceGroup().id)}'
-
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: storageAccountName
   location: location
@@ -65,36 +63,6 @@ resource plan 'Microsoft.Web/serverfarms@2020-12-01' = {
     name: 'Y1'
   }
   properties: {}
-}
-
-resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
-  name: keyVaultName
-  location: location
-  properties: {
-    sku: {
-      family: 'A'
-      name: 'standard'
-    }
-    tenantId: subscription().tenantId
-    enabledForDeployment: false
-    enabledForDiskEncryption: true
-    enabledForTemplateDeployment: false
-    enableSoftDelete: false
-    accessPolicies: [
-      {
-        tenantId: subscription().tenantId
-        objectId: functionApp.identity.principalId
-        permissions: {
-          keys: []
-          secrets: [
-            'get'
-            'list'
-          ]
-          'certificates': []
-        }
-      }
-    ]
-  }
 }
 
 resource functionApp 'Microsoft.Web/sites@2021-03-01' = {

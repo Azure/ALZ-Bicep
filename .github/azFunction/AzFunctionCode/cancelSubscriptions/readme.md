@@ -1,12 +1,2 @@
-# QueueTrigger - PowerShell
-
-The `QueueTrigger` makes it incredibly easy to react to new Queues inside of [Azure Queue Storage](https://azure.microsoft.com/en-us/services/storage/queues/).
-This sample demonstrates a simple use case of processing data from a given Queue using PowerShell.
-
-## How it works
-
-For a `QueueTrigger` to work, you provide a path which dictates where the queue messages are located inside your container.
-
-## Learn more
-
-<TODO> Documentation
+# Overview
+This function is triggered by items arriving on the subscriptionsToClose queue as defined in input bindings in the function.json file. Upon triggering the function will cancel the subscription using Azure rest api. If succesful, subscription name and id is placed in the queue canceledSubscriptions on associated storage as specified in output bindings in the function.json file. 

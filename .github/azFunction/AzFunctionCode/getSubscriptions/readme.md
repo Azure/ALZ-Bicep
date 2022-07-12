@@ -1,12 +1,3 @@
-# QueueTrigger - PowerShell
+# Overview
+This function is triggered by items arriving on the closedPullRequests queue as defined in input bindings in the function.json file. Upon triggering the function will try to get the subscription state based on subscription name using Get-AzSubscription. If subscription exists and is active, subscription name and id is placed in the queue subscriptionsToClose on associated storage as specified in output bindings in the function.json file. 
 
-The `QueueTrigger` makes it incredibly easy to react to new Queues inside of [Azure Queue Storage](https://azure.microsoft.com/en-us/services/storage/queues/).
-This sample demonstrates a simple use case of processing data from a given Queue using PowerShell.
-
-## How it works
-
-For a `QueueTrigger` to work, you provide a path which dictates where the queue messages are located inside your container.
-
-## Learn more
-
-<TODO> Documentation
