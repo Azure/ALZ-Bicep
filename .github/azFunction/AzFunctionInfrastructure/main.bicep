@@ -1,5 +1,5 @@
 @description('Azure region to deploy in')
-param location string = resourceGroup().location
+param parLocation string = resourceGroup().location
 
 @description('Azure Function App Name')
 param functionAppName string = uniqueString(resourceGroup().id)
@@ -20,7 +20,7 @@ var functionRuntime = 'powerShell'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: storageAccountName
-  location: location
+  location: parLocation
   sku: {
     name: storageSku
   }
@@ -46,7 +46,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
 
 resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
   name: appInsightsName
-  location: location
+  location: parLocation
   kind: 'web'
   properties: {
     Application_Type: 'web'
@@ -57,7 +57,7 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
 
 resource plan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: appSvcPlanName
-  location: location
+  location: parLocation
   kind: 'functionapp,linux'
   sku: {
     name: 'Y1'
@@ -67,7 +67,7 @@ resource plan 'Microsoft.Web/serverfarms@2020-12-01' = {
 
 resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
   name: functionAppName
-  location: location
+  location: parLocation
   kind: 'functionapp,linux'
   identity: {
     type: 'SystemAssigned'
@@ -115,21 +115,3 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
     httpsOnly: true
   }
 }
-
-
-
-//Add role assignment reader at Tenant root group level
-
-
-//
-// 
-//resource resRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-08-01-preview' = {
-//   name: guid(subscription().subscriptionId, policyContributorRoledef, uniqueString(resourceGroup().name))
-//   properties: {
-//     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', policyContributorRoledef)
-//     principalId: functionApp.identity.principalId
-//     principalType: 'ServicePrincipal'
-//   }
-// }
-
-
