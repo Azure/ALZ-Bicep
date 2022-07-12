@@ -2,27 +2,22 @@
 param parLocation string = resourceGroup().location
 
 @description('Azure Function App Name')
-param functionAppName string = uniqueString(resourceGroup().id)
+param parAzFunctionName string = uniqueString(resourceGroup().id)
 
 @description('Azure Storage Account Name')
-param storageAccountName string = uniqueString(resourceGroup().id)
+param parStorageAccountName string = uniqueString(resourceGroup().id)
 
 @description('App Service Plan Name')
-param appSvcPlanName string = 'FunctionPlan'
+param parApplicationServicePlanName string = 'FunctionPlan'
 
 @description('Application Insights Name')
-param appInsightsName string = 'AppInsights'
+param parApplicationInsightsName string = 'AppInsights'
 
-@description('Storage account SKU name.')
-param storageSku string = 'Standard_LRS'
-
-var functionRuntime = 'powerShell'
-
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
-  name: storageAccountName
+resource resStorageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
+  name: parStorageAccountName
   location: parLocation
   sku: {
-    name: storageSku
+    name: 'Standard_LRS'
   }
   kind: 'StorageV2'
   properties: {
@@ -44,8 +39,8 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   }
 }
 
-resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
-  name: appInsightsName
+resource resApplicationInsights 'Microsoft.Insights/components@2020-02-02' = {
+  name: parApplicationInsightsName
   location: parLocation
   kind: 'web'
   properties: {
@@ -55,8 +50,8 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
   }
 }
 
-resource plan 'Microsoft.Web/serverfarms@2020-12-01' = {
-  name: appSvcPlanName
+resource resApplicationServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
+  name: parApplicationServicePlanName
   location: parLocation
   kind: 'functionapp,linux'
   sku: {
@@ -65,15 +60,15 @@ resource plan 'Microsoft.Web/serverfarms@2020-12-01' = {
   properties: {}
 }
 
-resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
-  name: functionAppName
+resource resAzFunction 'Microsoft.Web/sites@2021-03-01' = {
+  name: parAzFunctionName
   location: parLocation
   kind: 'functionapp,linux'
   identity: {
     type: 'SystemAssigned'
   }
   properties: {
-    serverFarmId: plan.id
+    serverFarmId: resApplicationServicePlan.id
     enabled: true
     reserved: true
     isXenon: false
@@ -88,11 +83,11 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${resStorageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(resStorageAccount.id, resStorageAccount.apiVersion).keys[0].value}'
         }
         {
           name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${resStorageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(resStorageAccount.id, resStorageAccount.apiVersion).keys[0].value}'
         }
         {
           name: 'WEBSITE_CONTENTSHARE'
@@ -100,11 +95,11 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
         }
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-          value: appInsights.properties.InstrumentationKey
+          value: resApplicationInsights.properties.InstrumentationKey
         }
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
-          value: functionRuntime
+          value: 'powerShell'
         }
         {
           name: 'FUNCTIONS_EXTENSION_VERSION'
