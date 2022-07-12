@@ -22,7 +22,7 @@ There are a few options for you to make additional Policy Assignments using Bice
    - *(optional)* Deploy after [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) from `ALZ-Bicep` in your flow
 3. Define the assignment via "native" Bicep and deploy as a separate deployment
    - Using API schema for [Policy Assignments](https://docs.microsoft.com/azure/templates/microsoft.authorization/policyassignments?tabs=bicep)
-   - Example can be seen [here](https://github.com/Azure/bicep/blob/main/docs/examples/301/deployifnotexists-policy-with-initiative-and-assignment/policyAssignment.bicep)
+   - Example can be seen [here](https://github.com/Azure/azure-quickstart-templates/blob/master/managementgroup-deployments/mg-policy/main.bicep)
    - Need to ensure you make the required RBAC Role Assignments also as a separate resource declaration for policies that use Managed Identities for remediation tasks like `DeployIfNotExists` and `Modify`
      - Using API schema for [RBAC Role Assignments](https://docs.microsoft.com/azure/templates/microsoft.authorization/roleassignments?tabs=bicep)
 
