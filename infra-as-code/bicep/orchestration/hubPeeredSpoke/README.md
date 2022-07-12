@@ -11,7 +11,7 @@ Module deploys the following resources:
 - Spoke to hub peering - if resource id of hub virtual network object is specified in parHubVirtualNetworkID
 - Spoke to virtual WAN peering - if resource id of virtual WAN hub object is specified in parHubVirtualNetworkID
 
-Note that only one peering type can be created with this module, so either traditional Hub & Spoke OR Azure virtual WAN.
+Note that only one peering type can be created with this module, so either traditional Hub & Spoke **OR** Azure virtual WAN.
 
 ## Parameters
 
