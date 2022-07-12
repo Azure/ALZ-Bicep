@@ -1,0 +1,39 @@
+trigger: none
+
+variables:
+ - group: csu-bicep-environment
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: ArchiveFiles@2
+  displayName: "Archive files"
+  inputs:
+    rootFolderOrFile: "$(System.DefaultWorkingDirectory)/.github/azFunction/AzFunctionCode"
+    includeRootFolder: false
+    archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
+
+- task: AzureResourceManagerTemplateDeployment@3
+  displayName: "Deploy Base Azure Function"
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'azserviceconnection'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'cancelsubscription'
+    location:  $(Location)
+    templateLocation: 'Linked artifact'
+    csmFile: './.github/azFunction/AzFunctionInfrastructure/main.bicep'
+    overrideParameters: '-functionAppName $(cancelsubfunctionname)'
+    deploymentMode: 'Incremental'
+
+- task: AzureFunctionApp@1 
+  displayName: "Deploy Functions to base"
+  inputs:
+    azureSubscription: 'azserviceconnection'
+    appType: functionAppLinux 
+    appName: $(cancelsubfunctionname)
+    package: $(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip
+
+
+
