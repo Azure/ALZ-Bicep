@@ -14,18 +14,21 @@ steps:
     includeRootFolder: false
     archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
 
-- task: AzureResourceManagerTemplateDeployment@3
-  displayName: "Deploy Base Azure Function"
+- task: Bash@3
+  displayName: Login to Azure
+  name: git_azlogin
   inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'azserviceconnection'
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: 'cancelsubscription'
-    location:  $(Location)
-    templateLocation: 'Linked artifact'
-    csmFile: './.github/azFunction/AzFunctionInfrastructure/main.bicep'
-    overrideParameters: '-functionAppName $(cancelsubfunctionname)'
-    deploymentMode: 'Incremental'
+    targetType: 'inline'
+    script: |
+      az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+
+- task: Bash@3    
+  displayName: Deploy Base Azure Function
+  name: create_az_function
+  inputs:
+    targetType: 'inline'
+    script: |
+      az deployment group create --resource-group cancelsubscription --template-file .github/azFunction/AzFunctionInfrastructure/main.bicep --parameters parAzFunctionName=$(cancelsubfunctionname)
 
 - task: AzureFunctionApp@1 
   displayName: "Deploy Functions to base"
@@ -35,5 +38,12 @@ steps:
     appName: $(cancelsubfunctionname)
     package: $(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip
 
+- task: Bash@3    
+  displayName: Az CLI create Role Assignment to Tenant root group
+  name: create_role_assign_tenant
+  inputs:
+    targetType: 'inline'
+    script: |
+      az deployment mg create --template-file .github/azFunction/AzFunctionInfrastructure/rbac.bicep --parameters parAzFunctionName=$(cancelsubfunctionname) parAzFunctionSubscriptionId=$(cancelsubid) --location $(Location) --management-group-id $(azclitenant) --name setrbac
 
 
