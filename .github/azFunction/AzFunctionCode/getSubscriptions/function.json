@@ -1,0 +1,18 @@
+{
+  "bindings": [
+    {
+      "name": "QueueItem",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "closedPullRequests",
+      "connection": "AzureWebJobsStorage"
+    },
+    {
+      "type": "queue",
+      "direction": "out",
+      "name": "subscriptionsToClose",
+      "queueName": "subscriptionsToClose",
+      "connection": "AzureWebJobsStorage"
+    }
+  ]
+}
