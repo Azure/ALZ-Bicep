@@ -6,9 +6,8 @@ $subscriptionId = $QueueItem.Body.subscriptionId
 $subscriptionName = $QueueItem.Body.subscriptionName
 Write-Output "Subscription to be canceled is $subscriptionName with id: $subscriptionId"
 $cancelUri = "https://management.azure.com/subscriptions/$($subscriptionId)/providers/Microsoft.Subscription/cancel?api-version=2020-09-01"
-$token = (Get-AzAccessToken).Token 
-$secureStringCache = New-Object PSCredential ($username, $token)
-Invoke-RestMethod -Method Post -ContentType "application/json" -Authentication Bearer -Token $secureStringCache.Password -Uri $cancelUri
+$token = (Get-AzAccessToken).Token | ConvertTo-SecureString -AsPlainText -Force
+Invoke-RestMethod -Method Post -ContentType "application/json" -Authentication Bearer -Token $token -Uri $cancelUri
 $body = @{
     subscriptionName = $subscriptionName
     subscriptionId   = $subscriptionId
