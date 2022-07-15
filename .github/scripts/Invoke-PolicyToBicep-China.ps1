@@ -2,7 +2,7 @@
 SUMMARY: This PowerShell script helps with the authoring of the policy definiton module for Azure China by outputting information required for the variables within the module.
 DESCRIPTION: This PowerShell script outputs the Name & Path to a Bicep strucutred .txt file named '_mc_policyDefinitionsBicepInput.txt' and '_mc_policySetDefinitionsBicepInput.txt' respectively. It also creates a parameters file for each of the policy set definitions. It also outputs the number of policies definition and set definition files to the console for easier reviewing as part of the PR process.
 AUTHOR/S: faister, jtracey93
-VERSION: 1.1
+VERSION: 1.2.0
 #>
 
 # Policy Definitions
@@ -96,9 +96,20 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/l
     if (($policySetDefinitionsOutputForBicep.Count) -ne 0) {
         $policySetDefinitionsOutputForBicep.Keys | Sort-Object | ForEach-Object {
             $definitionReferenceId = $_
+            $definitionReferenceIdForParameters = $_
             $definitionId = $($policySetDefinitionsOutputForBicep[$_])
-            # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
-            Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/china/policy_set_definitions/_mc_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t`t{`r`n`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`tdefinitionId: '$definitionId'`r`n`t`t`tdefinitionParameters: json(loadTextContent('lib/china/policy_set_definitions/$parametersFileName')).$definitionReferenceId.parameters`r`n`t`t}"
+
+            # If definitionReferenceId contains, then wrap in definitionReferenceId value in [] to comply with bicep formatting
+            if ($definitionReferenceIdForParameters.Contains("-") -or $definitionReferenceIdForParameters.Contains(" ")) {
+                $definitionReferenceIdForParameters = "['$definitionReferenceIdForParameters']"
+
+                # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable, without the '.' before the definitionReferenceId to make it an accessor
+                Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t`t{`r`n`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`tdefinitionId: '$definitionId'`r`n`t`t`tdefinitionParameters: json(loadTextContent('lib/policy_set_definitions/$parametersFileName'))$definitionReferenceIdForParameters.parameters`r`n`t`t}"
+            }
+            else {
+                # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
+                Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t`t{`r`n`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`tdefinitionId: '$definitionId'`r`n`t`t`tdefinitionParameters: json(loadTextContent('lib/policy_set_definitions/$parametersFileName')).$definitionReferenceIdForParameters.parameters`r`n`t`t}"
+            }
         }
     }
 
@@ -125,7 +136,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/l
     $fileName = $_.Name
 
     # Remove hyphens from Policy Assignment Name
-    $policyAssignmentNameNoHyphens = $policyAssignmentName.replace("-","")
+    $policyAssignmentNameNoHyphens = $policyAssignmentName.replace("-", "")
 
     Write-Information "==> Adding '$policyAssignmentName' to '$PWD/_mc_policyAssignmentsBicepInput.txt'" -InformationAction Continue
     Add-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/china/policy_assignments/_mc_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionID: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: json(loadTextContent('../../policy/assignments/lib/china/policy_assignments/$fileName'))`r`n}`r`n"
