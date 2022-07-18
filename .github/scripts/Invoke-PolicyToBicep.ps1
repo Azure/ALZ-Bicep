@@ -136,7 +136,7 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
 
         # Add Policy Set/Initiative Definition Parameter Variables to Bicep Input File
         $policySetDefParamVarTrimJsonExt = $parametersFileName.TrimEnd("json").Replace('.', '_')
-        $policySetDefParamVarCreation = "var" + ($policySetDefParamVarTrimJsonExt -replace '(?:^|_)(\p{L})', { $_.Groups[1].Value.ToUpper() }).TrimEnd('_')
+        $policySetDefParamVarCreation = "var" + ($policySetDefParamVarTrimJsonExt -replace '(?:^|_|-)(\p{L})', { $_.Groups[1].Value.ToUpper() }).TrimEnd('_')
         $policySetDefParamVar = "var " + $policySetDefParamVarCreation + " = " + "loadJsonContent('$definitionsSetPath/$parametersFileName')"
         $policySetDefParamVarList += $policySetDefParamVar
 
