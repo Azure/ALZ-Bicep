@@ -4,6 +4,7 @@ DESCRIPTION: This PowerShell script outputs the Name & Path to a Bicep strucutre
 AUTHOR/S: faister, jtracey93, seseicht
 VERSION: 2.0.0
 #>
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "", Justification="False Positive")]
 
 [CmdletBinding(SupportsShouldProcess)]
 param (
@@ -194,7 +195,7 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
 function New-PolicyAssignmentsBicepInputTxtFile {
     [CmdletBinding(SupportsShouldProcess)]
     param()
-    
+
     Write-Information "====> Creating/Emptying '$assignmentsTxtFileName'" -InformationAction Continue
     Set-Content -Path "$rootPath/$assignmentsLongPath/$assignmentsTxtFileName" -Value $null -Encoding "utf8"
 
