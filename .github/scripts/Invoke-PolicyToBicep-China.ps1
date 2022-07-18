@@ -5,7 +5,7 @@ AUTHOR/S: faister, jtracey93, seseicht
 VERSION: 2.0.0
 #>
 
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess)]
 param (
     [Parameter()]
     [string]

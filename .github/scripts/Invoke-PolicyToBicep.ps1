@@ -5,7 +5,7 @@ AUTHOR/S: jtracey93, seseicht
 VERSION: 2.0.0
 #>
 
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess)]
 param (
     [Parameter()]
     [string]
@@ -17,9 +17,9 @@ param (
     [string]
     $definitionsLongPath = "$definitionsRoot/$definitionsPath",
     [string]
-    $definitionsSetPath = "lib/policy_set_definitions", 
+    $definitionsSetPath = "lib/policy_set_definitions",
     [string]
-    $definitionsSetLongPath = "$definitionsRoot/$definitionsSetPath", 
+    $definitionsSetLongPath = "$definitionsRoot/$definitionsSetPath",
     [string]
     $assignmentsRoot = "assignments",
     [string]
