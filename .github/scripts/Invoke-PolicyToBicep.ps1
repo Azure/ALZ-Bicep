@@ -89,9 +89,15 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
             $definitionReferenceId = $_.policyDefinitionReferenceId
             $definitionParameters = $_.parameters
 
-            $definitionParameters | Sort-Object | ForEach-Object {
+            if ($definitionParameters) {
+                $definitionParameters | Sort-Object | ForEach-Object {
+                    [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
+                    $definitionParametersOutputArray.Add("parameters", $_)
+                }
+            }
+            else {
                 [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
-                $definitionParametersOutputArray.Add("parameters", $_)
+                $definitionParametersOutputArray.Add("parameters", @{})
             }
 
             $definitionParametersOutputJSONObject.Add("$definitionReferenceId", $definitionParametersOutputArray)
