@@ -25,6 +25,8 @@ We recommend were possible to use option 1 and extend the current `ALZ-Bicep` ap
 
 ## How do I extend the `ALZ-Bicep` Custom Policy Definitions module?
 
+> ✋ Where possible avoid using `-`'s (hyphens/dashes) as these are an unsupported character in Bicep. camelCase or use `_` instead 👍
+
 To extend the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions) from `ALZ-Bicep` follow the below process.
 
 1. Navigate to the relevant `lib` directory
@@ -39,6 +41,7 @@ To extend the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bi
    1. Copy the entire contents of the relevant `.txt` file and replace the contents of the associated variable in the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions)
       - Policy Definition = `_policyDefinitionsBicepInput.txt` placed into variable named `varCustomPolicyDefinitionsArray` (place copied contents inside of array `[]`)
       - Policy Initiative (Set) = `_policySetDefinitionsBicepInput.txt` placed into variable named `varCustomPolicySetDefinitionsArray` (place copied contents inside of array `[]`)
+      - Policy Initiative (Set) Parameter Variables = Bottom of `_policySetDefinitionsBicepInput.txt` placed beneath the variable named `varCustomPolicySetDefinitionsArray`
 5. Redeploy the updated [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions) via your configured method (locally via Azure CLI or PowerShell or via Azure DevOps pipeline or GitHub action)
 6. New Policy Definitions now deployed to intermediate root Management Group (e.g. `Contoso`)
 
