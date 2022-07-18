@@ -99,8 +99,17 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/l
             $definitionReferenceIdForParameters = $_
             $definitionId = $($policySetDefinitionsOutputForBicep[$_])
 
+            # If definitionReferenceId or definitionReferenceIdForParameters contains apostrophes, replace that apostrophe with a backslash and an apostrohphe for Bicep string escaping
+            if ($definitionReferenceId.Contains("'")) {
+                $definitionReferenceId = $definitionReferenceId.Replace("'", "\'")
+            }
+
+            if ($definitionReferenceIdForParameters.Contains("'")) {
+                $definitionReferenceIdForParameters = $definitionReferenceIdForParameters.Replace("'", "\'")
+            }
+
             # If definitionReferenceId contains, then wrap in definitionReferenceId value in [] to comply with bicep formatting
-            if ($definitionReferenceIdForParameters.Contains("-") -or $definitionReferenceIdForParameters.Contains(" ")) {
+            if ($definitionReferenceIdForParameters.Contains("-") -or $definitionReferenceIdForParameters.Contains(" ") -or $definitionReferenceIdForParameters.Contains("\'")) {
                 $definitionReferenceIdForParameters = "['$definitionReferenceIdForParameters']"
 
                 # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable, without the '.' before the definitionReferenceId to make it an accessor
@@ -114,7 +123,7 @@ Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/l
     }
 
     # Finish output file creation of Policy Set/Initiative Definitions for Bicep
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/china/policy_set_definitions/_mc_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t]`r`n}"
+    Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t]`r`n}"
 
 }
 
