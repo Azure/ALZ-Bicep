@@ -5,152 +5,172 @@ AUTHOR/S: jtracey93
 VERSION: 1.6.0
 #>
 
-# Policy Definitions
+[CmdletBinding()]
+param (
+    [Parameter()]
+    [string]
+    $folderpath = "./infra-as-code/bicep/modules/policy"
+)
 
-Write-Information "====> Creating/Emptying '_policyDefinitionsBicepInput.txt'" -InformationAction Continue
-Set-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions/_policyDefinitionsBicepInput.txt" -Value $null -Encoding "utf8"
 
-Write-Information "====> Looping Through Policy Definitions:" -InformationAction Continue
-Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions" -Filter "*.json" | ForEach-Object {
-    $policyDef = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
+#region Policy Definitions
+function New-PolicyDefinitionsBicepInputTxtFile {
 
-    $policyDefinitionName = $policyDef.name
-    $fileName = $_.Name
+    Write-Information "====> Creating/Emptying '_policyDefinitionsBicepInput.txt'" -InformationAction Continue
+    Set-Content -Path "$folderpath/definitions/lib/policy_definitions/_policyDefinitionsBicepInput.txt" -Value $null -Encoding "utf8"
 
-    Write-Information "==> Adding '$policyDefinitionName' to '$PWD/_policyDefinitionsBicepInput.txt'" -InformationAction Continue
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions/_policyDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n`tname: '$policyDefinitionName'`r`n`tlibDefinition: json(loadTextContent('lib/policy_definitions/$fileName'))`r`n}"
+    Write-Information "====> Looping Through Policy Definitions:" -InformationAction Continue
+    Get-ChildItem -Recurse -Path "$folderpath/definitions/lib/policy_definitions" -Filter "*.json" | ForEach-Object {
+        $policyDef = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
+
+        $policyDefinitionName = $policyDef.name
+        $fileName = $_.Name
+
+        Write-Information "==> Adding '$policyDefinitionName' to '$PWD/_policyDefinitionsBicepInput.txt'" -InformationAction Continue
+        Add-Content -Path "$folderpath/definitions/lib/policy_definitions/_policyDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n`tname: '$policyDefinitionName'`r`n`tlibDefinition: json(loadTextContent('lib/policy_definitions/$fileName'))`r`n}"
+    }
+
+    $policyDefCount = Get-ChildItem -Recurse -Path "$folderpath/definitions/lib/policy_definitions" -Filter "*.json" | Measure-Object
+    $policyDefCountString = $policyDefCount.Count
+    Write-Information "====> Policy Definitions Total: $policyDefCountString" -InformationAction Continue
+    
 }
+#endregion
 
-$policyDefCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions" -Filter "*.json" | Measure-Object
-$policyDefCountString = $policyDefCount.Count
-Write-Information "====> Policy Definitions Total: $policyDefCountString" -InformationAction Continue
+#region Policy Set Definitions
+function New-PolicySetDefinitionsBicepInputTxtFile {
+    Write-Information "====> Creating/Emptying '_policySetDefinitionsBicepInput.txt'" -InformationAction Continue
+    Set-Content -Path "$folderpath/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Value $null -Encoding "utf8"
 
-# Policy Set Definitions
+    Write-Information "====> Looping Through Policy Set/Initiative Definition:" -InformationAction Continue
 
-Write-Information "====> Creating/Emptying '_policySetDefinitionsBicepInput.txt'" -InformationAction Continue
-Set-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Value $null -Encoding "utf8"
+    Get-ChildItem -Recurse -Path "$folderpath/definitions/lib/policy_set_definitions" -Filter "*.json" -Exclude "*.parameters.json" | ForEach-Object {
+        $policyDef = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
 
-Write-Information "====> Looping Through Policy Set/Initiative Definition:" -InformationAction Continue
+        # Load child Policy Set/Initiative Definitions
+        $policyDefinitions = $policyDef.properties.policyDefinitions | Sort-Object -Property policyDefinitionReferenceId
 
-Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions" -Filter "*.json" -Exclude "*.parameters.json" | ForEach-Object {
-    $policyDef = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
+        $policyDefinitionName = $policyDef.name
+        $fileName = $_.Name
 
-    # Load child Policy Set/Initiative Definitions
-    $policyDefinitions = $policyDef.properties.policyDefinitions | Sort-Object -Property policyDefinitionReferenceId
+        # Construct file name for Policy Set/Initiative Definitions parameters files
+        $parametersFileName = $fileName.Substring(0, $fileName.Length - 5) + ".parameters.json"
 
-    $policyDefinitionName = $policyDef.name
-    $fileName = $_.Name
+        # Create Policy Set/Initiative Definitions parameter file
+        Write-Information "==> Creating/Emptying '$parametersFileName'" -InformationAction Continue
+        Set-Content -Path "$folderpath/definitions/lib/policy_set_definitions/$parametersFileName" -Value $null -Encoding "utf8"
 
-    # Construct file name for Policy Set/Initiative Definitions parameters files
-    $parametersFileName = $fileName.Substring(0, $fileName.Length - 5) + ".parameters.json"
-
-    # Create Policy Set/Initiative Definitions parameter file
-    Write-Information "==> Creating/Emptying '$parametersFileName'" -InformationAction Continue
-    Set-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/$parametersFileName" -Value $null -Encoding "utf8"
-
-    # Loop through all Policy Set/Initiative Definitions Child Definitions and create parameters file for each of them
-    [System.Collections.Hashtable]$definitionParametersOutputJSONObject = [ordered]@{}
-    $policyDefinitions | Sort-Object | ForEach-Object {
-        $definitionReferenceId = $_.policyDefinitionReferenceId
-        $definitionParameters = $_.parameters
-
-        $definitionParameters | Sort-Object | ForEach-Object {
-            [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
-            $definitionParametersOutputArray.Add("parameters", $_)
-        }
-
-        $definitionParametersOutputJSONObject.Add("$definitionReferenceId", $definitionParametersOutputArray)
-    }
-    Write-Information "==> Adding parameters to '$parametersFileName'" -InformationAction Continue
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/$parametersFileName" -Value ($definitionParametersOutputJSONObject | ConvertTo-Json -Depth 10) -Encoding "utf8"
-
-    # Sort parameters file alphabetically to remove false git diffs
-    Write-Information "==> Sorting parameters file '$parametersFileName' alphabetically" -InformationAction Continue
-    $definitionParametersOutputJSONObjectSorted = New-Object PSCustomObject
-    Get-Content -Raw -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/$parametersFileName" | ConvertFrom-Json -pv fromPipe -Depth 10 |
-    Get-Member -Type NoteProperty | Sort-Object Name | ForEach-Object {
-        Add-Member -InputObject $definitionParametersOutputJSONObjectSorted -Type NoteProperty -Name $_.Name -Value $fromPipe.$($_.Name)
-    }
-    Set-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/$parametersFileName" -Value ($definitionParametersOutputJSONObjectSorted | ConvertTo-Json -Depth 10) -Encoding "utf8"
-
-    # Check if variable exists before trying to clear it
-    if ($policySetDefinitionsOutputForBicep) {
-        Clear-Variable -Name policySetDefinitionsOutputForBicep -ErrorAction Continue
-    }
-
-    # Create HashTable variable
-    [System.Collections.Hashtable]$policySetDefinitionsOutputForBicep = [ordered]@{}
-
-    # Loop through child Policy Set/Initiative Definitions if HashTable not == 0
-    if (($policyDefinitions.Count) -ne 0) {
+        # Loop through all Policy Set/Initiative Definitions Child Definitions and create parameters file for each of them
+        [System.Collections.Hashtable]$definitionParametersOutputJSONObject = [ordered]@{}
         $policyDefinitions | Sort-Object | ForEach-Object {
-            $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, $_.policyDefinitionId)
+            $definitionReferenceId = $_.policyDefinitionReferenceId
+            $definitionParameters = $_.parameters
+
+            $definitionParameters | Sort-Object | ForEach-Object {
+                [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
+                $definitionParametersOutputArray.Add("parameters", $_)
+            }
+
+            $definitionParametersOutputJSONObject.Add("$definitionReferenceId", $definitionParametersOutputArray)
         }
+        Write-Information "==> Adding parameters to '$parametersFileName'" -InformationAction Continue
+        Add-Content -Path "$folderpath/definitions/lib/policy_set_definitions/$parametersFileName" -Value ($definitionParametersOutputJSONObject | ConvertTo-Json -Depth 10) -Encoding "utf8"
+
+        # Sort parameters file alphabetically to remove false git diffs
+        Write-Information "==> Sorting parameters file '$parametersFileName' alphabetically" -InformationAction Continue
+        $definitionParametersOutputJSONObjectSorted = New-Object PSCustomObject
+        Get-Content -Raw -Path "$folderpath/definitions/lib/policy_set_definitions/$parametersFileName" | ConvertFrom-Json -pv fromPipe -Depth 10 |
+        Get-Member -Type NoteProperty | Sort-Object Name | ForEach-Object {
+            Add-Member -InputObject $definitionParametersOutputJSONObjectSorted -Type NoteProperty -Name $_.Name -Value $fromPipe.$($_.Name)
+        }
+        Set-Content -Path "$folderpath/definitions/lib/policy_set_definitions/$parametersFileName" -Value ($definitionParametersOutputJSONObjectSorted | ConvertTo-Json -Depth 10) -Encoding "utf8"
+
+        # Check if variable exists before trying to clear it
+        if ($policySetDefinitionsOutputForBicep) {
+            Clear-Variable -Name policySetDefinitionsOutputForBicep -ErrorAction Continue
+        }
+
+        # Create HashTable variable
+        [System.Collections.Hashtable]$policySetDefinitionsOutputForBicep = [ordered]@{}
+
+        # Loop through child Policy Set/Initiative Definitions if HashTable not == 0
+        if (($policyDefinitions.Count) -ne 0) {
+            $policyDefinitions | Sort-Object | ForEach-Object {
+                $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, $_.policyDefinitionId)
+            }
+        }
+
+        # Start output file creation of Policy Set/Initiative Definitions for Bicep
+        Write-Information "==> Adding '$policyDefinitionName' to '$PWD/_policySetDefinitionsBicepInput.txt'" -InformationAction Continue
+        Add-Content -Path "$folderpath/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n`tname: '$policyDefinitionName'`r`n`tlibSetDefinition: json(loadTextContent('lib/policy_set_definitions/$fileName'))`r`n`tlibSetChildDefinitions: ["
+
+        # Loop through child Policy Set/Initiative Definitions for Bicep output if HashTable not == 0
+        if (($policySetDefinitionsOutputForBicep.Count) -ne 0) {
+            $policySetDefinitionsOutputForBicep.Keys | Sort-Object | ForEach-Object {
+                $definitionReferenceId = $_
+                $definitionReferenceIdForParameters = $_
+                $definitionId = $($policySetDefinitionsOutputForBicep[$_])
+
+                # If definitionReferenceId or definitionReferenceIdForParameters contains apostrophes, replace that apostrophe with a backslash and an apostrohphe for Bicep string escaping
+                if ($definitionReferenceId.Contains("'")) {
+                    $definitionReferenceId = $definitionReferenceId.Replace("'", "\'")
+                }
+
+                if ($definitionReferenceIdForParameters.Contains("'")) {
+                    $definitionReferenceIdForParameters = $definitionReferenceIdForParameters.Replace("'", "\'")
+                }
+
+                # If definitionReferenceId contains, then wrap in definitionReferenceId value in [] to comply with bicep formatting
+                if ($definitionReferenceIdForParameters.Contains("-") -or $definitionReferenceIdForParameters.Contains(" ") -or $definitionReferenceIdForParameters.Contains("\'")) {
+                    $definitionReferenceIdForParameters = "['$definitionReferenceIdForParameters']"
+
+                    # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable, without the '.' before the definitionReferenceId to make it an accessor
+                    Add-Content -Path "$folderpath/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t`t{`r`n`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`tdefinitionId: '$definitionId'`r`n`t`t`tdefinitionParameters: json(loadTextContent('lib/policy_set_definitions/$parametersFileName'))$definitionReferenceIdForParameters.parameters`r`n`t`t}"
+                }
+                else {
+                    # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
+                    Add-Content -Path "$folderpath/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t`t{`r`n`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`tdefinitionId: '$definitionId'`r`n`t`t`tdefinitionParameters: json(loadTextContent('lib/policy_set_definitions/$parametersFileName')).$definitionReferenceIdForParameters.parameters`r`n`t`t}"
+                }
+            }
+        }
+
+        # Finish output file creation of Policy Set/Initiative Definitions for Bicep
+        Add-Content -Path "$folderpath/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t]`r`n}"
+
     }
 
-    # Start output file creation of Policy Set/Initiative Definitions for Bicep
-    Write-Information "==> Adding '$policyDefinitionName' to '$PWD/_policySetDefinitionsBicepInput.txt'" -InformationAction Continue
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "{`r`n`tname: '$policyDefinitionName'`r`n`tlibSetDefinition: json(loadTextContent('lib/policy_set_definitions/$fileName'))`r`n`tlibSetChildDefinitions: ["
+    $policyDefCount = Get-ChildItem -Recurse -Path "$folderpath/definitions/lib/policy_set_definitions" -Filter "*.json" -Exclude "*.parameters.json" | Measure-Object
+    $policyDefCountString = $policyDefCount.Count
+    Write-Information "====> Policy Set/Initiative Definitions Total: $policyDefCountString" -InformationAction Continue
+}
+#endregion
 
-    # Loop through child Policy Set/Initiative Definitions for Bicep output if HashTable not == 0
-    if (($policySetDefinitionsOutputForBicep.Count) -ne 0) {
-        $policySetDefinitionsOutputForBicep.Keys | Sort-Object | ForEach-Object {
-            $definitionReferenceId = $_
-            $definitionReferenceIdForParameters = $_
-            $definitionId = $($policySetDefinitionsOutputForBicep[$_])
+#region Policy Asssignments
+function New-PolicyAssignmentsBicepInputTxtFile {
+    Write-Information "====> Creating/Emptying '_policyAssignmentsBicepInput.txt'" -InformationAction Continue
+    Set-Content -Path "$folderpath/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Value $null -Encoding "utf8"
 
-            # If definitionReferenceId or definitionReferenceIdForParameters contains apostrophes, replace that apostrophe with a backslash and an apostrohphe for Bicep string escaping
-            if ($definitionReferenceId.Contains("'")) {
-                $definitionReferenceId = $definitionReferenceId.Replace("'", "\'")
-            }
+    Write-Information "====> Looping Through Policy Assignments:" -InformationAction Continue
+    Get-ChildItem -Recurse -Path "$folderpath/assignments/lib/policy_assignments" -Filter "*.json" | ForEach-Object {
+        $policyAssignment = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
 
-            if ($definitionReferenceIdForParameters.Contains("'")) {
-                $definitionReferenceIdForParameters = $definitionReferenceIdForParameters.Replace("'", "\'")
-            }
+        $policyAssignmentName = $policyAssignment.name
+        $policyAssignmentDefinitionID = $policyAssignment.properties.policyDefinitionId
+        $fileName = $_.Name
 
-            # If definitionReferenceId contains, then wrap in definitionReferenceId value in [] to comply with bicep formatting
-            if ($definitionReferenceIdForParameters.Contains("-") -or $definitionReferenceIdForParameters.Contains(" ") -or $definitionReferenceIdForParameters.Contains("\'")) {
-                $definitionReferenceIdForParameters = "['$definitionReferenceIdForParameters']"
+        # Remove hyphens from Policy Assignment Name
+        $policyAssignmentNameNoHyphens = $policyAssignmentName.replace("-", "")
 
-                # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable, without the '.' before the definitionReferenceId to make it an accessor
-                Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t`t{`r`n`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`tdefinitionId: '$definitionId'`r`n`t`t`tdefinitionParameters: json(loadTextContent('lib/policy_set_definitions/$parametersFileName'))$definitionReferenceIdForParameters.parameters`r`n`t`t}"
-            }
-            else {
-                # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
-                Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t`t{`r`n`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`tdefinitionId: '$definitionId'`r`n`t`t`tdefinitionParameters: json(loadTextContent('lib/policy_set_definitions/$parametersFileName')).$definitionReferenceIdForParameters.parameters`r`n`t`t}"
-            }
-        }
+        Write-Information "==> Adding '$policyAssignmentName' to '$PWD/_policyAssignmentsBicepInput.txt'" -InformationAction Continue
+        Add-Content -Path "$folderpath/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionId: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/$fileName'))`r`n}`r`n"
     }
 
-    # Finish output file creation of Policy Set/Initiative Definitions for Bicep
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/_policySetDefinitionsBicepInput.txt" -Encoding "utf8" -Value "`t]`r`n}"
-
+    $policyAssignmentCount = Get-ChildItem -Recurse -Path "$folderpath/assignments/lib/policy_assignments" -Filter "*.json" | Measure-Object
+    $policyAssignmentCountString = $policyAssignmentCount.Count
+    Write-Information "====> Policy Assignments Total: $policyAssignmentCountString" -InformationAction Continue
 }
+#endregion
 
-$policyDefCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions" -Filter "*.json" -Exclude "*.parameters.json" | Measure-Object
-$policyDefCountString = $policyDefCount.Count
-Write-Information "====> Policy Set/Initiative Definitions Total: $policyDefCountString" -InformationAction Continue
-
-# Policy Asssignments
-
-Write-Information "====> Creating/Emptying '_policyAssignmentsBicepInput.txt'" -InformationAction Continue
-Set-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Value $null -Encoding "utf8"
-
-Write-Information "====> Looping Through Policy Assignments:" -InformationAction Continue
-Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments" -Filter "*.json" | ForEach-Object {
-    $policyAssignment = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
-
-    $policyAssignmentName = $policyAssignment.name
-    $policyAssignmentDefinitionID = $policyAssignment.properties.policyDefinitionId
-    $fileName = $_.Name
-
-    # Remove hyphens from Policy Assignment Name
-    $policyAssignmentNameNoHyphens = $policyAssignmentName.replace("-", "")
-
-    Write-Information "==> Adding '$policyAssignmentName' to '$PWD/_policyAssignmentsBicepInput.txt'" -InformationAction Continue
-    Add-Content -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments/_policyAssignmentsBicepInput.txt" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionId: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: json(loadTextContent('../../policy/assignments/lib/policy_assignments/$fileName'))`r`n}`r`n"
-}
-
-$policyAssignmentCount = Get-ChildItem -Recurse -Path "./infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments" -Filter "*.json" | Measure-Object
-$policyAssignmentCountString = $policyAssignmentCount.Count
-Write-Information "====> Policy Assignments Total: $policyAssignmentCountString" -InformationAction Continue
+New-PolicyDefinitionsBicepInputTxtFile
+New-PolicySetDefinitionsBicepInputTxtFile
+New-PolicyAssignmentsBicepInputTxtFile
