@@ -48,9 +48,9 @@ To extend the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bi
 
 As Bicep is ultimately just compiling ARM templates behind the scenes, deployments of Bicep files/modules are still subject to the same limits as ARM Templates. The main limit to be aware of here is the `4 MB` total size limit for a single ARM Template.
 
-Today the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions) from `ALZ-Bicep` results in a `2.56 MB` ARM Template file `JSON` file being created.
+Today the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions) from `ALZ-Bicep` results in a `874 KB` ARM Template file `JSON` file being created.
 
-This has plenty of room for expansion but it is worth keeping in mind as you may hit the 4MB limit and see the errors of `JobSizeExceededException` or `DeploymentJobSizeExceededException`.
+This has plenty of room for expansion but it is worth keeping in mind as you may hit the `4 MB` limit and see the errors of `JobSizeExceededException` or `DeploymentJobSizeExceededException`.
 
 ### The fix
 
