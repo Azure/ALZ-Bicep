@@ -54,7 +54,6 @@ function New-PolicyDefinitionsBicepInputTxtFile {
     $policyDefCount = Get-ChildItem -Recurse -Path "$rootPath/$definitionsLongPath" -Filter "*.json" | Measure-Object
     $policyDefCountString = $policyDefCount.Count
     Write-Information "====> Policy Definitions Total: $policyDefCountString" -InformationAction Continue
-    
 }
 #endregion
 
@@ -67,7 +66,7 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
 
     $policySetDefParamVarList = @()
 
-    Get-ChildItem -Recurse -Path "$rootPath/$definitionsSetPath" -Filter "*.json" -Exclude "*.parameters.json" | ForEach-Object {
+    Get-ChildItem -Recurse -Path "$rootPath/$definitionsSetLongPath" -Filter "*.json" -Exclude "*.parameters.json" | ForEach-Object {
         $policyDef = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
 
         # Load child Policy Set/Initiative Definitions
@@ -175,12 +174,12 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
     }
 
     # Add Policy Set/Initiative Definition Parameter Variables to Bicep Input File
-    Add-Content -Path "$rootPath/$definitionsSetPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`r`n*****Parameter Variables*****`r`n"
+    Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`r`n*****Parameter Variables*****`r`n"
     $policySetDefParamVarList | ForEach-Object {
-        Add-Content -Path "$rootPath/$definitionsSetPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "$_`r`n"
+        Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "$_`r`n"
     }
 
-    $policyDefCount = Get-ChildItem -Recurse -Path "$rootPath/$definitionsSetPath" -Filter "*.json" -Exclude "*.parameters.json" | Measure-Object
+    $policyDefCount = Get-ChildItem -Recurse -Path "$rootPath/$definitionsSetLongPath" -Filter "*.json" -Exclude "*.parameters.json" | Measure-Object
     $policyDefCountString = $policyDefCount.Count
     Write-Information "====> Policy Set/Initiative Definitions Total: $policyDefCountString" -InformationAction Continue
 }
