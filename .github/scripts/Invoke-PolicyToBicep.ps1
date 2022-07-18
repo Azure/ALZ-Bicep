@@ -67,6 +67,7 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
 
     Write-Information "====> Creating/Emptying '$defintionsSetTxtFileName'" -InformationAction Continue
     Set-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Value $null -Encoding "utf8"
+    Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Value "var varCustomPolicySetDefinitionsArray = [" -Encoding "utf8"
 
     Write-Information "====> Looping Through Policy Set/Initiative Definition:" -InformationAction Continue
 
@@ -142,7 +143,7 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
 
         # Start output file creation of Policy Set/Initiative Definitions for Bicep
         Write-Information "==> Adding '$policyDefinitionName' to '$PWD/$defintionsSetTxtFileName'" -InformationAction Continue
-        Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "{`r`n`tname: '$policyDefinitionName'`r`n`tlibSetDefinition: json(loadTextContent('$definitionsSetPath/$fileName'))`r`n`tlibSetChildDefinitions: ["
+        Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t{`r`n`t`tname: '$policyDefinitionName'`r`n`t`tlibSetDefinition: json(loadTextContent('$definitionsSetPath/$fileName'))`r`n`t`tlibSetChildDefinitions: ["
 
         # Loop through child Policy Set/Initiative Definitions for Bicep output if HashTable not == 0
         if (($policySetDefinitionsOutputForBicep.Count) -ne 0) {
@@ -165,19 +166,20 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
                     $definitionReferenceIdForParameters = "['$definitionReferenceIdForParameters']"
 
                     # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable, without the '.' before the definitionReferenceId to make it an accessor
-                    Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t{`r`n`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`tdefinitionId: '$definitionId'`r`n`t`t`tdefinitionParameters: $policySetDefParamVarCreation$definitionReferenceIdForParameters.parameters`r`n`t`t}"
+                    Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation$definitionReferenceIdForParameters.parameters`r`n`t`t`t}"
                 }
                 else {
                     # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
-                    Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t{`r`n`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`tdefinitionId: '$definitionId'`r`n`t`t`tdefinitionParameters: $policySetDefParamVarCreation.$definitionReferenceIdForParameters.parameters`r`n`t`t}"
+                    Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation.$definitionReferenceIdForParameters.parameters`r`n`t`t`t}"
                 }
             }
         }
 
         # Finish output file creation of Policy Set/Initiative Definitions for Bicep
-        Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t]`r`n}"
+        Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t]`r`n`t}"
 
     }
+    Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "]`r`n"
 
     # Add Policy Set/Initiative Definition Parameter Variables to Bicep Input File
     Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`r`n// Policy Set/Initiative Definition Parameter Variables`r`n"
