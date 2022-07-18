@@ -32,9 +32,7 @@ param (
     $defintionsSetTxtFileName = "_policySetDefinitionsBicepInput.txt",
     [string]
     $assignmentsTxtFileName = "_policyAssignmentsBicepInput.txt"
-    
 )
-
 
 #region Policy Definitions
 function New-PolicyDefinitionsBicepInputTxtFile {
@@ -67,7 +65,9 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
 
     Write-Information "====> Looping Through Policy Set/Initiative Definition:" -InformationAction Continue
 
-    Get-ChildItem -Recurse -Path "$rootPath/$definitionsSetLongPath" -Filter "*.json" -Exclude "*.parameters.json" | ForEach-Object {
+    $policySetDefParamVarList = @()
+
+    Get-ChildItem -Recurse -Path "$rootPath/$definitionsSetPath" -Filter "*.json" -Exclude "*.parameters.json" | ForEach-Object {
         $policyDef = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
 
         # Load child Policy Set/Initiative Definitions
@@ -123,6 +123,12 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
             }
         }
 
+        # Add Policy Set/Initiative Definition Parameter Variables to Bicep Input File
+        $policySetDefParamVarTrimJsonExt = $parametersFileName.TrimEnd("json").Replace('.', '_')
+        $policySetDefParamVarCreation = "var" + ($policySetDefParamVarTrimJsonExt -replace '(?:^|_)(\p{L})', { $_.Groups[1].Value.ToUpper() }).TrimEnd('_')
+        $policySetDefParamVar = "var " + $policySetDefParamVarCreation + " = " + "loadJsonContent('lib/policy_set_definitions/$parametersFileName')"
+        $policySetDefParamVarList += $policySetDefParamVar
+
         # Start output file creation of Policy Set/Initiative Definitions for Bicep
         Write-Information "==> Adding '$policyDefinitionName' to '$PWD/$defintionsSetTxtFileName'" -InformationAction Continue
         Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "{`r`n`tname: '$policyDefinitionName'`r`n`tlibSetDefinition: json(loadTextContent('$definitionsSetPath/$fileName'))`r`n`tlibSetChildDefinitions: ["
@@ -162,7 +168,13 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
 
     }
 
-    $policyDefCount = Get-ChildItem -Recurse -Path "$rootPath/$definitionsSetLongPath" -Filter "*.json" -Exclude "*.parameters.json" | Measure-Object
+    # Add Policy Set/Initiative Definition Parameter Variables to Bicep Input File
+    Add-Content -Path "$rootPath/$definitionsSetPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`r`n*****Parameter Variables*****`r`n"
+    $policySetDefParamVarList | ForEach-Object {
+        Add-Content -Path "$rootPath/$definitionsSetPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "$_`r`n"
+    }
+
+    $policyDefCount = Get-ChildItem -Recurse -Path "$rootPath/$definitionsSetPath" -Filter "*.json" -Exclude "*.parameters.json" | Measure-Object
     $policyDefCountString = $policyDefCount.Count
     Write-Information "====> Policy Set/Initiative Definitions Total: $policyDefCountString" -InformationAction Continue
 }
