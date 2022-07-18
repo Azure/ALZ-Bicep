@@ -36,6 +36,8 @@ param (
 
 #region Policy Definitions
 function New-PolicyDefinitionsBicepInputTxtFile {
+    [CmdletBinding(SupportsShouldProcess)]
+    param()
 
     Write-Information "====> Creating/Emptying '$defintionsTxtFileName'" -InformationAction Continue
     Set-Content -Path "$rootPath/$definitionsLongPath/$defintionsTxtFileName" -Value $null -Encoding "utf8"
@@ -59,6 +61,9 @@ function New-PolicyDefinitionsBicepInputTxtFile {
 
 #region Policy Set Definitions
 function New-PolicySetDefinitionsBicepInputTxtFile {
+    [CmdletBinding(SupportsShouldProcess)]
+    param()
+
     Write-Information "====> Creating/Emptying '$defintionsSetTxtFileName'" -InformationAction Continue
     Set-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Value $null -Encoding "utf8"
 
@@ -187,6 +192,9 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
 
 #region Policy Asssignments
 function New-PolicyAssignmentsBicepInputTxtFile {
+    [CmdletBinding(SupportsShouldProcess)]
+    param()
+    
     Write-Information "====> Creating/Emptying '$assignmentsTxtFileName'" -InformationAction Continue
     Set-Content -Path "$rootPath/$assignmentsLongPath/$assignmentsTxtFileName" -Value $null -Encoding "utf8"
 
