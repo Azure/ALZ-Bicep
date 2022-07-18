@@ -196,4 +196,4 @@ function New-PolicyAssignmentsBicepInputTxtFile {
 
 New-PolicyDefinitionsBicepInputTxtFile
 New-PolicySetDefinitionsBicepInputTxtFile
-#New-PolicyAssignmentsBicepInputTxtFile
+New-PolicyAssignmentsBicepInputTxtFile
