@@ -40,8 +40,7 @@ To extend the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bi
 4. Run the [`Invoke-PolicyToBicep.ps1`](https://github.com/Azure/ALZ-Bicep/blob/main/.github/scripts/Invoke-PolicyToBicep.ps1) script to update the `_policyDefinitionsBicepInput.txt` and/or `_policySetDefinitionsBicepInput.txt` files in the `lib` folders
    1. Copy the entire contents of the relevant `.txt` file and replace the contents of the associated variable in the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions)
       - Policy Definition = `_policyDefinitionsBicepInput.txt` placed into variable named `varCustomPolicyDefinitionsArray` (place copied contents inside of array `[]`)
-      - Policy Initiative (Set) = `_policySetDefinitionsBicepInput.txt` placed into variable named `varCustomPolicySetDefinitionsArray` (place copied contents inside of array `[]`)
-      - Policy Initiative (Set) Parameter Variables = Bottom of `_policySetDefinitionsBicepInput.txt` placed beneath the variable named `varCustomPolicySetDefinitionsArray`
+      - Policy Initiative (Set) & Parameter Variables = Copy the entire contents of `_policySetDefinitionsBicepInput.txt` and replace variable named `varCustomPolicySetDefinitionsArray` and parameter variables below it with copied contents
 5. Redeploy the updated [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions) via your configured method (locally via Azure CLI or PowerShell or via Azure DevOps pipeline or GitHub action)
 6. New Policy Definitions now deployed to intermediate root Management Group (e.g. `Contoso`)
 
