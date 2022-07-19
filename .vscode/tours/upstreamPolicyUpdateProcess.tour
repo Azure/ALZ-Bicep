@@ -206,10 +206,11 @@
         },
         "end": {
           "line": 11,
-          "character": 155
+          "character": 18
         }
       },
-      "description": "Create and overwrite the `_policyDefinitionsBicepInput.txt` file in the specified directory with a new empty file with `utf8` encoding"
+      "description": "Create and overwrite the `_policyDefinitionsBicepInput.txt` file in the specified directory with a new empty file with `utf8` encoding",
+      "line": 44
     },
     {
       "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
@@ -223,7 +224,8 @@
           "character": 264
         }
       },
-      "description": "For every `.json` file in the `lib/policy_definitions` directory extract the policy definition name and the file path and then write them (append) into the `_policyDefinitionsBicepInput.txt` file in a Bicep formatted output (see end of line 21)"
+      "description": "For every `.json` file in the `lib/policy_definitions` directory extract the policy definition name and the file path and then write them (append) into the `_policyDefinitionsBicepInput.txt` file in a Bicep formatted output (see end of line 54)",
+      "line": 47
     },
     {
       "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
@@ -237,35 +239,8 @@
           "character": 102
         }
       },
-      "description": "Count the number of policy definitions in the `lib/policy_definitions` directory and output to the console the total number"
-    },
-    {
-      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
-      "selection": {
-        "start": {
-          "line": 30,
-          "character": 1
-        },
-        "end": {
-          "line": 31,
-          "character": 162
-        }
-      },
-      "description": "Create and overwrite the `_policySetDefinitionsBicepInput.txt` file in the specified directory with a new empty file with `utf8` encoding"
-    },
-    {
-      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
-      "selection": {
-        "start": {
-          "line": 35,
-          "character": 1
-        },
-        "end": {
-          "line": 108,
-          "character": 2
-        }
-      },
-      "description": "For every `.json` file in the `lib/policy_set_definitions` directory extract the policy set definitions (initiative) name and the file path and then write them (append) into the `_policySetDefinitionsBicepInput.txt` file in a Bicep formatted output (see end of line 93, 101 and 106).\r\n\r\nIt also creates a parameters file (not an ARM complaint one, just a JSON compliant document). And it also loops through all the child policy definitions of each policy set definition (initiative) and extracts the definition reference ID and the definition ID and adds them to the output in the `_policySetDefinitionsBicepInput.txt` file"
+      "description": "Count the number of policy definitions in the `lib/policy_definitions` directory and output to the console the total number",
+      "line": 57
     },
     {
       "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
@@ -285,6 +260,26 @@
       "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
       "selection": {
         "start": {
+          "line": 30,
+          "character": 1
+        },
+        "end": {
+          "line": 31,
+          "character": 162
+        }
+      },
+      "description": "Create and overwrite the `_policySetDefinitionsBicepInput.txt` file in the specified directory with a new empty file with `utf8` encoding",
+      "line": 69
+    },
+    {
+      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
+      "description": "For every `.json` file in the `lib/policy_set_definitions` directory extract the policy set definitions (initiative) name and the file path and then write them (append) into the `_policySetDefinitionsBicepInput.txt` file in a Bicep formatted output (see end of line 145, 168 and 172).\r\n\r\nIt also creates a parameters file (not an ARM complaint one, just a JSON compliant document). And it also loops through all the child policy definitions of each policy set definition (initiative) and extracts the definition reference ID and the definition ID and adds them to the output in the `_policySetDefinitionsBicepInput.txt` file",
+      "line": 64
+    },
+    {
+      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
+      "selection": {
+        "start": {
           "line": 116,
           "character": 1
         },
@@ -293,7 +288,8 @@
           "character": 155
         }
       },
-      "description": "Create and overwrite the `_policyAssignmentsBicepInput.txt` file in the specified directory with a new empty file with `utf8` encoding"
+      "description": "Create and overwrite the `_policyAssignmentsBicepInput.txt` file in the specified directory with a new empty file with `utf8` encoding",
+      "line": 200
     },
     {
       "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
@@ -307,7 +303,8 @@
           "character": 2
         }
       },
-      "description": "For every `.json` file in the `lib/policy_assignments` directory extract the policy assignment's name and the file path and then write them (append) into the `_policyAssignmentsBicepInput.txt` file in a Bicep formatted output (see end of line 131)."
+      "description": "For every `.json` file in the `lib/policy_assignments` directory extract the policy assignment's name and the file path and then write them (append) into the `_policyAssignmentsBicepInput.txt` file in a Bicep formatted output (see end of line 131).",
+      "line": 203
     },
     {
       "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
@@ -321,7 +318,8 @@
           "character": 109
         }
       },
-      "description": "Count the number of policy assignments in the `lib/policy_assignments` directory and output to the console the total number"
+      "description": "Count the number of policy assignments in the `lib/policy_assignments` directory and output to the console the total number",
+      "line": 218
     },
     {
       "file": ".github/workflows/update-policy.yml",
