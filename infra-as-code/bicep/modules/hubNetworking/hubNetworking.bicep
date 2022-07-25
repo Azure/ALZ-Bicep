@@ -83,9 +83,8 @@ param parAzFirewallAvailabilityZones array = []
   '2'
   '3'
 ])
-@description('Availability Zones to deploy the Gateway across. Region must support Availability Zones to use. If it does not then leave empty.')
-param parAzGatewayAvailabilityZones array = []
-
+@description('Availability Zones to deploy the ER/VPN Gateway across. Region must support Availability Zones to use. If it does not then leave empty.')
+param parGatewayAvailabilityZones array = []
 
 @description('Switch to enable/disable Azure Firewall DNS Proxy. Default: true')
 param parAzFirewallDnsProxyEnabled bool = true
@@ -448,7 +447,7 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in va
   name: 'deploy-Gateway-Public-IP-${i}'
   params: {
     parLocation: parLocation
-    parAvailabilityZones: parAzGatewayAvailabilityZones
+    parAvailabilityZones: parGatewayAvailabilityZones
     parPublicIpName: '${gateway.name}-PublicIp'
     parPublicIpProperties: {
       publicIpAddressVersion: 'IPv4'
