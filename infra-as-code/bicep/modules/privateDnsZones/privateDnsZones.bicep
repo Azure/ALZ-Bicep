@@ -127,8 +127,6 @@ var varAzBackupGeoCodes = {
 // If region entered in parLocation and matches a lookup to varAzBackupGeoCodes then insert Azure Backup Private DNS Zone with appropriate geo code inserted alongside zones in parPrivateDnsZones. If not just return parPrivateDnsZones
 var varPrivateDnsZonesMerge = contains(varAzBackupGeoCodes, parLocation) ? union(parPrivateDnsZones, ['privatelink.${varAzBackupGeoCodes[toLower(parLocation)]}.backup.windowsazure.com']) : parPrivateDnsZones
 
-var varVirtualNetworkToLinkName = split(parVirtualNetworkIdToLink, '/')[8]
-
 // Customer Usage Attribution Id
 var varCuaid = '981733dd-3195-4fda-a4ee-605ab959edb6'
 
@@ -139,7 +137,7 @@ resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [fo
 }]
 
 resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLink)) {
-  name: '${privateDnsZoneName}/${take('${privateDnsZoneName}-${varVirtualNetworkToLinkName}', 80)}'
+  name: '${privateDnsZoneName}/${take('link-${uniqueString(parVirtualNetworkIdToLink)}', 80)}'
   location: 'global'
   properties: {
     registrationEnabled: false
