@@ -27,7 +27,7 @@ param parTelemetryOptOut bool = false
 // Customer Usage Attribution Id
 var varCuaid = '3f85b84c-6bad-4c42-86bf-11c233241c22'
 
-resource resPublicIp 'Microsoft.Network/publicIPAddresses@2021-05-01' ={
+resource resPublicIp 'Microsoft.Network/publicIPAddresses@2021-08-01' ={
   name: parPublicIpName
   tags: parTags
   location: parLocation

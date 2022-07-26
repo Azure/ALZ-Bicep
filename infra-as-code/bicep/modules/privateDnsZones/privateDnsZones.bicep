@@ -137,7 +137,7 @@ resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [fo
 }]
 
 resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLink)) {
-  name: '${privateDnsZoneName}/${privateDnsZoneName}'
+  name: '${privateDnsZoneName}/${take('link-${uniqueString(parVirtualNetworkIdToLink)}', 80)}'
   location: 'global'
   properties: {
     registrationEnabled: false
