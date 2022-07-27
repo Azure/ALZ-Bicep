@@ -33,7 +33,7 @@ var varCuaid = '0c428583-f2a1-4448-975c-2d6262fd193a'
 
 //If Ddos parameter is true Ddos will be Enabled on the Virtual Network
 //If Azure Firewall is enabled and Network DNS Proxy is enabled DNS will be configured to point to AzureFirewall
-resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
+resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-08-01' = {
   name: parSpokeNetworkName
   location: parLocation
   tags: parTags
@@ -53,7 +53,7 @@ resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' =
   }
 }
 
-resource resSpokeToHubRouteTable 'Microsoft.Network/routeTables@2021-02-01' = if (!empty(parNextHopIpAddress)) {
+resource resSpokeToHubRouteTable 'Microsoft.Network/routeTables@2021-08-01' = if (!empty(parNextHopIpAddress)) {
   name: parSpokeToHubRouteTableName
   location: parLocation
   tags: parTags
