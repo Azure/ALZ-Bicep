@@ -99,7 +99,7 @@ param parPrivateDnsZonesEnabled bool = true
 @description('Resource Group Name for Private DNS Zones. Default: same resource group')
 param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 
-//@description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
+@description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
 param parPrivateDnsZones array = [
   'privatelink.azure-automation.net'
   'privatelink.database.windows.net'
