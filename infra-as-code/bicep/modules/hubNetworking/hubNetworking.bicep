@@ -70,21 +70,19 @@ param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLo
 ])
 param parAzFirewallTier string = 'Standard'
 
-@allowed([
-  '1'
-  '2'
-  '3'
-])
 @description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
-param parAzFirewallAvailabilityZones array = []
-
-@allowed([
+param parAzFirewallAvailabilityZones array = [
   '1'
   '2'
   '3'
-])
+]
+
 @description('Availability Zones to deploy the ER/VPN Gateway across. Region must support Availability Zones to use. If it does not then leave empty.')
-param parGatewayAvailabilityZones array = []
+param parGatewayAvailabilityZones array = [
+  '1'
+  '2'
+  '3'
+]
 
 @description('Switch to enable/disable Azure Firewall DNS Proxy. Default: true')
 param parAzFirewallDnsProxyEnabled bool = true
@@ -101,7 +99,7 @@ param parPrivateDnsZonesEnabled bool = true
 @description('Resource Group Name for Private DNS Zones. Default: same resource group')
 param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 
-@description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
+//@description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
 param parPrivateDnsZones array = [
   'privatelink.azure-automation.net'
   'privatelink.database.windows.net'
@@ -164,7 +162,7 @@ param parPrivateDnsZones array = [
 param parVpnGatewayConfig object = {
   name: '${parCompanyPrefix}-Vpn-Gateway'
   gatewayType: 'Vpn'
-  sku: 'VpnGw1'
+  sku: 'VpnGw1AZ'
   vpnType: 'RouteBased'
   generation: 'Generation1'
   enableBgp: false
@@ -184,6 +182,7 @@ param parVpnGatewayConfig object = {
 "parExpressRouteGatewayConfig": {
   "value": {}
 }''')
+
 param parExpressRouteGatewayConfig object = {
   name: '${parCompanyPrefix}-ExpressRoute-Gateway'
   gatewayType: 'ExpressRoute'
@@ -458,6 +457,7 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in va
     }
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
+
   }
 }]
 
@@ -609,7 +609,7 @@ output outAzFirewallPrivateIp string = parAzFirewallEnabled ? resAzureFirewall.p
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 output outAzFirewallName string = parAzFirewallEnabled ? parAzFirewallName : ''
 
-output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
+//output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
 
 output outDdosPlanResourceId string = resDdosProtectionPlan.id
 output outHubVirtualNetworkName string = resHubVnet.name
