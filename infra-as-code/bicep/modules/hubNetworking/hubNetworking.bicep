@@ -609,7 +609,7 @@ output outAzFirewallPrivateIp string = parAzFirewallEnabled ? resAzureFirewall.p
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 output outAzFirewallName string = parAzFirewallEnabled ? parAzFirewallName : ''
 
-//output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
+output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
 
 output outDdosPlanResourceId string = resDdosProtectionPlan.id
 output outHubVirtualNetworkName string = resHubVnet.name
