@@ -5,43 +5,43 @@ targetScope = 'managementGroup'
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@description('An array of Subscriptions to place in the Intermediate Root Management Group.')
+@description('An array of Subscription IDs to place in the Intermediate Root Management Group.')
 param parIntRootMgSubs array = []
 
-@description('An array of Subscriptions to place in the Platform Management Group.')
+@description('An array of Subscription IDs to place in the Platform Management Group.')
 param parPlatformMgSubs array = []
 
-@description('An array of Subscriptions to place in the (Platform) Management Management Group.')
+@description('An array of Subscription IDs to place in the (Platform) Management Management Group.')
 param parPlatformManagementMgSubs array = []
 
-@description('An array of Subscriptions to place in the (Platform) Connectivity Management Group.')
+@description('An array of Subscription IDs to place in the (Platform) Connectivity Management Group.')
 param parPlatformConnectivityMgSubs array = []
 
-@description('An array of Subscriptions to place in the (Platform) Identity Management Group.')
+@description('An array of Subscription IDs to place in the (Platform) Identity Management Group.')
 param parPlatformIdentityMgSubs array = []
 
-@description('An array of Subscriptions to place in the Landing Zones Management Group.')
+@description('An array of Subscription IDs to place in the Landing Zones Management Group.')
 param parLandingZonesMgSubs array = []
 
-@description('An array of Subscriptions to place in the Corp (Landing Zones) Management Group.')
+@description('An array of Subscription IDs to place in the Corp (Landing Zones) Management Group.')
 param parLandingZonesCorpMgSubs array = []
 
-@description('An array of Subscriptions to place in the Online (Landing Zones) Management Group.')
+@description('An array of Subscription IDs to place in the Online (Landing Zones) Management Group.')
 param parLandingZonesOnlineMgSubs array = []
 
-@description('An array of Subscriptions to place in the Confidential Corp (Landing Zones) Management Group.')
+@description('An array of Subscription IDs to place in the Confidential Corp (Landing Zones) Management Group.')
 param parLandingZonesConfidentialCorpMgSubs array = []
 
-@description('An array of Subscriptions to place in the Confidential Online (Landing Zones) Management Group.')
+@description('An array of Subscription IDs to place in the Confidential Online (Landing Zones) Management Group.')
 param parLandingZonesConfidentialOnlineMgSubs array = []
 
-@description('Dictionary Object to allow additional or different child Management Groups of the Landing Zones Management Group describing the subscriptions which each of them contain.')
+@description('Dictionary Object to allow additional or different child Management Groups of the Landing Zones Management Group describing the Subscription IDs which each of them contain.')
 param parLandingZoneMgChildrenSubs object = {}
 
-@description('An array of Subscriptions to place in the Decommissioned Management Group.')
+@description('An array of Subscription IDs to place in the Decommissioned Management Group.')
 param parDecommissionedMgSubs array = []
 
-@description('An array of Subscriptions to place in the Sandbox Management Group.')
+@description('An array of Subscription IDs to place in the Sandbox Management Group.')
 param parSandboxMgSubs array = []
 
 @description('Set Parameter to true to Opt-out of deployment telemetry')
