@@ -201,6 +201,14 @@ jobs:
       script: |
         az deployment mg validate --template-file infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep --parameters @infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json parPeeredVnetSubscriptionId="$(subscriptionId)" parHubVirtualNetworkId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/alz-hub-$(Location)" parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
 
+  - task: Bash@3    
+    displayName: Az CLI Validate subPlacementAll orchestration module
+    name: validate_sub_placement_all
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment mg validate --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parPlatformConnectivityMgSubs='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix) --name "$(ManagementGroupPrefix)-subPlacement"
+
 - job: bicep_cleanup
   dependsOn: bicep_validate
   displayName: Cleanup Bicep Validate Deployment for PR

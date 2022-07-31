@@ -32,7 +32,8 @@ jobs:
           git_diff5=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep)
           git_diff6=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep)
           git_diff7=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep)
-          if [[ $git_diff1 != '' ]] || [[ $git_diff2 != '' ]] || [[ $git_diff3 != '' ]] || [[ $git_diff4 != '' ]] || [[ $git_diff5 != '' ]] || [[ $git_diff6 != '' ]] || [[ $git_diff7 != '' ]]
+          git_diff8=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep)
+          if [[ $git_diff1 != '' ]] || [[ $git_diff2 != '' ]] || [[ $git_diff3 != '' ]] || [[ $git_diff4 != '' ]] || [[ $git_diff5 != '' ]] || [[ $git_diff6 != '' ]] || [[ $git_diff7 != '' ]] || [[ $git_diff8 != '' ]]
             then echo "##vso[task.setvariable variable=gitManagementOutput]setmgmt"
           fi
           echo 
@@ -177,7 +178,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        az deployment mg create --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep --parameters @infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.min.json parTargetManagementGroupId=$(ManagementGroupPrefix)-platform-connectivity parSubscriptionIds='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
+        az deployment mg create --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parPlatformConnectivityMgSubs='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
 
   - task: AzurePowerShell@5
     displayName: Az PwSh alzDefaultPolicyAssignments for PR
