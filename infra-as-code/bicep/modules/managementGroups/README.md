@@ -1,6 +1,6 @@
 # Module:  Management Groups
 
-The Management Groups module deploys a management group hierarchy in a customer's tenant under the `Tenant Root Group`.  This is accomplished through a tenant-scoped Azure Resource Manager (ARM) deployment.  The heirarchy can be modifed by editing `managementGroups.bicep`.  The hierarchy created by the deployment is:
+The Management Groups module deploys a management group hierarchy in a customer's tenant under the `Tenant Root Group`.  This is accomplished through a tenant-scoped Azure Resource Manager (ARM) deployment. The hierarchy can be modified by editing `managementGroups.bicep`.  The hierarchy created by the deployment is:
 
 - Tenant Root Group
   - Top Level Management Group (defined by parameter `parTopLevelManagementGroupPrefix`)
