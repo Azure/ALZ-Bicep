@@ -16,6 +16,7 @@
   - [Bicep File Structure](#bicep-file-structure)
   - [Bicep File Structure Example](#bicep-file-structure-example)
 - [Constructing a Bicep Module](#constructing-a-bicep-module)
+  - [Resource API Versions](#resource-api-versions)
 
 ---
 
@@ -243,3 +244,7 @@ To author Bicep modules that are in-line with the requirements for this project,
     - `<parameterSet>` denotes a set of parameters with similar characteristics, for example: `securityGroup`
     - `parameters` constant to denote the file as a parameters file
     - `<min|all>.json` denotes whether a parameter file contains all possible parameters or only minimum necessary for deployment
+
+### Resource API Versions
+
+Each resource must use the latest available, working, API version. If the latest API version cannot be used for any reason, a comment must be placed above the resource in the module file stating why and also called out as part of the PR.
