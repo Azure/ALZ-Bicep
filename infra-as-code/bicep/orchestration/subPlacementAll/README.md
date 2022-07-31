@@ -6,6 +6,8 @@ Module deploys the following resources:
 
 - Subscription placement for multiple Subscriptions into the ALZ Management Group hierarchy
 
+> This module calls the [`subscriptionPlacement.bicep` module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/subscriptionPlacement) multiple times to move the specified Subscription IDs to the desired Management Groups. If you only want to move a single subscription at a time to a specified Management Group, then you could consider this child module that is called many times in this module.
+
 ## Parameters
 
 The module requires the following inputs:
