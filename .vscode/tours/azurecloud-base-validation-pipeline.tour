@@ -118,9 +118,14 @@
       "line": 197
     },
     {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ subPlacementAll orchestration module deployment. Depends on management groups previously created.\r\n\r\n",
+      "line": 210
+    },
+    {
       "file": "tests/pipelines/base-unit-validate.yml",
       "description": "Job to clean up tenant after deploy -> remove management group structure specific to this PR, delete resources in created subscription. ",
-      "line": 205
+      "line": 212
     }
   ]
 }
