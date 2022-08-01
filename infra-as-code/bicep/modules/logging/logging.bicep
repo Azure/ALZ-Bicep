@@ -81,6 +81,9 @@ resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2021-06-2
     sku: {
       name: 'Basic'
     }
+    encryption: {
+      keySource: 'Microsoft.Automation'
+    }
   }
 }
 
