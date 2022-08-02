@@ -10,6 +10,11 @@ param parPublicIpSku object
 @description('Properties of Public IP to be deployed. Default: None')
 param parPublicIpProperties object
 
+@allowed([
+  '1'
+  '2'
+  '3'
+])
 @description('Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty.')
 param parAvailabilityZones array = []
 
