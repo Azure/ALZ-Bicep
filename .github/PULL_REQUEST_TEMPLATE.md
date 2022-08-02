@@ -21,6 +21,7 @@ Replace this with any testing evidence to show that your Pull Request works/fixe
 ## As part of this Pull Request I have
 
 - [ ] Read the [Contribution Guide](https://github.com/Azure/ALZ-Bicep/wiki/Contributing) and ensured this PR is compliant with the guide
+- [ ] Ensured the resource API versions in `.bicep` file/s I am adding/editing are using the latest API version possible
 - [ ] Checked for duplicate [Pull Requests](https://github.com/Azure/ALZ-Bicep/pulls)
 - [ ] Associated it with relevant [GitHub Issues](https://github.com/Azure/ALZ-Bicep/issues)
 - [ ] *(ALZ Bicep Core Team Only)* Associated it with relevant [ADO Items](https://aka.ms/alz/bicep/backlog)
