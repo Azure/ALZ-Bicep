@@ -70,19 +70,21 @@ param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLo
 ])
 param parAzFirewallTier string = 'Standard'
 
+@allowed([
+  '1'
+  '2'
+  '3'
+])
 @description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
-param parAzFirewallAvailabilityZones array = [
-  '1'
-  '2'
-  '3'
-]
+param parAzFirewallAvailabilityZones array = []
 
-@description('Availability Zones to deploy the ER/VPN Gateway across. Region must support Availability Zones to use. If it does not then leave empty.')
-param parGatewayAvailabilityZones array = [
+@allowed([
   '1'
   '2'
   '3'
-]
+])
+@description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
+param parGatewayAvailabilityZones array = []
 
 @description('Switch to enable/disable Azure Firewall DNS Proxy. Default: true')
 param parAzFirewallDnsProxyEnabled bool = true
