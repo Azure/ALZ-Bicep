@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -51,7 +51,7 @@ jobs:
       # Add pipeline tests for Azure Well-Architected Framework.
       # See https://aka.ms/ps-rule-action for configuration options.
       - name: Run PSRule analysis
-        uses: Microsoft/ps-rule@v2.1.0
+        uses: Microsoft/ps-rule@v2.3.0
         with:
           modules: PSRule.Rules.Azure
           baseline: Azure.GA_2022_03
