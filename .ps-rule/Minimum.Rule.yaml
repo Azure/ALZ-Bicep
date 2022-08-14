@@ -20,12 +20,15 @@ spec:
   - Azure.PublicIP.AvailabilityZone
   - Azure.VNG.VPNActiveActive
   - Azure.PublicIP.StandardSKU
+  - Azure.VNET.UseNSGs
   if:
     allOf:
     - type: '.'
       in:
       - Microsoft.Network/azureFirewalls
       - Microsoft.Network/publicIPAddresses
+      - Microsoft.Network/virtualNetworks
+      - Microsoft.Network/virtualNetworkGateways
     - source: 'Template'
       endsWith:
       - 'minimum.sample.bicep'
