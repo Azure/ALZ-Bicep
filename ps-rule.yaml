@@ -4,6 +4,9 @@
 
 # Please see the documentation for all configuration options:
 # https://aka.ms/ps-rule-azure
+# https://aka.ms/ps-rule-azure/options
+# https://aka.ms/ps-rule/options
+# https://aka.ms/ps-rule-azure/bicep
 
 # Use rules from the following modules/
 include:
@@ -12,8 +15,8 @@ include:
 
 # Require a minimum version of modules that include referenced baseline.
 requires:
-  PSRule: '@pre >=2.1.0'
-  PSRule.Rules.Azure: '@pre >=1.15.2'
+  PSRule: '@pre >=2.3.2'
+  PSRule.Rules.Azure: '@pre >=1.18.1'
 
 # Reference the repository in output.
 repository:
