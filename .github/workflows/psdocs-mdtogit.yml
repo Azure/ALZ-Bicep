@@ -5,6 +5,8 @@ on:
   push:
     branches: 
     - 'main'
+    paths:
+    - '**.bicep'
 jobs:
   arm_docs:
     name: Initial repository checkout
