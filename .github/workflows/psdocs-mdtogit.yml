@@ -1,6 +1,6 @@
 # Example: .github/workflows/arm-docs.yaml
 
-name: Generate ARM templates docs
+name: Generate documentation
 on:
   push:
     branches: 
@@ -9,7 +9,7 @@ on:
       - '**.bicep'
 jobs:
   arm_docs:
-    name: Generate ARM template docs
+    name: Initial repository checkout
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -31,7 +31,7 @@ jobs:
             }   
         }
     # STEP 2: Generate Markdowns using PSDocs
-    - name: Generate ARM markdowns
+    - name: Generate Markdowns
       run: | 
         Install-Module -Name 'PSDocs.Azure' -Repository PSGallery -force;
         # Scan for Azure template file recursively in the templates/ directory
