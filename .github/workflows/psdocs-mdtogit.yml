@@ -1,0 +1,77 @@
+# Example: .github/workflows/arm-docs.yaml
+
+name: Generate ARM templates docs
+on:
+  push:
+    branches: 
+    - 'main'
+    paths:
+      - '**.bicep'
+jobs:
+  arm_docs:
+    name: Generate ARM template docs
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    # STEP 1: Bicep build
+    - name: Bicep Build
+      shell: pwsh
+      run: |
+        Get-ChildItem -Recurse -Path infra-as-code/bicep/ -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
+            Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
+            $output = bicep build $_.FullName 2>&1
+            if ($LastExitCode -ne 0)
+            {
+              throw $output
+            }
+            Else
+            {
+              echo $output
+            }   
+        }
+    # STEP 2: Generate Markdowns using PSDocs
+    - name: Generate ARM markdowns
+      run: | 
+        Install-Module -Name 'PSDocs.Azure' -Repository PSGallery -force;
+        # Scan for Azure template file recursively in the templates/ directory
+        Get-AzDocTemplateFile -Path infra-as-code/bicep/ | ForEach-Object {
+          # Generate a standard name of the markdown file. i.e. <name>_<version>.md
+          $template = Get-Item -Path $_.TemplateFile;
+          $templateraw = Get-Content -Raw -Path $_.Templatefile;
+          $templateName = $template.Directory.Parent.Name;
+          $version = $template.Directory.Name;
+          $docNameWithoutExtension = [System.IO.Path]::GetFileNameWithoutExtension($template.Name);
+          $docName = "$($docNameWithoutExtension)_$version";
+          $jobj = ConvertFrom-Json -InputObject $templateraw
+          $jobj.metadata | Add-Member -name "name" -Value "$docNameWithoutExtension" -MemberType NoteProperty
+          $jobj.metadata | Add-Member -name "description" -Value "[Azure Landing Zones - Bicep Modules](..)" -MemberType NoteProperty
+
+          # Conversion
+
+          $templatepath = $template.DirectoryName
+          $convertedtemplatename = $template.Name
+          $convertedfullpath = $templatepath+"\"+$convertedtemplatename
+          $jobj | ConvertTo-Json -Depth 100 | Set-Content -Path $convertedfullpath
+          $mdname = ($docNameWithoutExtension)+'.bicep'
+
+
+          # Generate markdown
+          Invoke-PSDocument -Module PSDocs.Azure -OutputPath $template.DirectoryName -InputObject $template.FullName -InstanceName $mdname -Culture en-US;
+        }
+      shell: pwsh
+    # STEP 3: Remove Generated JSONs for MD Creation
+    - name: Remove Generated JSONs
+      shell: pwsh
+      run: |
+        Get-ChildItem -Recurse -Path infra-as-code/bicep/ -Filter '*.json' -Exclude 'bicepconfig.json','*.parameters.json','*.parameters.*.json','policy_*' | ForEach-Object {
+            Write-Information "==> Removing generated JSON file $_ from Bicep Build" -InformationAction Continue
+            Remove-Item -Path $_.FullName
+        }
+    # STEP 4: Commit files to push
+    - name: Commit files
+      run: |
+        git config --local user.name "github-actions[bot]"
+        git add --all
+        git commit -m "Bicep markdown amendment" -a
+        git push
