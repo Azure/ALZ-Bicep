@@ -74,17 +74,31 @@ param parAzFirewallTier string = 'Standard'
   '1'
   '2'
   '3'
+  '1,2'
+  '1,3'
+  '2,3'
+  '1,2,3'
 ])
 @description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
-param parAzFirewallAvailabilityZones array = []
+param parAzFirewallAvailabilityZones array = [
+  '1'
+  '2'
+]
 
 @allowed([
   '1'
   '2'
   '3'
+  '1,2'
+  '1,3'
+  '2,3'
+  '1,2,3'
 ])
 @description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP')
-param parAzGatewayAvailabilityZones array = []
+param parAzGatewayAvailabilityZones array = [
+  '1'
+  '2'
+]
 
 @description('Switch to enable/disable Azure Firewall DNS Proxy. Default: true')
 param parAzFirewallDnsProxyEnabled bool = true
@@ -539,7 +553,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-08-01' = if (pa
   name: parAzFirewallName
   location: parLocation
   tags: parTags
-  zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : json('null'))
+  zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : [])
   properties: {
     ipConfigurations: [
       {
