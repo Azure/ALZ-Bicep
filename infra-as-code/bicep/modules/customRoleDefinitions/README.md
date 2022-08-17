@@ -11,12 +11,8 @@ Module supports the following custom roles:
 
 ## Parameters
 
-The module requires the following inputs:
-
- | Parameter                           | Description                                                                                                                                                                                                                                                    | Requirement     | Example |
- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ------- |
- | parAssignableScopeManagementGroupId | The management group scope to which the role can be assigned.  This management group ID will be used for the [assignableScopes](https://docs.microsoft.com/azure/role-based-access-control/role-definitions#assignablescopes) property in the role definition. | Mandatory input | `alz`   |
- | parTelemetryOptOut                  | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                                                                                                       | None            | `false` |
+- [Parameter details for Azure Commercial Cloud](customRoleDefinitions.bicep.md)
+- [Parameter details for Azure China Cloud](mc-customRoleDefinitions.bicep.md)
 
 ## Outputs
 

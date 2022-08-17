@@ -10,22 +10,8 @@ Module deploys the following resources which can be configured by parameters:
 
 ## Parameters
 
-The module requires the following inputs:
-
- | Parameter                    | Type   | Default                                                                                              | Description                                                                                                                                                                                                                                                         | Requirement                   | Example                      |
- | ---------------------------- | ------ | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ---------------------------- |
- | parVirtualWanHubResourceId        | string | None                                               | Resource ID for Virtual WAN Hub.                                                                                                                                                                                          | 2-50 char                     | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus`              |
-| parRemoteVirtualNetworkResourceId        | string | None                                                 | Resource ID for remote spoke virtual network.                                                                                                                                                                                          | 2-50 char                     | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/spokevnet-rg/providers/Microsoft.Network/virtualNetworks/vnet-spoke`              |
- | parTelemetryOptOut           | bool   | `false`                                                                                                | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                                                                                                            | None                          | `false`                        |
-
-## Outputs
-
-The module will generate the following outputs:
-
-| Output                    | Type   | Example                                                                                                                                                                                                  |
-| ------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| outHubVirtualNetworkConnectionName | string | `alz-vhub-eastus/vnet-spoke-vhc`                                                                                                                                                                                            |
-| outHubVirtualNetworkConnectionResourceId      | string | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus/hubVirtualNetworkConnections/vnet-spoke-vhc`                                                                                                                                                                                          |
+- [Parameter details for Hub Virtual Network Connections](hubVirtualNetworkConnection.bicep.md)
+- [Parameter details for vWAN Virtual Network Peering Connections](vnetPeeringVwan.bicep.md)
 
 ## Deployment
 

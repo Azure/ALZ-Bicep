@@ -11,20 +11,7 @@ Module deploys the following resources:
 
 ## Parameters
 
-The module requires the following inputs:
-
- | Parameter                    | Type   | Default                    | Description                                                         | Requirement | Example                                                                                                                                               |
- | ---------------------------- | ------ | -------------------------- | ------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
- | parLocation                    | string | `resourceGroup().location` | The Azure Region to deploy the resources into                       | None        | `eastus`                                                                                                                                              |
- | parDisableBgpRoutePropagation | bool   | false                      | Switch which allows BGP Propagation to be disabled on the route table          | None        | false                                                                                                                                                 |
- | parTags                      | object | Empty object `{}`          | Array of Tags to be applied to all resources in the Spoke Network   | None        | `{"key": "value"}`                                                                                                                                    |
- | parDdosProtectionPlanId      | string | Empty string `''`          | Existing DDoS Protection plan to utilize                            | None        | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/Hub_Networking_POC/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan` |
- | parSpokeNetworkAddressPrefix | string | '10.11.0.0/16'             | CIDR for Spoke Network                                              | None        | '10.11.0.0/16'                                                                                                                                        |
- | parSpokeNetworkName          | string | 'vnet-spoke'               | The Name of the Spoke Virtual Network.                              | None        | 'vnet-spoke'                                                                                                                                          |
- | parDnsServerIps          | array  | Empty array `[]`           | DNS Servers to use for VNet DNS Resolution                 | None        | `['10.10.1.4', '10.20.1.5']`                                                                                                                          |
- | parNextHopIpAddress          | string | Empty string `''`          | IP Address where network traffic should route to leverage DNS Proxy | None        | '192.168.50.4'                                                                                                                                        |
- | parSpokeToHubRouteTableName  | string | 'rtb-spoke-to-hub'         | Name of Route table to create for the default route of Hub.         | None        | 'rtb-spoke-to-hub '                                                                                                                                   |
- | parTelemetryOptOut           | bool   | false                      | Set Parameter to true to Opt-out of deployment telemetry            | None        | false                                                                                                                                                 |
+- [Parameter details for Azure Commercial Cloud](spokeNetworking.bicep.md)
 
 ## Outputs
 

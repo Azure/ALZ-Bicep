@@ -9,47 +9,7 @@ Module deploys the following resources:
 
 ## Parameters
 
-The module requires the following inputs:
-
- | Parameter                 | Type   | Default                                                                                                          | Description                                                                                                                                    | Requirement                              | Example                                                                                                                                                |
- | ------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
- | parLocation               | string | `resourceGroup().location`                                                                                       | The Azure Region to deploy the resources into                                                                                                  | None                                     | `eastus`                                                                                                                                               |
- | parPrivateDnsZones        | array  | See example parameters file [`privateDnsZones.parameters.all.json`](parameters/privateDnsZones.parameters.all.json) | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones - See [DNS Zones](#dns-zones) for more info | None                                     | See Default                                                                                                                                            |
- | parTags                   | object | Empty object `{}`                                                                                                   | List of tags (Key Value Pairs) to be applied to resources                                                                                      | None                                     | environment: 'development'                                                                                                                             |
- | parVirtualNetworkIdToLink | string | Empty String                                                                                                     | Resource ID of VNet for Private DNS Zone VNet Links                                                                                            | Valid Resource ID of the Virtual Network | /subscriptions/[your platform connectivity subscription ID]/resourceGroups/Hub_PrivateDNS_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus |
- | parTelemetryOptOut        | bool   | false                                                                                                            | Set Parameter to true to Opt-out of deployment telemetry                                                                                       | None                                     | false                                                                                                                                                  |
-
-## DNS Zones
-
-### Regional Zones
-
-The following DNS Zones are region specific and will be deployed with the provided region in the `parLocation` parameter by default:
-
-- `privatelink.xxxxxx.batch.azure.com`
-- `privatelink.xxxxxx.azmk8s.io`
-
-**Note:** The region specific zones are included in the parameters files with the region set as `xxxxxx`. For these zones to deploy properly, replace `xxxxxx` with the target region. For example: `privatelink.xxxxxx.azmk8s.io` would become `privatelink.eastus.azmk8s.io` for a deployment targeting the East US region.
-
-### Geo Code Zones
-
-The following DNS Zone use a geo code associated to the Azure Region.
-
-- `privatelink.xxx.backup.windowsazure.com`
-
-If the Azure Region entered in `parLocation` matches a lookup to the map in `varAzBackupGeoCodes` we will append Geo Codes (value) used to generate region-specific DNS zone names for Azure Backup private endpoints. then insert Azure Backup Private DNS Zone with appropriate geo code inserted alongside zones in `parPrivateDnsZones` into a new array called `varPrivateDnsZonesMerge`. If not just return `parPrivateDnsZones` as the only values in `varPrivateDnsZonesMerge`.
-
-> For more information on Azure Backup and Private Link, or geo codes, please refer to: [Create and use private endpoints for Azure Backup](https://docs.microsoft.com/azure/backup/private-endpoints#when-using-custom-dns-server-or-host-files)
-
-### Prefixed DNS Zone
-
-The DNS Zone `privatelink.{dnsPrefix}.database.windows.net` is not deployed by default as the DNS Prefix is individual.
-
-You can add the zone to your parameters file with the required DNS Prefix in the zone name.
-
-### All Zones and more details
-
-For more details on private DNS Zones please refer to this link:
-[https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration](https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration)
+- [Parameter details for Azure Commercial Cloud](privateDnsZones.bicep.md)
 
 ## Outputs
 

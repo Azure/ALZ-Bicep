@@ -14,12 +14,8 @@ If you wish to add your own additional custom Azure Policy Definitions please re
 
 ## Parameters
 
-The module requires the following inputs:
-
- | Parameter                  | Description                                                                                                                                                             | Requirement                       | Example |
- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ------- |
- | parTargetManagementGroupId | The management group scope to which the the policy definitions will be stored/deployed to. This management group must already exist before deploying this bicep module. | Mandatory input                   | `alz`   |
- | parTelemetryOptOut         | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                | Mandatory input, default: `false` | `false` |
+- [Parameter details for Custom Policy Definitions in Azure Commercial Cloud](customPolicyDefinitions.bicep.md)
+- [Parameter details for Custom Policy Definitions in Azure China Cloud](mc-customPolicyDefinitions.bicep.md)
 
 ## Outputs
 
