@@ -1,15 +1,15 @@
 # Example: .github/workflows/arm-docs.yaml
 
-name: Generate documentation
+name: Generate Markdown
 on:
   push:
     branches: 
     - 'main'
     paths:
-    - '**.bicep'
+      - '**.bicep'
 jobs:
   arm_docs:
-    name: Initial repository checkout
+    name: Generate Markdown
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -18,7 +18,7 @@ jobs:
     - name: Bicep Build
       shell: pwsh
       run: |
-        Get-ChildItem -Recurse -Path infra-as-code/bicep/ -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
+        Get-ChildItem -Recurse -Path infra-as-code/bicep/modules/ -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
             Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
             $output = bicep build $_.FullName 2>&1
             if ($LastExitCode -ne 0)
@@ -31,11 +31,11 @@ jobs:
             }   
         }
     # STEP 2: Generate Markdowns using PSDocs
-    - name: Generate Markdowns
+    - name: Generate ARM markdowns
       run: | 
         Install-Module -Name 'PSDocs.Azure' -Repository PSGallery -force;
-        # Scan for Azure template file recursively in the templates/ directory
-        Get-AzDocTemplateFile -Path infra-as-code/bicep/ | ForEach-Object {
+        # Scan for Azure template file recursively in the infra-as-code/bicep/modules/ directory
+        Get-AzDocTemplateFile -Path infra-as-code/bicep/modules/ | ForEach-Object {
           # Generate a standard name of the markdown file. i.e. <name>_<version>.md
           $template = Get-Item -Path $_.TemplateFile;
           $templateraw = Get-Content -Raw -Path $_.Templatefile;
@@ -64,14 +64,23 @@ jobs:
     - name: Remove Generated JSONs
       shell: pwsh
       run: |
-        Get-ChildItem -Recurse -Path infra-as-code/bicep/ -Filter '*.json' -Exclude 'bicepconfig.json','*.parameters.json','*.parameters.*.json','policy_*' | ForEach-Object {
+        Get-ChildItem -Recurse -Path infra-as-code/bicep/modules/ -Filter '*.json' -Exclude 'bicepconfig.json','*.parameters.json','*.parameters.*.json','policy_*' | ForEach-Object {
             Write-Information "==> Removing generated JSON file $_ from Bicep Build" -InformationAction Continue
             Remove-Item -Path $_.FullName
         }
     # STEP 4: Commit files to push
-    - name: Commit files
+    - name: Commit and push files
+      shell: pwsh
       run: |
-        git config --local user.name "github-actions[bot]"
-        git add --all
-        git commit -m "Bicep markdown amendment" -a
-        git push
+        $x = (git status --short)
+        if ( $x -eq $null) {
+          echo "No changes to be made"
+        }
+        Else {
+          echo "Changes detected"
+          git add --all
+          git config --local user.name "github-actions[bot]"
+          git status
+          git commit -m "Bicep markdown amendment" -a
+          git push
+        }
