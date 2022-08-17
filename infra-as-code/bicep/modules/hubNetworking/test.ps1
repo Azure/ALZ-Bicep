@@ -9,7 +9,11 @@ New-AzResourceGroupDeployment `
   -parCompanyPrefix 'alz' `
   -parDnsServerIps '10.0.0.4' `
   -parPublicIpSku 'Standard' `
-  -parAzFirewallAvailabilityZones
-  -parAzGatewayAvailabilityZones 
+  -parAzFirewallAvailabilityZones [
+    '1,2,3'
+  ] `
+  -parAzGatewayAvailabilityZones [
+  '1,2,3'
+  ] `
   -parPrivateDnsZonesEnabled false `
   -ResourceGroupName 'Hub_Networking_POC_2'
