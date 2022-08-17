@@ -5,8 +5,6 @@ on:
   push:
     branches: 
     - 'main'
-    paths:
-      - '**.bicep'
 jobs:
   arm_docs:
     name: Generate Markdown
