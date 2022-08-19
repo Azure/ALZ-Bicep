@@ -74,29 +74,19 @@ param parAzFirewallTier string = 'Standard'
   '1'
   '2'
   '3'
-  '1,2'
-  '1,3'
-  '2,3'
   '1,2,3'
 ])
 @description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
-param parAzFirewallAvailabilityZones array = [
-  '1,2,3'
-]
+param parAzFirewallAvailabilityZones array 
 
 @allowed([
   '1'
   '2'
   '3'
-  '1,2'
-  '1,3'
-  '2,3'
   '1,2,3'
 ])
 @description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP')
-param parAzGatewayAvailabilityZones array = [
-  '1,2,3'
-]
+param parAzGatewayAvailabilityZones array
 
 @description('Switch to enable/disable Azure Firewall DNS Proxy. Default: true')
 param parAzFirewallDnsProxyEnabled bool = true
@@ -199,7 +189,7 @@ param parVpnGatewayConfig object = {
 param parExpressRouteGatewayConfig object = {
   name: '${parCompanyPrefix}-ExpressRoute-Gateway'
   gatewayType: 'ExpressRoute'
-  sku: 'ErGw1AZ'
+  sku: 'ErGw2AZ'
   vpnType: 'RouteBased'
   vpnGatewayGeneration: 'None'
   enableBgp: false
