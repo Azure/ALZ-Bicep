@@ -14,12 +14,6 @@ param parPublicIpProperties object
   '1'
   '2'
   '3'
-  '1'
-  '2'
-  '3'
-  '1,2'
-  '1,3'
-  '2,3'
   '1,2,3'
 ])
 @description('Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty.')
