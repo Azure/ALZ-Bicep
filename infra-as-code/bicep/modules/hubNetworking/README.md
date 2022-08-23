@@ -93,13 +93,28 @@ There are two different sets of input parameters; one for deploying to Azure glo
 # For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription 
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
+
 az account set --subscription $ConnectivitySubscriptionId
 
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
+
+# Set the Resource Group Name based on deployment type. ('prod' = Production, 'preprod' = Pre-Production, 'devtest' = Devtest etc.)
+DeploymentType="prod"
+
+ResourceGroupName="rg-$TopLevelMGPrefix-hub-networking-$DeploymentType-001"
+
+# Creating unique string to add to deployment name
+Date="$(date +%s%N)"
+LastFourDigits=${Date: -4}
+DeploymentName="hubNetworkingDeploy-$LastFourDigits"
+
 az group create --location eastus \
-   --name Hub_Networking_POC
+   --name $ResourceGroupName
 
 az deployment group create \
-   --resource-group HUB_Networking_POC  \
+   --name $DeploymentName \
+   --resource-group $ResourceGroupName  \
    --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
    --parameters @infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json
 ```
@@ -110,11 +125,25 @@ OR
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
+
+# Set the Resource Group Name based on deployment type. ('prod' = Production, 'preprod' = Pre-Production, 'devtest' = Devtest etc.)
+DeploymentType="prod"
+
+ResourceGroupName="rg-$TopLevelMGPrefix-hub-networking-$DeploymentType-001"
+
+# Creating unique string to add to deployment name
+Date="$(date +%s%N)"
+LastFourDigits=${Date: -4}
+DeploymentName="hubNetworkingDeploy-$LastFourDigits"
+
 az group create --location chinaeast2 \
-   --name Hub_Networking_POC
+   --name $ResourceGroupName
 
 az deployment group create \
-   --resource-group HUB_Networking_POC  \
+   --name $DeploymentName \
+   --resource-group $ResourceGroupName  \
    --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
    --parameters @infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json
 ```
@@ -126,15 +155,30 @@ az deployment group create \
 # Set Platform connectivity subscription ID as the the current subscription 
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+# Set the Resource Group Name based on deployment type. ('prod' = Production, 'preprod' = Pre-Production, 'devtest' = Devtest etc.)
+$DeploymentType = "prod"
+
+$ResourceGroupName = "rg-$TopLevelMGPrefix-hub-networking-$DeploymentType-001"
+
+# Creating unique string to add to deployment name
+$DateTime = Get-Date -UFormat %s
+$LastFourDigits = $DateTime.substring($DateTime.Length - 4, 4)
+
+$DeploymentName = "hubNetworkingDeploy-$LastFourDigits"
+
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzResourceGroup -Name 'Hub_Networking_POC' `
+New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'eastus'
   
 New-AzResourceGroupDeployment `
+  -Name $DeploymentName `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json `
-  -ResourceGroupName 'Hub_Networking_POC'
+  -ResourceGroupName $ResourceGroupName
 ```
 OR
 ```powershell
@@ -142,15 +186,30 @@ OR
 # Set Platform connectivity subscription ID as the the current subscription 
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+# Set the Resource Group Name based on deployment type. ('prod' = Production, 'preprod' = Pre-Production, 'devtest' = Devtest etc.)
+$DeploymentType = "prod"
+
+$ResourceGroupName = "rg-$TopLevelMGPrefix-hub-networking-$DeploymentType-001"
+
+# Creating unique string to add to deployment name
+$DateTime = Get-Date -UFormat %s
+$LastFourDigits = $DateTime.substring($DateTime.Length - 4, 4)
+
+$DeploymentName = "hubNetworkingDeploy-$LastFourDigits"
+
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzResourceGroup -Name 'Hub_Networking_POC' `
+New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'chinaeast2'
   
 New-AzResourceGroupDeployment `
+  -Name $DeploymentName `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json `
-  -ResourceGroupName 'Hub_Networking_POC'
+  -ResourceGroupName $ResourceGroupName
 ```
 ## Example Output in Azure global regions
 
