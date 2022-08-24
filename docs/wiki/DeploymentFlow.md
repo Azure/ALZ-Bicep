@@ -4,6 +4,22 @@
 
 This document outlines the prerequisites, dependencies and flow to help orchestrate an end-to-end Azure Landing Zone deployment.  The orchestration templates provided with this reference implementation have been pre-configured to follow the dependencies described in this document.
 
+## Azure Enablement Show Videos
+
+We have created a short 3-part series of video on the Azure Enablement Show that can be found below:
+
+### Part 1 - Introduction to Azure Landing Zones Bicep
+
+[![Part 1 - Introduction to Azure Landing Zones Bicep](https://img.youtube.com/vi/-pZNrH1GOxs/hqdefault.jpg)](https://aka.ms/azenable/94)
+
+### Part 2 - Azure Landing Zones Bicep - Enabling platform services
+
+[![Part 2 - Azure Landing Zones Bicep - Enabling platform services](https://img.youtube.com/vi/FNT0ZtUxYKQ/hqdefault.jpg)](https://aka.ms/azenable/95)
+
+### Part 3 - Azure Landing Zones Bicep - Enabling landing zones
+
+[![Part 3 - Azure Landing Zones Bicep - Enabling landing zones](https://img.youtube.com/vi/cZ7IN3zGbyM/hqdefault.jpg)](https://aka.ms/azenable/96)
+
 ## Prerequisites
 
 1. Azure Active Directory Tenant.

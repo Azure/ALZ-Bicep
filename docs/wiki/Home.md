@@ -27,6 +27,22 @@ Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` 
   * [Azure DevOps][wiki_pipelines_ado]
 * [Code Tours][code_tours]
 
+## Azure Enablement Show Videos
+
+We have created a short 3-part series of video on the Azure Enablement Show that can be found below:
+
+### Part 1 - Introduction to Azure Landing Zones Bicep
+
+[![Part 1 - Introduction to Azure Landing Zones Bicep](https://img.youtube.com/vi/-pZNrH1GOxs/hqdefault.jpg)](https://aka.ms/azenable/94)
+
+### Part 2 - Azure Landing Zones Bicep - Enabling platform services
+
+[![Part 2 - Azure Landing Zones Bicep - Enabling platform services](https://img.youtube.com/vi/FNT0ZtUxYKQ/hqdefault.jpg)](https://aka.ms/azenable/95)
+
+### Part 3 - Azure Landing Zones Bicep - Enabling landing zones
+
+[![Part 3 - Azure Landing Zones Bicep - Enabling landing zones](https://img.youtube.com/vi/cZ7IN3zGbyM/hqdefault.jpg)](https://aka.ms/azenable/96)
+
 
  [//]: # (************************)
  [//]: # (INSERT LINK LABELS BELOW)
