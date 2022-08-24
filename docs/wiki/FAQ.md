@@ -53,7 +53,7 @@ This is normally due to the release version you are using of `ALZ-Bicep` was bui
 
 An example of the error or something similar you may see is shown below:
 
-```azurepowershell
+```powershell
 VERBOSE: Using Bicep v0.5.6
 New-AzManagementGroupDeployment: Cannot retrieve the dynamic parameters for the cmdlet. C:\Source\ALZ-Bicep\infra-as-code\bicep\modules\policy\definitions\customPolicyDefinitions.bicep(448,31) : Error BCP062: The referenced declaration with name "varPolicySetDefinitionEsDenyPublicpaasendpointsParameters" is not valid.
 C:\Source\ALZ-Bicep\infra-as-code\bicep\modules\policy\definitions\customPolicyDefinitions.bicep(453,31) : Error BCP062: The referenced declaration with name "varPolicySetDefinitionEsDenyPublicpaasendpointsParameters" is not valid.
