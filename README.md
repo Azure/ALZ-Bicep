@@ -47,15 +47,15 @@ We have created a short 3-part series of video on the Azure Enablement Show that
 
 #### Part 1 - Introduction to Azure Landing Zones Bicep
 
-[![Part 1 - Introduction to Azure Landing Zones Bicep](./docs/wiki/media/aes1-thumb.jpg)][aes_part_1]
+[![Part 1 - Introduction to Azure Landing Zones Bicep][aes1_thumb]][aes_part_1]
 
 #### Part 2 - Azure Landing Zones Bicep - Enabling platform services
 
-[![Part 2 - Azure Landing Zones Bicep - Enabling platform services](./docs/wiki/media/aes2-thumb.jpg)][aes_part_2]
+[![Part 2 - Azure Landing Zones Bicep - Enabling platform services][aes2_thumb]][aes_part_2]
 
 #### Part 3 - Azure Landing Zones Bicep - Enabling landing zones
 
-[![Part 3 - Azure Landing Zones Bicep - Enabling landing zones](./docs/wiki/media/aes3-thumb.jpg)][aes_part_2]
+[![Part 3 - Azure Landing Zones Bicep - Enabling landing zones][aes3_thumb]][aes_part_2]
 
 ## Contributing
 
@@ -92,10 +92,13 @@ If you believe you have found a security vulnerability in this repository, pleas
 
 For support on the artifacts contained in this repository, please refer to [this guide][support_statement] for more details.
 
+ [//]: # (*****************************)
+ [//]: # (INSERT IMAGE REFERENCES BELOW)
+ [//]: # (*****************************)
 
-
-
-
+[aes1_thumb]: ./docs/wiki/media/aes1-thumb.jpg "Part 1 - Introduction to Azure Landing Zones Bicep Thumbnail"
+[aes2_thumb]: ./docs/wiki/media/aes2-thumb.jpg "Part 2 - Azure Landing Zones Bicep - Enabling platform services Thumbnail"
+[aes3_thumb]: ./docs/wiki/media/aes3-thumb.jpg "Part 3 - Azure Landing Zones Bicep - Enabling landing zones"
 
  [//]: # (************************)
  [//]: # (INSERT LINK LABELS BELOW)
