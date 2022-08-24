@@ -94,9 +94,9 @@ If you believe you have found a security vulnerability in this repository, pleas
 
 For support on the artifacts contained in this repository, please refer to [this guide][support_statement] for more details.
 
- [//]: # (*****************************)
- [//]: # (INSERT IMAGE REFERENCES BELOW)
- [//]: # (*****************************)
+[//]: # (*****************************)
+[//]: # (INSERT IMAGE REFERENCES BELOW)
+[//]: # (*****************************)
 
 [aes1_thumb]: ./docs/wiki/media/aes1-thumb.jpg "Part 1 - Introduction to Azure Landing Zones Bicep Thumbnail"
 [aes2_thumb]: ./docs/wiki/media/aes2-thumb.jpg "Part 2 - Azure Landing Zones Bicep - Enabling platform services Thumbnail"
@@ -105,9 +105,9 @@ For support on the artifacts contained in this repository, please refer to [this
 [aes_part_2]: https://aka.ms/azenable/95 "Part 2 - Enabling platform services"
 [aes_part_3]: https://aka.ms/azenable/96 "Part 3 - Enabling landing zones"
 
- [//]: # (************************)
- [//]: # (INSERT LINK LABELS BELOW)
- [//]: # (************************)
+[//]: # (************************)
+[//]: # (INSERT LINK LABELS BELOW)
+[//]: # (************************)
 
 <!--
 The following link references should be copied from `_sidebar.md` in the `./docs/wiki/` folder.
