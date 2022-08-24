@@ -47,15 +47,15 @@ We have created a short 3-part series of video on the Azure Enablement Show that
 
 #### Part 1 - Introduction to Azure Landing Zones Bicep
 
-[![Part 1 - Introduction to Azure Landing Zones Bicep](https://img.youtube.com/vi/-pZNrH1GOxs/hqdefault.jpg)](https://aka.ms/azenable/94)
+[![Part 1 - Introduction to Azure Landing Zones Bicep](./docs/wiki/media/aes1-thumb.jpg)][aes_part_1]
 
 #### Part 2 - Azure Landing Zones Bicep - Enabling platform services
 
-[![Part 2 - Azure Landing Zones Bicep - Enabling platform services](https://img.youtube.com/vi/FNT0ZtUxYKQ/hqdefault.jpg)](https://aka.ms/azenable/95)
+[![Part 2 - Azure Landing Zones Bicep - Enabling platform services](./docs/wiki/media/aes2-thumb.jpg)][aes_part_2]
 
 #### Part 3 - Azure Landing Zones Bicep - Enabling landing zones
 
-[![Part 3 - Azure Landing Zones Bicep - Enabling landing zones](https://img.youtube.com/vi/cZ7IN3zGbyM/hqdefault.jpg)](https://aka.ms/azenable/96)
+[![Part 3 - Azure Landing Zones Bicep - Enabling landing zones](./docs/wiki/media/aes3-thumb.jpg)][aes_part_2]
 
 ## Contributing
 
@@ -92,6 +92,11 @@ If you believe you have found a security vulnerability in this repository, pleas
 
 For support on the artifacts contained in this repository, please refer to [this guide][support_statement] for more details.
 
+
+
+
+
+
  [//]: # (************************)
  [//]: # (INSERT LINK LABELS BELOW)
  [//]: # (************************)
@@ -119,3 +124,6 @@ Replace `./` with `https://github.com/Azure/terraform-azurerm-caf-enterprise-sca
 [wiki_pipelines_gh]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub "Wiki - Sample Pipelines - GitHub Actions"
 [wiki_pipelines_ado]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO "Wiki - Sample Pipelines - Azure DevOps"
 [code_tours]:                                   https://github.com/Azure/ALZ-Bicep/wiki/CodeTour "Wiki - Code tours"
+[aes_part_1]:                                   https://aka.ms/azenable/94 "Part 1 - Introduction to Azure Landing Zones Bicep"
+[aes_part_2]:                                   https://aka.ms/azenable/95 "Part 2 - Enabling platform services"
+[aes_part_3]:                                   https://aka.ms/azenable/96 "Part 3 - Enabling landing zones"
