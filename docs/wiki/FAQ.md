@@ -72,3 +72,5 @@ C:\Source\ALZ-Bicep\policyDefinitions.bicep(3,15) : Error BCP104: The referenced
 You'll note that the error message above is stating it is using Bicep `v0.5.6` however, the `loadJsonContent` is available in `v0.7.4` and later.
 
 So to fix this issue all you need to do is update the version of Bicep to the [latest release](https://github.com/Azure/bicep/releases) or follow the installation instructions here: [Install Bicep tools](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install)
+
+Then just re-run the deployment or `bicep build` and you should see success 👍🥳
