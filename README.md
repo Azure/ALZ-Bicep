@@ -47,18 +47,19 @@ To get started with ALZ Bicep, please refer to the [Deployment Flow wiki page][w
 
 We have created a short 3-part series of video on the Azure Enablement Show that can be found below:
 
+<!-- markdownlint-disable -->
 #### Part 1 - Introduction to Azure Landing Zones Bicep
 
-[![Part 1 - Introduction to Azure Landing Zones Bicep][aes1_thumb]][aes_part_1]
+[![Part 1 - Introduction to Azure Landing Zones Bicep](https://img.youtube.com/vi/-pZNrH1GOxs/hqdefault.jpg)](https://aka.ms/azenable/94)
 
 #### Part 2 - Azure Landing Zones Bicep - Enabling platform services
 
-[![Part 2 - Azure Landing Zones Bicep - Enabling platform services][aes2_thumb]][aes_part_2]
+[![Part 2 - Azure Landing Zones Bicep - Enabling platform services](https://img.youtube.com/vi/FNT0ZtUxYKQ/hqdefault.jpg)](https://aka.ms/azenable/95)
 
 #### Part 3 - Azure Landing Zones Bicep - Enabling landing zones
 
-[![Part 3 - Azure Landing Zones Bicep - Enabling landing zones][aes3_thumb]][aes_part_2]
-
+[![Part 3 - Azure Landing Zones Bicep - Enabling landing zones](https://img.youtube.com/vi/cZ7IN3zGbyM/hqdefault.jpg)](https://aka.ms/azenable/96)
+<!-- markdownlint-restore -->
 ## Contributing
 
 This project welcomes contributions and suggestions. Please review our [Contributing guide][wiki_contributing] in the Wiki. Once your PR is created and submitted a member of the team will triage, review and discuss with you 👍
@@ -94,25 +95,9 @@ If you believe you have found a security vulnerability in this repository, pleas
 
 For support on the artifacts contained in this repository, please refer to [this guide][support_statement] for more details.
 
-[//]: # (*****************************)
-[//]: # (INSERT IMAGE REFERENCES BELOW)
-[//]: # (*****************************)
-
-[aes1_thumb]: ./docs/wiki/media/aes1-thumb.jpg "Part 1 - Introduction to Azure Landing Zones Bicep Thumbnail"
-[aes2_thumb]: ./docs/wiki/media/aes2-thumb.jpg "Part 2 - Azure Landing Zones Bicep - Enabling platform services Thumbnail"
-[aes3_thumb]: ./docs/wiki/media/aes3-thumb.jpg "Part 3 - Azure Landing Zones Bicep - Enabling landing zones"
-[aes_part_1]: https://aka.ms/azenable/94 "Part 1 - Introduction to Azure Landing Zones Bicep"
-[aes_part_2]: https://aka.ms/azenable/95 "Part 2 - Enabling platform services"
-[aes_part_3]: https://aka.ms/azenable/96 "Part 3 - Enabling landing zones"
-
 [//]: # (************************)
 [//]: # (INSERT LINK LABELS BELOW)
 [//]: # (************************)
-
-<!--
-The following link references should be copied from `_sidebar.md` in the `./docs/wiki/` folder.
-Replace `./` with `https://github.com/Azure/terraform-azurerm-caf-enterprise-scale/wiki/` when copying to here.
--->
 
 [wiki_home]:                                  https://github.com/Azure/ALZ-Bicep/wiki/home "Wiki - Home"
 [wiki_deployment_flow]:                            https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow "Wiki - Deployment Flow"

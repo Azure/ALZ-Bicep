@@ -9,7 +9,7 @@ This document outlines the prerequisites, dependencies and flow to help orchestr
 ## Azure Enablement Show Videos
 
 We have created a short 3-part series of video on the Azure Enablement Show that can be found below:
-
+<!-- markdownlint-disable -->
 ### Part 1 - Introduction to Azure Landing Zones Bicep
 
 [![Part 1 - Introduction to Azure Landing Zones Bicep](https://img.youtube.com/vi/-pZNrH1GOxs/hqdefault.jpg)](https://aka.ms/azenable/94)
@@ -21,6 +21,7 @@ We have created a short 3-part series of video on the Azure Enablement Show that
 ### Part 3 - Azure Landing Zones Bicep - Enabling landing zones
 
 [![Part 3 - Azure Landing Zones Bicep - Enabling landing zones](https://img.youtube.com/vi/cZ7IN3zGbyM/hqdefault.jpg)](https://aka.ms/azenable/96)
+<!-- markdownlint-restore -->
 
 ## Prerequisites
 
