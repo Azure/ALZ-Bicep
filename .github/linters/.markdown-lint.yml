@@ -28,6 +28,7 @@ MD026:
 MD029: false                  # Ordered list item prefix
 MD033: false                  # Allow inline HTML
 MD036: false                  # Emphasis used instead of a heading
+MD053: false                  # Super Linter broke this in v4.9.5
 
 #################
 # Rules by tags #
