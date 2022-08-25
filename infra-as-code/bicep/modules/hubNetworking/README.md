@@ -99,10 +99,7 @@ az account set --subscription $ConnectivitySubscriptionId
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 TopLevelMGPrefix="alz"
 
-# Set the Resource Group Name based on deployment type. ('prod' = Production, 'preprod' = Pre-Production, 'devtest' = Devtest etc.)
-DeploymentType="prod"
-
-ResourceGroupName="rg-$TopLevelMGPrefix-hub-networking-$DeploymentType-001"
+ResourceGroupName="rg-$TopLevelMGPrefix-hub-networking-001"
 
 # Creating unique string to add to deployment name
 Date="$(date +%s%N)"
@@ -128,10 +125,7 @@ az account set --subscription $ConnectivitySubscriptionId
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 TopLevelMGPrefix="alz"
 
-# Set the Resource Group Name based on deployment type. ('prod' = Production, 'preprod' = Pre-Production, 'devtest' = Devtest etc.)
-DeploymentType="prod"
-
-ResourceGroupName="rg-$TopLevelMGPrefix-hub-networking-$DeploymentType-001"
+ResourceGroupName="rg-$TopLevelMGPrefix-hub-networking-001"
 
 # Creating unique string to add to deployment name
 Date="$(date +%s%N)"
@@ -158,10 +152,7 @@ $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
 
-# Set the Resource Group Name based on deployment type. ('prod' = Production, 'preprod' = Pre-Production, 'devtest' = Devtest etc.)
-$DeploymentType = "prod"
-
-$ResourceGroupName = "rg-$TopLevelMGPrefix-hub-networking-$DeploymentType-001"
+$ResourceGroupName = "rg-$TopLevelMGPrefix-hub-networking-001"
 
 # Creating unique string to add to deployment name
 $DateTime = Get-Date -UFormat %s
@@ -189,10 +180,7 @@ $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
 
-# Set the Resource Group Name based on deployment type. ('prod' = Production, 'preprod' = Pre-Production, 'devtest' = Devtest etc.)
-$DeploymentType = "prod"
-
-$ResourceGroupName = "rg-$TopLevelMGPrefix-hub-networking-$DeploymentType-001"
+$ResourceGroupName = "rg-$TopLevelMGPrefix-hub-networking-001"
 
 # Creating unique string to add to deployment name
 $DateTime = Get-Date -UFormat %s
