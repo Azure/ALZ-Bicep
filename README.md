@@ -95,9 +95,9 @@ If you believe you have found a security vulnerability in this repository, pleas
 
 For support on the artifacts contained in this repository, please refer to [this guide][support_statement] for more details.
 
-[//]: # (************************)
-[//]: # (INSERT LINK LABELS BELOW)
-[//]: # (************************)
+ [//]: # (************************)
+ [//]: # (INSERT LINK LABELS BELOW)
+ [//]: # (************************)
 
 [wiki_home]:                                  https://github.com/Azure/ALZ-Bicep/wiki/home "Wiki - Home"
 [wiki_deployment_flow]:                            https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow "Wiki - Deployment Flow"
