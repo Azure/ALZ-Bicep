@@ -109,17 +109,32 @@ az deployment group create \
 # Set Platform management subscripion ID as the the current subscription 
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+$ResourceGroupName = "rg-$TopLevelMGPrefix-logging-001"
+
+$DateTime = Get-Date -UFormat %s
+$LastFourDigits = $DateTime.substring($DateTime.Length - 4, 4)
+
+$DeploymentName = "LoggingDeploy-$LastFourDigits"
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = $DeploymentName
+  ResourceGroupName     = $ResourceGroupName
+  TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
+  TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
+}
+
 Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
 
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
-  -Name alz-logging `
+  -Name $ResourceGroupName `
   -Location eastus
 
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/logging/logging.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json `
-  -ResourceGroup alz-logging
+New-AzResourceGroupDeployment @inputObject
 ```
 OR
 ```powershell
@@ -127,17 +142,32 @@ OR
 # Set Platform management subscripion ID as the the current subscription 
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+$ResourceGroupName = "rg-$TopLevelMGPrefix-logging-001"
+
+$DateTime = Get-Date -UFormat %s
+$LastFourDigits = $DateTime.substring($DateTime.Length - 4, 4)
+
+$DeploymentName = "LoggingDeploy-$LastFourDigits"
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = $DeploymentName
+  ResourceGroupName     = $ResourceGroupName
+  TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
+  TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
+}
+
 Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
 
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
-  -Name alz-logging `
+  -Name $ResourceGroupName `
   -Location chinaeast2
 
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/logging/logging.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json `
-  -ResourceGroup alz-logging
+New-AzResourceGroupDeployment @inputObject
 ```
 
 ## Bicep Visualizer
