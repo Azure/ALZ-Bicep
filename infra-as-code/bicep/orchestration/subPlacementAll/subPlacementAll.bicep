@@ -58,7 +58,7 @@ var varMgIds = {
   landingZonesOnline: '${parTopLevelManagementGroupPrefix}-landingzones-online'
   landingZonesConfidentialCorp: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-corp'
   landingZonesConfidentialOnline: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-online'
-  decommissioned: '${parTopLevelManagementGroupPrefix}-decommisoned'
+  decommissioned: '${parTopLevelManagementGroupPrefix}-decommissioned'
   sandbox: '${parTopLevelManagementGroupPrefix}-sandbox'
 }
 
