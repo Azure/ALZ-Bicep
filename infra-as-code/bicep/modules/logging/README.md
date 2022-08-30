@@ -110,7 +110,7 @@ az group create \
   --location chinaeast2
 
   $inputObject = @(
-  '--name',           'ExampleDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63]),
+  '--name',           'LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63]),
   '--resource-group', $ResourceGroupName,
   '--parameters',     '@infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json',
   '--template-file',  "infra-as-code/bicep/modules/logging/logging.bicep"
@@ -134,7 +134,7 @@ $ResourceGroupName = "rg-$TopLevelMGPrefix-logging-001"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'ExampleDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = $ResourceGroupName
   TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
   TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
@@ -162,7 +162,7 @@ $ResourceGroupName = "rg-$TopLevelMGPrefix-logging-001"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'ExampleDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = $ResourceGroupName
   TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
   TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
