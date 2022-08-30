@@ -72,16 +72,25 @@ There are separate input parameters files depending on which Azure cloud you are
 ManagementSubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ManagementSubscriptionId
 
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
+
+ResourceGroupName="rg-$TopLevelMGPrefix-logging-001"
+
 # Create Resource Group - optional when using an existing resource group
 az group create \
-  --name alz-logging \
+  --name $ResourceGroupName \
   --location eastus
 
+  $inputObject = @(
+  '--name',           ('LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--resource-group', $ResourceGroupName,
+  '--parameters',     '@infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json',
+  '--template-file',  "infra-as-code/bicep/modules/logging/logging.bicep"
+)
+
 # Deploy Module 
-az deployment group create \
-  --template-file infra-as-code/bicep/modules/logging/logging.bicep \
-  --parameters @infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json \
-  --resource-group alz-logging
+az deployment group create @inputObject
 ```
 OR
 ```bash
@@ -90,16 +99,25 @@ OR
 ManagementSubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ManagementSubscriptionId
 
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
+
+ResourceGroupName="rg-$TopLevelMGPrefix-logging-001"
+
 # Create Resource Group - optional when using an existing resource group
 az group create \
-  --name alz-logging \
+  --name $ResourceGroupName \
   --location chinaeast2
 
+  $inputObject = @(
+  '--name',           'ExampleDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63]),
+  '--resource-group', $ResourceGroupName,
+  '--parameters',     '@infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json',
+  '--template-file',  "infra-as-code/bicep/modules/logging/logging.bicep"
+)
+
 # Deploy Module 
-az deployment group create \
-  --template-file infra-as-code/bicep/modules/logging/logging.bicep \
-  --parameters @infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json \
-  --resource-group alz-logging
+az deployment group create @inputObject
 ```
 
 ### PowerShell
@@ -114,14 +132,9 @@ $TopLevelMGPrefix = "alz"
 
 $ResourceGroupName = "rg-$TopLevelMGPrefix-logging-001"
 
-$DateTime = Get-Date -UFormat %s
-$LastFourDigits = $DateTime.substring($DateTime.Length - 4, 4)
-
-$DeploymentName = "LoggingDeploy-$LastFourDigits"
-
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = $DeploymentName
+  DeploymentName        = 'ExampleDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = $ResourceGroupName
   TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
   TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
@@ -147,14 +160,9 @@ $TopLevelMGPrefix = "alz"
 
 $ResourceGroupName = "rg-$TopLevelMGPrefix-logging-001"
 
-$DateTime = Get-Date -UFormat %s
-$LastFourDigits = $DateTime.substring($DateTime.Length - 4, 4)
-
-$DeploymentName = "LoggingDeploy-$LastFourDigits"
-
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = $DeploymentName
+  DeploymentName        = 'ExampleDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = $ResourceGroupName
   TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
   TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
