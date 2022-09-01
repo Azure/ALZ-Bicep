@@ -8,6 +8,8 @@ Welcome to the wiki of the Azure Landing Zones Bicep repo. This repo contains th
 
 Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` repo](https://github.com/Azure/Enterprise-Scale) to ensure the choice of tooling to implement the architecture, produce the same outputs.
 
+> Have you seen our page in the Azure Architecture Center here: [Azure landing zones - Bicep modules design considerations][aac_article]
+
 ## Navigation
 
 * [Wiki Home][wiki_home]
@@ -26,6 +28,26 @@ Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` 
   * [GitHub Actions][wiki_pipelines_gh]
   * [Azure DevOps][wiki_pipelines_ado]
 * [Code Tours][code_tours]
+
+## Azure Enablement Show Videos
+
+We have created a short 3-part series of video on the Azure Enablement Show that can be found below:
+<!-- markdownlint-disable -->
+### Part 1 - Introduction to Azure Landing Zones Bicep
+
+[![Part 1 - Introduction to Azure Landing Zones Bicep](https://img.youtube.com/vi/-pZNrH1GOxs/hqdefault.jpg)](https://aka.ms/azenable/94)
+
+### Part 2 - Azure Landing Zones Bicep - Enabling platform services
+
+[![Part 2 - Azure Landing Zones Bicep - Enabling platform services](https://img.youtube.com/vi/FNT0ZtUxYKQ/hqdefault.jpg)](https://aka.ms/azenable/95)
+
+### Part 3 - Azure Landing Zones Bicep - Enabling landing zones
+
+[![Part 3 - Azure Landing Zones Bicep - Enabling landing zones](https://img.youtube.com/vi/cZ7IN3zGbyM/hqdefault.jpg)](https://aka.ms/azenable/96)
+<!-- markdownlint-restore -->
+
+
+
 
 
  [//]: # (************************)
@@ -53,3 +75,8 @@ Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to her
 [wiki_pipelines_gh]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub "Wiki - Sample Pipelines - GitHub Actions"
 [wiki_pipelines_ado]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO "Wiki - Sample Pipelines - Azure DevOps"
 [code_tours]:                                   https://github.com/Azure/ALZ-Bicep/wiki/CodeTour "Wiki - Code tours"
+[aes_part_1]:                                   https://aka.ms/azenable/94 "Part 1 - Introduction to Azure Landing Zones Bicep"
+[aes_part_2]:                                   https://aka.ms/azenable/95 "Part 2 - Enabling platform services"
+[aes_part_3]:                                   https://aka.ms/azenable/96 "Part 3 - Enabling landing zones"
+[aac_article]:                                  https://docs.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep "Azure Architecture Center - Azure landing zones - Bicep modules design considerations"
+
