@@ -49,40 +49,58 @@ Input parameter file `parameters/customRoleDefinitions.parameters.all.json` defi
 ### Azure CLI
 ```bash
 # For Azure global regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep \
-  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json \
-  --location eastus \
-  --management-group-id alz
+
+$inputObject = @(
+  '--name',                ('CustomRoleDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',          '@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json',
+  '--location',            'eastus',
+  '--management-group-id', 'alz',
+  '--template-file',       "infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep"
+)
+az deployment mg create @inputObject
 ```
 OR
 ```bash
 # For Azure China regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep \
-  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json \
-  --location chinaeast2 \
-  --management-group-id alz
+
+$inputObject = @(
+  '--name',                ('CustomRoleDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',          '@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json',
+  '--location',            'chinaeast2',
+  '--management-group-id', 'alz',
+  '--template-file',       "infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep"
+)
+az deployment mg create @inputObject
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json `
-  -Location eastus `
-  -ManagementGroupId alz
+
+$inputObject = @{
+  DeploymentName        = 'CustomRoleDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz'
+  Location              = 'eastus'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep"
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json `
-  -Location chinaeast2 `
-  -ManagementGroupId alz
+
+$inputObject = @{
+  DeploymentName        = 'CustomRoleDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz'
+  Location              = 'chinaeast2'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep"
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 
 ![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output")

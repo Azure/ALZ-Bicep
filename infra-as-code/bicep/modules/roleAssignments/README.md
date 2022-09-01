@@ -118,40 +118,60 @@ In this example, the built-in Reader role will be assigned to a Service Principa
 
 ```bash
 # For Azure global regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json \
-  --management-group-id alz-platform \
-  --location eastus
+
+$inputObject = @(
+  '--name',                ('RoleAssignmentsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',          '@infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json',
+  '--location',            'eastus',
+  '--management-group-id', 'alz',
+  '--template-file',       "infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
+)
+
+az deployment mg create @inputObject
 ```
 OR
 ```bash
 # For Azure China regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json \
-  --management-group-id alz-platform \
-  --location chinaeast2
+
+$inputObject = @(
+  '--name',                ('RoleAssignmentsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',          '@infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json',
+  '--location',            'chinaeast2',
+  '--management-group-id', 'alz',
+  '--template-file',       "infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
+)
+
+az deployment mg create @inputObject
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json `
-  -ManagementGroupId alz-platform `
-  -Location eastus
+
+$inputObject = @{
+  DeploymentName        = 'RoleAssignmentsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz'
+  Location              = 'eastus'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json `
-  -ManagementGroupId alz-platform `
-  -Location chinaeast2
+
+$inputObject = @{
+  DeploymentName        = 'RoleAssignmentsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz'
+  Location              = 'chinaeast2'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 
 ## Bicep Visualizer

@@ -26,40 +26,57 @@ In this example, the subscriptions `34b63c8f-1782-42e6-8fb9-ba6ee8b99735` and `4
 ### Azure CLI
 ```bash
 # For Azure global regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep \
-  --parameters @infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json \
-  --location eastus \
-  --management-group-id alz
+
+$inputObject = @(
+  '--name',                ('SubscriptionPlacementDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',          '@infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json',
+  '--location',            'eastus',
+  '--management-group-id', 'alz',
+  '--template-file',       "infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep"
+)
+az deployment mg create @inputObject
 ```
 OR
 ```bash
 # For Azure China regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep \
-  --parameters @infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json \
-  --location chinaeast2 \
-  --management-group-id alz
+
+$inputObject = @(
+  '--name',                ('SubscriptionPlacementDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',          '@infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json',
+  '--location',            'chinaeast2',
+  '--management-group-id', 'alz',
+  '--template-file',       "infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep"
+)
+az deployment mg create @inputObject
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json `
-  -Location eastus `
-  -ManagementGroupId alz
+
+$inputObject = @{
+  DeploymentName        = 'SubscriptionPlacementDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz'
+  Location              = 'eastus'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep"
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json `
-  -Location chinaeast2 `
-  -ManagementGroupId alz
+
+$inputObject = @{
+  DeploymentName        = 'SubscriptionPlacementDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz'
+  Location              = 'chinaeast2'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep"
+}
+New-AzManagementGroupDeployment @inputObject
 ```
 
 ## Bicep Visualizer

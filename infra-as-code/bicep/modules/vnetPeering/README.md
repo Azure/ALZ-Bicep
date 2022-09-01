@@ -56,10 +56,25 @@ During the deployment step, we will take parameters provided in the example para
 LandingZoneSubscriptionId="[your Landing Zone subscription ID]"
 az account set --subscription $LandingZoneSubscriptionId
 
-az deployment group create \
-   --resource-group Spoke_Networking_POC  \
-   --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep \
-   --parameters @infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
+
+ResourceGroupName="rg-$TopLevelMGPrefix-vnet-peering-001"
+
+# Create Resource Group - optional when using an existing resource group
+az group create \
+  --name $ResourceGroupName \
+  --location eastus
+
+  $inputObject = @(
+  '--name',           ('vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--resource-group', $ResourceGroupName,
+  '--parameters',     '@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json',
+  '--template-file',  "infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
+)
+
+
+az deployment group create @inputObject
 ```
 OR
 ```bash
@@ -68,10 +83,24 @@ OR
 LandingZoneSubscriptionId="[your Landing Zone subscription ID]"
 az account set --subscription $LandingZoneSubscriptionId
 
-az deployment group create \
-    --resource-group Spoke_Networking_POC  \
-   --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep \
-   --parameters @infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
+
+ResourceGroupName="rg-$TopLevelMGPrefix-logging-001"
+
+# Create Resource Group - optional when using an existing resource group
+az group create \
+  --name $ResourceGroupName \
+  --location chinaeast2
+
+  $inputObject = @(
+  '--name',           ('vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--resource-group', $ResourceGroupName,
+  '--parameters',     '@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json',
+  '--template-file',  "infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
+)
+
+az deployment group create @inputObject
 ```
 
 ### PowerShell
@@ -83,10 +112,25 @@ $LandingZoneSubscriptionId = "[your Landing Zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
 
-New-AzResourceGroupDeployment `
-  -ResourceGroupName Spoke_Networking_POC `
-  -TemplateFile infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+$ResourceGroupName = "rg-$TopLevelMGPrefix-vnet-peering-001"
+
+# Create Resource Group - optional when using an existing resource group
+New-AzResourceGroup `
+  -Name $ResourceGroupName `
+  -Location eastus
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = $ResourceGroupName
+  TemplateParameterFile = "infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json"
+  TemplateFile          = "ALZ-Bicep/infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
+}
+
+New-AzResourceGroupDeployment @inputObject
 ```
 OR
 ```powershell
@@ -96,10 +140,25 @@ $LandingZoneSubscriptionId = "[your Landing Zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
 
-New-AzResourceGroupDeployment `
-  -ResourceGroupName Spoke_Networking_POC `
-  -TemplateFile infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json
+# Create Resource Group - optional when using an existing resource group
+New-AzResourceGroup `
+  -Name $ResourceGroupName `
+  -Location chinaeast2
+
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+$ResourceGroupName = "rg-$TopLevelMGPrefix-vnet-peering-001"
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = $ResourceGroupName
+  TemplateParameterFile = "infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json"
+  TemplateFile          = "ALZ-Bicep/infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
+}
+
+New-AzResourceGroupDeployment @inputObject
 ```
 
 ## Example output in Azure global regions

@@ -42,24 +42,34 @@ In this example, the remote spoke Vnet will be peered with the Vwan Virtual Hub 
 # For Azure global regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription 
 $ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
+
 az account set --subscription $ConnectivitySubscriptionId
 
-az deployment sub create \
-   --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep \
-   --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json \
-   --location eastus
+$inputObject = @(
+  '--name',           ('vnetPeeringVwanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',     '@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json',
+  '--location',       'eastus',
+  '--template-file',  "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
+)
+
+az deployment sub create @inputObject
 ```
 OR
 ```bash
 # For Azure China regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription 
 $ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
+
 az account set --subscription $ConnectivitySubscriptionId
 
-az deployment sub create \
-   --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep \
-   --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json \
-   --location chinaeast2
+$inputObject = @(
+  '--name',           ('vnetPeeringVwanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',     '@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json',
+  '--location',       'chinaeast2',
+  '--template-file',  "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
+)
+
+az deployment sub create @inputObject
 ```
 
 ### PowerShell

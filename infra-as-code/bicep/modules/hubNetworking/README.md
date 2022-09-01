@@ -101,19 +101,17 @@ TopLevelMGPrefix="alz"
 
 ResourceGroupName="rg-$TopLevelMGPrefix-hub-networking-001"
 
-# Creating unique string to add to deployment name
-Date="$(date +%s%N)"
-LastFourDigits=${Date: -4}
-DeploymentName="hubNetworkingDeploy-$LastFourDigits"
+  $inputObject = @(
+  '--name',           ('HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--resource-group', $ResourceGroupName,
+  '--parameters',     '@infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json',
+  '--template-file',  "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+)
 
 az group create --location eastus \
    --name $ResourceGroupName
 
-az deployment group create \
-   --name $DeploymentName \
-   --resource-group $ResourceGroupName  \
-   --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json
+az deployment group create @inputObject
 ```
 OR
 ```bash
@@ -127,19 +125,17 @@ TopLevelMGPrefix="alz"
 
 ResourceGroupName="rg-$TopLevelMGPrefix-hub-networking-001"
 
-# Creating unique string to add to deployment name
-Date="$(date +%s%N)"
-LastFourDigits=${Date: -4}
-DeploymentName="hubNetworkingDeploy-$LastFourDigits"
+  $inputObject = @(
+  '--name',           ('HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--resource-group', $ResourceGroupName,
+  '--parameters',     '@infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json',
+  '--template-file',  "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+)
 
 az group create --location chinaeast2 \
    --name $ResourceGroupName
 
-az deployment group create \
-   --name $DeploymentName \
-   --resource-group $ResourceGroupName  \
-   --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json
+az deployment group create @inputObject
 ```
 
 ### PowerShell
@@ -149,27 +145,28 @@ az deployment group create \
 # Set Platform connectivity subscription ID as the the current subscription 
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
+Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+
+# Set Platform management subscripion ID as the the current subscription 
+$ManagementSubscriptionId = "[your platform management subscription ID]"
+
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
 
 $ResourceGroupName = "rg-$TopLevelMGPrefix-hub-networking-001"
 
-# Creating unique string to add to deployment name
-$DateTime = Get-Date -UFormat %s
-$LastFourDigits = $DateTime.substring($DateTime.Length - 4, 4)
-
-$DeploymentName = "hubNetworkingDeploy-$LastFourDigits"
-
-Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = $ResourceGroupName
+  TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json"
+  TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+}
 
 New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'eastus'
   
-New-AzResourceGroupDeployment `
-  -Name $DeploymentName `
-  -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json `
-  -ResourceGroupName $ResourceGroupName
+New-AzResourceGroupDeployment @inputObject
 ```
 OR
 ```powershell
@@ -177,27 +174,25 @@ OR
 # Set Platform connectivity subscription ID as the the current subscription 
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
+Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
 
 $ResourceGroupName = "rg-$TopLevelMGPrefix-hub-networking-001"
 
-# Creating unique string to add to deployment name
-$DateTime = Get-Date -UFormat %s
-$LastFourDigits = $DateTime.substring($DateTime.Length - 4, 4)
-
-$DeploymentName = "hubNetworkingDeploy-$LastFourDigits"
-
-Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = $ResourceGroupName
+  TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json"
+  TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+}
 
 New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'chinaeast2'
-  
-New-AzResourceGroupDeployment `
-  -Name $DeploymentName `
-  -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json `
-  -ResourceGroupName $ResourceGroupName
+
+New-AzResourceGroupDeployment @inputObject
 ```
 ## Example Output in Azure global regions
 

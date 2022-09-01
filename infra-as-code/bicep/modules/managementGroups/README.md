@@ -120,36 +120,54 @@ In this example, the management groups are created at the `Tenant Root Group` th
 ### Azure CLI
 ```bash
 # For Azure global regions
-az deployment tenant create \
-  --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
-  --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json \
-  --location eastus
+
+$inputObject = @(
+  '--name',           ('MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',     '@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json',
+  '--location',       'eastus',
+  '--template-file',  "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+)
+
+az deployment tenant create @inputObject
 ```
 OR
 ```bash
 # For Azure China regions
-az deployment tenant create \
-  --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
-  --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json \
-  --location chinaeast2
+
+$inputObject = @(
+  '--name',           ('MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',     '@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json',
+  '--location',       'chinaeast2',
+  '--template-file',  "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+)
+
+az deployment tenant create @inputObject
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-New-AzTenantDeployment `
-  -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json `
-  -Location eastus
+
+$inputObject = @{
+  DeploymentName        = 'MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
+  Location              = 'EastUS'
+  TemplateFile          = "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+}
+New-AzTenantDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-New-AzTenantDeployment `
-  -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json `
-  -Location chinaeast2  
+
+$inputObject = @{
+  DeploymentName        = 'MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
+  Location              = 'chinaeast2'
+  TemplateFile          = "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+}
+New-AzTenantDeployment @inputObject
 ```
 
 ![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output")
