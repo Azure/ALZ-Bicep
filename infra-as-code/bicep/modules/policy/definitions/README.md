@@ -45,40 +45,57 @@ The input parameter file `parameters/customPolicyDefinitions.parameters.all.json
 
 ```bash
 # For Azure global regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json \
-  --location eastus \
-  --management-group-id alz
+
+$inputObject = @(
+  '--name',                ('PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',          '@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json',
+  '--location',            'eastus',
+  '--management-group-id', 'alz',
+  '--template-file',       "infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep"
+)
+az deployment mg create @inputObject
 ```
 OR
 ```bash
 # For Azure China regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/policy/definitions/mc-customPolicyDefinitions.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json \
-  --location chinaeast2 \
-  --management-group-id alz
+
+$inputObject = @(
+  '--name',                ('PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',          '@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json',
+  '--location',            'chinaeast2',
+  '--management-group-id', 'alz',
+  '--template-file',       "infra-as-code/bicep/modules/policy/definitions/mc-customPolicyDefinitions.bicep"
+)
+az deployment mg create @inputObject
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json `
-  -Location eastus `
-  -ManagementGroupId alz
+
+$inputObject = @{
+  DeploymentName        = 'PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz'
+  Location              = 'eastus'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep"
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/policy/definitions/mc-customPolicyDefinitions.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json `
-  -Location chinaeast2 `
-  -ManagementGroupId alz
+
+$inputObject = @{
+  DeploymentName        = 'PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz'
+  Location              = 'chinaeast2'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/modules/policy/definitions/mc-customPolicyDefinitions.bicep"
+}
+New-AzManagementGroupDeployment @inputObject
 ```
 
 ![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output")

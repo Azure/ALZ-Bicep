@@ -47,40 +47,56 @@ In this example, the `Deny-PublicIP` custom policy definition will be deployed/a
 
 ```bash
 # For Azure global regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json \
-  --location eastus \
-  --management-group-id alz-landingzones
+
+$inputObject = @(
+  '--name',                ('PolicyDenyAssignmentsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',          '@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json',
+  '--location',            'eastus',
+  '--management-group-id', 'alz-landingzones',
+  '--template-file',       "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
+)
+az deployment mg create @inputObject
 ```
 OR
 ```bash
 # For Azure China regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json \
-  --location chinaeast2 \
-  --management-group-id alz-landingzones
+
+$inputObject = @(
+  '--name',                ('PolicyDenyAssignmentsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',          '@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json',
+  '--location',            'chinaeast2',
+  '--management-group-id', 'alz-landingzones',
+  '--template-file',       "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
+)
+az deployment mg create @inputObject
 ```
 
 #### PowerShell - Deny
 
 ```powershell
 # For Azure global regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json `
-  -Location eastus `
-  -ManagementGroupId 'alz-landingzones'
+
+$inputObject = @{
+  DeploymentName        = 'PolicyDenyAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz-landingzones'
+  Location              = 'eastus'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
+}
+New-AzManagementGroupDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json `
-  -Location chinaeast2 `
-  -ManagementGroupId 'alz-landingzones'
+
+$inputObject = @{
+  DeploymentName        = 'PolicyDenyAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz-landingzones'
+  Location              = 'chinaeast2'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
+}
+New-AzManagementGroupDeployment @inputObject
 ```
 
 ### DeployIfNotExists Effect
@@ -98,40 +114,60 @@ In this example, the `Deploy-MDFC-Config` custom policy definition will be deplo
 
 ```bash
 # For Azure global regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json \
-  --location eastus \
-  --management-group-id alz-landingzones
+
+$inputObject = @(
+  --name                = 'PolicyDineAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  --management-group-id = 'alz-landingzones'
+  --location            = 'eastus'
+  --parameters          = '@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json'
+  --template-file       = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
+)
+
+az deployment mg create @inputObject
 ```
 OR
 ```bash
 # For Azure China regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/policy/assignments/parameters/mc-policyAssignmentManagementGroup.dine.parameters.all.json \
-  --location chinaeast2 \
-  --management-group-id alz-landingzones
+
+$inputObject = @(
+  --name                = 'PolicyDineAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  --management-group-id = 'alz-landingzones'
+  --location            = 'chinaeast2'
+  --parameters          = '@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json'
+  --template-file       = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
+)
+
+az deployment mg create @inputObject
 ```
 
 #### PowerShell - DINE
 
 ```powershell
 # For Azure global regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json `
-  -Location eastus `
-  -ManagementGroupId 'alz-landingzones'
+
+$inputObject = @{
+  DeploymentName        = 'PolicyDineAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz-landingzones'
+  Location              = 'eastus'
+  TemplateParameterFile = '@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/policy/assignments/parameters/mc-policyAssignmentManagementGroup.dine.parameters.all.json `
-  -Location chinaeast2 `
-  -ManagementGroupId 'alz-landingzones'
+
+$inputObject = @{
+  DeploymentName        = 'PolicyDineAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz-landingzones'
+  Location              = 'chinaeast2'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/parameters/mc-policyAssignmentManagementGroup.dine.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 
 ## Bicep Visualizer
