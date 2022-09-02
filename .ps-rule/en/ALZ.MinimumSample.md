@@ -3,7 +3,7 @@
 ## SYNOPSIS
 
 Ignore the minimum sample configuration that may not be WAF compliant.
-See https://github.com/Azuure/ALZ-Bicep/blob/main/.ps-rule/en/ALZ.MinimumSample.md.
+See [https://github.com/Azuure/ALZ-Bicep/blob/main/.ps-rule/en/ALZ.MinimumSample.md](https://github.com/Azuure/ALZ-Bicep/blob/main/.ps-rule/en/ALZ.MinimumSample.md).
 
 ## DESCRIPTION
 
