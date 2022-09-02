@@ -21,10 +21,10 @@ param location string = resourceGroup().location
 module baseline_public_ip '../publicIp.bicep' = {
   name: 'baseline_public_ip'
   params: {
-    parPublicIPName: 'pip-baseline-ip'
+    parPublicIpName: 'pip-baseline-ip'
     parLocation: location
-    parPublicIPProperties: { }
-    parPublicIPSku: {
+    parPublicIpProperties: { }
+    parPublicIpSku: {
       name: 'Standard'
       tier: 'Regional'
     }

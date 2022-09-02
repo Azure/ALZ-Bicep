@@ -21,10 +21,10 @@ param location string = resourceGroup().location
 module minimum_public_ip '../publicIp.bicep' = {
   name: 'minimum_public_ip'
   params: {
-    parPublicIPName: 'pip-minimum-ip'
+    parPublicIpName: 'pip-minimum-ip'
     parLocation: location
-    parPublicIPProperties: { }
-    parPublicIPSku: {
+    parPublicIpProperties: { }
+    parPublicIpSku: {
       name: 'Basic'
       tier: 'Regional'
     }

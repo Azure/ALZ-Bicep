@@ -29,8 +29,8 @@ module baseline_hub_network '../hubNetworking.bicep' = {
   name: 'baseline_hub_network'
   params: {
     parLocation: location
-    parPublicIPSku: 'Standard'
-    parAzureFirewallAvailabilityZones: [
+    parPublicIpSku: 'Standard'
+    parAzFirewallAvailabilityZones: [
       '1'
       '2'
       '3'
@@ -45,8 +45,8 @@ module baseline_hub_network_with_ER '../hubNetworking.bicep' = {
   name: 'baseline_hub_network_with_ER'
   params: {
     parLocation: location
-    parPublicIPSku: 'Standard'
-    parAzureFirewallAvailabilityZones: [
+    parPublicIpSku: 'Standard'
+    parAzFirewallAvailabilityZones: [
       '1'
       '2'
       '3'
@@ -78,8 +78,8 @@ module baseline_hub_network_with_VPN '../hubNetworking.bicep' = {
   name: 'baseline_hub_network_with_VPN'
   params: {
     parLocation: location
-    parPublicIPSku: 'Standard'
-    parAzureFirewallAvailabilityZones: [
+    parPublicIpSku: 'Standard'
+    parAzFirewallAvailabilityZones: [
       '1'
       '2'
       '3'
