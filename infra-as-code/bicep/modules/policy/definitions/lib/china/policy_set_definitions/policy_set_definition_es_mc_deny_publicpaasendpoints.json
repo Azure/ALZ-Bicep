@@ -127,7 +127,7 @@
       },
       {
         "policyDefinitionReferenceId": "KeyVaultDenyPaasPublicIP",
-        "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-KeyVaultPaasPublicIP",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-KeyVaultPaasPublicIP",
         "parameters": {
           "effect": {
             "value": "[[parameters('KeyVaultPublicIpDenyEffect')]"
@@ -177,7 +177,7 @@
       },
       {
         "policyDefinitionReferenceId": "AFSDenyPaasPublicIP",
-        "policyDefinitionId": "${varTargetManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-AFSPaasPublicIP",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-AFSPaasPublicIP",
         "parameters": {
           "effect": {
             "value": "[[parameters('AFSPublicIpDenyEffect')]"

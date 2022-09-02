@@ -1,0 +1,95 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "parPolicyAssignmentName": {
+            "value": "Deploy-MDFC-Config"
+        },
+        "parPolicyAssignmentDisplayName": {
+            "value": "Deploy Microsoft Defender for Cloud configuration"
+        },
+        "parPolicyAssignmentDescription": {
+            "value": "Deploy Microsoft Defender for Cloud configuration and Security Contacts"
+        },
+        "parPolicyAssignmentDefinitionId": {
+            "value": "/providers/Microsoft.Management/managementGroups/alz/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config"
+        },
+        "parPolicyAssignmentParameters": {
+            "value": {
+                "emailSecurityContact": {
+                    "value": "security_contact@replace_me"
+                },
+                "logAnalytics": {
+                    "value": "alz-la"
+                },
+                "ascExportResourceGroupName": {
+                    "value": "alz-asc-export"
+                },
+                "ascExportResourceGroupLocation": {
+                    "value": "${parDefaultRegion}"
+                },
+                "enableAscForServers": {
+                    "value": "DeployIfNotExists"
+                },
+                "enableAscForSql": {
+                    "value": "Disabled"
+                },
+                "enableAscForAppServices": {
+                    "value": "DeployIfNotExists"
+                },
+                "enableAscForStorage": {
+                    "value": "DeployIfNotExists"
+                },
+                "enableAscForContainers": {
+                    "value": "DeployIfNotExists"
+                },
+                "enableAscForKeyVault": {
+                    "value": "DeployIfNotExists"
+                },
+                "enableAscForSqlOnVm": {
+                    "value": "Disabled"
+                },
+                "enableAscForArm": {
+                    "value": "DeployIfNotExists"
+                },
+                "enableAscForDns": {
+                    "value": "DeployIfNotExists"
+                },
+                "enableAscForOssDb": {
+                    "value": "Disabled"
+                }
+            }
+        },
+        "parPolicyAssignmentParameterOverrides": {
+            "value": {}
+        },
+        "parPolicyAssignmentNonComplianceMessages": {
+            "value": []
+        },
+        "parPolicyAssignmentNotScopes": {
+            "value": []
+        },
+        "parPolicyAssignmentEnforcementMode": {
+            "value": "Default"
+        },
+        "parPolicyAssignmentIdentityType": {
+            "value": "SystemAssigned"
+        },
+        "parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs": {
+            "value": [
+                "alz-platform"
+            ]
+        },
+        "parPolicyAssignmentIdentityRoleAssignmentsSubs": {
+            "value": []
+        },
+        "parPolicyAssignmentIdentityRoleDefinitionIds": {
+            "value": [
+                "8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+            ]
+        },
+        "parTelemetryOptOut": {
+            "value": false
+        }
+    }
+}

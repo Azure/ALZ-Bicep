@@ -55,8 +55,8 @@ jobs:
           scope: managementgroup
           managementGroupId: ${{ env.ManagementGroupPrefix }}
           region: ${{ env.Location }}
-          template: infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.bicep
-          parameters: infra-as-code/bicep/modules/policy/definitions/custom-policy-definitions.parameters.example.json
+          template: infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep
+          parameters: infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json
           deploymentName: create_policy_defs-${{ env.runNumber }}
           failOnStdErr: false
         
@@ -68,7 +68,7 @@ jobs:
           managementGroupId: ${{ env.ManagementGroupPrefix }}
           region: ${{ env.Location }}
           template: infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep
-          parameters: infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.parameters.example.json
+          parameters: infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json
           deploymentName: create_rbac_roles-${{ env.runNumber }}
           failOnStdErr: false
 
@@ -91,7 +91,7 @@ jobs:
           subscriptionId: ${{ env.LoggingSubId }}
           resourceGroupName: ${{ env.LoggingResourceGroupName }}
           template: infra-as-code/bicep/modules/logging/logging.bicep
-          parameters: infra-as-code/bicep/modules/logging/logging.parameters.example.json
+          parameters: infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json
           deploymentName: create_logging-${{ env.runNumber }}
           failOnStdErr: false
 
@@ -114,7 +114,7 @@ jobs:
           subscriptionId: ${{ env.HubNetworkSubId }}
           resourceGroupName: ${{ env.HubNetworkResourceGroupName }}
           template: infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep
-          parameters: infra-as-code/bicep/modules/hubNetworking/hubNetworking.parameters.example.json
+          parameters: infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json
           deploymentName: create_hub_network-${{ env.runNumber }}
           failOnStdErr: false
 
@@ -126,7 +126,7 @@ jobs:
           managementGroupId: ${{ env.RoleAssignmentManagementGroupId }}
           region: ${{ env.Location }}
           template: infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep
-          parameters: infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.parameters.service-principal.example.json
+          parameters: infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json
           deploymentName: create_role_assignment-${{ env.runNumber }}
           failOnStdErr: false
 
@@ -138,7 +138,7 @@ jobs:
           managementGroupId: ${{ env.ManagementGroupPrefix }}
           region: ${{ env.Location }}
           template: infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep
-          parameters: infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.parameters.example.json
+          parameters: infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json
           deploymentName: create_subscription_placement-${{ env.runNumber }}
           failOnStdErr: false
 
@@ -150,7 +150,7 @@ jobs:
           managementGroupId: ${{ env.ManagementGroupPrefix }}
           region: ${{ env.Location }}
           template: infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep
-          parameters: infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.parameters.example.json
+          parameters: infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json
           deploymentName: create_policy_assignments-${{ env.runNumber }}
           failOnStdErr: false
 
@@ -173,7 +173,7 @@ jobs:
           subscriptionId: ${{ env.SpokeNetworkSubId }}
           resourceGroupName: ${{ env.SpokeNetworkResourceGroupName }}
           template: infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep
-          parameters: infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.parameters.example.json
+          parameters: infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json
           deploymentName: create_spoke_network-${{ env.runNumber }}
           failOnStdErr: false
 ```

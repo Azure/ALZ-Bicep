@@ -1,0 +1,371 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Upstream Policy Update Process",
+  "steps": [
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "description": "This GitHub Action is responsible for syncing the policies from the upstream Enterprise-Scale repo into the ALZ-Bicep `lib` folders as explained here: https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive",
+      "line": 2
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "description": "It runs every weekday at 0800 UTC",
+      "line": 6
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "description": "It can also be triggered manually by maintainers of the repo, if reuqired",
+      "line": 7
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "description": "This makes sure the action only runs if the repo the action is running on is `Azure/ALZ-Bicep`.\r\n\r\nIf you clone this repo and want this action to run, you'll either need to remove this line or amend it",
+      "line": 19,
+      "selection": {
+        "start": {
+          "line": 19,
+          "character": 31
+        },
+        "end": {
+          "line": 19,
+          "character": 46
+        }
+      }
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "description": "Checkout the `ALZ-Bicep` repo to the folder `Azure/ALZ-Bicep`",
+      "line": 23
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "description": "Checkout the `Enterprise-Scale` repo to the folder `Azure/Enterprise-Scale`",
+      "line": 29
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "description": "Configure the GitHub Action runner Git user name and e-mail address so that it can make commits and push later",
+      "line": 36
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "description": "Create a new local branch on the `ALZ-Bicep` repo using the environment variable called `branch_name` (see line 11) as the branch name, if it doesn't exist already.\r\n\r\nIf it does already exist then still create the branch but set the existing branch in the origin as the tracked branch.\r\n\r\n",
+      "line": 42
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "selection": {
+        "start": {
+          "line": 61,
+          "character": 11
+        },
+        "end": {
+          "line": 62,
+          "character": 109
+        }
+      },
+      "description": "Install the required version of the `Az.Accounts` Azure PowerShell module on the runner (see line 12 where is set in enviornment variable)"
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "selection": {
+        "start": {
+          "line": 63,
+          "character": 11
+        },
+        "end": {
+          "line": 68,
+          "character": 19
+        }
+      },
+      "description": "Then Run the `Invoke-LibraryUpdate.ps1` PowerShell script and pass in the required input parameters of:\r\n\r\n1. `TargetModulePath` = Path to ALZ-Bicep repo clone/check out\r\n2. `SourceModulePath` = Path to Enterprise-Scale repo clone/check out\r\n\r\nThe `Reset` input parameter flag tells the script to remove any files that already exist in the current `lib` folders (think of it as an enforced overwrite)"
+    },
+    {
+      "file": ".github/scripts/Invoke-LibraryUpdate.ps1",
+      "selection": {
+        "start": {
+          "line": 24,
+          "character": 1
+        },
+        "end": {
+          "line": 27,
+          "character": 45
+        }
+      },
+      "description": "As you can see the require input parameters have some default values, but we provide them anyway when calling the script."
+    },
+    {
+      "file": ".github/scripts/Invoke-LibraryUpdate.ps1",
+      "selection": {
+        "start": {
+          "line": 32,
+          "character": 1
+        },
+        "end": {
+          "line": 37,
+          "character": 48
+        }
+      },
+      "description": "As the comment states, this script uses a PowerShell module that is also contained in the repo, but it is unlikely you need to amend or make changes to this ever!"
+    },
+    {
+      "file": ".github/scripts/Invoke-LibraryUpdate.ps1",
+      "description": "Set the output directory for the policies once split into individual files",
+      "line": 53
+    },
+    {
+      "file": ".github/scripts/Invoke-LibraryUpdate.ps1",
+      "selection": {
+        "start": {
+          "line": 76,
+          "character": 9
+        },
+        "end": {
+          "line": 77,
+          "character": 68
+        }
+      },
+      "description": ""
+    },
+    {
+      "file": ".github/scripts/Invoke-LibraryUpdate.ps1",
+      "selection": {
+        "start": {
+          "line": 76,
+          "character": 27
+        },
+        "end": {
+          "line": 76,
+          "character": 68
+        }
+      },
+      "description": "For resources with the type of `Microsoft.Authorization/policyDefinitions` then add the `fileNamePrefix` to the `outputPath` set on line 53"
+    },
+    {
+      "file": ".github/scripts/Invoke-LibraryUpdate.ps1",
+      "selection": {
+        "start": {
+          "line": 84,
+          "character": 1
+        },
+        "end": {
+          "line": 85,
+          "character": 76
+        }
+      },
+      "description": "For resources with the type of `Microsoft.Authorization/policySetDefinitions` then add the `fileNamePrefix` to the `outputPath` set on line 53"
+    },
+    {
+      "file": ".github/scripts/Invoke-LibraryUpdate.ps1",
+      "selection": {
+        "start": {
+          "line": 90,
+          "character": 1
+        },
+        "end": {
+          "line": 97,
+          "character": 2
+        }
+      },
+      "description": "As `Reset` flag is set to `$true` then remove all files from the existing libraries to ensure it is clean before beginning conversion process"
+    },
+    {
+      "file": ".github/scripts/Invoke-LibraryUpdate.ps1",
+      "selection": {
+        "start": {
+          "line": 99,
+          "character": 1
+        },
+        "end": {
+          "line": 112,
+          "character": 2
+        }
+      },
+      "description": "Convert Enterprise-Scale policies in it's various files into individual files into the correct `lib` folders as specified in the variables above"
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "selection": {
+        "start": {
+          "line": 71,
+          "character": 7
+        },
+        "end": {
+          "line": 76,
+          "character": 52
+        }
+      },
+      "description": "Run the `Invoke-PolicyToBicep.ps1` PowerShell script in the working directory of the clone/checkout of the `ALZ-Bicep` repo where the previous script that has just run (above) has now populated the `lib` folders with the latest changes from the `Enterprise-Scale` policy files."
+    },
+    {
+      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
+      "selection": {
+        "start": {
+          "line": 10,
+          "character": 1
+        },
+        "end": {
+          "line": 11,
+          "character": 18
+        }
+      },
+      "description": "Create and overwrite the `_policyDefinitionsBicepInput.txt` file in the specified directory with a new empty file with `utf8` encoding",
+      "line": 44
+    },
+    {
+      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
+      "selection": {
+        "start": {
+          "line": 21,
+          "character": 135
+        },
+        "end": {
+          "line": 21,
+          "character": 264
+        }
+      },
+      "description": "For every `.json` file in the `lib/policy_definitions` directory extract the policy definition name and the file path and then write them (append) into the `_policyDefinitionsBicepInput.txt` file in a Bicep formatted output (see end of line 54)",
+      "line": 47
+    },
+    {
+      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
+      "selection": {
+        "start": {
+          "line": 24,
+          "character": 1
+        },
+        "end": {
+          "line": 26,
+          "character": 102
+        }
+      },
+      "description": "Count the number of policy definitions in the `lib/policy_definitions` directory and output to the console the total number",
+      "line": 57
+    },
+    {
+      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
+      "selection": {
+        "start": {
+          "line": 110,
+          "character": 1
+        },
+        "end": {
+          "line": 112,
+          "character": 117
+        }
+      },
+      "description": "Count the number of policy set definitions in the `lib/policy_set_definitions` directory and output to the console the total number"
+    },
+    {
+      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
+      "selection": {
+        "start": {
+          "line": 30,
+          "character": 1
+        },
+        "end": {
+          "line": 31,
+          "character": 162
+        }
+      },
+      "description": "Create and overwrite the `_policySetDefinitionsBicepInput.txt` file in the specified directory with a new empty file with `utf8` encoding",
+      "line": 69
+    },
+    {
+      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
+      "description": "For every `.json` file in the `lib/policy_set_definitions` directory extract the policy set definitions (initiative) name and the file path and then write them (append) into the `_policySetDefinitionsBicepInput.txt` file in a Bicep formatted output (see end of line 145, 168 and 172).\r\n\r\nIt also creates a parameters file (not an ARM complaint one, just a JSON compliant document). And it also loops through all the child policy definitions of each policy set definition (initiative) and extracts the definition reference ID and the definition ID and adds them to the output in the `_policySetDefinitionsBicepInput.txt` file",
+      "line": 64
+    },
+    {
+      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
+      "selection": {
+        "start": {
+          "line": 116,
+          "character": 1
+        },
+        "end": {
+          "line": 117,
+          "character": 155
+        }
+      },
+      "description": "Create and overwrite the `_policyAssignmentsBicepInput.txt` file in the specified directory with a new empty file with `utf8` encoding",
+      "line": 200
+    },
+    {
+      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
+      "selection": {
+        "start": {
+          "line": 119,
+          "character": 1
+        },
+        "end": {
+          "line": 132,
+          "character": 2
+        }
+      },
+      "description": "For every `.json` file in the `lib/policy_assignments` directory extract the policy assignment's name and the file path and then write them (append) into the `_policyAssignmentsBicepInput.txt` file in a Bicep formatted output (see end of line 131).",
+      "line": 203
+    },
+    {
+      "file": ".github/scripts/Invoke-PolicyToBicep.ps1",
+      "selection": {
+        "start": {
+          "line": 134,
+          "character": 1
+        },
+        "end": {
+          "line": 136,
+          "character": 109
+        }
+      },
+      "description": "Count the number of policy assignments in the `lib/policy_assignments` directory and output to the console the total number",
+      "line": 218
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "selection": {
+        "start": {
+          "line": 78,
+          "character": 7
+        },
+        "end": {
+          "line": 84,
+          "character": 52
+        }
+      },
+      "description": "Do a `git status` to check for any file changes compared to what is already in the `main` branch of the `ALZ-Bicep` repo that we cloned/checked out earlier"
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "selection": {
+        "start": {
+          "line": 86,
+          "character": 7
+        },
+        "end": {
+          "line": 94,
+          "character": 52
+        }
+      },
+      "description": "If there were any chages to files then commit them and push them, and the branch (`patch-policy-library`), to the `ALZ-Bicep` repo"
+    },
+    {
+      "file": ".github/workflows/update-policy.yml",
+      "selection": {
+        "start": {
+          "line": 96,
+          "character": 7
+        },
+        "end": {
+          "line": 118,
+          "character": 52
+        }
+      },
+      "description": "Create a draft PR on the `ALZ-Bicep` repo for merging the `pathc-policy-library` branch into `main` and set the PR title and body from the environment variables (see lines 13 and 14)"
+    },
+    {
+      "title": "Maintainer Review",
+      "description": "A maintainer of the `ALZ-Bicep` repo will review the newly created PR and assess the changes and make any required changes to any of the modules if new policies have been added etc. using the `.txt` files generated by the `Invoke-PolicyToBicep.ps1` PowerShell script to copy the enitire contents of them into the respective `.bicep` module making the update process simple.\r\n\r\n> Be aware that for the policy set definitions the policy called `Deploy-Private-DNS-Zones` the `defintionParameters` use `-`'s which are not supported in Bicep so must be wrapped like this `['DINE-Private-DNS-Azure-Batch']` manually if you are replacing the whole `varCustomPolicySetDefinitionsArray` variable array from the `.txt` file."
+    }
+  ]
+}

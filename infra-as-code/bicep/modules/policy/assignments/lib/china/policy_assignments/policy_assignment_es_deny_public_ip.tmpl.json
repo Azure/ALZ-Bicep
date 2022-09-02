@@ -1,0 +1,22 @@
+{
+  "name": "Deny-Public-IP",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "This policy denies creation of Public IPs under the assigned scope.",
+    "displayName": "Deny the creation of public IP",
+    "notScopes": [],
+    "parameters": {
+      "effect": {
+        "value": "Deny"
+      }
+    },
+    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "None"
+  }
+}

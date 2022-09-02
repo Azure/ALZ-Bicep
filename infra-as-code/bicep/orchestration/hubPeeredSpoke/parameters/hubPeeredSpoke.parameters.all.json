@@ -1,0 +1,56 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "parLocation": {
+        "value": "westeurope"
+      },
+      "parTopLevelManagementGroupPrefix": {
+        "value": "alz"
+      },
+      "parPeeredVnetSubscriptionId": {
+        "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      },
+      "parPeeredVnetSubscriptionMgPlacement": {
+        "value": "alz-platform-connectivity"
+      },
+      "parDdosProtectionPlanId": {
+        "value": ""
+      },
+      "parSpokeNetworkName": {
+        "value": "vnet-spoke"
+      },
+      "parSpokeNetworkAddressPrefix": {
+        "value": "10.202.0.0/24"
+      },
+      "parDnsServerIps": {
+        "value": []
+      },
+      "parNextHopIpAddress": {
+        "value": "10.20.255.4"
+      },
+      "parDisableBgpRoutePropagation": {
+        "value": false
+      },      
+      "parSpoketoHubRouteTableName": {
+        "value": "rtb-spoke-to-hub"
+      },
+      "parHubVirtualNetworkId": {
+        "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-westeurope-hub-networking/providers/Microsoft.Network/virtualNetworks/alz-hub-westeurope"
+      },
+      "parAllowSpokeForwardedTraffic": {
+        "value": false
+      },
+      "parAllowHubVPNGatewayTransit": {
+        "value": true
+      },
+      "parTags": {
+        "value": {
+          "Environment": "POC"
+        }
+      },
+      "parTelemetryOptOut": {
+        "value": false
+      }
+    }
+  }

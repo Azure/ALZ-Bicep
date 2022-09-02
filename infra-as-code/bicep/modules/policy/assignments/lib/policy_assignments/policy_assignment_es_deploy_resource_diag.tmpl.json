@@ -11,7 +11,7 @@
         "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/${parTopLevelManagementGroupPrefix}-mgmt/providers/Microsoft.OperationalInsights/workspaces/${parTopLevelManagementGroupPrefix}-la"
       }
     },
-    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diagnostics-LogAnalytics",
+    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelManagementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diagnostics-LogAnalytics",
     "scope": null,
     "enforcementMode": "Default"
   },

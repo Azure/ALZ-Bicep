@@ -14,8 +14,8 @@ The module requires the following inputs:
  | Parameter                 | Type   | Default                                                                                                          | Description                                                                                                                                    | Requirement                              | Example                                                                                                                                                |
  | ------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
  | parLocation               | string | `resourceGroup().location`                                                                                       | The Azure Region to deploy the resources into                                                                                                  | None                                     | `eastus`                                                                                                                                               |
- | parPrivateDnsZones        | array  | See example parameters file [`privateDnsZones.parameters.example.json`](privateDnsZones.parameters.example.json) | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones - See [DNS Zones](#dns-zones) for more info | None                                     | See Default                                                                                                                                            |
- | parTags                   | object | Empty Array []                                                                                                   | List of tags (Key Value Pairs) to be applied to resources                                                                                      | None                                     | environment: 'development'                                                                                                                             |
+ | parPrivateDnsZones        | array  | See example parameters file [`privateDnsZones.parameters.all.json`](parameters/privateDnsZones.parameters.all.json) | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones - See [DNS Zones](#dns-zones) for more info | None                                     | See Default                                                                                                                                            |
+ | parTags                   | object | Empty object `{}`                                                                                                   | List of tags (Key Value Pairs) to be applied to resources                                                                                      | None                                     | environment: 'development'                                                                                                                             |
  | parVirtualNetworkIdToLink | string | Empty String                                                                                                     | Resource ID of VNet for Private DNS Zone VNet Links                                                                                            | Valid Resource ID of the Virtual Network | /subscriptions/[your platform connectivity subscription ID]/resourceGroups/Hub_PrivateDNS_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus |
  | parTelemetryOptOut        | bool   | false                                                                                                            | Set Parameter to true to Opt-out of deployment telemetry                                                                                       | None                                     | false                                                                                                                                                  |
 
@@ -25,11 +25,20 @@ The module requires the following inputs:
 
 The following DNS Zones are region specific and will be deployed with the provided region in the `parLocation` parameter by default:
 
-- `privatelink.batch.azure.com`
-- `privatelink.azmk8s.io`
-- `privatelink.siterecovery.windowsazure.com`
+- `privatelink.xxxxxx.batch.azure.com`
+- `privatelink.xxxxxx.azmk8s.io`
 
-**Note:** The region specific zones are not included in the example parameters files.
+**Note:** The region specific zones are included in the parameters files with the region set as `xxxxxx`. For these zones to deploy properly, replace `xxxxxx` with the target region. For example: `privatelink.xxxxxx.azmk8s.io` would become `privatelink.eastus.azmk8s.io` for a deployment targeting the East US region.
+
+### Geo Code Zones
+
+The following DNS Zone use a geo code associated to the Azure Region.
+
+- `privatelink.xxx.backup.windowsazure.com`
+
+If the Azure Region entered in `parLocation` matches a lookup to the map in `varAzBackupGeoCodes` we will append Geo Codes (value) used to generate region-specific DNS zone names for Azure Backup private endpoints. then insert Azure Backup Private DNS Zone with appropriate geo code inserted alongside zones in `parPrivateDnsZones` into a new array called `varPrivateDnsZonesMerge`. If not just return `parPrivateDnsZones` as the only values in `varPrivateDnsZonesMerge`.
+
+> For more information on Azure Backup and Private Link, or geo codes, please refer to: [Create and use private endpoints for Azure Backup](https://docs.microsoft.com/azure/backup/private-endpoints#when-using-custom-dns-server-or-host-files)
 
 ### Prefixed DNS Zone
 
@@ -61,8 +70,8 @@ There are two different sets of input parameters; one for deploying to Azure glo
 
  | Azure Cloud    | Bicep template        | Input parameters file                      |
  | -------------- | --------------------- | ------------------------------------------ |
- | Global regions | privateDnsZones.bicep | privateDnsZones.parameters.example.json    |
- | China regions  | privateDnsZones.bicep | mc-privateDnsZones.parameters.example.json |
+ | Global regions | privateDnsZones.bicep | parameters/privateDnsZones.parameters.all.json    |
+ | China regions  | privateDnsZones.bicep | parameters/mc-privateDnsZones.parameters.all.json |
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
@@ -79,7 +88,7 @@ az group create --location eastus \
 az deployment group create \
    --resource-group Hub_PrivateDNS_POC  \
    --template-file infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep \
-   --parameters @infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json
 ```
 OR
 ```bash
@@ -94,7 +103,7 @@ az group create --location chinaeast2 \
 az deployment group create \
    --resource-group Hub_PrivateDNS_POC  \
    --template-file infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep \
-   --parameters @infra-as-code/bicep/modules/privateDnsZones/mc-privateDnsZones.parameters.example.json
+   --parameters @infra-as-code/bicep/modules/privateDnsZones/parameters/mc-privateDnsZones.parameters.all.json
 ```
 
 ### PowerShell
@@ -111,7 +120,7 @@ New-AzResourceGroup -Name 'Hub_PrivateDNS_POC' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.parameters.example.json `
+  -TemplateParameterFile infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json `
   -ResourceGroupName 'Hub_PrivateDNS_POC'
 ```
 OR
@@ -127,13 +136,13 @@ New-AzResourceGroup -Name 'Hub_PrivateDNS_POC' `
   
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/privateDnsZones/mc-privateDnsZones.parameters.example.json
+  -TemplateParameterFile infra-as-code/bicep/modules/privateDnsZones/parameters/mc-privateDnsZones.parameters.all.json
   -ResourceGroupName 'Hub_PrivateDNS_POC'
 ```
 ## Example Output in Azure global regions
 
-![Example Deployment Output](media/privateDnsZonesExampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
+![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output in Azure global regions")
 
 ## Bicep Visualizer
 
-![Bicep Visualizer](media/privateDnsZonesBicepVisualizer.png "Bicep Visualizer")
+![Bicep Visualizer](media/bicepVisualizer.png "Bicep Visualizer")

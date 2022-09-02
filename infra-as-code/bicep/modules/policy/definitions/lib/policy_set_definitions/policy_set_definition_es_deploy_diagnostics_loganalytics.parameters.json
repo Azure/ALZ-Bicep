@@ -129,6 +129,32 @@
       }
     }
   },
+  "AVDScalingPlansDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('AVDScalingPlansLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "BastionDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('BastionLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
   "BatchDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {

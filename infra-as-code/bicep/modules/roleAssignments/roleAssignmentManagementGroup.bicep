@@ -22,7 +22,7 @@ param parTelemetryOptOut bool = false
 // Customer Usage Attribution Id
 var varCuaid = '59c2ac61-cd36-413b-b999-86a3e0d958fb'
 
-resource resRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-08-01-preview' = {
+resource resRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
   name: parRoleAssignmentNameGuid
   properties: {
     roleDefinitionId: tenantResourceId('Microsoft.Authorization/roleDefinitions', parRoleDefinitionId)

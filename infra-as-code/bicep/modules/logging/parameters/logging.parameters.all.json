@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parLogAnalyticsWorkspaceName": {
+      "value": "alz-log-analytics"
+    },
+    "parLogAnalyticsWorkspaceLocation": {
+      "value": "eastus"
+    },
+    "parLogAnalyticsWorkspaceSkuName": {
+      "value": "PerGB2018"
+    },
+    "parLogAnalyticsWorkspaceLogRetentionInDays": {
+      "value": 365
+    },
+    "parLogAnalyticsWorkspaceSolutions": {
+      "value": [
+        "AgentHealthAssessment",
+        "AntiMalware",
+        "AzureActivity",
+        "ChangeTracking",
+        "Security",
+        "SecurityInsights",
+        "ServiceMap",
+        "SQLAdvancedThreatProtection",
+        "SQLVulnerabilityAssessment",
+        "SQLAssessment",
+        "Updates",
+        "VMInsights"
+      ]
+    },
+    "parAutomationAccountName": {
+      "value": "alz-automation-account"
+    },
+    "parAutomationAccountLocation": {
+      "value": "eastus2"
+    },
+    "parTags": {
+      "value": {
+        "Environment": "POC"
+      }
+    },
+    "parTelemetryOptOut": {
+      "value": false
+    }
+  }
+}

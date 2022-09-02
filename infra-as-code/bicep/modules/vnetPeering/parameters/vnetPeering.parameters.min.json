@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parDestinationVirtualNetworkId": {
+      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
+    },
+    "parSourceVirtualNetworkName": {
+      "value": "vnet-spoke"
+    },
+    "parDestinationVirtualNetworkName": {
+      "value": "alz-hub-eastus"
+    },
+    "parAllowVirtualNetworkAccess": {
+      "value": true
+    },
+    "parAllowForwardedTraffic": {
+      "value": true
+    },
+    "parAllowGatewayTransit": {
+      "value": false
+    },
+    "parUseRemoteGateways": {
+      "value": false
+    },
+    "parTelemetryOptOut": {
+      "value": false
+    }
+  }
+}

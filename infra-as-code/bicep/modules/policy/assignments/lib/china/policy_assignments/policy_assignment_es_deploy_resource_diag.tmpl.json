@@ -1,0 +1,22 @@
+{
+  "name": "Deploy-Resource-Diag",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "Ensures that Azure resources are configured to forward diagnostic logs and metrics to an Azure Log Analytics workspace.",
+    "displayName": "Deploy-Resource-Diag",
+    "notScopes": [],
+    "parameters": {
+      "logAnalytics": {
+        "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/${parTopLevelManagementGroupPrefix}-mgmt/providers/Microsoft.OperationalInsights/workspaces/${parTopLevelManagementGroupPrefix}-la"
+      }
+    },
+    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diagnostics-LogAnalytics",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}
