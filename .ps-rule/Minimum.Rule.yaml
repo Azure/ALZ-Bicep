@@ -1,0 +1,34 @@
+#
+# Suppression and rules for the minimum sample configuration.
+#
+
+# NOTE:
+# For details on authoring suppression groups see:
+# https://microsoft.github.io/PSRule/v2/concepts/PSRule/en-US/about_PSRule_SuppressionGroups/
+# https://microsoft.github.io/PSRule/v2/concepts/PSRule/en-US/about_PSRule_Expressions/
+
+---
+# Synopsis: Ignore the minimum sample configuration.
+apiVersion: github.com/microsoft/PSRule/v1
+kind: SuppressionGroup
+metadata:
+  name: ALZ.MinimumSample
+spec:
+  rule:
+  - Azure.Firewall.Mode
+  - Azure.VNG.VPNAvailabilityZoneSKU
+  - Azure.PublicIP.AvailabilityZone
+  - Azure.VNG.VPNActiveActive
+  - Azure.PublicIP.StandardSKU
+  - Azure.VNET.UseNSGs
+  if:
+    allOf:
+    - type: '.'
+      in:
+      - Microsoft.Network/azureFirewalls
+      - Microsoft.Network/publicIPAddresses
+      - Microsoft.Network/virtualNetworks
+      - Microsoft.Network/virtualNetworkGateways
+    - source: 'Template'
+      endsWith:
+      - 'minimum.sample.bicep'

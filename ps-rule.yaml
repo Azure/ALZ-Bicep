@@ -1,0 +1,71 @@
+#
+# PSRule for Azure configuration
+#
+
+# Please see the documentation for all configuration options:
+# https://aka.ms/ps-rule-azure
+# https://aka.ms/ps-rule-azure/options
+# https://aka.ms/ps-rule/options
+# https://aka.ms/ps-rule-azure/bicep
+
+# Use rules from the following modules/
+include:
+  module:
+  - 'PSRule.Rules.Azure'
+
+# Require a minimum version of modules that include referenced baseline.
+requires:
+  PSRule: '@pre >=2.3.2'
+  PSRule.Rules.Azure: '@pre >=1.18.1'
+
+# Reference the repository in output.
+repository:
+  url: https://github.com/Azure/ALZ-Bicep
+
+execution:
+  # Ignore warnings for resources and objects that don't have any rules.
+  notProcessedWarning: false
+
+configuration:
+  # Enable expansion for Bicep source files.
+  AZURE_BICEP_FILE_EXPANSION: true
+
+  # Expand Bicep module from Azure parameter files.
+  AZURE_PARAMETER_FILE_EXPANSION: true
+
+  # Set timeout for expanding Bicep source files.
+  AZURE_BICEP_FILE_EXPANSION_TIMEOUT: 15
+
+input:
+  pathIgnore:
+  # Ignore common files that don't need analysis.
+  - '**/bicepconfig.json'
+  - '*.md'
+  - '*.png'
+  - '.github/'
+
+  # Exclude Bicep docs files
+  - docs/scripts/callModuleFromACR.example.bicep
+
+  # Exclude Bicep module files
+  - 'infra-as-code/bicep/**/*.bicep'
+
+  # Include samples/ test files from modules
+  - '!infra-as-code/bicep/**/samples/*.bicep'
+
+binding:
+  preferTargetInfo: true
+  targetType:
+  - resourceType
+  - type
+
+rule:
+  exclude:
+  # Ignore these recommendations for this repo.
+  - Azure.Resource.UseTags
+  - Azure.ACR.MinSku
+  - Azure.ACR.ContentTrust
+  - Azure.Policy.AssignmentAssignedBy
+
+  # Currently a bug as of v1.15.2. Review in the next release.
+  - Azure.PublicIP.Name
