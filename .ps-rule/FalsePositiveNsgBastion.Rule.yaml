@@ -1,0 +1,25 @@
+#
+# Suppression and rules for unsupported scenarios.
+#
+
+# NOTE:
+# For details on authoring suppression groups see:
+# https://microsoft.github.io/PSRule/v2/concepts/PSRule/en-US/about_PSRule_SuppressionGroups/
+# https://microsoft.github.io/PSRule/v2/concepts/PSRule/en-US/about_PSRule_Expressions/
+
+---
+# Synopsis: Ignore NSG lateral movement rule for Azure Bastion as this is needed for Bastion to work.
+apiVersion: github.com/microsoft/PSRule/v1
+kind: SuppressionGroup
+metadata:
+  name: ALZ.NSGForBastion
+spec:
+  rule:
+  - Azure.NSG.LateralTraversal
+  if:
+    allOf:
+    - name: '.'
+      contains: bastion
+    - type: '.'
+      in:
+      - Microsoft.Network/networkSecurityGroups

@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - "**.bicep"
+      - "ps-rule.yaml"
+      - ".ps-rule/*"
   workflow_dispatch: {}
 
 jobs:
@@ -15,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -59,3 +61,23 @@ jobs:
 
           Write-Information "***** List of resource types in ALZ-Bicep modules *****" -InformationAction Continue
           $resourceTypesFullList.Keys | Sort-Object
+
+  azure_waf:
+    name: Test Azure Well-Architected Framework
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # Add pipeline tests for Azure Well-Architected Framework.
+      # See https://aka.ms/ps-rule-action for configuration options.
+      - name: Run PSRule analysis
+        uses: Microsoft/ps-rule@v2.3.2
+        with:
+          modules: PSRule.Rules.Azure
+          baseline: Azure.GA_2022_06
+        continue-on-error: true
