@@ -21,4 +21,4 @@ jobs:
         github_token: '${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}'
         config_file: './.github/actions-config/gh-ado-sync-config.json'
       with:
-        ado: '${{ secrets.ADO_MAPPINGS_HANDLES }}'
+        ado: ${{ secrets.ADO_MAPPINGS_HANDLES }}
