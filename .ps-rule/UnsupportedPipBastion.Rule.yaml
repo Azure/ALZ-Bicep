@@ -1,0 +1,25 @@
+#
+# Suppression and rules for unsupported scenarios.
+#
+
+# NOTE:
+# For details on authoring suppression groups see:
+# https://microsoft.github.io/PSRule/v2/concepts/PSRule/en-US/about_PSRule_SuppressionGroups/
+# https://microsoft.github.io/PSRule/v2/concepts/PSRule/en-US/about_PSRule_Expressions/
+
+---
+# Synopsis: Ignore availability zones for Azure Bastion public IP which is not supported. https://github.com/Azure/PSRule.Rules.Azure/issues/1442
+apiVersion: github.com/microsoft/PSRule/v1
+kind: SuppressionGroup
+metadata:
+  name: ALZ.PublicIPForBastion
+spec:
+  rule:
+  - Azure.PublicIP.AvailabilityZone
+  if:
+    allOf:
+    - name: '.'
+      contains: bastion
+    - type: '.'
+      in:
+      - Microsoft.Network/publicIPAddresses
