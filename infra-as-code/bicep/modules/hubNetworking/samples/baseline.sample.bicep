@@ -35,6 +35,11 @@ module baseline_hub_network '../hubNetworking.bicep' = {
       '2'
       '3'
     ]
+    parAzGatewayAvailabilityZones: [
+      '1'
+      '2'
+      '3'
+    ]
     parVpnGatewayConfig: {}
     parExpressRouteGatewayConfig: {}
   }
@@ -47,6 +52,11 @@ module baseline_hub_network_with_ER '../hubNetworking.bicep' = {
     parLocation: location
     parPublicIpSku: 'Standard'
     parAzFirewallAvailabilityZones: [
+      '1'
+      '2'
+      '3'
+    ]
+    parAzGatewayAvailabilityZones: [
       '1'
       '2'
       '3'
@@ -80,6 +90,11 @@ module baseline_hub_network_with_VPN '../hubNetworking.bicep' = {
     parLocation: location
     parPublicIpSku: 'Standard'
     parAzFirewallAvailabilityZones: [
+      '1'
+      '2'
+      '3'
+    ]
+    parAzGatewayAvailabilityZones: [
       '1'
       '2'
       '3'
