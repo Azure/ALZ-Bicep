@@ -1,0 +1,16 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "PSRule",
+            "problemMatcher": [
+                "$PSRule"
+            ],
+            "label": "PSRule: Run analysis",
+            "presentation": {
+                "panel": "dedicated",
+                "clear": true
+            }
+        }
+    ]
+}
