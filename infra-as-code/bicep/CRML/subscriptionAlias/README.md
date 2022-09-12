@@ -39,19 +39,29 @@ In this example, the Subscription is created upon an EA Account through a tenant
 
 ### Azure CLI
 ```bash
-az deployment tenant create \
-  --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep \
-  --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json \
-  --location eastus
+
+$inputObject = @(
+  '--name',           ('SubscriptionAlias-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',     '@infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json',
+  '--location',       'EastUS',
+  '--template-file',  "infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep"
+)
+
+az deployment tenant create @inputObject
 ```
 
 ### PowerShell
 
 ```powershell
-New-AzTenantDeployment `
-  -TemplateFile infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep `
-  -TemplateParameterFile infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json `
-  -Location eastus
+
+$inputObject = @{
+  DeploymentName        = 'SubscriptionAlias-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  TemplateParameterFile = 'infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json'
+  Location              = 'EastUS'
+  TemplateFile          = "infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep"
+}
+
+New-AzTenantDeployment @inputObject
 ```
 
 ### Output Screenshot

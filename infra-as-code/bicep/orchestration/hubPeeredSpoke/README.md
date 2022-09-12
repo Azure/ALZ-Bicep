@@ -63,41 +63,60 @@ In this example, the spoke resources will be deployed to the resource group spec
 ### Azure CLI
 ```bash
 # For Azure global regions
-az deployment mg create \
-    --template-file infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep \
-    --parameters @infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json \
-    --location eastus \
-    --management-group-id alz
+
+$inputObject = @(
+  '--name',                ('HubPeeredSpoke-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',          '@infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json',
+  '--location',            'EastUS',
+  '--management-group-id', 'alz',
+  '--template-file',       "infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep"
+)
+
+az deployment mg create @inputObject
 ```
 OR
 ```bash
 # For Azure China regions
-az deployment mg create \
-    --template-file infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep \
-    --parameters @infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json \
-    --location chinaeast2 \
-    --management-group-id alz
+
+$inputObject = @(
+  '--name',                ('HubPeeredSpoke-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--parameters',          '@infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json',
+  '--location',            'chinaeast2',
+  '--management-group-id', 'alz',
+  '--template-file',       "infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep"
+)
+
+az deployment mg create @inputObject
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep `
-  -TemplateParameterFile infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json `
-  -Location eastus `
-  -ManagementGroupId alz
+
+$inputObject = @{
+  DeploymentName        = 'HubPeeredSpoke-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz'
+  Location              = 'EastUS'
+  TemplateParameterFile = 'infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep"
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep `
-  -TemplateParameterFile infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json `
-  -Location chinaeast2 `
-  -ManagementGroupId alz
 
+$inputObject = @{
+  DeploymentName        = 'HubPeeredSpoke-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ManagementGroupId     = 'alz'
+  Location              = 'chinaeast2'
+  TemplateParameterFile = 'infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep"
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 
 ## Bicep Visualizer

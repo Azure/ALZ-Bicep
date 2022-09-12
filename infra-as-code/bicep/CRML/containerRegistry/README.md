@@ -36,24 +36,33 @@ We will take the default values and not pass any parameters.
 ### Azure CLI
 
 ```bash
-az group create --location eastus2 \
+az group create --location eastus \
    --name Bicep_ACR
 
-az deployment group create \
-   --resource-group Bicep_Acr  \
-   --template-file infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep \
-   --parameters @infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json
+   $inputObject = @(
+  '--name',           ('ContainerRegistry-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--resource-group', 'Bicep_ACR',
+  '--parameters',     '@infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json',
+  '--template-file',  "infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep",
+)
+
+az deployment group create @inputObject
 ```
 
 ### PowerShell
 
 ```powershell
 New-AzResourceGroup -Name 'Bicep_ACR' `
-  -Location 'EastUs2'
-  
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep `
-  -TemplateParameterFile infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json
+  -Location 'EastUs'
+
+  $inputObject = @{
+  DeploymentName        = 'ContainerRegistry-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = 'Bicep_ACR'
+  TemplateParameterFile = 'infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json'
+  TemplateFile          = "infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep"
+}
+
+New-AzResourceGroupDeployment @inputObject
 ```
 
 ## Bicep Visualizer
