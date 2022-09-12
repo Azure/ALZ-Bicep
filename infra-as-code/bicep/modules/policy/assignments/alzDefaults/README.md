@@ -35,11 +35,12 @@ The module does not generate any outputs.
 <!-- markdownlint-restore -->
 
 ### Azure CLI
+**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 # For Azure global regions
 
 $inputObject = @(
-  '--name',                ('alzPolicyAssignmentDefaultsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',                ('alz-alzPolicyAssignmentDefaultsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--parameters',          '@infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json',
   '--location',            'eastus',
   '--management-group-id', 'alz',
@@ -53,7 +54,7 @@ OR
 # For Azure China regions
 
 $inputObject = @(
-  '--name',                ('alzPolicyAssignmentDefaultsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',                ('alz-alzPolicyAssignmentDefaultsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--parameters',          '@infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json',
   '--location',            'chinaeast2',
   '--management-group-id', 'alz',
@@ -69,7 +70,7 @@ az deployment mg create @inputObject
 # For Azure global regions
 
 $inputObject = @{
-  DeploymentName        = 'alzPolicyAssignmentDefaultsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-alzPolicyAssignmentDefaultsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ManagementGroupId     = 'alz'
   Location              = 'eastus'
   TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json'

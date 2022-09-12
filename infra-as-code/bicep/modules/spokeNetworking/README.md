@@ -44,6 +44,7 @@ In this example, the spoke resources will be deployed to the resource group spec
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 # For Azure global regions
 # Set Azure Landing zone subscription ID as the the current subscription 
@@ -62,7 +63,7 @@ az group create \
   --location eastus
 
     $inputObject = @(
-  '--name',           ('SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',           ('alz-SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--resource-group', $ResourceGroupName,
   '--parameters',     '@infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json',
   '--template-file',  "infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
@@ -89,7 +90,7 @@ az group create \
   --location chinaeast2
 
   $inputObject = @(
-  '--name',           ('SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',           ('alz-SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--resource-group', $ResourceGroupName,
   '--parameters',     '@infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json',
   '--template-file',  "infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
@@ -114,7 +115,7 @@ $ResourceGroupName = "rg-$TopLevelMGPrefix-spoke-networking-001"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = $ResourceGroupName
   TemplateParameterFile = "infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json"
   TemplateFile          = "infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
@@ -140,7 +141,7 @@ $ResourceGroupName = "rg-$TopLevelMGPrefix-spoke-networking-001"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = $ResourceGroupName
   TemplateParameterFile = "infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json"
   TemplateFile          = "infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"

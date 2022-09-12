@@ -89,6 +89,7 @@ There are two different sets of input parameters; one for deploying to Azure glo
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 # For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription 
@@ -102,7 +103,7 @@ TopLevelMGPrefix="alz"
 ResourceGroupName="rg-$TopLevelMGPrefix-hub-networking-001"
 
   $inputObject = @(
-  '--name',           ('HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',           ('alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--resource-group', $ResourceGroupName,
   '--parameters',     '@infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json',
   '--template-file',  "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
@@ -126,7 +127,7 @@ TopLevelMGPrefix="alz"
 ResourceGroupName="rg-$TopLevelMGPrefix-hub-networking-001"
 
   $inputObject = @(
-  '--name',           ('HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',           ('alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--resource-group', $ResourceGroupName,
   '--parameters',     '@infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json',
   '--template-file',  "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
@@ -157,7 +158,7 @@ $ResourceGroupName = "rg-$TopLevelMGPrefix-hub-networking-001"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = $ResourceGroupName
   TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json"
   TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
@@ -183,7 +184,7 @@ $ResourceGroupName = "rg-$TopLevelMGPrefix-hub-networking-001"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = $ResourceGroupName
   TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json"
   TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"

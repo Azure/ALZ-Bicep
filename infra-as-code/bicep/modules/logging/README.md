@@ -66,6 +66,7 @@ There are separate input parameters files depending on which Azure cloud you are
 > If the deployment failed due an error that your alz-log-analytics/Automation resource of type 'Microsoft.OperationalInsights/workspaces/linkedServices' was not found, please retry the deployment step and it would succeed.
 
 ### Azure CLI
+**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 # For Azure Global regions  
 # Set Platform management subscripion ID as the the current subscription 
@@ -83,7 +84,7 @@ az group create \
   --location eastus
 
   $inputObject = @(
-  '--name',           ('LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',           ('alz-LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--resource-group', $ResourceGroupName,
   '--parameters',     '@infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json',
   '--template-file',  "infra-as-code/bicep/modules/logging/logging.bicep"
@@ -110,7 +111,7 @@ az group create \
   --location chinaeast2
 
   $inputObject = @(
-  '--name',           'LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63]),
+  '--name',           'alz-LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63]),
   '--resource-group', $ResourceGroupName,
   '--parameters',     '@infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json',
   '--template-file',  "infra-as-code/bicep/modules/logging/logging.bicep"
@@ -134,7 +135,7 @@ $ResourceGroupName = "rg-$TopLevelMGPrefix-logging-001"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = $ResourceGroupName
   TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
   TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
@@ -162,7 +163,7 @@ $ResourceGroupName = "rg-$TopLevelMGPrefix-logging-001"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = $ResourceGroupName
   TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
   TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"

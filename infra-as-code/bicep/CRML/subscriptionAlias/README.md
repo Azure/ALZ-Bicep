@@ -38,10 +38,11 @@ In this example, the Subscription is created upon an EA Account through a tenant
 > For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 
 $inputObject = @(
-  '--name',           ('SubscriptionAlias-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',           ('alz-SubscriptionAlias-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--parameters',     '@infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json',
   '--location',       'EastUS',
   '--template-file',  "infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep"
@@ -55,7 +56,7 @@ az deployment tenant create @inputObject
 ```powershell
 
 $inputObject = @{
-  DeploymentName        = 'SubscriptionAlias-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-SubscriptionAlias-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   TemplateParameterFile = 'infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json'
   Location              = 'EastUS'
   TemplateFile          = "infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep"

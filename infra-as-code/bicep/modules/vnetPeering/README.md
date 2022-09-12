@@ -50,6 +50,7 @@ During the deployment step, we will take parameters provided in the example para
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 # For Azure global regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription 
@@ -67,7 +68,7 @@ az group create \
   --location eastus
 
   $inputObject = @(
-  '--name',           ('vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',           ('alz-vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--resource-group', $ResourceGroupName,
   '--parameters',     '@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json',
   '--template-file',  "infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
@@ -94,7 +95,7 @@ az group create \
   --location chinaeast2
 
   $inputObject = @(
-  '--name',           ('vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',           ('alz-vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--resource-group', $ResourceGroupName,
   '--parameters',     '@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json',
   '--template-file',  "infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
@@ -124,7 +125,7 @@ New-AzResourceGroup `
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = $ResourceGroupName
   TemplateParameterFile = "infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json"
   TemplateFile          = "ALZ-Bicep/infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
@@ -152,7 +153,7 @@ $ResourceGroupName = "rg-$TopLevelMGPrefix-vnet-peering-001"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = $ResourceGroupName
   TemplateParameterFile = "infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json"
   TemplateFile          = "ALZ-Bicep/infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"

@@ -38,6 +38,7 @@ In this example, the remote spoke Vnet will be peered with the Vwan Virtual Hub 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 # For Azure global regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription 
@@ -46,7 +47,7 @@ $ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
 $inputObject = @(
-  '--name',           ('vnetPeeringVwanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',           ('alz-vnetPeeringVwanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--parameters',     '@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json',
   '--location',       'eastus',
   '--template-file',  "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
@@ -63,7 +64,7 @@ $ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
 $inputObject = @(
-  '--name',           ('vnetPeeringVwanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',           ('alz-vnetPeeringVwanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--parameters',     '@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json',
   '--location',       'chinaeast2',
   '--template-file',  "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
@@ -81,10 +82,15 @@ $ConnectivitySubscriptionId = "[your Landing Zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzDeployment `
-  -TemplateFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json `
-  -Location 'eastus'
+$inputObject = @{
+  DeploymentName        = 'alz-VnetPeeringWanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  TemplateParameterFile = 'infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json'
+  Location              = 'eastus'
+  TemplateFile          = "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
+}
+
+New-AzDeployment @inputObject
+
 ```
 OR
 ```powershell
@@ -94,10 +100,14 @@ $ConnectivitySubscriptionId = "[your Landing Zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzDeployment `
-  -TemplateFile infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json `
-  -Location 'chinaeast2'
+$inputObject = @{
+  DeploymentName        = 'alz-VnetPeeringWanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  TemplateParameterFile = 'infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json'
+  Location              = 'chinaeast2'
+  TemplateFile          = "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
+}
+
+New-AzDeployment @inputObject
 ```
 ## Example Output in Azure global regions
 

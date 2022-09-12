@@ -24,11 +24,12 @@ In this example, the subscriptions `34b63c8f-1782-42e6-8fb9-ba6ee8b99735` and `4
 > For the  examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 # For Azure global regions
 
 $inputObject = @(
-  '--name',                ('SubscriptionPlacementDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',                ('alz-SubscriptionPlacementDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--parameters',          '@infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json',
   '--location',            'eastus',
   '--management-group-id', 'alz',
@@ -41,7 +42,7 @@ OR
 # For Azure China regions
 
 $inputObject = @(
-  '--name',                ('SubscriptionPlacementDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',                ('alz-SubscriptionPlacementDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--parameters',          '@infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json',
   '--location',            'chinaeast2',
   '--management-group-id', 'alz',
@@ -56,7 +57,7 @@ az deployment mg create @inputObject
 # For Azure global regions
 
 $inputObject = @{
-  DeploymentName        = 'SubscriptionPlacementDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-SubscriptionPlacementDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ManagementGroupId     = 'alz'
   Location              = 'eastus'
   TemplateParameterFile = 'infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json'
@@ -70,7 +71,7 @@ OR
 # For Azure China regions
 
 $inputObject = @{
-  DeploymentName        = 'SubscriptionPlacementDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-SubscriptionPlacementDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ManagementGroupId     = 'alz'
   Location              = 'chinaeast2'
   TemplateParameterFile = 'infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json'

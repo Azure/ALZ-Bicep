@@ -42,12 +42,13 @@ The input parameter file `parameters/customPolicyDefinitions.parameters.all.json
 > If the deployment provisioning state has failed due to policy definitions could not be found, this is often due to a known replication delay. Please re-run the deployment step below, and the deployment should succeed.
 
 ### Azure CLI
+**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 
 ```bash
 # For Azure global regions
 
 $inputObject = @(
-  '--name',                ('PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',                ('alz-PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--parameters',          '@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json',
   '--location',            'eastus',
   '--management-group-id', 'alz',
@@ -60,7 +61,7 @@ OR
 # For Azure China regions
 
 $inputObject = @(
-  '--name',                ('PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+  '--name',                ('alz-PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
   '--parameters',          '@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json',
   '--location',            'chinaeast2',
   '--management-group-id', 'alz',
@@ -75,7 +76,7 @@ az deployment mg create @inputObject
 # For Azure global regions
 
 $inputObject = @{
-  DeploymentName        = 'PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ManagementGroupId     = 'alz'
   Location              = 'eastus'
   TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json'
@@ -89,7 +90,7 @@ OR
 # For Azure China regions
 
 $inputObject = @{
-  DeploymentName        = 'PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ManagementGroupId     = 'alz'
   Location              = 'chinaeast2'
   TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json'
