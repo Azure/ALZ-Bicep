@@ -39,11 +39,11 @@ We will take the default values and not pass any parameters.
 az group create --location eastus \
    --name Bicep_ACR
 
-   $inputObject = @(
-  '--name',           ('ContainerRegistry-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--resource-group', 'Bicep_ACR',
-  '--parameters',     '@infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json',
-  '--template-file',  "infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep",
+$inputObject = @(
+'--name',           ('ContainerRegistry-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
+'--resource-group', 'Bicep_ACR',
+'--parameters',     '@infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json',
+'--template-file',  "infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep",
 )
 
 az deployment group create @inputObject
