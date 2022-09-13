@@ -8,6 +8,7 @@ on:
       - "**.bicep"
       - "ps-rule.yaml"
       - ".ps-rule/*"
+      - "**/bicepconfig.json"
   workflow_dispatch: {}
 
 jobs:
