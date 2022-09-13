@@ -13,6 +13,7 @@
   - [Bicep Best Practices](#bicep-best-practices)
   - [Bicep Code Styling](#bicep-code-styling)
   - [Bicep Elements Naming Standards](#bicep-elements-naming-standards)
+  - [Bicep Common Parameters Naming Standards](#bicep-common-parameters-naming-standards)
   - [Bicep File Structure](#bicep-file-structure)
   - [Bicep File Structure Example](#bicep-file-structure-example)
 - [Constructing a Bicep Module](#constructing-a-bicep-module)
@@ -229,6 +230,30 @@ To author Bicep modules that are in-line with the requirements for this project,
                       "level": "error"
                     },
                     "max-variables": {
+                      "level": "error"
+                    },
+                    "artifacts-parameters":{
+                      "level": "error"
+                    },
+                    "no-unused-existing-resources":{
+                      "level": "error"
+                    },
+                    "prefer-unquoted-property-names":{
+                      "level": "error"
+                    },
+                    "secure-params-in-nested-deploy":{
+                      "level": "error"
+                    },
+                    "secure-secrets-in-params":{
+                      "level": "error"
+                    },
+                    "use-recent-api-versions":{
+                      "level": "error"
+                    },
+                    "use-resource-id-functions":{
+                      "level": "error"
+                    },
+                    "use-stable-resource-identifiers":{
                       "level": "error"
                     }
                   }
