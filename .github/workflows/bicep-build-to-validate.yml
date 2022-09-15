@@ -22,11 +22,31 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: List Bicep Installed Version
+      - name: List Currently Installed Bicep Version
         shell: pwsh
         run: |
           $bicepVersion = bicep --version
-          Write-Information "=====> Installed Bicep version is: $bicepVersion <=====" -InformationAction Continue
+          Write-Information "=====> Currently installed Bicep version is: $bicepVersion <=====" -InformationAction Continue
+          
+      - name: List Currently Installed Bicep Version
+        shell: sh
+        run: |
+          # From https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#linux 
+          # Fetch the latest Bicep CLI binary
+          curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64
+          # Mark it as executable
+          chmod +x ./bicep
+          # Add bicep to your PATH (requires admin)
+          sudo mv ./bicep /usr/local/bin/bicep
+          # Verify you can now access the 'bicep' command
+          bicep --help
+          # Done!
+          
+      - name: List Now Installed Bicep Version
+        shell: pwsh
+        run: |
+          $bicepVersion = bicep --version
+          Write-Information "=====> Now installed Bicep version is: $bicepVersion <=====" -InformationAction Continue
           
       - name: Bicep Build & Lint All Modules
         shell: pwsh
