@@ -22,6 +22,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: List Bicep Installed Version
+        shell: pwsh
+        run: |
+          $bicepVersion
+          Write-Information "=====> Installed Bicep version is: $bicepVersion <=====" -InformationAction Continue
+          
       - name: Bicep Build & Lint All Modules
         shell: pwsh
         run: |
