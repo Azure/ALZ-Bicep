@@ -28,7 +28,7 @@ jobs:
           $bicepVersion = bicep --version
           Write-Information "=====> Currently installed Bicep version is: $bicepVersion <=====" -InformationAction Continue
           
-      - name: List Currently Installed Bicep Version
+      - name: Install latest version of Bicep
         shell: sh
         run: |
           # From https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#linux 
