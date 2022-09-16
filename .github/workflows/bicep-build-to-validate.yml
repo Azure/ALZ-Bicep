@@ -51,6 +51,7 @@ jobs:
       - name: Bicep Build & Lint All Modules
         shell: pwsh
         run: |
+          $output = @()
           Get-ChildItem -Recurse -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
               Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
               $bicepOutput = bicep build $_.FullName 2>&1
