@@ -52,7 +52,7 @@ jobs:
         shell: pwsh
         run: |
           $output = @()
-          Get-ChildItem -Path '.\infra-as-code\bicep' -Recurse -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
+          Get-ChildItem -Recurse -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
               Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
               $bicepOutput = bicep build $_.FullName 2>&1
               if ($LastExitCode -ne 0)
