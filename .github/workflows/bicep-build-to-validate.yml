@@ -63,7 +63,7 @@ jobs:
               }
               Else
               {
-                echo $output
+                echo "Bicep Build Successful for File: $_"
               }
           }
           if ($output.length -gt 0) {
