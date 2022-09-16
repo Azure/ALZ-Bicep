@@ -58,7 +58,7 @@ jobs:
               if ($LastExitCode -ne 0)
               {
                 foreach ($item in $bicepOutput) {
-                  $output += "$(item) `r`n"
+                  $output += "$($item) `r`n"
                 }
               }
               Else
