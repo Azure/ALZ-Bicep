@@ -23,7 +23,7 @@ param parAcrSku string = 'Basic'
 @description('Tags to be applied to resource when deployed.  Default: None')
 param parTags object ={}
 
-resource resAzureContainerRegistry 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
+resource resAzureContainerRegistry 'Microsoft.ContainerRegistry/registries@2022-02-01-preview' = {
   name: parAcrName
   tags: parTags
   location: parLocation
