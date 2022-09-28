@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parTopLevelManagementGroupPrefix": {
+      "value": "alz"
+    },
+    "parLawId": {
+        "value": "/subscriptions/ce14dde3-0f98-4198-ae91-260a4a83d62b/resourcegroups/alz-logging/providers/microsoft.operationalinsights/workspaces/alz-log-analytics"
+    },
+     "parLandingZoneMgChildren": {
+      "value": [
+        "alz-landingzones-SAP",
+        "alz-landingzones-AVS"
+      ]
+    }
+}
+}
