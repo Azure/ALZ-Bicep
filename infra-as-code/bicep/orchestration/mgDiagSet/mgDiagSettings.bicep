@@ -26,10 +26,6 @@ var varMgIds = {
   sandbox: '${parTopLevelManagementGroupPrefix}-sandbox'
 }
 
-//var varMgChildIds = [for childMg in items(parLandingZoneMgChildren): {
-//  key: childMg
-//}]
-
 module modMgDiagSet './modules/diagSettings.bicep' = [for mgId in items(varMgIds): {
   scope: managementGroup(mgId.value)
   name: 'mg-diag-set-${mgId.key}'
@@ -46,5 +42,3 @@ module modLandingZonesMgChildrenDiagSet './modules/diagSettings.bicep' = [for ch
     parLawId: parLawId
   }
 }]
-
-output mgIDs object = varMgIds
