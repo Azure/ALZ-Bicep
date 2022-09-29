@@ -5,14 +5,19 @@
     "parTopLevelManagementGroupPrefix": {
       "value": "alz"
     },
+    "parLandingZoneMgAlzDefaultsEnable": {
+      "value": true
+    },
+    "parLandingZoneMgConfidentialEnable": {
+      "value": true
+    },
     "parLawId": {
         "value": "/subscriptions/ce14dde3-0f98-4198-ae91-260a4a83d62b/resourcegroups/alz-logging/providers/microsoft.operationalinsights/workspaces/alz-log-analytics"
     },
-     "parLandingZoneMgChildren": {
+    "parLandingZoneMgChildren": {
       "value": [
-        "alz-landingzones-SAP",
-        "alz-landingzones-AVS"
-      ]
-    }
+        "pci",
+        "avs"
+       ]}
 }
 }

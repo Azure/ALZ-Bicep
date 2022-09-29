@@ -11,6 +11,12 @@ param parLandingZoneMgChildren array = []
 @description('Log Analytics Workspace Id')
 param parLawId string
 
+@description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
+param parLandingZoneMgAlzDefaultsEnable bool = true
+
+@description('Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.')
+param parLandingZoneMgConfidentialEnable bool = false
+
 var varMgIds = {
   intRoot: parTopLevelManagementGroupPrefix
   platform: '${parTopLevelManagementGroupPrefix}-platform'
@@ -18,26 +24,51 @@ var varMgIds = {
   platformConnectivity: '${parTopLevelManagementGroupPrefix}-platform-connectivity'
   platformIdentity: '${parTopLevelManagementGroupPrefix}-platform-identity'
   landingZones: '${parTopLevelManagementGroupPrefix}-landingzones'
-  landingZonesCorp: '${parTopLevelManagementGroupPrefix}-landingzones-corp'
-  landingZonesOnline: '${parTopLevelManagementGroupPrefix}-landingzones-online'
-  landingZonesConfidentialCorp: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-corp'
-  landingZonesConfidentialOnline: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-online'
   decommissioned: '${parTopLevelManagementGroupPrefix}-decommissioned'
   sandbox: '${parTopLevelManagementGroupPrefix}-sandbox'
 }
 
-module modMgDiagSet './modules/diagSettings.bicep' = [for mgId in items(varMgIds): {
+// Used if parLandingZoneMgAlzDefaultsEnable == true
+var varLandingZoneMgChildrenAlzDefault = {
+  landingZonesCorp: '${parTopLevelManagementGroupPrefix}-landingzones-corp'
+  landingZonesOnline: '${parTopLevelManagementGroupPrefix}-landingzones-online'
+}
+
+// Used if parLandingZoneMgConfidentialEnable == true
+var varLandingZoneMgChildrenConfidential = {
+  landingZonesConfidentialCorp: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-corp'
+  landingZonesConfidentialOnline: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-online'
+}
+
+// Used if parLandingZoneMgConfidentialEnable not empty
+var varLandingZoneMgCustomChildren = [for customMg in parLandingZoneMgChildren: {
+  mgId: '${parTopLevelManagementGroupPrefix}-landingzones-${customMg}'
+}]
+
+// Build final object based on input parameters for default and confidential child MGs of LZs
+var varLandingZoneMgDefaultChildrenUnioned = (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable) ? varLandingZoneMgChildrenAlzDefault : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable) ? varLandingZoneMgChildrenConfidential : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable) ? {} : {}
+
+module modMgDiagSet '../../modules/mgDiagnosticSettings/diagSettings.bicep' = [for mgId in items(varMgIds): {
   scope: managementGroup(mgId.value)
-  name: 'mg-diag-set-${mgId.key}'
+  name: 'mg-diag-set-${mgId.value}'
+  params: {
+    parLawId: parLawId
+  }
+}]
+
+// Default Children Landing Zone Management Groups
+module modMgLandingZonesDiagSet '../../modules/mgDiagnosticSettings/diagSettings.bicep' = [for childMg in items(varLandingZoneMgDefaultChildrenUnioned): {
+  scope: managementGroup(childMg.value)
+  name: 'mg-diag-set-${childMg.value}'
   params: {
     parLawId: parLawId
   }
 }]
 
 // Custom Children Landing Zone Management Groups
-module modLandingZonesMgChildrenDiagSet './modules/diagSettings.bicep' = [for childMg in (parLandingZoneMgChildren): {
-  scope: managementGroup(childMg)
-  name: 'mg-diag-set-${childMg}'
+module modMgChildrenDiagSet '../../modules/mgDiagnosticSettings/diagSettings.bicep' = [for childMg in varLandingZoneMgCustomChildren: {
+  scope: managementGroup(childMg.mgId)
+  name: 'mg-diag-set-${childMg.mgId}'
   params: {
     parLawId: parLawId
   }
