@@ -1,6 +1,9 @@
-# Module: Orchestration - mgDiagSettings - Enable diagnostic settings for all Management Group Hierarchy
+# Module: Orchestration - mgDiagSettingsAll - Enable diagnostic settings for management groups in the ALZ Management Groups hierarchy
 
-The Management Groups module deploys a management group hierarchy in a customer's tenant under the `Tenant Root Group`.  This is accomplished through a tenant-scoped Azure Resource Manager (ARM) deployment. The hierarchy can be modified by editing `managementGroups.bicep`.  The hierarchy created by the deployment is:
+This module acts as an orchestration module that helps enable Diagnostic settings on the management group hierarchy as was defined during the deployment of the Management Group module.  This is accomplished through a tenant-scoped Azure Resource Manager (ARM) deployment. There are two boolean parameters that should match the options selected during the deployment of Management Group module regarding creation or not of Corp and Online Landing Zones and Confidential Corp and Confidential Online Landing zones.
+It also enables Diagnostic Settings for existing custom child landing zones if those are specified.
+
+The hierarchy created during Management Group module with the different management groups to be on-boarded to Diagnostic Settings is shown below:
 
 - Tenant Root Group
   - Top Level Management Group (defined by parameter `parTopLevelManagementGroupPrefix`)
@@ -9,10 +12,18 @@ The Management Groups module deploys a management group hierarchy in a customer'
       - Connectivity
       - Identity
     - Landing Zones
-      - Corp
-      - Online
+      - Corp  (Optional)
+      - Online (optional)
+      - Confidential Corp (Optional)
+      - Confidential Online (Optional)
+      - "Other Custom Landing Zones" (Optional)
+      - ...
     - Sandbox
     - Decommissioned
+
+- Diagnostic Settings enable for multiple management groups in the ALZ Management Group hierarchy
+
+> This module calls the [`diagSettings.bicep`](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/mgDiagSettings) module multiple times to enable Diagnostic Settings to the desired Management Groups. If you only want to enable Diagnostic Settings at a time to a specified Management Group, then you could consider using the child module directly.
 
 ## Parameters
 
@@ -24,12 +35,12 @@ The module requires the following inputs:
 | parLandingZoneMgAlzDefaultsEnable     | bool   | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.                                                                                       | Mandatory input, default: `true`  | `true`                                                                                  |
 | parLandingZoneMgConfidentialEnable    | bool   | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.                                                             | Mandatory input, default: `false` | `false`                                                                                 |
 | parLawId    | string   | Id of the Log Analytics Workspace                                                             | Mandatory input, default: `false` | `false`                                                                                 |
-| parLandingZoneMgChildren              | array | Dictionary Object to allow additional child Management Groups of Landing Zones Management Group to be deployed.                                                         | Not required input, default `{}`  | {"value": ["pci","avs"]}                                                         |
+| parLandingZoneMgChildren              | array | Dictionary Object to allow additional child Management Groups of Landing Zones Management Group to be deployed.                                                         | Not required input, default `[]`  | {"value": ["pci","avs"]}                                                         |
 | parTelemetryOptOut                    | bool   | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                             | Mandatory input, default: `false` | `false`                                                                                 |
 
-### Child Landing Zone Management Groups Flexibility
+### Diagnostic Settings for Child Landing Zone Management Groups
 
-This module allows some flexibility for deploying child Landing Zone Management Groups, e.g. Management Groups that live beneath the Landing Zones Management Group. This flexibility is controlled by three parameters which are detailed below. All of these parameters can be used together to tailor the child Landing Zone Management Groups.
+This module considers the same flexibility used when creating the child Landing Zone Management Groups during deployment of the Management Groups module. The three parameters detailed below should correspond to the values used during Management Groups module deployment. All of these parameters can be used together to enable diagnostic settings on the child Landing Zone Management Groups.
 
 - `parLandingZoneMgAlzDefaultsEnable`
   - Boolean - defaults to `true`
@@ -45,13 +56,9 @@ This module allows some flexibility for deploying child Landing Zone Management 
     - `Confidential Corp`
     - `Confidential Online`
 - `parLandingZoneMgChildren`
-  - Object - default is an empty object `{}`
+  - Object - default is an empty array `[]`
   - **Optional**
   - Deploys whatever you specify in the object as child Landing Zone Management groups.
-
-These three parameters are then used to collate a single variable that is used to create the child Landing Zone Management Groups. Duplicates are removed if entered. This is done by using the `union()` function in bicep.
-
-> Investigate the variable called `varLandingZoneMgChildrenUnioned` if you want to see how this works in the module.
 
 #### `parLandingZoneMgChildren` Input Examples
 
@@ -73,16 +80,11 @@ parLandingZoneMgChildren: {
 ##### JSON Parameter File Input Example
 
 ```json
-"parLandingZoneMgChildren": {
-    "value": {
-        "pci": {
-          "displayName": "PCI"
-        },
-        "another-example": {
-          "displayName": "Another Example"
-        }
-    }
-}
+    "parLandingZoneMgChildren": {
+      "value": [
+        "pci",
+        "avs"
+    ]}
 ```
 
 ## Outputs
@@ -91,7 +93,7 @@ The module will not generate any outputs.
 
 ## Deployment
 
-In this example, the management groups are created at the `Tenant Root Group` through a tenant-scoped deployment.
+In this example, the Diagnostic Settings are enabled on the management groups through a tenant-scoped deployment.
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
@@ -100,8 +102,8 @@ In this example, the management groups are created at the `Tenant Root Group` th
 ```bash
 # For Azure global regions
 az deployment tenant create \
-  --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
-  --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json \
+  --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep \
+  --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json \
   --location eastus
 ```
 
@@ -110,8 +112,8 @@ OR
 ```bash
 # For Azure China regions
 az deployment tenant create \
-  --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
-  --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json \
+  --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep \
+  --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json \
   --location chinaeast2
 ```
 
@@ -120,8 +122,8 @@ az deployment tenant create \
 ```powershell
 # For Azure global regions
 New-AzTenantDeployment `
-  -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json `
+  -TemplateFile infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep `
+  -TemplateParameterFile infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json `
   -Location eastus
 ```
 
@@ -130,12 +132,15 @@ OR
 ```powershell
 # For Azure China regions
 New-AzTenantDeployment `
-  -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json `
-  -Location chinaeast2  
+  -TemplateFile infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep `
+  -TemplateParameterFile infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json `
+  -Location chinaeast2
+
 ```
 
-![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output")
+## Validation
+
+To validate if Diagnostic Settings was correctly enabled for any specific management group, a REST API GET call can be used. Documentation and easy way to try this can be found in this link [(Management Group Diagnostic Settings - Get)](https://learn.microsoft.com/rest/api/monitor/management-group-diagnostic-settings/get?tabs=HTTP&tryIt=true&source=docs#code-try-0). There is currently not a direct way to validate this in the Azure Portal, Azure CLI or PowerShell.
 
 ## Bicep Visualizer
 
