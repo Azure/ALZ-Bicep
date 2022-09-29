@@ -48,7 +48,7 @@ var varLandingZoneMgCustomChildren = [for customMg in parLandingZoneMgChildren: 
 // Build final object based on input parameters for default and confidential child MGs of LZs
 var varLandingZoneMgDefaultChildrenUnioned = (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable) ? varLandingZoneMgChildrenAlzDefault : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable) ? varLandingZoneMgChildrenConfidential : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable) ? {} : {}
 
-module modMgDiagSet '../../modules/mgDiagnosticSettings/diagSettings.bicep' = [for mgId in items(varMgIds): {
+module modMgDiagSet '../../modules/mgDiagSettings/diagSettings.bicep' = [for mgId in items(varMgIds): {
   scope: managementGroup(mgId.value)
   name: 'mg-diag-set-${mgId.value}'
   params: {
@@ -57,7 +57,7 @@ module modMgDiagSet '../../modules/mgDiagnosticSettings/diagSettings.bicep' = [f
 }]
 
 // Default Children Landing Zone Management Groups
-module modMgLandingZonesDiagSet '../../modules/mgDiagnosticSettings/diagSettings.bicep' = [for childMg in items(varLandingZoneMgDefaultChildrenUnioned): {
+module modMgLandingZonesDiagSet '../../modules/mgDiagSettings/diagSettings.bicep' = [for childMg in items(varLandingZoneMgDefaultChildrenUnioned): {
   scope: managementGroup(childMg.value)
   name: 'mg-diag-set-${childMg.value}'
   params: {
@@ -66,7 +66,7 @@ module modMgLandingZonesDiagSet '../../modules/mgDiagnosticSettings/diagSettings
 }]
 
 // Custom Children Landing Zone Management Groups
-module modMgChildrenDiagSet '../../modules/mgDiagnosticSettings/diagSettings.bicep' = [for childMg in varLandingZoneMgCustomChildren: {
+module modMgChildrenDiagSet '../../modules/mgDiagSettings/diagSettings.bicep' = [for childMg in varLandingZoneMgCustomChildren: {
   scope: managementGroup(childMg.mgId)
   name: 'mg-diag-set-${childMg.mgId}'
   params: {
