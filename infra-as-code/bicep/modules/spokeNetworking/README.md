@@ -9,9 +9,10 @@ Module deploys the following resources:
 
 > Consider using the `hubPeeredSpoke` orchestration module instead to simplify spoke networking deployment, VNET Peering, UDR configuration and Subscription placement in a single module. [infra-as-code/bicep/orchestration/hubPeeredSpoke](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/orchestration/hubPeeredSpoke)
 
-> #### NOTE
+> ## NOTE
 >
 > This module only deploys the skeleton of a virtual network. Subnet(s) are not created nor does this module support declaring them. This is a blank vNet with the expectation of handing it over to the app/workload team to create their subnet(s), etc. The ALZ-Bicep core team decided not to add subnet support due to:
+>
 > - Complexity of managing all of the subnet properties, including NSG, UDR, service endpoints, subnet delegations, etc.
 > - Intellisense will be a challenge as we'll be using an array of objects to define the subnet properties
 > - Feature parity with ALZ Azure Portal and Terraform experience
