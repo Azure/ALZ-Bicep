@@ -11,7 +11,7 @@
     "parLandingZoneMgConfidentialEnable": {
       "value": true
     },
-    "parLawId": {
+    "parLogAnalyticsWorkspaceResourceId": {
         "value": ""
     },
     "parLandingZoneMgChildren": {
