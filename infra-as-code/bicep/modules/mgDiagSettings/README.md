@@ -12,7 +12,7 @@ The module requires the following input parameters.
 
 ## Outputs
 
-The module will not generate any outputs.
+*The module will not generate any outputs.*
 
 ## Deployment
 
