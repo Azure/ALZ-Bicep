@@ -8,8 +8,8 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @description('Dictionary Object to allow additional or different child Management Groups of the Landing Zones Management Group .')
 param parLandingZoneMgChildren array = []
 
-@description('Log Analytics Workspace Id')
-param parLawId string
+@description('Log Analytics Workspace Resource ID.)
+param parLogAnalyticsWorkspaceResourceId string
 
 @description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
 param parLandingZoneMgAlzDefaultsEnable bool = true
