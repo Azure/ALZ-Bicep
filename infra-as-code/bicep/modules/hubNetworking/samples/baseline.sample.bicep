@@ -35,7 +35,12 @@ module baseline_hub_network '../hubNetworking.bicep' = {
       '2'
       '3'
     ]
-    parAzGatewayAvailabilityZones: [
+    parAzErGatewayAvailabilityZones: [
+      '1'
+      '2'
+      '3'
+    ]
+    parAzVpnGatewayAvailabilityZones: [
       '1'
       '2'
       '3'
@@ -56,7 +61,12 @@ module baseline_hub_network_with_ER '../hubNetworking.bicep' = {
       '2'
       '3'
     ]
-    parAzGatewayAvailabilityZones: [
+    parAzErGatewayAvailabilityZones: [
+      '1'
+      '2'
+      '3'
+    ]
+    parAzVpnGatewayAvailabilityZones: [
       '1'
       '2'
       '3'
@@ -94,7 +104,12 @@ module baseline_hub_network_with_VPN '../hubNetworking.bicep' = {
       '2'
       '3'
     ]
-    parAzGatewayAvailabilityZones: [
+    parAzErGatewayAvailabilityZones: [
+      '1'
+      '2'
+      '3'
+    ]
+    parAzVpnGatewayAvailabilityZones: [
       '1'
       '2'
       '3'
