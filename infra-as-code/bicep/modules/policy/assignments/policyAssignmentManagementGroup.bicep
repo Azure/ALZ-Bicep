@@ -61,7 +61,7 @@ var varPolicyAssignmentIdentityRoleAssignmentsMgsConverged = parPolicyAssignment
 // Customer Usage Attribution Id
 var varCuaid = '78001e36-9738-429c-a343-45cc84e8a527'
 
-resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-01' = {
+resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2021-06-01' = {
   name: parPolicyAssignmentName
   properties: {
     displayName: parPolicyAssignmentDisplayName 
