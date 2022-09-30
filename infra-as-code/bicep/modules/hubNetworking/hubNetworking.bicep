@@ -94,7 +94,6 @@ param parAzErGatewayAvailabilityZones array
 @description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP')
 param parAzVpnGatewayAvailabilityZones array
 
-
 @description('Switch to enable/disable Azure Firewall DNS Proxy. Default: true')
 param parAzFirewallDnsProxyEnabled bool = true
 
