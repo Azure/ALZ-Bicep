@@ -1,6 +1,7 @@
 targetScope = 'managementGroup'
 
-param parLawId string
+@description('Log Analytics Workspace Resource ID.)
+param parLogAnalyticsWorkspaceResourceId string
 
 resource mgDiagSet 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
   name: 'toLa'
