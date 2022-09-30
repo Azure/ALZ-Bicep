@@ -4,7 +4,7 @@ This module enables the supported Diagnostic Settings categories on a Management
 
 ## Parameters
 
-The module requires the following input parameters. This parameter is passed from the mgDiagSettingsAll.bice module.
+The module requires the following input parameters.
 
 | Parameter                             | Type   | Description                                                                                                                                                                          | Requirements                      | Example                                                                                 |
 | ------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------- | --------------------------------------------------------------------------------------- |
