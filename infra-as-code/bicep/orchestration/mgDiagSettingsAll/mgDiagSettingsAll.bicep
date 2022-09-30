@@ -61,7 +61,7 @@ module modMgLandingZonesDiagSet '../../modules/mgDiagSettings/diagSettings.bicep
   scope: managementGroup(childMg.value)
   name: 'mg-diag-set-${childMg.value}'
   params: {
-    parLawId: parLawId
+    parLawId: parLogAnalyticsWorkspaceResourceId
   }
 }]
 
