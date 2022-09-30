@@ -70,6 +70,6 @@ module modMgChildrenDiagSet '../../modules/mgDiagSettings/diagSettings.bicep' = 
   scope: managementGroup(childMg.mgId)
   name: 'mg-diag-set-${childMg.mgId}'
   params: {
-    parLawId: parLawId
+    parLawId: parLogAnalyticsWorkspaceResourceId
   }
 }]
