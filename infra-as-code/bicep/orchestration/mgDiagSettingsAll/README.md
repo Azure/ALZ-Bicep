@@ -3,25 +3,6 @@
 This module acts as an orchestration module that helps enable Diagnostic settings on the management group hierarchy as was defined during the deployment of the Management Group module.  This is accomplished through a tenant-scoped Azure Resource Manager (ARM) deployment. There are two boolean parameters that should match the options selected during the deployment of Management Group module regarding creation or not of Corp and Online Landing Zones and Confidential Corp and Confidential Online Landing zones.
 It also enables Diagnostic Settings for existing custom child landing zones if those are specified.
 
-The hierarchy created during Management Group module with the different management groups to be on-boarded to Diagnostic Settings is shown below:
-
-- Tenant Root Group
-  - Top Level Management Group (defined by parameter `parTopLevelManagementGroupPrefix`)
-    - Platform
-      - Management
-      - Connectivity
-      - Identity
-    - Landing Zones
-      - Corp  (Optional)
-      - Online (optional)
-      - Confidential Corp (Optional)
-      - Confidential Online (Optional)
-      - "Other Custom Landing Zones" (Optional)
-      - ...
-    - Sandbox
-    - Decommissioned
-
-- Diagnostic Settings enable for multiple management groups in the ALZ Management Group hierarchy
 
 > This module calls the [`diagSettings.bicep`](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/mgDiagSettings) module multiple times to enable Diagnostic Settings to the desired Management Groups. If you only want to enable Diagnostic Settings at a time to a specified Management Group, then you could consider using the child module directly.
 
