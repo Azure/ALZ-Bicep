@@ -8,7 +8,7 @@ var varRole = {
   description: 'Contributor role granted for application/operations team at resource group level'
 }
 
-resource resRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' = {
+resource resRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
   name: guid(varRole.name)
   properties: {
     roleName: varRole.name
