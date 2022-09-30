@@ -52,7 +52,7 @@ module modMgDiagSet '../../modules/mgDiagSettings/diagSettings.bicep' = [for mgI
   scope: managementGroup(mgId.value)
   name: 'mg-diag-set-${mgId.value}'
   params: {
-    parLawId: parLawId
+    parLawId: parLogAnalyticsWorkspaceResourceId
   }
 }]
 
