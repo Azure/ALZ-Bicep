@@ -64,7 +64,7 @@ parLandingZoneMgChildren: {
     "parLandingZoneMgChildren": {
       "value": [
         "pci",
-        "avs"
+        "another-example"
     ]}
 ```
 
