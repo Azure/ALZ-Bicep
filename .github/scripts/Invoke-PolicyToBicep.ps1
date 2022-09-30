@@ -162,7 +162,7 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
                 }
 
                 # If definitionReferenceId contains, then wrap in definitionReferenceId value in [] to comply with bicep formatting
-                if ($definitionReferenceIdForParameters.Contains("-") -or $definitionReferenceIdForParameters.Contains(" ") -or $definitionReferenceIdForParameters.Contains("\'")) {
+                if ($definitionReferenceIdForParameters.Contains("-") -or $definitionReferenceIdForParameters.Contains(" ") -or $definitionReferenceIdForParameters.Contains("\'") -or $definitionReferenceIdForParameters -match '^[0-9].+') {
                     $definitionReferenceIdForParameters = "['$definitionReferenceIdForParameters']"
 
                     # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable, without the '.' before the definitionReferenceId to make it an accessor

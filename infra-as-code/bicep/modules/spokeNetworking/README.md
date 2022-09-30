@@ -7,7 +7,26 @@ Module deploys the following resources:
 - Virtual Network (Spoke VNet)
 - UDR - if Firewall is enabled
 
+> ## Note
+>
+> ### Orchestration
+>
 > Consider using the `hubPeeredSpoke` orchestration module instead to simplify spoke networking deployment, VNET Peering, UDR configuration and Subscription placement in a single module. [infra-as-code/bicep/orchestration/hubPeeredSpoke](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/orchestration/hubPeeredSpoke)
+>
+> ### Subnet Declaration
+>
+> This module only deploys the skeleton of a virtual network. Subnet(s) are not created nor does this module support declaring them. This is a blank vNet with the expectation of handing it over to the app/workload team to create their subnet(s), etc. The ALZ-Bicep core team decided not to add subnet support due to:
+>
+> - Complexity of managing all of the subnet properties, including NSG, UDR, service endpoints, subnet delegations, etc.
+> - Intellisense will be a challenge as we'll be using an array of objects to define the subnet properties
+> - Feature parity with ALZ Azure Portal and Terraform experience
+> - Future updates to the virtual network resource provider could change the way we manage subnets as a child and/or a separate resource object. All to say this future change could make it easier to manage a subnet declaration within this module
+>
+> To customize spoke networking to include subnet declarations, we recommend the use of the following ordered methods:
+>
+> 1. [CARML](https://aka.ms/carml) - Utilize this mature Bicep repo for resource deployments
+> 2. [Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) this repo and customize the modules accordingly
+> 3. Write your own custom module
 
 ## Parameters
 
