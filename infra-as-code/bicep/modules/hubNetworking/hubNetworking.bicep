@@ -187,7 +187,7 @@ param parVpnGatewayConfig object = {
 param parExpressRouteGatewayConfig object = {
   name: '${parCompanyPrefix}-ExpressRoute-Gateway'
   gatewayType: 'ExpressRoute'
-  sku: 'ErGw2AZ'
+  sku: 'ErGw1AZ'
   vpnType: 'RouteBased'
   vpnGatewayGeneration: 'None'
   enableBgp: false
