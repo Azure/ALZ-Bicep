@@ -12,12 +12,9 @@
       "value": true
     },
     "parLawId": {
-        "value": "/subscriptions/ce14dde3-0f98-4198-ae91-260a4a83d62b/resourcegroups/alz-logging/providers/microsoft.operationalinsights/workspaces/alz-log-analytics"
+        "value": ""
     },
     "parLandingZoneMgChildren": {
-      "value": [
-        "pci",
-        "avs"
-       ]}
-}
+      "value": []}
+  }
 }
