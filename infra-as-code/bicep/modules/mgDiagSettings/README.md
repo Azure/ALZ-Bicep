@@ -1,6 +1,6 @@
 # Module: Enable Diagnostic Settings on Management Groups
 
-This module enables Diagnostic Settings on a management group to an existing Azure Log Analytics Workspace, normally deployed during the logging.bicep module.
+This module enables the supported Diagnostic Settings categories on a Management Group to an existing Azure Log Analytics Workspace.
 
 ## Parameters
 
