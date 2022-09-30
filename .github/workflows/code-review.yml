@@ -10,14 +10,13 @@ on:
 jobs:
   lint:
     name: Lint code base
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
 
-      - name: Git setup
-        run: |
-          git config --global core.autocrlf true
-          git config --global core.eol crlf
+      # - name: Git setup
+      #   run: |
+      #     git config --global core.autocrlf true
 
       - name: Checkout code
         uses: actions/checkout@v2
