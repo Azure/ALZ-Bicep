@@ -5,6 +5,7 @@
         "vsls-contrib.codetour",
         "msazurermtools.azurerm-vscode-tools",
         "bencoleman.armview",
-        "bewhite.psrule-vscode"
+        "bewhite.psrule-vscode",
+        "editorconfig.editorconfig"
     ]
 }
