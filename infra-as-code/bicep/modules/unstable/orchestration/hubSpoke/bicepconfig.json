@@ -62,6 +62,30 @@
         },
         "use-stable-vm-image": {
           "level": "off"
+        },
+        "artifacts-parameters":{
+          "level": "error"
+        },
+        "no-unused-existing-resources":{
+          "level": "error"
+        },
+        "prefer-unquoted-property-names":{
+          "level": "error"
+        },
+        "secure-params-in-nested-deploy":{
+          "level": "error"
+        },
+        "secure-secrets-in-params":{
+          "level": "error"
+        },
+        "use-recent-api-versions":{
+          "level": "error"
+        },
+        "use-resource-id-functions":{
+          "level": "error"
+        },
+        "use-stable-resource-identifiers":{
+          "level": "error"
         }
       }
     }

@@ -8,7 +8,7 @@ var varRole = {
   description: 'Security administrator role with a horizontal view across the entire Azure estate and the Azure Key Vault purge policy'
 }
 
-resource resRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' = {
+resource resRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
   name: guid(varRole.name)
   properties: {
     roleName: varRole.name
