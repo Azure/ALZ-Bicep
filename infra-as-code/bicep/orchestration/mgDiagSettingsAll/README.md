@@ -1,6 +1,8 @@
 # Module: Orchestration - mgDiagSettingsAll - Enable diagnostic settings for management groups in the ALZ Management Groups hierarchy
 
-This module acts as an orchestration module that helps enable Diagnostic settings on the management group hierarchy as was defined during the deployment of the Management Group module.  This is accomplished through a tenant-scoped Azure Resource Manager (ARM) deployment. There are two boolean parameters that should match the options selected during the deployment of Management Group module regarding creation or not of Corp and Online Landing Zones and Confidential Corp and Confidential Online Landing zones.
+This module acts as an orchestration module that helps enable Diagnostic Settings on the Management Group hierarchy as was defined during the deployment of the Management Group module (this can be deployed via the [`managementGroups.bicep` module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/managementGroups)), which is also described in the wiki on the [Deployment Flow article](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow).
+
+This is accomplished through a tenant-scoped Azure Resource Manager (ARM) deployment. There are two boolean parameters that should match the options selected during the deployment of Management Group module regarding creation or not of Corp and Online Landing Zones and Confidential Corp and Confidential Online Landing zones.
 It also enables Diagnostic Settings for existing custom child landing zones if those are specified.
 
 
