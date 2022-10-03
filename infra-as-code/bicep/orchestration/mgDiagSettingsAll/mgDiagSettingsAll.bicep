@@ -8,7 +8,7 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @description('Dictionary Object to allow additional or different child Management Groups of the Landing Zones Management Group .')
 param parLandingZoneMgChildren array = []
 
-@description('Log Analytics Workspace Resource ID.)
+@description('Log Analytics Workspace Resource ID.')
 param parLogAnalyticsWorkspaceResourceId string
 
 @description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
@@ -48,28 +48,28 @@ var varLandingZoneMgCustomChildren = [for customMg in parLandingZoneMgChildren: 
 // Build final object based on input parameters for default and confidential child MGs of LZs
 var varLandingZoneMgDefaultChildrenUnioned = (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable) ? varLandingZoneMgChildrenAlzDefault : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable) ? varLandingZoneMgChildrenConfidential : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable) ? {} : {}
 
-module modMgDiagSet '../../modules/mgDiagSettings/diagSettings.bicep' = [for mgId in items(varMgIds): {
+module modMgDiagSet '../../modules/mgDiagSettings/mgdiagSettings.bicep' = [for mgId in items(varMgIds): {
   scope: managementGroup(mgId.value)
   name: 'mg-diag-set-${mgId.value}'
   params: {
-    parLawId: parLogAnalyticsWorkspaceResourceId
+    parLogAnalyticsWorkspaceResourceId: parLogAnalyticsWorkspaceResourceId
   }
 }]
 
 // Default Children Landing Zone Management Groups
-module modMgLandingZonesDiagSet '../../modules/mgDiagSettings/diagSettings.bicep' = [for childMg in items(varLandingZoneMgDefaultChildrenUnioned): {
+module modMgLandingZonesDiagSet '../../modules/mgDiagSettings/mgDiagSettings.bicep' = [for childMg in items(varLandingZoneMgDefaultChildrenUnioned): {
   scope: managementGroup(childMg.value)
   name: 'mg-diag-set-${childMg.value}'
   params: {
-    parLawId: parLogAnalyticsWorkspaceResourceId
+    parLogAnalyticsWorkspaceResourceId: parLogAnalyticsWorkspaceResourceId
   }
 }]
 
 // Custom Children Landing Zone Management Groups
-module modMgChildrenDiagSet '../../modules/mgDiagSettings/diagSettings.bicep' = [for childMg in varLandingZoneMgCustomChildren: {
+module modMgChildrenDiagSet '../../modules/mgDiagSettings/mgdiagSettings.bicep' = [for childMg in varLandingZoneMgCustomChildren: {
   scope: managementGroup(childMg.mgId)
   name: 'mg-diag-set-${childMg.mgId}'
   params: {
-    parLawId: parLogAnalyticsWorkspaceResourceId
+    parLogAnalyticsWorkspaceResourceId: parLogAnalyticsWorkspaceResourceId
   }
 }]
