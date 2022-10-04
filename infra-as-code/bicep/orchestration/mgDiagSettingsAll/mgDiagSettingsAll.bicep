@@ -17,6 +17,9 @@ param parLandingZoneMgAlzDefaultsEnable bool = true
 @description('Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.')
 param parLandingZoneMgConfidentialEnable bool = false
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
 var varMgIds = {
   intRoot: parTopLevelManagementGroupPrefix
   platform: '${parTopLevelManagementGroupPrefix}-platform'
@@ -48,6 +51,9 @@ var varLandingZoneMgCustomChildren = [for customMg in parLandingZoneMgChildren: 
 // Build final object based on input parameters for default and confidential child MGs of LZs
 var varLandingZoneMgDefaultChildrenUnioned = (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable) ? varLandingZoneMgChildrenAlzDefault : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable) ? varLandingZoneMgChildrenConfidential : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable) ? {} : {}
 
+// Customer Usage Attribution Id
+var varCuaid = 'f49c8dfb-c0ce-4ee0-b316-5e4844474dd0'
+
 module modMgDiagSet '../../modules/mgDiagSettings/mgdiagSettings.bicep' = [for mgId in items(varMgIds): {
   scope: managementGroup(mgId.value)
   name: 'mg-diag-set-${mgId.value}'
@@ -73,3 +79,10 @@ module modMgChildrenDiagSet '../../modules/mgDiagSettings/mgdiagSettings.bicep' 
     parLogAnalyticsWorkspaceResourceId: parLogAnalyticsWorkspaceResourceId
   }
 }]
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdTenant.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
+  name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
+  params: {}
+}

@@ -9,13 +9,16 @@
       "value": true
     },
     "parLandingZoneMgConfidentialEnable": {
-      "value": true
+      "value": false
     },
     "parLogAnalyticsWorkspaceResourceId": {
-        "value": ""
+        "value": "/subscriptions/ce14dde3-0f98-4198-ae91-260a4a83d62b/resourcegroups/alz-logging/providers/microsoft.operationalinsights/workspaces/alz-log-analytics"
     },
     "parLandingZoneMgChildren": {
       "value": []
-      }
+    },
+    "parTelemetryOptOut": {
+      "value": false
+    }
   }
 }
