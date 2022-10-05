@@ -47,7 +47,6 @@ Input parameter file `parameters/customRoleDefinitions.parameters.all.json` defi
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
-**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 
 ```bash
 # For Azure global regions
