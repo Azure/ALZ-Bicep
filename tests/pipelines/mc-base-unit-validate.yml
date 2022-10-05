@@ -71,6 +71,14 @@ jobs:
         az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json --name $(ManagementGroupPrefix)
 
   - task: Bash@3    
+    displayName: Az CLI Deploy mgDiagSettingsAll for PR
+    name: create_mgDiagSettingsAll
+    inputs:
+      targetType: 'inline'
+      script: |
+        az deployment tenant create --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettings.parameters.min.json
+
+  - task: Bash@3    
     displayName: Az CLI Validate Subscription Placement for PR
     name: move_sub
     inputs:
