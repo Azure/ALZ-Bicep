@@ -54,7 +54,7 @@ var varLandingZoneMgDefaultChildrenUnioned = (parLandingZoneMgAlzDefaultsEnable 
 // Customer Usage Attribution Id
 var varCuaid = 'f49c8dfb-c0ce-4ee0-b316-5e4844474dd0'
 
-module modMgDiagSet '../../modules/mgDiagSettings/mgdiagSettings.bicep' = [for mgId in items(varMgIds): {
+module modMgDiagSet '../../modules/mgDiagSettings/mgDiagSettings.bicep' = [for mgId in items(varMgIds): {
   scope: managementGroup(mgId.value)
   name: 'mg-diag-set-${mgId.value}'
   params: {
@@ -72,7 +72,7 @@ module modMgLandingZonesDiagSet '../../modules/mgDiagSettings/mgDiagSettings.bic
 }]
 
 // Custom Children Landing Zone Management Groups
-module modMgChildrenDiagSet '../../modules/mgDiagSettings/mgdiagSettings.bicep' = [for childMg in varLandingZoneMgCustomChildren: {
+module modMgChildrenDiagSet '../../modules/mgDiagSettings/mgDiagSettings.bicep' = [for childMg in varLandingZoneMgCustomChildren: {
   scope: managementGroup(childMg.mgId)
   name: 'mg-diag-set-${childMg.mgId}'
   params: {
