@@ -60,22 +60,18 @@ az account set --subscription $LandingZoneSubscriptionId
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 TopLevelMGPrefix="alz"
 
-ResourceGroupName="rg-$TopLevelMGPrefix-vnet-peering-001"
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-vnetPeeringDeploy-${dateYMD}"
+GROUP="rg-$TopLevelMGPrefix-vnet-peering-001"
+PARAMETERS="@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json"
+TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
-  --name $ResourceGroupName \
+  --name $GROUP \
   --location eastus
 
-  $inputObject = @(
-  '--name',           ('alz-vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--resource-group', $ResourceGroupName,
-  '--parameters',     '@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json',
-  '--template-file',  "infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
-)
-
-
-az deployment group create @inputObject
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 OR
 ```bash
@@ -87,21 +83,18 @@ az account set --subscription $LandingZoneSubscriptionId
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 TopLevelMGPrefix="alz"
 
-ResourceGroupName="rg-$TopLevelMGPrefix-logging-001"
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-vnetPeeringDeploy-${dateYMD}"
+GROUP="rg-$TopLevelMGPrefix-vnet-peering-001"
+PARAMETERS="@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json"
+TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
-  --name $ResourceGroupName \
+  --name $GROUP \
   --location chinaeast2
 
-  $inputObject = @(
-  '--name',           ('alz-vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--resource-group', $ResourceGroupName,
-  '--parameters',     '@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json',
-  '--template-file',  "infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
-)
-
-az deployment group create @inputObject
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 
 ### PowerShell

@@ -91,21 +91,18 @@ az account set --subscription $ConnectivitySubscriptionId
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 TopLevelMGPrefix="alz"
 
-ResourceGroupName="rg-$TopLevelMGPrefix-vwan-001"
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-vwanConnectivityDeploy-${dateYMD}"
+GROUP="rg-$TopLevelMGPrefix-vwan-001"
+PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json"
+TEMPLATEFILE="infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
-  --name $ResourceGroupName \
+  --name $GROUP \
   --location eastus
 
-  $inputObject = @(
-  '--name',           ('alz-vwanConnectivityDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--resource-group', $ResourceGroupName,
-  '--parameters',     '@infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json',
-  '--template-file',  "infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
-)
-
-az deployment group create @inputObject
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 OR
 ```bash
@@ -117,29 +114,18 @@ az account set --subscription $ConnectivitySubscriptionId
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 TopLevelMGPrefix="alz"
 
-ResourceGroupName="rg-$TopLevelMGPrefix-vwan-001"
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-vwanConnectivityDeploy-${dateYMD}"
+GROUP="rg-$TopLevelMGPrefix-vwan-001"
+PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json"
+TEMPLATEFILE="infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
-  --name $ResourceGroupName \
+  --name $GROUP \
   --location chinaeast2
 
-  $inputObject = @(
-  '--name',           ('alz-vwanConnectivityDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--resource-group', $ResourceGroupName,
-  '--parameters',     '@infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json',
-  '--template-file',  "infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
-)
-
-az deployment group create @inputObject
-
-az group create --location chinaeast2 \
-   --name alz-vwan-chinaeast2
-
-az deployment group create \
-   --resource-group alz-vwan-chinaeast2 \
-   --template-file infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep \
-   --parameters @infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 
 ### PowerShell

@@ -38,7 +38,7 @@ In this example, the remote spoke Vnet will be peered with the Vwan Virtual Hub 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
-**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
+
 ```bash
 # For Azure global regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription 
@@ -46,14 +46,13 @@ $ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
 
 az account set --subscription $ConnectivitySubscriptionId
 
-$inputObject = @(
-  '--name',           ('alz-vnetPeeringVwanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--parameters',     '@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json',
-  '--location',       'eastus',
-  '--template-file',  "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
-)
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-vnetPeeringVwanDeployment-${dateYMD}"
+PARAMETERS="@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json"
+LOCATION="eastus"
+TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
 
-az deployment sub create @inputObject
+az deployment sub create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --template-file $TEMPLATEFILE
 ```
 OR
 ```bash
@@ -63,14 +62,13 @@ $ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
 
 az account set --subscription $ConnectivitySubscriptionId
 
-$inputObject = @(
-  '--name',           ('alz-vnetPeeringVwanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--parameters',     '@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json',
-  '--location',       'chinaeast2',
-  '--template-file',  "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
-)
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-vnetPeeringVwanDeployment-${dateYMD}"
+PARAMETERS="@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json"
+LOCATION="chinaeast2"
+TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
 
-az deployment sub create @inputObject
+az deployment sub create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --template-file $TEMPLATEFILE
 ```
 
 ### PowerShell

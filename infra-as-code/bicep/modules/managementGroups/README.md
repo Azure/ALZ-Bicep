@@ -118,31 +118,29 @@ In this example, the management groups are created at the `Tenant Root Group` th
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
-**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
+
 ```bash
 # For Azure global regions
 
-$inputObject = @(
-  '--name',           ('alz-MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--parameters',     '@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json',
-  '--location',       'eastus',
-  '--template-file',  "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
-)
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-MGDeployment-${dateYMD}"
+LOCATION="eastus"
+PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
+TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
 
-az deployment tenant create @inputObject
+az deployment tenant create --name ${NAME:0:63} --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 OR
 ```bash
 # For Azure China regions
 
-$inputObject = @(
-  '--name',           ('alz-MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--parameters',     '@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json',
-  '--location',       'chinaeast2',
-  '--template-file',  "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
-)
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-MGDeployment-${dateYMD}"
+LOCATION="chinaeast2"
+PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
+TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
 
-az deployment tenant create @inputObject
+az deployment tenant create --name ${NAME:0:63} --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 
 ### PowerShell
