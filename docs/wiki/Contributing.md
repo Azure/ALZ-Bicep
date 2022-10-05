@@ -58,6 +58,7 @@ The following tooling/extensions are recommended to assist you developing for th
 - [ARM Tools extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools)
 - [ARM Template Viewer extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bencoleman.armview)
 - [PSRule extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bewhite.psrule-vscode)
+- [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 - For visibility of Bracket Pairs:
   - Inside Visual Studio Code, add "editor.bracketPairColorization.enabled": true to your settings.json, to enable bracket pair colorization.
 
@@ -94,7 +95,6 @@ Throughout the development of Bicep code you should follow the [Bicep Best Pract
 - Tab indents should be set to `2` for all Bicep files
 - Double line-breaks should exist between each element type section
 - When intended for scopes above resource group deployment, targetScope should be indicated at the beginning of the file
-
 
 ### Bicep Elements Naming Standards
 
@@ -140,13 +140,13 @@ param parExampleResourceGroupNamePrefix string = 'TEST'
 var varExampleResourceGroupName = 'rsg-${parExampleResourceGroupNamePrefix}' // Create name for the example resource group
 
 
-// RESOURCE DEPLOYMENTS 
+// RESOURCE DEPLOYMENTS
 resource resExampleResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: varExampleResourceGroupName
   location: 'uksouth' // Hardcoded as an example of commenting inside a resource
 }
 
-/* 
+/*
 No modules being deployed in this example
 */
 
@@ -274,3 +274,5 @@ To author Bicep modules that are in-line with the requirements for this project,
 ### Resource API Versions
 
 Each resource must use the latest available, working, API version. If the latest API version cannot be used for any reason, a comment must be placed above the resource in the module file stating why and also called out as part of the PR.
+
+> The Bicep linter rule `use-recent-api-versions` will now also check for this 👍
