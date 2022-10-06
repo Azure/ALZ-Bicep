@@ -1,0 +1,1451 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.1272.37030",
+      "templateHash": "12121009476972149583"
+    }
+  },
+  "parameters": {
+    "parLocation": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "The Azure Region to deploy the resources into. Default: resourceGroup().location"
+      }
+    },
+    "parCompanyPrefix": {
+      "type": "string",
+      "defaultValue": "alz",
+      "metadata": {
+        "description": "Prefix value which will be prepended to all resource names. Default: alz"
+      }
+    },
+    "parHubNetworkName": {
+      "type": "string",
+      "defaultValue": "[format('{0}-hub-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]",
+      "metadata": {
+        "description": "Prefix Used for Hub Network. Default: {parCompanyPrefix}-hub-{parLocation}"
+      }
+    },
+    "parHubNetworkAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.10.0.0/16",
+      "metadata": {
+        "description": "The IP address range for all virtual networks to use. Default: 10.10.0.0/16"
+      }
+    },
+    "parSubnets": {
+      "type": "array",
+      "defaultValue": [
+        {
+          "name": "AzureBastionSubnet",
+          "ipAddressRange": "10.10.15.0/24"
+        },
+        {
+          "name": "GatewaySubnet",
+          "ipAddressRange": "10.10.252.0/24"
+        },
+        {
+          "name": "AzureFirewallSubnet",
+          "ipAddressRange": "10.10.254.0/24"
+        }
+      ],
+      "metadata": {
+        "description": "The name and IP address range for each subnet in the virtual networks. Default: AzureBastionSubnet, GatewaySubnet, AzureFirewall Subnet"
+      }
+    },
+    "parDnsServerIps": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Array of DNS Server IP addresses for VNet. Default: Empty Array"
+      }
+    },
+    "parPublicIpSku": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "allowedValues": [
+        "Basic",
+        "Standard"
+      ],
+      "metadata": {
+        "description": "Public IP Address SKU. Default: Standard"
+      }
+    },
+    "parAzBastionEnabled": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Switch to enable/disable Azure Bastion deployment. Default: true"
+      }
+    },
+    "parAzBastionName": {
+      "type": "string",
+      "defaultValue": "[format('{0}-bastion', parameters('parCompanyPrefix'))]",
+      "metadata": {
+        "description": "Name Associated with Bastion Service:  Default: {parCompanyPrefix}-bastion"
+      }
+    },
+    "parAzBastionSku": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "metadata": {
+        "description": "Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard"
+      }
+    },
+    "parAzBastionNsgName": {
+      "type": "string",
+      "defaultValue": "nsg-AzureBastionSubnet",
+      "metadata": {
+        "description": "NSG Name for Azure Bastion Subnet NSG. Default: nsg-AzureBastionSubnet"
+      }
+    },
+    "parDdosEnabled": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Switch to enable/disable DDoS Standard deployment. Default: true"
+      }
+    },
+    "parDdosPlanName": {
+      "type": "string",
+      "defaultValue": "[format('{0}-ddos-plan', parameters('parCompanyPrefix'))]",
+      "metadata": {
+        "description": "DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan"
+      }
+    },
+    "parAzFirewallEnabled": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Switch to enable/disable Azure Firewall deployment. Default: true"
+      }
+    },
+    "parAzFirewallName": {
+      "type": "string",
+      "defaultValue": "[format('{0}-azfw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]",
+      "metadata": {
+        "description": "Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall "
+      }
+    },
+    "parAzFirewallPoliciesName": {
+      "type": "string",
+      "defaultValue": "[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]",
+      "metadata": {
+        "description": "Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}"
+      }
+    },
+    "parAzFirewallTier": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "allowedValues": [
+        "Standard",
+        "Premium"
+      ],
+      "metadata": {
+        "description": "Azure Firewall Tier associated with the Firewall to deploy. Default: Standard "
+      }
+    },
+    "parAzFirewallAvailabilityZones": {
+      "type": "array",
+      "metadata": {
+        "description": "Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty."
+      },
+      "allowedValues": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    "parAzErGatewayAvailabilityZones": {
+      "type": "array",
+      "metadata": {
+        "description": "Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP"
+      },
+      "allowedValues": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    "parAzVpnGatewayAvailabilityZones": {
+      "type": "array",
+      "metadata": {
+        "description": "Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP"
+      },
+      "allowedValues": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    "parAzFirewallDnsProxyEnabled": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Switch to enable/disable Azure Firewall DNS Proxy. Default: true"
+      }
+    },
+    "parHubRouteTableName": {
+      "type": "string",
+      "defaultValue": "[format('{0}-hub-routetable', parameters('parCompanyPrefix'))]",
+      "metadata": {
+        "description": "Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable"
+      }
+    },
+    "parDisableBgpRoutePropagation": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Switch to enable/disable BGP Propagation on route table. Default: false"
+      }
+    },
+    "parPrivateDnsZonesEnabled": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Switch to enable/disable Private DNS Zones deployment. Default: true"
+      }
+    },
+    "parPrivateDnsZonesResourceGroup": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().name]",
+      "metadata": {
+        "description": "Resource Group Name for Private DNS Zones. Default: same resource group"
+      }
+    },
+    "parPrivateDnsZones": {
+      "type": "array",
+      "defaultValue": [
+        "privatelink.azure-automation.net",
+        "privatelink.database.windows.net",
+        "privatelink.sql.azuresynapse.net",
+        "privatelink.dev.azuresynapse.net",
+        "privatelink.azuresynapse.net",
+        "privatelink.blob.core.windows.net",
+        "privatelink.table.core.windows.net",
+        "privatelink.queue.core.windows.net",
+        "privatelink.file.core.windows.net",
+        "privatelink.web.core.windows.net",
+        "privatelink.dfs.core.windows.net",
+        "privatelink.documents.azure.com",
+        "privatelink.mongo.cosmos.azure.com",
+        "privatelink.cassandra.cosmos.azure.com",
+        "privatelink.gremlin.cosmos.azure.com",
+        "privatelink.table.cosmos.azure.com",
+        "[format('privatelink.{0}.batch.azure.com', toLower(parameters('parLocation')))]",
+        "privatelink.postgres.database.azure.com",
+        "privatelink.mysql.database.azure.com",
+        "privatelink.mariadb.database.azure.com",
+        "privatelink.vaultcore.azure.net",
+        "privatelink.managedhsm.azure.net",
+        "[format('privatelink.{0}.azmk8s.io', toLower(parameters('parLocation')))]",
+        "privatelink.siterecovery.windowsazure.com",
+        "privatelink.servicebus.windows.net",
+        "privatelink.azure-devices.net",
+        "privatelink.eventgrid.azure.net",
+        "privatelink.azurewebsites.net",
+        "privatelink.api.azureml.ms",
+        "privatelink.notebooks.azure.net",
+        "privatelink.service.signalr.net",
+        "privatelink.monitor.azure.com",
+        "privatelink.oms.opinsights.azure.com",
+        "privatelink.ods.opinsights.azure.com",
+        "privatelink.agentsvc.azure-automation.net",
+        "privatelink.afs.azure.net",
+        "privatelink.datafactory.azure.net",
+        "privatelink.adf.azure.com",
+        "privatelink.redis.cache.windows.net",
+        "privatelink.redisenterprise.cache.azure.net",
+        "privatelink.purview.azure.com",
+        "privatelink.purviewstudio.azure.com",
+        "privatelink.digitaltwins.azure.net",
+        "privatelink.azconfig.io",
+        "privatelink.cognitiveservices.azure.com",
+        "privatelink.azurecr.io",
+        "privatelink.search.windows.net",
+        "privatelink.azurehdinsight.net",
+        "privatelink.media.azure.net",
+        "privatelink.his.arc.azure.com",
+        "privatelink.guestconfiguration.azure.com"
+      ],
+      "metadata": {
+        "description": "Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones"
+      }
+    },
+    "parVpnGatewayConfig": {
+      "type": "object",
+      "defaultValue": {
+        "name": "[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]",
+        "gatewayType": "Vpn",
+        "sku": "VpnGw1",
+        "vpnType": "RouteBased",
+        "generation": "Generation1",
+        "enableBgp": false,
+        "activeActive": false,
+        "enableBgpRouteTranslationForNat": false,
+        "enableDnsForwarding": false,
+        "asn": 65515,
+        "bgpPeeringAddress": "",
+        "bgpsettings": {
+          "asn": 65515,
+          "bgpPeeringAddress": "",
+          "peerWeight": 5
+        }
+      },
+      "metadata": {
+        "description": "Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. \n\"parVpnGatewayConfig\": {\n  \"value\": {}\n}"
+      }
+    },
+    "parExpressRouteGatewayConfig": {
+      "type": "object",
+      "defaultValue": {
+        "name": "[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]",
+        "gatewayType": "ExpressRoute",
+        "sku": "ErGw1AZ",
+        "vpnType": "RouteBased",
+        "vpnGatewayGeneration": "None",
+        "enableBgp": false,
+        "activeActive": false,
+        "enableBgpRouteTranslationForNat": false,
+        "enableDnsForwarding": false,
+        "asn": "65515",
+        "bgpPeeringAddress": "",
+        "bgpsettings": {
+          "asn": "65515",
+          "bgpPeeringAddress": "",
+          "peerWeight": "5"
+        }
+      },
+      "metadata": {
+        "description": "Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. \n\"parExpressRouteGatewayConfig\": {\n  \"value\": {}\n}"
+      }
+    },
+    "parTags": {
+      "type": "object",
+      "defaultValue": {},
+      "metadata": {
+        "description": "Tags you would like to be applied to all resources in this module. Default: empty array"
+      }
+    },
+    "parTelemetryOptOut": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Set Parameter to true to Opt-out of deployment telemetry"
+      }
+    }
+  },
+  "variables": {
+    "copy": [
+      {
+        "name": "varSubnetProperties",
+        "count": "[length(parameters('parSubnets'))]",
+        "input": {
+          "name": "[parameters('parSubnets')[copyIndex('varSubnetProperties')].name]",
+          "properties": {
+            "addressPrefix": "[parameters('parSubnets')[copyIndex('varSubnetProperties')].ipAddressRange]",
+            "networkSecurityGroup": "[if(not(equals(parameters('parSubnets')[copyIndex('varSubnetProperties')].name, 'AzureBastionSubnet')), null(), createObject('id', format('{0}/providers/Microsoft.Network/networkSecurityGroups/{1}', resourceGroup().id, parameters('parAzBastionNsgName'))))]"
+          }
+        }
+      }
+    ],
+    "varVpnGwConfig": "[if(not(empty(parameters('parVpnGatewayConfig'))), parameters('parVpnGatewayConfig'), json('{\"name\": \"noconfigVpn\"}'))]",
+    "varErGwConfig": "[if(not(empty(parameters('parExpressRouteGatewayConfig'))), parameters('parExpressRouteGatewayConfig'), json('{\"name\": \"noconfigEr\"}'))]",
+    "varGwConfig": [
+      "[variables('varVpnGwConfig')]",
+      "[variables('varErGwConfig')]"
+    ],
+    "varCuaid": "2686e846-5fdc-4d4f-b533-16dcb09d6e6c"
+  },
+  "resources": [
+    {
+      "condition": "[parameters('parDdosEnabled')]",
+      "type": "Microsoft.Network/ddosProtectionPlans",
+      "apiVersion": "2021-08-01",
+      "name": "[parameters('parDdosPlanName')]",
+      "location": "[parameters('parLocation')]",
+      "tags": "[parameters('parTags')]"
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2021-08-01",
+      "name": "[parameters('parHubNetworkName')]",
+      "location": "[parameters('parLocation')]",
+      "tags": "[parameters('parTags')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('parHubNetworkAddressPrefix')]"
+          ]
+        },
+        "dhcpOptions": {
+          "dnsServers": "[parameters('parDnsServerIps')]"
+        },
+        "subnets": "[variables('varSubnetProperties')]",
+        "enableDdosProtection": "[parameters('parDdosEnabled')]",
+        "ddosProtectionPlan": "[if(parameters('parDdosEnabled'), createObject('id', resourceId('Microsoft.Network/ddosProtectionPlans', parameters('parDdosPlanName'))), null())]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('parAzBastionNsgName'))]",
+        "[resourceId('Microsoft.Network/ddosProtectionPlans', parameters('parDdosPlanName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2021-08-01",
+      "name": "[parameters('parAzBastionNsgName')]",
+      "location": "[parameters('parLocation')]",
+      "tags": "[parameters('parTags')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "AllowHttpsInbound",
+            "properties": {
+              "access": "Allow",
+              "direction": "Inbound",
+              "priority": 120,
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "443"
+            }
+          },
+          {
+            "name": "AllowGatewayManagerInbound",
+            "properties": {
+              "access": "Allow",
+              "direction": "Inbound",
+              "priority": 130,
+              "sourceAddressPrefix": "GatewayManager",
+              "destinationAddressPrefix": "*",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "443"
+            }
+          },
+          {
+            "name": "AllowAzureLoadBalancerInbound",
+            "properties": {
+              "access": "Allow",
+              "direction": "Inbound",
+              "priority": 140,
+              "sourceAddressPrefix": "AzureLoadBalancer",
+              "destinationAddressPrefix": "*",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "443"
+            }
+          },
+          {
+            "name": "AllowBastionHostCommunication",
+            "properties": {
+              "access": "Allow",
+              "direction": "Inbound",
+              "priority": 150,
+              "sourceAddressPrefix": "VirtualNetwork",
+              "destinationAddressPrefix": "VirtualNetwork",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRanges": [
+                "8080",
+                "5701"
+              ]
+            }
+          },
+          {
+            "name": "AllowSshRDPOutbound",
+            "properties": {
+              "access": "Allow",
+              "direction": "Outbound",
+              "priority": 100,
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "VirtualNetwork",
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRanges": [
+                "22",
+                "3389"
+              ]
+            }
+          },
+          {
+            "name": "AllowAzureCloudOutbound",
+            "properties": {
+              "access": "Allow",
+              "direction": "Outbound",
+              "priority": 110,
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "AzureCloud",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "443"
+            }
+          },
+          {
+            "name": "AllowBastionCommunication",
+            "properties": {
+              "access": "Allow",
+              "direction": "Outbound",
+              "priority": 120,
+              "sourceAddressPrefix": "VirtualNetwork",
+              "destinationAddressPrefix": "VirtualNetwork",
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRanges": [
+                "8080",
+                "5701"
+              ]
+            }
+          },
+          {
+            "name": "AllowGetSessionInformation",
+            "properties": {
+              "access": "Allow",
+              "direction": "Outbound",
+              "priority": 130,
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "Internet",
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "80"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "condition": "[parameters('parAzBastionEnabled')]",
+      "type": "Microsoft.Network/bastionHosts",
+      "apiVersion": "2021-08-01",
+      "name": "[parameters('parAzBastionName')]",
+      "location": "[parameters('parLocation')]",
+      "tags": "[parameters('parTags')]",
+      "sku": {
+        "name": "[parameters('parAzBastionSku')]"
+      },
+      "properties": {
+        "dnsName": "[uniqueString(resourceGroup().id)]",
+        "ipConfigurations": [
+          {
+            "name": "IpConf",
+            "properties": {
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('parHubNetworkName'), 'AzureBastionSubnet')]"
+              },
+              "publicIPAddress": {
+                "id": "[if(parameters('parAzBastionEnabled'), reference(resourceId('Microsoft.Resources/deployments', 'deploy-Bastion-Public-IP')).outputs.outPublicIpId.value, '')]"
+              }
+            }
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'deploy-Bastion-Public-IP')]",
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('parHubNetworkName'))]"
+      ]
+    },
+    {
+      "condition": "[and(not(equals(variables('varGwConfig')[copyIndex()].name, 'noconfigVpn')), not(equals(variables('varGwConfig')[copyIndex()].name, 'noconfigEr')))]",
+      "copy": {
+        "name": "resGateway",
+        "count": "[length(variables('varGwConfig'))]"
+      },
+      "type": "Microsoft.Network/virtualNetworkGateways",
+      "apiVersion": "2021-02-01",
+      "name": "[variables('varGwConfig')[copyIndex()].name]",
+      "location": "[parameters('parLocation')]",
+      "tags": "[parameters('parTags')]",
+      "properties": {
+        "activeActive": "[variables('varGwConfig')[copyIndex()].activeActive]",
+        "enableBgp": "[variables('varGwConfig')[copyIndex()].enableBgp]",
+        "enableBgpRouteTranslationForNat": "[variables('varGwConfig')[copyIndex()].enableBgpRouteTranslationForNat]",
+        "enableDnsForwarding": "[variables('varGwConfig')[copyIndex()].enableDnsForwarding]",
+        "bgpSettings": "[if(variables('varGwConfig')[copyIndex()].enableBgp, variables('varGwConfig')[copyIndex()].bgpSettings, null())]",
+        "gatewayType": "[variables('varGwConfig')[copyIndex()].gatewayType]",
+        "vpnGatewayGeneration": "[if(equals(variables('varGwConfig')[copyIndex()].gatewayType, 'VPN'), variables('varGwConfig')[copyIndex()].generation, 'None')]",
+        "vpnType": "[variables('varGwConfig')[copyIndex()].vpnType]",
+        "sku": {
+          "name": "[variables('varGwConfig')[copyIndex()].sku]",
+          "tier": "[variables('varGwConfig')[copyIndex()].sku]"
+        },
+        "ipConfigurations": [
+          {
+            "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('parHubNetworkName'))]",
+            "name": "vnetGatewayConfig",
+            "properties": {
+              "publicIPAddress": {
+                "id": "[if(and(not(equals(variables('varGwConfig')[copyIndex()].name, 'noconfigVpn')), not(equals(variables('varGwConfig')[copyIndex()].name, 'noconfigEr'))), reference(resourceId('Microsoft.Resources/deployments', format('deploy-Gateway-Public-IP-{0}', copyIndex()))).outputs.outPublicIpId.value, 'na')]"
+              },
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('parHubNetworkName'), 'GatewaySubnet')]"
+              }
+            }
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', format('deploy-Gateway-Public-IP-{0}', copyIndex()))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('parHubNetworkName'))]"
+      ]
+    },
+    {
+      "condition": "[parameters('parAzFirewallEnabled')]",
+      "type": "Microsoft.Network/firewallPolicies",
+      "apiVersion": "2021-08-01",
+      "name": "[parameters('parAzFirewallPoliciesName')]",
+      "location": "[parameters('parLocation')]",
+      "tags": "[parameters('parTags')]",
+      "properties": {
+        "dnsSettings": {
+          "enableProxy": "[parameters('parAzFirewallDnsProxyEnabled')]"
+        },
+        "sku": {
+          "tier": "[parameters('parAzFirewallTier')]"
+        }
+      }
+    },
+    {
+      "condition": "[parameters('parAzFirewallEnabled')]",
+      "type": "Microsoft.Network/azureFirewalls",
+      "apiVersion": "2021-08-01",
+      "name": "[parameters('parAzFirewallName')]",
+      "location": "[parameters('parLocation')]",
+      "tags": "[parameters('parTags')]",
+      "zones": "[if(not(empty(parameters('parAzFirewallAvailabilityZones'))), parameters('parAzFirewallAvailabilityZones'), createArray())]",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('parHubNetworkName'), 'AzureFirewallSubnet')]"
+              },
+              "publicIPAddress": {
+                "id": "[if(parameters('parAzFirewallEnabled'), reference(resourceId('Microsoft.Resources/deployments', 'deploy-Firewall-Public-IP')).outputs.outPublicIpId.value, '')]"
+              }
+            }
+          }
+        ],
+        "sku": {
+          "name": "AZFW_VNet",
+          "tier": "[parameters('parAzFirewallTier')]"
+        },
+        "firewallPolicy": {
+          "id": "[resourceId('Microsoft.Network/firewallPolicies', parameters('parAzFirewallPoliciesName'))]"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'deploy-Firewall-Public-IP')]",
+        "[resourceId('Microsoft.Network/firewallPolicies', parameters('parAzFirewallPoliciesName'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('parHubNetworkName'))]"
+      ]
+    },
+    {
+      "condition": "[parameters('parAzFirewallEnabled')]",
+      "type": "Microsoft.Network/routeTables",
+      "apiVersion": "2021-08-01",
+      "name": "[parameters('parHubRouteTableName')]",
+      "location": "[parameters('parLocation')]",
+      "tags": "[parameters('parTags')]",
+      "properties": {
+        "routes": [
+          {
+            "name": "udr-default-azfw",
+            "properties": {
+              "addressPrefix": "0.0.0.0/0",
+              "nextHopType": "VirtualAppliance",
+              "nextHopIpAddress": "[if(parameters('parAzFirewallEnabled'), reference(resourceId('Microsoft.Network/azureFirewalls', parameters('parAzFirewallName'))).ipConfigurations[0].properties.privateIPAddress, '')]"
+            }
+          }
+        ],
+        "disableBgpRoutePropagation": "[parameters('parDisableBgpRoutePropagation')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/azureFirewalls', parameters('parAzFirewallName'))]"
+      ]
+    },
+    {
+      "condition": "[parameters('parAzBastionEnabled')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "deploy-Bastion-Public-IP",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "parLocation": {
+            "value": "[parameters('parLocation')]"
+          },
+          "parPublicIpName": {
+            "value": "[format('{0}-PublicIp', parameters('parAzBastionName'))]"
+          },
+          "parPublicIpSku": {
+            "value": {
+              "name": "[parameters('parPublicIpSku')]"
+            }
+          },
+          "parPublicIpProperties": {
+            "value": {
+              "publicIpAddressVersion": "IPv4",
+              "publicIpAllocationMethod": "Static"
+            }
+          },
+          "parTags": {
+            "value": "[parameters('parTags')]"
+          },
+          "parTelemetryOptOut": {
+            "value": "[parameters('parTelemetryOptOut')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1272.37030",
+              "templateHash": "17465702948742999081"
+            }
+          },
+          "parameters": {
+            "parLocation": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Azure Region to deploy Public IP Address to. Default: Current Resource Group"
+              }
+            },
+            "parPublicIpName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of Public IP to create in Azure. Default: None"
+              }
+            },
+            "parPublicIpSku": {
+              "type": "object",
+              "metadata": {
+                "description": "Public IP Address SKU. Default: None"
+              }
+            },
+            "parPublicIpProperties": {
+              "type": "object",
+              "metadata": {
+                "description": "Properties of Public IP to be deployed. Default: None"
+              }
+            },
+            "parAvailabilityZones": {
+              "type": "array",
+              "defaultValue": [],
+              "metadata": {
+                "description": "Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty."
+              },
+              "allowedValues": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "parTags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags to be applied to resource when deployed.  Default: None"
+              }
+            },
+            "parTelemetryOptOut": {
+              "type": "bool",
+              "defaultValue": false,
+              "metadata": {
+                "description": "Set Parameter to true to Opt-out of deployment telemetry"
+              }
+            }
+          },
+          "variables": {
+            "varCuaid": "3f85b84c-6bad-4c42-86bf-11c233241c22"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/publicIPAddresses",
+              "apiVersion": "2021-08-01",
+              "name": "[parameters('parPublicIpName')]",
+              "tags": "[parameters('parTags')]",
+              "location": "[parameters('parLocation')]",
+              "zones": "[parameters('parAvailabilityZones')]",
+              "sku": "[parameters('parPublicIpSku')]",
+              "properties": "[parameters('parPublicIpProperties')]"
+            },
+            {
+              "condition": "[not(parameters('parTelemetryOptOut'))]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location, parameters('parPublicIpName')))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {},
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.4.1272.37030",
+                      "templateHash": "4174488789265615178"
+                    }
+                  },
+                  "resources": []
+                }
+              }
+            }
+          ],
+          "outputs": {
+            "outPublicIpId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('parPublicIpName'))]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "condition": "[and(not(equals(variables('varGwConfig')[copyIndex()].name, 'noconfigVpn')), not(equals(variables('varGwConfig')[copyIndex()].name, 'noconfigEr')))]",
+      "copy": {
+        "name": "modGatewayPublicIp",
+        "count": "[length(variables('varGwConfig'))]"
+      },
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('deploy-Gateway-Public-IP-{0}', copyIndex())]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "parLocation": {
+            "value": "[parameters('parLocation')]"
+          },
+          "parAvailabilityZones": {
+            "value": "[if(equals(variables('varGwConfig')[copyIndex()].gatewayType, 'ExpressRoute'), parameters('parAzErGatewayAvailabilityZones'), parameters('parAzVpnGatewayAvailabilityZones'))]"
+          },
+          "parPublicIpName": {
+            "value": "[format('{0}-PublicIp', variables('varGwConfig')[copyIndex()].name)]"
+          },
+          "parPublicIpProperties": {
+            "value": {
+              "publicIpAddressVersion": "IPv4",
+              "publicIpAllocationMethod": "Static"
+            }
+          },
+          "parPublicIpSku": {
+            "value": {
+              "name": "[parameters('parPublicIpSku')]"
+            }
+          },
+          "parTags": {
+            "value": "[parameters('parTags')]"
+          },
+          "parTelemetryOptOut": {
+            "value": "[parameters('parTelemetryOptOut')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1272.37030",
+              "templateHash": "17465702948742999081"
+            }
+          },
+          "parameters": {
+            "parLocation": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Azure Region to deploy Public IP Address to. Default: Current Resource Group"
+              }
+            },
+            "parPublicIpName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of Public IP to create in Azure. Default: None"
+              }
+            },
+            "parPublicIpSku": {
+              "type": "object",
+              "metadata": {
+                "description": "Public IP Address SKU. Default: None"
+              }
+            },
+            "parPublicIpProperties": {
+              "type": "object",
+              "metadata": {
+                "description": "Properties of Public IP to be deployed. Default: None"
+              }
+            },
+            "parAvailabilityZones": {
+              "type": "array",
+              "defaultValue": [],
+              "metadata": {
+                "description": "Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty."
+              },
+              "allowedValues": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "parTags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags to be applied to resource when deployed.  Default: None"
+              }
+            },
+            "parTelemetryOptOut": {
+              "type": "bool",
+              "defaultValue": false,
+              "metadata": {
+                "description": "Set Parameter to true to Opt-out of deployment telemetry"
+              }
+            }
+          },
+          "variables": {
+            "varCuaid": "3f85b84c-6bad-4c42-86bf-11c233241c22"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/publicIPAddresses",
+              "apiVersion": "2021-08-01",
+              "name": "[parameters('parPublicIpName')]",
+              "tags": "[parameters('parTags')]",
+              "location": "[parameters('parLocation')]",
+              "zones": "[parameters('parAvailabilityZones')]",
+              "sku": "[parameters('parPublicIpSku')]",
+              "properties": "[parameters('parPublicIpProperties')]"
+            },
+            {
+              "condition": "[not(parameters('parTelemetryOptOut'))]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location, parameters('parPublicIpName')))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {},
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.4.1272.37030",
+                      "templateHash": "4174488789265615178"
+                    }
+                  },
+                  "resources": []
+                }
+              }
+            }
+          ],
+          "outputs": {
+            "outPublicIpId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('parPublicIpName'))]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "condition": "[parameters('parAzFirewallEnabled')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "deploy-Firewall-Public-IP",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "parLocation": {
+            "value": "[parameters('parLocation')]"
+          },
+          "parAvailabilityZones": {
+            "value": "[parameters('parAzFirewallAvailabilityZones')]"
+          },
+          "parPublicIpName": {
+            "value": "[format('{0}-PublicIp', parameters('parAzFirewallName'))]"
+          },
+          "parPublicIpProperties": {
+            "value": {
+              "publicIpAddressVersion": "IPv4",
+              "publicIpAllocationMethod": "Static"
+            }
+          },
+          "parPublicIpSku": {
+            "value": {
+              "name": "[parameters('parPublicIpSku')]"
+            }
+          },
+          "parTags": {
+            "value": "[parameters('parTags')]"
+          },
+          "parTelemetryOptOut": {
+            "value": "[parameters('parTelemetryOptOut')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1272.37030",
+              "templateHash": "17465702948742999081"
+            }
+          },
+          "parameters": {
+            "parLocation": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Azure Region to deploy Public IP Address to. Default: Current Resource Group"
+              }
+            },
+            "parPublicIpName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of Public IP to create in Azure. Default: None"
+              }
+            },
+            "parPublicIpSku": {
+              "type": "object",
+              "metadata": {
+                "description": "Public IP Address SKU. Default: None"
+              }
+            },
+            "parPublicIpProperties": {
+              "type": "object",
+              "metadata": {
+                "description": "Properties of Public IP to be deployed. Default: None"
+              }
+            },
+            "parAvailabilityZones": {
+              "type": "array",
+              "defaultValue": [],
+              "metadata": {
+                "description": "Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty."
+              },
+              "allowedValues": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "parTags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags to be applied to resource when deployed.  Default: None"
+              }
+            },
+            "parTelemetryOptOut": {
+              "type": "bool",
+              "defaultValue": false,
+              "metadata": {
+                "description": "Set Parameter to true to Opt-out of deployment telemetry"
+              }
+            }
+          },
+          "variables": {
+            "varCuaid": "3f85b84c-6bad-4c42-86bf-11c233241c22"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/publicIPAddresses",
+              "apiVersion": "2021-08-01",
+              "name": "[parameters('parPublicIpName')]",
+              "tags": "[parameters('parTags')]",
+              "location": "[parameters('parLocation')]",
+              "zones": "[parameters('parAvailabilityZones')]",
+              "sku": "[parameters('parPublicIpSku')]",
+              "properties": "[parameters('parPublicIpProperties')]"
+            },
+            {
+              "condition": "[not(parameters('parTelemetryOptOut'))]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location, parameters('parPublicIpName')))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {},
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.4.1272.37030",
+                      "templateHash": "4174488789265615178"
+                    }
+                  },
+                  "resources": []
+                }
+              }
+            }
+          ],
+          "outputs": {
+            "outPublicIpId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('parPublicIpName'))]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "condition": "[parameters('parPrivateDnsZonesEnabled')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "deploy-Private-DNS-Zones",
+      "resourceGroup": "[parameters('parPrivateDnsZonesResourceGroup')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "parLocation": {
+            "value": "[parameters('parLocation')]"
+          },
+          "parTags": {
+            "value": "[parameters('parTags')]"
+          },
+          "parVirtualNetworkIdToLink": {
+            "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('parHubNetworkName'))]"
+          },
+          "parPrivateDnsZones": {
+            "value": "[parameters('parPrivateDnsZones')]"
+          },
+          "parTelemetryOptOut": {
+            "value": "[parameters('parTelemetryOptOut')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1272.37030",
+              "templateHash": "7941150163118666055"
+            }
+          },
+          "parameters": {
+            "parLocation": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "The Azure Region to deploy the resources into. Default: resourceGroup().location"
+              }
+            },
+            "parPrivateDnsZones": {
+              "type": "array",
+              "defaultValue": [
+                "privatelink.azure-automation.net",
+                "privatelink.database.windows.net",
+                "privatelink.sql.azuresynapse.net",
+                "privatelink.dev.azuresynapse.net",
+                "privatelink.azuresynapse.net",
+                "privatelink.blob.core.windows.net",
+                "privatelink.table.core.windows.net",
+                "privatelink.queue.core.windows.net",
+                "privatelink.file.core.windows.net",
+                "privatelink.web.core.windows.net",
+                "privatelink.dfs.core.windows.net",
+                "privatelink.documents.azure.com",
+                "privatelink.mongo.cosmos.azure.com",
+                "privatelink.cassandra.cosmos.azure.com",
+                "privatelink.gremlin.cosmos.azure.com",
+                "privatelink.table.cosmos.azure.com",
+                "[format('privatelink.{0}.batch.azure.com', toLower(parameters('parLocation')))]",
+                "privatelink.postgres.database.azure.com",
+                "privatelink.mysql.database.azure.com",
+                "privatelink.mariadb.database.azure.com",
+                "privatelink.vaultcore.azure.net",
+                "privatelink.managedhsm.azure.net",
+                "[format('privatelink.{0}.azmk8s.io', toLower(parameters('parLocation')))]",
+                "privatelink.siterecovery.windowsazure.com",
+                "privatelink.servicebus.windows.net",
+                "privatelink.azure-devices.net",
+                "privatelink.eventgrid.azure.net",
+                "privatelink.azurewebsites.net",
+                "privatelink.api.azureml.ms",
+                "privatelink.notebooks.azure.net",
+                "privatelink.service.signalr.net",
+                "privatelink.monitor.azure.com",
+                "privatelink.oms.opinsights.azure.com",
+                "privatelink.ods.opinsights.azure.com",
+                "privatelink.agentsvc.azure-automation.net",
+                "privatelink.afs.azure.net",
+                "privatelink.datafactory.azure.net",
+                "privatelink.adf.azure.com",
+                "privatelink.redis.cache.windows.net",
+                "privatelink.redisenterprise.cache.azure.net",
+                "privatelink.purview.azure.com",
+                "privatelink.purviewstudio.azure.com",
+                "privatelink.digitaltwins.azure.net",
+                "privatelink.azconfig.io",
+                "privatelink.cognitiveservices.azure.com",
+                "privatelink.azurecr.io",
+                "privatelink.search.windows.net",
+                "privatelink.azurehdinsight.net",
+                "privatelink.media.azure.net",
+                "privatelink.his.arc.azure.com",
+                "privatelink.guestconfiguration.azure.com"
+              ],
+              "metadata": {
+                "description": "Array of custom DNS Zones to provision in Hub Virtual Network. Default: all known private link DNS zones deployed"
+              }
+            },
+            "parTags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags you would like to be applied to all resources in this module. Default: empty object"
+              }
+            },
+            "parVirtualNetworkIdToLink": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Resource ID of VNet for Private DNS Zone VNet Links"
+              }
+            },
+            "parTelemetryOptOut": {
+              "type": "bool",
+              "defaultValue": false,
+              "metadata": {
+                "description": "Set Parameter to true to Opt-out of deployment telemetry"
+              }
+            }
+          },
+          "variables": {
+            "varAzBackupGeoCodes": {
+              "australiacentral": "acl",
+              "australiacentral2": "acl2",
+              "australiaeast": "ae",
+              "australiasoutheast": "ase",
+              "brazilsouth": "brs",
+              "brazilsoutheast": "bse",
+              "centraluseuap": "ccy",
+              "canadacentral": "cnc",
+              "canadaeast": "cne",
+              "centralus": "cus",
+              "eastasia": "ea",
+              "eastus2euap": "ecy",
+              "eastus": "eus",
+              "eastus2": "eus2",
+              "francecentral": "frc",
+              "francesouth": "frs",
+              "germanynorth": "gn",
+              "germanywestcentral": "gwc",
+              "centralindia": "inc",
+              "southindia": "ins",
+              "westindia": "inw",
+              "japaneast": "jpe",
+              "japanwest": "jpw",
+              "jioindiacentral": "jic",
+              "jioindiawest": "jiw",
+              "koreacentral": "krc",
+              "koreasouth": "krs",
+              "northcentralus": "ncus",
+              "northeurope": "ne",
+              "norwayeast": "nwe",
+              "norwaywest": "nww",
+              "qatarcentral": "qac",
+              "southafricanorth": "san",
+              "southafricawest": "saw",
+              "southcentralus": "scus",
+              "swedencentral": "sdc",
+              "swedensouth": "sds",
+              "southeastasia": "sea",
+              "switzerlandnorth": "szn",
+              "switzerlandwest": "szw",
+              "uaecentral": "uac",
+              "uaenorth": "uan",
+              "uksouth": "uks",
+              "ukwest": "ukw",
+              "westcentralus": "wcus",
+              "westeurope": "we",
+              "westus": "wus",
+              "westus2": "wus2",
+              "westus3": "wus3",
+              "usdodcentral": "udc",
+              "usdodeast": "ude",
+              "usgovarizona": "uga",
+              "usgoviowa": "ugi",
+              "usgovtexas": "ugt",
+              "usgovvirginia": "ugv",
+              "usnateast": "exe",
+              "usnatwest": "exw",
+              "usseceast": "rxe",
+              "ussecwest": "rxw",
+              "chinanorth": "bjb",
+              "chinanorth2": "bjb2",
+              "chinanorth3": "bjb3",
+              "chinaeast": "sha",
+              "chinaeast2": "sha2",
+              "chinaeast3": "sha3",
+              "germanycentral": "gec",
+              "germanynortheast": "gne"
+            },
+            "varPrivateDnsZonesMerge": "[if(contains(variables('varAzBackupGeoCodes'), parameters('parLocation')), union(parameters('parPrivateDnsZones'), createArray(format('privatelink.{0}.backup.windowsazure.com', variables('varAzBackupGeoCodes')[toLower(parameters('parLocation'))]))), parameters('parPrivateDnsZones'))]",
+            "varCuaid": "981733dd-3195-4fda-a4ee-605ab959edb6"
+          },
+          "resources": [
+            {
+              "copy": {
+                "name": "resPrivateDnsZones",
+                "count": "[length(variables('varPrivateDnsZonesMerge'))]"
+              },
+              "type": "Microsoft.Network/privateDnsZones",
+              "apiVersion": "2020-06-01",
+              "name": "[variables('varPrivateDnsZonesMerge')[copyIndex()]]",
+              "location": "global",
+              "tags": "[parameters('parTags')]"
+            },
+            {
+              "condition": "[not(empty(parameters('parVirtualNetworkIdToLink')))]",
+              "copy": {
+                "name": "resVirtualNetworkLink",
+                "count": "[length(variables('varPrivateDnsZonesMerge'))]"
+              },
+              "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+              "apiVersion": "2020-06-01",
+              "name": "[format('{0}/{1}', variables('varPrivateDnsZonesMerge')[copyIndex()], take(format('link-{0}', uniqueString(parameters('parVirtualNetworkIdToLink'))), 80))]",
+              "location": "global",
+              "properties": {
+                "registrationEnabled": false,
+                "virtualNetwork": {
+                  "id": "[parameters('parVirtualNetworkIdToLink')]"
+                }
+              },
+              "dependsOn": [
+                "resPrivateDnsZones"
+              ]
+            },
+            {
+              "condition": "[not(parameters('parTelemetryOptOut'))]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {},
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.4.1272.37030",
+                      "templateHash": "4174488789265615178"
+                    }
+                  },
+                  "resources": []
+                }
+              }
+            }
+          ],
+          "outputs": {
+            "outPrivateDnsZones": {
+              "type": "array",
+              "copy": {
+                "count": "[length(range(0, length(variables('varPrivateDnsZonesMerge'))))]",
+                "input": {
+                  "name": "[variables('varPrivateDnsZonesMerge')[range(0, length(variables('varPrivateDnsZonesMerge')))[copyIndex()]]]",
+                  "id": "[resourceId('Microsoft.Network/privateDnsZones', variables('varPrivateDnsZonesMerge')[range(0, length(variables('varPrivateDnsZonesMerge')))[copyIndex()]])]"
+                }
+              }
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('parHubNetworkName'))]"
+      ]
+    },
+    {
+      "condition": "[not(parameters('parTelemetryOptOut'))]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1272.37030",
+              "templateHash": "4174488789265615178"
+            }
+          },
+          "resources": []
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "outAzFirewallPrivateIp": {
+      "type": "string",
+      "value": "[if(parameters('parAzFirewallEnabled'), reference(resourceId('Microsoft.Network/azureFirewalls', parameters('parAzFirewallName'))).ipConfigurations[0].properties.privateIPAddress, '')]"
+    },
+    "outAzFirewallName": {
+      "type": "string",
+      "value": "[if(parameters('parAzFirewallEnabled'), parameters('parAzFirewallName'), '')]"
+    },
+    "outPrivateDnsZones": {
+      "type": "array",
+      "value": "[if(parameters('parPrivateDnsZonesEnabled'), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('parPrivateDnsZonesResourceGroup')), 'Microsoft.Resources/deployments', 'deploy-Private-DNS-Zones')).outputs.outPrivateDnsZones.value, createArray())]"
+    },
+    "outDdosPlanResourceId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Network/ddosProtectionPlans', parameters('parDdosPlanName'))]"
+    },
+    "outHubVirtualNetworkName": {
+      "type": "string",
+      "value": "[parameters('parHubNetworkName')]"
+    },
+    "outHubVirtualNetworkId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('parHubNetworkName'))]"
+    }
+  }
+}
