@@ -1,6 +1,6 @@
 # Module:  Hub-Networking
 
-This module defines hub networking based on the recommendations from the Azure Landing Zone Conceptual Architecture.  
+This module defines hub networking based on the recommendations from the Azure Landing Zone Conceptual Architecture.
 
 Module deploys the following resources:
 
@@ -92,7 +92,7 @@ There are two different sets of input parameters; one for deploying to Azure glo
 ```bash
 # For Azure global regions
 
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 
 az account set --subscription $ConnectivitySubscriptionId
@@ -116,7 +116,7 @@ OR
 # For Azure China regions
 
 
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 
 az account set --subscription $ConnectivitySubscriptionId
@@ -140,12 +140,12 @@ az deployment group create --name ${NAME:0:63} --resource-group $GROUP --paramet
 
 ```powershell
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-# Set Platform management subscripion ID as the the current subscription 
+# Set Platform management subscripion ID as the the current subscription
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
@@ -163,13 +163,13 @@ $inputObject = @{
 
 New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'eastus'
-  
+
 New-AzResourceGroupDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId

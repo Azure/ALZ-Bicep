@@ -41,7 +41,7 @@ In this example, the remote spoke Vnet will be peered with the Vwan Virtual Hub 
 
 ```bash
 # For Azure global regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription
 $ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
 
 az account set --subscription $ConnectivitySubscriptionId
@@ -57,7 +57,7 @@ az deployment sub create --name ${NAME:0:63} --parameters $PARAMETERS --location
 OR
 ```bash
 # For Azure China regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription
 $ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
 
 az account set --subscription $ConnectivitySubscriptionId
@@ -75,7 +75,7 @@ az deployment sub create --name ${NAME:0:63} --parameters $PARAMETERS --location
 
 ```powershell
 # For Azure global regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your Landing Zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
@@ -93,7 +93,7 @@ New-AzDeployment @inputObject
 OR
 ```powershell
 # For Azure China regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your Landing Zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId

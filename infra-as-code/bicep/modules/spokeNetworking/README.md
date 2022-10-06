@@ -66,7 +66,7 @@ In this example, the spoke resources will be deployed to the resource group spec
 
 ```bash
 # For Azure global regions
-# Set Azure Landing zone subscription ID as the the current subscription 
+# Set Azure Landing zone subscription ID as the the current subscription
 LandingZoneSubscriptionId="[your landing zone subscription ID]"
 
 az account set --subscription $LandingZoneSubscriptionId
@@ -90,7 +90,7 @@ az deployment group create --name ${NAME:0:63} --resource-group $GROUP --paramet
 OR
 ```bash
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 LandingZoneSubscriptionId="[your landing zone subscription ID]"
 
 az account set --subscription $LandingZoneSubscriptionId
@@ -116,7 +116,7 @@ az deployment group create --name ${NAME:0:63} --resource-group $GROUP --paramet
 
 ```powershell
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $LandingZoneSubscriptionId = "[your landing zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
@@ -136,13 +136,13 @@ $inputObject = @{
 
 New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'eastus'
-  
+
 New-AzResourceGroupDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $LandingZoneSubscriptionId = "[your landing zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
@@ -162,7 +162,7 @@ $inputObject = @{
 
 New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'chinaeast2'
-  
+
 New-AzResourceGroupDeployment @inputObject
 ```
 ## Example Output in Azure global regions

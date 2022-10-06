@@ -1,6 +1,6 @@
 # Module: Private DNS Zones
 
-This module deploys Private DNS Zones used for Private Link based on the recommendations from the Azure Landing Zone Conceptual Architecture.  
+This module deploys Private DNS Zones used for Private Link based on the recommendations from the Azure Landing Zone Conceptual Architecture.
 
 Module deploys the following resources:
 
@@ -79,7 +79,7 @@ There are two different sets of input parameters; one for deploying to Azure glo
 
 ```bash
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
@@ -100,7 +100,7 @@ az deployment group create --name ${NAME:0:63} --resource-group $RESOURCEGROUP -
 OR
 ```bash
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
@@ -123,7 +123,7 @@ az deployment group create --name ${NAME:0:63} --resource-group $RESOURCEGROUP -
 
 ```powershell
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
@@ -149,7 +149,7 @@ OR
 
 ```powershell
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId

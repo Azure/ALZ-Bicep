@@ -68,8 +68,8 @@ There are separate input parameters files depending on which Azure cloud you are
 ### Azure CLI
 
 ```bash
-# For Azure Global regions  
-# Set Platform management subscripion ID as the the current subscription 
+# For Azure Global regions
+# Set Platform management subscripion ID as the the current subscription
 ManagementSubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ManagementSubscriptionId
 
@@ -88,13 +88,13 @@ az group create \
   --name $GROUP \
   --location eastus
 
-# Deploy Module 
+# Deploy Module
 az deployment group create --name ${NAME:0:63} --resource-group $GROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 OR
 ```bash
-# For Azure China regions  
-# Set Platform management subscripion ID as the the current subscription 
+# For Azure China regions
+# Set Platform management subscripion ID as the the current subscription
 ManagementSubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ManagementSubscriptionId
 
@@ -113,7 +113,7 @@ az group create \
   --name $GROUP \
   --location chinaeast2
 
-# Deploy Module 
+# Deploy Module
 az deployment group create --name ${NAME:0:63} --resource-group $GROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 
@@ -121,7 +121,7 @@ az deployment group create --name ${NAME:0:63} --resource-group $GROUP --paramet
 
 ```powershell
 # For Azure Global regions
-# Set Platform management subscripion ID as the the current subscription 
+# Set Platform management subscripion ID as the the current subscription
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
@@ -149,7 +149,7 @@ New-AzResourceGroupDeployment @inputObject
 OR
 ```powershell
 # For Azure China regions
-# Set Platform management subscripion ID as the the current subscription 
+# Set Platform management subscripion ID as the the current subscription
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.

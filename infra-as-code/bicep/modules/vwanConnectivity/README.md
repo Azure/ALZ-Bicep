@@ -84,7 +84,7 @@ In this example, the resources required for Virtual WAN connectivity will be dep
 **NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
@@ -107,7 +107,7 @@ az deployment group create --name ${NAME:0:63} --resource-group $GROUP --paramet
 OR
 ```bash
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
@@ -132,7 +132,7 @@ az deployment group create --name ${NAME:0:63} --resource-group $GROUP --paramet
 
 ```powershell
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
@@ -153,13 +153,13 @@ $inputObject = @{
 
 New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'EastUs'
-  
+
 New-AzResourceGroupDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
@@ -179,7 +179,7 @@ $inputObject = @{
 
 New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'chinaeast2'
-  
+
 New-AzResourceGroupDeployment @inputObject
   ```
 ## Example Output in Azure global regions
