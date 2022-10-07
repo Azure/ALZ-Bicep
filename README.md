@@ -29,6 +29,16 @@ Detailed information about how to use, deploy and extend artifacts found in this
 
 ## Overview
 
+Asurgent changes: 
+none :) 
+
+Information about fork updates: 
+
+https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks
+
+https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork
+
+
 The Azure Landing Zones Bicep repo provides an approach for deploying and managing the core platform capabilities of Cloud Adoption Framework Azure Landing Zones conceptual architecture using Bicep.
 
 In its current incarnation each module can be deployed separately via command line but in future releases a more automated approach, via orchestration modules, will be published; but due to current Bicep & ARM limitations this is not possible today.
