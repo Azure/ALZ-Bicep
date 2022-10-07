@@ -455,7 +455,7 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in va
   name: 'deploy-Gateway-Public-IP-${i}'
   params: {
     parLocation: parLocation
-    parAvailabilityZones: (gateway.gatewayType == 'ExpressRoute') ? parAzErGatewayAvailabilityZones : parAzVpnGatewayAvailabilityZones
+    parAvailabilityZones: gateway.gatewayType == 'ExpressRoute' ? parAzErGatewayAvailabilityZones : gateway.gatewayType == 'Vpn' ? parAzVpnGatewayAvailabilityZones : []
     parPublicIpName: '${gateway.name}-PublicIp'
     parPublicIpProperties: {
       publicIpAddressVersion: 'IPv4'
