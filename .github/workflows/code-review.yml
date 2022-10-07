@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v2
         with:
@@ -32,6 +33,7 @@ jobs:
           VALIDATE_MARKDOWN: true
           VALIDATE_POWERSHELL: true
           VALIDATE_YAML: true
+          VALIDATE_EDITORCONFIG: true
 
   markdown-link-check:
     name: Markdown Link Check
