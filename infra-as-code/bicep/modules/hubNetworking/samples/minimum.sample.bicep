@@ -22,9 +22,7 @@ module minimum_hub_network '../hubNetworking.bicep' = {
   name: 'minimum_hub_network'
   params: {
     parLocation: location
-    parAzFirewallAvailabilityZones: [
-    ]
-    parAzGatewayAvailabilityZones: [
-    ]
+    parAzFirewallAvailabilityZones: []
+    parAzGatewayAvailabilityZones: []
   }
 }
