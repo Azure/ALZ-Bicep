@@ -1,6 +1,6 @@
 # Module: Public IP
 
-This module defines a public IP address and outputs the id for other modules to consume.  
+This module defines a public IP address and outputs the id for other modules to consume.
 
 Module deploys the following resources:
 

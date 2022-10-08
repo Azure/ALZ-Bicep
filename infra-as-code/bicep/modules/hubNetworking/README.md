@@ -1,6 +1,6 @@
 # Module:  Hub-Networking
 
-This module defines hub networking based on the recommendations from the Azure Landing Zone Conceptual Architecture.  
+This module defines hub networking based on the recommendations from the Azure Landing Zone Conceptual Architecture.
 
 Module deploys the following resources:
 
@@ -95,7 +95,7 @@ There are two different sets of input parameters; one for deploying to Azure glo
 ### Azure CLI
 ```bash
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
@@ -110,7 +110,7 @@ az deployment group create \
 OR
 ```bash
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
@@ -127,14 +127,14 @@ az deployment group create \
 
 ```powershell
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 New-AzResourceGroup -Name 'Hub_Networking_POC' `
   -Location 'eastus'
-  
+
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json `
@@ -143,14 +143,14 @@ New-AzResourceGroupDeployment `
 OR
 ```powershell
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 New-AzResourceGroup -Name 'Hub_Networking_POC' `
   -Location 'chinaeast2'
-  
+
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json `

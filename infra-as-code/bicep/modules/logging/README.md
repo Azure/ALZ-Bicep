@@ -67,8 +67,8 @@ There are separate input parameters files depending on which Azure cloud you are
 
 ### Azure CLI
 ```bash
-# For Azure Global regions  
-# Set Platform management subscripion ID as the the current subscription 
+# For Azure Global regions
+# Set Platform management subscripion ID as the the current subscription
 ManagementSubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ManagementSubscriptionId
 
@@ -77,7 +77,7 @@ az group create \
   --name alz-logging \
   --location eastus
 
-# Deploy Module 
+# Deploy Module
 az deployment group create \
   --template-file infra-as-code/bicep/modules/logging/logging.bicep \
   --parameters @infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json \
@@ -85,8 +85,8 @@ az deployment group create \
 ```
 OR
 ```bash
-# For Azure China regions  
-# Set Platform management subscripion ID as the the current subscription 
+# For Azure China regions
+# Set Platform management subscripion ID as the the current subscription
 ManagementSubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ManagementSubscriptionId
 
@@ -95,7 +95,7 @@ az group create \
   --name alz-logging \
   --location chinaeast2
 
-# Deploy Module 
+# Deploy Module
 az deployment group create \
   --template-file infra-as-code/bicep/modules/logging/logging.bicep \
   --parameters @infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json \
@@ -106,7 +106,7 @@ az deployment group create \
 
 ```powershell
 # For Azure Global regions
-# Set Platform management subscripion ID as the the current subscription 
+# Set Platform management subscripion ID as the the current subscription
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
@@ -124,7 +124,7 @@ New-AzResourceGroupDeployment `
 OR
 ```powershell
 # For Azure China regions
-# Set Platform management subscripion ID as the the current subscription 
+# Set Platform management subscripion ID as the the current subscription
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
