@@ -1,15 +1,17 @@
 targetScope = 'subscription'
 
-@description('Azure Region where Resource Group will be created.  No Default')
+@description('Azure Region where Resource Group will be created.')
 param parLocation string
 
-@description('Name of Resource Group to be created.  No Default')
+@description('Name of Resource Group to be created.')
+@minLength(2)
+@maxLength(64)
 param parResourceGroupName string
 
-@description('Tags you would like to be applied to all resources in this module')
+@description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
 param parTags object = {}
 
-@description('Set Parameter to true to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id
