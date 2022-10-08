@@ -1,27 +1,27 @@
 targetScope = 'tenant'
 
-@description('Prefix for the management group hierarchy.  This management group will be created as part of the deployment.')
+@description('Prefix for the management group hierarchy. This management group will be created as part of the deployment. Default: alz')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@description('Display name for top level management group.  This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter.')
+@description('Display name for top level management group. This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter. Default: Azure Landing Zones')
 @minLength(2)
 param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
 
-@description('Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group.')
+@description('Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group. Default: Empty String')
 param parTopLevelManagementGroupParentId string = ''
 
-@description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
+@description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true')
 param parLandingZoneMgAlzDefaultsEnable bool = true
 
-@description('Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.')
+@description('Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true. Default: false')
 param parLandingZoneMgConfidentialEnable bool = false
 
-@description('Dictionary Object to allow additional or different child Management Groups of Landing Zones Management Group to be deployed.')
+@description('Dictionary Object to allow additional or different child Management Groups of Landing Zones Management Group to be deployed. Default: Empty Object')
 param parLandingZoneMgChildren object = {}
 
-@description('Set Parameter to true to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Platform and Child Management Groups
@@ -219,7 +219,7 @@ output outPlatformConnectivityManagementGroupId string = resPlatformConnectivity
 output outPlatformIdentityManagementGroupId string = resPlatformIdentityMg.id
 
 output outLandingZonesManagementGroupId string = resLandingZonesMg.id
-output outLandingZoneChildrenMangementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}' ]
+output outLandingZoneChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}' ]
 
 output outSandboxManagementGroupId string = resSandboxMg.id
 
@@ -234,7 +234,7 @@ output outPlatformConnectivityManagementGroupName string = resPlatformConnectivi
 output outPlatformIdentityManagementGroupName string = resPlatformIdentityMg.name
 
 output outLandingZonesManagementGroupName string = resLandingZonesMg.name
-output outLandingZoneChildrenMangementGroupNames array = [for mg in items(varLandingZoneMgChildrenUnioned): mg.value.displayName ]
+output outLandingZoneChildrenManagementGroupNames array = [for mg in items(varLandingZoneMgChildrenUnioned): mg.value.displayName ]
 
 output outSandboxManagementGroupName string = resSandboxMg.name
 
