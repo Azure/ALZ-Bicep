@@ -4,7 +4,7 @@ param parLocation string = resourceGroup().location
 @description('Switch to enable/disable BGP Propagation on route table. Default: false')
 param parDisableBgpRoutePropagation bool = false
 
-@description('Id of the DdosProtectionPlan which will be applied to the Virtual Network.  Default: Empty String')
+@description('Id of the DdosProtectionPlan which will be applied to the Virtual Network. Default: Empty String')
 param parDdosProtectionPlanId string = ''
 
 @description('The IP address range for all virtual networks to use. Default: 10.11.0.0/16')

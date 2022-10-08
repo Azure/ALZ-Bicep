@@ -5,7 +5,7 @@ This module defines spoke networking based on the recommendations from the Azure
 Module deploys the following resources:
 
 - Virtual Network (Spoke VNet)
-- UDR - if Firewall is enabled
+- Route Table with route to NVA - if Firewall is enabled
 
 > ## Note
 >
