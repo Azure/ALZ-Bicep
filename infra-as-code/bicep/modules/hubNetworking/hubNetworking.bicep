@@ -10,7 +10,7 @@ param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 @description('The IP address range for all virtual networks to use. Default: 10.10.0.0/16')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
-@description('The name and IP address range for each subnet in the virtual networks. Default: AzureBastionSubnet, GatewaySubnet, AzureFirewall Subnet')
+@description('The name and IP address range for each subnet in the virtual networks. Default: AzureBastionSubnet, GatewaySubnet, AzureFirewallSubnet')
 param parSubnets array = [
   {
     name: 'AzureBastionSubnet'
@@ -57,13 +57,13 @@ param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
 @description('Switch to enable/disable Azure Firewall deployment. Default: true')
 param parAzFirewallEnabled bool = true
 
-@description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall ')
+@description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall')
 param parAzFirewallName string = '${parCompanyPrefix}-azfw-${parLocation}'
 
 @description('Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}')
 param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
 
-@description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
+@description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard')
 @allowed([
   'Standard'
   'Premium'
@@ -75,7 +75,7 @@ param parAzFirewallTier string = 'Standard'
   '2'
   '3'
 ])
-@description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
+@description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty. Default Empty Array')
 param parAzFirewallAvailabilityZones array = []
 
 @description('Switch to enable/disable Azure Firewall DNS Proxy. Default: true')
@@ -90,7 +90,7 @@ param parDisableBgpRoutePropagation bool = false
 @description('Switch to enable/disable Private DNS Zones deployment. Default: true')
 param parPrivateDnsZonesEnabled bool = true
 
-@description('Resource Group Name for Private DNS Zones. Default: same resource group')
+@description('Resource Group Name for Private DNS Zones. Default: resourceGroup().name')
 param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 
 @description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
@@ -195,10 +195,10 @@ param parExpressRouteGatewayConfig object = {
   }
 }
 
-@description('Tags you would like to be applied to all resources in this module. Default: empty array')
+@description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
 param parTags object = {}
 
-@description('Set Parameter to true to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 var varSubnetProperties = [for subnet in parSubnets: {
