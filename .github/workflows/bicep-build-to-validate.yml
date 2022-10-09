@@ -112,5 +112,5 @@ jobs:
         uses: Microsoft/ps-rule@v2.3.2
         with:
           modules: PSRule.Rules.Azure
-          baseline: Azure.GA_2022_06
+          baseline: Azure.GA_2022_09
         continue-on-error: true
