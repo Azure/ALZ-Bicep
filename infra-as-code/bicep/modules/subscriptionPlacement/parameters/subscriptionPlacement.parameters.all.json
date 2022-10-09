@@ -2,17 +2,17 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-        "parTargetManagementGroupId": {
-          "value": "alz-platform-connectivity"
-        },
-        "parSubscriptionIds": {
-          "value": [
-            "34b63c8f-1782-42e6-8fb9-ba6ee8b99735",
-            "4f9f8765-911a-4a6d-af60-4bc0473268c0"
-          ]
-        },
-        "parTelemetryOptOut": {
-          "value": false
-        }
+    "parTargetManagementGroupId": {
+      "value": "alz-platform-connectivity"
+    },
+    "parSubscriptionIds": {
+      "value": [
+        "34b63c8f-1782-42e6-8fb9-ba6ee8b99735",
+        "4f9f8765-911a-4a6d-af60-4bc0473268c0"
+      ]
+    },
+    "parTelemetryOptOut": {
+      "value": false
     }
+  }
 }
