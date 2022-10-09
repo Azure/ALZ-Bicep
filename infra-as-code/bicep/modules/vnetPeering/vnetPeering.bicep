@@ -1,25 +1,27 @@
-@description('Virtual Network ID of Virtual Network destination. No default')
+@description('Virtual Network ID of Virtual Network destination.')
 param parDestinationVirtualNetworkId string
 
-@description('Name of source Virtual Network we are peering. No default')
+@description('Name of source Virtual Network we are peering.')
 param parSourceVirtualNetworkName string
 
-@description('Name of destination virtual network we are peering. No default')
+@description('Name of destination virtual network we are peering.')
+@minLength(2)
+@maxLength(64)
 param parDestinationVirtualNetworkName string
 
-@description('Switch to enable/disable Virtual Network Access for the Network Peer. Default = true')
+@description('Switch to enable/disable Virtual Network Access for the Network Peer. Default: true')
 param parAllowVirtualNetworkAccess bool = true
 
-@description('Switch to enable/disable forwarded traffic for the Network Peer. Default = true')
+@description('Switch to enable/disable forwarded traffic for the Network Peer. Default: true')
 param parAllowForwardedTraffic bool = true
 
-@description('Switch to enable/disable gateway transit for the Network Peer. Default = false')
+@description('Switch to enable/disable gateway transit for the Network Peer. Default: false')
 param parAllowGatewayTransit bool = false
 
-@description('Switch to enable/disable remote gateway for the Network Peer. Default = false')
+@description('Switch to enable/disable remote gateway for the Network Peer. Default:false')
 param parUseRemoteGateways bool = false
 
-@description('Set Parameter to true to Opt-out of deployment telemetry. Default = false')
+@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id
