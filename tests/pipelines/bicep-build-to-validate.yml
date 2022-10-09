@@ -144,7 +144,7 @@ jobs:
 
       - task: Bash@3
         displayName: Az CLI Register Resource Providers for PR
-        name: create_rsg
+        name: register_providers
         inputs:
           targetType: "inline"
           script: |
