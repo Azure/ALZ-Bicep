@@ -1,5 +1,5 @@
 {
-  version: "0.10.4",
-  releaseNotes: "https://github.com/Azure/ALZ-Bicep/releases/tag/v0.10.4",
-  releaseDateTimeUTC: "20221009T1825143733Z"
+  "version": "0.10.4",
+  "releaseNotes": "https://github.com/Azure/ALZ-Bicep/releases/tag/v0.10.4",
+  "releaseDateTimeUTC": "20221009T1825143733Z"
 }
