@@ -1,6 +1,6 @@
 # Module:  Hub-Networking
 
-This module defines hub networking based on the recommendations from the Azure Landing Zone Conceptual Architecture.  
+This module defines hub networking based on the recommendations from the Azure Landing Zone Conceptual Architecture.
 
 Module deploys the following resources:
 
@@ -37,10 +37,12 @@ The module requires the following inputs:
  | parAzFirewallName               | string | `${parCompanyPrefix}-azfw-${parLocation}`                                                                                  | Name associated with Azure Firewall                                                                                                                                                                                                                                    | 1-80 char                     | alz-azfw-eastus                                |
  | parAzFirewallPoliciesName       | string | `${parCompanyPrefix}-azfwpolicy-${resourceGroup().location}`                                                               | Name associated with Azure Firewall Policy                                                                                                                                                                                                                             | 1-80 char                     | alz-azfwpolicy-eastus                          |
  | parAzFirewallTier               | string | Standard                                                                                                                   | Tier associated with the Firewall to be deployed.                                                                                                                                                                                                                      | Standard or Premium           | Premium                                        |
- | parAzFirewallAvailabilityZones  | array  | Empty Array []                                                                                                             | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.                                                                                                                                | None                          | `['1']` or `['1' ,'2', '3']`                   |
- | parHubRouteTableName            | string | `${parCompanyPrefix}-hub-routetable`                                                                                       | Name of route table to be associated with Hub Network                                                                                                                                                                                                                  | 1-80 char                     | alz-hub-routetable                             |
- | parVpnGatewayConfig             | object | See example parameters file [`parameters/hubNetworking.parameters.all.json`](parameters/hubNetworking.parameters.all.json) | Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parVpnGatewayConfig": {"value": {} }'''                               | None                          | See Default                                    |
- | parExpressRouteGatewayConfig    | object | See example parameters file [`parameters/hubNetworking.parameters.all.json`](parameters/hubNetworking.parameters.all.json) | Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parExpressRouteGatewayConfig": {"value": {} }'''    | None                          | See Default                                    |
+ | parAzFirewallAvailabilityZones  | array  | Empty Array []                                                                                                             | Availability Zones to deploy the Azure Firewall across. This also affects the PIP associated with the Azure Firewall. Region must support Availability Zones to use. If it does not then leave empty.                                                                                                                                | None                          | `['1']` or `['1' ,'2', '3']`                   |
+ | parAzErGatewayAvailabilityZones  | array  | Empty Array []                                                                                                             | Availability Zones to deploy the ER Gateway PIP across. Ensure that you use a zonal SKU for the Gateway if using Zonal or Zone-Redundant Public IP Address. Region must support Availability Zones to use. If it does not then leave empty.                                                                                                                                | None                          | `['1']` or `['1' ,'2', '3']`                   |
+ | parAzVpnGatewayAvailabilityZones  | array  | Empty Array []                                                                                                             | Availability Zones to deploy the VPN Gateway PIP across. Ensure that you use a zonal SKU for the Gateway if using Zonal or Zone-Redundant Public IP Address. Region must support Availability Zones to use. If it does not then leave empty.                                                                                                                                | None                          | `['1']` or `['1' ,'2', '3']`                   |
+| parHubRouteTableName            | string | `${parCompanyPrefix}-hub-routetable`                                                                                       | Name of route table to be associated with Hub Network                                                                                                                                                                                                                  | 1-80 char                     | alz-hub-routetable                             |
+ | parVpnGatewayConfig             | object | See example parameters file [`parameters/hubNetworking.parameters.all.json`](parameters/hubNetworking.parameters.all.json) | Configuration for VPN virtual network gateway to be deployed. Ensure that you use a zonal SKU if deploying with zone redundant Public IP. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parVpnGatewayConfig": {"value": {} }'''                               | None                          | See Default                                    |
+ | parExpressRouteGatewayConfig    | object | See example parameters file [`parameters/hubNetworking.parameters.all.json`](parameters/hubNetworking.parameters.all.json) | Configuration for ExpressRoute virtual network gateway to be deployed. Ensure that you use a zonal SKU if deploying with zone redundant Public IP. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parExpressRouteGatewayConfig": {"value": {} }'''    | None                          | See Default                                    |
  | parSubnets                      | array  | See example parameters file [`parameters/hubNetworking.parameters.all.json`](parameters/hubNetworking.parameters.all.json) | Array of objects to provide for a dynamic set of subnets                                                                                                                                                                                                               | Must provide array of objects | See Default                                    |
  | parDnsServerIps                 | array  | Empty Array []                                                                                                             | Array of DNS Server IP addresses for VNet.                                                                                                                                                                                                                             | None                          | `['10.10.1.4', '10.10.2.4']`                   |
  | parAzFirewallDnsProxyEnabled    | bool   | true                                                                                                                       | Switch which enables DNS Proxy to be enabled on the Azure Firewall                                                                                                                                                                                                     | None                          | true                                           |
@@ -91,7 +93,7 @@ There are two different sets of input parameters; one for deploying to Azure glo
 ### Azure CLI
 ```bash
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
@@ -106,7 +108,7 @@ az deployment group create \
 OR
 ```bash
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
@@ -123,14 +125,14 @@ az deployment group create \
 
 ```powershell
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 New-AzResourceGroup -Name 'Hub_Networking_POC' `
   -Location 'eastus'
-  
+
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json `
@@ -139,14 +141,14 @@ New-AzResourceGroupDeployment `
 OR
 ```powershell
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 New-AzResourceGroup -Name 'Hub_Networking_POC' `
   -Location 'chinaeast2'
-  
+
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json `
