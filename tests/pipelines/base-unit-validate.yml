@@ -83,7 +83,7 @@ jobs:
 
       - task: Bash@3
         displayName: Az CLI Deploy Logging for PR
-        name: validate_logging
+        name: create_logging
         inputs:
           targetType: "inline"
           script: |
