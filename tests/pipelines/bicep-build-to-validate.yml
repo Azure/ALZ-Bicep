@@ -143,6 +143,15 @@ jobs:
             az group create --name $(ResourceGroupName) --location $(Location)
 
       - task: Bash@3
+        displayName: Az CLI Register Resource Providers for PR
+        name: create_rsg
+        inputs:
+          targetType: "inline"
+          script: |
+            az account set --subscription $(subscriptionId)
+            az provider register -n 'Microsoft.Insights'
+
+      - task: Bash@3
         displayName: Az CLI Deploy Management Groups for PR
         name: create_mgs
         condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
