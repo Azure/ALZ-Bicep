@@ -71,7 +71,7 @@ jobs:
         inputs:
           targetType: "inline"
           script: |
-            az deployment tenant create --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettings.parameters.min.json --location $(Location)
+            az deployment tenant create --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.min.json --location $(Location)
 
       - task: Bash@3
         displayName: Az CLI Validate Custom Role Definitions for PR
