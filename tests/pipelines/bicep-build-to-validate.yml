@@ -185,7 +185,7 @@ jobs:
         inputs:
           targetType: "inline"
           script: |
-            az deployment tenant create --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettings.parameters.min.json
+            az deployment tenant create --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" --location $(Location)
 
       - task: Bash@3
         displayName: Az CLI Subscription Placement for PR
