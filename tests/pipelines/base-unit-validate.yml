@@ -58,6 +58,16 @@ jobs:
             az deployment sub create --name "deploy-$(ResourceGroupName)" --template-file infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep --location $(Location) --parameters parLocation=$(Location) parResourceGroupName=$(ResourceGroupName)
 
       - task: Bash@3
+        displayName: Az CLI Register Resource Providers for PR
+        name: create_rsg
+        inputs:
+          targetType: "inline"
+          script: |
+            az account set --subscription $(subscriptionId)
+            az provider register -n 'Microsoft.Insights'
+
+
+      - task: Bash@3
         displayName: Az CLI Deploy Management Groups for PR
         name: create_mgs
         inputs:
@@ -90,12 +100,12 @@ jobs:
             az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/parameters/logging.parameters.min.json
 
       - task: Bash@3
-        displayName: Az CLI Deploy mgDiagSettingsAll for PR
+        displayName: Az CLI Validate mgDiagSettingsAll for PR
         name: create_mgDiagSettingsAll
         inputs:
           targetType: "inline"
           script: |
-            az deployment tenant create --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parLogAnalyticsWorkspaceResourceId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" --location $(Location)
+            az deployment tenant validate --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parLogAnalyticsWorkspaceResourceId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" --location $(Location)
 
       - task: Bash@3
         displayName: Az CLI Validate Subscription Placement for PR
