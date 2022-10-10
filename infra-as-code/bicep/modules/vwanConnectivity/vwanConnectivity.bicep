@@ -221,7 +221,7 @@ resource resErGateway 'Microsoft.Network/expressRouteGateways@2021-05-01' = if (
   }
 }
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-08-01' = if (parVirtualHubEnabled && parAzFirewallEnabled) {
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2022-05-01' = if (parVirtualHubEnabled && parAzFirewallEnabled) {
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
@@ -235,7 +235,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-08-01' = i
   }
 }
 
-resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (parVirtualHubEnabled && parAzFirewallEnabled) {
+resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2022-05-01' = if (parVirtualHubEnabled && parAzFirewallEnabled) {
   name: parAzFirewallName
   location: parLocation
   tags: parTags
