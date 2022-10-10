@@ -36,6 +36,7 @@ The following are the unique ID's (also known as PIDs) used in each of the modul
 | hubNetworking                   | 2686e846-5fdc-4d4f-b533-16dcb09d6e6c |
 | logging                         | f8087c67-cc41-46b2-994d-66e4b661860d |
 | managementGroups                | 9b7965a0-d77c-41d6-85ef-ec3dfea4845b |
+| mgDiagSettings                  | 5d17f1c2-f17b-4426-9712-0cd2652c4435 |
 | policy-definitions              | 2b136786-9881-412e-84ba-f4c2822e1ac9 |
 | policy-assignments              | 78001e36-9738-429c-a343-45cc84e8a527 |
 | alzDefaultPolicyAssignments     | 98cef979-5a6b-403b-83c7-10c8f04ac9a2 |
@@ -51,3 +52,4 @@ The following are the unique ID's (also known as PIDs) used in each of the modul
 | hubSpoke - Orchestration        | 50ad3b1a-f72c-4de4-8293-8a6399991beb |
 | hubPeeredSpoke - Orchestration  | 8ea6f19a-d698-4c00-9afb-5c92d4766fd2 |
 | SubPlacementAll - Orchestration | bb800623-86ff-4ab4-8901-93c2b70967ae |
+| mgDiagSettingsAll - Orchestration | f49c8dfb-c0ce-4ee0-b316-5e4844474dd0 |

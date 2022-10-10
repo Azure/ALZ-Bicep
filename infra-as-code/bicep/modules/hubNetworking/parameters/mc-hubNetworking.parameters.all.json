@@ -69,6 +69,12 @@
     "parAzFirewallAvailabilityZones": {
       "value": []
     },
+    "parAzErGatewayAvailabilityZones": {
+      "value": []
+    },
+    "parAzVpnGatewayAvailabilityZones": {
+      "value": []
+    },
     "parAzFirewallDnsProxyEnabled": {
       "value": true
     },

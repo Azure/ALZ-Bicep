@@ -78,6 +78,22 @@ param parAzFirewallTier string = 'Standard'
 @description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
 param parAzFirewallAvailabilityZones array = []
 
+@allowed([
+  '1'
+  '2'
+  '3'
+])
+@description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP')
+param parAzErGatewayAvailabilityZones array = []
+
+@allowed([
+  '1'
+  '2'
+  '3'
+])
+@description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP')
+param parAzVpnGatewayAvailabilityZones array = []
+
 @description('Switch to enable/disable Azure Firewall DNS Proxy. Default: true')
 param parAzFirewallDnsProxyEnabled bool = true
 
@@ -149,7 +165,7 @@ param parPrivateDnsZones array = [
 ]
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
-@description('''Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. 
+@description('''Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
 "parVpnGatewayConfig": {
   "value": {}
 }''')
@@ -172,7 +188,7 @@ param parVpnGatewayConfig object = {
   }
 }
 
-@description('''Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. 
+@description('''Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
 "parExpressRouteGatewayConfig": {
   "value": {}
 }''')
@@ -229,7 +245,7 @@ resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-08-01
   tags: parTags
 }
 
-//DDos Protection plan will only be enabled if parDdosEnabled is true.  
+//DDos Protection plan will only be enabled if parDdosEnabled is true.
 resource resHubVnet 'Microsoft.Network/virtualNetworks@2021-08-01' = {
   dependsOn: [
     resBastionNsg
@@ -403,7 +419,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
 }
 
 // AzureBastionSubnet is required to deploy Bastion service. This subnet must exist in the parsubnets array if you enable Bastion Service.
-// There is a minimum subnet requirement of /27 prefix.  
+// There is a minimum subnet requirement of /27 prefix.
 // If you are deploying standard this needs to be larger. https://docs.microsoft.com/en-us/azure/bastion/configuration-settings#subnet
 resource resBastion 'Microsoft.Network/bastionHosts@2021-08-01' = if (parAzBastionEnabled) {
   location: parLocation
@@ -439,6 +455,7 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in va
   name: 'deploy-Gateway-Public-IP-${i}'
   params: {
     parLocation: parLocation
+    parAvailabilityZones: gateway.gatewayType == 'ExpressRoute' ? parAzErGatewayAvailabilityZones : gateway.gatewayType == 'Vpn' ? parAzVpnGatewayAvailabilityZones : []
     parPublicIpName: '${gateway.name}-PublicIp'
     parPublicIpProperties: {
       publicIpAddressVersion: 'IPv4'
@@ -525,12 +542,12 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-08-01' = i
 }
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
-// There is a minimum subnet requirement of /26 prefix.  
+// There is a minimum subnet requirement of /26 prefix.
 resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-08-01' = if (parAzFirewallEnabled) {
   name: parAzFirewallName
   location: parLocation
   tags: parTags
-  zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : json('null'))
+  zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : [])
   properties: {
     ipConfigurations: [
       {
