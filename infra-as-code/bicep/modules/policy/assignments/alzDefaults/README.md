@@ -35,33 +35,30 @@ The module does not generate any outputs.
 <!-- markdownlint-restore -->
 
 ### Azure CLI
-**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 # For Azure global regions
 
-$inputObject = @(
-  '--name',                ('alz-alzPolicyAssignmentDefaultsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--parameters',          '@infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json',
-  '--location',            'eastus',
-  '--management-group-id', 'alz',
-  '--template-file',       "infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep"
-)
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-alzPolicyAssignmentDefaults-${dateYMD}"
+PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json"
+LOCATION="eastus"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep"
 
-az deployment mg create @inputObject
+az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE
 ```
 OR
 ```bash
 # For Azure China regions
 
-$inputObject = @(
-  '--name',                ('alz-alzPolicyAssignmentDefaultsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--parameters',          '@infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json',
-  '--location',            'chinaeast2',
-  '--management-group-id', 'alz',
-  '--template-file',       "infra-as-code/bicep/modules/policy/assignments/alzDefaults/mc-alzDefaultPolicyAssignments.bicep"
-)
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-alzPolicyAssignmentDefaults-${dateYMD}"
+PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json"
+LOCATION="chinaeast2"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep"
 
-az deployment mg create @inputObject
+az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE
 ```
 
 ### PowerShell

@@ -96,15 +96,14 @@ This however may be done as part of another process, for example upon Subscripti
 ```bash
 # For Azure global regions
 
-$inputObject = @(
-  '--name',                ('alz-SubPlacementAll-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--parameters',          '@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json',
-  '--location',            'EastUS',
-  '--management-group-id', 'alz',
-  '--template-file',       "infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
-)
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-SubPlacementAll-${dateYMD}"
+PARAMETERS="@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json"
+LOCATION="eastus"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
 
-az deployment mg create @inputObject
+az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE
 ```
 
 OR
@@ -112,15 +111,14 @@ OR
 ```bash
 # For Azure China regions
 
-$inputObject = @(
-  '--name',                ('alz-SubPlacementAll-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--parameters',          '@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json',
-  '--location',            'chinaeast2',
-  '--management-group-id', 'alz',
-  '--template-file',       "infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
-)
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-SubPlacementAll-${dateYMD}"
+PARAMETERS="@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json"
+LOCATION="chinaeast2"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
 
-az deployment mg create @inputObject
+az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE
 ```
 
 ### PowerShell

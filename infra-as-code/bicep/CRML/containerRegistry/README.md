@@ -34,9 +34,14 @@ We will take the default values and not pass any parameters.
 > For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
-**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 
 ```bash
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-ContainerRegistry-${dateYMD}"
+RESOURCEGROUP="Bicep_ACR"
+PARAMETERS="@infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json"
+TEMPLATEFILE="infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep"
+
 az group create --location eastus \
    --name Bicep_ACR
 
@@ -47,7 +52,7 @@ $inputObject = @(
 '--template-file',  "infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep",
 )
 
-az deployment group create @inputObject
+az deployment group create --name ${NAME:0:63} --resource-group $RESOURCEGROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 
 ### PowerShell

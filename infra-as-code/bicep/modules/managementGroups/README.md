@@ -128,7 +128,7 @@ LOCATION="eastus"
 PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
 TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
 
-az deployment tenant create --name ${NAME:0:63} --parameters $PARAMETERS --template-file $TEMPLATEFILE
+az deployment tenant create --name ${NAME:0:63} --location $LOCATION --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 OR
 ```bash

@@ -61,7 +61,7 @@ In this example, the spoke resources will be deployed to the resource group spec
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
-**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
+
 ```bash
 # For Azure global regions
 
@@ -73,21 +73,27 @@ $inputObject = @(
   '--template-file',       "infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep"
 )
 
-az deployment mg create @inputObject
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-HubPeeredSpoke-${dateYMD}"
+PARAMETERS="@infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json"
+LOCATION="eastus"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep"
+
+az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE
 ```
 OR
 ```bash
 # For Azure China regions
 
-$inputObject = @(
-  '--name',                ('alz-HubPeeredSpoke-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--parameters',          '@infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json',
-  '--location',            'chinaeast2',
-  '--management-group-id', 'alz',
-  '--template-file',       "infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep"
-)
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-HubPeeredSpoke-${dateYMD}"
+PARAMETERS="@infra-as-code/bicep/orchestration/hubPeeredSpoke/parameters/hubPeeredSpoke.parameters.all.json"
+LOCATION="chinaeast2"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/orchestration/hubPeeredSpoke/hubPeeredSpoke.bicep"
 
-az deployment mg create @inputObject
+az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE
 ```
 
 ### PowerShell
