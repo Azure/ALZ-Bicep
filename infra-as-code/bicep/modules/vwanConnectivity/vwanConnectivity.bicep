@@ -253,9 +253,6 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = if (pa
     virtualHub: {
       id: parVirtualHubEnabled ? resVhub.id : ''
     }
-    additionalProperties: {
-      'Network.DNS.EnableProxy': '${parAzFirewallDnsProxyEnabled}'
-    }
     firewallPolicy: {
       id: (parVirtualHubEnabled && parAzFirewallEnabled) ? resFirewallPolicies.id : ''
     }
