@@ -10,21 +10,21 @@ param parLocation string = deployment().location
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@description('Subscription Id to the Virtual Network Hub object. Default: empty string')
+@description('Subscription Id to the Virtual Network Hub object. Default: Empty String')
 param parPeeredVnetSubscriptionId string = ''
 
-@description('Array of Tags to be applied to all resources in module. Default: empty object')
+@description('Array of Tags to be applied to all resources in module. Default: Empty Object')
 param parTags object = {}
 
 @description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Subscription Module Parameters
-@description('The Management Group Id to place the subscription in. Default: empty string')
+@description('The Management Group Id to place the subscription in. Default: Empty String')
 param parPeeredVnetSubscriptionMgPlacement string = ''
 
 // Resource Group Module Parameters
-@description('Name of Resource Group to be created to contain spoke networking resources like the virtual network.  Default: {parTopLevelManagementGroupPrefix}-{parLocation}-spoke-networking')
+@description('Name of Resource Group to be created to contain spoke networking resources like the virtual network. Default: {parTopLevelManagementGroupPrefix}-{parLocation}-spoke-networking')
 param parResourceGroupNameForSpokeNetworking string = '${parTopLevelManagementGroupPrefix}-${parLocation}-spoke-networking'
 
 // Spoke Networking Module Parameters
