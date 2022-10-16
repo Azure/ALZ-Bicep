@@ -69,6 +69,12 @@
     "parAzFirewallAvailabilityZones": {
       "value": []
     },
+    "parAzErGatewayAvailabilityZones": {
+      "value": []
+    },
+    "parAzVpnGatewayAvailabilityZones": {
+      "value": []
+    },
     "parAzFirewallDnsProxyEnabled": {
       "value": true
     },
@@ -161,7 +167,7 @@
       "value": {
         "name": "alz-ExpressRoute-Gateway",
         "gatewayType": "ExpressRoute",
-        "sku": "ErGw1AZ",
+        "sku": "Standard",
         "vpnType": "RouteBased",
         "generation": "None",
         "enableBgp": false,

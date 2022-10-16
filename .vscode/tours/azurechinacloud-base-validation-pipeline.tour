@@ -39,6 +39,11 @@
     },
     {
       "file": "tests/pipelines/mc-base-unit-validate.yml",
+      "description": "Validate ALZ mgDiagSettingsAll component deployment. Depends on Log Analytics Workspace and Management Groups previously created.",
+      "line": 78
+    },
+    {
+      "file": "tests/pipelines/mc-base-unit-validate.yml",
       "description": "Validate ALZ subscription placement into management group deployment. Depends on management groups previously created.",
       "line": 78
     },
