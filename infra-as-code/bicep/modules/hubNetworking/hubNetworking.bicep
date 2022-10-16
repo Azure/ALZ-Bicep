@@ -75,7 +75,7 @@ param parAzFirewallTier string = 'Standard'
   '2'
   '3'
 ])
-@description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty. Default Empty Array')
+@description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty. Default: Empty Array')
 param parAzFirewallAvailabilityZones array = []
 
 @allowed([
@@ -83,7 +83,7 @@ param parAzFirewallAvailabilityZones array = []
   '2'
   '3'
 ])
-@description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP')
+@description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP. Default: Empty Array')
 param parAzErGatewayAvailabilityZones array = []
 
 @allowed([
@@ -91,7 +91,7 @@ param parAzErGatewayAvailabilityZones array = []
   '2'
   '3'
 ])
-@description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP')
+@description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP. Default: Empty Array')
 param parAzVpnGatewayAvailabilityZones array = []
 
 @description('Switch to enable/disable Azure Firewall DNS Proxy. Default: true')
