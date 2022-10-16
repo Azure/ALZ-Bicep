@@ -5,6 +5,7 @@ This module acts as an orchestration module that create and configures a spoke n
 Module deploys the following resources:
 
 - Subscription placement in Management Group hierarchy - if parPeeredVnetSubscriptionMgPlacement is specified
+- Resource group
 - Virtual Network (Spoke VNet)
 - UDR - if parNextHopIPAddress and resource id of hub virtual network object is specified
 - Hub to Spoke peering - if resource id of hub virtual network object is specified in parHubVirtualNetworkID
@@ -15,7 +16,7 @@ Note that only one peering type can be created with this module, so either tradi
 
 <!-- markdownlint-disable -->
 > You can use this module to enable Landing Zones (aka Subscriptions) with platform resources, as defined above, and also place them into the correct location in the hierarchy to meet governance requirements. For example, you can also use this module to deploy the Identity Landing Zone Subscription's vNet and peer it back to the hub vNet.
-> 
+>
 > You could also use it in a [loop](https://docs.microsoft.com/azure/azure-resource-manager/bicep/loops) to enable multiple Landing Zone Subscriptions at a time in a single deployment.
 <!-- markdownlint-restore -->
 
@@ -39,7 +40,7 @@ The module requires the following inputs:
  | parNextHopIpAddress                    | string | Empty string `''`                                               | IP Address where network traffic should route to                       | None               | `192.168.50.4`                                                                                                                                             |
  | parDisableBgpRoutePropagation                 | bool   | false                                                           | Switch to enable BGP Route Propagation on VNet Route Table             | None               | false                                                                                                                                                      |
  | parSpokeToHubRouteTableName            | string | 'rtb-spoke-to-hub'                                              | Name of Route table to create for the default route of Hub             | None               | `rtb-spoke-to-hub`                                                                                                                                         |
- | parHubVirtualNetworkId                 | string | Empty string `''`                                               | Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID | None               | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/Hub_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-vnet-hub-northeurope`  
+ | parHubVirtualNetworkId                 | string | Empty string `''`                                               | Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID | None               | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/Hub_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-vnet-hub-northeurope`
  | parAllowSpokeForwardedTraffic          | bool   | false                                                           | Switch to enable/disable forwarded Traffic from outside spoke network  | None               | false                                                                                                                                                      |
  | parAllowHubVpnGatewayTransit           | bool   | false                                                           | Switch to enable/disable VPN Gateway for the hub network peering       | None               | false                                                                                                                                                      |
 
