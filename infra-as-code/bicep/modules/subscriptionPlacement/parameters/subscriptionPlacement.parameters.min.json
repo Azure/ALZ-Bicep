@@ -7,8 +7,7 @@
     },
     "parSubscriptionIds": {
       "value": [
-        "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-        "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy"
+        "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
       ]
     },
     "parTelemetryOptOut": {

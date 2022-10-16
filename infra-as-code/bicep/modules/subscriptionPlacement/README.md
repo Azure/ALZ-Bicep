@@ -19,7 +19,7 @@ The module requires the following required input parameters.
 
 ## Deployment
 
-In this example, the subscriptions `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` and `yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy` will be moved to `alz-platform-connectivity` management group.  The inputs for this module are defined in `parameters/subscriptionPlacement.parameters.all.json`.
+In this example, the subscription `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` will be moved to `alz-platform-connectivity` management group. The inputs for this module are defined in `parameters/subscriptionPlacement.parameters.all.json`.
 
 > For the  examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
