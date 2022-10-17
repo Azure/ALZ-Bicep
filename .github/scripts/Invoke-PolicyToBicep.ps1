@@ -51,7 +51,7 @@ function New-PolicyDefinitionsBicepInputTxtFile {
         $fileName = $_.Name
 
         Write-Information "==> Adding '$policyDefinitionName' to '$PWD/$defintionsTxtFileName'" -InformationAction Continue
-        Add-Content -Path "$rootPath/$definitionsLongPath/$defintionsTxtFileName" -Encoding "utf8" -Value "{`r`n`tname: '$policyDefinitionName'`r`n`tlibDefinition: json(loadTextContent('$definitionsPath/$fileName'))`r`n}"
+        Add-Content -Path "$rootPath/$definitionsLongPath/$defintionsTxtFileName" -Encoding "utf8" -Value "{`r`n`tname: '$policyDefinitionName'`r`n`tlibDefinition: loadJsonContent('$definitionsPath/$fileName')`r`n}"
     }
 
     $policyDefCount = Get-ChildItem -Recurse -Path "$rootPath/$definitionsLongPath" -Filter "*.json" | Measure-Object
@@ -143,7 +143,7 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
 
         # Start output file creation of Policy Set/Initiative Definitions for Bicep
         Write-Information "==> Adding '$policyDefinitionName' to '$PWD/$defintionsSetTxtFileName'" -InformationAction Continue
-        Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t{`r`n`t`tname: '$policyDefinitionName'`r`n`t`tlibSetDefinition: json(loadTextContent('$definitionsSetPath/$fileName'))`r`n`t`tlibSetChildDefinitions: ["
+        Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t{`r`n`t`tname: '$policyDefinitionName'`r`n`t`tlibSetDefinition: loadJsonContent('$definitionsSetPath/$fileName')`r`n`t`tlibSetChildDefinitions: ["
 
         # Loop through child Policy Set/Initiative Definitions for Bicep output if HashTable not == 0
         if (($policySetDefinitionsOutputForBicep.Count) -ne 0) {
@@ -213,7 +213,7 @@ function New-PolicyAssignmentsBicepInputTxtFile {
         $policyAssignmentNameNoHyphens = $policyAssignmentName.replace("-", "")
 
         Write-Information "==> Adding '$policyAssignmentName' to '$PWD/$assignmentsTxtFileName'" -InformationAction Continue
-        Add-Content -Path "$rootPath/$assignmentsLongPath/$assignmentsTxtFileName" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionId: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: json(loadTextContent('../../policy/$assignmentsLongPath/$fileName'))`r`n}`r`n"
+        Add-Content -Path "$rootPath/$assignmentsLongPath/$assignmentsTxtFileName" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionId: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: loadJsonContent('../../policy/$assignmentsLongPath/$fileName')`r`n}`r`n"
     }
 
     $policyAssignmentCount = Get-ChildItem -Recurse -Path "$rootPath/$assignmentsLongPath" -Filter "*.json" | Measure-Object
