@@ -103,7 +103,7 @@ param parDisableBgpRoutePropagation bool = false
 param parPrivateDnsZonesEnabled bool = true
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
-@description('''Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. 
+@description('''Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
 "parVpnGatewayConfig": {
   "value": {}
 }''')
@@ -126,7 +126,7 @@ param parVpnGatewayConfig object = {
     }
   }
 
-@description('''Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. 
+@description('''Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
 "parExpressRouteGatewayConfig": {
   "value": {}
 }''')
@@ -1078,7 +1078,7 @@ module modPolicyAssignmentLzsDenySubnetWithoutNsg '../../../policy/assignments/p
   }
 }
 
-// Module - Policy Assignment - Deploy-VM-Backup - https://github.com/Azure/bicep/issues/5371 
+// Module - Policy Assignment - Deploy-VM-Backup - https://github.com/Azure/bicep/issues/5371
 module modPolicyAssignmentLzsDeployVmBackup '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   dependsOn: [
     modCustomPolicyDefinitions

@@ -292,7 +292,7 @@ module modPolicyAssignmentIntRootDeployAzActivityLog '../../../policy/assignment
   }
 }
 
-// Module - Policy Assignment - Deploy-ASC-Monitoring 
+// Module - Policy Assignment - Deploy-ASC-Monitoring
 module modPolicyAssignmentIntRootDeployAscMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   // dependsOn: [
   //   modCustomPolicyDefinitions
@@ -457,7 +457,7 @@ module modPolicyAssignmentIdentDenySubnetWithoutNsg '../../../policy/assignments
   }
 }
 
-// Module - Policy Assignment - Deploy-VM-Backup 
+// Module - Policy Assignment - Deploy-VM-Backup
 module modPolicyAssignmentIdentDeployVmBackup '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.platformIdentity)
   name: varModuleDeploymentNames.modPolicyAssignmentIdentDeployVmBackup
@@ -476,7 +476,7 @@ module modPolicyAssignmentIdentDeployVmBackup '../../../policy/assignments/polic
   }
 }
 
-// Modules - Policy Assignments - Management Management Group 
+// Modules - Policy Assignments - Management Management Group
 // Module - Policy Assignment - Deploy-Log-Analytics
 module modPolicyAssignmentMgmtDeployLogAnalytics '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.platformManagement)
@@ -516,7 +516,7 @@ module modPolicyAssignmentMgmtDeployLogAnalytics '../../../policy/assignments/po
   }
 }
 
-// Modules - Policy Assignments - Landing Zones Management Group 
+// Modules - Policy Assignments - Landing Zones Management Group
 // Module - Policy Assignment - Deny-IP-Forwarding
 module modPolicyAssignmentLzsDenyIpForwarding '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
@@ -608,7 +608,7 @@ module modPolicyAssignmentLzsEnableDdosVnet '../../../policy/assignments/policyA
   }
 }
 
-// Module - Policy Assignment - Deny-Storage-http 
+// Module - Policy Assignment - Deny-Storage-http
 module modPolicyAssignmentLzsDenyStorageHttp '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyStorageHttp
@@ -624,7 +624,7 @@ module modPolicyAssignmentLzsDenyStorageHttp '../../../policy/assignments/policy
   }
 }
 
-// Module - Policy Assignment - Deploy-AKS-Policy 
+// Module - Policy Assignment - Deploy-AKS-Policy
 module modPolicyAssignmentLzsDeployAksPolicy '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployAksPolicy
@@ -643,7 +643,7 @@ module modPolicyAssignmentLzsDeployAksPolicy '../../../policy/assignments/policy
   }
 }
 
-// Module - Policy Assignment - Deny-Priv-Escalation-AKS 
+// Module - Policy Assignment - Deny-Priv-Escalation-AKS
 module modPolicyAssignmentLzsDenyPrivEscalationAks '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyPrivEscalationAks
@@ -659,7 +659,7 @@ module modPolicyAssignmentLzsDenyPrivEscalationAks '../../../policy/assignments/
   }
 }
 
-// Module - Policy Assignment - Deny-Priv-Containers-AKS 
+// Module - Policy Assignment - Deny-Priv-Containers-AKS
 module modPolicyAssignmentLzsDenyPrivContainersAks '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyPrivContainersAks
@@ -675,7 +675,7 @@ module modPolicyAssignmentLzsDenyPrivContainersAks '../../../policy/assignments/
   }
 }
 
-// Module - Policy Assignment - Enforce-AKS-HTTPS 
+// Module - Policy Assignment - Enforce-AKS-HTTPS
 module modPolicyAssignmentLzsEnforceAksHttps '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsEnforceAksHttps
@@ -707,7 +707,7 @@ module modPolicyAssignmentLzsEnforceTlsSsl '../../../policy/assignments/policyAs
   }
 }
 
-// Module - Policy Assignment - Deploy-SQL-DB-Auditing 
+// Module - Policy Assignment - Deploy-SQL-DB-Auditing
 module modPolicyAssignmentLzsDeploySqlDbAuditing '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeploySqlDbAuditing
@@ -726,7 +726,7 @@ module modPolicyAssignmentLzsDeploySqlDbAuditing '../../../policy/assignments/po
   }
 }
 
-// Module - Policy Assignment - Deploy-SQL-Threat 
+// Module - Policy Assignment - Deploy-SQL-Threat
 module modPolicyAssignmentLzsDeploySqlThreat '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeploySqlThreat
