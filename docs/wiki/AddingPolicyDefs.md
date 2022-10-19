@@ -62,6 +62,4 @@ For example, you could leave the [Custom Policy Definitions module](https://gith
 
 > Ensure you deploy all of your Custom Policy Definitions at the correct stage of your deployment as per the guidance in the [Deployment Flow wiki article](https://github.com/Evilazaro/ALZ-Bicep/wiki/DeploymentFlow).
 
-## Support
 
-If you have any issues or require any assistance or advice please raise a [GitHub Issue](https://github.com/Evilazaro/ALZ-Bicep/issues/new/choose) on the repo and we will work with you to assist where possible.

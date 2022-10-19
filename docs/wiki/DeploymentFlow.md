@@ -67,7 +67,6 @@ If in your networking topology there is no concept of a hub then you can use eit
 
 We have some orchestration modules (Bicep files that wrap/call other Bicep modules) available to help simplify and reduce the number of deployments. These are completely optional to use but may be useful for your requirements.
 
-> If you have any suggestions for additional orchestration modules please raise a [feature request](https://github.com/Evilazaro/ALZ-Bicep/issues/new?assignees=&labels=enhancement&template=feature-request---.md&title=%F0%9F%92%A1+Feature+Request+-+PLEASE+CHANGE+ME+TO+SOMETHING+DESCRIPTIVE)
 
 The current available orchestration modules are listed below:
 
