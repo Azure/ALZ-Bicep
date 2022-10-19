@@ -53,7 +53,7 @@ $defaultConfig = @{
     outputPath         = $TargetPath + "/infra-as-code/bicep/modules/policy/definitions/lib"
     fileNamePrefix     = ""
     fileNameSuffix     = ".json"
-    exportFormat       = "Raw"
+    exportFormat       = "ArmResource"
     recurse            = $false
 }
 
