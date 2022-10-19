@@ -1,0 +1,27 @@
+name: Deploy Azure Enterprise Landing Zone
+
+on:
+  workflow_dispatch:
+
+env:
+  AZURE_CONTAINER_REGISTRY: "your-azure-container-registry"
+  CONTAINER_NAME: "your-container-name"
+  RESOURCE_GROUP: "your-resource-group"
+  CLUSTER_NAME: "your-cluster-name"
+  IMAGE_PULL_SECRET_NAME: "your-image-pull-secret-name"
+  DEPLOYMENT_MANIFEST_PATH: 'your-deployment-manifest-path'
+
+jobs:
+  Logging_to_Azure:
+    runs-on: ubuntu-latest
+    steps:
+    # Logs in with your Azure credentials
+    - name: Azure login
+      uses: azure/login@v1.4.3
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Grant Access to the User at tenant root scope “/” to deploy Enterprise-Scale
+      run: az role assignment create --scope '/'  --role 'Owner' --assignee-object-id $(az ad signed-in-user show --query id --output tsv)
