@@ -54,7 +54,7 @@ jobs:
           fi
         working-directory: ${{ github.repository }}
         env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Update Policy Library
         run: |
@@ -115,4 +115,4 @@ jobs:
           fi
         working-directory: ${{ github.repository }}
         env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
