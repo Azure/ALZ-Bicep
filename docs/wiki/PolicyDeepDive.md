@@ -10,7 +10,7 @@ The definitions in the [`lib` folder](https://github.com/Evilazaro/ALZ-Bicep/tre
 
 You can also make all of the Azure Landing Zone default Azure Policy Assignments using the [ALZ Default Policy Assignments module](https://github.com/Evilazaro/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults).
 
-> Azure US Gov (aka Fairfax) is not covered today in ALZ-Bicep. Please raise a feature request if you would like to see this added via the [issues](https://github.com/Evilazaro/ALZ-Bicep/issues/new/choose) 👍
+
 
 ## What Azure Policies does Azure Landing Zone (Enterprise-Scale) provide additionally to those already built-in?
 

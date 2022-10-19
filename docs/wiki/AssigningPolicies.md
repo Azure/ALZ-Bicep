@@ -65,6 +65,3 @@ The steps explained in the above section to extend the [ALZ Default Policy Assig
 
 You will also need to ensure you create unique deployment names for each policy assignment as we do in the [ALZ Default Policy Assignments module](https://github.com/Evilazaro/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) in the variable named `varModuleDeploymentNames` which is referenced for each policy assignment to its associated deployment name.
 
-## Support
-
-If you have any issues or require any assistance or advice please raise a [GitHub Issue](https://github.com/Evilazaro/ALZ-Bicep/issues/new/choose) on the repo and we will work with you to assist where possible.
