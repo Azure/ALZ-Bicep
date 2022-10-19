@@ -4,7 +4,7 @@
   "steps": [
     {
       "file": ".github/workflows/update-policy.yml",
-      "description": "This GitHub Action is responsible for syncing the policies from the upstream Enterprise-Scale repo into the ALZ-Bicep `lib` folders as explained here: https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive",
+      "description": "This GitHub Action is responsible for syncing the policies from the upstream Enterprise-Scale repo into the ALZ-Bicep `lib` folders as explained here: https://github.com/Evilazaro/ALZ-Bicep/wiki/PolicyDeepDive",
       "line": 2
     },
     {
@@ -19,7 +19,7 @@
     },
     {
       "file": ".github/workflows/update-policy.yml",
-      "description": "This makes sure the action only runs if the repo the action is running on is `Azure/ALZ-Bicep`.\r\n\r\nIf you clone this repo and want this action to run, you'll either need to remove this line or amend it",
+      "description": "This makes sure the action only runs if the repo the action is running on is `Evilazaro/ALZ-Bicep`.\r\n\r\nIf you clone this repo and want this action to run, you'll either need to remove this line or amend it",
       "line": 19,
       "selection": {
         "start": {
@@ -34,7 +34,7 @@
     },
     {
       "file": ".github/workflows/update-policy.yml",
-      "description": "Checkout the `ALZ-Bicep` repo to the folder `Azure/ALZ-Bicep`",
+      "description": "Checkout the `ALZ-Bicep` repo to the folder `Evilazaro/ALZ-Bicep`",
       "line": 23
     },
     {

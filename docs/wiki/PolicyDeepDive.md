@@ -4,13 +4,13 @@
 
 ## Overview
 
-In the `ALZ-Bicep` project we provide the ability to deploy all of the custom Azure Policy Definitions and Initiatives that are included as part of the [Azure Landing Zones (Enterprise-Scale) repo](https://github.com/Azure/Enterprise-Scale) by using the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions).
+In the `ALZ-Bicep` project we provide the ability to deploy all of the custom Azure Policy Definitions and Initiatives that are included as part of the [Azure Landing Zones (Enterprise-Scale) repo](https://github.com/Azure/Enterprise-Scale) by using the [Custom Policy Definitions module](https://github.com/Evilazaro/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions).
 
-The definitions in the [`lib` folder](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions/lib) of the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions).  are kept up-to-date with the contents of the [`eslzArm/managementGroupTemplates/PolicyDefinitions`](https://github.com/Azure/Enterprise-Scale/tree/main/eslzArm/managementGroupTemplates/policyDefinitions) folder via a [GitHub Action](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/update-policy.yml) and associated PowerShell scripts/modules that runs once a day.
+The definitions in the [`lib` folder](https://github.com/Evilazaro/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions/lib) of the [Custom Policy Definitions module](https://github.com/Evilazaro/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions).  are kept up-to-date with the contents of the [`eslzArm/managementGroupTemplates/PolicyDefinitions`](https://github.com/Azure/Enterprise-Scale/tree/main/eslzArm/managementGroupTemplates/policyDefinitions) folder via a [GitHub Action](https://github.com/Evilazaro/ALZ-Bicep/blob/main/.github/workflows/update-policy.yml) and associated PowerShell scripts/modules that runs once a day.
 
-You can also make all of the Azure Landing Zone default Azure Policy Assignments using the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults).
+You can also make all of the Azure Landing Zone default Azure Policy Assignments using the [ALZ Default Policy Assignments module](https://github.com/Evilazaro/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults).
 
-> Azure US Gov (aka Fairfax) is not covered today in ALZ-Bicep. Please raise a feature request if you would like to see this added via the [issues](https://github.com/Azure/ALZ-Bicep/issues/new/choose) 👍
+> Azure US Gov (aka Fairfax) is not covered today in ALZ-Bicep. Please raise a feature request if you would like to see this added via the [issues](https://github.com/Evilazaro/ALZ-Bicep/issues/new/choose) 👍
 
 ## What Azure Policies does Azure Landing Zone (Enterprise-Scale) provide additionally to those already built-in?
 
@@ -44,13 +44,13 @@ The GitHub action runs every weekday at 0800 UTC.
 
 **Useful Links**:
 
-- [`update-policy.yml` - GitHub Action](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/update-policy.yml)
-- [`Invoke-LibraryUpdate.ps1` - PowerShell Script](https://github.com/Azure/ALZ-Bicep/blob/main/.github/scripts/Invoke-LibraryUpdate.ps1)
-- [`Invoke-PolicyToBicep.ps1` - PowerShell Script](https://github.com/Azure/ALZ-Bicep/blob/main/.github/scripts/Invoke-PolicyToBicep.ps1)
+- [`update-policy.yml` - GitHub Action](https://github.com/Evilazaro/ALZ-Bicep/blob/main/.github/workflows/update-policy.yml)
+- [`Invoke-LibraryUpdate.ps1` - PowerShell Script](https://github.com/Evilazaro/ALZ-Bicep/blob/main/.github/scripts/Invoke-LibraryUpdate.ps1)
+- [`Invoke-PolicyToBicep.ps1` - PowerShell Script](https://github.com/Evilazaro/ALZ-Bicep/blob/main/.github/scripts/Invoke-PolicyToBicep.ps1)
 
 We will explain this process further below in a series of diagrams:
 
-> A [Code Tour](https://github.com/Azure/ALZ-Bicep/wiki/CodeTour) for this process can also be found [here](https://github.com/Azure/ALZ-Bicep/blob/main/.vscode/tours/upstreamPolicyUpdateProcess.tour)
+> A [Code Tour](https://github.com/Evilazaro/ALZ-Bicep/wiki/CodeTour) for this process can also be found [here](https://github.com/Evilazaro/ALZ-Bicep/blob/main/.vscode/tours/upstreamPolicyUpdateProcess.tour)
 
 ![ALZ-Bicep Policy Update Step 1](media/alzBicepPolicyUpdate1.PNG)
 
@@ -66,8 +66,8 @@ We will explain this process further below in a series of diagrams:
 
 ## How do we add a custom Azure Policy definition or initiative?
 
-Please see the following wiki article that explains this process further: [Adding Custom Azure Policy Definitions](https://github.com/Azure/ALZ-Bicep/wiki/AddingPolicyDefs)
+Please see the following wiki article that explains this process further: [Adding Custom Azure Policy Definitions](https://github.com/Evilazaro/ALZ-Bicep/wiki/AddingPolicyDefs)
 
 ## How do we assign a built-in or custom Azure Policy?
 
-Please see the following wiki article that explains this process further: [Assigning Azure Policies](https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies)
+Please see the following wiki article that explains this process further: [Assigning Azure Policies](https://github.com/Evilazaro/ALZ-Bicep/wiki/AssigningPolicies)

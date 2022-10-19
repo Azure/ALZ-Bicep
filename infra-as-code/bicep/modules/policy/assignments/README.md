@@ -4,7 +4,7 @@ This module deploys Azure Policy Assignments to a specified Management Group and
 
 > If you are looking for the default ALZ policy assignments check out [`./alzDefaults` directory](alzDefaults/README.md)
 
-If you wish to add your own additional Azure Policy Assignments please review [How Does ALZ-Bicep Implement Azure Policies?](https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive) and more specifically [Adding Custom Azure Policy Definitions](https://github.com/Azure/ALZ-Bicep/wiki/AddingPolicyDefs)
+If you wish to add your own additional Azure Policy Assignments please review [How Does ALZ-Bicep Implement Azure Policies?](https://github.com/Evilazaro/ALZ-Bicep/wiki/PolicyDeepDive) and more specifically [Adding Custom Azure Policy Definitions](https://github.com/Evilazaro/ALZ-Bicep/wiki/AddingPolicyDefs)
 
 ## Parameters
 

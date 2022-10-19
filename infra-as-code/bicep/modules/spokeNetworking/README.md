@@ -11,7 +11,7 @@ Module deploys the following resources:
 >
 > ### Orchestration
 >
-> Consider using the `hubPeeredSpoke` orchestration module instead to simplify spoke networking deployment, VNET Peering, UDR configuration and Subscription placement in a single module. [infra-as-code/bicep/orchestration/hubPeeredSpoke](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/orchestration/hubPeeredSpoke)
+> Consider using the `hubPeeredSpoke` orchestration module instead to simplify spoke networking deployment, VNET Peering, UDR configuration and Subscription placement in a single module. [infra-as-code/bicep/orchestration/hubPeeredSpoke](https://github.com/Evilazaro/ALZ-Bicep/tree/main/infra-as-code/bicep/orchestration/hubPeeredSpoke)
 >
 > ### Subnet Declaration
 >

@@ -1,7 +1,7 @@
 # Module: Enable Diagnostic Settings on a Management Group
 
 This module enables the supported Diagnostic Settings categories on a Management Group to an existing Azure Log Analytics Workspace.
-> Consider using the `mgDiagSettingsAll` orchestration module instead to simplify configuring the Diagnostic Settings for all your Management Group hierarchy in a single module. [infra-as-code/bicep/orchestration/mgDiagSettingsAll](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/orchestration/mgDiagSettingsAll)
+> Consider using the `mgDiagSettingsAll` orchestration module instead to simplify configuring the Diagnostic Settings for all your Management Group hierarchy in a single module. [infra-as-code/bicep/orchestration/mgDiagSettingsAll](https://github.com/Evilazaro/ALZ-Bicep/tree/main/infra-as-code/bicep/orchestration/mgDiagSettingsAll)
 
 ## Parameters
 

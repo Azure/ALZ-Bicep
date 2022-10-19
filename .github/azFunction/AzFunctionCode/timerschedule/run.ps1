@@ -12,7 +12,7 @@ if ($Timer.IsPastDue) {
 # Write an information log with the current time.
 Write-Output "PowerShell timer trigger function ran! TIME: $currentUTCtime"
 $body = @{
-    GitHubRepo = "https://api.github.com/repos/Azure/ALZ-Bicep/pulls"
+    GitHubRepo = "https://api.github.com/repos/Evilazaro/ALZ-Bicep/pulls"
 }
 # Associate values to output bindings by calling 'Push-OutputBinding'.
 Push-OutputBinding -Name startJob -Value ([HttpResponseContext]@{

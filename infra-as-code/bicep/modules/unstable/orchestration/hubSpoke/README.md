@@ -2,7 +2,7 @@
 
 > 🚨⚠️🚨 **This module does not work today due to the following Bicep/ARM bugs, [5371](https://github.com/Azure/bicep/issues/5371) & [5412](https://github.com/Azure/bicep/issues/5412), that we are working with engineering teams to resolve ASAP** 🚨⚠️🚨
 
-This module acts as an orchestration module that glues all the individual module deployments together the deliver the Azure Landing Zone Hub & Spoke architecture *(a.k.a. Adventure Works)* which is also described in the wiki on the [Deployment Flow article](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow).
+This module acts as an orchestration module that glues all the individual module deployments together the deliver the Azure Landing Zone Hub & Spoke architecture *(a.k.a. Adventure Works)* which is also described in the wiki on the [Deployment Flow article](https://github.com/Evilazaro/ALZ-Bicep/wiki/DeploymentFlow).
 
 As the warning at the top of this `README.md` states this module does not actually work today as a single deployment due to some bugs in Bicep/ARM that we are working closely with the Bicep & ARM engineering teams to resolve. The bugs are for awareness:
 

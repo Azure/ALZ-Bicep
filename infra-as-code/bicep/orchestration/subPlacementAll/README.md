@@ -1,12 +1,12 @@
 # Module: Orchestration - subPlacementAll - Place All Subscriptions Into ALZ Management Group Hierarchy
 
-This module acts as an orchestration module that helps to define where all Subscriptions should be placed in the ALZ Management Group Hierarchy (this can be deployed via the [`managementGroups.bicep` module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/managementGroups)), which is also described in the wiki on the [Deployment Flow article](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow).
+This module acts as an orchestration module that helps to define where all Subscriptions should be placed in the ALZ Management Group Hierarchy (this can be deployed via the [`managementGroups.bicep` module](https://github.com/Evilazaro/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/managementGroups)), which is also described in the wiki on the [Deployment Flow article](https://github.com/Evilazaro/ALZ-Bicep/wiki/DeploymentFlow).
 
 Module deploys the following resources:
 
 - Subscription placement for multiple Subscriptions into the ALZ Management Group hierarchy
 
-> This module calls the [`subscriptionPlacement.bicep` module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/subscriptionPlacement) multiple times to move the specified Subscription IDs to the desired Management Groups. If you only want to move a single subscription at a time to a specified Management Group, then you could consider this child module that is called many times in this module.
+> This module calls the [`subscriptionPlacement.bicep` module](https://github.com/Evilazaro/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/subscriptionPlacement) multiple times to move the specified Subscription IDs to the desired Management Groups. If you only want to move a single subscription at a time to a specified Management Group, then you could consider this child module that is called many times in this module.
 
 ## Parameters
 
@@ -32,7 +32,7 @@ The module requires the following inputs:
 
 ### `parLandingZoneMgChildrenSubs` Input Examples
 
-The `parLandingZoneMgChildrenSubs` is only used if you have deployed different Management Groups beneath the Landing Zones Management Group using the `parLandingZoneMgChildren` parameter in the [`managementGroups.bicep` module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/managementGroups).
+The `parLandingZoneMgChildrenSubs` is only used if you have deployed different Management Groups beneath the Landing Zones Management Group using the `parLandingZoneMgChildren` parameter in the [`managementGroups.bicep` module](https://github.com/Evilazaro/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/managementGroups).
 
 Below are some examples of how to use this input parameter in both Bicep & JSON formats.
 

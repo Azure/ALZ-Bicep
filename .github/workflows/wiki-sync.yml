@@ -8,9 +8,9 @@ on:
       - "docs/wiki/**"
 
 env:
-  wiki_source_repo: "Azure/ALZ-Bicep"
-  wiki_source_repo_dir: "Azure/ALZ-Bicep/docs/wiki"
-  wiki_target_repo: "Azure/ALZ-Bicep.wiki"
+  wiki_source_repo: "Evilazaro/ALZ-Bicep"
+  wiki_source_repo_dir: "Evilazaro/ALZ-Bicep/docs/wiki"
+  wiki_target_repo: "Evilazaro/ALZ-Bicep.wiki"
   github_user_name: "github-actions"
   github_email: "41898282+github-actions[bot]@users.noreply.github.com"
   github_commit_message: "Wiki Sync from docs/wiki"
@@ -18,7 +18,7 @@ env:
 jobs:
   sync-wiki:
     name: Sync docs/wiki to Wiki
-    if: github.repository == 'Azure/ALZ-Bicep'
+    if: github.repository == 'Evilazaro/ALZ-Bicep'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Repo

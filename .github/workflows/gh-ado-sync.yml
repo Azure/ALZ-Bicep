@@ -10,7 +10,7 @@ jobs:
   alert:
     runs-on: ubuntu-latest
     name: Sync workflow
-    if: github.repository == 'Azure/ALZ-Bicep'
+    if: github.repository == 'Evilazaro/ALZ-Bicep'
 
     steps:
       - name: Checkout code

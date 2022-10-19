@@ -2,7 +2,7 @@
 ## Azure Landing Zones Bicep - Pipelines
 <!-- markdownlint-restore -->
 
-This document provides high-level guidance for deploying the ALZ modules with pipelines and provides sample code for GitHub Actions and Azure DevOps Pipelines. The sample code leverages the orchestration templates, deployment sequence, and prerequisites described in the [DeploymentFlow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) document. In addition to these prerequisites, a GitHub or Azure DevOps account will be needed to run the pipelines.
+This document provides high-level guidance for deploying the ALZ modules with pipelines and provides sample code for GitHub Actions and Azure DevOps Pipelines. The sample code leverages the orchestration templates, deployment sequence, and prerequisites described in the [DeploymentFlow](https://github.com/Evilazaro/ALZ-Bicep/wiki/DeploymentFlow) document. In addition to these prerequisites, a GitHub or Azure DevOps account will be needed to run the pipelines.
 
 ## ALZ Orchestration
 
@@ -12,12 +12,12 @@ A pipeline is the repeatable process defined in a configuration file that you us
 
 ### Sample Pipelines
 
-These ALZ sample pipelines sequentially deploy the nine modules detailed in the [DeploymentFlow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) document in a single pipeline job. The pipelines have been configured with manual triggers for learning and experimentation.
+These ALZ sample pipelines sequentially deploy the nine modules detailed in the [DeploymentFlow](https://github.com/Evilazaro/ALZ-Bicep/wiki/DeploymentFlow) document in a single pipeline job. The pipelines have been configured with manual triggers for learning and experimentation.
 
 ### Sample Pipeline Code
 
-- [GitHub Actions](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub)
-- [Azure DevOps Pipelines](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO)
+- [GitHub Actions](https://github.com/Evilazaro/ALZ-Bicep/wiki/PipelinesGitHub)
+- [Azure DevOps Pipelines](https://github.com/Evilazaro/ALZ-Bicep/wiki/PipelinesADO)
 
 ### Sample Pipeline Flowchart
 
@@ -45,7 +45,7 @@ The sample code uses manually triggered pipelines for learning purposes. For Git
 
 Typically teams will want to take a more automated approach to running workflows based upon events that occur in the repository, such as a pull request to the main branch. Normally protected by a branch policies to enforce all changes to a protected branch (e.g. `main`) must be made via a PR.
 
-For an example of an automated workflow, please review the [bicep-build-to-validate.yml](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/bicep-build-to-validate.yml) file in the workflows directory of this repo.
+For an example of an automated workflow, please review the [bicep-build-to-validate.yml](https://github.com/Evilazaro/ALZ-Bicep/blob/main/.github/workflows/bicep-build-to-validate.yml) file in the workflows directory of this repo.
 
 For many scenarios, it may also make sense to take a more modular approach to ALZ deployment. While a single pipeline is good for learning purposes, separate workflows aligned to ALZ components and the teams that manage them may be required for some organizations.
 

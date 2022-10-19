@@ -56,25 +56,25 @@ We have created a short 3-part series of video on the Azure Enablement Show that
 
 <!--
 The following link references should be copied from `_sidebar.md` in the `./docs/wiki/` folder.
-Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to here.
+Replace `./` with `https://github.com/Evilazaro/ALZ-Bicep/wiki/` when copying to here.
 -->
 
-[wiki_home]:                                  https://github.com/Azure/ALZ-Bicep/wiki/home "Wiki - Home"
-[wiki_deployment_flow]:                            https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow "Wiki - Deployment Flow"
-[wiki_deployment_flow_hs]:                            https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowHS "Wiki - Deployment Flow - Hub and Spoke"
-[wiki_deployment_flow_vwan]:                            https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowVWAN "Wiki - Deployment Flow - Virtual WAN"
-[wiki_consumer_guide]:                          https://github.com/Azure/ALZ-Bicep/wiki/ConsumerGuide "Wiki - Consumer Guide"
-[wiki_policy_deep_dive]:                        https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive "Wiki - Policy Deep Dive"
-[wiki_policy_defs]:                        https://github.com/Azure/ALZ-Bicep/wiki/AddingPolicyDefs "Wiki - Policy Definitions"
-[wiki_policy_assignments]:                        https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies "Wiki - Policy Assignments"
-[wiki_contributing]:                          https://github.com/Azure/ALZ-Bicep/wiki/Contributing "Wiki - Contributing"
-[wiki_acrdeploy]:                          https://github.com/Azure/ALZ-Bicep/wiki/ACRDeployment "Wiki - Private Bicep Registry"
-[wiki_cuaid]:                          https://github.com/Azure/ALZ-Bicep/wiki/CustomerUsage "Wiki - Telemetry Usage ID"
-[wiki_faq]:                          https://github.com/Azure/ALZ-Bicep/wiki/FAQ "Wiki - FAQs"
-[wiki_pipelines]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesOverview "Wiki - Sample Pipelines"
-[wiki_pipelines_gh]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub "Wiki - Sample Pipelines - GitHub Actions"
-[wiki_pipelines_ado]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO "Wiki - Sample Pipelines - Azure DevOps"
-[code_tours]:                                   https://github.com/Azure/ALZ-Bicep/wiki/CodeTour "Wiki - Code tours"
+[wiki_home]:                                  https://github.com/Evilazaro/ALZ-Bicep/wiki/home "Wiki - Home"
+[wiki_deployment_flow]:                            https://github.com/Evilazaro/ALZ-Bicep/wiki/DeploymentFlow "Wiki - Deployment Flow"
+[wiki_deployment_flow_hs]:                            https://github.com/Evilazaro/ALZ-Bicep/wiki/DeploymentFlowHS "Wiki - Deployment Flow - Hub and Spoke"
+[wiki_deployment_flow_vwan]:                            https://github.com/Evilazaro/ALZ-Bicep/wiki/DeploymentFlowVWAN "Wiki - Deployment Flow - Virtual WAN"
+[wiki_consumer_guide]:                          https://github.com/Evilazaro/ALZ-Bicep/wiki/ConsumerGuide "Wiki - Consumer Guide"
+[wiki_policy_deep_dive]:                        https://github.com/Evilazaro/ALZ-Bicep/wiki/PolicyDeepDive "Wiki - Policy Deep Dive"
+[wiki_policy_defs]:                        https://github.com/Evilazaro/ALZ-Bicep/wiki/AddingPolicyDefs "Wiki - Policy Definitions"
+[wiki_policy_assignments]:                        https://github.com/Evilazaro/ALZ-Bicep/wiki/AssigningPolicies "Wiki - Policy Assignments"
+[wiki_contributing]:                          https://github.com/Evilazaro/ALZ-Bicep/wiki/Contributing "Wiki - Contributing"
+[wiki_acrdeploy]:                          https://github.com/Evilazaro/ALZ-Bicep/wiki/ACRDeployment "Wiki - Private Bicep Registry"
+[wiki_cuaid]:                          https://github.com/Evilazaro/ALZ-Bicep/wiki/CustomerUsage "Wiki - Telemetry Usage ID"
+[wiki_faq]:                          https://github.com/Evilazaro/ALZ-Bicep/wiki/FAQ "Wiki - FAQs"
+[wiki_pipelines]:                          https://github.com/Evilazaro/ALZ-Bicep/wiki/PipelinesOverview "Wiki - Sample Pipelines"
+[wiki_pipelines_gh]:                          https://github.com/Evilazaro/ALZ-Bicep/wiki/PipelinesGitHub "Wiki - Sample Pipelines - GitHub Actions"
+[wiki_pipelines_ado]:                          https://github.com/Evilazaro/ALZ-Bicep/wiki/PipelinesADO "Wiki - Sample Pipelines - Azure DevOps"
+[code_tours]:                                   https://github.com/Evilazaro/ALZ-Bicep/wiki/CodeTour "Wiki - Code tours"
 [aes_part_1]:                                   https://aka.ms/azenable/94 "Part 1 - Introduction to Azure Landing Zones Bicep"
 [aes_part_2]:                                   https://aka.ms/azenable/95 "Part 2 - Enabling platform services"
 [aes_part_3]:                                   https://aka.ms/azenable/96 "Part 3 - Enabling landing zones"

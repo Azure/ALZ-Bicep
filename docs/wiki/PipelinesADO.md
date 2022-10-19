@@ -6,7 +6,7 @@
 
 This sample pipeline is provided as an example that is intended to be used for learning purposes.
 
-Please review the [Pipelines Overview](https://github.com/Azure/ALZ-Bicep/wiki/PipelinesOverview) and [Deployment Flow Prerequisites](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow#prerequisites) before running the pipeline. A successful run will require updated module parameter files and a deployment identity.
+Please review the [Pipelines Overview](https://github.com/Evilazaro/ALZ-Bicep/wiki/PipelinesOverview) and [Deployment Flow Prerequisites](https://github.com/Evilazaro/ALZ-Bicep/wiki/DeploymentFlow#prerequisites) before running the pipeline. A successful run will require updated module parameter files and a deployment identity.
 
 ### Sample Code
 

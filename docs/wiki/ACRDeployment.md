@@ -15,7 +15,7 @@ This document outlines the prerequisites, dependencies and flow to setup a Priva
 ## Deployment Flow
 
 1. Clone Bicep Azure Landing Zone Github repository
-    - `git clone https://github.com/Azure/ALZ-Bicep.git`
+    - `git clone https://github.com/Evilazaro/ALZ-Bicep.git`
 2. Login to Azure leveraging PowerShell or CLI
     - **PowerShell**: `Connect-AzAccount`
     - **CLI**: `az login`
@@ -29,8 +29,8 @@ This document outlines the prerequisites, dependencies and flow to setup a Priva
 ## Provided automation
 
 Two scripts exist which automate steps 4 to 6.
-* [PowerShell](https://github.com/Azure/ALZ-Bicep/blob/main/docs/scripts/createRGandcallBicep.ps1)
-* [Azure CLI](https://github.com/Azure/ALZ-Bicep/blob/main/docs/scripts/createRGandcallBicep.sh)
+* [PowerShell](https://github.com/Evilazaro/ALZ-Bicep/blob/main/docs/scripts/createRGandcallBicep.ps1)
+* [Azure CLI](https://github.com/Evilazaro/ALZ-Bicep/blob/main/docs/scripts/createRGandcallBicep.sh)
 
 ## Deployment
 Prior to executing your desired script, steps one and two need to be complete, and the two variables should be reviewed in the script.

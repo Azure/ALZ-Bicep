@@ -37,7 +37,7 @@ There are a couple of ways you can ensure you get notified of the latest release
 
 ![GIF showing how to configure watch notification settings](media/alz-bicep-watch-demo.gif)
 
-2. Sign-up to and use [newreleases.io](https://newreleases.io), add this repo `Azure/ALZ-Bicep` and select your email frequency.
+2. Sign-up to and use [newreleases.io](https://newreleases.io), add this repo `Evilazaro/ALZ-Bicep` and select your email frequency.
 
 ## Why are some linter rules disabled via the `#disable-next-line` Bicep function?
 

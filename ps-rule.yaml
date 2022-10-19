@@ -20,7 +20,7 @@ requires:
 
 # Reference the repository in output.
 repository:
-  url: https://github.com/Azure/ALZ-Bicep
+  url: https://github.com/Evilazaro/ALZ-Bicep
 
 execution:
   # Ignore warnings for resources and objects that don't have any rules.

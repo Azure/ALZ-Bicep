@@ -4,7 +4,7 @@ param($QueueItem, $TriggerMetadata)
 Write-Output "PowerShell queue trigger function processed work item: $QueueItem"
 Write-Output "Queue item insertion time: $($TriggerMetadata.InsertionTime)"
 $perPageCount = 0
-$closedPrs = Invoke-RestMethod -Method Get -Uri "https://api.github.com/repos/Azure/ALZ-Bicep/pulls?per_page=$perPageCount&state=closed&page=1"
+$closedPrs = Invoke-RestMethod -Method Get -Uri "https://api.github.com/repos/Evilazaro/ALZ-Bicep/pulls?per_page=$perPageCount&state=closed&page=1"
 $closedPrs | Select-Object -unique -Property title, number, state | ForEach-Object {
     $body = @{
         prTitle  = $PSItem.title
