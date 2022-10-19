@@ -1,5 +1,7 @@
 # Azure Landing Zones (ALZ) - Bicep
 
+This repo has been Forked by Evilazaro Alves.
+
 [![Update Policy Library](https://github.com/Evilazaro/ALZ-Bicep/actions/workflows/update-policy.yml/badge.svg?branch=main)](https://github.com/Evilazaro/ALZ-Bicep/actions/workflows/update-policy.yml)
 
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Evilazaro/ALZ-Bicep?style=flat&logo=github)
