@@ -260,7 +260,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2022-05-01' = if (pa
 }
 
 // DDoS plan is deployed even though not supported to attach to Virtual WAN today as per https://docs.microsoft.com/azure/firewall-manager/overview#known-issues - However, it can still be linked via policy to spoke VNets etc.
-resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-08-01' = if (parDdosEnabled) {
+resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2022-05-01' = if (parDdosEnabled) {
   name: parDdosPlanName
   location: parLocation
   tags: parTags
