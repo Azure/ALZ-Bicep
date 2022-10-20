@@ -13,7 +13,7 @@ $resourceTypesFullList = @{}
 
 Get-ChildItem -Path '.\infra-as-code\bicep\modules' -Recurse -Filter '*.json' -Exclude 'callModuleFromACR.example.json', 'orchHubSpoke.json', '*parameters*.json', 'bicepconfig.json', '*policy_*.json' | ForEach-Object {
   Write-Information "==> Reading Built ARM Template JSON File: $_" -InformationAction Continue
-  $armTemplate = Get-Content $_.FullName | ConvertFrom-Json -Depth 20
+  $armTemplate = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
   $armResourceTypes = $armTemplate.Resources
   $armResourceTypes | ForEach-Object {
     if (!$resourceTypesFullList.ContainsKey($_.Type)) {
