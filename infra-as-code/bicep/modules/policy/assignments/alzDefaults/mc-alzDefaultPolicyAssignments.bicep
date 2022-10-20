@@ -76,108 +76,108 @@ var varModuleDeploymentNames = {
 // Policy Assignments Modules Variables
 
 var varPolicyAssignmentEnforceAKSHTTPS = {
-	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_http_ingress_aks.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policyDefinitions/1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_http_ingress_aks.tmpl.json')
 }
 
 var varPolicyAssignmentDenyIPForwarding = {
-	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/88c0b9da-ce96-4b03-9635-f29a937e2900'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_ip_forwarding.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policyDefinitions/88c0b9da-ce96-4b03-9635-f29a937e2900'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_ip_forwarding.tmpl.json')
 }
 
 var varPolicyAssignmentDenyPrivContainersAKS = {
-	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/95edb821-ddaf-4404-9732-666045e056b4'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_priv_containers_aks.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policyDefinitions/95edb821-ddaf-4404-9732-666045e056b4'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_priv_containers_aks.tmpl.json')
 }
 
 var varPolicyAssignmentDenyPrivEscalationAKS = {
-	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/1c6e92c9-99f0-4e55-9cf2-0c234dc48f99'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_priv_escalation_aks.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policyDefinitions/1c6e92c9-99f0-4e55-9cf2-0c234dc48f99'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_priv_escalation_aks.tmpl.json')
 }
 
 var varPolicyAssignmentDenyPublicEndpoints = {
-	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicPaaSEndpoints'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_public_endpoints.tmpl.json')
+  definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicPaaSEndpoints'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_public_endpoints.tmpl.json')
 }
 
 var varPolicyAssignmentDenyPublicIP = {
-	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json')
+  definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json')
 }
 
 var varPolicyAssignmentDenyRDPFromInternet = {
-	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-RDP-From-Internet'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_rdp_from_internet.tmpl.json')
+  definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-RDP-From-Internet'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_rdp_from_internet.tmpl.json')
 }
 
 var varPolicyAssignmentDenyStoragehttp = {
-	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_storage_http.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_storage_http.tmpl.json')
 }
 
 var varPolicyAssignmentDenySubnetWithoutNsg = {
-	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_subnet_without_nsg.tmpl.json')
+  definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_subnet_without_nsg.tmpl.json')
 }
 
 var varPolicyAssignmentDeployAKSPolicy = {
-	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/a8eff44f-8c92-45c3-a3fb-9880802d67a7'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_aks_policy.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policyDefinitions/a8eff44f-8c92-45c3-a3fb-9880802d67a7'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_aks_policy.tmpl.json')
 }
 
 var varPolicyAssignmentDeployASCMonitoring = {
-	definitionID: '/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_asc_monitoring.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_asc_monitoring.tmpl.json')
 }
 
 var varPolicyAssignmentDeployLogAnalytics = {
-	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/8e3e61b3-0b32-22d5-4edf-55f87fdb5955'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_log_analytics.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policyDefinitions/8e3e61b3-0b32-22d5-4edf-55f87fdb5955'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_log_analytics.tmpl.json')
 }
 
 var varPolicyAssignmentDeployMDFCConfig = {
-	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_mdfc_config.tmpl.json')
+  definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_mdfc_config.tmpl.json')
 }
 
 var varPolicyAssignmentDeployResourceDiag = {
-	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diagnostics-LogAnalytics'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_resource_diag.tmpl.json')
+  definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diagnostics-LogAnalytics'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_resource_diag.tmpl.json')
 }
 
 var varPolicyAssignmentDeploySQLDBAuditing = {
-	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_sql_db_auditing.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policyDefinitions/a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_sql_db_auditing.tmpl.json')
 }
 
 var varPolicyAssignmentDeploySQLThreat = {
-	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/36d49e87-48c4-4f2e-beed-ba4ed02b71f5'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_sql_threat.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policyDefinitions/36d49e87-48c4-4f2e-beed-ba4ed02b71f5'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_sql_threat.tmpl.json')
 }
 
 var varPolicyAssignmentDeployVMBackup = {
-	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/98d0b9f8-fd90-49c9-88e2-d3baf3b0dd86'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_vm_backup.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policyDefinitions/98d0b9f8-fd90-49c9-88e2-d3baf3b0dd86'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_vm_backup.tmpl.json')
 }
 
 var varPolicyAssignmentDeployVMMonitoring = {
-	definitionID: '/providers/Microsoft.Authorization/policySetDefinitions/55f3eceb-5573-4f18-9695-226972c6d74a'
-	libDefinition:loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_vm_monitoring.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policySetDefinitions/55f3eceb-5573-4f18-9695-226972c6d74a'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_vm_monitoring.tmpl.json')
 }
 
 var varPolicyAssignmentDeployVMSSMonitoring = {
-	definitionID: '/providers/Microsoft.Authorization/policySetDefinitions/75714362-cae7-409e-9b99-a8e5075b7fad'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_vmss_monitoring.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policySetDefinitions/75714362-cae7-409e-9b99-a8e5075b7fad'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_vmss_monitoring.tmpl.json')
 }
 
 var varPolicyAssignmentEnableDDoSVNET = {
-	definitionID: '/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_enable_ddos_vnet.tmpl.json')
+  definitionID: '/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_enable_ddos_vnet.tmpl.json')
 }
 
 var varPolicyAssignmentEnforceTLSSSL = {
-	definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-EncryptTransit'
-	libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_enforce_tls_ssl.tmpl.json')
+  definitionID: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-EncryptTransit'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_enforce_tls_ssl.tmpl.json')
 }
 
 // RBAC Role Definitions Variables - Used For Policy Assignments
