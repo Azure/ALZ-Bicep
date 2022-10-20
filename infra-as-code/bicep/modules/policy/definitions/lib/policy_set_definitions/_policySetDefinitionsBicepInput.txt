@@ -1,7 +1,7 @@
 var varCustomPolicySetDefinitionsArray = [
 	{
 		name: 'Deny-PublicPaaSEndpoints'
-		libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_Deny-PublicPaaSEndpoints.json'))
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Deny-PublicPaaSEndpoints.json')
 		libSetChildDefinitions: [
 			{
 				definitionReferenceId: 'ACRDenyPaasPublicIP'
@@ -57,7 +57,7 @@ var varCustomPolicySetDefinitionsArray = [
 	}
 	{
 		name: 'Deploy-Diagnostics-LogAnalytics'
-		libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_Deploy-Diagnostics-LogAnalytics.json'))
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Deploy-Diagnostics-LogAnalytics.json')
 		libSetChildDefinitions: [
 			{
 				definitionReferenceId: 'ACIDeployDiagnosticLogDeployLogAnalytics'
@@ -383,7 +383,7 @@ var varCustomPolicySetDefinitionsArray = [
 	}
 	{
 		name: 'Deploy-MDFC-Config'
-		libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_Deploy-MDFC-Config.json'))
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Deploy-MDFC-Config.json')
 		libSetChildDefinitions: [
 			{
 				definitionReferenceId: 'ascExport'
@@ -449,7 +449,7 @@ var varCustomPolicySetDefinitionsArray = [
 	}
 	{
 		name: 'Deploy-Private-DNS-Zones'
-		libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_Deploy-Private-DNS-Zones.json'))
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Deploy-Private-DNS-Zones.json')
 		libSetChildDefinitions: [
 			{
 				definitionReferenceId: 'DINE-Private-DNS-Azure-ACR'
@@ -555,7 +555,7 @@ var varCustomPolicySetDefinitionsArray = [
 	}
 	{
 		name: 'Deploy-Sql-Security'
-		libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_Deploy-Sql-Security.json'))
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Deploy-Sql-Security.json')
 		libSetChildDefinitions: [
 			{
 				definitionReferenceId: 'SqlDbAuditingSettingsDeploySqlSecurity'
@@ -581,7 +581,7 @@ var varCustomPolicySetDefinitionsArray = [
 	}
 	{
 		name: 'Enforce-Encryption-CMK'
-		libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Encryption-CMK.json'))
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Encryption-CMK.json')
 		libSetChildDefinitions: [
 			{
 				definitionReferenceId: 'ACRCmkDeny'
@@ -662,7 +662,7 @@ var varCustomPolicySetDefinitionsArray = [
 	}
 	{
 		name: 'Enforce-EncryptTransit'
-		libSetDefinition: json(loadTextContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-EncryptTransit.json'))
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-EncryptTransit.json')
 		libSetChildDefinitions: [
 			{
 				definitionReferenceId: 'AKSIngressHttpsOnlyEffect'
