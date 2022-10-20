@@ -31,7 +31,7 @@ jobs:
         with:
           repository: ${{ env.remote_repository }}
           path: ${{ env.remote_repository }}
-          ref: add-bicep-support
+          ref: main
 
       - name: Configure local git
         run: |
