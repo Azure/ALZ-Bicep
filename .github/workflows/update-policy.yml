@@ -57,16 +57,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.github_token }}
 
       - name: Update Policy Library
-        run: |
-          Write-Information "==> Installing Az.Accounts PowerShell Module..." -InformationAction Continue
-          Install-Module -Name "Az.Accounts" -MinimumVersion "${{ env.az_accounts_minimum_version }}" -Force
-          Write-Information "==> Running script..." -InformationAction Continue
-          ${{ github.repository }}/.github/scripts/Invoke-LibraryUpdate.ps1 `
-            -TargetModulePath ${{ github.workspace }}/${{ github.repository }} `
-            -SourceModulePath ${{ github.workspace }}/${{ env.remote_repository }} `
-            -UseCacheFromModule `
-            -Reset
-        shell: pwsh
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            Write-Information "==> Running script..." -InformationAction Continue
+            ${{ github.repository }}/.github/scripts/Invoke-LibraryUpdate.ps1 `
+              -AlzToolsPath "${{ github.workspace }}/${{ env.remote_repository }}/src/Alz.Tools/" `
+              -TargetPath ${{ github.workspace }}/${{ github.repository }} `
+              -SourcePath ${{ github.workspace }}/${{ env.remote_repository }} `
+              -Reset
+          azPSVersion: "latest"
 
       - name: Update Policy Definition Bicep Input Files
         run: |
