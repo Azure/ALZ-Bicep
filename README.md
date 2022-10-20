@@ -65,7 +65,7 @@ We have created a short 3-part series of video on the Azure Enablement Show that
 This project welcomes contributions and suggestions. Please review our [Contributing guide][wiki_contributing] in the Wiki. Once your PR is created and submitted a member of the team will triage, review and discuss with you 👍
 Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit the [Microsoft Contributor License Agreement page](https://cla.opensource.microsoft.com).
+the rights to use your contribution. For details, visit the [Microsoft Contributor License Agreement page](https://opensource.microsoft.com/cla/).
 When you submit a pull request, a CLA bot will automatically determine whether you need to provide
 a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
 provided by the bot. You will only need to do this once across all repos using our CLA.
