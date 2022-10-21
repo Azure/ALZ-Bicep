@@ -44,7 +44,7 @@ param (
 Import-Module $alzToolsPath -ErrorAction Stop
 
 # Line Endings function to be used in three functions below
-function Invoke-RunFilesThroughLineEndings {
+function Update-FileLineEndingType {
   [CmdletBinding(SupportsShouldProcess)]
   param(
     [string]
@@ -74,7 +74,7 @@ function New-PolicyDefinitionsBicepInputTxtFile {
   }
 
   Write-Information "====> Running '$defintionsTxtFileName' through Line Endings" -InformationAction Continue
-  Invoke-RunFilesThroughLineEndings -filePath "$rootPath/$definitionsLongPath/$defintionsTxtFileName"
+  Update-FileLineEndingType -filePath "$rootPath/$definitionsLongPath/$defintionsTxtFileName"
 
   $policyDefCount = Get-ChildItem -Recurse -Path "$rootPath/$definitionsLongPath" -Filter "*.json" | Measure-Object
   $policyDefCountString = $policyDefCount.Count
@@ -210,7 +210,7 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
   }
 
   Write-Information "====> Running '$defintionsSetTxtFileName' through Line Endings" -InformationAction Continue
-  Invoke-RunFilesThroughLineEndings -filePath "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName"
+  Update-FileLineEndingType -filePath "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName"
 
   $policyDefCount = Get-ChildItem -Recurse -Path "$rootPath/$definitionsSetLongPath" -Filter "*.json" -Exclude "*.parameters.json" | Measure-Object
   $policyDefCountString = $policyDefCount.Count
@@ -242,7 +242,7 @@ function New-PolicyAssignmentsBicepInputTxtFile {
   }
 
   Write-Information "====> Running '$assignmentsTxtFileName' through Line Endings" -InformationAction Continue
-  Invoke-RunFilesThroughLineEndings -filePath "$rootPath/$assignmentsLongPath/$assignmentsTxtFileName"
+  Update-FileLineEndingType -filePath "$rootPath/$assignmentsLongPath/$assignmentsTxtFileName"
 
   $policyAssignmentCount = Get-ChildItem -Recurse -Path "$rootPath/$assignmentsLongPath" -Filter "*.json" | Measure-Object
   $policyAssignmentCountString = $policyAssignmentCount.Count
