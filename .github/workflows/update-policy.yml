@@ -70,11 +70,14 @@ jobs:
           azPSVersion: "latest"
 
       - name: Update Policy Definition Bicep Input Files
-        run: |
-          Write-Information "==> Running script..." -InformationAction Continue
-          .github/scripts/Invoke-PolicyToBicep.ps1
-        shell: pwsh
-        working-directory: ${{ github.repository }}
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            Write-Information "==> Running script..." -InformationAction Continue
+            .github/scripts/Invoke-PolicyToBicep.ps1 `
+              -alzToolsPath "${{ github.workspace }}/${{ env.remote_repository }}/src/Alz.Tools/"
+          azPSVersion: "latest"
+          working-directory: ${{ github.repository }}
 
       - name: Check for changes
         id: git_status

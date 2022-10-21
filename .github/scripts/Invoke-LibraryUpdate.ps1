@@ -32,8 +32,7 @@ param (
 $ErrorActionPreference = "Stop"
 
 # This script relies on a custom set of classes and functions
-# defined within the EnterpriseScaleLibraryTools PowerShell
-# module.
+# defined within the Alz.Tools PowerShell module.
 Import-Module $AlzToolsPath -ErrorAction Stop
 
 # To avoid needing to authenticate with Azure, the following
