@@ -41,7 +41,7 @@ param (
 
 # This script relies on a custom set of classes and functions
 # defined within the Alz.Tools PowerShell module.
-Import-Module $AlzToolsPath -ErrorAction Stop
+Import-Module $alzToolsPath -ErrorAction Stop
 
 # Line Endings function to be used in three functions below
 function Invoke-RunFilesThroughLineEndings {
