@@ -51,7 +51,7 @@ function Invoke-RunFilesThroughLineEndings {
     $filePath
   )
 
-  Get-Content $filePath | Edit-LineEndings -LineEnding $LineEnding | Out-File $filePath
+  (Get-Content $filePath | Edit-LineEndings -LineEnding $LineEnding) | Out-File $filePath
 }
 
 #region Policy Definitions
