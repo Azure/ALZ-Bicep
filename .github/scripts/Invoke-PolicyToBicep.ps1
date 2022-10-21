@@ -5,6 +5,7 @@ AUTHOR/S: jtracey93, seseicht
 VERSION: 2.0.0
 #>
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "", Justification = "False Positive")]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseBOMForUnicodeEncodedFile", "", Justification = "False Positive")]
 
 [CmdletBinding(SupportsShouldProcess)]
 param (
@@ -12,7 +13,11 @@ param (
   [string]
   $rootPath = "./infra-as-code/bicep/modules/policy",
   [string]
+  $alzToolsPath = "$PWD/../Enterprise-Scale/src/Alz.Tools",
+  [string]
   $definitionsRoot = "definitions",
+  [string]
+  $lineEnding = "unix",
   [string]
   $definitionsPath = "lib/policy_definitions",
   [string]
@@ -35,6 +40,21 @@ param (
   $assignmentsTxtFileName = "_policyAssignmentsBicepInput.txt"
 )
 
+# This script relies on a custom set of classes and functions
+# defined within the Alz.Tools PowerShell module.
+Import-Module $alzToolsPath -ErrorAction Stop
+
+# Line Endings function to be used in three functions below
+function Update-FileLineEndingType {
+  [CmdletBinding(SupportsShouldProcess)]
+  param(
+    [string]
+    $filePath
+  )
+
+  (Get-Content $filePath | Edit-LineEndings -LineEnding $LineEnding) | Out-File $filePath
+}
+
 #region Policy Definitions
 function New-PolicyDefinitionsBicepInputTxtFile {
   [CmdletBinding(SupportsShouldProcess)]
@@ -53,6 +73,9 @@ function New-PolicyDefinitionsBicepInputTxtFile {
     Write-Information "==> Adding '$policyDefinitionName' to '$PWD/$defintionsTxtFileName'" -InformationAction Continue
     Add-Content -Path "$rootPath/$definitionsLongPath/$defintionsTxtFileName" -Encoding "utf8" -Value "{`r`n`tname: '$policyDefinitionName'`r`n`tlibDefinition: loadJsonContent('$definitionsPath/$fileName')`r`n}"
   }
+
+  Write-Information "====> Running '$defintionsTxtFileName' through Line Endings" -InformationAction Continue
+  Update-FileLineEndingType -filePath "$rootPath/$definitionsLongPath/$defintionsTxtFileName"
 
   $policyDefCount = Get-ChildItem -Recurse -Path "$rootPath/$definitionsLongPath" -Filter "*.json" | Measure-Object
   $policyDefCountString = $policyDefCount.Count
@@ -187,6 +210,9 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
     Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "$_`r`n"
   }
 
+  Write-Information "====> Running '$defintionsSetTxtFileName' through Line Endings" -InformationAction Continue
+  Update-FileLineEndingType -filePath "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName"
+
   $policyDefCount = Get-ChildItem -Recurse -Path "$rootPath/$definitionsSetLongPath" -Filter "*.json" -Exclude "*.parameters.json" | Measure-Object
   $policyDefCountString = $policyDefCount.Count
   Write-Information "====> Policy Set/Initiative Definitions Total: $policyDefCountString" -InformationAction Continue
@@ -215,6 +241,9 @@ function New-PolicyAssignmentsBicepInputTxtFile {
     Write-Information "==> Adding '$policyAssignmentName' to '$PWD/$assignmentsTxtFileName'" -InformationAction Continue
     Add-Content -Path "$rootPath/$assignmentsLongPath/$assignmentsTxtFileName" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionId: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: loadJsonContent('../../policy/$assignmentsLongPath/$fileName')`r`n}`r`n"
   }
+
+  Write-Information "====> Running '$assignmentsTxtFileName' through Line Endings" -InformationAction Continue
+  Update-FileLineEndingType -filePath "$rootPath/$assignmentsLongPath/$assignmentsTxtFileName"
 
   $policyAssignmentCount = Get-ChildItem -Recurse -Path "$rootPath/$assignmentsLongPath" -Filter "*.json" | Measure-Object
   $policyAssignmentCountString = $policyAssignmentCount.Count
