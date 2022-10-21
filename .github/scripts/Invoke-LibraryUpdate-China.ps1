@@ -22,8 +22,8 @@
 [CmdletBinding(SupportsShouldProcess)]
 param (
     [Parameter()][String]$AlzToolsPath = "$PWD/enterprise-scale/src/Alz.Tools",
-    [Parameter()][String]$TargetModulePath = "$PWD/ALZ-Bicep",
-    [Parameter()][String]$SourceModulePath = "$PWD/enterprise-scale",
+    [Parameter()][String]$TargetPath = "$PWD/ALZ-Bicep",
+    [Parameter()][String]$SourcePath = "$PWD/enterprise-scale",
     [Parameter()][String]$LineEnding = "unix",
     [Parameter()][Switch]$Reset,
     [Parameter()][Switch]$UpdateProviderApiVersions
@@ -50,7 +50,7 @@ if ($UseCacheFromModule -and (Test-Path "$esltModuleDirectory/ProviderApiVersion
 $defaultConfig = @{
     inputFilter            = "*.json"
     resourceTypeFilter     = @()
-    outputPath             = $TargetModulePath + "/infra-as-code/bicep/modules/policy/definitions/lib/china"
+    outputPath             = $TargetPath + "/infra-as-code/bicep/modules/policy/definitions/lib/china"
     fileNamePrefix         = ""
     fileNameSuffix         = ".json"
     exportFormat           = "Bicep"
@@ -59,8 +59,8 @@ $defaultConfig = @{
 
 # File locations from Enterprise-scale repository for
 # resources, organised by type
-$policyDefinitionFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyDefinitions/china"
-$policySetDefinitionFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyDefinitions/china"
+$policyDefinitionFilePaths = "$SourcePath/eslzArm/managementGroupTemplates/policyDefinitions/china"
+$policySetDefinitionFilePaths = "$SourcePath/eslzArm/managementGroupTemplates/policyDefinitions/china"
 
 # The exportConfig array controls the foreach loop used to run
 # Export-LibraryArtifact. Each object provides a set of values
@@ -91,9 +91,9 @@ $exportConfig += $policySetDefinitionFilePaths | ForEach-Object {
 # artefacts (by resource type) from the library
 if ($Reset) {
     Write-Information "Deleting existing Policy Definitions from library." -InformationAction Continue
-    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/china/policy_definitions/" -Recurse -Force
+    Remove-Item -Path "$TargetPath/infra-as-code/bicep/modules/policy/definitions/lib/china/policy_definitions/" -Recurse -Force
     Write-Information "Deleting existing Policy Set Definitions from library." -InformationAction Continue
-    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/china/policy_set_definitions/" -Recurse -Force
+    Remove-Item -Path "$TargetPath/infra-as-code/bicep/modules/policy/definitions/lib/china/policy_set_definitions/" -Recurse -Force
 }
 
 # Process the files added to $esltConfig, to add content
