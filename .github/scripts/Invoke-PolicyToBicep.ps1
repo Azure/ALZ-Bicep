@@ -5,6 +5,7 @@ AUTHOR/S: jtracey93, seseicht
 VERSION: 2.0.0
 #>
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "", Justification = "False Positive")]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseBOMForUnicodeEncodedFile", "", Justification = "False Positive")]
 
 [CmdletBinding(SupportsShouldProcess)]
 param (
