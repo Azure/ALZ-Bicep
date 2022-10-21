@@ -40,9 +40,9 @@ Import-Module $AlzToolsPath -ErrorAction Stop
 # code will preload the ProviderApiVersions cache from a
 # stored state in the module if the UseCacheFromModule flag
 # is set and the ProviderApiVersions.zip file is present.
-if ($UseCacheFromModule -and (Test-Path "$esltModuleDirectory/ProviderApiVersions.zip")) {
+if (!$UpdateProviderApiVersions -and (Test-Path "$AlzToolsPath/ProviderApiVersions.zip")) {
   Write-Information "Pre-loading ProviderApiVersions from saved cache." -InformationAction Continue
-  Invoke-UseCacheFromModule($esltModuleDirectory)
+  Invoke-UseCacheFromModule($AlzToolsPath)
 }
 
 # The defaultConfig object provides a set of default values
@@ -59,9 +59,18 @@ $defaultConfig = @{
 
 # File locations from Enterprise-scale repository for
 # resources, organised by type
-$policyDefinitionFilePaths = "$SourcePath/eslzArm/managementGroupTemplates/policyDefinitions/china"
-$policySetDefinitionFilePaths = "$SourcePath/eslzArm/managementGroupTemplates/policyDefinitions/china"
-
+$policyDefinitionFilePaths = (
+    Get-ChildItem -Path "$SourcePath/src/resources/Microsoft.Authorization/policyDefinitions/*" `
+        -File `
+        -Include "*.json", "*.AzureChinaCloud.json" `
+        -Exclude "*.AzureUSGovernment.json"
+).FullName
+$policySetDefinitionFilePaths = (
+    Get-ChildItem -Path "$SourcePath/src/resources/Microsoft.Authorization/policySetDefinitions/*" `
+        -File `
+        -Include "*.json", "*.AzureChinaCloud.json" `
+        -Exclude "*.AzureUSGovernment.json"
+).FullName
 # The exportConfig array controls the foreach loop used to run
 # Export-LibraryArtifact. Each object provides a set of values
 # used to configure each run of Export-LibraryArtifact within
