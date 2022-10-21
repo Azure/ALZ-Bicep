@@ -16,7 +16,7 @@ param (
   [string]
   $definitionsRoot = "definitions",
   [string]
-  $lineEndings = "unix",
+  $lineEnding = "unix",
   [string]
   $definitionsPath = "lib/policy_definitions",
   [string]
@@ -51,7 +51,7 @@ function Invoke-RunFilesThroughLineEndings {
     $filePath
   )
 
-  Get-Content $filePath | Edit-LineEndings -lineEndings $LineEnding | Out-File $filePath
+  Get-Content $filePath | Edit-LineEndings -LineEnding $LineEnding | Out-File $filePath
 }
 
 #region Policy Definitions
