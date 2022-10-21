@@ -77,7 +77,6 @@ jobs:
             .github/scripts/Invoke-PolicyToBicep.ps1 `
               -alzToolsPath "${{ github.workspace }}/${{ env.remote_repository }}/src/Alz.Tools/"
           azPSVersion: "latest"
-          working-directory: ${{ github.repository }}
 
       - name: Check for changes
         id: git_status
