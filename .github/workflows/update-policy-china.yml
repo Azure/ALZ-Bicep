@@ -63,8 +63,8 @@ jobs:
             Write-Information "==> Running script..." -InformationAction Continue
             ${{ github.repository }}/.github/scripts/Invoke-LibraryUpdate-China.ps1 `
               -AlzToolsPath "${{ github.workspace }}/${{ env.remote_repository }}/src/Alz.Tools/" `
-              -TargetModulePath ${{ github.workspace }}/${{ github.repository }} `
-              -SourceModulePath ${{ github.workspace }}/${{ env.remote_repository }} `
+              -TargetPath ${{ github.workspace }}/${{ github.repository }} `
+              -SourcePath ${{ github.workspace }}/${{ env.remote_repository }} `
               -Reset
           azPSVersion: "latest"
 
