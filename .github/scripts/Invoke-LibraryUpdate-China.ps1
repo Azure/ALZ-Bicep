@@ -48,13 +48,13 @@ if ($UseCacheFromModule -and (Test-Path "$esltModuleDirectory/ProviderApiVersion
 # The defaultConfig object provides a set of default values
 # to reduce verbosity within the esltConfig object.
 $defaultConfig = @{
-    inputFilter    = "*.json"
-    typeFilter     = @()
-    outputPath     = $TargetModulePath + "/infra-as-code/bicep/modules/policy/definitions/lib/china"
-    fileNamePrefix = ""
-    fileNameSuffix = ".json"
-    exportFormat   = "Bicep"
-    recurse        = $false
+    inputFilter            = "*.json"
+    resourceTypeFilter     = @()
+    outputPath             = $TargetModulePath + "/infra-as-code/bicep/modules/policy/definitions/lib/china"
+    fileNamePrefix         = ""
+    fileNameSuffix         = ".json"
+    exportFormat           = "Bicep"
+    recurse                = $false
 }
 
 # File locations from Enterprise-scale repository for
@@ -73,7 +73,7 @@ $exportConfig = @()
 $exportConfig += $policyDefinitionFilePaths | ForEach-Object {
     [PsCustomObject]@{
         inputPath      = $_
-        typeFilter     = "Microsoft.Authorization/policyDefinitions"
+        resourceTypeFilter     = "Microsoft.Authorization/policyDefinitions"
         fileNamePrefix = "policy_definitions/policy_definition_es_mc_"
     }
 }
@@ -81,7 +81,7 @@ $exportConfig += $policyDefinitionFilePaths | ForEach-Object {
 $exportConfig += $policySetDefinitionFilePaths | ForEach-Object {
     [PsCustomObject]@{
         inputPath      = $_
-        typeFilter     = "Microsoft.Authorization/policySetDefinitions"
+        resourceTypeFilter     = "Microsoft.Authorization/policySetDefinitions"
         fileNamePrefix = "policy_set_definitions/policy_set_definition_es_mc_"
         fileNameSuffix = ".json"
     }
@@ -102,7 +102,7 @@ foreach ($config in $exportConfig) {
     Export-LibraryArtifact `
         -InputPath ($config.inputPath ?? $defaultConfig.inputPath) `
         -InputFilter ($config.inputFilter ?? $defaultConfig.inputFilter) `
-        -TypeFilter ($config.typeFilter ?? $defaultConfig.typeFilter) `
+        -resourceTypeFilter ($config.resourceTypeFilter ?? $defaultConfig.resourceTypeFilter) `
         -OutputPath ($config.outputPath ?? $defaultConfig.outputPath) `
         -FileNamePrefix ($config.fileNamePrefix ?? $defaultConfig.fileNamePrefix) `
         -FileNameSuffix ($config.fileNameSuffix ?? $defaultConfig.fileNameSuffix) `
