@@ -13,3 +13,17 @@ charset = utf-8
 end_of_line = lf
 trim_trailing_whitespace = true
 insert_final_newline = true
+
+[**/policy/definitions/lib/**]
+indent_size = 2
+charset = unset
+end_of_line = unset
+trim_trailing_whitespace = unset
+insert_final_newline = unset
+
+[**/policy/assignments/lib/**]
+indent_size = 2
+charset = unset
+end_of_line = unset
+trim_trailing_whitespace = unset
+insert_final_newline = unset

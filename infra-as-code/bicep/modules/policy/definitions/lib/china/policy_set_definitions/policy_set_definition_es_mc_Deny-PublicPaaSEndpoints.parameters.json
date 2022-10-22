@@ -1,0 +1,72 @@
+{
+  "ACRDenyPaasPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('ACRPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "AFSDenyPaasPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('AFSPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "AKSDenyPaasPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('AKSPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "BatchDenyPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('BatchPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "CosmosDenyPaasPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('CosmosPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "KeyVaultDenyPaasPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('KeyVaultPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "MySQLFlexDenyPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('MySQLFlexPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "PostgreSQLFlexDenyPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('PostgreSQLFlexPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "SqlServerDenyPaasPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SqlServerPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "StorageDenyPaasPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('StoragePublicIpDenyEffect')]"
+      }
+    }
+  }
+}
