@@ -1,7 +1,7 @@
 targetScope = 'managementGroup'
 
-@description('Array of Subscription Ids that should be moved to the new management group.')
-param parSubscriptionIds array
+@description('Array of Subscription Ids that should be moved to the new management group. Default: Empty Array')
+param parSubscriptionIds array = []
 
 @description('Target management group for the subscription. This management group must exist.')
 param parTargetManagementGroupId string

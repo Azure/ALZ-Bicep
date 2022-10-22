@@ -1,13 +1,9 @@
 targetScope = 'subscription'
 
 @description('Virtual WAN Hub resource ID.')
-@minLength(2)
-@maxLength(50)
 param parVirtualWanHubResourceId string
 
 @description('Remote Spoke virtual network resource ID.')
-@minLength(2)
-@maxLength(50)
 param parRemoteVirtualNetworkResourceId string
 
 @description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')

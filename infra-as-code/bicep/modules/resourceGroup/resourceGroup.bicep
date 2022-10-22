@@ -4,8 +4,6 @@ targetScope = 'subscription'
 param parLocation string
 
 @description('Name of Resource Group to be created.')
-@minLength(2)
-@maxLength(64)
 param parResourceGroupName string
 
 @description('Tags you would like to be applied to all resources in this module. Default: Empty Object')

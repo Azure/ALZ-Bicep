@@ -5,8 +5,6 @@ param parDestinationVirtualNetworkId string
 param parSourceVirtualNetworkName string
 
 @description('Name of destination virtual network we are peering.')
-@minLength(2)
-@maxLength(64)
 param parDestinationVirtualNetworkName string
 
 @description('Switch to enable/disable Virtual Network Access for the Network Peer. Default: true')
