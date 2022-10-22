@@ -1,396 +1,460 @@
 {
 	name: 'Append-AppService-httpsonly'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_append_appservice_httpsonly.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Append-AppService-httpsonly.json')
 }
 {
 	name: 'Append-AppService-latestTLS'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_append_appservice_latesttls.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Append-AppService-latestTLS.json')
 }
 {
 	name: 'Append-KV-SoftDelete'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_append_kv_softdelete.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Append-KV-SoftDelete.json')
 }
 {
 	name: 'Append-Redis-disableNonSslPort'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_append_redis_disablenonsslport.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Append-Redis-disableNonSslPort.json')
 }
 {
 	name: 'Append-Redis-sslEnforcement'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_append_redis_sslenforcement.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Append-Redis-sslEnforcement.json')
+}
+{
+	name: 'Audit-MachineLearning-PrivateEndpointId'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Audit-MachineLearning-PrivateEndpointId.json')
+}
+{
+	name: 'Deny-AA-child-resources'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-AA-child-resources.json')
 }
 {
 	name: 'Deny-AFSPaasPublicIP'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_afspaaspublicip.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-AFSPaasPublicIP.json')
 }
 {
 	name: 'Deny-AppGW-Without-WAF'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_appgw_without_waf.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-AppGW-Without-WAF.json')
 }
 {
 	name: 'Deny-AppServiceApiApp-http'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_appserviceapiapp_http.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-AppServiceApiApp-http.json')
 }
 {
 	name: 'Deny-AppServiceFunctionApp-http'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_appservicefunctionapp_http.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-AppServiceFunctionApp-http.json')
 }
 {
 	name: 'Deny-AppServiceWebApp-http'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_appservicewebapp_http.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-AppServiceWebApp-http.json')
+}
+{
+	name: 'Deny-Databricks-NoPublicIp'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-Databricks-NoPublicIp.json')
+}
+{
+	name: 'Deny-Databricks-Sku'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-Databricks-Sku.json')
+}
+{
+	name: 'Deny-Databricks-VirtualNetwork'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-Databricks-VirtualNetwork.json')
 }
 {
 	name: 'Deny-KeyVaultPaasPublicIP'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_keyvaultpaaspublicip.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-KeyVaultPaasPublicIP.json')
+}
+{
+	name: 'Deny-MachineLearning-Aks'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-Aks.json')
+}
+{
+	name: 'Deny-MachineLearning-Compute-SubnetId'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-Compute-SubnetId.json')
+}
+{
+	name: 'Deny-MachineLearning-Compute-VmSize'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-Compute-VmSize.json')
+}
+{
+	name: 'Deny-MachineLearning-ComputeCluster-RemoteLoginPortPublicAccess'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-ComputeCluster-RemoteLoginPortPublicAccess.json')
+}
+{
+	name: 'Deny-MachineLearning-ComputeCluster-Scale'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-ComputeCluster-Scale.json')
+}
+{
+	name: 'Deny-MachineLearning-HbiWorkspace'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-HbiWorkspace.json')
+}
+{
+	name: 'Deny-MachineLearning-PublicAccessWhenBehindVnet'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-PublicAccessWhenBehindVnet.json')
+}
+{
+	name: 'Deny-MachineLearning-PublicNetworkAccess'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-PublicNetworkAccess.json')
 }
 {
 	name: 'Deny-MySql-http'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_mysql_http.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MySql-http.json')
 }
 {
 	name: 'Deny-PostgreSql-http'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_postgresql_http.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-PostgreSql-http.json')
 }
 {
 	name: 'Deny-Private-DNS-Zones'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_private_dns_zones.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-Private-DNS-Zones.json')
 }
 {
 	name: 'Deny-PublicEndpoint-MariaDB'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_publicendpoint_mariadb.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-PublicEndpoint-MariaDB.json')
 }
 {
 	name: 'Deny-PublicIP'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_publicip.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-PublicIP.json')
 }
 {
 	name: 'Deny-RDP-From-Internet'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_rdp_from_internet.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-RDP-From-Internet.json')
 }
 {
 	name: 'Deny-Redis-http'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_redis_http.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-Redis-http.json')
 }
 {
 	name: 'Deny-Sql-minTLS'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_sql_mintls.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-Sql-minTLS.json')
 }
 {
 	name: 'Deny-SqlMi-minTLS'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_sqlmi_mintls.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-SqlMi-minTLS.json')
 }
 {
 	name: 'Deny-Storage-minTLS'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_storage_mintls.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-Storage-minTLS.json')
 }
 {
 	name: 'Deny-Subnet-Without-Nsg'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_subnet_without_nsg.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-Subnet-Without-Nsg.json')
 }
 {
 	name: 'Deny-Subnet-Without-Udr'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_subnet_without_udr.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-Subnet-Without-Udr.json')
 }
 {
 	name: 'Deny-VNET-Peer-Cross-Sub'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_vnet_peer_cross_sub.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-VNET-Peer-Cross-Sub.json')
 }
 {
 	name: 'Deny-VNET-Peering-To-Non-Approved-VNETs'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_vnet_peering_to_non_approved_vnets.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-VNET-Peering-To-Non-Approved-VNETs.json')
 }
 {
 	name: 'Deny-VNet-Peering'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deny_vnet_peering.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-VNet-Peering.json')
 }
 {
 	name: 'Deploy-ActivityLogs-to-LA-workspace'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_activitylogs_to_la_workspace.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-ActivityLogs-to-LA-workspace.json')
 }
 {
 	name: 'Deploy-ASC-SecurityContacts'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_asc_securitycontacts.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-ASC-SecurityContacts.json')
+}
+{
+	name: 'Deploy-Budget'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Budget.json')
+}
+{
+	name: 'Deploy-Custom-Route-Table'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Custom-Route-Table.json')
 }
 {
 	name: 'Deploy-DDoSProtection'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_ddosprotection.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-DDoSProtection.json')
 }
 {
 	name: 'Deploy-Default-Udr'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_default_udr.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Default-Udr.json')
 }
 {
 	name: 'Deploy-Diagnostics-AA'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_aa.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-AA.json')
 }
 {
 	name: 'Deploy-Diagnostics-ACI'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_aci.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-ACI.json')
 }
 {
 	name: 'Deploy-Diagnostics-ACR'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_acr.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-ACR.json')
 }
 {
 	name: 'Deploy-Diagnostics-AnalysisService'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_analysisservice.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-AnalysisService.json')
 }
 {
 	name: 'Deploy-Diagnostics-ApiForFHIR'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_apiforfhir.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-ApiForFHIR.json')
 }
 {
 	name: 'Deploy-Diagnostics-APIMgmt'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_apimgmt.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-APIMgmt.json')
 }
 {
 	name: 'Deploy-Diagnostics-ApplicationGateway'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_applicationgateway.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-ApplicationGateway.json')
+}
+{
+	name: 'Deploy-Diagnostics-AVDScalingPlans'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-AVDScalingPlans.json')
 }
 {
 	name: 'Deploy-Diagnostics-Bastion'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_bastion.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-Bastion.json')
 }
 {
 	name: 'Deploy-Diagnostics-CDNEndpoints'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_cdnendpoints.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-CDNEndpoints.json')
 }
 {
 	name: 'Deploy-Diagnostics-CognitiveServices'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_cognitiveservices.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-CognitiveServices.json')
 }
 {
 	name: 'Deploy-Diagnostics-CosmosDB'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_cosmosdb.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-CosmosDB.json')
 }
 {
 	name: 'Deploy-Diagnostics-Databricks'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_databricks.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-Databricks.json')
 }
 {
 	name: 'Deploy-Diagnostics-DataExplorerCluster'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_dataexplorercluster.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-DataExplorerCluster.json')
 }
 {
 	name: 'Deploy-Diagnostics-DataFactory'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_datafactory.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-DataFactory.json')
 }
 {
 	name: 'Deploy-Diagnostics-DLAnalytics'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_dlanalytics.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-DLAnalytics.json')
 }
 {
 	name: 'Deploy-Diagnostics-EventGridSub'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_eventgridsub.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-EventGridSub.json')
 }
 {
 	name: 'Deploy-Diagnostics-EventGridSystemTopic'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_eventgridsystemtopic.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-EventGridSystemTopic.json')
 }
 {
 	name: 'Deploy-Diagnostics-EventGridTopic'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_eventgridtopic.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-EventGridTopic.json')
 }
 {
 	name: 'Deploy-Diagnostics-ExpressRoute'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_expressroute.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-ExpressRoute.json')
 }
 {
 	name: 'Deploy-Diagnostics-Firewall'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_firewall.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-Firewall.json')
 }
 {
 	name: 'Deploy-Diagnostics-FrontDoor'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_frontdoor.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-FrontDoor.json')
 }
 {
 	name: 'Deploy-Diagnostics-Function'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_function.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-Function.json')
 }
 {
 	name: 'Deploy-Diagnostics-HDInsight'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_hdinsight.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-HDInsight.json')
 }
 {
 	name: 'Deploy-Diagnostics-iotHub'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_iothub.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-iotHub.json')
 }
 {
 	name: 'Deploy-Diagnostics-LoadBalancer'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_loadbalancer.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-LoadBalancer.json')
 }
 {
 	name: 'Deploy-Diagnostics-LogicAppsISE'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_logicappsise.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-LogicAppsISE.json')
 }
 {
 	name: 'Deploy-Diagnostics-MariaDB'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_mariadb.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-MariaDB.json')
 }
 {
 	name: 'Deploy-Diagnostics-MediaService'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_mediaservice.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-MediaService.json')
 }
 {
 	name: 'Deploy-Diagnostics-MlWorkspace'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_mlworkspace.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-MlWorkspace.json')
 }
 {
 	name: 'Deploy-Diagnostics-MySQL'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_mysql.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-MySQL.json')
 }
 {
 	name: 'Deploy-Diagnostics-NetworkSecurityGroups'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_networksecuritygroups.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-NetworkSecurityGroups.json')
 }
 {
 	name: 'Deploy-Diagnostics-NIC'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_nic.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-NIC.json')
 }
 {
 	name: 'Deploy-Diagnostics-PostgreSQL'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_postgresql.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-PostgreSQL.json')
 }
 {
 	name: 'Deploy-Diagnostics-PowerBIEmbedded'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_powerbiembedded.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-PowerBIEmbedded.json')
 }
 {
 	name: 'Deploy-Diagnostics-RedisCache'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_rediscache.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-RedisCache.json')
 }
 {
 	name: 'Deploy-Diagnostics-Relay'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_relay.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-Relay.json')
 }
 {
 	name: 'Deploy-Diagnostics-SignalR'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_signalr.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-SignalR.json')
 }
 {
 	name: 'Deploy-Diagnostics-SQLElasticPools'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_sqlelasticpools.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-SQLElasticPools.json')
 }
 {
 	name: 'Deploy-Diagnostics-SQLMI'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_sqlmi.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-SQLMI.json')
 }
 {
 	name: 'Deploy-Diagnostics-TimeSeriesInsights'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_timeseriesinsights.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-TimeSeriesInsights.json')
 }
 {
 	name: 'Deploy-Diagnostics-TrafficManager'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_trafficmanager.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-TrafficManager.json')
 }
 {
 	name: 'Deploy-Diagnostics-VirtualNetwork'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_virtualnetwork.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-VirtualNetwork.json')
 }
 {
 	name: 'Deploy-Diagnostics-VM'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_vm.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-VM.json')
 }
 {
 	name: 'Deploy-Diagnostics-VMSS'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_vmss.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-VMSS.json')
 }
 {
 	name: 'Deploy-Diagnostics-VNetGW'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_vnetgw.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-VNetGW.json')
 }
 {
 	name: 'Deploy-Diagnostics-WebServerFarm'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_webserverfarm.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-WebServerFarm.json')
 }
 {
 	name: 'Deploy-Diagnostics-Website'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_website.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-Website.json')
 }
 {
 	name: 'Deploy-Diagnostics-WVDAppGroup'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_wvdappgroup.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-WVDAppGroup.json')
 }
 {
 	name: 'Deploy-Diagnostics-WVDHostPools'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_wvdhostpools.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-WVDHostPools.json')
 }
 {
 	name: 'Deploy-Diagnostics-WVDWorkspace'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_diagnostics_wvdworkspace.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-WVDWorkspace.json')
 }
 {
 	name: 'Deploy-FirewallPolicy'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_firewallpolicy.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-FirewallPolicy.json')
 }
 {
 	name: 'Deploy-MySQL-sslEnforcement'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_mysql_sslenforcement.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-MySQL-sslEnforcement.json')
 }
 {
 	name: 'Deploy-MySQLCMKEffect'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_mysqlcmkeffect.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-MySQLCMKEffect.json')
 }
 {
 	name: 'Deploy-Nsg-FlowLogs-to-LA'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_nsg_flowlogs_to_la.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Nsg-FlowLogs-to-LA.json')
 }
 {
 	name: 'Deploy-Nsg-FlowLogs'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_nsg_flowlogs.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Nsg-FlowLogs.json')
 }
 {
 	name: 'Deploy-PostgreSQL-sslEnforcement'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_postgresql_sslenforcement.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-PostgreSQL-sslEnforcement.json')
 }
 {
 	name: 'Deploy-PostgreSQLCMKEffect'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_postgresqlcmkeffect.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-PostgreSQLCMKEffect.json')
 }
 {
 	name: 'Deploy-Private-DNS-Azure-File-Sync'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_private_dns_azure_file_sync.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Private-DNS-Azure-File-Sync.json')
 }
 {
 	name: 'Deploy-Private-DNS-Azure-KeyVault'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_private_dns_azure_keyvault.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Private-DNS-Azure-KeyVault.json')
 }
 {
 	name: 'Deploy-Private-DNS-Azure-Web'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_private_dns_azure_web.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Private-DNS-Azure-Web.json')
 }
 {
 	name: 'Deploy-Sql-AuditingSettings'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_sql_auditingsettings.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Sql-AuditingSettings.json')
 }
 {
 	name: 'Deploy-SQL-minTLS'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_sql_mintls.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-SQL-minTLS.json')
 }
 {
 	name: 'Deploy-Sql-SecurityAlertPolicies'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_sql_securityalertpolicies.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Sql-SecurityAlertPolicies.json')
 }
 {
 	name: 'Deploy-Sql-Tde'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_sql_tde.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Sql-Tde.json')
 }
 {
 	name: 'Deploy-Sql-vulnerabilityAssessments'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_sql_vulnerabilityassessments.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Sql-vulnerabilityAssessments.json')
 }
 {
 	name: 'Deploy-SqlMi-minTLS'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_sqlmi_mintls.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-SqlMi-minTLS.json')
 }
 {
 	name: 'Deploy-Storage-sslEnforcement'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_storage_sslenforcement.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Storage-sslEnforcement.json')
 }
 {
 	name: 'Deploy-VNET-HubSpoke'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_vnet_hubspoke.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-VNET-HubSpoke.json')
 }
 {
 	name: 'Deploy-Windows-DomainJoin'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_deploy_windows_domainjoin.json')
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Windows-DomainJoin.json')
 }
