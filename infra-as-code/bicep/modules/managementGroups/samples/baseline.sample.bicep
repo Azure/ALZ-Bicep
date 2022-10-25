@@ -30,9 +30,9 @@ module baseline_managementgroups'../managementGroups.bicep' = {
       }
     }
     parTopLevelManagementGroupPrefix: 'alz'
-    parTopLevelManagementGroupDisplayName: 'Azure Landing Zones' 
-    parLandingZoneMgAlzDefaultsEnable: true 
-    parLandingZoneMgConfidentialEnable: false  
-    parTelemetryOptOut: false                      
+    parTopLevelManagementGroupDisplayName: 'Azure Landing Zones'
+    parLandingZoneMgAlzDefaultsEnable: true
+    parLandingZoneMgConfidentialEnable: false
+    parTelemetryOptOut: false
   }
 }

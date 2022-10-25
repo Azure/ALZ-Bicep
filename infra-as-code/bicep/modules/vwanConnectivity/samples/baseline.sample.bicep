@@ -37,7 +37,7 @@ module minimum_vwan_conn '../vwanConnectivity.bicep' = {
       '2'
       '3'
     ]
-    parVirtualNetworkIdToLink: '/subscriptions/2cf8f06f-b761-4132-9ed1-2c90d07c4885/resourceGroups/rg-vnet/providers/Microsoft.Network/virtualNetworks/vnet'
+    parVirtualNetworkIdToLink: '/subscriptions/xxxxxxxxx-b761-4132-9ed1-2c90d07c4885/resourceGroups/rg-vnet/providers/Microsoft.Network/virtualNetworks/vnet'
 
     parAzFirewallPoliciesName: '${parCompanyPrefix}-azfwpolicy-${location}'
 

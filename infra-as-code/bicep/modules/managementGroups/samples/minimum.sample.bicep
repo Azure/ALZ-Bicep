@@ -28,6 +28,6 @@ module minimum_managementgroups '../managementGroups.bicep' = {
           }
         }
       }
-    }                          
+    }
   }
 }

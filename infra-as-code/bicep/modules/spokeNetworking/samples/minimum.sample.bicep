@@ -26,7 +26,7 @@ module spoke_nw '../spokeNetworking.bicep' = {
     parDnsServerIps: [
       'dns-svr-1'
       'dns-svr-2'
-    ] 
+    ]
     parNextHopIpAddress: '10.10.10.10'
 
   }
