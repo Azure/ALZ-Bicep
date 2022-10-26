@@ -1,23 +1,23 @@
 targetScope = 'tenant'
 
-@description('Prefix used for the management group hierarchy in the managementGroups module.')
+@description('Prefix used for the management group hierarchy in the managementGroups module. Default: alz')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@description('Dictionary Object to allow additional or different child Management Groups of the Landing Zones Management Group .')
+@description('Dictionary Object to allow additional or different child Management Groups of the Landing Zones Management Group. Default: Empty Array')
 param parLandingZoneMgChildren array = []
 
 @description('Log Analytics Workspace Resource ID.')
 param parLogAnalyticsWorkspaceResourceId string
 
-@description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
+@description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true')
 param parLandingZoneMgAlzDefaultsEnable bool = true
 
-@description('Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.')
+@description('Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true. Default: false')
 param parLandingZoneMgConfidentialEnable bool = false
 
-@description('Set Parameter to true to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 var varMgIds = {

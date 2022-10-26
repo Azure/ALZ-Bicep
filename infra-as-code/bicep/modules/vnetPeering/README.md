@@ -1,6 +1,6 @@
 # Module: VNet Peering
 
-This module creates a virtual network peering connection between two virtual networks and is to be utilized by other modules. Module will need to be called twice to create the completed peering.  Each time with a peering direction. This allows for peering between different subscriptions.  
+This module creates a virtual network peering connection between two virtual networks and is to be utilized by other modules. Module will need to be called twice to create the completed peering.  Each time with a peering direction. This allows for peering between different subscriptions.
 
 **Peering Options Documentation:**
 
@@ -52,7 +52,7 @@ During the deployment step, we will take parameters provided in the example para
 ### Azure CLI
 ```bash
 # For Azure global regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription
 LandingZoneSubscriptionId="[your Landing Zone subscription ID]"
 az account set --subscription $LandingZoneSubscriptionId
 
@@ -64,7 +64,7 @@ az deployment group create \
 OR
 ```bash
 # For Azure China regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription
 LandingZoneSubscriptionId="[your Landing Zone subscription ID]"
 az account set --subscription $LandingZoneSubscriptionId
 
@@ -78,7 +78,7 @@ az deployment group create \
 
 ```powershell
 # For Azure global regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription
 $LandingZoneSubscriptionId = "[your Landing Zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
@@ -91,7 +91,7 @@ New-AzResourceGroupDeployment `
 OR
 ```powershell
 # For Azure China regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription 
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription
 $LandingZoneSubscriptionId = "[your Landing Zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
