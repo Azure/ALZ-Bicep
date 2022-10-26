@@ -5,7 +5,7 @@ This module defines spoke networking based on the recommendations from the Azure
 Module deploys the following resources:
 
 - Virtual Network (Spoke VNet)
-- UDR - if Firewall is enabled
+- Route Table with route to NVA - if Firewall is enabled
 
 > ## Note
 >
@@ -65,7 +65,7 @@ In this example, the spoke resources will be deployed to the resource group spec
 ### Azure CLI
 ```bash
 # For Azure global regions
-# Set Azure Landing zone subscription ID as the the current subscription 
+# Set Azure Landing zone subscription ID as the the current subscription
 LandingZoneSubscriptionId="[your landing zone subscription ID]"
 az account set --subscription $LandingZoneSubscriptionId
 
@@ -80,7 +80,7 @@ az deployment group create \
 OR
 ```bash
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 LandingZoneSubscriptionId="[your landing zone subscription ID]"
 az account set --subscription $LandingZoneSubscriptionId
 
@@ -97,14 +97,14 @@ az deployment group create \
 
 ```powershell
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $LandingZoneSubscriptionId = "[your landing zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
 
 New-AzResourceGroup -Name 'Spoke_Networking_POC' `
   -Location 'EastUs2'
-  
+
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json `
@@ -113,14 +113,14 @@ New-AzResourceGroupDeployment `
 OR
 ```powershell
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $LandingZoneSubscriptionId = "[your landing zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
 
 New-AzResourceGroup -Name 'Spoke_Networking_POC' `
   -Location 'chinaeast2'
-  
+
 New-AzResourceGroupDeployment `
   -TemplateFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep `
   -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json `

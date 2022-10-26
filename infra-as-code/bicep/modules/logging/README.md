@@ -35,8 +35,8 @@ The module requires the following required input parameters.
 | parAutomationAccountName                   | string          | Automation account name                                     | Mandatory input, name must be unique in the subscription, default: `alz-automation-account`                                                                                                                                                                            | `alz-automation-account`                                                                                     |
 | parAutomationAccountLocation               | string          | Region name                                                 | Mandatory input, default: `resourceGroup().location`                                                                                                                                                                                                                   | `eastus`                                                                                                     |
 | parTags                                    | object          | Empty object `{}`                                           | Array of Tags to be applied to all resources in the logging module                                                                                                                                                                                                     | `{"key": "value"}`                                                                                           |
-| parAutomationAccountTags                   | object          | Empty object `{}`                                           | Array of Tags to be applied to Automation Account in the logging module                                                                                                                                                                                                | `{"key": "value"}`                                                                                           |
-| parLogAnalyticsWorkspaceTags               | object          | Empty object `{}`                                           | Array of Tags to be applied to Log Analytics Workspace in the logging module                                                                                                                                                                                           | `{"key": "value"}`                                                                                           |
+| parAutomationAccountTags                   | object          | `parTags` / Empty object `{}`                                           | Array of Tags to be applied to Automation Account in the logging module                                                                                                                                                                                                | `{"key": "value"}`                                                                                           |
+| parLogAnalyticsWorkspaceTags               | object          | `parTags` / Empty object `{}`                                           | Array of Tags to be applied to Log Analytics Workspace in the logging module                                                                                                                                                                                           | `{"key": "value"}`                                                                                           |
 | parTelemetryOptOut                         | bool            | Set Parameter to true to Opt-out of deployment telemetry    | Mandatory input, default: `false`                                                                                                                                                                                                                                      | `false`                                                                                                      |
 
 ## Outputs
@@ -48,7 +48,7 @@ The module will generate the following outputs:
 | outLogAnalyticsWorkspaceName | string          | alz-log-analytics                                                                                                                                                                                                               |
 | outLogAnalyticsWorkspaceId   | string          | /subscriptions/4f9f8765-911a-4a6d-af60-4bc0473268c0/resourceGroups/alz-logging/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics                                                                             |
 | outLogAnalyticsCustomerId    | string          | 4192b202-f57d-4e75-a074-d215aa2acb49                                                                                                                                                                                            |
-| outLogAnalyticsSolutions     | Array of string | ["AgentHealthAssessment", "AntiMalware","AzureActivity", "ChangeTracking", "Security", "SecurityInsights", "ServiceMap", "SQLAdvancedThreatProtection", "SQLVulnerabilityAssessment", "SQLAssessment", "Updates", "VMInsights"] |
+| outLogAnalyticsSolutions     | array | ["AgentHealthAssessment", "AntiMalware","AzureActivity", "ChangeTracking", "Security", "SecurityInsights", "ServiceMap", "SQLAdvancedThreatProtection", "SQLVulnerabilityAssessment", "SQLAssessment", "Updates", "VMInsights"] |
 | outAutomationAccountName     | string          | alz-automation-account                                                                                                                                                                                                          |
 | outAutomationAccountId       | string          | /subscriptions/4f9f8765-911a-4a6d-af60-4bc0473268c0/resourceGroups/alz-logging/providers/Microsoft.Automation/automationAccounts/alz-automation-account                                                                         |
 
@@ -67,8 +67,8 @@ There are separate input parameters files depending on which Azure cloud you are
 
 ### Azure CLI
 ```bash
-# For Azure Global regions  
-# Set Platform management subscripion ID as the the current subscription 
+# For Azure Global regions
+# Set Platform management subscripion ID as the the current subscription
 ManagementSubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ManagementSubscriptionId
 
@@ -77,7 +77,7 @@ az group create \
   --name alz-logging \
   --location eastus
 
-# Deploy Module 
+# Deploy Module
 az deployment group create \
   --template-file infra-as-code/bicep/modules/logging/logging.bicep \
   --parameters @infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json \
@@ -85,8 +85,8 @@ az deployment group create \
 ```
 OR
 ```bash
-# For Azure China regions  
-# Set Platform management subscripion ID as the the current subscription 
+# For Azure China regions
+# Set Platform management subscripion ID as the the current subscription
 ManagementSubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ManagementSubscriptionId
 
@@ -95,7 +95,7 @@ az group create \
   --name alz-logging \
   --location chinaeast2
 
-# Deploy Module 
+# Deploy Module
 az deployment group create \
   --template-file infra-as-code/bicep/modules/logging/logging.bicep \
   --parameters @infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json \
@@ -106,7 +106,7 @@ az deployment group create \
 
 ```powershell
 # For Azure Global regions
-# Set Platform management subscripion ID as the the current subscription 
+# Set Platform management subscripion ID as the the current subscription
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
@@ -124,7 +124,7 @@ New-AzResourceGroupDeployment `
 OR
 ```powershell
 # For Azure China regions
-# Set Platform management subscripion ID as the the current subscription 
+# Set Platform management subscripion ID as the the current subscription
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ManagementSubscriptionId

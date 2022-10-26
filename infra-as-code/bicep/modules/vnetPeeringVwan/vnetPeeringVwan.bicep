@@ -1,12 +1,12 @@
 targetScope = 'subscription'
 
-@description('Virtual WAN Hub resource ID. No default')
+@description('Virtual WAN Hub resource ID.')
 param parVirtualWanHubResourceId string
 
-@description('Remote Spoke virtual network resource ID. No default')
+@description('Remote Spoke virtual network resource ID.')
 param parRemoteVirtualNetworkResourceId string
 
-@description('Set Parameter to true to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id
@@ -22,7 +22,7 @@ var varModhubVirtualNetworkConnectionDeploymentName = take('deploy-vnet-peering-
 
 // The hubVirtualNetworkConnection resource is implemented as a separate module because the deployment scope could be on a different subscription and resource group
 module modhubVirtualNetworkConnection 'hubVirtualNetworkConnection.bicep' = if (!empty(parVirtualWanHubResourceId) && !empty(parRemoteVirtualNetworkResourceId)) {
-  scope: resourceGroup(varVwanSubscriptionId, varVwanResourceGroup)  
+  scope: resourceGroup(varVwanSubscriptionId, varVwanResourceGroup)
   name: varModhubVirtualNetworkConnectionDeploymentName
     params: {
     parVirtualWanHubResourceId: parVirtualWanHubResourceId

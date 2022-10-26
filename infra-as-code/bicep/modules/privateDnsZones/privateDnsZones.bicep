@@ -59,10 +59,10 @@ param parPrivateDnsZones array = [
 @description('Tags you would like to be applied to all resources in this module. Default: empty object')
 param parTags object = {}
 
-@description('Resource ID of VNet for Private DNS Zone VNet Links')
+@description('Resource ID of VNet for Private DNS Zone VNet Links. Default: Empty String')
 param parVirtualNetworkIdToLink string = ''
 
-@description('Set Parameter to true to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 var varAzBackupGeoCodes = {
