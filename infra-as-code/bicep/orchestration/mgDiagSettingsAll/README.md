@@ -50,14 +50,10 @@ Below are some examples of how to use this input parameter in both Bicep & JSON 
 ##### Bicep Example
 
 ```bicep
-parLandingZoneMgChildren: {
-  pci: {
-    displayName: 'PCI'
-  }
-  'another-example': {
-    displayName: 'Another Example'
-  }
-}
+parLandingZoneMgChildren: [
+    'pci'
+    'another-example'
+]
 ```
 
 ##### JSON Parameter File Input Example
