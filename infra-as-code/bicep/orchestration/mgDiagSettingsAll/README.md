@@ -14,7 +14,7 @@ The module requires the following inputs:
 
 | Parameter                             | Type   | Description                                                                                                                                                                          | Requirements                      | Example                                                                                 |
 | ------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------- | --------------------------------------------------------------------------------------- |
-| parTopLevelManagementGroupPrefix      | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment.                                                                         | 2-10 characters                   | `alz`                                                                                   |
+| parTopLevelManagementGroupPrefix      | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment.                                                                         | 2-10 characters, default: `alz`                   | `alz`                                                                                   |
 | parLandingZoneMgAlzDefaultsEnable     | bool   | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.                                                                                       | Mandatory input, default: `true`  | `true`                                                                                  |
 | parLandingZoneMgConfidentialEnable    | bool   | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.                                                             | Mandatory input, default: `false` | `false`                                                                                 |
 | parLogAnalyticsWorkspaceResourceId | string   | Resource ID of the Log Analytics Workspace                                                             | Mandatory input | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics` |
@@ -50,14 +50,10 @@ Below are some examples of how to use this input parameter in both Bicep & JSON 
 ##### Bicep Example
 
 ```bicep
-parLandingZoneMgChildren: {
-  pci: {
-    displayName: 'PCI'
-  }
-  'another-example': {
-    displayName: 'Another Example'
-  }
-}
+parLandingZoneMgChildren: [
+    'pci'
+    'another-example'
+]
 ```
 
 ##### JSON Parameter File Input Example
