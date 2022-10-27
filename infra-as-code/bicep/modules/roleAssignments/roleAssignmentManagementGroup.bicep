@@ -1,9 +1,9 @@
 targetScope = 'managementGroup'
 
-@description('A GUID representing the role assignment name.  Default:  guid(managementGroup().name, parRoleDefinitionId, parAssigneeObjectId)')
+@description('A GUID representing the role assignment name. Default: guid(managementGroup().name, parRoleDefinitionId, parAssigneeObjectId)')
 param parRoleAssignmentNameGuid string = guid(managementGroup().name, parRoleDefinitionId, parAssigneeObjectId)
 
-@description('Role Definition Id (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)')
+@description('Role Definition Id (i.e. GUID, Reader Role Definition ID: acdd72a7-3385-48ef-bd42-f606fba81ae7)')
 param parRoleDefinitionId string
 
 @description('Principal type of the assignee.  Allowed values are \'Group\' (Security Group) or \'ServicePrincipal\' (Service Principal or System/User Assigned Managed Identity)')
@@ -16,7 +16,7 @@ param parAssigneePrincipalType string
 @description('Object ID of groups, service principals or managed identities. For managed identities use the principal id. For service principals, use the object ID and not the app ID')
 param parAssigneeObjectId string
 
-@description('Set Parameter to true to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

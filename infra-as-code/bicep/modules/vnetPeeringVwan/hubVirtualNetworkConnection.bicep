@@ -1,7 +1,7 @@
-@description('Virtual WAN Hub resource ID. No default')
+@description('Virtual WAN Hub resource ID.')
 param parVirtualWanHubResourceId string
 
-@description('Remote Spoke virtual network resource ID. No default')
+@description('Remote Spoke virtual network resource ID.')
 param parRemoteVirtualNetworkResourceId string
 
 var varVwanHubName = split(parVirtualWanHubResourceId, '/')[8]
