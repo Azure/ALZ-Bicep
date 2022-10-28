@@ -11,6 +11,9 @@ Module supports the following custom roles:
 
 ## Parameters
 
+- [Parameters for Azure Commercial Cloud](generateddocs/customRoleDefinitions.bicep.md)
+- [Parameters for Azure China Cloud](generateddocs/mc-customRoleDefinitions.bicep.md)
+
 The module requires the following inputs:
 
  | Parameter                           | Description                                                                                                                                                                                                                                                    | Requirement     | Example |

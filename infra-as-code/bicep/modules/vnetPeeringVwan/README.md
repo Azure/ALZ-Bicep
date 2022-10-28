@@ -10,6 +10,9 @@ Module deploys the following resources which can be configured by parameters:
 
 ## Parameters
 
+- [Parameters for Virtual Network Peering from vWAN](generateddocs/vnetPeeringVwan.bicep.md)
+- [Parameters for Hub Virtual Network Connectivity from vWAN](generateddocs/hubVirtualNetworkConnection.bicep.md)
+
 The module requires the following inputs:
 
  | Parameter                    | Type   | Default                                                                                              | Description                                                                                                                                                                                                                                                         | Requirement                   | Example                      |

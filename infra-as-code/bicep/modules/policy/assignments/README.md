@@ -8,6 +8,8 @@ If you wish to add your own additional Azure Policy Assignments please review [H
 
 ## Parameters
 
+- [Parameters for Azure Commercial Cloud](generateddocs/policyAssignmentManagementGroup.bicep.md)
+
 > Please use the scroll horizontal scroll bar at the bottom of this table to scroll along to see the other columns!
 
 The module requires the following inputs:

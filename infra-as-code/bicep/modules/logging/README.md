@@ -23,6 +23,8 @@ The module will deploy the following Log Analytics Workspace solutions by defaul
 
 ## Parameters
 
+- [Parameters for Azure Commercial Cloud](generateddocs/logging.bicep.md)
+
 The module requires the following required input parameters.
 
 | Parameter                                  | Type            | Description                                                 | Requirement                                                                                                                                                                                                                                                            | Example                                                                                                      |

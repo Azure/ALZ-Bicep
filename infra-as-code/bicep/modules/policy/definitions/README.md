@@ -14,6 +14,9 @@ If you wish to add your own additional custom Azure Policy Definitions please re
 
 ## Parameters
 
+- [Parameters for Azure Commercial Cloud](generateddocs/customPolicyDefinitions.bicep.md)
+- [Parameters for Azure Commercial Cloud](generateddocs/mc-customPolicyDefinitions.bicep.md)
+
 The module requires the following inputs:
 
  | Parameter                  | Description                                                                                                                                                             | Requirement                       | Example |

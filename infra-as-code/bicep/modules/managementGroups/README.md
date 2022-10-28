@@ -16,6 +16,8 @@ The Management Groups module deploys a management group hierarchy in a customer'
 
 ## Parameters
 
+- [Parameters for Azure Commercial Cloud](generateddocs/managementGroups.bicep.md)
+
 The module requires the following inputs:
 
 | Parameter                             | Type   | Description                                                                                                                                                                          | Requirements                      | Example                                                                                 |
