@@ -1,9 +1,9 @@
 targetScope = 'managementGroup'
 
-@description('Log Analytics Workspace Resource ID.')
+@sys.description('Log Analytics Workspace Resource ID.')
 param parLogAnalyticsWorkspaceResourceId string
 
-@description('Set Parameter to true to Opt-out of deployment telemetry')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

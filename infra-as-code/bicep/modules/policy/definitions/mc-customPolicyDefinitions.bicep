@@ -1,9 +1,9 @@
 targetScope = 'managementGroup'
 
-@description('The management group scope to which the policy definitions are to be created at. DEFAULT VALUE = "alz"')
+@sys.description('The management group scope to which the policy definitions are to be created at. DEFAULT VALUE = "alz"')
 param parTargetManagementGroupId string = 'alz'
 
-@description('Set Parameter to true to Opt-out of deployment telemetry')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
 var varTargetManagementGroupResourceId = tenantResourceId('Microsoft.Management/managementGroups', parTargetManagementGroupId)

@@ -1,12 +1,12 @@
 targetScope = 'subscription'
 
-@description('Virtual WAN Hub resource ID.')
+@sys.description('Virtual WAN Hub resource ID.')
 param parVirtualWanHubResourceId string
 
-@description('Remote Spoke virtual network resource ID.')
+@sys.description('Remote Spoke virtual network resource ID.')
 param parRemoteVirtualNetworkResourceId string
 
-@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id
