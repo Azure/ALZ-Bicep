@@ -3,14 +3,14 @@
 name: Generate Markdown
 on:
   push:
-    branches:
-      - "generatemds"
-#  pull_request_target:
-#    types:
-#      - edited
-#      - opened
-#      - reopened
-#      - synchronize
+  pull_request_target:
+    types:
+      - edited
+      - opened
+      - reopened
+      - synchronize
+  workflow_dispatch:
+    {}
 
 env:
   github_user_name: 'github-actions'
