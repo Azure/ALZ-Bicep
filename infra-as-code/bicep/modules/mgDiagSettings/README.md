@@ -7,14 +7,6 @@ This module enables the supported Diagnostic Settings categories on a Management
 
 - [Parameters for Azure Commercial Cloud](generateddocs/mgDiagSettings.bicep.md)
 
-The module requires the following input parameters.
-
-| Parameter                             | Type   | Description                                                                                                                                                                          | Requirements                      | Example                                                                                 |
-| ------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------- | --------------------------------------------------------------------------------------- |
-| parLogAnalyticsWorkspaceResourceId | string   | Resource ID of the Log Analytics Workspace                                                             | Mandatory input | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics`                                                                                 |
- | parTargetManagementGroupId | string          | Target management group for the subscription.                               | Mandatory input, management group must exist | `alz-platform-connectivity`                                                                                                                                                                    |
- | parTelemetryOptOut         | bool            | Set Parameter to true to Opt-out of deployment telemetry                    | none                                         | `false`                                                                                                                                                                                        |
-
 ## Outputs
 
 *The module will not generate any outputs.*

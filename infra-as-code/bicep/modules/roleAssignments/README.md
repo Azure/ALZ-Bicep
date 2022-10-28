@@ -66,43 +66,19 @@ Connect-AzureAD
 
 ### roleAssignmentManagementGroup.bicep
 
-| Parameter                 | Type   | Description                                                                                                                                                               | Requirement                      | Example                                |
-| ------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------------------------------------- |
-| parRoleAssignmentNameGuid | string | A GUID representing the role assignment name.  Default:  `guid(managmentGroup().name, parRoleDefinitionId, parAssigneeObjectId)`                                                                   | Unique GUID                      | `f3b171da-2023-4508-b467-042a53f4cd5d` |
-| parRoleDefinitionId       | string | Role Definition ID (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)                                                                           | Must exist                       | `acdd72a7-3385-48ef-bd42-f606fba81ae7` |
-| parAssigneePrincipalType  | string | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity)            | One of [Group, ServicePrincipal] | `ServicePrincipal`                     |
-| parAssigneeObjectId       | string | Object ID of groups, service principals or  managed identities. For managed identities use the principal ID. For service principals, use the object id and not the app ID | Must exist                       | `a86fe549-7f87-4873-8b0e-82f0081a0034` |
-| parTelemetryOptOut        | bool   | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                  | none                             | `false`                                |
+- [Parameters for Azure Commercial Cloud](generateddocs/roleAssignmentManagementGroup.bicep.md)
 
 ### roleAssignmentManagementGroupMany.bicep
 
-| Parameter                | Type            | Description                                                                                                                                                              | Requirement                      | Example                                                  |
-| ------------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------------------------------------------------------- |
-| parManagementGroupIds    | Array of string | A list of management group scopes that will be used for role assignment (i.e. [alz-platform-connectivity, alz-platform-identity]).  Default = `[]`                         | Must exist                       | `['alz-platform-connectivity', 'alz-platform-identity']` |
-| parRoleDefinitionId      | string          | Role Definition ID(i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)                                                                          | Must exist                       | `acdd72a7-3385-48ef-bd42-f606fba81ae7`                   |
-| parAssigneePrincipalType | string          | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity)           | One of [Group, ServicePrincipal] | `ServicePrincipal`                                       |
-| parAssigneeObjectId      | string          | Object ID of groups, service principals or managed identities. For managed identities use the principal ID. For service principals, use the object ID and not the app ID | Must exist                       | `a86fe549-7f87-4873-8b0e-82f0081a0034`                   |
-| parTelemetryOptOut       | bool            | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                 | none                             | `false`                                                  |
+- [Parameters for Azure Commercial Cloud](generateddocs/roleAssignmentManagementGroupMany.bicep.md)
 
 ### roleAssignmentSubscription.bicep
 
-| Parameter                 | Type   | Description                                                                                                                                                              | Requirement                      | Example                                |
-| ------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------------------------------------- |
-| parRoleAssignmentNameGuid | string | A GUID representing the role assignment name. Default: `guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId)`                                   | Unique GUID                      | `f3b171da-2023-4508-b467-042a53f4cd5d` |
-| parRoleDefinitionId       | string | Role Definition Id (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)                                                                         | Must exist                       | `acdd72a7-3385-48ef-bd42-f606fba81ae7` |
-| parAssigneePrincipalType  | string | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity)           | One of [Group, ServicePrincipal] | `ServicePrincipal`                     |
-| parAssigneeObjectId       | string | Object ID of groups, service principals or managed identities. For managed identities use the principal ID. For service principals, use the object ID and not the app ID | Must exist                       | `a86fe549-7f87-4873-8b0e-82f0081a0034` |
-| parTelemetryOptOut        | bool   | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                 | none                             | `false`                                |
+- [Parameters for Azure Commercial Cloud](generateddocs/roleAssignmentSubscription.bicep.md)
 
 ### roleAssignmentSubscriptionMany.bicep
 
-| Parameter                | Type            | Description                                                                                                                                                              | Requirement                      | Example                                                                           |
-| ------------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | --------------------------------------------------------------------------------- |
-| parSubscriptionIds       | Array of string | A list of subscription ids that will be used for role assignment (i.e. 4f9f8765-911a-4a6d-af60-4bc0473268c0)  Default = []                                               | Must exist                       | `['4f9f8765-911a-4a6d-af60-4bc0473268c0','82f7705e-3386-427b-95b7-cbed91ab29a7']` |
-| parRoleDefinitionId      | string          | Role Definition ID(i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)                                                                          | Must exist                       | `acdd72a7-3385-48ef-bd42-f606fba81ae7`                                            |
-| parAssigneePrincipalType | string          | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity)           | One of [Group, ServicePrincipal] | `ServicePrincipal`                                                                |
-| parAssigneeObjectId      | string          | Object ID of groups, service principals or managed identities. For managed identities use the principal ID. For service principals, use the object ID and not the app ID | Must exist                       | `a86fe549-7f87-4873-8b0e-82f0081a0034`                                            |
-| parTelemetryOptOut       | bool            | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                 | none                             | `false`                                                                           |
+- [Parameters for Azure Commercial Cloud](generateddocs/roleAssignmentSubscriptionMany.bicep.md)
 
 ## Outputs
 

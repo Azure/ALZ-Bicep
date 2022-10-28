@@ -8,15 +8,8 @@ This module moves one or more subscriptions to be a child of the specified manag
 
 - [Parameters for Azure Commercial Cloud](generateddocs/subscriptionPlacement.bicep.md)
 
-The module requires the following required input parameters.
-
- | Parameter                  | Type            | Description                                                                 | Requirement                                  | Example                                                                                                                                                                                        |
- | -------------------------- | --------------- | --------------------------------------------------------------------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
- | parSubscriptionIds         | Array | Array of Subscription Ids that should be moved to the new management group. | Mandatory input, default: `[]`                              | Empty: `[]` or <br />1 Subscription: `["yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy"]` or<br />Many Subscriptions: `["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy"]` |
- | parTargetManagementGroupId | string          | Target management group for the subscription.                               | Mandatory input, management group must exist | `alz-platform-connectivity`                                                                                                                                                                    |
- | parTelemetryOptOut         | bool            | Set Parameter to true to Opt-out of deployment telemetry                    | Optional input, default: `false`                                         | `false`                                                                                                                                                                                        |
-
 ## Outputs
+
 *This module does not produce any outputs.*
 
 ## Deployment
