@@ -2,12 +2,15 @@
 
 name: Generate Markdown
 on:
-  pull_request_target:
-    types:
-      - edited
-      - opened
-      - reopened
-      - synchronize
+  push:
+    branches:
+      - "generatemds"
+#  pull_request_target:
+#    types:
+#      - edited
+#      - opened
+#      - reopened
+#      - synchronize
 
 env:
   github_user_name: 'github-actions'
