@@ -154,7 +154,13 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
     # Loop through child Policy Set/Initiative Definitions if HashTable not == 0
     if (($policyDefinitions.Count) -ne 0) {
       $policyDefinitions | Sort-Object | ForEach-Object {
-        $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, $_.policyDefinitionId)
+        if ($null -ne $_.groupNames -and $_.groupNames.Count -ne 0) {
+          $joinedGroupNames = "'" + ($_.groupNames -join "','" ) + "'"
+          $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, @($_.policyDefinitionId, $joinedGroupNames))
+        }
+        else {
+          $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, @($_.policyDefinitionId, ""))
+        }
       }
     }
 
@@ -173,7 +179,8 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
       $policySetDefinitionsOutputForBicep.Keys | Sort-Object | ForEach-Object {
         $definitionReferenceId = $_
         $definitionReferenceIdForParameters = $_
-        $definitionId = $($policySetDefinitionsOutputForBicep[$_])
+        $definitionId = $($policySetDefinitionsOutputForBicep[$_][0])
+        $groups = $($policySetDefinitionsOutputForBicep[$_][1])
 
         # If definitionReferenceId or definitionReferenceIdForParameters contains apostrophes, replace that apostrophe with a backslash and an apostrohphe for Bicep string escaping
         if ($definitionReferenceId.Contains("'")) {
@@ -189,11 +196,11 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
           $definitionReferenceIdForParameters = "['$definitionReferenceIdForParameters']"
 
           # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable, without the '.' before the definitionReferenceId to make it an accessor
-          Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation$definitionReferenceIdForParameters.parameters`r`n`t`t`t}"
+          Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tgroups: [$groups]`r`n`t`t`t}"
         }
         else {
           # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
-          Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation.$definitionReferenceIdForParameters.parameters`r`n`t`t`t}"
+          Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation.$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tgroups: [$groups]`r`n`t`t`t}"
         }
       }
     }
