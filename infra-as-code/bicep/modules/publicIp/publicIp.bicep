@@ -1,3 +1,6 @@
+metadata name = 'ALZ Bicep - Public IP creation module'
+metadata description = 'Module used to set up Public IP for Azure Landing Zones'
+
 @sys.description('Azure Region to deploy Public IP Address to. Default: resourceGroup().location')
 param parLocation string = resourceGroup().location
 

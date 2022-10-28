@@ -1,5 +1,8 @@
 targetScope = 'managementGroup'
 
+metadata name = 'ALZ Bicep - Orchestration - Hub Peered Spoke'
+metadata description = 'Orchestration module used to create and configure a spoke network to deliver the Azure Landing Zone Hub & Spoke architecture'
+
 // **Parameters**
 // Generic Parameters - Used in multiple modules
 @sys.description('The region to deploy all resources into. Default: deployment().location')

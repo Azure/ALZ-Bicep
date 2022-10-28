@@ -1,3 +1,6 @@
+metadata name = 'ALZ Bicep - Logging Module'
+metadata description = 'ALZ Bicep Module used to set up Logging'
+
 @sys.description('Log Analytics Workspace name. Default: alz-log-analytics')
 param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 

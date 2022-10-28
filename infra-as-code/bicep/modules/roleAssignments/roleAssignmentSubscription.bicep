@@ -1,5 +1,8 @@
 targetScope = 'subscription'
 
+metadata name = 'ALZ Bicep - Role Assignment to a Subscription'
+metadata description = 'Module used to assign a Role Assignment to a Subscription'
+
 @sys.description('A GUID representing the role assignment name. Default: guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId)')
 param parRoleAssignmentNameGuid string = guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId)
 

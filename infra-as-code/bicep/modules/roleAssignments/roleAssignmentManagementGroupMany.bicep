@@ -1,5 +1,8 @@
 targetScope = 'managementGroup'
 
+metadata name = 'ALZ Bicep - Role Assignment to Management Groups'
+metadata description = 'Module used to assign a Role Assignment to multiple Management Groups'
+
 @sys.description('A list of management group scopes that will be used for role assignment (i.e. [alz-platform-connectivity, alz-platform-identity]). Default: Empty Array')
 param parManagementGroupIds array = []
 

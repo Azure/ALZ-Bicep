@@ -1,3 +1,6 @@
+metadata name = 'ALZ Bicep - Spoke Networking module'
+metadata description = 'This module creates spoke networking resources'
+
 @sys.description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
 param parLocation string = resourceGroup().location
 

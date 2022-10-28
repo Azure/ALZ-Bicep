@@ -1,5 +1,8 @@
 targetScope = 'managementGroup'
 
+metadata name = 'ALZ Bicep - Security Operations Role'
+metadata description = 'Role for Security Operations'
+
 @sys.description('The management group scope to which the role can be assigned.  This management group ID will be used for the assignableScopes property in the role definition.')
 param parAssignableScopeManagementGroupId string
 

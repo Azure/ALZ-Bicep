@@ -1,5 +1,8 @@
 targetScope = 'subscription'
 
+metadata name = 'ALZ Bicep - Resource Group creation module'
+metadata description = 'Module used to create Resource Groups for Azure Landing Zones'
+
 @sys.description('Azure Region where Resource Group will be created.')
 param parLocation string
 

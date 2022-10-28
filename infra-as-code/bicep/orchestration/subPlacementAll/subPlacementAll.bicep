@@ -1,5 +1,8 @@
 targetScope = 'managementGroup'
 
+metadata name = 'ALZ Bicep orchestration - Subscription Placement - ALL'
+metadata description = 'Orchestration module that helps to define where all Subscriptions should be placed in the ALZ Management Group Hierarchy'
+
 @sys.description('Prefix for the management group hierarchy.  This management group will be created as part of the deployment. Default: alz')
 @minLength(2)
 @maxLength(10)

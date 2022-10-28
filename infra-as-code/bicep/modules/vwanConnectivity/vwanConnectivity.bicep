@@ -1,3 +1,6 @@
+metadata name = 'ALZ Bicep - Azure vWAN Connectivity Module'
+metadata description = 'Module used to set up vWAN Connectivity'
+
 @sys.description('Region in which the resource group was created. Default: {resourceGroup().location}')
 param parLocation string = resourceGroup().location
 

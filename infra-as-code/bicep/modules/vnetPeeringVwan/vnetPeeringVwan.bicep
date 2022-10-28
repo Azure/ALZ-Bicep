@@ -1,5 +1,8 @@
 targetScope = 'subscription'
 
+metadata name = 'ALZ Bicep - Virtual Network Peering to vWAN'
+metadata description = 'Module used to set up Virtual Network Peering from Virtual Network back to vWAN'
+
 @sys.description('Virtual WAN Hub resource ID.')
 param parVirtualWanHubResourceId string
 

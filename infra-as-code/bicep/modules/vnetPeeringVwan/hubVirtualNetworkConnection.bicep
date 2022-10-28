@@ -1,3 +1,6 @@
+metadata name = 'ALZ Bicep - Azure vWAN Hub Virtual Network Peerings'
+metadata description = 'Module used to set up peering to Virtual Networks from vWAN Hub'
+
 @sys.description('Virtual WAN Hub resource ID.')
 param parVirtualWanHubResourceId string
 

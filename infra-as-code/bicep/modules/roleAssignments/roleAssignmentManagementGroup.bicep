@@ -1,5 +1,8 @@
 targetScope = 'managementGroup'
 
+metadata name = 'ALZ Bicep - Role Assignment to a Management Group'
+metadata description = 'Module used to assign a role to Management Group'
+
 @sys.description('A GUID representing the role assignment name. Default: guid(managementGroup().name, parRoleDefinitionId, parAssigneeObjectId)')
 param parRoleAssignmentNameGuid string = guid(managementGroup().name, parRoleDefinitionId, parAssigneeObjectId)
 

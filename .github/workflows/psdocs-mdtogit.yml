@@ -73,8 +73,6 @@ jobs:
             $docName = "$($docNameWithoutExtension)_$version";
             $jobj = ConvertFrom-Json -InputObject $templateraw
 
-            $jobj.metadata | Add-Member -name "description" -Value "[Back to Module](..)" -MemberType NoteProperty
-
             $outputpathformds = $template.DirectoryName+'/generateddocs'
             New-Item -Path $outputpathformds -ItemType Directory -Force
 

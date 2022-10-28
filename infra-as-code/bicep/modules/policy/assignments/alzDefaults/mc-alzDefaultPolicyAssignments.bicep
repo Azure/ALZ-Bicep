@@ -1,3 +1,6 @@
+metadata name = 'ALZ Bicep - ALZ Default Policy Assignments'
+metadata description = 'This policy assignment will assign the ALZ Default Policy to management groups'
+
 @sys.description('Prefix for the management group hierarchy. DEFAULT VALUE = alz')
 @minLength(2)
 @maxLength(10)

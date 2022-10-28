@@ -9,6 +9,9 @@ AUTHOR/S: aultt
 VERSION: 1.0.0
 */
 
+metadata name = 'ALZ Bicep CRML - Container Registry Module'
+metadata description = 'Module to create an Azure Container Registry to store private Bicep Modules'
+
 @minLength(5)
 @maxLength(50)
 @sys.description('Provide a globally unique name of your Azure Container Registry')

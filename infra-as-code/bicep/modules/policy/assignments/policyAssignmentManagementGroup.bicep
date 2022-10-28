@@ -1,5 +1,8 @@
 targetScope = 'managementGroup'
 
+metadata name = 'ALZ Bicep - Management Group Policy Assignments'
+metadata description = 'Module used to assign policy definitions to management groups'
+
 @minLength(1)
 @maxLength(24)
 @sys.description('The name of the policy assignment. e.g. "Deny-Public-IP"')
