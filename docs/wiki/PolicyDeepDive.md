@@ -74,11 +74,11 @@ Please see the following wiki article that explains this process further: [Assig
 
 ## How to migrate ALZ custom policies to Azure built-in policies
 
-Every so often there will be a new Azure built-in policy or policy initiative that replicates functionality previously found only in ALZ custom policies. When this happens, a new release of ALZ-Bicep will contain details around the policies involved as well as upgrade considerations. The below describes generic scenarios for migrating from ALZ custom policies to Azure built-in policies, leveraging ALZ-Bicep functionality. fixme assuming that ALZ-Bicep is leveraged completely i.e. with default policy assignments.
+Every so often there will be a new Azure built-in policy or policy initiative that replicates functionality previously found only in ALZ custom policies. When this happens, a new release of ALZ-Bicep will contain details around the policies involved as well as upgrade considerations. The below describes generic scenarios for migrating from ALZ custom policies to Azure built-in policies, leveraging ALZ-Bicep functionality.
 
 ### Update scenarios
-There are the following scenarios for ALZ custom policies being superseded by Azure built-in policies, listed in order of complexity:
-1. A single ALZ custom policy, which is not assigned anywhere in your Azure estate, is superseded by an Azure built-in policy.
+There are the following scenarios for ALZ custom policies being superseded by Azure built-in policies, listed in increasing order of complexity:
+1. A single ALZ custom policy, which is not assigned anywhere in your Azure estate, is superseded by an Azure built-in policy. The process for managing this is described in [Migrate single ALZ custom policy to built-in policy](#migrate-single-pol).
 2. A single ALZ custom policy, which is assigned at one or more scopes in your Azure estate, is superseded by an Azure built-in policy. The process for managing this is described in [Migrate single ALZ custom policy to built-in policy](#migrate-single-pol).
 3. One or more ALZ custom policies, assigned via ALZ custom policy intiative, which are superseded by Azure built-in policies. The process for managing this is described in [Migrate ALZ custom policies in initiatives to built-in policies](#migrate-multiple-pol).
 
@@ -87,7 +87,7 @@ For this scenario we will use the ALZ custom policy _Deny the creation of public
 
 To carry out the instructions in the scenario the operator will require Resource Policy Permissions at the root of the ALZ management group hierarchy
 
-- Go to https://portal.azure.com
+- Go to `https://portal.azure.com`
 - Open Policy
 - Go to Definitions and in Search find the ALZ custom policy.
 
@@ -140,7 +140,7 @@ To carry out the instructions in the scenario the operator will require Resource
 
 [Azure Portal](#tab/azure-portal)
 
-- Go to https://portal.azure.com
+- Go to `https://portal.azure.com`
 - Open Policy
 - Go to Definitions and in Search find the ALZ custom policy initiative.
 
