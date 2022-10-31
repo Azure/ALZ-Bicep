@@ -83,7 +83,7 @@ There are the following scenarios for ALZ custom policies being superseded by Az
 3. One or more ALZ custom policies, assigned via ALZ custom policy intiative, which are superseded by Azure built-in policies. The process for managing this is described in [Migrate ALZ custom policies in initiatives to built-in policies](#migrate-alz-custom-policies-in-initiatives-to-built-in-policies).
 
 #### Migrate single ALZ custom policy to built-in policy
-For this scenario we will use the ALZ custom policy _Deny the creation of public IP_ which will be migrated to the built-in policy _Not allowed resource types_
+For this scenario we will use the ALZ custom policy ```Deny the creation of public IP``` which will be migrated to the built-in policy ```Not allowed resource types```
 
 To carry out the instructions in the scenario the operator will require Resource Policy Permissions at the root of the ALZ management group hierarchy
 
@@ -134,11 +134,9 @@ To carry out the instructions in the scenario the operator will require Resource
 
 ### Migrate ALZ custom policies in initiatives to built-in policies
 
-For this scenario we will use the ALZ custom initiative _Deploy Diagnostic Settings to Azure Services_ which is leveraging quite a large number of ALZ custom policies to apply diagnostics settings for various resources.
+For this scenario we will use the ALZ custom initiative ```Deploy Diagnostic Settings to Azure Services``` which is leveraging quite a large number of ALZ custom policies to apply diagnostics settings for various resources.
 
 To carry out the instructions in the scenario the operator will require Resource Policy Permissions at the root of the ALZ management group hierarchy
-
-[Azure Portal](#tab/azure-portal)
 
 - Go to `https://portal.azure.com`
 - Open Policy
