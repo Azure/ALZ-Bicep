@@ -78,9 +78,9 @@ Every so often there will be a new Azure built-in policy or policy initiative th
 
 ### Update scenarios
 There are the following scenarios for ALZ custom policies being superseded by Azure built-in policies, listed in increasing order of complexity:
-1. A single ALZ custom policy, which is not assigned anywhere in your Azure estate, is superseded by an Azure built-in policy. The process for managing this is described in [Migrate single ALZ custom policy to built-in policy](#migrate-single-pol).
-2. A single ALZ custom policy, which is assigned at one or more scopes in your Azure estate, is superseded by an Azure built-in policy. The process for managing this is described in [Migrate single ALZ custom policy to built-in policy](#migrate-single-pol).
-3. One or more ALZ custom policies, assigned via ALZ custom policy intiative, which are superseded by Azure built-in policies. The process for managing this is described in [Migrate ALZ custom policies in initiatives to built-in policies](#migrate-multiple-pol).
+1. A single ALZ custom policy, which is not assigned anywhere in your Azure estate, is superseded by an Azure built-in policy. The process for managing this is described in [Migrate single ALZ custom policy to built-in policy](#migrate-single-alz-custom-policy-to-built-in-policy).
+2. A single ALZ custom policy, which is assigned at one or more scopes in your Azure estate, is superseded by an Azure built-in policy. The process for managing this is described in [Migrate single ALZ custom policy to built-in policy](#migrate-single-alz-custom-policy-to-built-in-policy).
+3. One or more ALZ custom policies, assigned via ALZ custom policy intiative, which are superseded by Azure built-in policies. The process for managing this is described in [Migrate ALZ custom policies in initiatives to built-in policies](#migrate-alz-custom-policies-in-initiatives-to-built-in-policies).
 
 #### Migrate single ALZ custom policy to built-in policy
 For this scenario we will use the ALZ custom policy _Deny the creation of public IP_ which will be migrated to the built-in policy _Not allowed resource types_
@@ -185,8 +185,6 @@ that the provided example has a simple parameter set. If more complex parameters
 - Once all initiative assignments are deleted, go to the Definitions pane, search for the initiative definition. Once found click the ellipsis and choose Delete Policy Definition
 
     ![alz-custom-initiative-def-search](media/alz-update-initiative-with-builtin-01.png)
-
-
 
 ### Synchronize your local repo with ALZ-Bicep
 
