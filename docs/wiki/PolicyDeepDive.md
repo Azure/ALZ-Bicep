@@ -130,7 +130,7 @@ To carry out the instructions in the scenario the operator will require Resource
 
 - For each assignment, click the ellipsis and select Delete Assignment.
 - Once all policy assignments are deleted, go to the Definitions pane, search for the definition. Once found click the ellipsis and choose Delete Policy Definition
-- Follow the next steps in fixme to deploy policy assignments with the Azure built-in policy
+- Follow the steps in [Manually synchronize your local repo with ALZ-Bicep](#manually-synchronize-your-local-repo-with-alz-bicep) to synchronize policy updates from the ALZ-Bicep repository to your local repo.
 
 ### Migrate ALZ custom policies in initiatives to built-in policies
 
@@ -184,7 +184,9 @@ that the provided example has a simple parameter set. If more complex parameters
 
     ![alz-custom-initiative-def-search](media/alz-update-initiative-with-builtin-01.png)
 
-### Synchronize your local repo with ALZ-Bicep
+- Follow the steps in [Manually synchronize your local repo with ALZ-Bicep](#manually-synchronize-your-local-repo-with-alz-bicep) to synchronize policy updates from the ALZ-Bicep repository to your local repo.
+
+### Manually synchronize your local repo with ALZ-Bicep
 
 To get the latest updates from the ALZ-Bicep repo and download to you local repo, do the following.
 - On a client where you have already cloned your version of the ALZ-Bicep repo, start a PowerShell command prompt
@@ -196,19 +198,18 @@ To get the latest updates from the ALZ-Bicep repo and download to you local repo
   git pull
   ```
 
+- If you did not already, copy the [`Invoke-GitHubReleaseFetcher.ps1`](https://github.com/Azure/ALZ-Bicep/tree/main/.github/scripts/Invoke-GitHubReleaseFetcher.ps1) script into the following location in your ALZ-Bicep repository: `.github/scripts/`
 - Synchronize your local repo with the ALZ-Bicep repo by running the following
 command
   ```posh
-  .github/scripts/Invoke-GitHubReleaseFetcher.ps1 -githubRepoUrl "https://github.com/Azure/ALZ-Bicep"
+  .github/scripts/Invoke-GitHubReleaseFetcher.ps1 -githubRepoUrl "https://github.com/Azure/ALZ-Bicep" -directoryAndFilesToKeep @("infra-as-code/bicep/modules/policy")
   ```
 
 - When you have synchronized your repo perform the following verification tasks
   - Verify that removed policy definition has been removed from ./infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep
   - Verify that ./infra-as-code/bicep/modules/policy/assignments/alzdefaults/alzDefaultPolicyAssignments.bicep has been updated to no longer include assignments for the removed ALZ custom policy
-  - Verify that the built-in policy has been added to ./infra-as-code/bicep/modules/policy/assignments/alzdefaults/alzDefaultPolicyAssignments.bicep. fixme this depends on whether the policy is part of default assignments some verbiage around this.
-  - If the built-in policy requires input parameters, verify that samples of those are included in ./infra-as-code/bicep/modules/policy/assignments/alzdefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json, and modify your own version of the parameter file accordingly. fixme reference to general guidance for managing ALZ with Bicep, i.e. specifically to isolate parameter files so they are not overwritten.
-
-### Deploy changed policy assignments
+  - Verify that the built-in policy has been added to ./infra-as-code/bicep/modules/policy/assignments/alzdefaults/alzDefaultPolicyAssignments.bicep if relevant.
+  - If the built-in policy requires input parameters, verify that samples of those are included in ./infra-as-code/bicep/modules/policy/assignments/alzdefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json, and modify your own version of the parameter file accordingly.
 
 - Create a branch for the updates by running the following commands
 
@@ -225,6 +226,11 @@ command
   - ./infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep
   - ./infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions/<removed ALZ custom policy definition file>
   - ./infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/<removed ALZ custom policy initiative definition file>
+
+- Follow the steps in [Deploy changed policy assignments](#deploy-changed-policy-assignments) to deploy and test any changed policy assignments
+
+### Deploy changed policy assignments
+
 - Leveraging the guidance in [Module: Custom Policy Definitions](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions), deploy the updated custom policy definitions to your [canary environment](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/testing-approach). After deploying verify that only the expected policy definitions has been created.
 - Leveraging the guidance in [Module: ALZ Default Policy Assignments](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults), deploy the updated default policy assignments to your [canary environment](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/testing-approach). After deploying verify that only the expected policy assignments has been created.
 - Test that policies are working as intended.
