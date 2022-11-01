@@ -118,7 +118,7 @@ To carry out the instructions in the scenario the operator will require Resource
   ![alz-custom-policy-assignments](media/alz-determine-policy-assign-02.png)
 
 - As can be seen this particular policy is assigned with only a simple Deny effect parameter at the following levels in the management group structure
-  - Contoso/contoso-landingzones/contoso-landingzones-corp
+  - `Contoso/contoso-landingzones/contoso-landingzones-corp`
   - Contoso/contoso-platform/contoso-platform-identity
 
 > Note that the provided example has a simple parameter set. If more complex parameters are assigned to a policy which is to be migrated those should be noted down. In that respect the possibility to download the query results as CSV could be leveraged.
