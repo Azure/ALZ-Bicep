@@ -48,6 +48,9 @@
       },
       "enableAscForOssDb": {
         "value": "DeployIfNotExists"
+      },
+      "enableAscForCosmosDbs": {
+        "value": "DeployIfNotExists"
       }
     },
     "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelManagementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config",
