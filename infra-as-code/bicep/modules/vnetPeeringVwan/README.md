@@ -42,8 +42,7 @@ In this example, the remote spoke Vnet will be peered with the Vwan Virtual Hub 
 ```bash
 # For Azure global regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription
-$ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
-
+ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
@@ -58,8 +57,7 @@ OR
 ```bash
 # For Azure China regions
 # Set your Corp Connected Landing Zone subscription ID as the the current subscription
-$ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
-
+ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)

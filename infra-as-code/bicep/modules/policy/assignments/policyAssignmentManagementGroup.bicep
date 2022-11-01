@@ -17,7 +17,7 @@ param parPolicyAssignmentDefinitionId string
 @description('An object containing the parameter values for the policy to be assigned. DEFAULT VALUE = {}')
 param parPolicyAssignmentParameters object = {}
 
-@description('An object containing parameter values that override those provided to parPolicyAssignmentParameters, usually via a JSON file and json(loadTextContent(FILE_PATH)). This is only useful when wanting to take values from a source like a JSON file for the majority of the parameters but override specific parameter inputs from other sources or hardcoded. If duplicate parameters exist between parPolicyAssignmentParameters & parPolicyAssignmentParameterOverrides, inputs provided to parPolicyAssignmentParameterOverrides will win. DEFAULT VALUE = {}')
+@description('An object containing parameter values that override those provided to parPolicyAssignmentParameters, usually via a JSON file and loadJsonContent(FILE_PATH). This is only useful when wanting to take values from a source like a JSON file for the majority of the parameters but override specific parameter inputs from other sources or hardcoded. If duplicate parameters exist between parPolicyAssignmentParameters & parPolicyAssignmentParameterOverrides, inputs provided to parPolicyAssignmentParameterOverrides will win. DEFAULT VALUE = {}')
 param parPolicyAssignmentParameterOverrides object = {}
 
 @description('An array containing object/s for the non-compliance messages for the policy to be assigned. See https://docs.microsoft.com/en-us/azure/governance/policy/concepts/assignment-structure#non-compliance-messages for more details on use. DEFAULT VALUE = []')
@@ -64,7 +64,7 @@ var varCuaid = '78001e36-9738-429c-a343-45cc84e8a527'
 resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2021-06-01' = {
   name: parPolicyAssignmentName
   properties: {
-    displayName: parPolicyAssignmentDisplayName 
+    displayName: parPolicyAssignmentDisplayName
     description: parPolicyAssignmentDescription
     policyDefinitionId: parPolicyAssignmentDefinitionId
     parameters: varPolicyAssignmentParametersMerged

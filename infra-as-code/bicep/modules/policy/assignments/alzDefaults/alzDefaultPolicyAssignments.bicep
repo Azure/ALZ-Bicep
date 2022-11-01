@@ -76,132 +76,129 @@ var varModuleDeploymentNames = {
 // Policy Assignments Modules Variables
 
 var varPolicyAssignmentDenyDataBPip = {
-	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-NoPublicIp'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_public_ip.tmpl.json'))
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-NoPublicIp'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_public_ip.tmpl.json')
 }
 
 var varPolicyAssignmentDenyDataBSku = {
-	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-Sku'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_sku.tmpl.json'))
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-Sku'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_sku.tmpl.json')
 }
 
 var varPolicyAssignmentDenyDataBVnet = {
-	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-VirtualNetwork'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_vnet.tmpl.json'))
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-VirtualNetwork'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_vnet.tmpl.json')
 }
 
-var varPolicyAssignmentEnforceAksHttps = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_http_ingress_aks.tmpl.json'))
+var varPolicyAssignmentEnforceAKSHTTPS = {
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_http_ingress_aks.tmpl.json')
 }
 
-var varPolicyAssignmentDenyIpForwarding = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/88c0b9da-ce96-4b03-9635-f29a937e2900'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_ip_forwarding.tmpl.json'))
+var varPolicyAssignmentDenyIPForwarding = {
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/88c0b9da-ce96-4b03-9635-f29a937e2900'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_ip_forwarding.tmpl.json')
 }
 
-var varPolicyAssignmentDenyPrivContainersAks = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/95edb821-ddaf-4404-9732-666045e056b4'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_priv_containers_aks.tmpl.json'))
+var varPolicyAssignmentDenyPrivContainersAKS = {
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/95edb821-ddaf-4404-9732-666045e056b4'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_priv_containers_aks.tmpl.json')
 }
 
-var varPolicyAssignmentDenyPrivEscalationAks = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1c6e92c9-99f0-4e55-9cf2-0c234dc48f99'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_priv_escalation_aks.tmpl.json'))
+var varPolicyAssignmentDenyPrivEscalationAKS = {
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1c6e92c9-99f0-4e55-9cf2-0c234dc48f99'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_priv_escalation_aks.tmpl.json')
 }
 
 var varPolicyAssignmentDenyPublicEndpoints = {
-	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicPaaSEndpoints'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_endpoints.tmpl.json'))
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicPaaSEndpoints'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_endpoints.tmpl.json')
 }
 
-var varPolicyAssignmentDenyPublicIp = {
-	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json'))
+var varPolicyAssignmentDenyPublicIP = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json')
 }
 
-var varPolicyAssignmentDenyRdpFromInternet = {
-	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-RDP-From-Internet'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_rdp_from_internet.tmpl.json'))
+var varPolicyAssignmentDenyRDPFromInternet = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-RDP-From-Internet'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_rdp_from_internet.tmpl.json')
 }
 
-var varPolicyAssignmentDenyStorageHttp = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_storage_http.tmpl.json'))
+var varPolicyAssignmentDenyStoragehttp = {
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_storage_http.tmpl.json')
 }
 
 var varPolicyAssignmentDenySubnetWithoutNsg = {
-	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_subnet_without_nsg.tmpl.json'))
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_subnet_without_nsg.tmpl.json')
 }
 
-
-var varPolicyAssignmentDeployAksPolicy = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a8eff44f-8c92-45c3-a3fb-9880802d67a7'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_aks_policy.tmpl.json'))
+var varPolicyAssignmentDeployAKSPolicy = {
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a8eff44f-8c92-45c3-a3fb-9880802d67a7'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_aks_policy.tmpl.json')
 }
 
-var varPolicyAssignmentDeployAscMonitoring = {
-	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_asc_monitoring.tmpl.json'))
+var varPolicyAssignmentDeployASCMonitoring = {
+  definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_asc_monitoring.tmpl.json')
 }
 
 var varPolicyAssignmentDeployAzActivityLog = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/2465583e-4e78-4c15-b6be-a36cbc7c8b0f'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_azactivity_log.tmpl.json'))
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/2465583e-4e78-4c15-b6be-a36cbc7c8b0f'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_azactivity_log.tmpl.json')
 }
 
 var varPolicyAssignmentDeployLogAnalytics = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/8e3e61b3-0b32-22d5-4edf-55f87fdb5955'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_log_analytics.tmpl.json'))
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/8e3e61b3-0b32-22d5-4edf-55f87fdb5955'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_log_analytics.tmpl.json')
 }
 
-var varPolicyAssignmentDeployMdfcConfig = {
-	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_mdfc_config.tmpl.json'))
+var varPolicyAssignmentDeployMDFCConfig = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_mdfc_config.tmpl.json')
 }
 
 var varPolicyAssignmentDeployResourceDiag = {
-	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diagnostics-LogAnalytics'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_resource_diag.tmpl.json'))
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diagnostics-LogAnalytics'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_resource_diag.tmpl.json')
 }
 
-var varPolicyAssignmentDeploySqlDbAuditing = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_sql_db_auditing.tmpl.json'))
+var varPolicyAssignmentDeploySQLDBAuditing = {
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_sql_db_auditing.tmpl.json')
 }
 
-var varPolicyAssignmentDeploySqlThreat = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/36d49e87-48c4-4f2e-beed-ba4ed02b71f5'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_sql_threat.tmpl.json'))
+var varPolicyAssignmentDeploySQLThreat = {
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/36d49e87-48c4-4f2e-beed-ba4ed02b71f5'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_sql_threat.tmpl.json')
 }
 
-var varPolicyAssignmentDeployVmBackup = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/98d0b9f8-fd90-49c9-88e2-d3baf3b0dd86'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vm_backup.tmpl.json'))
+var varPolicyAssignmentDeployVMBackup = {
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/98d0b9f8-fd90-49c9-88e2-d3baf3b0dd86'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vm_backup.tmpl.json')
 }
 
-var varPolicyAssignmentDeployVmMonitoring = {
-	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/55f3eceb-5573-4f18-9695-226972c6d74a'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vm_monitoring.tmpl.json'))
+var varPolicyAssignmentDeployVMMonitoring = {
+  definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/55f3eceb-5573-4f18-9695-226972c6d74a'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vm_monitoring.tmpl.json')
 }
 
-var varPolicyAssignmentDeployVmssMonitoring = {
-	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/75714362-cae7-409e-9b99-a8e5075b7fad'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vmss_monitoring.tmpl.json'))
+var varPolicyAssignmentDeployVMSSMonitoring = {
+  definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/75714362-cae7-409e-9b99-a8e5075b7fad'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vmss_monitoring.tmpl.json')
 }
 
-var varPolicyAssignmentEnableDdosVnet = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enable_ddos_vnet.tmpl.json'))
+var varPolicyAssignmentEnableDDoSVNET = {
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enable_ddos_vnet.tmpl.json')
 }
 
-var varPolicyAssignmentEnforceTlsSsl = {
-	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-EncryptTransit'
-	libDefinition: json(loadTextContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_tls_ssl.tmpl.json'))
+var varPolicyAssignmentEnforceTLSSSL = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-EncryptTransit'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_tls_ssl.tmpl.json')
 }
-
-
 
 // RBAC Role Definitions Variables - Used For Policy Assignments
 var varRbacRoleDefinitionIds = {
@@ -243,11 +240,11 @@ module modPolicyAssignmentIntRootDeployMdfcConfig '../../../policy/assignments/p
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployMdfcConfig
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMdfcConfig.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployMdfcConfig.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMdfcConfig.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployMdfcConfig.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployMdfcConfig.libDefinition.properties.parameters
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMDFCConfig.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeployMDFCConfig.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDFCConfig.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployMDFCConfig.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployMDFCConfig.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       emailSecurityContact: {
         value: parMsDefenderForCloudEmailSecurityContact
@@ -259,11 +256,11 @@ module modPolicyAssignmentIntRootDeployMdfcConfig '../../../policy/assignments/p
         value: parLogAnalyticsWorkspaceResourceId
       }
     }
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployMdfcConfig.libDefinition.identity.type
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployMDFCConfig.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.owner
     ]
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployMdfcConfig.libDefinition.properties.enforcementMode
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployMDFCConfig.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -292,7 +289,7 @@ module modPolicyAssignmentIntRootDeployAzActivityLog '../../../policy/assignment
   }
 }
 
-// Module - Policy Assignment - Deploy-ASC-Monitoring 
+// Module - Policy Assignment - Deploy-ASC-Monitoring
 module modPolicyAssignmentIntRootDeployAscMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   // dependsOn: [
   //   modCustomPolicyDefinitions
@@ -300,13 +297,13 @@ module modPolicyAssignmentIntRootDeployAscMonitoring '../../../policy/assignment
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployAscMonitoring
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployAscMonitoring.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployAscMonitoring.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployAscMonitoring.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployAscMonitoring.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployAscMonitoring.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployAscMonitoring.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployAscMonitoring.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployASCMonitoring.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeployASCMonitoring.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployASCMonitoring.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployASCMonitoring.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployASCMonitoring.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployASCMonitoring.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployASCMonitoring.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -340,18 +337,18 @@ module modPolicyAssignmentIntRootDeployVmMonitoring '../../../policy/assignments
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployVmMonitoring
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmMonitoring.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployVmMonitoring.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVmMonitoring.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployVmMonitoring.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployVmMonitoring.libDefinition.properties.parameters
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMMonitoring.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeployVMMonitoring.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       logAnalytics_1: {
         value: parLogAnalyticsWorkspaceResourceId
       }
     }
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVmMonitoring.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployVmMonitoring.libDefinition.properties.enforcementMode
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMMonitoring.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.owner
     ]
@@ -364,18 +361,18 @@ module modPolicyAssignmentIntRootDeployVmssMonitoring '../../../policy/assignmen
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployVmssMonitoring
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmssMonitoring.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployVmssMonitoring.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVmssMonitoring.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployVmssMonitoring.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployVmssMonitoring.libDefinition.properties.parameters
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMSSMonitoring.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       logAnalytics_1: {
         value: parLogAnalyticsWorkspaceResourceId
       }
     }
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVmssMonitoring.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployVmssMonitoring.libDefinition.properties.enforcementMode
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.owner
     ]
@@ -389,18 +386,18 @@ module modPolicyAssignmentConnEnableDdosVnet '../../../policy/assignments/policy
   scope: managementGroup(varManagementGroupIds.platformConnectivity)
   name: varModuleDeploymentNames.modPolicyAssignmentConnEnableDdosVnet
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnableDdosVnet.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentEnableDdosVnet.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentEnableDdosVnet.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentEnableDdosVnet.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentEnableDdosVnet.libDefinition.properties.parameters
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnableDDoSVNET.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnableDDoSVNET.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       ddosPlan: {
         value: parDdosProtectionPlanId
       }
     }
-    parPolicyAssignmentIdentityType: varPolicyAssignmentEnableDdosVnet.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentEnableDdosVnet.libDefinition.properties.enforcementMode
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnableDDoSVNET.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.networkContributor
     ]
@@ -414,13 +411,13 @@ module modPolicyAssignmentIdentDenyPublicIp '../../../policy/assignments/policyA
   scope: managementGroup(varManagementGroupIds.platformIdentity)
   name: varModuleDeploymentNames.modPolicyAssignmentIdentDenyPublicIp
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPublicIp.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDenyPublicIp.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPublicIp.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyPublicIp.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDenyPublicIp.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPublicIp.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyPublicIp.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPublicIP.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDenyPublicIP.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPublicIP.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDenyPublicIP.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDenyPublicIP.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPublicIP.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyPublicIP.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -430,13 +427,13 @@ module modPolicyAssignmentIdentDenyRdpFromInternet '../../../policy/assignments/
   scope: managementGroup(varManagementGroupIds.platformIdentity)
   name: varModuleDeploymentNames.modPolicyAssignmentIdentDenyRdpFromInternet
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyRdpFromInternet.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDenyRdpFromInternet.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyRdpFromInternet.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyRdpFromInternet.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDenyRdpFromInternet.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyRdpFromInternet.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyRdpFromInternet.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyRDPFromInternet.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDenyRDPFromInternet.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyRDPFromInternet.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDenyRDPFromInternet.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDenyRDPFromInternet.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyRDPFromInternet.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyRDPFromInternet.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -457,18 +454,18 @@ module modPolicyAssignmentIdentDenySubnetWithoutNsg '../../../policy/assignments
   }
 }
 
-// Module - Policy Assignment - Deploy-VM-Backup 
+// Module - Policy Assignment - Deploy-VM-Backup
 module modPolicyAssignmentIdentDeployVmBackup '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.platformIdentity)
   name: varModuleDeploymentNames.modPolicyAssignmentIdentDeployVmBackup
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmBackup.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployVmBackup.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVmBackup.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployVmBackup.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployVmBackup.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVmBackup.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployVmBackup.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMBackup.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeployVMBackup.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMBackup.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployVMBackup.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployVMBackup.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMBackup.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployVMBackup.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.owner
     ]
@@ -476,7 +473,7 @@ module modPolicyAssignmentIdentDeployVmBackup '../../../policy/assignments/polic
   }
 }
 
-// Modules - Policy Assignments - Management Management Group 
+// Modules - Policy Assignments - Management Management Group
 // Module - Policy Assignment - Deploy-Log-Analytics
 module modPolicyAssignmentMgmtDeployLogAnalytics '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.platformManagement)
@@ -516,19 +513,19 @@ module modPolicyAssignmentMgmtDeployLogAnalytics '../../../policy/assignments/po
   }
 }
 
-// Modules - Policy Assignments - Landing Zones Management Group 
+// Modules - Policy Assignments - Landing Zones Management Group
 // Module - Policy Assignment - Deny-IP-Forwarding
 module modPolicyAssignmentLzsDenyIpForwarding '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyIpForwarding
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyIpForwarding.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDenyIpForwarding.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyIpForwarding.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyIpForwarding.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDenyIpForwarding.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyIpForwarding.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyIpForwarding.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyIPForwarding.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDenyIPForwarding.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyIPForwarding.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDenyIPForwarding.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDenyIPForwarding.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyIPForwarding.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyIPForwarding.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -538,13 +535,13 @@ module modPolicyAssignmentLzsDenyRdpFromInternet '../../../policy/assignments/po
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyRdpFromInternet
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyRdpFromInternet.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDenyRdpFromInternet.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyRdpFromInternet.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyRdpFromInternet.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDenyRdpFromInternet.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyRdpFromInternet.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyRdpFromInternet.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyRDPFromInternet.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDenyRDPFromInternet.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyRDPFromInternet.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDenyRDPFromInternet.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDenyRDPFromInternet.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyRDPFromInternet.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyRDPFromInternet.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -570,13 +567,13 @@ module modPolicyAssignmentLzsDeployVmBackup '../../../policy/assignments/policyA
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployVmBackup
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmBackup.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployVmBackup.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVmBackup.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployVmBackup.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployVmBackup.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVmBackup.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployVmBackup.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMBackup.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeployVMBackup.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMBackup.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployVMBackup.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployVMBackup.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMBackup.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployVMBackup.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.owner
     ]
@@ -589,18 +586,18 @@ module modPolicyAssignmentLzsEnableDdosVnet '../../../policy/assignments/policyA
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsEnableDdosVnet
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnableDdosVnet.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentEnableDdosVnet.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentEnableDdosVnet.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentEnableDdosVnet.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentEnableDdosVnet.libDefinition.properties.parameters
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnableDDoSVNET.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnableDDoSVNET.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       ddosPlan: {
         value: parDdosProtectionPlanId
       }
     }
-    parPolicyAssignmentIdentityType: varPolicyAssignmentEnableDdosVnet.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentEnableDdosVnet.libDefinition.properties.enforcementMode
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnableDDoSVNET.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.networkContributor
     ]
@@ -608,34 +605,34 @@ module modPolicyAssignmentLzsEnableDdosVnet '../../../policy/assignments/policyA
   }
 }
 
-// Module - Policy Assignment - Deny-Storage-http 
+// Module - Policy Assignment - Deny-Storage-http
 module modPolicyAssignmentLzsDenyStorageHttp '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyStorageHttp
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyStorageHttp.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDenyStorageHttp.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyStorageHttp.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyStorageHttp.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDenyStorageHttp.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyStorageHttp.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyStorageHttp.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyStoragehttp.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDenyStoragehttp.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyStoragehttp.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDenyStoragehttp.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDenyStoragehttp.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyStoragehttp.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyStoragehttp.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
-// Module - Policy Assignment - Deploy-AKS-Policy 
+// Module - Policy Assignment - Deploy-AKS-Policy
 module modPolicyAssignmentLzsDeployAksPolicy '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployAksPolicy
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployAksPolicy.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployAksPolicy.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployAksPolicy.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployAksPolicy.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployAksPolicy.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployAksPolicy.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployAksPolicy.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployAKSPolicy.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeployAKSPolicy.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployAKSPolicy.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.aksContributor
     ]
@@ -643,50 +640,50 @@ module modPolicyAssignmentLzsDeployAksPolicy '../../../policy/assignments/policy
   }
 }
 
-// Module - Policy Assignment - Deny-Priv-Escalation-AKS 
+// Module - Policy Assignment - Deny-Priv-Escalation-AKS
 module modPolicyAssignmentLzsDenyPrivEscalationAks '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyPrivEscalationAks
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPrivEscalationAks.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDenyPrivEscalationAks.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPrivEscalationAks.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyPrivEscalationAks.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDenyPrivEscalationAks.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPrivEscalationAks.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyPrivEscalationAks.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPrivEscalationAKS.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
-// Module - Policy Assignment - Deny-Priv-Containers-AKS 
+// Module - Policy Assignment - Deny-Priv-Containers-AKS
 module modPolicyAssignmentLzsDenyPrivContainersAks '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyPrivContainersAks
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPrivContainersAks.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDenyPrivContainersAks.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPrivContainersAks.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyPrivContainersAks.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDenyPrivContainersAks.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPrivContainersAks.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyPrivContainersAks.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPrivContainersAKS.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
-// Module - Policy Assignment - Enforce-AKS-HTTPS 
+// Module - Policy Assignment - Enforce-AKS-HTTPS
 module modPolicyAssignmentLzsEnforceAksHttps '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsEnforceAksHttps
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceAksHttps.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentEnforceAksHttps.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceAksHttps.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentEnforceAksHttps.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentEnforceAksHttps.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceAksHttps.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentEnforceAksHttps.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceAKSHTTPS.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -696,29 +693,29 @@ module modPolicyAssignmentLzsEnforceTlsSsl '../../../policy/assignments/policyAs
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsEnforceTlsSsl
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceTlsSsl.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentEnforceTlsSsl.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceTlsSsl.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentEnforceTlsSsl.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentEnforceTlsSsl.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceTlsSsl.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentEnforceTlsSsl.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceTLSSSL.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceTLSSSL.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceTLSSSL.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceTLSSSL.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceTLSSSL.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceTLSSSL.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentEnforceTLSSSL.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
-// Module - Policy Assignment - Deploy-SQL-DB-Auditing 
+// Module - Policy Assignment - Deploy-SQL-DB-Auditing
 module modPolicyAssignmentLzsDeploySqlDbAuditing '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeploySqlDbAuditing
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeploySqlDbAuditing.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeploySqlDbAuditing.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeploySqlDbAuditing.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeploySqlDbAuditing.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeploySqlDbAuditing.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeploySqlDbAuditing.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeploySqlDbAuditing.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeploySQLDBAuditing.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeploySQLDBAuditing.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeploySQLDBAuditing.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeploySQLDBAuditing.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeploySQLDBAuditing.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeploySQLDBAuditing.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeploySQLDBAuditing.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.owner
     ]
@@ -726,18 +723,18 @@ module modPolicyAssignmentLzsDeploySqlDbAuditing '../../../policy/assignments/po
   }
 }
 
-// Module - Policy Assignment - Deploy-SQL-Threat 
+// Module - Policy Assignment - Deploy-SQL-Threat
 module modPolicyAssignmentLzsDeploySqlThreat '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeploySqlThreat
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeploySqlThreat.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeploySqlThreat.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeploySqlThreat.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeploySqlThreat.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeploySqlThreat.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeploySqlThreat.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeploySqlThreat.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeploySQLThreat.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeploySQLThreat.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeploySQLThreat.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeploySQLThreat.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeploySQLThreat.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeploySQLThreat.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDeploySQLThreat.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.owner
     ]
@@ -767,13 +764,13 @@ module modPolicyAssignmentLzsDenyPublicIp '../../../policy/assignments/policyAss
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyPublicIp
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPublicIp.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDenyPublicIp.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPublicIp.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyPublicIp.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDenyPublicIp.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPublicIp.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyPublicIp.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPublicIP.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDenyPublicIP.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPublicIP.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDenyPublicIP.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDenyPublicIP.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPublicIP.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: varPolicyAssignmentDenyPublicIP.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }

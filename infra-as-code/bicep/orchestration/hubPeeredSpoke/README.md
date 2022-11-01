@@ -5,6 +5,7 @@ This module acts as an orchestration module that create and configures a spoke n
 Module deploys the following resources:
 
 - Subscription placement in Management Group hierarchy - if parPeeredVnetSubscriptionMgPlacement is specified
+- Resource group
 - Virtual Network (Spoke VNet)
 - UDR - if parNextHopIPAddress and resource id of hub virtual network object is specified
 - Hub to Spoke peering - if resource id of hub virtual network object is specified in parHubVirtualNetworkID
@@ -25,7 +26,7 @@ The module requires the following inputs:
 
  | Parameter                              | Type   | Default                                                         | Description                                                            | Requirement        | Example                                                                                                                                                    |
  | -------------------------------------- | ------ | --------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
- | parLocation                            | string | `deployment().location`                                       | The region to deploy all resoruces into                                | Valid Azure Region | `northeurope`                                                                                                                                              |
+ | parLocation                            | string | `deployment().location`                                       | The region to deploy all resources into                                | Valid Azure Region | `northeurope`                                                                                                                                              |
  | parTopLevelManagementGroupPrefix       | string | `'alz'`                                                         | Prefix for the management group hierarchy                              | None               | `alz`                                                                                                                                                      |
  | parPeeredVnetSubscriptionId            | string | Empty string `''`                                               | Subscription Id to the Virtual Network Hub object                      | None               | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`                                                                                                                     |
  | parTags                                | object | Empty object `{}`                                               | Array of Tags to be applied to all resources in module                 | None               | `{"key": "value"}`                                                                                                                                         |

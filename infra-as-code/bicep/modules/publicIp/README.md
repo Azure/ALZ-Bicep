@@ -1,6 +1,6 @@
 # Module: Public IP
 
-This module defines a public IP address and outputs the id for other modules to consume.  
+This module defines a public IP address and outputs the id for other modules to consume.
 
 Module deploys the following resources:
 
@@ -12,12 +12,12 @@ The module requires the following inputs:
 
  | Parameter             | Type   | Default                  | Description                                                                                                                        | Requirement        | Example                              |
  | --------------------- | ------ | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ------------------------------------ |
- | parLocation           | string | resourceGroup().location | Location where Public IP address will be deployed                                                                                  | Valid Azure Region | `eastus2`                            |
+ | parLocation           | string | `resourceGroup().location` | Location where Public IP address will be deployed                                                                                  | Valid Azure Region | `eastus2`                            |
  | parPublicIpName       | string | none                     | Name associated with the Public IP to be created                                                                                   | 1-80 char          | alz-bastion-PublicIp                 |
  | parPublicIpSku        | object | none                     | SKU of IP to deploy to Azure                                                                                                       | Standard or Basic  | Standard                             |
  | parPublicIpProperties | object | none                     | N/A                                                                                                                                |
  | parAvailabilityZones  | array  | Empty Array `[]`         | Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty. | none               | `[]` or `['1']` or `['1' ,'2', '3']` |
- | parTags               | object | none                     | Tags to be appended to resource after it is created                                                                                | none               | {"Environment" : "Development"}      |
+ | parTags               | object | Empty Object `{}`                     | Tags to be appended to resource after it is created                                                                                | none               | {"Environment" : "Development"}      |
  | parTelemetryOptOut    | bool   | `false`                  | Set Parameter to true to Opt-out of deployment telemetry                                                                           | none               | `false`                              |
 
 ## Outputs

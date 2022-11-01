@@ -1,12 +1,12 @@
 targetScope = 'managementGroup'
 
-@description('Array of Subscription Ids that should be moved to the new management group.')
+@description('Array of Subscription Ids that should be moved to the new management group. Default: Empty Array')
 param parSubscriptionIds array = []
 
-@description('Target management group for the subscription.  This management group must exist.')
+@description('Target management group for the subscription. This management group must exist.')
 param parTargetManagementGroupId string
 
-@description('Set Parameter to true to Opt-out of deployment telemetry')
+@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

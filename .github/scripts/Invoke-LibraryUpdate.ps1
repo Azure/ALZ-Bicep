@@ -21,69 +21,79 @@
 
 [CmdletBinding(SupportsShouldProcess)]
 param (
-    [Parameter()][String]$TargetModulePath = "$PWD/ALZ-Bicep",
-    [Parameter()][String]$SourceModulePath = "$PWD/enterprise-scale",
+    [Parameter()][String]$AlzToolsPath = "$PWD/enterprise-scale/src/Alz.Tools",
+    [Parameter()][String]$TargetPath = "$PWD/ALZ-Bicep",
+    [Parameter()][String]$SourcePath = "$PWD/enterprise-scale",
+    [Parameter()][String]$LineEnding = "unix",
     [Parameter()][Switch]$Reset,
-    [Parameter()][Switch]$UseCacheFromModule
+    [Parameter()][Switch]$UpdateProviderApiVersions
 )
 
 $ErrorActionPreference = "Stop"
 
 # This script relies on a custom set of classes and functions
-# defined within the EnterpriseScaleLibraryTools PowerShell
-# module.
-$esltModuleDirectory = $TargetModulePath + "/.github/scripts/EnterpriseScaleLibraryTools"
-$esltModulePath = "$esltModuleDirectory/EnterpriseScaleLibraryTools.psm1"
-Import-Module $esltModulePath -ErrorAction Stop
+# defined within the Alz.Tools PowerShell module.
+Import-Module $AlzToolsPath -ErrorAction Stop
 
 # To avoid needing to authenticate with Azure, the following
 # code will preload the ProviderApiVersions cache from a
 # stored state in the module if the UseCacheFromModule flag
 # is set and the ProviderApiVersions.zip file is present.
-if ($UseCacheFromModule -and (Test-Path "$esltModuleDirectory/ProviderApiVersions.zip")) {
+if (!$UpdateProviderApiVersions -and (Test-Path "$AlzToolsPath/ProviderApiVersions.zip")) {
     Write-Information "Pre-loading ProviderApiVersions from saved cache." -InformationAction Continue
-    Invoke-UseCacheFromModule($esltModuleDirectory)
+    Invoke-UseCacheFromModule($AlzToolsPath)
 }
 
 # The defaultConfig object provides a set of default values
-# to reduce verbosity within the esltConfig object.
+# to reduce verbosity within the exportConfig object.
 $defaultConfig = @{
-    inputFilter    = "*.json"
-    typeFilter     = @()
-    outputPath     = $TargetModulePath + "/infra-as-code/bicep/modules/policy/definitions/lib"
-    fileNamePrefix = ""
-    fileNameSuffix = ".json"
-    asTemplate     = $true
-    recurse        = $false
+    inputFilter        = "*.json"
+    resourceTypeFilter = @()
+    outputPath         = $TargetPath + "/infra-as-code/bicep/modules/policy/definitions/lib"
+    fileNamePrefix     = ""
+    fileNameSuffix     = ".json"
+    exportFormat       = "Bicep"
+    recurse            = $false
 }
 
 # File locations from Enterprise-scale repository for
 # resources, organised by type
-$policyDefinitionFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyDefinitions"
-$policySetDefinitionFilePaths = "$SourceModulePath/eslzArm/managementGroupTemplates/policyDefinitions"
+$policyDefinitionFilePaths = (
+    Get-ChildItem -Path "$SourcePath/src/resources/Microsoft.Authorization/policyDefinitions/*" `
+        -File `
+        -Include "*.json" `
+        -Exclude "*.AzureChinaCloud.json", "*.AzureUSGovernment.json"
+).FullName
+$policySetDefinitionFilePaths = (
+    Get-ChildItem -Path "$SourcePath/src/resources/Microsoft.Authorization/policySetDefinitions/*" `
+        -File `
+        -Include "*.json" `
+        -Exclude "*.AzureChinaCloud.json", "*.AzureUSGovernment.json"
+).FullName
 
-# The esltConfig array controls the foreach loop used to run
+# The exportConfig array controls the foreach loop used to run
 # Export-LibraryArtifact. Each object provides a set of values
 # used to configure each run of Export-LibraryArtifact within
 # the loop. If a value needed by Export-LibraryArtifact is
 # missing, it will use the default value specified in the
 # defaultConfig object.
-$esltConfig = @()
-# Add Policy Definition source files to $esltConfig
-$esltConfig += $policyDefinitionFilePaths | ForEach-Object {
+$exportConfig = @()
+# Add Policy Definition source files to $exportConfig
+$exportConfig += $policyDefinitionFilePaths |
+ForEach-Object {
     [PsCustomObject]@{
-        inputPath      = $_
-        typeFilter     = "Microsoft.Authorization/policyDefinitions"
-        fileNamePrefix = "policy_definitions/policy_definition_es_"
+        inputPath          = $_
+        resourceTypeFilter = "Microsoft.Authorization/policyDefinitions"
+        fileNamePrefix     = "policy_definitions/policy_definition_es_"
     }
 }
-# Add Policy Set Definition source files to $esltConfig
-$esltConfig += $policySetDefinitionFilePaths | ForEach-Object {
+# Add Policy Set Definition source files to $exportConfig
+$exportConfig += $policySetDefinitionFilePaths | ForEach-Object {
     [PsCustomObject]@{
-        inputPath      = $_
-        typeFilter     = "Microsoft.Authorization/policySetDefinitions"
-        fileNamePrefix = "policy_set_definitions/policy_set_definition_es_"
-        fileNameSuffix = ".json"
+        inputPath          = $_
+        resourceTypeFilter = "Microsoft.Authorization/policySetDefinitions"
+        fileNamePrefix     = "policy_set_definitions/policy_set_definition_es_"
+        fileNameSuffix     = ".json"
     }
 }
 
@@ -91,23 +101,23 @@ $esltConfig += $policySetDefinitionFilePaths | ForEach-Object {
 # artefacts (by resource type) from the library
 if ($Reset) {
     Write-Information "Deleting existing Policy Definitions from library." -InformationAction Continue
-    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions/" -Recurse -Force
+    Remove-Item -Path "$TargetPath/infra-as-code/bicep/modules/policy/definitions/lib/policy_definitions/" -Recurse -Force
     Write-Information "Deleting existing Policy Set Definitions from library." -InformationAction Continue
-    Remove-Item -Path "$TargetModulePath/infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/" -Recurse -Force
+    Remove-Item -Path "$TargetPath/infra-as-code/bicep/modules/policy/definitions/lib/policy_set_definitions/" -Recurse -Force
 }
 
-# Process the files added to $esltConfig, to add content
+# Process the files added to $exportConfig, to add content
 # to the library
-foreach ($config in $esltConfig) {
+foreach ($config in $exportConfig) {
     Export-LibraryArtifact `
         -InputPath ($config.inputPath ?? $defaultConfig.inputPath) `
         -InputFilter ($config.inputFilter ?? $defaultConfig.inputFilter) `
-        -TypeFilter ($config.typeFilter ?? $defaultConfig.typeFilter) `
+        -ResourceTypeFilter ($config.resourceTypeFilter ?? $defaultConfig.resourceTypeFilter) `
         -OutputPath ($config.outputPath ?? $defaultConfig.outputPath) `
         -FileNamePrefix ($config.fileNamePrefix ?? $defaultConfig.fileNamePrefix) `
         -FileNameSuffix ($config.fileNameSuffix ?? $defaultConfig.fileNameSuffix) `
-        -AsTemplate:($config.asTemplate ?? $defaultConfig.asTemplate) `
+        -ExportFormat:($config.exportFormat ?? $defaultConfig.exportFormat) `
         -Recurse:($config.recurse ?? $defaultConfig.recurse) `
+        -LineEnding $LineEnding `
         -WhatIf:$WhatIfPreference
 }
-
