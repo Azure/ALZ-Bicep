@@ -169,7 +169,7 @@ To carry out the instructions in the scenario the operator will require Resource
   ![alz-custom-initiative-assignments](media/alz-update-initiative-with-builtin-03.png)
 
 - As can be seen this particular initiative is assigned with only a single parameter at the following levels in the management group structure
-  - Contoso/
+  - `Contoso/`
 
 > Note
 that the provided example has a simple parameter set. If more complex parameters are assigned to a policy which is to be migrated those should be noted down. In that respect the possibility to download the query results as CSV could be leveraged.
@@ -201,11 +201,17 @@ To get the latest updates from the ALZ-Bicep repo and download to you local repo
 - If you did not already, copy the [`Invoke-GitHubReleaseFetcher.ps1`](https://github.com/Azure/ALZ-Bicep/tree/main/.github/scripts/Invoke-GitHubReleaseFetcher.ps1) script into the following location in your ALZ-Bicep repository: `.github/scripts/`
 - Synchronize your local repo with the ALZ-Bicep repo by running the following
 command
+
   ```posh
   .github/scripts/Invoke-GitHubReleaseFetcher.ps1 -githubRepoUrl "https://github.com/Azure/ALZ-Bicep" -directoryAndFilesToKeep @("infra-as-code/bicep/modules/policy")
   ```
+- The above script will create a releases folder in the root of your local repo containing a version folder (e.g. v0.10.6), in that folder will be a policy folder containing all the latest updates to policy assignments and policy definitions from the ALZ-Bicep repo.
+- To update your local copy of the repo with the policy changes run the following command
 
-- When you have synchronized your repo perform the following verification tasks
+  ```posh
+  Copy-Item -Path .\releases\<version folder>\policy\* -Destination .\infra-as-code\bicep\modules\policy\ -Recurse -Force
+  ```
+- After completing the above, perform the following verification tasks
   - Verify that removed policy definition has been removed from ./infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep
   - Verify that ./infra-as-code/bicep/modules/policy/assignments/alzdefaults/alzDefaultPolicyAssignments.bicep has been updated to no longer include assignments for the removed ALZ custom policy
   - Verify that the built-in policy has been added to ./infra-as-code/bicep/modules/policy/assignments/alzdefaults/alzDefaultPolicyAssignments.bicep if relevant.

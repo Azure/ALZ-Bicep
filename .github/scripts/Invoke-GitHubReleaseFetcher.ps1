@@ -137,7 +137,7 @@ if ($syncAllReleases -eq $true) {
         Move-Item -Path "$($extractedSubFolder.FullName)/*" -Destination "$releaseDirectory" -ErrorAction SilentlyContinue
       }
 
-      #Remove-Item -Path "$releaseDirectory/tmp" -Force -Recurse
+      Remove-Item -Path "$releaseDirectory/tmp" -Force -Recurse
 
     }
     else {
@@ -189,7 +189,7 @@ if ($syncAllReleases -eq $false) {
       Move-Item -Path "$($extractedSubFolder.FullName)/*" -Destination "$releaseDirectory" -ErrorAction SilentlyContinue
     }
 
-    #Remove-Item -Path "$releaseDirectory/tmp" -Force -Recurse
+    Remove-Item -Path "$releaseDirectory/tmp" -Force -Recurse
 
   }
   else {
