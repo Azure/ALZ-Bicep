@@ -38,7 +38,6 @@ In this example, the Subscription is created upon an EA Account through a tenant
 > For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
-**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)

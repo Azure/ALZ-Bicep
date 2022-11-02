@@ -35,7 +35,7 @@ MGID="alz"
 TEMPLATEFILE="infra-as-code/bicep/modules/subscriptionPlacement/subscriptionPlacement.bicep"
 PARAMETERS="@infra-as-code/bicep/modules/subscriptionPlacement/parameters/subscriptionPlacement.parameters.all.json"
 
-az deployment mg create --name ${NAME:0:63} $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
