@@ -42,19 +42,18 @@ The input parameter file `parameters/customPolicyDefinitions.parameters.all.json
 > If the deployment provisioning state has failed due to policy definitions could not be found, this is often due to a known replication delay. Please re-run the deployment step below, and the deployment should succeed.
 
 ### Azure CLI
-**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 
 ```bash
 # For Azure global regions
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-PolicyDefsDefaults-${dateYMD}"
-PARAMETERS="@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json"
 LOCATION="eastus"
 MGID="alz"
 TEMPLATEFILE="infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json"
 
-az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
@@ -62,12 +61,12 @@ OR
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-PolicyDefsDefaults-${dateYMD}"
-PARAMETERS="@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json"
 LOCATION="chinaeast2"
 MGID="alz"
 TEMPLATEFILE="infra-as-code/bicep/modules/policy/definitions/mc-customPolicyDefinitions.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json"
 
-az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
@@ -77,10 +76,10 @@ az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location 
 
 $inputObject = @{
   DeploymentName        = 'alz-PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ManagementGroupId     = 'alz'
   Location              = 'eastus'
-  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json'
+  ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json'
 }
 
 New-AzManagementGroupDeployment @inputObject
@@ -91,10 +90,10 @@ OR
 
 $inputObject = @{
   DeploymentName        = 'alz-PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ManagementGroupId     = 'alz'
   Location              = 'chinaeast2'
-  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json'
+  ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/modules/policy/definitions/mc-customPolicyDefinitions.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json'
 }
 New-AzManagementGroupDeployment @inputObject
 ```

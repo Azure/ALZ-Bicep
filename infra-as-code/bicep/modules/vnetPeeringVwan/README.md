@@ -47,11 +47,11 @@ az account set --subscription $ConnectivitySubscriptionId
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-vnetPeeringVwanDeployment-${dateYMD}"
-PARAMETERS="@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json"
 LOCATION="eastus"
 TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json"
 
-az deployment sub create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --template-file $TEMPLATEFILE
+az deployment sub create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
@@ -62,11 +62,11 @@ az account set --subscription $ConnectivitySubscriptionId
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-vnetPeeringVwanDeployment-${dateYMD}"
-PARAMETERS="@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json"
 LOCATION="chinaeast2"
 TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json"
 
-az deployment sub create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --template-file $TEMPLATEFILE
+az deployment sub create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
@@ -80,9 +80,9 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 $inputObject = @{
   DeploymentName        = 'alz-VnetPeeringWanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  TemplateParameterFile = 'infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json'
   Location              = 'eastus'
   TemplateFile          = "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json'
 }
 
 New-AzDeployment @inputObject
@@ -98,9 +98,9 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 $inputObject = @{
   DeploymentName        = 'alz-VnetPeeringWanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  TemplateParameterFile = 'infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json'
   Location              = 'chinaeast2'
   TemplateFile          = "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json'
 }
 
 New-AzDeployment @inputObject

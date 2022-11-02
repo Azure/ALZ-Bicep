@@ -44,7 +44,6 @@ The module does not generate any outputs.
 In this example, the `Deny-PublicIP` custom policy definition will be deployed/assigned to the `alz-landingzones` management group.
 
 #### Azure CLI - Deny
-**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 
 ```bash
 # For Azure global regions
@@ -57,7 +56,7 @@ LOCATION="eastus"
 MGID="alz-landingzones"
 TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
 
-az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
@@ -71,7 +70,7 @@ LOCATION="chinaeast2"
 MGID="alz-landingzones"
 TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
 
-az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 #### PowerShell - Deny
@@ -114,27 +113,18 @@ There are two different sets of input parameters files; one for deploying to Azu
 
 In this example, the `Deploy-MDFC-Config` custom policy definition will be deployed/assigned to the `alz-landingzones` management group (intermediate root management group). And the managed identity associated with the policy will also be assigned to the `alz-platform` management group, as defined in the parameter file: `parameters/policyAssignmentManagementGroup.dine.parameters.all.json` or `parameters/mc-policyAssignmentManagementGroup.dine.parameters.all.json`
 #### Azure CLI - DINE
-**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 
 ```bash
 # For Azure global regions
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-PolicyDineAssignments-${dateYMD}"
-MGID="alz-landingzones"
 LOCATION="eastus"
-PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json"
+MGID="alz-landingzones"
 TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json"
 
-$inputObject = @(
-  --name                = 'alz-PolicyDineAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  --management-group-id = 'alz-landingzones'
-  --location            = 'eastus'
-  --parameters          = '@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json'
-  --template-file       = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
-)
-
-az deployment mg create --name $NAME --management-group-id $MGID --location $LOCATION --parameters $PARAMETERS --template-file $TEMPLATEFILE
+az deployment mg create --name $NAME --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
@@ -142,20 +132,12 @@ OR
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-PolicyDineAssignments-${dateYMD}"
-MGID="alz-landingzones"
 LOCATION="eastus"
-PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json"
+MGID="alz-landingzones"
 TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json"
 
-$inputObject = @(
-  --name                = 'alz-PolicyDineAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  --management-group-id = 'alz-landingzones'
-  --location            = 'chinaeast2'
-  --parameters          = '@infra-as-code/bicep/modules/policy/assignments/parameters/mc-policyAssignmentManagementGroup.dine.parameters.all.json'
-  --template-file       = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
-)
-
-az deployment mg create --name $NAME --management-group-id $MGID --location $LOCATION --parameters $PARAMETERS --template-file $TEMPLATEFILEect
+az deployment mg create --name $NAME --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 #### PowerShell - DINE
@@ -165,10 +147,10 @@ az deployment mg create --name $NAME --management-group-id $MGID --location $LOC
 
 $inputObject = @{
   DeploymentName        = 'alz-PolicyDineAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ManagementGroupId     = 'alz-landingzones'
   Location              = 'eastus'
-  TemplateParameterFile = '@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json'
+  ManagementGroupId     = 'alz-landingzones'
   TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
+  TemplateParameterFile = '@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.dine.parameters.all.json'
 }
 
 New-AzManagementGroupDeployment @inputObject
@@ -179,10 +161,10 @@ OR
 
 $inputObject = @{
   DeploymentName        = 'alz-PolicyDineAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ManagementGroupId     = 'alz-landingzones'
   Location              = 'chinaeast2'
-  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/parameters/mc-policyAssignmentManagementGroup.dine.parameters.all.json'
+  ManagementGroupId     = 'alz-landingzones'
   TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/parameters/mc-policyAssignmentManagementGroup.dine.parameters.all.json'
 }
 
 New-AzManagementGroupDeployment @inputObject

@@ -81,7 +81,6 @@ In this example, the resources required for Virtual WAN connectivity will be dep
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
-**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 # For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription
@@ -94,15 +93,15 @@ TopLevelMGPrefix="alz"
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-vwanConnectivityDeploy-${dateYMD}"
 GROUP="rg-$TopLevelMGPrefix-vwan-001"
-PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json"
 TEMPLATEFILE="infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
   --name $GROUP \
   --location eastus
 
-az deployment group create --name ${NAME:0:63} --resource-group $GROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
@@ -117,15 +116,15 @@ TopLevelMGPrefix="alz"
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-vwanConnectivityDeploy-${dateYMD}"
 GROUP="rg-$TopLevelMGPrefix-vwan-001"
-PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json"
 TEMPLATEFILE="infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
   --name $GROUP \
   --location chinaeast2
 
-az deployment group create --name ${NAME:0:63} --resource-group $GROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
@@ -140,14 +139,12 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
 
-$ResourceGroupName = "rg-$TopLevelMGPrefix-vwan-001"
-
 # Parameters necessary for deployment
 $inputObject = @{
   DeploymentName        = 'alz-vwanConnectivityDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = $ResourceGroupName
-  TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json"
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-vwan-001"
   TemplateFile          = "infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json"
 }
 
 
@@ -167,14 +164,12 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
 
-$ResourceGroupName = "rg-$TopLevelMGPrefix-vwan-001"
-
 # Parameters necessary for deployment
 $inputObject = @{
   DeploymentName        = 'alz-vwanConnectivityDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = $ResourceGroupName
-  TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json"
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-vwan-001"
   TemplateFile          = "infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json"
 }
 
 New-AzResourceGroup -Name $ResourceGroupName `

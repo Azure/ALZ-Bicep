@@ -89,11 +89,11 @@ TopLevelMGPrefix="alz"
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-PrivateDnsZonesDeployment-${dateYMD}"
 RESOURCEGROUP="rg-$TopLevelMGPrefix-private-dns-001"
-PARAMETERS="@infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
 TEMPLATEFILE="infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
 
 az group create --location eastus \
-   --name Hub_$RESOURCEGROUP
+   --name $RESOURCEGROUP
 
 az deployment group create --name ${NAME:0:63} --resource-group $RESOURCEGROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
@@ -110,11 +110,11 @@ TopLevelMGPrefix="alz"
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-PrivateDnsZonesDeployment-${dateYMD}"
 RESOURCEGROUP="rg-$TopLevelMGPrefix-private-dns-001"
-PARAMETERS="@infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
 TEMPLATEFILE="infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
 
 az group create --location chinaeast2 \
-   --name Hub_$RESOURCEGROUP
+   --name $RESOURCEGROUP
 
 az deployment group create --name ${NAME:0:63} --resource-group $RESOURCEGROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
@@ -131,16 +131,14 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
 
-$ResourceGroupName = "rg-$TopLevelMGPrefix-private-dns-001"
-
 New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'eastus'
 
 $inputObject = @{
   DeploymentName        = 'alz-PrivateDnsZonesDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = $ResourceGroupName
-  TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-private-dns-001"
   TemplateFile          = "infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
 }
 
 New-AzResourceGroupDeployment @inputObject
@@ -157,16 +155,14 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
 
-$ResourceGroupName = "rg-$TopLevelMGPrefix-private-dns-001"
-
 New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'chinaeast2'
 
 $inputObject = @{
   DeploymentName        = 'alz-PrivateDnsZonesDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = $ResourceGroupName
-  TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-private-dns-001"
   TemplateFile          = "infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
 }
 
 New-AzResourceGroupDeployment @inputObject

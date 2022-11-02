@@ -38,19 +38,12 @@ We will take the default values and not pass any parameters.
 ```bash
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-ContainerRegistry-${dateYMD}"
-RESOURCEGROUP="Bicep_ACR"
+RESOURCEGROUP="rg-bicep-acr"
 PARAMETERS="@infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json"
 TEMPLATEFILE="infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep"
 
 az group create --location eastus \
-   --name Bicep_ACR
-
-$inputObject = @(
-'--name',           ('alz-ContainerRegistry-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-'--resource-group', 'Bicep_ACR',
-'--parameters',     '@infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json',
-'--template-file',  "infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep",
-)
+   --name rg-bicep-acr
 
 az deployment group create --name ${NAME:0:63} --resource-group $RESOURCEGROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
@@ -58,12 +51,12 @@ az deployment group create --name ${NAME:0:63} --resource-group $RESOURCEGROUP -
 ### PowerShell
 
 ```powershell
-New-AzResourceGroup -Name 'Bicep_ACR' `
+New-AzResourceGroup -Name 'rg-bicep-acr' `
   -Location 'EastUs'
 
   $inputObject = @{
   DeploymentName        = 'alz-ContainerRegistry-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = 'Bicep_ACR'
+  ResourceGroupName     = 'rg-bicep-acr'
   TemplateParameterFile = 'infra-as-code/bicep/CRML/containerRegistry/parameters/containerRegistry.parameters.all.json'
   TemplateFile          = "infra-as-code/bicep/CRML/containerRegistry/containerRegistry.bicep"
 }

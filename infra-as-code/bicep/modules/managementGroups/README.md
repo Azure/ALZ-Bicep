@@ -125,10 +125,10 @@ In this example, the management groups are created at the `Tenant Root Group` th
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-MGDeployment-${dateYMD}"
 LOCATION="eastus"
-PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
 TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
 
-az deployment tenant create --name ${NAME:0:63} --location $LOCATION --parameters $PARAMETERS --template-file $TEMPLATEFILE
+az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
@@ -137,10 +137,10 @@ OR
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-MGDeployment-${dateYMD}"
 LOCATION="chinaeast2"
-PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
 TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
 
-az deployment tenant create --name ${NAME:0:63} --parameters $PARAMETERS --template-file $TEMPLATEFILE
+az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
@@ -150,9 +150,9 @@ az deployment tenant create --name ${NAME:0:63} --parameters $PARAMETERS --templ
 
 $inputObject = @{
   DeploymentName        = 'alz-MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
   Location              = 'EastUS'
   TemplateFile          = "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
 }
 New-AzTenantDeployment @inputObject
 ```
@@ -162,9 +162,9 @@ OR
 
 $inputObject = @{
   DeploymentName        = 'alz-MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
   Location              = 'chinaeast2'
   TemplateFile          = "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
 }
 New-AzTenantDeployment @inputObject
 ```

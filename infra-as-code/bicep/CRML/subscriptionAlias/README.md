@@ -41,14 +41,13 @@ In this example, the Subscription is created upon an EA Account through a tenant
 **NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 
-$inputObject = @(
-  '--name',           ('alz-SubscriptionAlias-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])),
-  '--parameters',     '@infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json',
-  '--location',       'EastUS',
-  '--template-file',  "infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep"
-)
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-SubscriptionAlias-${dateYMD}"
+LOCATION="eastus"
+PARAMETERS="@infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json"
+TEMPLATEFILE="infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep"
 
-az deployment tenant create @inputObject
+az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell

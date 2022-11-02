@@ -59,10 +59,10 @@ LOCATION="eastus"
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-CustomRoleDefsDeployment-${dateYMD}"
-PARAMETERS="@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json"
 TEMPLATEFILE="infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json"
 
-az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
@@ -76,10 +76,10 @@ LOCATION="chinaeast2"
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-CustomRoleDefsDeployment-${dateYMD}"
-PARAMETERS="@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json"
 TEMPLATEFILE="infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json"
 
-az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
@@ -89,10 +89,10 @@ az deployment mg create --name ${NAME:0:63} --parameters $PARAMETERS --location 
 
 $inputObject = @{
   DeploymentName        = 'alz-CustomRoleDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ManagementGroupId     = 'alz'
   Location              = 'eastus'
-  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json'
+  ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json'
 }
 
 New-AzManagementGroupDeployment @inputObject
@@ -103,10 +103,10 @@ OR
 
 $inputObject = @{
   DeploymentName        = 'alz-CustomRoleDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ManagementGroupId     = 'alz'
   Location              = 'chinaeast2'
-  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json'
+  ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json'
 }
 
 New-AzManagementGroupDeployment @inputObject
