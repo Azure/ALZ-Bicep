@@ -33,6 +33,13 @@
       }
     }
   },
+  "defenderForCosmosDbs": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForCosmosDbs')]"
+      }
+    }
+  },
   "defenderForDns": {
     "parameters": {
       "effect": {
