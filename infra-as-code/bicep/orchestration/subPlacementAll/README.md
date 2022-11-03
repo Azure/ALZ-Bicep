@@ -91,48 +91,64 @@ This however may be done as part of another process, for example upon Subscripti
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
-
 ```bash
 # For Azure global regions
-az deployment mg create \
-    --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep \
-    --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json \
-    --location eastus \
-    --management-group-id alz
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-SubPlacementAll-${dateYMD}"
+LOCATION="eastus"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
+PARAMETERS="@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 OR
 
 ```bash
 # For Azure China regions
-az deployment mg create \
-    --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep \
-    --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json \
-    --location chinaeast2 \
-    --management-group-id alz
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-SubPlacementAll-${dateYMD}"
+LOCATION="chinaeast2"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
+PARAMETERS="@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep `
-  -TemplateParameterFile infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json `
-  -Location eastus `
-  -ManagementGroupId alz
+
+$inputObject = @{
+  DeploymentName        = 'alz-SubPlacementAll-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'EastUS'
+  ManagementGroupId     = 'alz'
+  TemplateFile          = "infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json'
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 
 OR
 
 ```powershell
 # For Azure China regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep `
-  -TemplateParameterFile infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json `
-  -Location chinaeast2 `
-  -ManagementGroupId alz
 
+$inputObject = @{
+  DeploymentName        = 'alz-SubPlacementAll-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'chinaeast2'
+  ManagementGroupId     = 'alz'
+  TemplateFile          = "infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json'
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 
 ## Bicep Visualizer
