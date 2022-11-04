@@ -2,11 +2,11 @@
 
 This module acts as an orchestration module that helps enable Diagnostic Settings on the Management Group hierarchy as was defined during the deployment of the Management Group module (this can be deployed via the [`managementGroups.bicep` module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/managementGroups)), which is also described in the wiki on the [Deployment Flow article](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow).
 
-This is accomplished through a tenant-scoped Azure Resource Manager (ARM) deployment. There are two boolean parameters that should match the options selected during the deployment of Management Group module regarding creation or not of Corp and Online Landing Zones and Confidential Corp and Confidential Online Landing zones.
+This is accomplished through a managementGroup-scoped Azure Resource Manager (ARM) deployment. There are two boolean parameters that should match the options selected during the deployment of Management Group module regarding creation or not of Corp and Online Landing Zones and Confidential Corp and Confidential Online Landing zones.
 It also enables Diagnostic Settings for existing custom child landing zones if those are specified.
 
 
-> This module calls the [`diagSettings.bicep`](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/mgDiagSettings) module multiple times to enable Diagnostic Settings to the desired Management Groups. If you only want to enable Diagnostic Settings at a time to a specified Management Group, then you could consider using the child module directly.
+> This module calls the [`mgDiagSettings.bicep`](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/mgDiagSettings) module multiple times to enable Diagnostic Settings to the desired Management Groups. If you only want to enable Diagnostic Settings at a time to a specified Management Group, then you could consider using the child module directly.
 
 ## Parameters
 
@@ -14,7 +14,7 @@ The module requires the following inputs:
 
 | Parameter                             | Type   | Description                                                                                                                                                                          | Requirements                      | Example                                                                                 |
 | ------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------- | --------------------------------------------------------------------------------------- |
-| parTopLevelManagementGroupPrefix      | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment.                                                                         | 2-10 characters, default: `alz`                   | `alz`                                                                                   |
+| parTopLevelManagementGroupPrefix      | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment.                                                                         | 2-10 characters                   | `alz`                                                                                   |
 | parLandingZoneMgAlzDefaultsEnable     | bool   | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.                                                                                       | Mandatory input, default: `true`  | `true`                                                                                  |
 | parLandingZoneMgConfidentialEnable    | bool   | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.                                                             | Mandatory input, default: `false` | `false`                                                                                 |
 | parLogAnalyticsWorkspaceResourceId | string   | Resource ID of the Log Analytics Workspace                                                             | Mandatory input | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics` |
@@ -50,10 +50,14 @@ Below are some examples of how to use this input parameter in both Bicep & JSON 
 ##### Bicep Example
 
 ```bicep
-parLandingZoneMgChildren: [
-    'pci'
-    'another-example'
-]
+parLandingZoneMgChildren: {
+  pci: {
+    displayName: 'PCI'
+  }
+  'another-example': {
+    displayName: 'Another Example'
+  }
+}
 ```
 
 ##### JSON Parameter File Input Example
@@ -73,7 +77,7 @@ parLandingZoneMgChildren: [
 
 ## Deployment
 
-In this example, the Diagnostic Settings are enabled on the management groups through a tenant-scoped deployment.
+In this example, the Diagnostic Settings are enabled on the management groups through a managementGroup-scoped deployment.
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
@@ -81,40 +85,45 @@ In this example, the Diagnostic Settings are enabled on the management groups th
 
 ```bash
 # For Azure global regions
-az deployment tenant create \
+az deployment mg create \
   --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep \
   --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json \
-  --location eastus
+  --location eastus \
+  --management-group-id alz
 ```
 
 OR
 
 ```bash
 # For Azure China regions
-az deployment tenant create \
+az deployment mg create \
   --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep \
   --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json \
-  --location chinaeast2
+  --location chinaeast2 \
+  --management-group-id alz
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-New-AzTenantDeployment `
+New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep `
   -TemplateParameterFile infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json `
-  -Location eastus
+  -Location eastus `
+  -ManagementGroupId alz
+
 ```
 
 OR
 
 ```powershell
 # For Azure China regions
-New-AzTenantDeployment `
+New-AzManagementGroupDeployment `
   -TemplateFile infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep `
   -TemplateParameterFile infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json `
-  -Location chinaeast2
+  -Location chinaeast2 `
+  -ManagementGroupId alz
 
 ```
 

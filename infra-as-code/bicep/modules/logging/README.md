@@ -39,22 +39,29 @@ There are separate input parameters files depending on which Azure cloud you are
 > If the deployment failed due an error that your alz-log-analytics/Automation resource of type 'Microsoft.OperationalInsights/workspaces/linkedServices' was not found, please retry the deployment step and it would succeed.
 
 ### Azure CLI
+
 ```bash
 # For Azure Global regions
 # Set Platform management subscripion ID as the the current subscription
 ManagementSubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ManagementSubscriptionId
 
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+GROUP="rg-$TopLevelMGPrefix-logging-001"
+NAME="alz-loggingDeployment-${dateYMD}"
+TEMPLATEFILE="infra-as-code/bicep/modules/logging/logging.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
+
 # Create Resource Group - optional when using an existing resource group
 az group create \
-  --name alz-logging \
+  --name $GROUP \
   --location eastus
 
 # Deploy Module
-az deployment group create \
-  --template-file infra-as-code/bicep/modules/logging/logging.bicep \
-  --parameters @infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json \
-  --resource-group alz-logging
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
@@ -63,16 +70,22 @@ OR
 ManagementSubscriptionId="[your platform management subscription ID]"
 az account set --subscription $ManagementSubscriptionId
 
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+GROUP="rg-$TopLevelMGPrefix-logging-001"
+NAME="alz-loggingDeployment-${dateYMD}"
+TEMPLATEFILE="infra-as-code/bicep/modules/logging/logging.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json"
+
 # Create Resource Group - optional when using an existing resource group
 az group create \
-  --name alz-logging \
+  --name $GROUP \
   --location chinaeast2
 
 # Deploy Module
-az deployment group create \
-  --template-file infra-as-code/bicep/modules/logging/logging.bicep \
-  --parameters @infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json \
-  --resource-group alz-logging
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
@@ -82,17 +95,25 @@ az deployment group create \
 # Set Platform management subscripion ID as the the current subscription
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'alz-LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-logging-001"
+  TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
+}
+
 Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
 
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
-  -Name alz-logging `
+  -Name $ResourceGroupName `
   -Location eastus
 
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/logging/logging.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json `
-  -ResourceGroup alz-logging
+New-AzResourceGroupDeployment @inputObject
 ```
 OR
 ```powershell
@@ -100,17 +121,25 @@ OR
 # Set Platform management subscripion ID as the the current subscription
 $ManagementSubscriptionId = "[your platform management subscription ID]"
 
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'alz-LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-logging-001"
+  TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
+}
+
 Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
 
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
-  -Name alz-logging `
+  -Name $ResourceGroupName `
   -Location chinaeast2
 
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/logging/logging.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json `
-  -ResourceGroup alz-logging
+New-AzResourceGroupDeployment @inputObject
 ```
 
 ## Bicep Visualizer

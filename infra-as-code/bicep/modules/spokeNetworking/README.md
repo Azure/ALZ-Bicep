@@ -50,34 +50,53 @@ In this example, the spoke resources will be deployed to the resource group spec
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+
 ```bash
 # For Azure global regions
 # Set Azure Landing zone subscription ID as the the current subscription
 LandingZoneSubscriptionId="[your landing zone subscription ID]"
+
 az account set --subscription $LandingZoneSubscriptionId
 
-az group create --location eastus \
-   --name Spoke_Networking_POC
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
 
-az deployment group create \
-   --resource-group Spoke_Networking_POC  \
-   --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-SpokeNetworkingDeployment-${dateYMD}"
+GROUP="rg-$TopLevelMGPrefix-spoke-networking-001"
+TEMPLATEFILE="infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json"
+
+# Create Resource Group - optional when using an existing resource group
+az group create \
+  --name $GROUP \
+  --location eastus
+
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
 # For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription
 LandingZoneSubscriptionId="[your landing zone subscription ID]"
+
 az account set --subscription $LandingZoneSubscriptionId
 
-az group create --location chinaeast2 \
-   --name Spoke_Networking_POC
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
 
-az deployment group create \
-   --resource-group Spoke_Networking_POC  \
-   --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-SpokeNetworkingDeployment-${dateYMD}"
+GROUP="rg-$TopLevelMGPrefix-spoke-networking-001"
+TEMPLATEFILE="infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json"
+
+# Create Resource Group - optional when using an existing resource group
+az group create \
+  --name $GROUP \
+  --location chinaeast2
+
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
@@ -89,13 +108,21 @@ $LandingZoneSubscriptionId = "[your landing zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
 
-New-AzResourceGroup -Name 'Spoke_Networking_POC' `
-  -Location 'EastUs2'
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
 
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json `
-  -ResourceGroupName 'Spoke_Networking_POC'
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'alz-SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-spoke-networking-001"
+  TemplateParameterFile = "infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json"
+  TemplateFile          = "infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
+}
+
+New-AzResourceGroup -Name $ResourceGroupName `
+  -Location 'eastus'
+
+New-AzResourceGroupDeployment @inputObject
 ```
 OR
 ```powershell
@@ -105,13 +132,21 @@ $LandingZoneSubscriptionId = "[your landing zone subscription ID]"
 
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
 
-New-AzResourceGroup -Name 'Spoke_Networking_POC' `
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'alz-SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-spoke-networking-001"
+  TemplateParameterFile = "infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json"
+  TemplateFile          = "infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
+}
+
+New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'chinaeast2'
 
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json `
-  -ResourceGroupName 'Spoke_Networking_POC'
+New-AzResourceGroupDeployment @inputObject
 ```
 ## Example Output in Azure global regions
 

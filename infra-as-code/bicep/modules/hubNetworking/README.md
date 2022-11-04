@@ -64,32 +64,47 @@ There are two different sets of input parameters; one for deploying to Azure glo
 ### Azure CLI
 ```bash
 # For Azure global regions
+
 # Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
+
 az account set --subscription $ConnectivitySubscriptionId
 
-az group create --location eastus \
-   --name Hub_Networking_POC
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
 
-az deployment group create \
-   --resource-group HUB_Networking_POC  \
-   --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-HubNetworkingDeploy-${dateYMD}"
+GROUP="rg-$TopLevelMGPrefix-hub-networking-001"
+TEMPLATEFILE="infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json"
+
+az group create --location eastus \
+   --name $GROUP
+
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
 # For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
+
 az account set --subscription $ConnectivitySubscriptionId
 
-az group create --location chinaeast2 \
-   --name Hub_Networking_POC
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
 
-az deployment group create \
-   --resource-group HUB_Networking_POC  \
-   --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-HubNetworkingDeploy-${dateYMD}"
+GROUP="rg-$TopLevelMGPrefix-hub-networking-001"
+TEMPLATEFILE="infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json"
+
+az group create --location chinaeast2 \
+   --name $GROUP
+
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
@@ -101,13 +116,24 @@ $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzResourceGroup -Name 'Hub_Networking_POC' `
+# Set Platform management subscription ID as the the current subscription
+$ManagementSubscriptionId = "[your platform management subscription ID]"
+
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-hub-networking-001"
+  TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json"
+}
+
+New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'eastus'
 
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json `
-  -ResourceGroupName 'Hub_Networking_POC'
+New-AzResourceGroupDeployment @inputObject
 ```
 OR
 ```powershell
@@ -117,13 +143,21 @@ $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzResourceGroup -Name 'Hub_Networking_POC' `
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-hub-networking-001"
+  TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json"
+}
+
+New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'chinaeast2'
 
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json `
-  -ResourceGroupName 'Hub_Networking_POC'
+New-AzResourceGroupDeployment @inputObject
 ```
 ## Example Output in Azure global regions
 
