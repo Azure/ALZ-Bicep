@@ -19,14 +19,6 @@
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Append-Redis-sslEnforcement.json')
 }
 {
-	name: 'Audit-MachineLearning-PrivateEndpointId'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Audit-MachineLearning-PrivateEndpointId.json')
-}
-{
-	name: 'Deny-AA-child-resources'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-AA-child-resources.json')
-}
-{
 	name: 'Deny-AFSPaasPublicIP'
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-AFSPaasPublicIP.json')
 }
@@ -47,52 +39,8 @@
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-AppServiceWebApp-http.json')
 }
 {
-	name: 'Deny-Databricks-NoPublicIp'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-Databricks-NoPublicIp.json')
-}
-{
-	name: 'Deny-Databricks-Sku'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-Databricks-Sku.json')
-}
-{
-	name: 'Deny-Databricks-VirtualNetwork'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-Databricks-VirtualNetwork.json')
-}
-{
 	name: 'Deny-KeyVaultPaasPublicIP'
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-KeyVaultPaasPublicIP.json')
-}
-{
-	name: 'Deny-MachineLearning-Aks'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-Aks.json')
-}
-{
-	name: 'Deny-MachineLearning-Compute-SubnetId'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-Compute-SubnetId.json')
-}
-{
-	name: 'Deny-MachineLearning-Compute-VmSize'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-Compute-VmSize.json')
-}
-{
-	name: 'Deny-MachineLearning-ComputeCluster-RemoteLoginPortPublicAccess'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-ComputeCluster-RemoteLoginPortPublicAccess.json')
-}
-{
-	name: 'Deny-MachineLearning-ComputeCluster-Scale'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-ComputeCluster-Scale.json')
-}
-{
-	name: 'Deny-MachineLearning-HbiWorkspace'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-HbiWorkspace.json')
-}
-{
-	name: 'Deny-MachineLearning-PublicAccessWhenBehindVnet'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-PublicAccessWhenBehindVnet.json')
-}
-{
-	name: 'Deny-MachineLearning-PublicNetworkAccess'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MachineLearning-PublicNetworkAccess.json')
 }
 {
 	name: 'Deny-MySql-http'
@@ -163,10 +111,6 @@
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-ASC-SecurityContacts.json')
 }
 {
-	name: 'Deploy-Budget'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Budget.json')
-}
-{
 	name: 'Deploy-Custom-Route-Table'
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Custom-Route-Table.json')
 }
@@ -205,10 +149,6 @@
 {
 	name: 'Deploy-Diagnostics-ApplicationGateway'
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-ApplicationGateway.json')
-}
-{
-	name: 'Deploy-Diagnostics-AVDScalingPlans'
-	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-AVDScalingPlans.json')
 }
 {
 	name: 'Deploy-Diagnostics-Bastion'
