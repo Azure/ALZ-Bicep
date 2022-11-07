@@ -12,13 +12,6 @@
       }
     }
   },
-  "defenderForAppServices": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('enableAscForAppServices')]"
-      }
-    }
-  },
   "defenderForArm": {
     "parameters": {
       "effect": {
@@ -40,38 +33,10 @@
       }
     }
   },
-  "defenderForKeyVaults": {
-    "parameters": {
-      "Effect": {
-        "value": "[[parameters('enableAscForKeyVault')]"
-      }
-    }
-  },
-  "defenderForOssDb": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('enableAscForOssDb')]"
-      }
-    }
-  },
   "defenderForSqlPaas": {
     "parameters": {
       "effect": {
         "value": "[[parameters('enableAscForSql')]"
-      }
-    }
-  },
-  "defenderForSqlServerVirtualMachines": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('enableAscForSqlOnVm')]"
-      }
-    }
-  },
-  "defenderForStorageAccounts": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('enableAscForStorage')]"
       }
     }
   },
