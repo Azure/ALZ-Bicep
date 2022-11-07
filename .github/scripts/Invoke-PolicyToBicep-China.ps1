@@ -39,7 +39,7 @@ param (
   [string]
   $assignmentsTxtFileName = "_mc_policyAssignmentsBicepInput.txt",
   [array]
-  $excludedPolicySetChildDefinitionsReferenceIds = @("AVDHostPoolsDeployDiagnosticLogDeployLogAnalytics", "defenderForSqlServerVirtualMachines", "defenderForOssDb", "defenderForCosmosDbs", "defenderForAppServices", "defenderForStorageAccounts", "defenderForKeyVaults")
+  $excludedPolicySetChildDefinitionsReferenceIds = @("AVDScalingPlansDeployDiagnosticLogDeployLogAnalytics", "defenderForSqlServerVirtualMachines", "defenderForOssDb", "defenderForCosmosDbs", "defenderForAppServices", "defenderForStorageAccounts", "defenderForKeyVaults")
 )
 
 # This script relies on a custom set of classes and functions
