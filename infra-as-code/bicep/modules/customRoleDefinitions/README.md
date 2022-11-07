@@ -4,10 +4,13 @@ This module defines custom roles based on the recommendations from the Azure Lan
 
 Module supports the following custom roles:
 
-- Subscription owner
-- Application owners (DevOps/AppOps)
-- Network management (NetOps)
-- Security operations (SecOps)
+- [*ManagementGroupId] Subscription owner
+- [*ManagementGroupId] Application owners (DevOps/AppOps)
+- [*ManagementGroupId] Network management (NetOps)
+- [*ManagementGroupId] Security operations (SecOps)
+
+*The custom role names are prefixed with `[ManagementGroupId]` since custom roles scoped at Management Group level must be unique within the Azure AD tenant. This will alleviate any conflicts if you chose to deploy a [canary environment](https://aka.ms/alz/canary).
+For example, if the `ManagementGroupId` = **alz**, then each role will have this prefix **[alz]** like `[alz] Subscription owner`. See the [example output deployment](#example-deployment-output) below.
 
 ## Parameters
 
@@ -111,6 +114,8 @@ $inputObject = @{
 
 New-AzManagementGroupDeployment @inputObject
 ```
+
+#### Example Deployment Output
 
 ![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output")
 
