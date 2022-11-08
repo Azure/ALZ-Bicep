@@ -37,7 +37,9 @@ param (
   [string]
   $defintionsSetTxtFileName = "_mc_policySetDefinitionsBicepInput.txt",
   [string]
-  $assignmentsTxtFileName = "_mc_policyAssignmentsBicepInput.txt"
+  $assignmentsTxtFileName = "_mc_policyAssignmentsBicepInput.txt",
+  [array]
+  $excludedPolicySetChildDefinitionsReferenceIds = @("AVDScalingPlansDeployDiagnosticLogDeployLogAnalytics", "defenderForSqlServerVirtualMachines", "defenderForOssDb", "defenderForCosmosDbs", "defenderForAppServices", "defenderForStorageAccounts", "defenderForKeyVaults")
 )
 
 # This script relies on a custom set of classes and functions
@@ -129,19 +131,26 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
         $definitionReferenceId = $_.policyDefinitionReferenceId
         $definitionParameters = $_.parameters
 
-        if ($definitionParameters) {
-          $definitionParameters | Sort-Object | ForEach-Object {
-            [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
-            $definitionParametersOutputArray.Add("parameters", $_)
+        if ($definitionReferenceId -notin $excludedPolicySetChildDefinitionsReferenceIds) {
+
+          if ($definitionParameters) {
+            $definitionParameters | Sort-Object | ForEach-Object {
+              [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
+              $definitionParametersOutputArray.Add("parameters", $_)
+            }
           }
+          else {
+            [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
+            $definitionParametersOutputArray.Add("parameters", @{})
+          }
+
+          $definitionParametersOutputJSONObject.Add("$definitionReferenceId", $definitionParametersOutputArray)
         }
         else {
-          [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
-          $definitionParametersOutputArray.Add("parameters", @{})
+          Write-Information "==> Skipping '$definitionReferenceId' as it is in the excluded list" -InformationAction Continue
         }
-
-        $definitionParametersOutputJSONObject.Add("$definitionReferenceId", $definitionParametersOutputArray)
       }
+
       Write-Information "==> Adding parameters to '$parametersFileName'" -InformationAction Continue
       Add-Content -Path "$rootPath/$definitionsSetLongPath/$parametersFileName" -Value ($definitionParametersOutputJSONObject | ConvertTo-Json -Depth 10) -Encoding "utf8"
 
@@ -193,25 +202,31 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
           $definitionId = $($policySetDefinitionsOutputForBicep[$_][0])
           $groups = $($policySetDefinitionsOutputForBicep[$_][1])
 
-          # If definitionReferenceId or definitionReferenceIdForParameters contains apostrophes, replace that apostrophe with a backslash and an apostrohphe for Bicep string escaping
-          if ($definitionReferenceId.Contains("'")) {
-            $definitionReferenceId = $definitionReferenceId.Replace("'", "\'")
-          }
+          if ($definitionReferenceId -notin $excludedPolicySetChildDefinitionsReferenceIds) {
 
-          if ($definitionReferenceIdForParameters.Contains("'")) {
-            $definitionReferenceIdForParameters = $definitionReferenceIdForParameters.Replace("'", "\'")
-          }
+            # If definitionReferenceId or definitionReferenceIdForParameters contains apostrophes, replace that apostrophe with a backslash and an apostrohphe for Bicep string escaping
+            if ($definitionReferenceId.Contains("'")) {
+              $definitionReferenceId = $definitionReferenceId.Replace("'", "\'")
+            }
 
-          # If definitionReferenceId contains, then wrap in definitionReferenceId value in [] to comply with bicep formatting
-          if ($definitionReferenceIdForParameters.Contains("-") -or $definitionReferenceIdForParameters.Contains(" ") -or $definitionReferenceIdForParameters.Contains("\'")) {
-            $definitionReferenceIdForParameters = "['$definitionReferenceIdForParameters']"
+            if ($definitionReferenceIdForParameters.Contains("'")) {
+              $definitionReferenceIdForParameters = $definitionReferenceIdForParameters.Replace("'", "\'")
+            }
 
-            # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable, without the '.' before the definitionReferenceId to make it an accessor
-            Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tdefinitionGroups: [$groups]`r`n`t`t`t}"
+            # If definitionReferenceId contains, then wrap in definitionReferenceId value in [] to comply with bicep formatting
+            if ($definitionReferenceIdForParameters.Contains("-") -or $definitionReferenceIdForParameters.Contains(" ") -or $definitionReferenceIdForParameters.Contains("\'")) {
+              $definitionReferenceIdForParameters = "['$definitionReferenceIdForParameters']"
+
+              # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable, without the '.' before the definitionReferenceId to make it an accessor
+              Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tdefinitionGroups: [$groups]`r`n`t`t`t}"
+            }
+            else {
+              # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
+              Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation.$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tdefinitionGroups: [$groups]`r`n`t`t`t}"
+            }
           }
           else {
-            # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
-            Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation.$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tdefinitionGroups: [$groups]`r`n`t`t`t}"
+            Write-Information "==> Skipping '$definitionReferenceId' as it is in the excluded list" -InformationAction Continue
           }
         }
       }

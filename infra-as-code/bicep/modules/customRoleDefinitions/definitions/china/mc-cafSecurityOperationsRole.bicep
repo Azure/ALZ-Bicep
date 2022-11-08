@@ -7,12 +7,12 @@ metadata description = 'Role for Security Operations'
 param parAssignableScopeManagementGroupId string
 
 var varRole = {
-  name: 'Security operations (SecOps)'
+  name: '[${managementGroup().name}] Security operations (SecOps)'
   description: 'Security administrator role with a horizontal view across the entire Azure estate and the Azure Key Vault purge policy'
 }
 
 resource resRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
-  name: guid(varRole.name)
+  name: guid(varRole.name, parAssignableScopeManagementGroupId)
   properties: {
     roleName: varRole.name
     description: varRole.description

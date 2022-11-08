@@ -7,12 +7,12 @@ metadata description = 'Role for Subscription Owners'
 param parAssignableScopeManagementGroupId string
 
 var varRole = {
-  name: 'Subscription owner'
+  name: '[${managementGroup().name}] Subscription owner'
   description: 'Delegated role for subscription owner derived from subscription Owner role'
 }
 
 resource resRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
-  name: guid(varRole.name)
+  name: guid(varRole.name, parAssignableScopeManagementGroupId)
   properties: {
     roleName: varRole.name
     description: varRole.description

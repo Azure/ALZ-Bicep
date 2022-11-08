@@ -7,12 +7,12 @@ metadata description = 'Role for Network Management'
 param parAssignableScopeManagementGroupId string
 
 var varRole = {
-  name: 'Network management (NetOps)'
+  name: '[${managementGroup().name}] Network management (NetOps)'
   description: 'Platform-wide global connectivity management: Virtual networks, UDRs, NSGs, NVAs, VPN, Azure ExpressRoute, and others'
 }
 
 resource resRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
-  name: guid(varRole.name)
+  name: guid(varRole.name, parAssignableScopeManagementGroupId)
   properties: {
     roleName: varRole.name
     description: varRole.description
