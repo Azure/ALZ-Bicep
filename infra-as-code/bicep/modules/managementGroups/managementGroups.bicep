@@ -3,11 +3,11 @@ targetScope = 'tenant'
 @description('Prefix for the management group hierarchy. This management group will be created as part of the deployment. Default: alz')
 @minLength(2)
 @maxLength(10)
-param parTopLevelManagementGroupPrefix string = 'afli'
+param parTopLevelManagementGroupPrefix string = 'alz'
 
 @description('Display name for top level management group. This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter. Default: Azure Landing Zones')
 @minLength(2)
-param parTopLevelManagementGroupDisplayName string = 'Ageas Federal Life Insurance'
+param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
 
 @description('Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group. Default: Empty String')
 param parTopLevelManagementGroupParentId string = ''
