@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "parTopLevelManagementGroupPrefix": {
-      "value": "alz"
+      "value": "afli"
     },
     "parTopLevelManagementGroupDisplayName": {
-      "value": "Azure Landing Zones"
+      "value": "Ageas Federal Life Insurance"
     },
     "parTopLevelManagementGroupParentId": {
       "value": ""
