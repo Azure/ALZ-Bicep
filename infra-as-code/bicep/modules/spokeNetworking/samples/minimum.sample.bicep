@@ -23,9 +23,10 @@ module spoke_nw '../spokeNetworking.bicep' = {
   params: {
     parLocation: location
     parDdosProtectionPlanId: 'ddosProtectionPlanId'
+    parSpokeNetworkAddressPrefix: '10.1.0.0/16'
     parDnsServerIps: [
-      'dns-svr-1'
-      'dns-svr-2'
+      '10.1.1.100'
+      '10.1.1.101'
     ]
     parNextHopIpAddress: '10.10.10.10'
 

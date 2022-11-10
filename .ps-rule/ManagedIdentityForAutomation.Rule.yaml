@@ -1,0 +1,25 @@
+#
+# Suppression and rules for unsupported scenarios.
+#
+
+# NOTE:
+# For details on authoring suppression groups see:
+# https://microsoft.github.io/PSRule/v2/concepts/PSRule/en-US/about_PSRule_SuppressionGroups/
+# https://microsoft.github.io/PSRule/v2/concepts/PSRule/en-US/about_PSRule_Expressions/
+
+---
+# Synopsis: Ignore Managed Identity is used for authentication.
+apiVersion: github.com/microsoft/PSRule/v1
+kind: SuppressionGroup
+metadata:
+  name: ALZ.ManagedIdentityForAutomation
+spec:
+  rule:
+  - Azure.Automation.ManagedIdentity
+  if:
+    allOf:
+    - name: '.'
+      contains: alz-automation-account
+    - type: '.'
+      in:
+      - Microsoft.Automation/automationAccounts
