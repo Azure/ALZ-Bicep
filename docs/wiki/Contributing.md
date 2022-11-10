@@ -85,6 +85,7 @@ Throughout the development of Bicep code you should follow the [Bicep Best Pract
 - Services with "Azure" in the name are abbreviated "Az", for example: `parAzBastionName` instead of `parAzureBastionName`
 - Use [parameter decorators](https://docs.microsoft.com/azure/azure-resource-manager/bicep/parameters#decorators) to ensure integrity of user inputs are complete and therefore enable successful deployment
   - Only use the [`@secure()` parameter decorator](https://docs.microsoft.com/azure/azure-resource-manager/bicep/parameters#secure-parameters) for inputs. Never for outputs as this is not stored securely and will be stored/shown as plain-text!
+- A description is required on parameters to provide an explanation into their function. As metadata is used in Bicep modules, `sys.description('description here')` is the chosen formatting. More information can be found in the [Azure Bicep documentation](https://learn.microsoft.com/azure/azure-resource-manager/bicep/parameters#decorators)
 - Comments should be provided where additional information/description of what is happening is required, except when a decorator like `@sys.description('Example description')` is providing adequate coverage
   - Single-line `// <comment here>` and multi-line `/* <comment here> */` comments are both welcomed
   - Provide contextual public Microsoft documentation recommendation references/URLs in comments to help user understanding of code implementation
