@@ -1,6 +1,6 @@
 # Module: Private DNS Zones
 
-This module deploys Private DNS Zones used for Private Link based on the recommendations from the Azure Landing Zone Conceptual Architecture.  
+This module deploys Private DNS Zones used for Private Link based on the recommendations from the Azure Landing Zone Conceptual Architecture.
 
 Module deploys the following resources:
 
@@ -76,68 +76,96 @@ There are two different sets of input parameters; one for deploying to Azure glo
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+
 ```bash
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
-az group create --location eastus \
-   --name Hub_PrivateDNS_POC
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
 
-az deployment group create \
-   --resource-group Hub_PrivateDNS_POC  \
-   --template-file infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep \
-   --parameters @infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-PrivateDnsZonesDeployment-${dateYMD}"
+RESOURCEGROUP="rg-$TopLevelMGPrefix-private-dns-001"
+TEMPLATEFILE="infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
+
+az group create --location eastus \
+   --name $RESOURCEGROUP
+
+az deployment group create --name ${NAME:0:63} --resource-group $RESOURCEGROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 OR
 ```bash
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 az account set --subscription $ConnectivitySubscriptionId
 
-az group create --location chinaeast2 \
-   --name Hub_PrivateDNS_POC
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
 
-az deployment group create \
-   --resource-group Hub_PrivateDNS_POC  \
-   --template-file infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep \
-   --parameters @infra-as-code/bicep/modules/privateDnsZones/parameters/mc-privateDnsZones.parameters.all.json
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-PrivateDnsZonesDeployment-${dateYMD}"
+RESOURCEGROUP="rg-$TopLevelMGPrefix-private-dns-001"
+TEMPLATEFILE="infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
+
+az group create --location chinaeast2 \
+   --name $RESOURCEGROUP
+
+az deployment group create --name ${NAME:0:63} --resource-group $RESOURCEGROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzResourceGroup -Name 'Hub_PrivateDNS_POC' `
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'eastus'
-  
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json `
-  -ResourceGroupName 'Hub_PrivateDNS_POC'
+
+$inputObject = @{
+  DeploymentName        = 'alz-PrivateDnsZonesDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-private-dns-001"
+  TemplateFile          = "infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
+}
+
+New-AzResourceGroupDeployment @inputObject
 ```
 OR
+
 ```powershell
 # For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription 
+# Set Platform connectivity subscription ID as the the current subscription
 $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzResourceGroup -Name 'Hub_PrivateDNS_POC' `
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'chinaeast2'
-  
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/privateDnsZones/parameters/mc-privateDnsZones.parameters.all.json
-  -ResourceGroupName 'Hub_PrivateDNS_POC'
+
+$inputObject = @{
+  DeploymentName        = 'alz-PrivateDnsZonesDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-private-dns-001"
+  TemplateFile          = "infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
+}
+
+New-AzResourceGroupDeployment @inputObject
 ```
 ## Example Output in Azure global regions
 

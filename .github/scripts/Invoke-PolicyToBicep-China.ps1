@@ -37,7 +37,9 @@ param (
   [string]
   $defintionsSetTxtFileName = "_mc_policySetDefinitionsBicepInput.txt",
   [string]
-  $assignmentsTxtFileName = "_mc_policyAssignmentsBicepInput.txt"
+  $assignmentsTxtFileName = "_mc_policyAssignmentsBicepInput.txt",
+  [array]
+  $excludedPolicySetChildDefinitionsReferenceIds = @("AVDScalingPlansDeployDiagnosticLogDeployLogAnalytics", "defenderForSqlServerVirtualMachines", "defenderForOssDb", "defenderForCosmosDbs", "defenderForAppServices", "defenderForStorageAccounts", "defenderForKeyVaults")
 )
 
 # This script relies on a custom set of classes and functions
@@ -69,9 +71,16 @@ function New-PolicyDefinitionsBicepInputTxtFile {
 
     $policyDefinitionName = $policyDef.name
     $fileName = $_.Name
+    $policyDefMetadataAlzCloudEnvironments = $policyDef.properties.metadata.alzCloudEnvironments
 
-    Write-Information "==> Adding '$policyDefinitionName' to '$PWD/$defintionsTxtFileName'" -InformationAction Continue
-    Add-Content -Path "$rootPath/$definitionsLongPath/$defintionsTxtFileName" -Encoding "utf8" -Value "{`r`n`tname: '$policyDefinitionName'`r`n`tlibDefinition: loadJsonContent('$definitionsPath/$fileName')`r`n}"
+    if ($policyDefMetadataAlzCloudEnvironments -contains "AzureChinaCloud") {
+      Write-Information "==> Adding '$policyDefinitionName' to '$PWD/$defintionsTxtFileName'" -InformationAction Continue
+      Add-Content -Path "$rootPath/$definitionsLongPath/$defintionsTxtFileName" -Encoding "utf8" -Value "{`r`n`tname: '$policyDefinitionName'`r`n`tlibDefinition: loadJsonContent('$definitionsPath/$fileName')`r`n}"
+    }
+    else {
+      Write-Information "==> Skipping '$policyDefinitionName' as metadata 'alzCloudEnvironments' does not contain 'AzureChinaCloud'" -InformationAction Continue
+    }
+
   }
 
   Write-Information "====> Running '$defintionsTxtFileName' through Line Endings" -InformationAction Continue
@@ -105,103 +114,131 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
     $policyDefinitionName = $policyDef.name
     $fileName = $_.Name
 
-    # Construct file name for Policy Set/Initiative Definitions parameters files
-    $parametersFileName = $fileName.Substring(0, $fileName.Length - 5) + ".parameters.json"
+    $policyDefMetadataAlzCloudEnvironments = $policyDef.properties.metadata.alzCloudEnvironments
 
-    # Create Policy Set/Initiative Definitions parameter file
-    Write-Information "==> Creating/Emptying '$parametersFileName'" -InformationAction Continue
-    Set-Content -Path "$rootPath/$definitionsSetLongPath/$parametersFileName" -Value $null -Encoding "utf8"
+    if ($policyDefMetadataAlzCloudEnvironments -contains "AzureChinaCloud") {
 
-    # Loop through all Policy Set/Initiative Definitions Child Definitions and create parameters file for each of them
-    [System.Collections.Hashtable]$definitionParametersOutputJSONObject = [ordered]@{}
-    $policyDefinitions | Sort-Object | ForEach-Object {
-      $definitionReferenceId = $_.policyDefinitionReferenceId
-      $definitionParameters = $_.parameters
+      # Construct file name for Policy Set/Initiative Definitions parameters files
+      $parametersFileName = $fileName.Substring(0, $fileName.Length - 5) + ".parameters.json"
 
-      if ($definitionParameters) {
-        $definitionParameters | Sort-Object | ForEach-Object {
-          [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
-          $definitionParametersOutputArray.Add("parameters", $_)
-        }
-      }
-      else {
-        [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
-        $definitionParametersOutputArray.Add("parameters", @{})
-      }
+      # Create Policy Set/Initiative Definitions parameter file
+      Write-Information "==> Creating/Emptying '$parametersFileName'" -InformationAction Continue
+      Set-Content -Path "$rootPath/$definitionsSetLongPath/$parametersFileName" -Value $null -Encoding "utf8"
 
-      $definitionParametersOutputJSONObject.Add("$definitionReferenceId", $definitionParametersOutputArray)
-    }
-    Write-Information "==> Adding parameters to '$parametersFileName'" -InformationAction Continue
-    Add-Content -Path "$rootPath/$definitionsSetLongPath/$parametersFileName" -Value ($definitionParametersOutputJSONObject | ConvertTo-Json -Depth 10) -Encoding "utf8"
-
-    # Sort parameters file alphabetically to remove false git diffs
-    Write-Information "==> Sorting parameters file '$parametersFileName' alphabetically" -InformationAction Continue
-    $definitionParametersOutputJSONObjectSorted = New-Object PSCustomObject
-    Get-Content -Raw -Path "$rootPath/$definitionsSetLongPath/$parametersFileName" | ConvertFrom-Json -pv fromPipe -Depth 10 |
-    Get-Member -Type NoteProperty | Sort-Object Name | ForEach-Object {
-      Add-Member -InputObject $definitionParametersOutputJSONObjectSorted -Type NoteProperty -Name $_.Name -Value $fromPipe.$($_.Name)
-    }
-    Set-Content -Path "$rootPath/$definitionsSetLongPath/$parametersFileName" -Value ($definitionParametersOutputJSONObjectSorted | ConvertTo-Json -Depth 10) -Encoding "utf8"
-
-    # Check if variable exists before trying to clear it
-    if ($policySetDefinitionsOutputForBicep) {
-      Clear-Variable -Name policySetDefinitionsOutputForBicep -ErrorAction Continue
-    }
-
-    # Create HashTable variable
-    [System.Collections.Hashtable]$policySetDefinitionsOutputForBicep = [ordered]@{}
-
-    # Loop through child Policy Set/Initiative Definitions if HashTable not == 0
-    if (($policyDefinitions.Count) -ne 0) {
+      # Loop through all Policy Set/Initiative Definitions Child Definitions and create parameters file for each of them
+      [System.Collections.Hashtable]$definitionParametersOutputJSONObject = [ordered]@{}
       $policyDefinitions | Sort-Object | ForEach-Object {
-        $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, $_.policyDefinitionId)
-      }
-    }
+        $definitionReferenceId = $_.policyDefinitionReferenceId
+        $definitionParameters = $_.parameters
 
-    # Add Policy Set/Initiative Definition Parameter Variables to Bicep Input File
-    $policySetDefParamVarTrimJsonExt = $parametersFileName.TrimEnd("json").Replace('.', '_')
-    $policySetDefParamVarCreation = "var" + ($policySetDefParamVarTrimJsonExt -replace '(?:^|_|-)(\p{L})', { $_.Groups[1].Value.ToUpper() }).TrimEnd('_')
-    $policySetDefParamVar = "var " + $policySetDefParamVarCreation + " = " + "loadJsonContent('$definitionsSetPath/$parametersFileName')"
-    $policySetDefParamVarList += $policySetDefParamVar
+        if ($definitionReferenceId -notin $excludedPolicySetChildDefinitionsReferenceIds) {
 
-    # Start output file creation of Policy Set/Initiative Definitions for Bicep
-    Write-Information "==> Adding '$policyDefinitionName' to '$PWD/$defintionsSetTxtFileName'" -InformationAction Continue
-    Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t{`r`n`t`tname: '$policyDefinitionName'`r`n`t`tlibSetDefinition: loadJsonContent('$definitionsSetPath/$fileName')`r`n`t`tlibSetChildDefinitions: ["
+          if ($definitionParameters) {
+            $definitionParameters | Sort-Object | ForEach-Object {
+              [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
+              $definitionParametersOutputArray.Add("parameters", $_)
+            }
+          }
+          else {
+            [System.Collections.Hashtable]$definitionParametersOutputArray = [ordered]@{}
+            $definitionParametersOutputArray.Add("parameters", @{})
+          }
 
-    # Loop through child Policy Set/Initiative Definitions for Bicep output if HashTable not == 0
-    if (($policySetDefinitionsOutputForBicep.Count) -ne 0) {
-      $policySetDefinitionsOutputForBicep.Keys | Sort-Object | ForEach-Object {
-        $definitionReferenceId = $_
-        $definitionReferenceIdForParameters = $_
-        $definitionId = $($policySetDefinitionsOutputForBicep[$_])
-
-        # If definitionReferenceId or definitionReferenceIdForParameters contains apostrophes, replace that apostrophe with a backslash and an apostrohphe for Bicep string escaping
-        if ($definitionReferenceId.Contains("'")) {
-          $definitionReferenceId = $definitionReferenceId.Replace("'", "\'")
-        }
-
-        if ($definitionReferenceIdForParameters.Contains("'")) {
-          $definitionReferenceIdForParameters = $definitionReferenceIdForParameters.Replace("'", "\'")
-        }
-
-        # If definitionReferenceId contains, then wrap in definitionReferenceId value in [] to comply with bicep formatting
-        if ($definitionReferenceIdForParameters.Contains("-") -or $definitionReferenceIdForParameters.Contains(" ") -or $definitionReferenceIdForParameters.Contains("\'")) {
-          $definitionReferenceIdForParameters = "['$definitionReferenceIdForParameters']"
-
-          # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable, without the '.' before the definitionReferenceId to make it an accessor
-          Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation$definitionReferenceIdForParameters.parameters`r`n`t`t`t}"
+          $definitionParametersOutputJSONObject.Add("$definitionReferenceId", $definitionParametersOutputArray)
         }
         else {
-          # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
-          Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation.$definitionReferenceIdForParameters.parameters`r`n`t`t`t}"
+          Write-Information "==> Skipping '$definitionReferenceId' as it is in the excluded list" -InformationAction Continue
         }
       }
+
+      Write-Information "==> Adding parameters to '$parametersFileName'" -InformationAction Continue
+      Add-Content -Path "$rootPath/$definitionsSetLongPath/$parametersFileName" -Value ($definitionParametersOutputJSONObject | ConvertTo-Json -Depth 10) -Encoding "utf8"
+
+      # Sort parameters file alphabetically to remove false git diffs
+      Write-Information "==> Sorting parameters file '$parametersFileName' alphabetically" -InformationAction Continue
+      $definitionParametersOutputJSONObjectSorted = New-Object PSCustomObject
+      Get-Content -Raw -Path "$rootPath/$definitionsSetLongPath/$parametersFileName" | ConvertFrom-Json -pv fromPipe -Depth 10 |
+      Get-Member -Type NoteProperty | Sort-Object Name | ForEach-Object {
+        Add-Member -InputObject $definitionParametersOutputJSONObjectSorted -Type NoteProperty -Name $_.Name -Value $fromPipe.$($_.Name)
+      }
+      Set-Content -Path "$rootPath/$definitionsSetLongPath/$parametersFileName" -Value ($definitionParametersOutputJSONObjectSorted | ConvertTo-Json -Depth 10) -Encoding "utf8"
+
+      # Check if variable exists before trying to clear it
+      if ($policySetDefinitionsOutputForBicep) {
+        Clear-Variable -Name policySetDefinitionsOutputForBicep -ErrorAction Continue
+      }
+
+      # Create HashTable variable
+      [System.Collections.Hashtable]$policySetDefinitionsOutputForBicep = [ordered]@{}
+
+      # Loop through child Policy Set/Initiative Definitions if HashTable not == 0
+      if (($policyDefinitions.Count) -ne 0) {
+        $policyDefinitions | Sort-Object | ForEach-Object {
+          if ($null -ne $_.groupNames -and $_.groupNames.Count -ne 0) {
+            $joinedGroupNames = "'" + ($_.groupNames -join "','" ) + "'"
+            $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, @($_.policyDefinitionId, $joinedGroupNames))
+          }
+          else {
+            $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, @($_.policyDefinitionId, ""))
+          }
+        }
+      }
+
+      # Add Policy Set/Initiative Definition Parameter Variables to Bicep Input File
+      $policySetDefParamVarTrimJsonExt = $parametersFileName.TrimEnd("json").Replace('.', '_')
+      $policySetDefParamVarCreation = "var" + ($policySetDefParamVarTrimJsonExt -replace '(?:^|_|-)(\p{L})', { $_.Groups[1].Value.ToUpper() }).TrimEnd('_')
+      $policySetDefParamVar = "var " + $policySetDefParamVarCreation + " = " + "loadJsonContent('$definitionsSetPath/$parametersFileName')"
+      $policySetDefParamVarList += $policySetDefParamVar
+
+      # Start output file creation of Policy Set/Initiative Definitions for Bicep
+      Write-Information "==> Adding '$policyDefinitionName' to '$PWD/$defintionsSetTxtFileName'" -InformationAction Continue
+      Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t{`r`n`t`tname: '$policyDefinitionName'`r`n`t`tlibSetDefinition: loadJsonContent('$definitionsSetPath/$fileName')`r`n`t`tlibSetChildDefinitions: ["
+
+      # Loop through child Policy Set/Initiative Definitions for Bicep output if HashTable not == 0
+      if (($policySetDefinitionsOutputForBicep.Count) -ne 0) {
+        $policySetDefinitionsOutputForBicep.Keys | Sort-Object | ForEach-Object {
+          $definitionReferenceId = $_
+          $definitionReferenceIdForParameters = $_
+          $definitionId = $($policySetDefinitionsOutputForBicep[$_][0])
+          $groups = $($policySetDefinitionsOutputForBicep[$_][1])
+
+          if ($definitionReferenceId -notin $excludedPolicySetChildDefinitionsReferenceIds) {
+
+            # If definitionReferenceId or definitionReferenceIdForParameters contains apostrophes, replace that apostrophe with a backslash and an apostrohphe for Bicep string escaping
+            if ($definitionReferenceId.Contains("'")) {
+              $definitionReferenceId = $definitionReferenceId.Replace("'", "\'")
+            }
+
+            if ($definitionReferenceIdForParameters.Contains("'")) {
+              $definitionReferenceIdForParameters = $definitionReferenceIdForParameters.Replace("'", "\'")
+            }
+
+            # If definitionReferenceId contains, then wrap in definitionReferenceId value in [] to comply with bicep formatting
+            if ($definitionReferenceIdForParameters.Contains("-") -or $definitionReferenceIdForParameters.Contains(" ") -or $definitionReferenceIdForParameters.Contains("\'")) {
+              $definitionReferenceIdForParameters = "['$definitionReferenceIdForParameters']"
+
+              # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable, without the '.' before the definitionReferenceId to make it an accessor
+              Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tdefinitionGroups: [$groups]`r`n`t`t`t}"
+            }
+            else {
+              # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
+              Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation.$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tdefinitionGroups: [$groups]`r`n`t`t`t}"
+            }
+          }
+          else {
+            Write-Information "==> Skipping '$definitionReferenceId' as it is in the excluded list" -InformationAction Continue
+          }
+        }
+      }
+
+      # Finish output file creation of Policy Set/Initiative Definitions for Bicep
+      Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t]`r`n`t}"
     }
-
-    # Finish output file creation of Policy Set/Initiative Definitions for Bicep
-    Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t]`r`n`t}"
-
+    else {
+      Write-Information "==> Skipping '$policyDefinitionName' as metadata 'alzCloudEnvironments' does not contain 'AzureChinaCloud'" -InformationAction Continue
+    }
   }
+
   Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "]`r`n"
 
   # Add Policy Set/Initiative Definition Parameter Variables to Bicep Input File

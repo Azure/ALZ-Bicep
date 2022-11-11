@@ -4,10 +4,13 @@ This module defines custom roles based on the recommendations from the Azure Lan
 
 Module supports the following custom roles:
 
-- Subscription owner
-- Application owners (DevOps/AppOps)
-- Network management (NetOps)
-- Security operations (SecOps)
+- [*ManagementGroupId] Subscription owner
+- [*ManagementGroupId] Application owners (DevOps/AppOps)
+- [*ManagementGroupId] Network management (NetOps)
+- [*ManagementGroupId] Security operations (SecOps)
+
+*The custom role names are prefixed with `[ManagementGroupId]` since custom roles scoped at Management Group level must be unique within the Azure AD tenant. This will alleviate any conflicts if you chose to deploy a [canary environment](https://aka.ms/alz/canary).
+For example, if the `ManagementGroupId` = **alz**, then each role will have this prefix **[alz]** like `[alz] Subscription owner`. See the [example output deployment](#example-deployment-output) below.
 
 ## Parameters
 
@@ -15,7 +18,7 @@ The module requires the following inputs:
 
  | Parameter                           | Description                                                                                                                                                                                                                                                    | Requirement     | Example |
  | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ------- |
- | parAssignableScopeManagementGroupId | The management group scope to which the role can be assigned.  This management group ID will be used for the [assignableScopes](https://docs.microsoft.com/azure/role-based-access-control/role-definitions#assignablescopes) property in the role definition. | Mandatory input | `alz`   |
+ | parAssignableScopeManagementGroupId | The management group scope to which the role can be assigned.  This management group ID will be used for the [assignableScopes](https://docs.microsoft.com/azure/role-based-access-control/role-definitions#assignablescopes) property in the role definition. | None | `alz`   |
  | parTelemetryOptOut                  | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                                                                                                       | None            | `false` |
 
 ## Outputs
@@ -47,43 +50,72 @@ Input parameter file `parameters/customRoleDefinitions.parameters.all.json` defi
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+
 ```bash
 # For Azure global regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep \
-  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json \
-  --location eastus \
-  --management-group-id alz
+
+# Management Group ID
+MGID="alz"
+
+# Chosen Azure Region
+LOCATION="eastus"
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-CustomRoleDefsDeployment-${dateYMD}"
+TEMPLATEFILE="infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
 # For Azure China regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep \
-  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json \
-  --location chinaeast2 \
-  --management-group-id alz
+
+# Management Group ID
+MGID="alz"
+
+# Chosen Azure Region
+LOCATION="chinaeast2"
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-CustomRoleDefsDeployment-${dateYMD}"
+TEMPLATEFILE="infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json `
-  -Location eastus `
-  -ManagementGroupId alz
+
+$inputObject = @{
+  DeploymentName        = 'alz-CustomRoleDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'eastus'
+  ManagementGroupId     = 'alz'
+  TemplateFile          = "infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json'
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json `
-  -Location chinaeast2 `
-  -ManagementGroupId alz
+
+$inputObject = @{
+  DeploymentName        = 'alz-CustomRoleDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'chinaeast2'
+  ManagementGroupId     = 'alz'
+  TemplateFile          = "infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json'
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
+
+#### Example Deployment Output
 
 ![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output")
 

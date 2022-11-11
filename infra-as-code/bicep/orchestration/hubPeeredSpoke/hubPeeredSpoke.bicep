@@ -2,29 +2,29 @@ targetScope = 'managementGroup'
 
 // **Parameters**
 // Generic Parameters - Used in multiple modules
-@description('The region to deploy all resources into. DEFAULTS TO deployment().location')
+@description('The region to deploy all resources into. Default: deployment().location')
 param parLocation string = deployment().location
 
-@description('Prefix for the management group hierarchy. DEFAULTS TO = alz')
+@description('Prefix for the management group hierarchy. Default: alz')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@description('Subscription Id to the Virtual Network Hub object. DEFAULTS TO empty')
+@description('Subscription Id to the Virtual Network Hub object. Default: Empty String')
 param parPeeredVnetSubscriptionId string = ''
 
-@description('Array of Tags to be applied to all resources in module. Default: empty array')
+@description('Array of Tags to be applied to all resources in module. Default: Empty Object')
 param parTags object = {}
 
-@description('Set Parameter to true to Opt-out of deployment telemetry DEFAULTS TO = false')
+@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Subscription Module Parameters
-@description('The Management Group Id to place the subscription in. DEFAULTS TO empty')
+@description('The Management Group Id to place the subscription in. Default: Empty String')
 param parPeeredVnetSubscriptionMgPlacement string = ''
 
 // Resource Group Module Parameters
-@description('Name of Resource Group to be created to contain spoke networking resources like the virtual network.  Default: {parTopLevelManagementGroupPrefix}-{parLocation}-spoke-networking')
+@description('Name of Resource Group to be created to contain spoke networking resources like the virtual network. Default: {parTopLevelManagementGroupPrefix}-{parLocation}-spoke-networking')
 param parResourceGroupNameForSpokeNetworking string = '${parTopLevelManagementGroupPrefix}-${parLocation}-spoke-networking'
 
 // Spoke Networking Module Parameters
@@ -43,20 +43,20 @@ param parDnsServerIps  array = []
 @description('IP Address where network traffic should route to. Default: Empty string')
 param parNextHopIpAddress string = ''
 
-@description('Switch which allows BGP Route Propogation to be disabled on the route table')
+@description('Switch which allows BGP Route Propogation to be disabled on the route table. Default: false')
 param parDisableBgpRoutePropagation bool = false
 
 @description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
 param parSpokeToHubRouteTableName string = 'rtb-spoke-to-hub'
 
 // Peering Modules Parameters
-@description('Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID. No default')
+@description('Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID.')
 param parHubVirtualNetworkId string
 
-@description('Switch to enable/disable forwarded Traffic from outside spoke network. Default = false')
+@description('Switch to enable/disable forwarded Traffic from outside spoke network. Default: false')
 param parAllowSpokeForwardedTraffic bool = false
 
-@description('Switch to enable/disable VPN Gateway for the hub network peering. Default = false')
+@description('Switch to enable/disable VPN Gateway for the hub network peering. Default: false')
 param parAllowHubVpnGatewayTransit bool = false
 
 // **Variables**
@@ -177,7 +177,7 @@ module modSpokePeeringToHub '../../modules/vnetPeering/vnetPeering.bicep' = if (
 
 // Module -  Spoke to Azure Virtual WAN Hub peering.
 module modhubVirtualNetworkConnection '../../modules/vnetPeeringVwan/hubVirtualNetworkConnection.bicep' = if (!empty(varVirtualHubResourceId)) {
-  scope: resourceGroup(varVirtualHubSubscriptionId, varVirtualHubResourceGroup)  
+  scope: resourceGroup(varVirtualHubSubscriptionId, varVirtualHubResourceGroup)
   name: varModuleDeploymentNames.modVnetPeeringVwan
   params: {
     parVirtualWanHubResourceId: varVirtualHubResourceId

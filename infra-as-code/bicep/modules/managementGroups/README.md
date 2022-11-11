@@ -20,8 +20,8 @@ The module requires the following inputs:
 
 | Parameter                             | Type   | Description                                                                                                                                                                          | Requirements                      | Example                                                                                 |
 | ------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------- | --------------------------------------------------------------------------------------- |
-| parTopLevelManagementGroupPrefix      | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment.                                                                         | 2-10 characters                   | `alz`                                                                                   |
-| parTopLevelManagementGroupDisplayName | string | Display name for top level management group.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter.                      | Minimum two characters            | `Azure Landing Zones`                                                                   |
+| parTopLevelManagementGroupPrefix      | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment.                                                                         | 2-10 characters, default: `alz`                   | `alz`                                                                                   |
+| parTopLevelManagementGroupDisplayName | string | Display name for top level management group.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter.                      | Minimum two characters, default: `Azure Landing Zones`            | `Azure Landing Zones`                                                                   |
 | parTopLevelManagementGroupParentId    | string | Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group. | Not required input, default `''`  | `/providers/Microsoft.Management/managementGroups/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` |
 | parLandingZoneMgAlzDefaultsEnable     | bool   | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.                                                                                       | Mandatory input, default: `true`  | `true`                                                                                  |
 | parLandingZoneMgConfidentialEnable    | bool   | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.                                                             | Mandatory input, default: `false` | `false`                                                                                 |
@@ -118,38 +118,55 @@ In this example, the management groups are created at the `Tenant Root Group` th
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+
 ```bash
 # For Azure global regions
-az deployment tenant create \
-  --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
-  --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json \
-  --location eastus
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-MGDeployment-${dateYMD}"
+LOCATION="eastus"
+TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
+
+az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
 # For Azure China regions
-az deployment tenant create \
-  --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep \
-  --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json \
-  --location chinaeast2
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-MGDeployment-${dateYMD}"
+LOCATION="chinaeast2"
+TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
+
+az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-New-AzTenantDeployment `
-  -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json `
-  -Location eastus
+
+$inputObject = @{
+  DeploymentName        = 'alz-MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'EastUS'
+  TemplateFile          = "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
+}
+New-AzTenantDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-New-AzTenantDeployment `
-  -TemplateFile infra-as-code/bicep/modules/managementGroups/managementGroups.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json `
-  -Location chinaeast2  
+
+$inputObject = @{
+  DeploymentName        = 'alz-MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'chinaeast2'
+  TemplateFile          = "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
+}
+New-AzTenantDeployment @inputObject
 ```
 
 ![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output")

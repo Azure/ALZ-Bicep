@@ -68,8 +68,8 @@ Connect-AzureAD
 
 | Parameter                 | Type   | Description                                                                                                                                                               | Requirement                      | Example                                |
 | ------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------------------------------------- |
-| parRoleAssignmentNameGuid | string | A GUID representing the role assignment name.  Default:  guid(managmentGroup().name, parRoleDefinitionId, parAssigneeObjectId)                                                                   | Unique GUID                      | `f3b171da-2023-4508-b467-042a53f4cd5d` |
-| parRoleDefinitionId       | string | Role Definition ID(i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)                                                                           | Must exist                       | `acdd72a7-3385-48ef-bd42-f606fba81ae7` |
+| parRoleAssignmentNameGuid | string | A GUID representing the role assignment name.  Default:  `guid(managmentGroup().name, parRoleDefinitionId, parAssigneeObjectId)`                                                                   | Unique GUID                      | `f3b171da-2023-4508-b467-042a53f4cd5d` |
+| parRoleDefinitionId       | string | Role Definition ID (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)                                                                           | Must exist                       | `acdd72a7-3385-48ef-bd42-f606fba81ae7` |
 | parAssigneePrincipalType  | string | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity)            | One of [Group, ServicePrincipal] | `ServicePrincipal`                     |
 | parAssigneeObjectId       | string | Object ID of groups, service principals or  managed identities. For managed identities use the principal ID. For service principals, use the object id and not the app ID | Must exist                       | `a86fe549-7f87-4873-8b0e-82f0081a0034` |
 | parTelemetryOptOut        | bool   | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                  | none                             | `false`                                |
@@ -78,7 +78,7 @@ Connect-AzureAD
 
 | Parameter                | Type            | Description                                                                                                                                                              | Requirement                      | Example                                                  |
 | ------------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------------------------------------------------------- |
-| parManagementGroupIds    | Array of string | A list of management group scopes that will be used for role assignment (i.e. [alz-platform-connectivity, alz-platform-identity]).  Default = []                         | Must exist                       | `['alz-platform-connectivity', 'alz-platform-identity']` |
+| parManagementGroupIds    | Array of string | A list of management group scopes that will be used for role assignment (i.e. [alz-platform-connectivity, alz-platform-identity]).  Default = `[]`                         | Must exist                       | `['alz-platform-connectivity', 'alz-platform-identity']` |
 | parRoleDefinitionId      | string          | Role Definition ID(i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)                                                                          | Must exist                       | `acdd72a7-3385-48ef-bd42-f606fba81ae7`                   |
 | parAssigneePrincipalType | string          | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity)           | One of [Group, ServicePrincipal] | `ServicePrincipal`                                       |
 | parAssigneeObjectId      | string          | Object ID of groups, service principals or managed identities. For managed identities use the principal ID. For service principals, use the object ID and not the app ID | Must exist                       | `a86fe549-7f87-4873-8b0e-82f0081a0034`                   |
@@ -88,7 +88,7 @@ Connect-AzureAD
 
 | Parameter                 | Type   | Description                                                                                                                                                              | Requirement                      | Example                                |
 | ------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------------------------------------- |
-| parRoleAssignmentNameGuid | string | A GUID representing the role assignment name.  Default:  guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId)                                   | Unique GUID                      | `f3b171da-2023-4508-b467-042a53f4cd5d` |
+| parRoleAssignmentNameGuid | string | A GUID representing the role assignment name. Default: `guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId)`                                   | Unique GUID                      | `f3b171da-2023-4508-b467-042a53f4cd5d` |
 | parRoleDefinitionId       | string | Role Definition Id (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)                                                                         | Must exist                       | `acdd72a7-3385-48ef-bd42-f606fba81ae7` |
 | parAssigneePrincipalType  | string | Principal type of the assignee. Allowed values are `Group` (Security Group) or `ServicePrincipal` (Service Principal or System/User Assigned Managed Identity)           | One of [Group, ServicePrincipal] | `ServicePrincipal`                     |
 | parAssigneeObjectId       | string | Object ID of groups, service principals or managed identities. For managed identities use the principal ID. For service principals, use the object ID and not the app ID | Must exist                       | `a86fe549-7f87-4873-8b0e-82f0081a0034` |
@@ -118,40 +118,58 @@ In this example, the built-in Reader role will be assigned to a Service Principa
 
 ```bash
 # For Azure global regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json \
-  --management-group-id alz-platform \
-  --location eastus
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-RoleAssignmentsDeployment-${dateYMD}"
+LOCATION="eastus"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
 # For Azure China regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep \
-  --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json \
-  --management-group-id alz-platform \
-  --location chinaeast2
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-RoleAssignmentsDeployment-${dateYMD}"
+LOCATION="chinaeast2"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json `
-  -ManagementGroupId alz-platform `
-  -Location eastus
+
+$inputObject = @{
+  DeploymentName        = 'alz-RoleAssignmentsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'eastus'
+  ManagementGroupId     = 'alz'
+  TemplateFile          = "infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json'
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 OR
 ```powershell
 # For Azure China regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json `
-  -ManagementGroupId alz-platform `
-  -Location chinaeast2
+
+$inputObject = @{
+  DeploymentName        = 'alz-RoleAssignmentsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'chinaeast2'
+  ManagementGroupId     = 'alz'
+  TemplateFile          = "infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json'
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 
 ## Bicep Visualizer

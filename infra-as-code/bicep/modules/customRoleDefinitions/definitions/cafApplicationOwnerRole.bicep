@@ -4,12 +4,12 @@ targetScope = 'managementGroup'
 param parAssignableScopeManagementGroupId string
 
 var varRole = {
-  name: 'Application owners (DevOps/AppOps)'
+  name: '[${managementGroup().name}] Application owners (DevOps/AppOps)'
   description: 'Contributor role granted for application/operations team at resource group level'
 }
 
 resource resRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
-  name: guid(varRole.name)
+  name: guid(varRole.name, parAssignableScopeManagementGroupId)
   properties: {
     roleName: varRole.name
     description: varRole.description

@@ -8,9 +8,11 @@ Module deploys the following resources:
 - Subnets
 - VPN Gateway/ExpressRoute Gateway
 - Azure Firewall
+- Azure Firewall Policies
 - Private DNS Zones
 - DDos Standard Plan
 - Bastion
+- Route Table
 
 ## Parameters
 
@@ -35,7 +37,7 @@ The module requires the following inputs:
  | parHubNetworkAddressPrefix      | string | 10.10.0.0/16                                                                                                               | CIDR range for Hub Network                                                                                                                                                                                                                                             | CIDR Notation                 | 10.10.0.0/16                                   |
  | parHubNetworkName               | string | `${parCompanyPrefix}-hub-${parLocation}`                                                                                   | Name prefix for Virtual Network.  Prefix will be appended with the region.                                                                                                                                                                                             | 2-50 char                     | alz-hub-eastus                                 |
  | parAzFirewallName               | string | `${parCompanyPrefix}-azfw-${parLocation}`                                                                                  | Name associated with Azure Firewall                                                                                                                                                                                                                                    | 1-80 char                     | alz-azfw-eastus                                |
- | parAzFirewallPoliciesName       | string | `${parCompanyPrefix}-azfwpolicy-${resourceGroup().location}`                                                               | Name associated with Azure Firewall Policy                                                                                                                                                                                                                             | 1-80 char                     | alz-azfwpolicy-eastus                          |
+ | parAzFirewallPoliciesName       | string | `${parCompanyPrefix}-azfwpolicy-${parLocation}`                                                               | Name associated with Azure Firewall Policy                                                                                                                                                                                                                             | 1-80 char                     | alz-azfwpolicy-eastus                          |
  | parAzFirewallTier               | string | Standard                                                                                                                   | Tier associated with the Firewall to be deployed.                                                                                                                                                                                                                      | Standard or Premium           | Premium                                        |
  | parAzFirewallAvailabilityZones  | array  | Empty Array []                                                                                                             | Availability Zones to deploy the Azure Firewall across. This also affects the PIP associated with the Azure Firewall. Region must support Availability Zones to use. If it does not then leave empty.                                                                                                                                | None                          | `['1']` or `['1' ,'2', '3']`                   |
  | parAzErGatewayAvailabilityZones  | array  | Empty Array []                                                                                                             | Availability Zones to deploy the ER Gateway PIP across. Ensure that you use a zonal SKU for the Gateway if using Zonal or Zone-Redundant Public IP Address. Region must support Availability Zones to use. If it does not then leave empty.                                                                                                                                | None                          | `['1']` or `['1' ,'2', '3']`                   |
@@ -67,12 +69,14 @@ The module requires the following inputs:
 
 The module will generate the following outputs:
 
-| Output                 | Type   | Example                                                                                                                                                                                                  |
-| ---------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| outAzFirewallPrivateIp | string | 192.168.100.1                                                                                                                                                                                            |
-| outAzFirewallName      | string | MyAzureFirewall                                                                                                                                                                                          |
-| outDdosPlanResourceId  | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan                                                      |
-| outPrivateDnsZones     | array  | `["name": "privatelink.azurecr.io", "id": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/net-lz-spk-eastus-rg/providers/Microsoft.Network/privateDnsZones/privatelink.azurecr.io"]` |
+| Output                    | Type   | Example                                                                                                                                                                                                  |
+| ------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| outAzFirewallPrivateIp    | string | 192.168.100.1                                                                                                                                                                                            |
+| outAzFirewallName         | string | MyAzureFirewall                                                                                                                                                                                          |
+| outDdosPlanResourceId     | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan                                                      |
+| outPrivateDnsZones        | array  | `["name": "privatelink.azurecr.io", "id": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/net-lz-spk-eastus-rg/providers/Microsoft.Network/privateDnsZones/privatelink.azurecr.io"]` |
+| outHubVirtualNetworkName  | array  | MyHubVirtualNetworkName |
+| outHubVirtualNetworkId    | array  | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/my-hub-vnet   |
 
 ## Deployment
 > **Note:** `bicepconfig.json` file is included in the module directory.  This file allows us to override Bicep Linters.  Currently there are two URLs which were removed because of linter warnings.  URLs removed are the following: database.windows.net and core.windows.net
@@ -93,32 +97,47 @@ There are two different sets of input parameters; one for deploying to Azure glo
 ### Azure CLI
 ```bash
 # For Azure global regions
+
 # Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
+
 az account set --subscription $ConnectivitySubscriptionId
 
-az group create --location eastus \
-   --name Hub_Networking_POC
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
 
-az deployment group create \
-   --resource-group HUB_Networking_POC  \
-   --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-HubNetworkingDeploy-${dateYMD}"
+GROUP="rg-$TopLevelMGPrefix-hub-networking-001"
+TEMPLATEFILE="infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json"
+
+az group create --location eastus \
+   --name $GROUP
+
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 OR
 ```bash
 # For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription
 ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
+
 az account set --subscription $ConnectivitySubscriptionId
 
-az group create --location chinaeast2 \
-   --name Hub_Networking_POC
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
 
-az deployment group create \
-   --resource-group HUB_Networking_POC  \
-   --template-file infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep \
-   --parameters @infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-HubNetworkingDeploy-${dateYMD}"
+GROUP="rg-$TopLevelMGPrefix-hub-networking-001"
+TEMPLATEFILE="infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json"
+
+az group create --location chinaeast2 \
+   --name $GROUP
+
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
 ### PowerShell
@@ -130,13 +149,24 @@ $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzResourceGroup -Name 'Hub_Networking_POC' `
+# Set Platform management subscription ID as the the current subscription
+$ManagementSubscriptionId = "[your platform management subscription ID]"
+
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-hub-networking-001"
+  TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json"
+}
+
+New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'eastus'
 
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json `
-  -ResourceGroupName 'Hub_Networking_POC'
+New-AzResourceGroupDeployment @inputObject
 ```
 OR
 ```powershell
@@ -146,13 +176,21 @@ $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzResourceGroup -Name 'Hub_Networking_POC' `
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-hub-networking-001"
+  TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json"
+}
+
+New-AzResourceGroup -Name $ResourceGroupName `
   -Location 'chinaeast2'
 
-New-AzResourceGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep `
-  -TemplateParameterFile infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json `
-  -ResourceGroupName 'Hub_Networking_POC'
+New-AzResourceGroupDeployment @inputObject
 ```
 ## Example Output in Azure global regions
 
