@@ -8,7 +8,7 @@
 # https://microsoft.github.io/PSRule/v2/concepts/PSRule/en-US/about_PSRule_Expressions/
 
 ---
-# Synopsis: Ignore automation account audit diagnostic logs are enabled.
+# Synopsis: Ignore automation account audit diagnostic logs are enabled as these are covered by DINE policies in ALZ
 apiVersion: github.com/microsoft/PSRule/v1
 kind: SuppressionGroup
 metadata:
