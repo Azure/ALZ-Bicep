@@ -119,7 +119,8 @@ $inputObject = @{
 }
 
 
-New-AzResourceGroup -Name $ResourceGroupName `
+New-AzResourceGroup `
+  -Name $inputObject.ResourceGroupName `
   -Location 'EastUs'
 
 New-AzResourceGroupDeployment @inputObject
@@ -143,7 +144,8 @@ $inputObject = @{
   TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json"
 }
 
-New-AzResourceGroup -Name $ResourceGroupName `
+New-AzResourceGroup `
+  -Name $inputObject.ResourceGroupName `
   -Location 'chinaeast2'
 
 New-AzResourceGroupDeployment @inputObject

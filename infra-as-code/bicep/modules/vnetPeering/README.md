@@ -100,7 +100,7 @@ $TopLevelMGPrefix = "alz"
 
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
-  -Name $ResourceGroupName `
+  -Name $inputObject.ResourceGroupName `
   -Location eastus
 
 # Parameters necessary for deployment
@@ -123,7 +123,7 @@ Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
 
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
-  -Name $ResourceGroupName `
+  -Name $inputObject.ResourceGroupName `
   -Location chinaeast2
 
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.

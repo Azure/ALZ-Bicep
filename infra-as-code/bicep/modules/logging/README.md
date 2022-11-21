@@ -110,7 +110,7 @@ Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
 
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
-  -Name $ResourceGroupName `
+  -Name $inputObject.ResourceGroupName `
   -Location eastus
 
 New-AzResourceGroupDeployment @inputObject
@@ -136,7 +136,7 @@ Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
 
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
-  -Name $ResourceGroupName `
+  -Name $inputObject.ResourceGroupName `
   -Location chinaeast2
 
 New-AzResourceGroupDeployment @inputObject
