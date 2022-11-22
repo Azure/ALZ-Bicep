@@ -262,6 +262,12 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'LogAnalyticsDeployDiagnosticLogDeployLogAnalytics'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LogAnalytics'
+				definitionParameters: varPolicySetDefinitionEsMcDeployDiagnosticsLogAnalyticsParameters.LogAnalyticsDeployDiagnosticLogDeployLogAnalytics.parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'LogicAppsISEDeployDiagnosticLogDeployLogAnalytics'
 				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LogicAppsISE'
 				definitionParameters: varPolicySetDefinitionEsMcDeployDiagnosticsLogAnalyticsParameters.LogicAppsISEDeployDiagnosticLogDeployLogAnalytics.parameters
