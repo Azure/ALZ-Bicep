@@ -18,7 +18,7 @@ The module requires the following inputs:
 | parLandingZoneMgAlzDefaultsEnable     | bool   | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.                                                                                       | Mandatory input, default: `true`  | `true`                                                                                  |
 | parLandingZoneMgConfidentialEnable    | bool   | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.                                                             | Mandatory input, default: `false` | `false`                                                                                 |
 | parLogAnalyticsWorkspaceResourceId | string   | Resource ID of the Log Analytics Workspace                                                             | Mandatory input | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics` |
-| parLandingZoneMgChildren              | array | Dictionary Object to allow additional child Management Groups of Landing Zones Management Group to be deployed.                                                         | Not required input, default `[]`  | {"value": ["pci","avs"]}                                                         |
+| parLandingZoneMgChildren              | array | Array of strings to allow additional child Management Groups of Landing Zones Management Group to be deployed.                                                         | Not required input, default `[]`  | {"value": ["pci","another-example"]}                                                         |
 | parTelemetryOptOut                    | bool   | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                             | Mandatory input, default: `false` | `false`                                                                                 |
 
 ### Diagnostic Settings for Child Landing Zone Management Groups
@@ -50,14 +50,10 @@ Below are some examples of how to use this input parameter in both Bicep & JSON 
 ##### Bicep Example
 
 ```bicep
-parLandingZoneMgChildren: {
-  pci: {
-    displayName: 'PCI'
-  }
-  'another-example': {
-    displayName: 'Another Example'
-  }
-}
+parLandingZoneMgChildren = [
+  'pci',
+  'another-example'
+]
 ```
 
 ##### JSON Parameter File Input Example
