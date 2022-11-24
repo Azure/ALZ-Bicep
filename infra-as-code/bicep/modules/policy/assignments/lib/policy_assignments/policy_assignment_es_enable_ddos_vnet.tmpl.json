@@ -3,8 +3,8 @@
   "type": "Microsoft.Authorization/policyAssignments",
   "apiVersion": "2019-09-01",
   "properties": {
-    "description": "Protect your virtual networks against volumetric and protocol attacks with Azure DDoS Network Protection. For more information, visit https://aka.ms/ddosprotectiondocs.",
-    "displayName": "Virtual networks should be protected by Azure DDoS Network Protection",
+    "description": "Protect your virtual networks against volumetric and protocol attacks with Azure DDoS Protection Standard. For more information, visit https://aka.ms/ddosprotectiondocs.",
+    "displayName": "Virtual networks should be protected by Azure DDoS Protection Standard",
     "notScopes": [],
     "parameters": {
       "effect": {
