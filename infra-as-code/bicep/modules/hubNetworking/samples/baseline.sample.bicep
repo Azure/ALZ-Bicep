@@ -79,7 +79,7 @@ module baseline_hub_network_with_ER '../hubNetworking.bicep' = {
       vpntype: 'RouteBased'
       vpnGatewayGeneration: 'None'
       enableBgp: false
-      activeActive: false
+      activeActive: true
       enableBgpRouteTranslationForNat: false
       enableDnsForwarding: false
       asn: '65515'
@@ -121,7 +121,7 @@ module baseline_hub_network_with_VPN '../hubNetworking.bicep' = {
       vpntype: 'RouteBased'
       generation: 'Generation1'
       enableBgp: false
-      activeActive: false
+      activeActive: true
       enableBgpRouteTranslationForNat: false
       enableDnsForwarding: false
       asn: 65515

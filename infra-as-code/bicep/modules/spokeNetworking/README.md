@@ -132,7 +132,8 @@ $inputObject = @{
   TemplateFile          = "infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
 }
 
-New-AzResourceGroup -Name $ResourceGroupName `
+New-AzResourceGroup `
+  -Name $inputObject.ResourceGroupName `
   -Location 'eastus'
 
 New-AzResourceGroupDeployment @inputObject
@@ -156,7 +157,8 @@ $inputObject = @{
   TemplateFile          = "infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
 }
 
-New-AzResourceGroup -Name $ResourceGroupName `
+New-AzResourceGroup `
+  -Name $inputObject.ResourceGroupName `
   -Location 'chinaeast2'
 
 New-AzResourceGroupDeployment @inputObject
