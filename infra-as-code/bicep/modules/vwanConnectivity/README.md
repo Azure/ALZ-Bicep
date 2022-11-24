@@ -10,7 +10,7 @@ Module deploys the following resources which can be configured by parameters:
 - ExpressRoute Gateway
 - Azure Firewall
 - Azure Firewall policy
-- DDoS Standard Plan
+- DDoS Network Protection Plan
 - Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> [https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration](https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration)
 
 ## Parameters
