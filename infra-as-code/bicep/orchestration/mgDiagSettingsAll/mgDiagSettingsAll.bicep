@@ -8,7 +8,7 @@ metadata description = 'Orchestration module that helps enable Diagnostic Settin
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@sys.description('Dictionary Object to allow additional or different child Management Groups of the Landing Zones Management Group. Default: Empty Array')
+@sys.description('Array of strings to allow additional or different child Management Groups of the Landing Zones Management Group.')
 param parLandingZoneMgChildren array = []
 
 @sys.description('Log Analytics Workspace Resource ID.')

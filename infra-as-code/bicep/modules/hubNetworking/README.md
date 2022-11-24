@@ -10,7 +10,7 @@ Module deploys the following resources:
 - Azure Firewall
 - Azure Firewall Policies
 - Private DNS Zones
-- DDos Standard Plan
+- DDoS Network Protection Plan
 - Bastion
 - Route Table
 

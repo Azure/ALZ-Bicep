@@ -64,7 +64,7 @@ param parVpnGatewayScaleUnit int = 1
 @sys.description('The scale unit for this ExpressRoute Gateway: Default: 1')
 param parExpressRouteGatewayScaleUnit int = 1
 
-@sys.description('Switch to enable/disable DDoS Standard deployment. Default: true')
+@sys.description('Switch to enable/disable DDoS Network Protection deployment. Default: true')
 param parDdosEnabled bool = true
 
 @sys.description('DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan')

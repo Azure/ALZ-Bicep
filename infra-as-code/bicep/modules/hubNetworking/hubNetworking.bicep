@@ -51,7 +51,7 @@ param parAzBastionSku string = 'Standard'
 @sys.description('NSG Name for Azure Bastion Subnet NSG. Default: nsg-AzureBastionSubnet')
 param parAzBastionNsgName string = 'nsg-AzureBastionSubnet'
 
-@sys.description('Switch to enable/disable DDoS Standard deployment. Default: true')
+@sys.description('Switch to enable/disable DDoS Network Protection deployment. Default: true')
 param parDdosEnabled bool = true
 
 @sys.description('DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan')
