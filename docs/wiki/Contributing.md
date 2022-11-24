@@ -166,8 +166,13 @@ To author Bicep modules that are in-line with the requirements for this project,
   - Folder Name will be created with camel case: `infra-as-code/bicep/modules/moduleName`
 - Each new module folder must contain:
   - A `media` folder that will contain images used in the `README.md`
-  - A `README.md` for each module in the root of its own folder, as above, detailing the module, what it deploys, parameters and any other useful information for consumers.
+  - A `README.md` for each module in the root of its own folder, as above, detailing the module, what it deploys and any other useful information for consumers.
     - The `README.md` must also contain a Bicep visualizer image of the complete module
+ - Parameter detail files are automatically generated in the `generateddocs` folder of each module after contributing to the repository. A link in the `README.md` file must be created.
+ - When contributing a module to the repository, anticipate creation of the markdown for the parameters. To link to the parameters after contribution, use the following structure in the parameters section of the readme:
+
+`- [Link to Azure Commercial Cloud/Azure China Cloud](generateddocs/<NAME-OF-BICEP-MODULE-FILE.bicep.md)`
+
   - A `bicepconfig.json` for each module in the root of its own folder.
     - [Bicep Linting Documentation](https://docs.microsoft.com/azure/azure-resource-manager/bicep/linter)
     - The `bicepconfig.json` file should contain the following:
