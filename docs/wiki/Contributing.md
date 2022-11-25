@@ -173,6 +173,19 @@ To author Bicep modules that are in-line with the requirements for this project,
 
 `- [Link to Azure Commercial Cloud/Azure China Cloud](generateddocs/<NAME-OF-BICEP-MODULE-FILE.bicep.md)`
 
+### Parameter Markdown Generation Workflow
+
+On your Pull Request (PR), the following steps will happen:
+- PR is created.
+- GitHub Action [Workflow](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/psdocs-mdtogit.yml) initialises.
+    - The PR Branch is checked out.
+    - A `Bicep Build` is run on each of the modules.
+    - PSDocs For Azure generates a markdown file against each of the built JSON files in the module folders.
+    - A `generateddocs` folder is created in each of the modules.
+    - The markdown files are stored in this folder for each of the modules.
+    - Removal of the JSON files from the Bicep Build task is done.
+    - A git status and push is then done to the same PR for the created/updated generated documentation to complete the workflow.
+
   - A `bicepconfig.json` for each module in the root of its own folder.
     - [Bicep Linting Documentation](https://docs.microsoft.com/azure/azure-resource-manager/bicep/linter)
     - The `bicepconfig.json` file should contain the following:

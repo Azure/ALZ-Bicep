@@ -2,15 +2,12 @@
 
 name: Generate Markdown
 on:
-  push:
   pull_request_target:
     types:
       - edited
       - opened
       - reopened
       - synchronize
-  workflow_dispatch:
-    {}
 
 env:
   github_user_name: 'github-actions'
@@ -86,7 +83,6 @@ jobs:
             $convertedfullpath = $templatepath+"\"+$convertedtemplatename
             $jobj | ConvertTo-Json -Depth 100 | Set-Content -Path $convertedfullpath
             $mdname = ($docNameWithoutExtension)+'.bicep'
-
 
             # Generate markdown
             Invoke-PSDocument -Module PSDocs.Azure -OutputPath $outputpathformds -InputObject $template.FullName -InstanceName $mdname -Culture en-US;
