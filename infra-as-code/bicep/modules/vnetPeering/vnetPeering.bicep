@@ -1,25 +1,28 @@
-@description('Virtual Network ID of Virtual Network destination.')
+metadata name = 'ALZ Bicep - Virtual Network Peering module'
+metadata description = 'Module used to set up Virtual Network Peering between Virtual Networks'
+
+@sys.description('Virtual Network ID of Virtual Network destination.')
 param parDestinationVirtualNetworkId string
 
-@description('Name of source Virtual Network we are peering.')
+@sys.description('Name of source Virtual Network we are peering.')
 param parSourceVirtualNetworkName string
 
-@description('Name of destination virtual network we are peering.')
+@sys.description('Name of destination virtual network we are peering.')
 param parDestinationVirtualNetworkName string
 
-@description('Switch to enable/disable Virtual Network Access for the Network Peer. Default: true')
+@sys.description('Switch to enable/disable Virtual Network Access for the Network Peer. Default: true')
 param parAllowVirtualNetworkAccess bool = true
 
-@description('Switch to enable/disable forwarded traffic for the Network Peer. Default: true')
+@sys.description('Switch to enable/disable forwarded traffic for the Network Peer. Default: true')
 param parAllowForwardedTraffic bool = true
 
-@description('Switch to enable/disable gateway transit for the Network Peer. Default: false')
+@sys.description('Switch to enable/disable gateway transit for the Network Peer. Default: false')
 param parAllowGatewayTransit bool = false
 
-@description('Switch to enable/disable remote gateway for the Network Peer. Default:false')
+@sys.description('Switch to enable/disable remote gateway for the Network Peer. Default:false')
 param parUseRemoteGateways bool = false
 
-@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

@@ -1,31 +1,34 @@
-@description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
+metadata name = 'ALZ Bicep - Spoke Networking module'
+metadata description = 'This module creates spoke networking resources'
+
+@sys.description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
 param parLocation string = resourceGroup().location
 
-@description('Switch to enable/disable BGP Propagation on route table. Default: false')
+@sys.description('Switch to enable/disable BGP Propagation on route table. Default: false')
 param parDisableBgpRoutePropagation bool = false
 
-@description('Id of the DdosProtectionPlan which will be applied to the Virtual Network. Default: Empty String')
+@sys.description('Id of the DdosProtectionPlan which will be applied to the Virtual Network. Default: Empty String')
 param parDdosProtectionPlanId string = ''
 
-@description('The IP address range for all virtual networks to use. Default: 10.11.0.0/16')
+@sys.description('The IP address range for all virtual networks to use. Default: 10.11.0.0/16')
 param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 
-@description('The Name of the Spoke Virtual Network. Default: vnet-spoke')
+@sys.description('The Name of the Spoke Virtual Network. Default: vnet-spoke')
 param parSpokeNetworkName string = 'vnet-spoke'
 
-@description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
+@sys.description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
 param parDnsServerIps array = []
 
-@description('IP Address where network traffic should route to leveraged with DNS Proxy. Default: Empty String')
+@sys.description('IP Address where network traffic should route to leveraged with DNS Proxy. Default: Empty String')
 param parNextHopIpAddress string = ''
 
-@description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
+@sys.description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
 param parSpokeToHubRouteTableName string = 'rtb-spoke-to-hub'
 
-@description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
+@sys.description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
 param parTags object = {}
 
-@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

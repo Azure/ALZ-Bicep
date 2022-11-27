@@ -1,15 +1,18 @@
 targetScope = 'subscription'
 
-@description('Azure Region where Resource Group will be created.')
+metadata name = 'ALZ Bicep - Resource Group creation module'
+metadata description = 'Module used to create Resource Groups for Azure Landing Zones'
+
+@sys.description('Azure Region where Resource Group will be created.')
 param parLocation string
 
-@description('Name of Resource Group to be created.')
+@sys.description('Name of Resource Group to be created.')
 param parResourceGroupName string
 
-@description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
+@sys.description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
 param parTags object = {}
 
-@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

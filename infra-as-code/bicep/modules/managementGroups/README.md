@@ -16,17 +16,7 @@ The Management Groups module deploys a management group hierarchy in a customer'
 
 ## Parameters
 
-The module requires the following inputs:
-
-| Parameter                             | Type   | Description                                                                                                                                                                          | Requirements                      | Example                                                                                 |
-| ------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------- | --------------------------------------------------------------------------------------- |
-| parTopLevelManagementGroupPrefix      | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment.                                                                         | 2-10 characters, default: `alz`                   | `alz`                                                                                   |
-| parTopLevelManagementGroupDisplayName | string | Display name for top level management group.  This name will be applied to the management group prefix defined in `parTopLevelManagementGroupPrefix` parameter.                      | Minimum two characters, default: `Azure Landing Zones`            | `Azure Landing Zones`                                                                   |
-| parTopLevelManagementGroupParentId    | string | Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group. | Not required input, default `''`  | `/providers/Microsoft.Management/managementGroups/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` |
-| parLandingZoneMgAlzDefaultsEnable     | bool   | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.                                                                                       | Mandatory input, default: `true`  | `true`                                                                                  |
-| parLandingZoneMgConfidentialEnable    | bool   | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.                                                             | Mandatory input, default: `false` | `false`                                                                                 |
-| parLandingZoneMgChildren              | object | Dictionary Object to allow additional or different child Management Groups of Landing Zones Management Group to be deployed.                                                         | Not required input, default `{}`  | `{pci: {displayName: 'PCI'}}`                                                           |
-| parTelemetryOptOut                    | bool   | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                             | Mandatory input, default: `false` | `false`                                                                                 |
+- [Parameters for Azure Commercial Cloud](generateddocs/managementGroups.bicep.md)
 
 ### Child Landing Zone Management Groups Flexibility
 

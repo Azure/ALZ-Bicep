@@ -1,23 +1,26 @@
 targetScope = 'managementGroup'
 
-@description('Prefix used for the management group hierarchy in the managementGroups module.')
+metadata name = 'ALZ Bicep orchestration - Management Group Diagnostic Settings - ALL'
+metadata description = 'Orchestration module that helps enable Diagnostic Settings on the Management Group hierarchy as was defined during the deployment of the Management Group module'
+
+@sys.description('Prefix used for the management group hierarchy in the managementGroups module. Default: alz')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@description('Array of strings to allow additional or different child Management Groups of the Landing Zones Management Group.')
+@sys.description('Array of strings to allow additional or different child Management Groups of the Landing Zones Management Group.')
 param parLandingZoneMgChildren array = []
 
-@description('Log Analytics Workspace Resource ID.')
+@sys.description('Log Analytics Workspace Resource ID.')
 param parLogAnalyticsWorkspaceResourceId string
 
-@description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
+@sys.description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true')
 param parLandingZoneMgAlzDefaultsEnable bool = true
 
-@description('Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.')
+@sys.description('Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true. Default: false')
 param parLandingZoneMgConfidentialEnable bool = false
 
-@description('Set Parameter to true to Opt-out of deployment telemetry')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 var varMgIds = {

@@ -1,7 +1,10 @@
-@description('Log Analytics Workspace name. Default: alz-log-analytics')
+metadata name = 'ALZ Bicep - Logging Module'
+metadata description = 'ALZ Bicep Module used to set up Logging'
+
+@sys.description('Log Analytics Workspace name. Default: alz-log-analytics')
 param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 
-@description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings. Default: resourceGroup().location')
+@sys.description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings. Default: resourceGroup().location')
 param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 
 @allowed([
@@ -14,12 +17,12 @@ param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
   'Standalone'
   'Standard'
 ])
-@description('Log Analytics Workspace sku name. Default: PerGB2018')
+@sys.description('Log Analytics Workspace sku name. Default: PerGB2018')
 param parLogAnalyticsWorkspaceSkuName string = 'PerGB2018'
 
 @minValue(30)
 @maxValue(730)
-@description('Number of days of log retention for Log Analytics Workspace. Default: 365')
+@sys.description('Number of days of log retention for Log Analytics Workspace. Default: 365')
 param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
 
 @allowed([
@@ -36,7 +39,7 @@ param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
   'Updates'
   'VMInsights'
 ])
-@description('Solutions that will be added to the Log Analytics Workspace. Default: [AgentHealthAssessment, AntiMalware, AzureActivity, ChangeTracking, Security, SecurityInsights, ServiceMap, SQLAssessment, Updates, VMInsights]')
+@sys.description('Solutions that will be added to the Log Analytics Workspace. Default: [AgentHealthAssessment, AntiMalware, AzureActivity, ChangeTracking, Security, SecurityInsights, ServiceMap, SQLAssessment, Updates, VMInsights]')
 param parLogAnalyticsWorkspaceSolutions array = [
   'AgentHealthAssessment'
   'AntiMalware'
@@ -52,22 +55,22 @@ param parLogAnalyticsWorkspaceSolutions array = [
   'VMInsights'
 ]
 
-@description('Automation account name. - Default: alz-automation-account')
+@sys.description('Automation account name. - Default: alz-automation-account')
 param parAutomationAccountName string = 'alz-automation-account'
 
-@description('Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings. Default: resourceGroup().location')
+@sys.description('Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings. Default: resourceGroup().location')
 param parAutomationAccountLocation string = resourceGroup().location
 
-@description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
+@sys.description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
 param parTags object = {}
 
-@description('Tags you would like to be applied to Automation Account. Default: parTags')
+@sys.description('Tags you would like to be applied to Automation Account. Default: parTags')
 param parAutomationAccountTags object = parTags
 
-@description('Tags you would like to be applied to Log Analytics Workspace. Default: parTags')
+@sys.description('Tags you would like to be applied to Log Analytics Workspace. Default: parTags')
 param parLogAnalyticsWorkspaceTags object = parTags
 
-@description('Set Parameter to true to Opt-out of deployment telemetry')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

@@ -1,62 +1,65 @@
 targetScope = 'managementGroup'
 
+metadata name = 'ALZ Bicep - Orchestration - Hub Peered Spoke'
+metadata description = 'Orchestration module used to create and configure a spoke network to deliver the Azure Landing Zone Hub & Spoke architecture'
+
 // **Parameters**
 // Generic Parameters - Used in multiple modules
-@description('The region to deploy all resources into. Default: deployment().location')
+@sys.description('The region to deploy all resources into. Default: deployment().location')
 param parLocation string = deployment().location
 
-@description('Prefix for the management group hierarchy. Default: alz')
+@sys.description('Prefix for the management group hierarchy. Default: alz')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@description('Subscription Id to the Virtual Network Hub object. Default: Empty String')
+@sys.description('Subscription Id to the Virtual Network Hub object. Default: Empty String')
 param parPeeredVnetSubscriptionId string = ''
 
-@description('Array of Tags to be applied to all resources in module. Default: Empty Object')
+@sys.description('Array of Tags to be applied to all resources in module. Default: Empty Object')
 param parTags object = {}
 
-@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 // Subscription Module Parameters
-@description('The Management Group Id to place the subscription in. Default: Empty String')
+@sys.description('The Management Group Id to place the subscription in. Default: Empty String')
 param parPeeredVnetSubscriptionMgPlacement string = ''
 
 // Resource Group Module Parameters
-@description('Name of Resource Group to be created to contain spoke networking resources like the virtual network. Default: {parTopLevelManagementGroupPrefix}-{parLocation}-spoke-networking')
+@sys.description('Name of Resource Group to be created to contain spoke networking resources like the virtual network. Default: {parTopLevelManagementGroupPrefix}-{parLocation}-spoke-networking')
 param parResourceGroupNameForSpokeNetworking string = '${parTopLevelManagementGroupPrefix}-${parLocation}-spoke-networking'
 
 // Spoke Networking Module Parameters
-@description('Existing DDoS Protection plan to utilize. Default: Empty string')
+@sys.description('Existing DDoS Protection plan to utilize. Default: Empty string')
 param parDdosProtectionPlanId string = ''
 
-@description('The Name of the Spoke Virtual Network. Default: vnet-spoke')
+@sys.description('The Name of the Spoke Virtual Network. Default: vnet-spoke')
 param parSpokeNetworkName string = 'vnet-spoke'
 
-@description('CIDR for Spoke Network. Default: 10.11.0.0/16')
+@sys.description('CIDR for Spoke Network. Default: 10.11.0.0/16')
 param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 
-@description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
+@sys.description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
 param parDnsServerIps  array = []
 
-@description('IP Address where network traffic should route to. Default: Empty string')
+@sys.description('IP Address where network traffic should route to. Default: Empty string')
 param parNextHopIpAddress string = ''
 
-@description('Switch which allows BGP Route Propogation to be disabled on the route table. Default: false')
+@sys.description('Switch which allows BGP Route Propogation to be disabled on the route table. Default: false')
 param parDisableBgpRoutePropagation bool = false
 
-@description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
+@sys.description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
 param parSpokeToHubRouteTableName string = 'rtb-spoke-to-hub'
 
 // Peering Modules Parameters
-@description('Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID.')
+@sys.description('Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID.')
 param parHubVirtualNetworkId string
 
-@description('Switch to enable/disable forwarded Traffic from outside spoke network. Default: false')
+@sys.description('Switch to enable/disable forwarded Traffic from outside spoke network. Default: false')
 param parAllowSpokeForwardedTraffic bool = false
 
-@description('Switch to enable/disable VPN Gateway for the hub network peering. Default: false')
+@sys.description('Switch to enable/disable VPN Gateway for the hub network peering. Default: false')
 param parAllowHubVpnGatewayTransit bool = false
 
 // **Variables**

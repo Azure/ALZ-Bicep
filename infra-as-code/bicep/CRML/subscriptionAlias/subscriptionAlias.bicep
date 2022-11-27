@@ -9,29 +9,32 @@ VERSION: 1.1.0
 
 targetScope = 'tenant'
 
-@description('Name of the subscription to be created. Will also be used as the alias name. Whilst you can use any name you like we recommend it to be: all lowercase, no spaces, alphanumeric and hyphens only.')
+metadata name = 'ALZ Bicep CRML - Subscription Alias Module'
+metadata description = 'Module to deploy an Azure Subscription into an existing billing scope that can be from an EA, MCA or MPA'
+
+@sys.description('Name of the subscription to be created. Will also be used as the alias name. Whilst you can use any name you like we recommend it to be: all lowercase, no spaces, alphanumeric and hyphens only.')
 param parSubscriptionName string
 
-@description('The full resource ID of billing scope associated to the EA, MCA or MPA account you wish to create the subscription in.')
+@sys.description('The full resource ID of billing scope associated to the EA, MCA or MPA account you wish to create the subscription in.')
 param parSubscriptionBillingScope string
 
-@description('Tags you would like to be applied.')
+@sys.description('Tags you would like to be applied.')
 param parTags object = {}
 
-@description('The ID of the existing management group where the subscription will be placed. Also known as its parent management group. (Optional)')
+@sys.description('The ID of the existing management group where the subscription will be placed. Also known as its parent management group. (Optional)')
 param parManagementGroupId string = ''
 
-@description('The object ID of a responsible user, AAD group or service principal. (Optional)')
+@sys.description('The object ID of a responsible user, AAD group or service principal. (Optional)')
 param parSubscriptionOwnerId string = ''
 
 @allowed([
   'DevTest'
   'Production'
 ])
-@description('The offer type of the EA, MCA or MPA subscription to be created. Defaults to = Production')
+@sys.description('The offer type of the EA, MCA or MPA subscription to be created. Defaults to = Production')
 param parSubscriptionOfferType string = 'Production'
 
-@description('The ID of the tenant. Defaults to = tenant().tenantId')
+@sys.description('The ID of the tenant. Defaults to = tenant().tenantId')
 param parTenantId string = tenant().tenantId
 
 resource resSubscription 'Microsoft.Subscription/aliases@2021-10-01' = {

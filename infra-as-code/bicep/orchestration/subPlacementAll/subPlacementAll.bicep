@@ -1,50 +1,53 @@
 targetScope = 'managementGroup'
 
-@description('Prefix for the management group hierarchy.  This management group will be created as part of the deployment. Default: alz')
+metadata name = 'ALZ Bicep orchestration - Subscription Placement - ALL'
+metadata description = 'Orchestration module that helps to define where all Subscriptions should be placed in the ALZ Management Group Hierarchy'
+
+@sys.description('Prefix for the management group hierarchy.  This management group will be created as part of the deployment. Default: alz')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@description('An array of Subscription IDs to place in the Intermediate Root Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the Intermediate Root Management Group. Default: Empty Array')
 param parIntRootMgSubs array = []
 
-@description('An array of Subscription IDs to place in the Platform Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the Platform Management Group. Default: Empty Array')
 param parPlatformMgSubs array = []
 
-@description('An array of Subscription IDs to place in the (Platform) Management Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the (Platform) Management Management Group. Default: Empty Array')
 param parPlatformManagementMgSubs array = []
 
-@description('An array of Subscription IDs to place in the (Platform) Connectivity Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the (Platform) Connectivity Management Group. Default: Empty Array')
 param parPlatformConnectivityMgSubs array = []
 
-@description('An array of Subscription IDs to place in the (Platform) Identity Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the (Platform) Identity Management Group. Default: Empty Array')
 param parPlatformIdentityMgSubs array = []
 
-@description('An array of Subscription IDs to place in the Landing Zones Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the Landing Zones Management Group. Default: Empty Array')
 param parLandingZonesMgSubs array = []
 
-@description('An array of Subscription IDs to place in the Corp (Landing Zones) Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the Corp (Landing Zones) Management Group. Default: Empty Array')
 param parLandingZonesCorpMgSubs array = []
 
-@description('An array of Subscription IDs to place in the Online (Landing Zones) Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the Online (Landing Zones) Management Group. Default: Empty Array')
 param parLandingZonesOnlineMgSubs array = []
 
-@description('An array of Subscription IDs to place in the Confidential Corp (Landing Zones) Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the Confidential Corp (Landing Zones) Management Group. Default: Empty Array')
 param parLandingZonesConfidentialCorpMgSubs array = []
 
-@description('An array of Subscription IDs to place in the Confidential Online (Landing Zones) Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the Confidential Online (Landing Zones) Management Group. Default: Empty Array')
 param parLandingZonesConfidentialOnlineMgSubs array = []
 
-@description('Dictionary Object to allow additional or different child Management Groups of the Landing Zones Management Group describing the Subscription IDs which each of them contain. Default: Empty Object')
+@sys.description('Dictionary Object to allow additional or different child Management Groups of the Landing Zones Management Group describing the Subscription IDs which each of them contain. Default: Empty Object')
 param parLandingZoneMgChildrenSubs object = {}
 
-@description('An array of Subscription IDs to place in the Decommissioned Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the Decommissioned Management Group. Default: Empty Array')
 param parDecommissionedMgSubs array = []
 
-@description('An array of Subscription IDs to place in the Sandbox Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the Sandbox Management Group. Default: Empty Array')
 param parSandboxMgSubs array = []
 
-@description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
 var varMgIds = {

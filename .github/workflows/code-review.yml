@@ -34,6 +34,8 @@ jobs:
           VALIDATE_POWERSHELL: true
           VALIDATE_YAML: true
           VALIDATE_EDITORCONFIG: true
+          # Added exclusion in workflow for generated documentation. PR #304
+          FILTER_REGEX_EXCLUDE: ".*generateddocs/.*.bicep.md"
 
   markdown-link-check:
     name: Markdown Link Check

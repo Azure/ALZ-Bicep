@@ -85,7 +85,8 @@ Throughout the development of Bicep code you should follow the [Bicep Best Pract
 - Services with "Azure" in the name are abbreviated "Az", for example: `parAzBastionName` instead of `parAzureBastionName`
 - Use [parameter decorators](https://docs.microsoft.com/azure/azure-resource-manager/bicep/parameters#decorators) to ensure integrity of user inputs are complete and therefore enable successful deployment
   - Only use the [`@secure()` parameter decorator](https://docs.microsoft.com/azure/azure-resource-manager/bicep/parameters#secure-parameters) for inputs. Never for outputs as this is not stored securely and will be stored/shown as plain-text!
-- Comments should be provided where additional information/description of what is happening is required, except when a decorator like `@description('Example description')` is providing adequate coverage
+- A description is required on parameters to provide an explanation into their function. As metadata is used in Bicep modules, `sys.description('description here')` is the chosen formatting. More information can be found in the [Azure Bicep documentation](https://learn.microsoft.com/azure/azure-resource-manager/bicep/parameters#decorators)
+- Comments should be provided where additional information/description of what is happening is required, except when a decorator like `@sys.description('Example description')` is providing adequate coverage
   - Single-line `// <comment here>` and multi-line `/* <comment here> */` comments are both welcomed
   - Provide contextual public Microsoft documentation recommendation references/URLs in comments to help user understanding of code implementation
 - All expressions, used in conditionals and loops, should be stored in a variable to simplify code readability
@@ -132,7 +133,7 @@ targetScope = 'subscription' //Deploying at Subscription scope to allow resource
 
 
 // PARAMETERS
-@description('Example description for parameter. - DEFAULT VALUE: "TEST"')
+@sys.description('Example description for parameter. - DEFAULT VALUE: "TEST"')
 param parExampleResourceGroupNamePrefix string = 'TEST'
 
 
@@ -165,111 +166,131 @@ To author Bicep modules that are in-line with the requirements for this project,
   - Folder Name will be created with camel case: `infra-as-code/bicep/modules/moduleName`
 - Each new module folder must contain:
   - A `media` folder that will contain images used in the `README.md`
-  - A `README.md` for each module in the root of its own folder, as above, detailing the module, what it deploys, parameters and any other useful information for consumers.
+  - A `README.md` for each module in the root of its own folder, as above, detailing the module, what it deploys and any other useful information for consumers.
     - The `README.md` must also contain a Bicep visualizer image of the complete module
-  - A `bicepconfig.json` for each module in the root of its own folder.
-    - [Bicep Linting Documentation](https://docs.microsoft.com/azure/azure-resource-manager/bicep/linter)
-    - The `bicepconfig.json` file should contain the following:
+  - Parameter detail files are automatically generated in the `generateddocs` folder of each module after contributing to the repository. A link in the `README.md` file must be created.
+  - When contributing a module to the repository, anticipate creation of the markdown for the parameters. To link to the parameters after contribution, use the following structure in the parameters section of the readme:
 
-      ```json
-            {
-              "analyzers": {
-                "core": {
-                  "enabled": true,
-                  "verbose": true,
-                  "rules": {
-                    "adminusername-should-not-be-literal": {
-                      "level": "error"
-                    },
-                    "no-hardcoded-env-urls": {
-                      "level": "error"
-                    },
-                    "no-unnecessary-dependson": {
-                      "level": "error"
-                    },
-                    "no-unused-params": {
-                      "level": "error"
-                    },
-                    "no-unused-vars": {
-                      "level": "error"
-                    },
-                    "outputs-should-not-contain-secrets": {
-                      "level": "error"
-                    },
-                    "prefer-interpolation": {
-                      "level": "error"
-                    },
-                    "secure-parameter-default": {
-                      "level": "error"
-                    },
-                    "simplify-interpolation": {
-                      "level": "error"
-                    },
-                    "protect-commandtoexecute-secrets": {
-                      "level": "error"
-                    },
-                    "use-stable-vm-image": {
-                      "level": "error"
-                    },
-                    "explicit-values-for-loc-params": {
-                      "level": "error"
-                    },
-                    "no-hardcoded-location": {
-                      "level": "error"
-                    },
-                    "no-loc-expr-outside-params": {
-                      "level": "error"
-                    },
-                    "max-outputs": {
-                      "level": "error"
-                    },
-                    "max-params": {
-                      "level": "error"
-                    },
-                    "max-resources": {
-                      "level": "error"
-                    },
-                    "max-variables": {
-                      "level": "error"
-                    },
-                    "artifacts-parameters":{
-                      "level": "error"
-                    },
-                    "no-unused-existing-resources":{
-                      "level": "error"
-                    },
-                    "prefer-unquoted-property-names":{
-                      "level": "error"
-                    },
-                    "secure-params-in-nested-deploy":{
-                      "level": "error"
-                    },
-                    "secure-secrets-in-params":{
-                      "level": "error"
-                    },
-                    "use-recent-api-versions":{
-                      "level": "error"
-                    },
-                    "use-resource-id-functions":{
-                      "level": "error"
-                    },
-                    "use-stable-resource-identifiers":{
-                      "level": "error"
-                    }
+`- [Link to Azure Commercial Cloud/Azure China Cloud](generateddocs/<NAME-OF-BICEP-MODULE-FILE.bicep.md)`
+
+### Parameter Markdown Generation Workflow
+
+On your Pull Request (PR), the following steps will happen:
+- PR is created.
+- GitHub Action [Workflow](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/psdocs-mdtogit.yml) initialises.
+  - The PR Branch is checked out.
+  - A `Bicep Build` is run on each of the modules.
+  - PSDocs For Azure generates a markdown file against each of the built JSON files in the module folders.
+  - A `generateddocs` folder is created in each of the modules.
+  - The markdown files are stored in this folder for each of the modules.
+  - Removal of the JSON files from the Bicep Build task is done.
+  - A git status and push is then done to the same PR for the created/updated generated documentation to complete the workflow.
+
+### `bicepconfig.json`
+
+- A `bicepconfig.json` for each module in the root of its own folder.
+  - [Bicep Linting Documentation](https://docs.microsoft.com/azure/azure-resource-manager/bicep/linter)
+  - The `bicepconfig.json` file should contain the following:
+
+    ```json
+          {
+            "analyzers": {
+              "core": {
+                "enabled": true,
+                "verbose": true,
+                "rules": {
+                  "adminusername-should-not-be-literal": {
+                    "level": "error"
+                  },
+                  "no-hardcoded-env-urls": {
+                    "level": "error"
+                  },
+                  "no-unnecessary-dependson": {
+                    "level": "error"
+                  },
+                  "no-unused-params": {
+                    "level": "error"
+                  },
+                  "no-unused-vars": {
+                    "level": "error"
+                  },
+                  "outputs-should-not-contain-secrets": {
+                    "level": "error"
+                  },
+                  "prefer-interpolation": {
+                    "level": "error"
+                  },
+                  "secure-parameter-default": {
+                    "level": "error"
+                  },
+                  "simplify-interpolation": {
+                    "level": "error"
+                  },
+                  "protect-commandtoexecute-secrets": {
+                    "level": "error"
+                  },
+                  "use-stable-vm-image": {
+                    "level": "error"
+                  },
+                  "explicit-values-for-loc-params": {
+                    "level": "error"
+                  },
+                  "no-hardcoded-location": {
+                    "level": "error"
+                  },
+                  "no-loc-expr-outside-params": {
+                    "level": "error"
+                  },
+                  "max-outputs": {
+                    "level": "error"
+                  },
+                  "max-params": {
+                    "level": "error"
+                  },
+                  "max-resources": {
+                    "level": "error"
+                  },
+                  "max-variables": {
+                    "level": "error"
+                  },
+                  "artifacts-parameters":{
+                    "level": "error"
+                  },
+                  "no-unused-existing-resources":{
+                    "level": "error"
+                  },
+                  "prefer-unquoted-property-names":{
+                    "level": "error"
+                  },
+                  "secure-params-in-nested-deploy":{
+                    "level": "error"
+                  },
+                  "secure-secrets-in-params":{
+                    "level": "error"
+                  },
+                  "use-recent-api-versions":{
+                    "level": "error"
+                  },
+                  "use-resource-id-functions":{
+                    "level": "error"
+                  },
+                  "use-stable-resource-identifiers":{
+                    "level": "error"
                   }
                 }
               }
             }
-      ```
+          }
+    ```
 
-  - The Bicep module file
-  - A `parameters` folder that will contain the parameters files for the module
-  - Parameters `...all.json` and `...min.json` files based on file naming convention below
-  - Parameter files should be named according to the convention: `<module>.<parameterSet>.parameters.<min|all>.json`
-    - `<module>` denotes the current module (and scope when necessary), for example: `roleAssignmentManagementGroup`
-    - `<parameterSet>` denotes a set of parameters with similar characteristics, for example: `securityGroup`
-    - `parameters` constant to denote the file as a parameters file
-    - `<min|all>.json` denotes whether a parameter file contains all possible parameters or only minimum necessary for deployment
+- The Bicep module file
+- A `parameters` folder that will contain the parameters files for the module
+- Parameters `...all.json` and `...min.json` files based on file naming convention below
+- Parameter files should be named according to the convention: `<module>.<parameterSet>.parameters.<min|all>.json`
+  - `<module>` denotes the current module (and scope when necessary), for example: `roleAssignmentManagementGroup`
+  - `<parameterSet>` denotes a set of parameters with similar characteristics, for example: `securityGroup`
+  - `parameters` constant to denote the file as a parameters file
+  - `<min|all>.json` denotes whether a parameter file contains all possible parameters or only minimum necessary for deployment
 
 ### Resource API Versions
 
