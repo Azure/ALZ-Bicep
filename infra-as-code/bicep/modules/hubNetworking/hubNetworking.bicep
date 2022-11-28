@@ -127,6 +127,7 @@ param parPrivateDnsZones array = [
   'privatelink.azure-automation.net'
   'privatelink.azurecr.io'
   'privatelink.azure-devices.net'
+  'privatelink.azure-devices-provisioning.net'
   'privatelink.azurehdinsight.net'
   'privatelink.azurehealthcareapis.com'
   'privatelink.azurestaticapps.net'
@@ -178,6 +179,7 @@ param parPrivateDnsZones array = [
   'privatelink.token.botframework.com'
   'privatelink.vaultcore.azure.net'
   'privatelink.web.core.windows.net'
+  'privatelink.webpubsub.azure.com'
 ]
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
