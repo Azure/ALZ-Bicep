@@ -44,7 +44,7 @@ var varPolicyAssignmentDenyPublicEndpoints = {
 }
 
 var varPolicyAssignmentDenyPublicIP = {
-	definitionId: '${modManagementGroups.outputs.outTopLevelManagementGroupId}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP'
+	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/6c112d4e-5bc7-47ae-a041-ea2d9dccd749'
 	libDefinition: loadJsonContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json')
 }
 

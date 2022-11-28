@@ -29,6 +29,32 @@
       }
     }
   },
+  "DINE-Private-DNS-Azure-Automation-DSCHybrid": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureAutomationDSCHybridPrivateDnsZoneId')]"
+      },
+      "privateEndpointGroupId": {
+        "value": "DSCAndHybridWorker"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Automation-Webhook": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureAutomationWebhookPrivateDnsZoneId')]"
+      },
+      "privateEndpointGroupId": {
+        "value": "Webhook"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
   "DINE-Private-DNS-Azure-Batch": {
     "parameters": {
       "privateDnsZoneId": {
@@ -53,6 +79,101 @@
     "parameters": {
       "privateDnsZoneId": {
         "value": "[[parameters('azureCognitiveServicesPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Cosmos-Cassandra": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureCosmosCassandraPrivateDnsZoneId')]"
+      },
+      "privateEndpointGroupId": {
+        "value": "Cassandra"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Cosmos-Gremlin": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureCosmosGremlinPrivateDnsZoneId')]"
+      },
+      "privateEndpointGroupId": {
+        "value": "Gremlin"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Cosmos-MongoDB": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureCosmosMongoPrivateDnsZoneId')]"
+      },
+      "privateEndpointGroupId": {
+        "value": "MongoDB"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Cosmos-SQL": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureCosmosSQLPrivateDnsZoneId')]"
+      },
+      "privateEndpointGroupId": {
+        "value": "SQL"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Cosmos-Table": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureCosmosTablePrivateDnsZoneId')]"
+      },
+      "privateEndpointGroupId": {
+        "value": "Table"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-DataFactory": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureDataFactoryPrivateDnsZoneId')]"
+      },
+      "listOfGroupIds": {
+        "value": [
+          "dataFactory"
+        ]
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-DataFactory-Portal": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureDataFactoryPortalPrivateDnsZoneId')]"
+      },
+      "listOfGroupIds": {
+        "value": [
+          "portal"
+        ]
       },
       "effect": {
         "value": "[[parameters('effect')]"
@@ -109,6 +230,19 @@
       }
     }
   },
+  "DINE-Private-DNS-Azure-HDInsight": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureHDInsightPrivateDnsZoneId')]"
+      },
+      "groupId": {
+        "value": "cluster"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
   "DINE-Private-DNS-Azure-IoT": {
     "parameters": {
       "privateDnsZoneId": {
@@ -149,6 +283,77 @@
       }
     }
   },
+  "DINE-Private-DNS-Azure-MediaServices-Key": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureMediaServicesKeyPrivateDnsZoneId')]"
+      },
+      "groupId": {
+        "value": "keydelivery"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-MediaServices-Live": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureMediaServicesLivePrivateDnsZoneId')]"
+      },
+      "groupId": {
+        "value": "liveevent"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-MediaServices-Stream": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureMediaServicesStreamPrivateDnsZoneId')]"
+      },
+      "groupId": {
+        "value": "streamingendpoint"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Migrate": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureMigratePrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Monitor": {
+    "parameters": {
+      "privateDnsZoneId1": {
+        "value": "[[parameters('azureMonitorPrivateDnsZoneId1')]"
+      },
+      "privateDnsZoneId2": {
+        "value": "[[parameters('azureMonitorPrivateDnsZoneId2')]"
+      },
+      "privateDnsZoneId3": {
+        "value": "[[parameters('azureMonitorPrivateDnsZoneId3')]"
+      },
+      "privateDnsZoneId4": {
+        "value": "[[parameters('azureMonitorPrivateDnsZoneId4')]"
+      },
+      "privateDnsZoneId5": {
+        "value": "[[parameters('azureMonitorPrivateDnsZoneId5')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
   "DINE-Private-DNS-Azure-RedisCache": {
     "parameters": {
       "privateDnsZoneId": {
@@ -183,6 +388,135 @@
     "parameters": {
       "privateDnsZoneId": {
         "value": "[[parameters('azureAsrPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Storage-Blob": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureStorageBlobPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Storage-Blob-Sec": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureStorageBlobSecPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Storage-DFS": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureStorageDFSPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Storage-DFS-Sec": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureStorageDFSSecPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Storage-File": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureStorageFilePrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Storage-Queue": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureStorageQueuePrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Storage-Queue-Sec": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureStorageQueueSecPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Storage-StaticWeb": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureStorageStaticWebPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Storage-StaticWeb-Sec": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureStorageStaticWebSecPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Synapse-Dev": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureSynapseDevPrivateDnsZoneId')]"
+      },
+      "targetSubResource": {
+        "value": "Dev"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Synapse-SQL": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureSynapseSQLPrivateDnsZoneId')]"
+      },
+      "targetSubResource": {
+        "value": "Sql"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Synapse-SQL-OnDemand": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureSynapseSQLODPrivateDnsZoneId')]"
+      },
+      "targetSubResource": {
+        "value": "SqlOnDemand"
       },
       "effect": {
         "value": "[[parameters('effect')]"

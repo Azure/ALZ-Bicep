@@ -267,6 +267,10 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-LoadBalancer.json')
 }
 {
+	name: 'Deploy-Diagnostics-LogAnalytics'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-LogAnalytics.json')
+}
+{
 	name: 'Deploy-Diagnostics-LogicAppsISE'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-LogicAppsISE.json')
 }

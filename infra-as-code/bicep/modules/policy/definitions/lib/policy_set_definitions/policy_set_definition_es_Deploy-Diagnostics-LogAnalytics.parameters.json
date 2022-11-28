@@ -428,6 +428,19 @@
       }
     }
   },
+  "LogAnalyticsDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('LogAnalyticsLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
   "LogicAppsISEDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
