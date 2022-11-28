@@ -34,6 +34,7 @@ module baseline_private_dns '../privateDnsZones.bicep' = {
       'privatelink.azure-automation.net'
       'privatelink.azurecr.io'
       'privatelink.azure-devices.net'
+      'privatelink.azure-devices-provisioning.net'
       'privatelink.azurehdinsight.net'
       'privatelink.azurehealthcareapis.com'
       'privatelink.azurestaticapps.net'
@@ -85,6 +86,7 @@ module baseline_private_dns '../privateDnsZones.bicep' = {
       'privatelink.token.botframework.com'
       'privatelink.vaultcore.azure.net'
       'privatelink.web.core.windows.net'
+      'privatelink.webpubsub.azure.com'
     ]
     parTags: {}
     parVirtualNetworkIdToLink: ''
