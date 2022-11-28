@@ -268,6 +268,12 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'LogAnalyticsDeployDiagnosticLogDeployLogAnalytics'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LogAnalytics'
+				definitionParameters: varPolicySetDefinitionEsDeployDiagnosticsLogAnalyticsParameters.LogAnalyticsDeployDiagnosticLogDeployLogAnalytics.parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'LogicAppsISEDeployDiagnosticLogDeployLogAnalytics'
 				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LogicAppsISE'
 				definitionParameters: varPolicySetDefinitionEsDeployDiagnosticsLogAnalyticsParameters.LogicAppsISEDeployDiagnosticLogDeployLogAnalytics.parameters
@@ -562,6 +568,18 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Automation-DSCHybrid'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/6dd01e4f-1be1-4e80-9d0b-d109e04cb064'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Automation-DSCHybrid'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Automation-Webhook'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/6dd01e4f-1be1-4e80-9d0b-d109e04cb064'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Automation-Webhook'].parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'DINE-Private-DNS-Azure-Batch'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/4ec38ebc-381f-45ee-81a4-acbc4be878f8'
 				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Batch'].parameters
@@ -577,6 +595,48 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'DINE-Private-DNS-Azure-CognitiveServices'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/c4bc6f10-cb41-49eb-b000-d5ab82e2a091'
 				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-CognitiveServices'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Cosmos-Cassandra'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a63cc0bd-cda4-4178-b705-37dc439d3e0f'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Cosmos-Cassandra'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Cosmos-Gremlin'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a63cc0bd-cda4-4178-b705-37dc439d3e0f'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Cosmos-Gremlin'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Cosmos-MongoDB'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a63cc0bd-cda4-4178-b705-37dc439d3e0f'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Cosmos-MongoDB'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Cosmos-SQL'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a63cc0bd-cda4-4178-b705-37dc439d3e0f'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Cosmos-SQL'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Cosmos-Table'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a63cc0bd-cda4-4178-b705-37dc439d3e0f'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Cosmos-Table'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-DataFactory'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/86cd96e1-1745-420d-94d4-d3f2fe415aa4'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-DataFactory'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-DataFactory-Portal'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/86cd96e1-1745-420d-94d4-d3f2fe415aa4'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-DataFactory-Portal'].parameters
 				definitionGroups: []
 			}
 			{
@@ -610,6 +670,12 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-HDInsight'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/43d6e3bd-fc6a-4b44-8b4d-2151d8736a11'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-HDInsight'].parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'DINE-Private-DNS-Azure-IoT'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/aaa64d2d-2fa3-45e5-b332-0b031b9b30e8'
 				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-IoT'].parameters
@@ -634,6 +700,36 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-MediaServices-Key'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b4a7f6c1-585e-4177-ad5b-c2c93f4bb991'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-MediaServices-Key'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-MediaServices-Live'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b4a7f6c1-585e-4177-ad5b-c2c93f4bb991'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-MediaServices-Live'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-MediaServices-Stream'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b4a7f6c1-585e-4177-ad5b-c2c93f4bb991'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-MediaServices-Stream'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Migrate'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/7590a335-57cf-4c95-babd-ecbc8fafeb1f'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Migrate'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Monitor'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/437914ee-c176-4fff-8986-7e05eb971365'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Monitor'].parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'DINE-Private-DNS-Azure-RedisCache'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e016b22b-e0eb-436d-8fd7-160c4eaed6e2'
 				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-RedisCache'].parameters
@@ -655,6 +751,78 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'DINE-Private-DNS-Azure-Site-Recovery'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/942bd215-1a66-44be-af65-6a1c0318dbe2'
 				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Site-Recovery'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Storage-Blob'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/75973700-529f-4de2-b794-fb9b6781b6b0'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Storage-Blob'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Storage-Blob-Sec'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/d847d34b-9337-4e2d-99a5-767e5ac9c582'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Storage-Blob-Sec'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Storage-DFS'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/83c6fe0f-2316-444a-99a1-1ecd8a7872ca'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Storage-DFS'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Storage-DFS-Sec'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/90bd4cb3-9f59-45f7-a6ca-f69db2726671'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Storage-DFS-Sec'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Storage-File'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/6df98d03-368a-4438-8730-a93c4d7693d6'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Storage-File'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Storage-Queue'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/bcff79fb-2b0d-47c9-97e5-3023479b00d1'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Storage-Queue'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Storage-Queue-Sec'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/da9b4ae8-5ddc-48c5-b9c0-25f8abf7a3d6'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Storage-Queue-Sec'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Storage-StaticWeb'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/9adab2a5-05ba-4fbd-831a-5bf958d04218'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Storage-StaticWeb'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Storage-StaticWeb-Sec'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/d19ae5f1-b303-4b82-9ca8-7682749faf0c'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Storage-StaticWeb-Sec'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Synapse-Dev'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1e5ed725-f16c-478b-bd4b-7bfa2f7940b9'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Synapse-Dev'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Synapse-SQL'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1e5ed725-f16c-478b-bd4b-7bfa2f7940b9'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Synapse-SQL'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-Private-DNS-Azure-Synapse-SQL-OnDemand'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1e5ed725-f16c-478b-bd4b-7bfa2f7940b9'
+				definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Synapse-SQL-OnDemand'].parameters
 				definitionGroups: []
 			}
 			{

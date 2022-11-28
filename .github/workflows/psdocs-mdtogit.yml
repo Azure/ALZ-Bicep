@@ -8,6 +8,8 @@ on:
       - opened
       - reopened
       - synchronize
+    paths:
+      - '**.bicep'
 
 env:
   github_user_name: 'github-actions'

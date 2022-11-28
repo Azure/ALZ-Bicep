@@ -93,6 +93,9 @@
     "parameters": {
       "emailSecurityContact": {
         "value": "[[parameters('emailSecurityContact')]"
+      },
+      "minimalSeverity": {
+        "value": "[[parameters('minimalSeverity')]"
       }
     }
   }

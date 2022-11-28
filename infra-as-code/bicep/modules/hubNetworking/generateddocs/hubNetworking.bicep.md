@@ -17,7 +17,7 @@ parAzBastionEnabled | No       | Switch to enable/disable Azure Bastion deployme
 parAzBastionName | No       | Name Associated with Bastion Service:  Default: {parCompanyPrefix}-bastion
 parAzBastionSku | No       | Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard
 parAzBastionNsgName | No       | NSG Name for Azure Bastion Subnet NSG. Default: nsg-AzureBastionSubnet
-parDdosEnabled | No       | Switch to enable/disable DDoS Standard deployment. Default: true
+parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment. Default: true
 parDdosPlanName | No       | DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan
 parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment. Default: true
 parAzFirewallName | No       | Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall
@@ -129,7 +129,7 @@ NSG Name for Azure Bastion Subnet NSG. Default: nsg-AzureBastionSubnet
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable DDoS Standard deployment. Default: true
+Switch to enable/disable DDoS Network Protection deployment. Default: true
 
 - Default value: `True`
 
@@ -245,7 +245,7 @@ Resource Group Name for Private DNS Zones. Default: resourceGroup().name
 
 Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones
 
-- Default value: `privatelink.azure-automation.net privatelink.database.windows.net privatelink.sql.azuresynapse.net privatelink.dev.azuresynapse.net privatelink.azuresynapse.net privatelink.blob.core.windows.net privatelink.table.core.windows.net privatelink.queue.core.windows.net privatelink.file.core.windows.net privatelink.web.core.windows.net privatelink.dfs.core.windows.net privatelink.documents.azure.com privatelink.mongo.cosmos.azure.com privatelink.cassandra.cosmos.azure.com privatelink.gremlin.cosmos.azure.com privatelink.table.cosmos.azure.com [format('privatelink.{0}.batch.azure.com', toLower(parameters('parLocation')))] privatelink.postgres.database.azure.com privatelink.mysql.database.azure.com privatelink.mariadb.database.azure.com privatelink.vaultcore.azure.net privatelink.managedhsm.azure.net [format('privatelink.{0}.azmk8s.io', toLower(parameters('parLocation')))] privatelink.siterecovery.windowsazure.com privatelink.servicebus.windows.net privatelink.azure-devices.net privatelink.eventgrid.azure.net privatelink.azurewebsites.net privatelink.api.azureml.ms privatelink.notebooks.azure.net privatelink.service.signalr.net privatelink.monitor.azure.com privatelink.oms.opinsights.azure.com privatelink.ods.opinsights.azure.com privatelink.agentsvc.azure-automation.net privatelink.afs.azure.net privatelink.datafactory.azure.net privatelink.adf.azure.com privatelink.redis.cache.windows.net privatelink.redisenterprise.cache.azure.net privatelink.purview.azure.com privatelink.purviewstudio.azure.com privatelink.digitaltwins.azure.net privatelink.azconfig.io privatelink.cognitiveservices.azure.com privatelink.azurecr.io privatelink.search.windows.net privatelink.azurehdinsight.net privatelink.media.azure.net privatelink.his.arc.azure.com privatelink.guestconfiguration.azure.com`
+- Default value: `[format('privatelink.{0}.azmk8s.io', toLower(parameters('parLocation')))] [format('privatelink.{0}.batch.azure.com', toLower(parameters('parLocation')))] [format('privatelink.{0}.kusto.windows.net', toLower(parameters('parLocation')))] privatelink.adf.azure.com privatelink.afs.azure.net privatelink.agentsvc.azure-automation.net privatelink.analysis.windows.net privatelink.api.azureml.ms privatelink.azconfig.io privatelink.azure-api.net privatelink.azure-automation.net privatelink.azurecr.io privatelink.azure-devices.net privatelink.azurehdinsight.net privatelink.azurehealthcareapis.com privatelink.azurestaticapps.net privatelink.azuresynapse.net privatelink.azurewebsites.net privatelink.batch.azure.com privatelink.blob.core.windows.net privatelink.cassandra.cosmos.azure.com privatelink.cognitiveservices.azure.com privatelink.database.windows.net privatelink.datafactory.azure.net privatelink.dev.azuresynapse.net privatelink.dfs.core.windows.net privatelink.dicom.azurehealthcareapis.com privatelink.digitaltwins.azure.net privatelink.directline.botframework.com privatelink.documents.azure.com privatelink.eventgrid.azure.net privatelink.file.core.windows.net privatelink.gremlin.cosmos.azure.com privatelink.guestconfiguration.azure.com privatelink.his.arc.azure.com privatelink.kubernetesconfiguration.azure.com privatelink.managedhsm.azure.net privatelink.mariadb.database.azure.com privatelink.media.azure.net privatelink.mongo.cosmos.azure.com privatelink.monitor.azure.com privatelink.mysql.database.azure.com privatelink.notebooks.azure.net privatelink.ods.opinsights.azure.com privatelink.oms.opinsights.azure.com privatelink.pbidedicated.windows.net privatelink.postgres.database.azure.com privatelink.prod.migration.windowsazure.com privatelink.purview.azure.com privatelink.purviewstudio.azure.com privatelink.queue.core.windows.net privatelink.redis.cache.windows.net privatelink.redisenterprise.cache.azure.net privatelink.search.windows.net privatelink.service.signalr.net privatelink.servicebus.windows.net privatelink.siterecovery.windowsazure.com privatelink.sql.azuresynapse.net privatelink.table.core.windows.net privatelink.table.cosmos.azure.com privatelink.tip1.powerquery.microsoft.com privatelink.token.botframework.com privatelink.vaultcore.azure.net privatelink.web.core.windows.net`
 
 ### parVpnGatewayConfig
 
@@ -396,57 +396,70 @@ outHubVirtualNetworkId | string |
         },
         "parPrivateDnsZones": {
             "value": [
-                "privatelink.azure-automation.net",
-                "privatelink.database.windows.net",
-                "privatelink.sql.azuresynapse.net",
-                "privatelink.dev.azuresynapse.net",
-                "privatelink.azuresynapse.net",
-                "privatelink.blob.core.windows.net",
-                "privatelink.table.core.windows.net",
-                "privatelink.queue.core.windows.net",
-                "privatelink.file.core.windows.net",
-                "privatelink.web.core.windows.net",
-                "privatelink.dfs.core.windows.net",
-                "privatelink.documents.azure.com",
-                "privatelink.mongo.cosmos.azure.com",
-                "privatelink.cassandra.cosmos.azure.com",
-                "privatelink.gremlin.cosmos.azure.com",
-                "privatelink.table.cosmos.azure.com",
-                "[format('privatelink.{0}.batch.azure.com', toLower(parameters('parLocation')))]",
-                "privatelink.postgres.database.azure.com",
-                "privatelink.mysql.database.azure.com",
-                "privatelink.mariadb.database.azure.com",
-                "privatelink.vaultcore.azure.net",
-                "privatelink.managedhsm.azure.net",
                 "[format('privatelink.{0}.azmk8s.io', toLower(parameters('parLocation')))]",
-                "privatelink.siterecovery.windowsazure.com",
-                "privatelink.servicebus.windows.net",
-                "privatelink.azure-devices.net",
-                "privatelink.eventgrid.azure.net",
-                "privatelink.azurewebsites.net",
-                "privatelink.api.azureml.ms",
-                "privatelink.notebooks.azure.net",
-                "privatelink.service.signalr.net",
-                "privatelink.monitor.azure.com",
-                "privatelink.oms.opinsights.azure.com",
-                "privatelink.ods.opinsights.azure.com",
-                "privatelink.agentsvc.azure-automation.net",
-                "privatelink.afs.azure.net",
-                "privatelink.datafactory.azure.net",
+                "[format('privatelink.{0}.batch.azure.com', toLower(parameters('parLocation')))]",
+                "[format('privatelink.{0}.kusto.windows.net', toLower(parameters('parLocation')))]",
                 "privatelink.adf.azure.com",
-                "privatelink.redis.cache.windows.net",
-                "privatelink.redisenterprise.cache.azure.net",
+                "privatelink.afs.azure.net",
+                "privatelink.agentsvc.azure-automation.net",
+                "privatelink.analysis.windows.net",
+                "privatelink.api.azureml.ms",
+                "privatelink.azconfig.io",
+                "privatelink.azure-api.net",
+                "privatelink.azure-automation.net",
+                "privatelink.azurecr.io",
+                "privatelink.azure-devices.net",
+                "privatelink.azurehdinsight.net",
+                "privatelink.azurehealthcareapis.com",
+                "privatelink.azurestaticapps.net",
+                "privatelink.azuresynapse.net",
+                "privatelink.azurewebsites.net",
+                "privatelink.batch.azure.com",
+                "privatelink.blob.core.windows.net",
+                "privatelink.cassandra.cosmos.azure.com",
+                "privatelink.cognitiveservices.azure.com",
+                "privatelink.database.windows.net",
+                "privatelink.datafactory.azure.net",
+                "privatelink.dev.azuresynapse.net",
+                "privatelink.dfs.core.windows.net",
+                "privatelink.dicom.azurehealthcareapis.com",
+                "privatelink.digitaltwins.azure.net",
+                "privatelink.directline.botframework.com",
+                "privatelink.documents.azure.com",
+                "privatelink.eventgrid.azure.net",
+                "privatelink.file.core.windows.net",
+                "privatelink.gremlin.cosmos.azure.com",
+                "privatelink.guestconfiguration.azure.com",
+                "privatelink.his.arc.azure.com",
+                "privatelink.kubernetesconfiguration.azure.com",
+                "privatelink.managedhsm.azure.net",
+                "privatelink.mariadb.database.azure.com",
+                "privatelink.media.azure.net",
+                "privatelink.mongo.cosmos.azure.com",
+                "privatelink.monitor.azure.com",
+                "privatelink.mysql.database.azure.com",
+                "privatelink.notebooks.azure.net",
+                "privatelink.ods.opinsights.azure.com",
+                "privatelink.oms.opinsights.azure.com",
+                "privatelink.pbidedicated.windows.net",
+                "privatelink.postgres.database.azure.com",
+                "privatelink.prod.migration.windowsazure.com",
                 "privatelink.purview.azure.com",
                 "privatelink.purviewstudio.azure.com",
-                "privatelink.digitaltwins.azure.net",
-                "privatelink.azconfig.io",
-                "privatelink.cognitiveservices.azure.com",
-                "privatelink.azurecr.io",
+                "privatelink.queue.core.windows.net",
+                "privatelink.redis.cache.windows.net",
+                "privatelink.redisenterprise.cache.azure.net",
                 "privatelink.search.windows.net",
-                "privatelink.azurehdinsight.net",
-                "privatelink.media.azure.net",
-                "privatelink.his.arc.azure.com",
-                "privatelink.guestconfiguration.azure.com"
+                "privatelink.service.signalr.net",
+                "privatelink.servicebus.windows.net",
+                "privatelink.siterecovery.windowsazure.com",
+                "privatelink.sql.azuresynapse.net",
+                "privatelink.table.core.windows.net",
+                "privatelink.table.cosmos.azure.com",
+                "privatelink.tip1.powerquery.microsoft.com",
+                "privatelink.token.botframework.com",
+                "privatelink.vaultcore.azure.net",
+                "privatelink.web.core.windows.net"
             ]
         },
         "parVpnGatewayConfig": {
