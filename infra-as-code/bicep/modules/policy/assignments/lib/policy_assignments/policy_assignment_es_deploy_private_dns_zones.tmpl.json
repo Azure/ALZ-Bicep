@@ -121,8 +121,8 @@
       "azureAsrPrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureAsrPrivateDnsZoneId]"
       },
-      "azureIoTPrivateDnsZoneId": {
-        "value": "${varPrivateDnsZonesFinalResourceIds}.azureIoTPrivateDnsZoneId]"
+      "azureIotPrivateDnsZoneId": {
+        "value": "${varPrivateDnsZonesFinalResourceIds}.azureIotPrivateDnsZoneId]"
       },
       "azureKeyVaultPrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureKeyVaultPrivateDnsZoneId]"

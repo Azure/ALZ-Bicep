@@ -277,7 +277,7 @@ var varPrivateDnsZonesFinalResourceIds = {
   azureBatchPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.batch.azure.com'
   azureAppPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.azconfig.io'
   azureAsrPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.siterecovery.windowsazure.com'
-  azureIoTPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.azure-devices-provisioning.net'
+  azureIotPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.azure-devices-provisioning.net'
   azureKeyVaultPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.vaultcore.azure.net'
   azureSignalRPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.service.signalr.net'
   azureAppServicesPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.azurewebsites.net'
@@ -996,8 +996,8 @@ module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments
       azureAsrPrivateDnsZoneId: {
         value: varPrivateDnsZonesFinalResourceIds.azureAsrPrivateDnsZoneId
       }
-      azureIoTPrivateDnsZoneId: {
-        value: varPrivateDnsZonesFinalResourceIds.azureIoTPrivateDnsZoneId
+      azureIotPrivateDnsZoneId: {
+        value: varPrivateDnsZonesFinalResourceIds.azureIotPrivateDnsZoneId
       }
       azureKeyVaultPrivateDnsZoneId: {
         value: varPrivateDnsZonesFinalResourceIds.azureKeyVaultPrivateDnsZoneId
