@@ -13,6 +13,7 @@ parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log re
 parAutomationAccountName | No       | Automation account name. - DEFAULT VALUE: alz-automation-account
 parMsDefenderForCloudEmailSecurityContact | No       | An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.
 parDdosProtectionPlanId | No       | ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues. Default: Empty String
+parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group. Default: Empty String
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
 ### parTopLevelManagementGroupPrefix
@@ -67,6 +68,12 @@ An e-mail address that you want Microsoft Defender for Cloud alerts to be sent t
 
 ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues. Default: Empty String
 
+### parPrivateDnsResourceGroupId
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group. Default: Empty String
+
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -106,6 +113,9 @@ Set Parameter to true to Opt-out of deployment telemetry
             "value": "security_contact@replace_me.com"
         },
         "parDdosProtectionPlanId": {
+            "value": ""
+        },
+        "parPrivateDnsResourceGroupId": {
             "value": ""
         },
         "parTelemetryOptOut": {
