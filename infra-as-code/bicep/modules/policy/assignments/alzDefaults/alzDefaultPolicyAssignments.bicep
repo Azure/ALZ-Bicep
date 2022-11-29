@@ -878,7 +878,7 @@ module modPolicyAssignmentLzsDenyDataBVnet '../../../policy/assignments/policyAs
 }
 
 // Module - Policy Assignment - Deploy-Private-DNS-Zones
-module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!empty(varPrivateDnsZonesBaseResourceId)) {
+module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!empty(varPrivateDnsZonesResourceGroupSubscriptionId)) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployPrivateDnsZones
   params: {
