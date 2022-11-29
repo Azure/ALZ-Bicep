@@ -223,6 +223,10 @@
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-LoadBalancer.json')
 }
 {
+	name: 'Deploy-Diagnostics-LogAnalytics'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-LogAnalytics.json')
+}
+{
 	name: 'Deploy-Diagnostics-LogicAppsISE'
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-LogicAppsISE.json')
 }
