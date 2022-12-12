@@ -10,7 +10,7 @@ parLogAnalyticsWorkspaceName | No       | Log Analytics Workspace name. Default:
 parLogAnalyticsWorkspaceLocation | No       | Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings. Default: resourceGroup().location
 parLogAnalyticsWorkspaceSkuName | No       | Log Analytics Workspace sku name. Default: PerGB2018
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace. Default: 365
-parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace. Default: [AgentHealthAssessment, AntiMalware, AzureActivity, ChangeTracking, Security, SecurityInsights, ServiceMap, SQLAssessment, Updates, VMInsights]
+parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace. Default: [AgentHealthAssessment, AntiMalware, ChangeTracking, Security, SecurityInsights, ServiceMap, SQLAssessment, Updates, VMInsights]
 parAutomationAccountName | No       | Automation account name. - Default: alz-automation-account
 parAutomationAccountLocation | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings. Default: resourceGroup().location
 parTags        | No       | Tags you would like to be applied to all resources in this module. Default: Empty Object
@@ -56,11 +56,11 @@ Number of days of log retention for Log Analytics Workspace. Default: 365
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Solutions that will be added to the Log Analytics Workspace. Default: [AgentHealthAssessment, AntiMalware, AzureActivity, ChangeTracking, Security, SecurityInsights, ServiceMap, SQLAssessment, Updates, VMInsights]
+Solutions that will be added to the Log Analytics Workspace. Default: [AgentHealthAssessment, AntiMalware, ChangeTracking, Security, SecurityInsights, ServiceMap, SQLAssessment, Updates, VMInsights]
 
-- Default value: `AgentHealthAssessment AntiMalware AzureActivity ChangeTracking Security SecurityInsights ServiceMap SQLAdvancedThreatProtection SQLVulnerabilityAssessment SQLAssessment Updates VMInsights`
+- Default value: `AgentHealthAssessment AntiMalware ChangeTracking Security SecurityInsights ServiceMap SQLAdvancedThreatProtection SQLVulnerabilityAssessment SQLAssessment Updates VMInsights`
 
-- Allowed values: `AgentHealthAssessment`, `AntiMalware`, `AzureActivity`, `ChangeTracking`, `Security`, `SecurityInsights`, `ServiceMap`, `SQLAdvancedThreatProtection`, `SQLVulnerabilityAssessment`, `SQLAssessment`, `Updates`, `VMInsights`
+- Allowed values: `AgentHealthAssessment`, `AntiMalware`, `ChangeTracking`, `Security`, `SecurityInsights`, `ServiceMap`, `SQLAdvancedThreatProtection`, `SQLVulnerabilityAssessment`, `SQLAssessment`, `Updates`, `VMInsights`
 
 ### parAutomationAccountName
 
@@ -147,7 +147,6 @@ outAutomationAccountId | string |
             "value": [
                 "AgentHealthAssessment",
                 "AntiMalware",
-                "AzureActivity",
                 "ChangeTracking",
                 "Security",
                 "SecurityInsights",
