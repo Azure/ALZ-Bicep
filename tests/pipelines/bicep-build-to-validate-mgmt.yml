@@ -11,7 +11,8 @@ variables:
   - name: TopLevelManagementGroupDisplayName
     value: "PR $(System.PullRequest.PullRequestNumber) Azure Landing Zones"
   - name: SubscriptionName
-    value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)"
+    value: "oZakari"
+    #value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)"
 
 jobs:
   - job: bicep_deploy
