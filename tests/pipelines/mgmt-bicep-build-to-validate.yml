@@ -20,8 +20,6 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
-          - checkout:
-
           - task: Bash@3
             displayName: Login to Azure
             name: git_azlogin
