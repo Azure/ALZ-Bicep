@@ -231,6 +231,7 @@ stages:
 
       - job: bicep_deploy_prfiles
         displayName: Deploy Bicep Files for PR
+        dependsOn: bicep_deploy_mainfiles
         pool:
           vmImage: ubuntu-latest
         steps:
