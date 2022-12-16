@@ -6,14 +6,18 @@ variables:
     value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
   - name: ManagementGroupPrefix
     value: "PR-$(System.PullRequest.PullRequestNumber)"
-  - name: TopLevelManagementGroupDisplayName
-    value: "PR $(System.PullRequest.PullRequestNumber) Azure Landing Zones"
+
   - name: SubscriptionName
     value: "oZakari"
     #value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)"
 
 stages:
   - stage: PRFileDeployOnly
+    variables:
+      - name: TopLevelManagementGroupDisplayName
+        value: "PR $(System.PullRequest.PullRequestNumber) ALZ 1"
+      - name: SubscriptionName
+        value: "oZakari"
     jobs:
       - job: bicep_deploy_prfiles
         displayName: Deploy Bicep Files for PR
@@ -74,7 +78,6 @@ stages:
           - task: Bash@3
             displayName: Az CLI Subscription Placement for PR
             name: move_sub
-            condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
             inputs:
               targetType: "inline"
               script: |
@@ -95,7 +98,6 @@ stages:
           - task: Bash@3
             displayName: Az CLI After Deployment What-If Management Groups for PR
             name: whatif_mgs
-            condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
             inputs:
               targetType: "inline"
               script: |
@@ -127,12 +129,20 @@ stages:
               pwsh: true
 
   - stage: PROverMainFileDeploy
+    dependsOn: []
+    variables:
+      - name: TopLevelManagementGroupDisplayName
+        value: "PR $(System.PullRequest.PullRequestNumber) ALZ 2"
+      - name: SubscriptionName
+        value: "Microsoft MSDN"
     jobs:
       - job: bicep_deploy_mainfiles
         displayName: Deploy Bicep Files for Main
         pool:
           vmImage: ubuntu-latest
         steps:
+          - bash: git checkout main
+
           - task: Bash@3
             displayName: Login to Azure
             name: git_azlogin
@@ -225,6 +235,8 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
+          - bash: echo "##vso[task.setvariable variable=one]secondValue"
+            displayName: Set new variable value
           - task: Bash@3
             displayName: Login to Azure
             name: git_azlogin
@@ -279,7 +291,6 @@ stages:
           - task: Bash@3
             displayName: Az CLI Subscription Placement for PR
             name: move_sub
-            condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
             inputs:
               targetType: "inline"
               script: |
@@ -300,7 +311,6 @@ stages:
           - task: Bash@3
             displayName: Az CLI After Deployment What-If Management Groups for PR
             name: whatif_mgs
-            condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
             inputs:
               targetType: "inline"
               script: |
