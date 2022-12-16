@@ -1,0 +1,333 @@
+name: "ALZ-Bicep Management-RBAC-Policy-SubPlacement Module Tests"
+
+variables:
+  - group: csu-bicep-environment
+  - name: ResourceGroupName
+    value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
+  - name: ManagementGroupPrefix
+    value: "PR-$(System.PullRequest.PullRequestNumber)"
+  - name: TopLevelManagementGroupDisplayName
+    value: "PR $(System.PullRequest.PullRequestNumber) Azure Landing Zones"
+  - name: SubscriptionName
+    value: "oZakari"
+    #value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)"
+
+stages:
+  - stage: PRFileDeployOnly
+    jobs:
+      - job: bicep_deploy_prfiles
+        displayName: Deploy Bicep Files for PR
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: Bash@3
+            displayName: Login to Azure
+            name: git_azlogin
+            inputs:
+              targetType: "inline"
+              script: |
+                az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+
+          - task: Bash@3
+            displayName: Az CLI Create Subscription for PR
+            name: create_subscription
+            inputs:
+              targetType: "inline"
+              script: |
+                subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
+                echo $subId
+                echo "##vso[task.setvariable variable=subscriptionId]$subid"
+                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
+
+          - task: Bash@3
+            displayName: Az CLI Refresh subscription list
+            name: refresh_subscription
+            inputs:
+              targetType: "inline"
+              script: |
+                az account list --refresh
+
+          - task: Bash@3
+            displayName: Az CLI Deploy Management Groups for PR
+            name: create_mgs
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.min.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location)
+
+          - task: Bash@3
+            displayName: Az CLI Deploy Custom Role Definitions for PR
+            name: create_rbac_roles
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment mg create --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.min.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
+
+          - task: Bash@3
+            displayName: Az CLI Deploy Custom Policy Definitions for PR
+            name: create_policy_defs
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.min.json parTargetManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
+
+          - task: Bash@3
+            displayName: Az CLI Subscription Placement for PR
+            name: move_sub
+            condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment mg create --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parPlatformConnectivityMgSubs='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
+
+          - task: AzurePowerShell@5
+            displayName: Az PwSh alzDefaultPolicyAssignments for PR
+            name: alz_default_policy_assignments
+            inputs:
+              azureSubscription: "azserviceconnection"
+              ScriptType: "FilePath"
+              ScriptPath: ".github/scripts/Set-AlzDefaultPolicyAssignment.ps1"
+              ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\alzDefaults\parameters\alzDefaultPolicyAssignments.parameters.min.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix) -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $(Location) -parLogAnalyticsWorkspaceResourceId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" -parDdosProtectionPlanId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan" -parPrivateDnsResourceGroupId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)"'
+              azurePowerShellVersion: "LatestVersion"
+              pwsh: true
+
+          # Verify that WhatIf does not find differences between code and environment thats just been deployed
+          - task: Bash@3
+            displayName: Az CLI After Deployment What-If Management Groups for PR
+            name: whatif_mgs
+            condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+            inputs:
+              targetType: "inline"
+              script: |
+                result=$(az deployment tenant what-if --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.min.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location) --exclude-change-types Ignore NoChange --only-show-errors)
+                if [[ $result != *'Resource changes: no change.'* ]]
+                then
+                  echo "##vso[task.logissue type=error]WhatIf reports difference between code and environment thats just been deployed"
+                  echo "$result"
+                  exit 1
+                fi
+
+      - job: bicep_cleanup
+        dependsOn: bicep_deploy
+        variables:
+          isDeployed: $[ dependencies.bicep_deploy.outputs['create_subscription.IsDeployed'] ]
+        displayName: Cleanup Bicep Deployment for PR
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: AzurePowerShell@5
+            displayName: Az CLI Remove/Cleanup Deployment
+            condition: ne(variables['isDeployed'], '')
+            inputs:
+              azureSubscription: "azserviceconnection"
+              ScriptType: "FilePath"
+              ScriptPath: ".github/scripts/Wipe-AlzTenant.ps1"
+              ScriptArguments: '-tenantRootGroupID $(azclitenant) -intermediateRootGroupID "$(ManagementGroupPrefix)" -subscriptionName "$(SubscriptionName)"'
+              azurePowerShellVersion: "LatestVersion"
+              pwsh: true
+
+  - stage: PROverMainFileDeploy
+    jobs:
+      jobs:
+        - job: bicep_deploy_prfiles
+          displayName: Deploy Bicep Files for Main
+          pool:
+            vmImage: ubuntu-latest
+          steps:
+            - task: Bash@3
+              displayName: Login to Azure
+              name: git_azlogin
+              inputs:
+                targetType: "inline"
+                script: |
+                  az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+
+            - task: Bash@3
+              displayName: Az CLI Create Subscription for PR
+              name: create_subscription
+              inputs:
+                targetType: "inline"
+                script: |
+                  subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
+                  echo $subId
+                  echo "##vso[task.setvariable variable=subscriptionId]$subid"
+                  echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
+
+            - task: Bash@3
+              displayName: Az CLI Refresh subscription list
+              name: refresh_subscription
+              inputs:
+                targetType: "inline"
+                script: |
+                  az account list --refresh
+
+            - task: Bash@3
+              displayName: Az CLI Deploy Management Groups for PR
+              name: create_mgs
+              inputs:
+                targetType: "inline"
+                script: |
+                  az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.min.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location)
+
+            - task: Bash@3
+              displayName: Az CLI Deploy Custom Role Definitions for PR
+              name: create_rbac_roles
+              inputs:
+                targetType: "inline"
+                script: |
+                  az deployment mg create --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.min.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
+
+            - task: Bash@3
+              displayName: Az CLI Deploy Custom Policy Definitions for PR
+              name: create_policy_defs
+              inputs:
+                targetType: "inline"
+                script: |
+                  az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.min.json parTargetManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
+
+            - task: Bash@3
+              displayName: Az CLI Subscription Placement for PR
+              name: move_sub
+              condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+              inputs:
+                targetType: "inline"
+                script: |
+                  az deployment mg create --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parPlatformConnectivityMgSubs='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
+
+            - task: AzurePowerShell@5
+              displayName: Az PwSh alzDefaultPolicyAssignments for PR
+              name: alz_default_policy_assignments
+              inputs:
+                azureSubscription: "azserviceconnection"
+                ScriptType: "FilePath"
+                ScriptPath: ".github/scripts/Set-AlzDefaultPolicyAssignment.ps1"
+                ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\alzDefaults\parameters\alzDefaultPolicyAssignments.parameters.min.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix) -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $(Location) -parLogAnalyticsWorkspaceResourceId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" -parDdosProtectionPlanId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan" -parPrivateDnsResourceGroupId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)"'
+                azurePowerShellVersion: "LatestVersion"
+                pwsh: true
+
+            # Verify that WhatIf does not find differences between code and environment thats just been deployed
+            - task: Bash@3
+              displayName: Az CLI After Deployment What-If Management Groups for PR
+              name: whatif_mgs
+              condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+              inputs:
+                targetType: "inline"
+                script: |
+                  result=$(az deployment tenant what-if --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.min.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location) --exclude-change-types Ignore NoChange --only-show-errors)
+                  if [[ $result != *'Resource changes: no change.'* ]]
+                  then
+                    echo "##vso[task.logissue type=error]WhatIf reports difference between code and environment thats just been deployed"
+                    echo "$result"
+                    exit 1
+                  fi
+          jobs:
+        - job: bicep_deploy_prfiles
+          displayName: Deploy Bicep Files for PR
+          pool:
+            vmImage: ubuntu-latest
+          steps:
+            - task: Bash@3
+              displayName: Login to Azure
+              name: git_azlogin
+              inputs:
+                targetType: "inline"
+                script: |
+                  az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+
+            - task: Bash@3
+              displayName: Az CLI Create Subscription for PR
+              name: create_subscription
+              inputs:
+                targetType: "inline"
+                script: |
+                  subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
+                  echo $subId
+                  echo "##vso[task.setvariable variable=subscriptionId]$subid"
+                  echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
+
+            - task: Bash@3
+              displayName: Az CLI Refresh subscription list
+              name: refresh_subscription
+              inputs:
+                targetType: "inline"
+                script: |
+                  az account list --refresh
+
+            - task: Bash@3
+              displayName: Az CLI Deploy Management Groups for PR
+              name: create_mgs
+              inputs:
+                targetType: "inline"
+                script: |
+                  az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.min.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location)
+
+            - task: Bash@3
+              displayName: Az CLI Deploy Custom Role Definitions for PR
+              name: create_rbac_roles
+              inputs:
+                targetType: "inline"
+                script: |
+                  az deployment mg create --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.min.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
+
+            - task: Bash@3
+              displayName: Az CLI Deploy Custom Policy Definitions for PR
+              name: create_policy_defs
+              inputs:
+                targetType: "inline"
+                script: |
+                  az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.min.json parTargetManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
+
+            - task: Bash@3
+              displayName: Az CLI Subscription Placement for PR
+              name: move_sub
+              condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+              inputs:
+                targetType: "inline"
+                script: |
+                  az deployment mg create --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parPlatformConnectivityMgSubs='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
+
+            - task: AzurePowerShell@5
+              displayName: Az PwSh alzDefaultPolicyAssignments for PR
+              name: alz_default_policy_assignments
+              inputs:
+                azureSubscription: "azserviceconnection"
+                ScriptType: "FilePath"
+                ScriptPath: ".github/scripts/Set-AlzDefaultPolicyAssignment.ps1"
+                ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\alzDefaults\parameters\alzDefaultPolicyAssignments.parameters.min.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix) -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $(Location) -parLogAnalyticsWorkspaceResourceId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" -parDdosProtectionPlanId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan" -parPrivateDnsResourceGroupId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)"'
+                azurePowerShellVersion: "LatestVersion"
+                pwsh: true
+
+            # Verify that WhatIf does not find differences between code and environment thats just been deployed
+            - task: Bash@3
+              displayName: Az CLI After Deployment What-If Management Groups for PR
+              name: whatif_mgs
+              condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+              inputs:
+                targetType: "inline"
+                script: |
+                  result=$(az deployment tenant what-if --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.min.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location) --exclude-change-types Ignore NoChange --only-show-errors)
+                  if [[ $result != *'Resource changes: no change.'* ]]
+                  then
+                    echo "##vso[task.logissue type=error]WhatIf reports difference between code and environment thats just been deployed"
+                    echo "$result"
+                    exit 1
+                  fi
+
+        - job: bicep_cleanup
+          dependsOn: bicep_deploy
+          variables:
+            isDeployed: $[ dependencies.bicep_deploy.outputs['create_subscription.IsDeployed'] ]
+          displayName: Cleanup Bicep Deployment for PR
+          pool:
+            vmImage: ubuntu-latest
+          steps:
+            - task: AzurePowerShell@5
+              displayName: Az CLI Remove/Cleanup Deployment
+              condition: ne(variables['isDeployed'], '')
+              inputs:
+                azureSubscription: "azserviceconnection"
+                ScriptType: "FilePath"
+                ScriptPath: ".github/scripts/Wipe-AlzTenant.ps1"
+                ScriptArguments: '-tenantRootGroupID $(azclitenant) -intermediateRootGroupID "$(ManagementGroupPrefix)" -subscriptionName "$(SubscriptionName)"'
+                azurePowerShellVersion: "LatestVersion"
+                pwsh: true
