@@ -110,7 +110,7 @@ stages:
                 fi
 
       - job: bicep_cleanup
-        dependsOn: bicep_deploy
+        dependsOn: bicep_deploy_prfiles
         variables:
           isDeployed: $[ dependencies.bicep_deploy.outputs['create_subscription.IsDeployed'] ]
         displayName: Cleanup Bicep Deployment for PR
@@ -130,7 +130,7 @@ stages:
 
   - stage: PROverMainFileDeploy
     jobs:
-      - job: bicep_deploy_prfiles
+      - job: bicep_deploy_mainfiles
         displayName: Deploy Bicep Files for Main
         pool:
           vmImage: ubuntu-latest
@@ -315,7 +315,7 @@ stages:
                 fi
 
       - job: bicep_cleanup
-        dependsOn: bicep_deploy
+        dependsOn: bicep_deploy_prfiles
         variables:
           isDeployed: $[ dependencies.bicep_deploy.outputs['create_subscription.IsDeployed'] ]
         displayName: Cleanup Bicep Deployment for PR
