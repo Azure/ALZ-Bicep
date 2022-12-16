@@ -128,7 +128,7 @@ stages:
               pwsh: true
 
   - stage: PROverMainFileDeploy
-    dependsOn: []
+    dependsOn: "PRFileDeployOnly"
     variables:
       - name: ManagementGroupPrefix
         value: "PR-$(System.PullRequest.PullRequestNumber)-S2"
