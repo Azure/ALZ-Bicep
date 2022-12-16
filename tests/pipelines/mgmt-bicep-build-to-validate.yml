@@ -4,9 +4,8 @@ variables:
   - group: csu-bicep-environment
   - name: ResourceGroupName
     value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
-  - name: ManagementGroupPrefix
-    value: "PR-$(System.PullRequest.PullRequestNumber)"
-
+  - name: TopLevelManagementGroupDisplayName
+    value: "PR $(System.PullRequest.PullRequestNumber) ALZ 1"
   - name: SubscriptionName
     value: "oZakari"
     #value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)"
@@ -14,10 +13,10 @@ variables:
 stages:
   - stage: PRFileDeployOnly
     variables:
-      - name: TopLevelManagementGroupDisplayName
-        value: "PR $(System.PullRequest.PullRequestNumber) ALZ 1"
       - name: SubscriptionName
         value: "oZakari"
+      - name: ManagementGroupPrefix
+        value: "PR-$(System.PullRequest.PullRequestNumber)-S1"
     jobs:
       - job: bicep_deploy_prfiles
         displayName: Deploy Bicep Files for PR
@@ -131,8 +130,8 @@ stages:
   - stage: PROverMainFileDeploy
     dependsOn: []
     variables:
-      - name: TopLevelManagementGroupDisplayName
-        value: "PR $(System.PullRequest.PullRequestNumber) ALZ 2"
+      - name: ManagementGroupPrefix
+        value: "PR-$(System.PullRequest.PullRequestNumber)-S2"
       - name: SubscriptionName
         value: "Microsoft MSDN"
     jobs:
