@@ -6,15 +6,14 @@ variables:
     value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
   - name: TopLevelManagementGroupDisplayName
     value: "PR $(System.PullRequest.PullRequestNumber) ALZ 1"
-  - name: SubscriptionName
-    value: "oZakari"
-    #value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)"
 
 stages:
   - stage: PRFileDeployOnly
     variables:
       - name: SubscriptionName
         value: "oZakari"
+      - name: subscriptionId
+        value: "e44b5f52-d79f-4faf-bd5f-e8ca3be03d9b"
       - name: ManagementGroupPrefix
         value: "PR-$(System.PullRequest.PullRequestNumber)-S1"
     jobs:
@@ -130,10 +129,13 @@ stages:
   - stage: PROverMainFileDeploy
     dependsOn: "PRFileDeployOnly"
     variables:
-      - name: ManagementGroupPrefix
-        value: "PR-$(System.PullRequest.PullRequestNumber)-S2"
       - name: SubscriptionName
         value: "Microsoft MSDN"
+      - name: subscriptionId
+        value: "d95b8bcd-4e1d-4cc7-8048-92f24cdc0e3d"
+      - name: ManagementGroupPrefix
+        value: "PR-$(System.PullRequest.PullRequestNumber)-S2"
+
     jobs:
       - job: bicep_deploy_mainfiles
         displayName: Deploy Bicep Files for Main
@@ -196,7 +198,6 @@ stages:
           - task: Bash@3
             displayName: Az CLI Subscription Placement for PR
             name: move_sub
-            condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
             inputs:
               targetType: "inline"
               script: |
@@ -217,7 +218,6 @@ stages:
           - task: Bash@3
             displayName: Az CLI After Deployment What-If Management Groups for PR
             name: whatif_mgs
-            condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
             inputs:
               targetType: "inline"
               script: |
