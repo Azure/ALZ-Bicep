@@ -30,16 +30,16 @@ stages:
               script: |
                 az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
 
-          - task: Bash@3
-            displayName: Az CLI Create Subscription for PR
-            name: create_subscription
-            inputs:
-              targetType: "inline"
-              script: |
-                subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
-                echo $subId
-                echo "##vso[task.setvariable variable=subscriptionId]$subid"
-                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
+          # - task: Bash@3
+          #   displayName: Az CLI Create Subscription for PR
+          #   name: create_subscription
+          #   inputs:
+          #     targetType: "inline"
+          #     script: |
+          #       subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
+          #       echo $subId
+          #       # echo "##vso[task.setvariable variable=subscriptionId]$subid"
+          #       # echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
 
           - task: Bash@3
             displayName: Az CLI Refresh subscription list
@@ -152,16 +152,16 @@ stages:
               script: |
                 az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
 
-          - task: Bash@3
-            displayName: Az CLI Create Subscription for PR
-            name: create_subscription
-            inputs:
-              targetType: "inline"
-              script: |
-                subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
-                echo $subId
-                echo "##vso[task.setvariable variable=subscriptionId]$subid"
-                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
+          # - task: Bash@3
+          #   displayName: Az CLI Create Subscription for PR
+          #   name: create_subscription
+          #   inputs:
+          #     targetType: "inline"
+          #     script: |
+          #       subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
+          #       echo $subId
+          #       echo "##vso[task.setvariable variable=subscriptionId]$subid"
+          #       echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
 
           - task: Bash@3
             displayName: Az CLI Refresh subscription list
@@ -244,17 +244,6 @@ stages:
               targetType: "inline"
               script: |
                 az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
-
-          - task: Bash@3
-            displayName: Az CLI Create Subscription for PR
-            name: create_subscription
-            inputs:
-              targetType: "inline"
-              script: |
-                subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
-                echo $subId
-                echo "##vso[task.setvariable variable=subscriptionId]$subid"
-                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
 
           - task: Bash@3
             displayName: Az CLI Refresh subscription list
