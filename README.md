@@ -1,11 +1,9 @@
 # Azure Landing Zones (ALZ) - Bicep
 
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/azure/alz-bicep.svg)](http://isitmaintained.com/project/azure/alz-bicep "Average time to resolve an issue")
-
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/azure/alz-bicep.svg)](http://isitmaintained.com/project/azure/alz-bicep "Percentage of issues still open")
 
 [![Update Policy Library](https://github.com/Azure/ALZ-Bicep/actions/workflows/update-policy.yml/badge.svg?branch=main)](https://github.com/Azure/ALZ-Bicep/actions/workflows/update-policy.yml)
-
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Azure/ALZ-Bicep?style=flat&logo=github)
 
 ![Bicep Logo](docs/wiki/media/bicep-logo.png)
