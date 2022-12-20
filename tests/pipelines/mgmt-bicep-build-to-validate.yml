@@ -4,18 +4,15 @@ variables:
   - group: csu-bicep-environment
   - name: ResourceGroupName
     value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
-  - name: TopLevelManagementGroupDisplayName
-    value: "PR $(System.PullRequest.PullRequestNumber) ALZ 1"
 
 stages:
   - stage: PRFileDeployOnly
     variables:
       - name: SubscriptionName
-        value: "oZakari"
-      - name: subscriptionId
-        value: "e44b5f52-d79f-4faf-bd5f-e8ca3be03d9b"
+        value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)-s1"
       - name: ManagementGroupPrefix
         value: "PR-$(System.PullRequest.PullRequestNumber)-S1"
+
     jobs:
       - job: bicep_deploy_prfiles
         displayName: Deploy Bicep Files for PR
@@ -30,16 +27,16 @@ stages:
               script: |
                 az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
 
-          # - task: Bash@3
-          #   displayName: Az CLI Create Subscription for PR
-          #   name: create_subscription
-          #   inputs:
-          #     targetType: "inline"
-          #     script: |
-          #       subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
-          #       echo $subId
-          #       # echo "##vso[task.setvariable variable=subscriptionId]$subid"
-          #       # echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
+          - task: Bash@3
+            displayName: Az CLI Create Subscription for PR
+            name: create_subscription
+            inputs:
+              targetType: "inline"
+              script: |
+                subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
+                echo $subId
+                # echo "##vso[task.setvariable variable=subscriptionId]$subid"
+                # echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
 
           - task: Bash@3
             displayName: Az CLI Refresh subscription list
@@ -110,7 +107,7 @@ stages:
       - job: bicep_cleanup
         dependsOn: bicep_deploy_prfiles
         variables:
-          isDeployed: $[ dependencies.bicep_deploy.outputs['create_subscription.IsDeployed'] ]
+          isDeployed: $[ dependencies.bicep_deploy_prfiles.outputs['create_subscription.IsDeployed'] ]
         displayName: Cleanup Bicep Deployment for PR
         pool:
           vmImage: ubuntu-latest
@@ -130,9 +127,7 @@ stages:
     dependsOn: "PRFileDeployOnly"
     variables:
       - name: SubscriptionName
-        value: "Microsoft MSDN"
-      - name: subscriptionId
-        value: "d95b8bcd-4e1d-4cc7-8048-92f24cdc0e3d"
+        value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)-s2"
       - name: ManagementGroupPrefix
         value: "PR-$(System.PullRequest.PullRequestNumber)-S2"
 
@@ -142,6 +137,8 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
+          - checkout: none
+
           - bash: git checkout main
 
           - task: Bash@3
@@ -152,16 +149,16 @@ stages:
               script: |
                 az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
 
-          # - task: Bash@3
-          #   displayName: Az CLI Create Subscription for PR
-          #   name: create_subscription
-          #   inputs:
-          #     targetType: "inline"
-          #     script: |
-          #       subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
-          #       echo $subId
-          #       echo "##vso[task.setvariable variable=subscriptionId]$subid"
-          #       echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
+          - task: Bash@3
+            displayName: Az CLI Create Subscription for PR
+            name: create_subscription
+            inputs:
+              targetType: "inline"
+              script: |
+                subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
+                echo $subId
+                echo "##vso[task.setvariable variable=subscriptionId]$subid"
+                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
 
           - task: Bash@3
             displayName: Az CLI Refresh subscription list
@@ -314,7 +311,7 @@ stages:
       - job: bicep_cleanup
         dependsOn: bicep_deploy_prfiles
         variables:
-          isDeployed: $[ dependencies.bicep_deploy.outputs['create_subscription.IsDeployed'] ]
+          isDeployed: $[ dependencies.bicep_deploy_mainfiles.outputs['create_subscription.IsDeployed'] ]
         displayName: Cleanup Bicep Deployment for PR
         pool:
           vmImage: ubuntu-latest
