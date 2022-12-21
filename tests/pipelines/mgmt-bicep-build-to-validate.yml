@@ -1,3 +1,4 @@
+# Description:This pipeline is used to allow contributors to quickly test changes made to MG structure, subscription moves, custom roles, custom policy definitions/sets, and policy assignments.
 name: "ALZ-Bicep Management-RBAC-Policy-SubPlacement Module Tests"
 
 variables:
@@ -6,6 +7,7 @@ variables:
     value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
 
 stages:
+  # This stage will test the modules using the contributor's branch only.
   - stage: PRFileDeployOnly
     variables:
       - name: SubscriptionName
@@ -13,6 +15,7 @@ stages:
       - name: ManagementGroupPrefix
         value: "PR-$(System.PullRequest.PullRequestNumber)-S1"
 
+    # This job is used to create a subscription and test the modules and scenarios within the description at the top of this file.
     jobs:
       - job: bicep_deploy_prfiles
         displayName: Deploy Bicep Files for PR
@@ -89,7 +92,7 @@ stages:
               azurePowerShellVersion: "LatestVersion"
               pwsh: true
 
-          # Verify that WhatIf does not find differences between code and environment thats just been deployed
+          # Used to verify that WhatIf operator does not find differences between code and environment that's just been deployed.
           - task: Bash@3
             displayName: Az CLI After Deployment What-If Management Groups for PR
             name: whatif_mgs
@@ -104,6 +107,7 @@ stages:
                   exit 1
                 fi
 
+      # Used to clean environment from all resources provisioned from the 'bicep_deploy_prfiles' job within the 'PRFileDeployOnly' stage.
       - job: bicep_cleanup
         dependsOn: bicep_deploy_prfiles
         variables:
@@ -123,6 +127,7 @@ stages:
               azurePowerShellVersion: "LatestVersion"
               pwsh: true
 
+  # This stage will test the modules by first deploying the resources using the ALZ-Bicep main branch and then deploying over the top of those resources using the contributor's branch.
   - stage: PROverMainFileDeploy
     dependsOn: "PRFileDeployOnly"
     variables:
@@ -131,6 +136,7 @@ stages:
       - name: ManagementGroupPrefix
         value: "PR-$(System.PullRequest.PullRequestNumber)-S2"
 
+    # This job is used to create a subscription and test the modules and scenarios within the description at the top of this file.
     jobs:
       - job: bicep_deploy_mainfiles
         displayName: Deploy Bicep Files for Main
@@ -232,8 +238,6 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
-          - bash: echo "##vso[task.setvariable variable=one]secondValue"
-            displayName: Set new variable value
           - task: Bash@3
             displayName: Login to Azure
             name: git_azlogin
@@ -293,7 +297,7 @@ stages:
               azurePowerShellVersion: "LatestVersion"
               pwsh: true
 
-          # Verify that WhatIf does not find differences between code and environment thats just been deployed
+          # Used to verify that WhatIf operator does not find differences between code and environment that's just been deployed.
           - task: Bash@3
             displayName: Az CLI After Deployment What-If Management Groups for PR
             name: whatif_mgs
@@ -308,6 +312,7 @@ stages:
                   exit 1
                 fi
 
+      # Used to clean environment from all resources provisioned from the 'bicep_deploy_prfiles' job within the 'PROverMainFileDeploy' stage.
       - job: bicep_cleanup
         dependsOn: bicep_deploy_prfiles
         variables:
