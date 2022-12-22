@@ -5,7 +5,7 @@ This module enables the supported Diagnostic Settings categories on a Management
 
 ## Parameters
 
-- [Parameters for Azure Commercial Cloud](generateddocs/mgDiagSettings.bicep.md)
+- [Link to Parameters](generateddocs/mgDiagSettings.bicep.md)
 
 ## Outputs
 
