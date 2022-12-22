@@ -3,9 +3,18 @@ name: "ALZ-Bicep unit tests for hub networking"
 trigger: none
 
 variables:
+  #- group: csu-bicep-environment
+  #- name: ResourceGroupName
+  #  value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
+  #- name: SubscriptionName
+  #  value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)"
+
   - group: csu-bicep-environment
   - name: ResourceGroupName
-    value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
+    value: "ALZ-Bicep-RG"
+  - name: SubscriptionName
+    value: "SAP Subscription"
+
 
 jobs:
   - job: bicep_deploy
@@ -48,6 +57,40 @@ jobs:
           targetType: "inline"
           script: |
             az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+
+      - task: Bash@3
+        displayName: Az CLI Create Subscription for PR
+        name: create_subscription
+        condition: or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], ''))
+        inputs:
+          targetType: "inline"
+          script: |
+            subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
+            echo $subId
+            echo "##vso[task.setvariable variable=subscriptionId]$subid"
+            echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
+
+      - task: Bash@3
+        displayName: Az CLI Refresh subscription list
+        name: refresh_subscription
+        condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+        inputs:
+          targetType: "inline"
+          script: |
+            az account list --refresh
+
+      - task: Bash@3
+        displayName: Az CLI Create Resource Group for PR
+        name: create_rsg
+        condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+        inputs:
+          targetType: "inline"
+          script: |
+            az account set --subscription $(subscriptionId)
+            if [ $(az group exists --name $(ResourceGroupName) ) == false ]; then
+                sleep 300
+            fi
+            az group create --name $(ResourceGroupName) --location $(Location)
 
       - task: Bash@3
         displayName: Az CLI Refresh subscription list
