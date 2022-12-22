@@ -6,38 +6,38 @@ Module used to set up vWAN Connectivity
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parLocation    | No       | Region in which the resource group was created. Default: {resourceGroup().location}
-parCompanyPrefix | No       | Prefix value which will be prepended to all resource names. Default: alz
-parVirtualHubAddressPrefix | No       | The IP address range in CIDR notation for the vWAN virtual Hub to use. Default: 10.100.0.0/23
-parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy. Default: Standard 
-parVirtualHubEnabled | No       | Switch to enable/disable Virtual Hub deployment. Default: true
-parVpnGatewayEnabled | No       | Switch to enable/disable VPN Gateway deployment. Default: false
-parExpressRouteGatewayEnabled | No       | Switch to enable/disable ExpressRoute Gateway deployment. Default: false
-parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment. Default: false
-parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy. Default: false
-parVirtualWanName | No       | Prefix Used for Virtual WAN. Default: {parCompanyPrefix}-vwan-{parLocation}
-parVirtualWanHubName | No       | Prefix Used for Virtual WAN Hub. Default: {parCompanyPrefix}-hub-{parLocation}
-parVpnGatewayName | No       | Prefix Used for VPN Gateway. Default: {parCompanyPrefix}-vpngw-{parLocation}
-parExpressRouteGatewayName | No       | Prefix Used for ExpressRoute Gateway. Default: {parCompanyPrefix}-ergw-{parLocation}
-parAzFirewallName | No       | Azure Firewall Name. Default: {parCompanyPrefix}-fw-{parLocation}
+parLocation    | No       | Region in which the resource group was created.
+parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
+parVirtualHubAddressPrefix | No       | The IP address range in CIDR notation for the vWAN virtual Hub to use.
+parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
+parVirtualHubEnabled | No       | Switch to enable/disable Virtual Hub deployment.
+parVpnGatewayEnabled | No       | Switch to enable/disable VPN Gateway deployment.
+parExpressRouteGatewayEnabled | No       | Switch to enable/disable ExpressRoute Gateway deployment.
+parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment.
+parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
+parVirtualWanName | No       | Prefix Used for Virtual WAN.
+parVirtualWanHubName | No       | Prefix Used for Virtual WAN Hub.
+parVpnGatewayName | No       | Prefix Used for VPN Gateway.
+parExpressRouteGatewayName | No       | Prefix Used for ExpressRoute Gateway.
+parAzFirewallName | No       | Azure Firewall Name.
 parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
-parAzFirewallPoliciesName | No       | Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}
-parVpnGatewayScaleUnit | No       | The scale unit for this VPN Gateway: Default: 1
-parExpressRouteGatewayScaleUnit | No       | The scale unit for this ExpressRoute Gateway: Default: 1
-parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment. Default: true
-parDdosPlanName | No       | DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan
-parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment. Default: true
-parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones. Default: same resource group
-parPrivateDnsZones | No       | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones
+parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
+parVpnGatewayScaleUnit | No       | The scale unit for this VPN Gateway.
+parExpressRouteGatewayScaleUnit | No       | The scale unit for this ExpressRoute Gateway.
+parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment.
+parDdosPlanName | No       | DDoS Plan Name.
+parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment.
+parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones.
+parPrivateDnsZones | No       | Array of DNS Zones to provision in Hub Virtual Network.
 parVirtualNetworkIdToLink | No       | Resource ID of VNet for Private DNS Zone VNet Links
-parTags        | No       | Tags you would like to be applied to all resources in this module. Default: empty array
+parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
 ### parLocation
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Region in which the resource group was created. Default: {resourceGroup().location}
+Region in which the resource group was created.
 
 - Default value: `[resourceGroup().location]`
 
@@ -45,7 +45,7 @@ Region in which the resource group was created. Default: {resourceGroup().locati
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix value which will be prepended to all resource names. Default: alz
+Prefix value which will be prepended to all resource names.
 
 - Default value: `alz`
 
@@ -53,7 +53,7 @@ Prefix value which will be prepended to all resource names. Default: alz
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The IP address range in CIDR notation for the vWAN virtual Hub to use. Default: 10.100.0.0/23
+The IP address range in CIDR notation for the vWAN virtual Hub to use.
 
 - Default value: `10.100.0.0/23`
 
@@ -61,7 +61,7 @@ The IP address range in CIDR notation for the vWAN virtual Hub to use. Default: 
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Azure Firewall Tier associated with the Firewall to deploy. Default: Standard 
+Azure Firewall Tier associated with the Firewall to deploy.
 
 - Default value: `Standard`
 
@@ -71,7 +71,7 @@ Azure Firewall Tier associated with the Firewall to deploy. Default: Standard
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable Virtual Hub deployment. Default: true
+Switch to enable/disable Virtual Hub deployment.
 
 - Default value: `True`
 
@@ -79,7 +79,7 @@ Switch to enable/disable Virtual Hub deployment. Default: true
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable VPN Gateway deployment. Default: false
+Switch to enable/disable VPN Gateway deployment.
 
 - Default value: `True`
 
@@ -87,7 +87,7 @@ Switch to enable/disable VPN Gateway deployment. Default: false
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable ExpressRoute Gateway deployment. Default: false
+Switch to enable/disable ExpressRoute Gateway deployment.
 
 - Default value: `True`
 
@@ -95,7 +95,7 @@ Switch to enable/disable ExpressRoute Gateway deployment. Default: false
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable Azure Firewall deployment. Default: false
+Switch to enable/disable Azure Firewall deployment.
 
 - Default value: `True`
 
@@ -103,7 +103,7 @@ Switch to enable/disable Azure Firewall deployment. Default: false
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable Azure Firewall DNS Proxy. Default: false
+Switch to enable/disable Azure Firewall DNS Proxy.
 
 - Default value: `True`
 
@@ -111,7 +111,7 @@ Switch to enable/disable Azure Firewall DNS Proxy. Default: false
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix Used for Virtual WAN. Default: {parCompanyPrefix}-vwan-{parLocation}
+Prefix Used for Virtual WAN.
 
 - Default value: `[format('{0}-vwan-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
@@ -119,7 +119,7 @@ Prefix Used for Virtual WAN. Default: {parCompanyPrefix}-vwan-{parLocation}
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix Used for Virtual WAN Hub. Default: {parCompanyPrefix}-hub-{parLocation}
+Prefix Used for Virtual WAN Hub.
 
 - Default value: `[format('{0}-vhub-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
@@ -127,7 +127,7 @@ Prefix Used for Virtual WAN Hub. Default: {parCompanyPrefix}-hub-{parLocation}
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix Used for VPN Gateway. Default: {parCompanyPrefix}-vpngw-{parLocation}
+Prefix Used for VPN Gateway.
 
 - Default value: `[format('{0}-vpngw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
@@ -135,7 +135,7 @@ Prefix Used for VPN Gateway. Default: {parCompanyPrefix}-vpngw-{parLocation}
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix Used for ExpressRoute Gateway. Default: {parCompanyPrefix}-ergw-{parLocation}
+Prefix Used for ExpressRoute Gateway.
 
 - Default value: `[format('{0}-ergw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
@@ -143,7 +143,7 @@ Prefix Used for ExpressRoute Gateway. Default: {parCompanyPrefix}-ergw-{parLocat
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Azure Firewall Name. Default: {parCompanyPrefix}-fw-{parLocation}
+Azure Firewall Name.
 
 - Default value: `[format('{0}-fw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
@@ -159,7 +159,7 @@ Availability Zones to deploy the Azure Firewall across. Region must support Avai
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}
+Azure Firewall Policies Name.
 
 - Default value: `[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
@@ -167,7 +167,7 @@ Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The scale unit for this VPN Gateway: Default: 1
+The scale unit for this VPN Gateway.
 
 - Default value: `1`
 
@@ -175,7 +175,7 @@ The scale unit for this VPN Gateway: Default: 1
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The scale unit for this ExpressRoute Gateway: Default: 1
+The scale unit for this ExpressRoute Gateway.
 
 - Default value: `1`
 
@@ -183,7 +183,7 @@ The scale unit for this ExpressRoute Gateway: Default: 1
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable DDoS Network Protection deployment. Default: true
+Switch to enable/disable DDoS Network Protection deployment.
 
 - Default value: `True`
 
@@ -191,7 +191,7 @@ Switch to enable/disable DDoS Network Protection deployment. Default: true
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan
+DDoS Plan Name.
 
 - Default value: `[format('{0}-ddos-plan', parameters('parCompanyPrefix'))]`
 
@@ -199,7 +199,7 @@ DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable Private DNS Zones deployment. Default: true
+Switch to enable/disable Private DNS Zones deployment.
 
 - Default value: `True`
 
@@ -207,7 +207,7 @@ Switch to enable/disable Private DNS Zones deployment. Default: true
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Resource Group Name for Private DNS Zones. Default: same resource group
+Resource Group Name for Private DNS Zones.
 
 - Default value: `[resourceGroup().name]`
 
@@ -215,7 +215,7 @@ Resource Group Name for Private DNS Zones. Default: same resource group
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones
+Array of DNS Zones to provision in Hub Virtual Network.
 
 - Default value: `[format('privatelink.{0}.azmk8s.io', toLower(parameters('parLocation')))] [format('privatelink.{0}.batch.azure.com', toLower(parameters('parLocation')))] [format('privatelink.{0}.kusto.windows.net', toLower(parameters('parLocation')))] privatelink.adf.azure.com privatelink.afs.azure.net privatelink.agentsvc.azure-automation.net privatelink.analysis.windows.net privatelink.api.azureml.ms privatelink.azconfig.io privatelink.azure-api.net privatelink.azure-automation.net privatelink.azurecr.io privatelink.azure-devices.net privatelink.azure-devices-provisioning.net privatelink.azurehdinsight.net privatelink.azurehealthcareapis.com privatelink.azurestaticapps.net privatelink.azuresynapse.net privatelink.azurewebsites.net privatelink.batch.azure.com privatelink.blob.core.windows.net privatelink.cassandra.cosmos.azure.com privatelink.cognitiveservices.azure.com privatelink.database.windows.net privatelink.datafactory.azure.net privatelink.dev.azuresynapse.net privatelink.dfs.core.windows.net privatelink.dicom.azurehealthcareapis.com privatelink.digitaltwins.azure.net privatelink.directline.botframework.com privatelink.documents.azure.com privatelink.eventgrid.azure.net privatelink.file.core.windows.net privatelink.gremlin.cosmos.azure.com privatelink.guestconfiguration.azure.com privatelink.his.arc.azure.com privatelink.kubernetesconfiguration.azure.com privatelink.managedhsm.azure.net privatelink.mariadb.database.azure.com privatelink.media.azure.net privatelink.mongo.cosmos.azure.com privatelink.monitor.azure.com privatelink.mysql.database.azure.com privatelink.notebooks.azure.net privatelink.ods.opinsights.azure.com privatelink.oms.opinsights.azure.com privatelink.pbidedicated.windows.net privatelink.postgres.database.azure.com privatelink.prod.migration.windowsazure.com privatelink.purview.azure.com privatelink.purviewstudio.azure.com privatelink.queue.core.windows.net privatelink.redis.cache.windows.net privatelink.redisenterprise.cache.azure.net privatelink.search.windows.net privatelink.service.signalr.net privatelink.servicebus.windows.net privatelink.siterecovery.windowsazure.com privatelink.sql.azuresynapse.net privatelink.table.core.windows.net privatelink.table.cosmos.azure.com privatelink.tip1.powerquery.microsoft.com privatelink.token.botframework.com privatelink.vaultcore.azure.net privatelink.web.core.windows.net privatelink.webpubsub.azure.com`
 
@@ -229,7 +229,7 @@ Resource ID of VNet for Private DNS Zone VNet Links
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Tags you would like to be applied to all resources in this module. Default: empty array
+Tags you would like to be applied to all resources in this module.
 
 ### parTelemetryOptOut
 

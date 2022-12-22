@@ -6,14 +6,14 @@ This policy definition is used to deploy custom policy definitions at management
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parTargetManagementGroupId | No       | The management group scope to which the policy definitions are to be created at. DEFAULT VALUE = "alz"
+parTargetManagementGroupId | No       | The management group scope to which the policy definitions are to be created at.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
 ### parTargetManagementGroupId
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The management group scope to which the policy definitions are to be created at. DEFAULT VALUE = "alz"
+The management group scope to which the policy definitions are to be created at.
 
 - Default value: `alz`
 

@@ -9,11 +9,11 @@ Parameter name | Required | Description
 parDestinationVirtualNetworkId | Yes      | Virtual Network ID of Virtual Network destination.
 parSourceVirtualNetworkName | Yes      | Name of source Virtual Network we are peering.
 parDestinationVirtualNetworkName | Yes      | Name of destination virtual network we are peering.
-parAllowVirtualNetworkAccess | No       | Switch to enable/disable Virtual Network Access for the Network Peer. Default: true
-parAllowForwardedTraffic | No       | Switch to enable/disable forwarded traffic for the Network Peer. Default: true
-parAllowGatewayTransit | No       | Switch to enable/disable gateway transit for the Network Peer. Default: false
-parUseRemoteGateways | No       | Switch to enable/disable remote gateway for the Network Peer. Default:false
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry. Default: false
+parAllowVirtualNetworkAccess | No       | Switch to enable/disable Virtual Network Access for the Network Peer.
+parAllowForwardedTraffic | No       | Switch to enable/disable forwarded traffic for the Network Peer.
+parAllowGatewayTransit | No       | Switch to enable/disable gateway transit for the Network Peer.
+parUseRemoteGateways | No       | Switch to enable/disable remote gateway for the Network Peer.
+parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parDestinationVirtualNetworkId
 
@@ -37,7 +37,7 @@ Name of destination virtual network we are peering.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable Virtual Network Access for the Network Peer. Default: true
+Switch to enable/disable Virtual Network Access for the Network Peer.
 
 - Default value: `True`
 
@@ -45,7 +45,7 @@ Switch to enable/disable Virtual Network Access for the Network Peer. Default: t
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable forwarded traffic for the Network Peer. Default: true
+Switch to enable/disable forwarded traffic for the Network Peer.
 
 - Default value: `True`
 
@@ -53,7 +53,7 @@ Switch to enable/disable forwarded traffic for the Network Peer. Default: true
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable gateway transit for the Network Peer. Default: false
+Switch to enable/disable gateway transit for the Network Peer.
 
 - Default value: `False`
 
@@ -61,7 +61,7 @@ Switch to enable/disable gateway transit for the Network Peer. Default: false
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable remote gateway for the Network Peer. Default:false
+Switch to enable/disable remote gateway for the Network Peer.
 
 - Default value: `False`
 
@@ -69,7 +69,7 @@ Switch to enable/disable remote gateway for the Network Peer. Default:false
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set Parameter to true to Opt-out of deployment telemetry. Default: false
+Set Parameter to true to Opt-out of deployment telemetry.
 
 - Default value: `False`
 

@@ -8,8 +8,8 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parLocation    | Yes      | Azure Region where Resource Group will be created.
 parResourceGroupName | Yes      | Name of Resource Group to be created.
-parTags        | No       | Tags you would like to be applied to all resources in this module. Default: Empty Object
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry. Default: false
+parTags        | No       | Tags you would like to be applied to all resources in this module.
+parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parLocation
 
@@ -27,13 +27,13 @@ Name of Resource Group to be created.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Tags you would like to be applied to all resources in this module. Default: Empty Object
+Tags you would like to be applied to all resources in this module.
 
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set Parameter to true to Opt-out of deployment telemetry. Default: false
+Set Parameter to true to Opt-out of deployment telemetry.
 
 - Default value: `False`
 
