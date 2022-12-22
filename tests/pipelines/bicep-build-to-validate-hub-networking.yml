@@ -71,15 +71,6 @@ jobs:
             echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
 
       - task: Bash@3
-        displayName: Az CLI Refresh subscription list
-        name: refresh_subscription
-        condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
-        inputs:
-          targetType: "inline"
-          script: |
-            az account list --refresh
-
-      - task: Bash@3
         displayName: Az CLI Create Resource Group for PR
         name: create_rsg
         condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
