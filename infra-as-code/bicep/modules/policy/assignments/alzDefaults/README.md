@@ -7,7 +7,7 @@ If you wish to add your own additional Azure Policy Assignments please review [H
 ## Parameters
 
 - [Parameters for Azure Commercial Cloud](generateddocs/alzDefaultPolicyAssignments.bicep.md)
-- [Parameters for Azure Commercial Cloud](generateddocs/mc-alzDefaultPolicyAssignments.bicep.md)
+- [Parameters for Azure China Cloud](generateddocs/mc-alzDefaultPolicyAssignments.bicep.md)
 
 ## Outputs
 
