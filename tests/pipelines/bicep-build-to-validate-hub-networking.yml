@@ -61,7 +61,7 @@ jobs:
       - task: Bash@3
         displayName: Az CLI Create Subscription for PR
         name: create_subscription
-        condition: or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], ''))
+        condition: or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), e(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], ''))
         inputs:
           targetType: "inline"
           script: |
@@ -73,7 +73,7 @@ jobs:
       - task: Bash@3
         displayName: Az CLI Refresh subscription list
         name: refresh_subscription
-        condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+        condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), e(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
         inputs:
           targetType: "inline"
           script: |
@@ -82,7 +82,7 @@ jobs:
       - task: Bash@3
         displayName: Az CLI Create Resource Group for PR
         name: create_rsg
-        condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+        condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), e(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
         inputs:
           targetType: "inline"
           script: |
@@ -104,7 +104,7 @@ jobs:
       - task: Bash@3
         displayName: Az CLI Deploy Hub Networking for PR
         name: create_hub_network
-        condition: and(or(ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+        condition: and(or(e(variables['gitHubOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
         inputs:
           targetType: "inline"
           script: |
@@ -113,7 +113,7 @@ jobs:
       - task: Bash@3
         displayName: Az CLI Deploy Spoke Networking for PR
         name: create_spoke_network
-        condition: and(or(ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+        condition: and(or(e(variables['gitSpokeOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
         inputs:
           targetType: "inline"
           script: |
@@ -122,7 +122,7 @@ jobs:
       - task: Bash@3
         displayName: Az CLI Deploy vNet Peer for PR spoke to hub
         name: create_vnet_peer_spoke_2_hub
-        condition: and(ne(variables['gitVnetPeerOUTPUT'], ''), ne(variables['subscriptionId'], ''))
+        condition: and(e(variables['gitVnetPeerOUTPUT'], ''), ne(variables['subscriptionId'], ''))
         inputs:
           targetType: "inline"
           script: |
@@ -131,7 +131,7 @@ jobs:
       - task: Bash@3
         displayName: Az CLI Deploy vNet Peer for PR hub to spoke
         name: create_vnet_peer_hub_2_spoke
-        condition: and(ne(variables['gitVnetPeerOUTPUT'], ''), ne(variables['subscriptionId'], ''))
+        condition: and(e(variables['gitVnetPeerOUTPUT'], ''), ne(variables['subscriptionId'], ''))
         inputs:
           targetType: "inline"
           script: |
