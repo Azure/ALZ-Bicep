@@ -131,7 +131,7 @@ jobs:
       - task: Bash@3
         displayName: Az CLI Deploy vNet Peer for PR hub to spoke
         name: create_vnet_peer_hub_2_spoke
-        condition: and(ne(variables['gitVnetPeerOUTPUT'], ''), ne(variables['subscriptionId'], ''))
+        #condition: and(ne(variables['gitVnetPeerOUTPUT'], ''), ne(variables['subscriptionId'], ''))
         inputs:
           targetType: "inline"
           script: |
