@@ -8,7 +8,6 @@ The module will deploy the following Log Analytics Workspace solutions by defaul
 
 - AgentHealthAssessment
 - AntiMalware
-- AzureActivity
 - ChangeTracking
 - Security
 - SecurityInsights (Azure Sentinel)
