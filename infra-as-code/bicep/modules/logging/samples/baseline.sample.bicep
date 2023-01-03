@@ -28,7 +28,6 @@ module baseline_logging '../logging.bicep' = {
     parLogAnalyticsWorkspaceSolutions: [
       'AgentHealthAssessment'
       'AntiMalware'
-      'AzureActivity'
       'ChangeTracking'
       'Security'
       'SecurityInsights'
