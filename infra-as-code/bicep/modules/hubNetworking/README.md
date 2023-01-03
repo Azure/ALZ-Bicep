@@ -18,11 +18,11 @@ Module deploys the following resources:
 
 - [Parameters for Azure Commercial Cloud](generateddocs/hubNetworking.bicep.md)
 
-> **NOTE:** Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
-
-> NOTE: When deploying using the `parameters/hubNetworking.parameters.all.json` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region or geo code, for Azure Backup. Failure to do so will cause these services to be unreachable over private endpoints.
-<!-- markdownlint-disable -->
-
+> **NOTE:**
+> - Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
+>
+> - When deploying using the `parameters/hubNetworking.parameters.all.json` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region or geo code, for Azure Backup. Failure to do so will cause these services to be unreachable over private endpoints.
+>
 > For example, if deploying to East US the following zone entries:
 > - `privatelink.xxxxxx.azmk8s.io`
 > - `privatelink.xxxxxx.backup.windowsazure.com`
@@ -34,7 +34,6 @@ Module deploys the following resources:
 > - `privatelink.eastus.batch.azure.com`
 >
 > See child module, [`privateDnsZones.bicep` docs](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/privateDnsZones#dns-zones) for more info on how this works
-<!-- markdownlint-restore -->
 
 ## Outputs
 
