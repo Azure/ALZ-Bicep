@@ -3,7 +3,7 @@ targetScope = 'subscription'
 metadata name = 'ALZ Bicep - Role Assignment to a Subscription'
 metadata description = 'Module used to assign a Role Assignment to a Subscription'
 
-@sys.description('A GUID representing the role assignment name. Default: guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId)')
+@sys.description('A GUID representing the role assignment name.')
 param parRoleAssignmentNameGuid string = guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId)
 
 @sys.description('Role Definition Id (i.e. GUID, Reader Role Definition ID: acdd72a7-3385-48ef-bd42-f606fba81ae7)')
@@ -19,7 +19,7 @@ param parAssigneePrincipalType string
 @sys.description('Object ID of groups, service principals or managed identities. For managed identities use the principal id. For service principals, use the object ID and not the app ID')
 param parAssigneeObjectId string
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

@@ -6,17 +6,17 @@ Module used to assign a role to Management Group
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parRoleAssignmentNameGuid | No       | A GUID representing the role assignment name. Default: guid(managementGroup().name, parRoleDefinitionId, parAssigneeObjectId)
+parRoleAssignmentNameGuid | No       | A GUID representing the role assignment name.
 parRoleDefinitionId | Yes      | Role Definition Id (i.e. GUID, Reader Role Definition ID: acdd72a7-3385-48ef-bd42-f606fba81ae7)
 parAssigneePrincipalType | Yes      | Principal type of the assignee.  Allowed values are 'Group' (Security Group) or 'ServicePrincipal' (Service Principal or System/User Assigned Managed Identity)
 parAssigneeObjectId | Yes      | Object ID of groups, service principals or managed identities. For managed identities use the principal id. For service principals, use the object ID and not the app ID
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry. Default: false
+parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parRoleAssignmentNameGuid
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-A GUID representing the role assignment name. Default: guid(managementGroup().name, parRoleDefinitionId, parAssigneeObjectId)
+A GUID representing the role assignment name.
 
 - Default value: `[guid(managementGroup().name, parameters('parRoleDefinitionId'), parameters('parAssigneeObjectId'))]`
 
@@ -44,7 +44,7 @@ Object ID of groups, service principals or managed identities. For managed ident
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set Parameter to true to Opt-out of deployment telemetry. Default: false
+Set Parameter to true to Opt-out of deployment telemetry.
 
 - Default value: `False`
 

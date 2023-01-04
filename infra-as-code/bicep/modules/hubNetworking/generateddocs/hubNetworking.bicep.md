@@ -6,42 +6,42 @@ ALZ Bicep Module used to set up Hub Networking
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parLocation    | No       | The Azure Region to deploy the resources into. Default: resourceGroup().location
-parCompanyPrefix | No       | Prefix value which will be prepended to all resource names. Default: alz
-parHubNetworkName | No       | Prefix Used for Hub Network. Default: {parCompanyPrefix}-hub-{parLocation}
-parHubNetworkAddressPrefix | No       | The IP address range for all virtual networks to use. Default: 10.10.0.0/16
-parSubnets     | No       | The name and IP address range for each subnet in the virtual networks. Default: AzureBastionSubnet, GatewaySubnet, AzureFirewallSubnet
-parDnsServerIps | No       | Array of DNS Server IP addresses for VNet. Default: Empty Array
-parPublicIpSku | No       | Public IP Address SKU. Default: Standard
+parLocation    | No       | The Azure Region to deploy the resources into.
+parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
+parHubNetworkName | No       | Prefix Used for Hub Network.
+parHubNetworkAddressPrefix | No       | The IP address range for all virtual networks to use.
+parSubnets     | No       | The name and IP address range for each subnet in the virtual networks.
+parDnsServerIps | No       | Array of DNS Server IP addresses for VNet.
+parPublicIpSku | No       | Public IP Address SKU.
 parAzBastionEnabled | No       | Switch to enable/disable Azure Bastion deployment. Default: true
-parAzBastionName | No       | Name Associated with Bastion Service:  Default: {parCompanyPrefix}-bastion
-parAzBastionSku | No       | Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard
-parAzBastionNsgName | No       | NSG Name for Azure Bastion Subnet NSG. Default: nsg-AzureBastionSubnet
-parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment. Default: true
-parDdosPlanName | No       | DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan
-parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment. Default: true
-parAzFirewallName | No       | Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall
-parAzFirewallPoliciesName | No       | Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}
-parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy. Default: Standard
-parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty. Default: Empty Array
-parAzErGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP. Default: Empty Array
-parAzVpnGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP. Default: Empty Array
-parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy. Default: true
-parHubRouteTableName | No       | Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable
-parDisableBgpRoutePropagation | No       | Switch to enable/disable BGP Propagation on route table. Default: false
-parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment. Default: true
-parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones. Default: resourceGroup().name
+parAzBastionName | No       | Name Associated with Bastion Service.
+parAzBastionSku | No       | Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard.
+parAzBastionNsgName | No       | NSG Name for Azure Bastion Subnet NSG.
+parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment.
+parDdosPlanName | No       | DDoS Plan Name.
+parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment.
+parAzFirewallName | No       | Azure Firewall Name.
+parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
+parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
+parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
+parAzErGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
+parAzVpnGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
+parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
+parHubRouteTableName | No       | Name of Route table to create for the default route of Hub.
+parDisableBgpRoutePropagation | No       | Switch to enable/disable BGP Propagation on route table.
+parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment.
+parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones.
 parPrivateDnsZones | No       | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones
 parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parVpnGatewayConfig": {   "value": {} }
 parExpressRouteGatewayConfig | No       | Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parExpressRouteGatewayConfig": {   "value": {} }
-parTags        | No       | Tags you would like to be applied to all resources in this module. Default: Empty Object
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry. Default: false
+parTags        | No       | Tags you would like to be applied to all resources in this module.
+parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parLocation
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The Azure Region to deploy the resources into. Default: resourceGroup().location
+The Azure Region to deploy the resources into.
 
 - Default value: `[resourceGroup().location]`
 
@@ -49,7 +49,7 @@ The Azure Region to deploy the resources into. Default: resourceGroup().location
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix value which will be prepended to all resource names. Default: alz
+Prefix value which will be prepended to all resource names.
 
 - Default value: `alz`
 
@@ -57,7 +57,7 @@ Prefix value which will be prepended to all resource names. Default: alz
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix Used for Hub Network. Default: {parCompanyPrefix}-hub-{parLocation}
+Prefix Used for Hub Network.
 
 - Default value: `[format('{0}-hub-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
@@ -65,7 +65,7 @@ Prefix Used for Hub Network. Default: {parCompanyPrefix}-hub-{parLocation}
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The IP address range for all virtual networks to use. Default: 10.10.0.0/16
+The IP address range for all virtual networks to use.
 
 - Default value: `10.10.0.0/16`
 
@@ -73,7 +73,7 @@ The IP address range for all virtual networks to use. Default: 10.10.0.0/16
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The name and IP address range for each subnet in the virtual networks. Default: AzureBastionSubnet, GatewaySubnet, AzureFirewallSubnet
+The name and IP address range for each subnet in the virtual networks.
 
 - Default value: `  `
 
@@ -81,13 +81,13 @@ The name and IP address range for each subnet in the virtual networks. Default: 
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Array of DNS Server IP addresses for VNet. Default: Empty Array
+Array of DNS Server IP addresses for VNet.
 
 ### parPublicIpSku
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Public IP Address SKU. Default: Standard
+Public IP Address SKU.
 
 - Default value: `Standard`
 
@@ -105,7 +105,7 @@ Switch to enable/disable Azure Bastion deployment. Default: true
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Name Associated with Bastion Service:  Default: {parCompanyPrefix}-bastion
+Name Associated with Bastion Service.
 
 - Default value: `[format('{0}-bastion', parameters('parCompanyPrefix'))]`
 
@@ -113,7 +113,7 @@ Name Associated with Bastion Service:  Default: {parCompanyPrefix}-bastion
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard
+Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard.
 
 - Default value: `Standard`
 
@@ -121,7 +121,7 @@ Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Stan
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-NSG Name for Azure Bastion Subnet NSG. Default: nsg-AzureBastionSubnet
+NSG Name for Azure Bastion Subnet NSG.
 
 - Default value: `nsg-AzureBastionSubnet`
 
@@ -129,7 +129,7 @@ NSG Name for Azure Bastion Subnet NSG. Default: nsg-AzureBastionSubnet
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable DDoS Network Protection deployment. Default: true
+Switch to enable/disable DDoS Network Protection deployment.
 
 - Default value: `True`
 
@@ -137,7 +137,7 @@ Switch to enable/disable DDoS Network Protection deployment. Default: true
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan
+DDoS Plan Name.
 
 - Default value: `[format('{0}-ddos-plan', parameters('parCompanyPrefix'))]`
 
@@ -145,7 +145,7 @@ DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable Azure Firewall deployment. Default: true
+Switch to enable/disable Azure Firewall deployment.
 
 - Default value: `True`
 
@@ -153,7 +153,7 @@ Switch to enable/disable Azure Firewall deployment. Default: true
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall
+Azure Firewall Name.
 
 - Default value: `[format('{0}-azfw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
@@ -161,7 +161,7 @@ Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}
+Azure Firewall Policies Name.
 
 - Default value: `[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
@@ -169,7 +169,7 @@ Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Azure Firewall Tier associated with the Firewall to deploy. Default: Standard
+Azure Firewall Tier associated with the Firewall to deploy.
 
 - Default value: `Standard`
 
@@ -179,7 +179,7 @@ Azure Firewall Tier associated with the Firewall to deploy. Default: Standard
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty. Default: Empty Array
+Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
 
 - Allowed values: `1`, `2`, `3`
 
@@ -187,7 +187,7 @@ Availability Zones to deploy the Azure Firewall across. Region must support Avai
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP. Default: Empty Array
+Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
 
 - Allowed values: `1`, `2`, `3`
 
@@ -195,7 +195,7 @@ Availability Zones to deploy the VPN/ER PIP across. Region must support Availabi
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP. Default: Empty Array
+Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
 
 - Allowed values: `1`, `2`, `3`
 
@@ -203,7 +203,7 @@ Availability Zones to deploy the VPN/ER PIP across. Region must support Availabi
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable Azure Firewall DNS Proxy. Default: true
+Switch to enable/disable Azure Firewall DNS Proxy.
 
 - Default value: `True`
 
@@ -211,7 +211,7 @@ Switch to enable/disable Azure Firewall DNS Proxy. Default: true
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable
+Name of Route table to create for the default route of Hub.
 
 - Default value: `[format('{0}-hub-routetable', parameters('parCompanyPrefix'))]`
 
@@ -219,7 +219,7 @@ Name of Route table to create for the default route of Hub. Default: {parCompany
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable BGP Propagation on route table. Default: false
+Switch to enable/disable BGP Propagation on route table.
 
 - Default value: `False`
 
@@ -227,7 +227,7 @@ Switch to enable/disable BGP Propagation on route table. Default: false
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable Private DNS Zones deployment. Default: true
+Switch to enable/disable Private DNS Zones deployment.
 
 - Default value: `True`
 
@@ -235,7 +235,7 @@ Switch to enable/disable Private DNS Zones deployment. Default: true
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Resource Group Name for Private DNS Zones. Default: resourceGroup().name
+Resource Group Name for Private DNS Zones.
 
 - Default value: `[resourceGroup().name]`
 
@@ -273,13 +273,13 @@ Configuration for ExpressRoute virtual network gateway to be deployed. If a Expr
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Tags you would like to be applied to all resources in this module. Default: Empty Object
+Tags you would like to be applied to all resources in this module.
 
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set Parameter to true to Opt-out of deployment telemetry. Default: false
+Set Parameter to true to Opt-out of deployment telemetry.
 
 - Default value: `False`
 
