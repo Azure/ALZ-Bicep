@@ -1,34 +1,34 @@
 metadata name = 'ALZ Bicep - Spoke Networking module'
 metadata description = 'This module creates spoke networking resources'
 
-@sys.description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
+@sys.description('The Azure Region to deploy the resources into.')
 param parLocation string = resourceGroup().location
 
-@sys.description('Switch to enable/disable BGP Propagation on route table. Default: false')
+@sys.description('Switch to enable/disable BGP Propagation on route table.')
 param parDisableBgpRoutePropagation bool = false
 
-@sys.description('Id of the DdosProtectionPlan which will be applied to the Virtual Network. Default: Empty String')
+@sys.description('Id of the DdosProtectionPlan which will be applied to the Virtual Network.')
 param parDdosProtectionPlanId string = ''
 
-@sys.description('The IP address range for all virtual networks to use. Default: 10.11.0.0/16')
+@sys.description('The IP address range for all virtual networks to use.')
 param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 
-@sys.description('The Name of the Spoke Virtual Network. Default: vnet-spoke')
+@sys.description('The Name of the Spoke Virtual Network.')
 param parSpokeNetworkName string = 'vnet-spoke'
 
-@sys.description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
+@sys.description('Array of DNS Server IP addresses for VNet.')
 param parDnsServerIps array = []
 
-@sys.description('IP Address where network traffic should route to leveraged with DNS Proxy. Default: Empty String')
+@sys.description('IP Address where network traffic should route to leveraged with DNS Proxy.')
 param parNextHopIpAddress string = ''
 
-@sys.description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
+@sys.description('Name of Route table to create for the default route of Hub.')
 param parSpokeToHubRouteTableName string = 'rtb-spoke-to-hub'
 
-@sys.description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
+@sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

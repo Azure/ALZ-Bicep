@@ -1,50 +1,50 @@
 metadata name = 'ALZ Bicep - Azure vWAN Connectivity Module'
 metadata description = 'Module used to set up vWAN Connectivity'
 
-@sys.description('Region in which the resource group was created. Default: {resourceGroup().location}')
+@sys.description('Region in which the resource group was created.')
 param parLocation string = resourceGroup().location
 
-@sys.description('Prefix value which will be prepended to all resource names. Default: alz')
+@sys.description('Prefix value which will be prepended to all resource names.')
 param parCompanyPrefix string = 'alz'
 
-@sys.description('The IP address range in CIDR notation for the vWAN virtual Hub to use. Default: 10.100.0.0/23')
+@sys.description('The IP address range in CIDR notation for the vWAN virtual Hub to use.')
 param parVirtualHubAddressPrefix string = '10.100.0.0/23'
 
-@sys.description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard ')
+@sys.description('Azure Firewall Tier associated with the Firewall to deploy.')
 @allowed([
   'Standard'
   'Premium'
 ])
 param parAzFirewallTier string = 'Standard'
 
-@sys.description('Switch to enable/disable Virtual Hub deployment. Default: true')
+@sys.description('Switch to enable/disable Virtual Hub deployment.')
 param parVirtualHubEnabled bool = true
 
-@sys.description('Switch to enable/disable VPN Gateway deployment. Default: false')
+@sys.description('Switch to enable/disable VPN Gateway deployment.')
 param parVpnGatewayEnabled bool = true
 
-@sys.description('Switch to enable/disable ExpressRoute Gateway deployment. Default: false')
+@sys.description('Switch to enable/disable ExpressRoute Gateway deployment.')
 param parExpressRouteGatewayEnabled bool = true
 
-@sys.description('Switch to enable/disable Azure Firewall deployment. Default: false')
+@sys.description('Switch to enable/disable Azure Firewall deployment.')
 param parAzFirewallEnabled bool = true
 
-@sys.description('Switch to enable/disable Azure Firewall DNS Proxy. Default: false')
+@sys.description('Switch to enable/disable Azure Firewall DNS Proxy.')
 param parAzFirewallDnsProxyEnabled bool = true
 
-@sys.description('Prefix Used for Virtual WAN. Default: {parCompanyPrefix}-vwan-{parLocation}')
+@sys.description('Prefix Used for Virtual WAN.')
 param parVirtualWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
 
-@sys.description('Prefix Used for Virtual WAN Hub. Default: {parCompanyPrefix}-hub-{parLocation}')
+@sys.description('Prefix Used for Virtual WAN Hub.')
 param parVirtualWanHubName string = '${parCompanyPrefix}-vhub-${parLocation}'
 
-@sys.description('Prefix Used for VPN Gateway. Default: {parCompanyPrefix}-vpngw-{parLocation}')
+@sys.description('Prefix Used for VPN Gateway.')
 param parVpnGatewayName string = '${parCompanyPrefix}-vpngw-${parLocation}'
 
-@sys.description('Prefix Used for ExpressRoute Gateway. Default: {parCompanyPrefix}-ergw-{parLocation}')
+@sys.description('Prefix Used for ExpressRoute Gateway.')
 param parExpressRouteGatewayName string = '${parCompanyPrefix}-ergw-${parLocation}'
 
-@sys.description('Azure Firewall Name. Default: {parCompanyPrefix}-fw-{parLocation}')
+@sys.description('Azure Firewall Name.')
 param parAzFirewallName string = '${parCompanyPrefix}-fw-${parLocation}'
 
 @allowed([
@@ -55,28 +55,28 @@ param parAzFirewallName string = '${parCompanyPrefix}-fw-${parLocation}'
 @sys.description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
 param parAzFirewallAvailabilityZones array = []
 
-@sys.description('Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}')
+@sys.description('Azure Firewall Policies Name.')
 param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
 
-@sys.description('The scale unit for this VPN Gateway: Default: 1')
+@sys.description('The scale unit for this VPN Gateway.')
 param parVpnGatewayScaleUnit int = 1
 
-@sys.description('The scale unit for this ExpressRoute Gateway: Default: 1')
+@sys.description('The scale unit for this ExpressRoute Gateway.')
 param parExpressRouteGatewayScaleUnit int = 1
 
-@sys.description('Switch to enable/disable DDoS Network Protection deployment. Default: true')
+@sys.description('Switch to enable/disable DDoS Network Protection deployment.')
 param parDdosEnabled bool = true
 
-@sys.description('DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan')
+@sys.description('DDoS Plan Name.')
 param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
 
-@sys.description('Switch to enable/disable Private DNS Zones deployment. Default: true')
+@sys.description('Switch to enable/disable Private DNS Zones deployment.')
 param parPrivateDnsZonesEnabled bool = true
 
-@sys.description('Resource Group Name for Private DNS Zones. Default: same resource group')
+@sys.description('Resource Group Name for Private DNS Zones.')
 param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 
-@sys.description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
+@sys.description('Array of DNS Zones to provision in Hub Virtual Network.')
 param parPrivateDnsZones array = [
   'privatelink.${toLower(parLocation)}.azmk8s.io'
   'privatelink.${toLower(parLocation)}.batch.azure.com'
@@ -149,7 +149,7 @@ param parPrivateDnsZones array = [
 @sys.description('Resource ID of VNet for Private DNS Zone VNet Links')
 param parVirtualNetworkIdToLink string = ''
 
-@sys.description('Tags you would like to be applied to all resources in this module. Default: empty array')
+@sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
 
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
