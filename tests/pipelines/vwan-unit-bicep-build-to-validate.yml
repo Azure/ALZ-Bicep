@@ -1,0 +1,138 @@
+name: "ALZ-Bicep unit tests for vWAN Connectivity"
+
+trigger: none
+
+variables:
+  - group: csu-bicep-environment
+  - name: ResourceGroupName
+    value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
+  - name: SubscriptionName
+    value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)"
+
+jobs:
+  - job: bicep_deploy
+    displayName: Deploy Bicep Files for PR
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - task: Bash@3
+        displayName: Check for vwanNetworking Changes
+        name: git_vwannetworking_diff
+        inputs:
+          targetType: "inline"
+          script: |
+            git_vwan=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep )
+            echo "##vso[task.setvariable variable=gitVwanOUTPUT]$git_vwan"
+
+      - task: Bash@3
+        displayName: Check for vwanNetwork Connection Changes
+        name: git_vwannetworkconnection_diff
+        inputs:
+          targetType: "inline"
+          script: |
+            git_vwannwc=$(git diff --name-only HEAD^ HEAD infra-as-code/bicep/modules/vnetPeeringVwan ':(exclude)*.md' ':(exclude)*.png')
+            echo "##vso[task.setvariable variable=gitVwanNwcOUTPUT]$git_vwannwc"
+
+      - task: Bash@3
+        displayName: Login to Azure
+        name: git_azlogin
+        inputs:
+          targetType: "inline"
+          script: |
+            az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+
+      - task: Bash@3
+        displayName: Az CLI Create Subscription for PR
+        name: create_subscription
+        condition: or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], ''))
+        inputs:
+          targetType: "inline"
+          script: |
+            subid=$(az deployment tenant create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep --parameters @infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.min.json --parameters parSubscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) parSubscriptionName=$(SubscriptionName) | jq .properties.outputs.outSubscriptionId.value | tr -d '"')
+            echo $subId
+            echo "##vso[task.setvariable variable=subscriptionId]$subid"
+            echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
+
+      - task: Bash@3
+        displayName: Az CLI Refresh subscription list
+        name: refresh_subscription
+        condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+        inputs:
+          targetType: "inline"
+          script: |
+            az account list --refresh
+
+      - task: Bash@3
+        displayName: Az CLI Create Resource Group for PR
+        name: create_rsg
+        condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+        inputs:
+          targetType: "inline"
+          script: |
+            az account set --subscription $(subscriptionId)
+            if [ $(az group exists --name $(ResourceGroupName) ) == false ]; then
+                sleep 300
+            fi
+            az group create --name $(ResourceGroupName) --location $(Location)
+
+      - task: Bash@3
+        displayName: Az CLI Register Resource Providers for PR
+        name: register_providers
+        inputs:
+          targetType: "inline"
+          script: |
+            az account set --subscription $(subscriptionId)
+            az provider register -n 'Microsoft.Insights'
+
+      - task: Bash@3
+        displayName: Az CLI Deploy vWan Networking for PR
+        name: create_vwan_network
+        condition: and(or(ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+        inputs:
+          targetType: "inline"
+          script: |
+            az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep --parameters @infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.min.json parVirtualNetworkIdToLink="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke"
+
+      - task: Bash@3
+        displayName: Az CLI Deploy vWan Network connection for PR
+        name: create_vwan_network_connection
+        condition: and(ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['subscriptionId'], ''))
+        inputs:
+          targetType: "inline"
+          script: |
+            az deployment sub create --location $(Location) --template-file infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep --parameters @infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.min.json parVirtualWanHubResourceId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualHubs/alz-vhub-$(Location)" parRemoteVirtualNetworkResourceId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/vnet-spoke"
+
+      # Verify that WhatIf does not find differences between code and environment thats just been deployed
+      - task: Bash@3
+        displayName: Az CLI After Deployment What-If Management Groups for PR
+        name: whatif_mgs
+        condition: and(or(ne(variables['gitManagementOUTPUT'], ''), ne(variables['gitLoggingOUTPUT'], ''), ne(variables['gitSpokeOUTPUT'], ''), ne(variables['gitHubOUTPUT'], ''), ne(variables['gitVwanOUTPUT'], ''), ne(variables['gitVwanNwcOUTPUT'], ''), ne(variables['gitVnetPeerOUTPUT'], '')), ne(variables['subscriptionId'], ''))
+        inputs:
+          targetType: "inline"
+          script: |
+            result=$(az deployment tenant what-if --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.min.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location) --exclude-change-types Ignore NoChange --only-show-errors)
+            if [[ $result != *'Resource changes: no change.'* ]]
+            then
+              echo "##vso[task.logissue type=error]WhatIf reports difference between code and environment thats just been deployed"
+              echo "$result"
+              exit 1
+            fi
+
+  - job: bicep_cleanup
+    dependsOn: bicep_deploy
+    variables:
+      isDeployed: $[ dependencies.bicep_deploy.outputs['create_subscription.IsDeployed'] ]
+    displayName: Cleanup Bicep Deployment for PR
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - task: AzurePowerShell@5
+        displayName: Az CLI Remove/Cleanup Deployment
+        condition: ne(variables['isDeployed'], '')
+        inputs:
+          azureSubscription: "azserviceconnection"
+          ScriptType: "FilePath"
+          ScriptPath: ".github/scripts/Wipe-AlzTenant.ps1"
+          ScriptArguments: '-tenantRootGroupID $(azclitenant) -intermediateRootGroupID "$(ManagementGroupPrefix)" -subscriptionName "$(SubscriptionName)"'
+          azurePowerShellVersion: "LatestVersion"
+          pwsh: true
