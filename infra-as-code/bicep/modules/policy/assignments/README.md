@@ -10,6 +10,8 @@ If you wish to add your own additional Azure Policy Assignments please review [H
 
 - [Parameters for Azure Commercial Cloud](generateddocs/policyAssignmentManagementGroup.bicep.md)
 
+> **NOTE:** Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
+
 ## Outputs
 
 The module does not generate any outputs.

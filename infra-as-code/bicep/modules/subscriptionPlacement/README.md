@@ -6,7 +6,7 @@ This module moves one or more subscriptions to be a child of the specified manag
 
 ## Parameters
 
-- [Parameters for Azure Commercial Cloud](generateddocs/subscriptionPlacement.bicep.md)
+- [Link to Parameters](generateddocs/subscriptionPlacement.bicep.md)
 
 ## Outputs
 

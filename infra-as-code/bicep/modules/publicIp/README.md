@@ -8,7 +8,7 @@ Module deploys the following resources:
 
 ## Parameters
 
-- [Parameters for Azure Commercial Cloud](generateddocs/publicIp.bicep.md)
+- [Link to Parameters](generateddocs/publicIp.bicep.md)
 
 ## Outputs
 

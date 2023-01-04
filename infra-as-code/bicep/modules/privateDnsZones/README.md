@@ -11,6 +11,8 @@ Module deploys the following resources:
 
 - [Parameters for Azure Commercial Cloud](generateddocs/privateDnsZones.bicep.md)
 
+> **NOTE:** Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
+
 ## DNS Zones
 
 ### Regional Zones

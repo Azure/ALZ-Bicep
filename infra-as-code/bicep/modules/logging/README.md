@@ -24,6 +24,8 @@ The module will deploy the following Log Analytics Workspace solutions by defaul
 
 - [Parameters for Azure Commercial Cloud](generateddocs/logging.bicep.md)
 
+> **NOTE:** Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
+
 ## Deployment
 
 In this example, a Log Analytics Workspace and Automation Account will be deployed to the resource group `alz-logging`.  The inputs for this module are defined in `logging.parameters.all.json`.

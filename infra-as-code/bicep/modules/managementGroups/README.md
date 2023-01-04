@@ -16,7 +16,7 @@ The Management Groups module deploys a management group hierarchy in a customer'
 
 ## Parameters
 
-- [Parameters for Azure Commercial Cloud](generateddocs/managementGroups.bicep.md)
+- [Link to Parameters](generateddocs/managementGroups.bicep.md)
 
 ### Child Landing Zone Management Groups Flexibility
 
