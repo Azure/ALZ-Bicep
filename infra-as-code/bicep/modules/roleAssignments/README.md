@@ -66,19 +66,19 @@ Connect-AzureAD
 
 ### roleAssignmentManagementGroup.bicep
 
-- [Parameters for Azure Commercial Cloud](generateddocs/roleAssignmentManagementGroup.bicep.md)
+- [Link to Parameters](generateddocs/roleAssignmentManagementGroup.bicep.md)
 
 ### roleAssignmentManagementGroupMany.bicep
 
-- [Parameters for Azure Commercial Cloud](generateddocs/roleAssignmentManagementGroupMany.bicep.md)
+- [Link to Parameters](generateddocs/roleAssignmentManagementGroupMany.bicep.md)
 
 ### roleAssignmentSubscription.bicep
 
-- [Parameters for Azure Commercial Cloud](generateddocs/roleAssignmentSubscription.bicep.md)
+- [Link to Parameters](generateddocs/roleAssignmentSubscription.bicep.md)
 
 ### roleAssignmentSubscriptionMany.bicep
 
-- [Parameters for Azure Commercial Cloud](generateddocs/roleAssignmentSubscriptionMany.bicep.md)
+- [Link to Parameters](generateddocs/roleAssignmentSubscriptionMany.bicep.md)
 
 ## Outputs
 

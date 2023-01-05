@@ -18,7 +18,6 @@
       "value": [
         "AgentHealthAssessment",
         "AntiMalware",
-        "AzureActivity",
         "ChangeTracking",
         "Security",
         "SecurityInsights",

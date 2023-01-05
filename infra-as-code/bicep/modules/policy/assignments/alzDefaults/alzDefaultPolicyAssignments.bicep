@@ -1,30 +1,30 @@
 metadata name = 'ALZ Bicep - ALZ Default Policy Assignments'
 metadata description = 'This policy assignment will assign the ALZ Default Policy to management groups'
 
-@sys.description('Prefix for the management group hierarchy. DEFAULT VALUE = alz')
+@sys.description('Prefix for the management group hierarchy.')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@sys.description('The region where the Log Analytics Workspace & Automation Account are deployed. DEFAULT VALUE = eastus')
+@sys.description('The region where the Log Analytics Workspace & Automation Account are deployed.')
 param parLogAnalyticsWorkSpaceAndAutomationAccountLocation string = 'eastus'
 
-@sys.description('Log Analytics Workspace Resource ID. - DEFAULT VALUE: Empty String ')
+@sys.description('Log Analytics Workspace Resource ID.')
 param parLogAnalyticsWorkspaceResourceId string = ''
 
-@sys.description('Number of days of log retention for Log Analytics Workspace. - DEFAULT VALUE: 365')
+@sys.description('Number of days of log retention for Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceLogRetentionInDays string = '365'
 
-@sys.description('Automation account name. - DEFAULT VALUE: alz-automation-account')
+@sys.description('Automation account name.')
 param parAutomationAccountName string = 'alz-automation-account'
 
 @sys.description('An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.')
 param parMsDefenderForCloudEmailSecurityContact string = 'security_contact@replace_me.com'
 
-@sys.description('ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues. Default: Empty String')
+@sys.description('ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.')
 param parDdosProtectionPlanId string = ''
 
-@sys.description('Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group. Default: Empty String')
+@sys.description('Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group.')
 param parPrivateDnsResourceGroupId string = ''
 
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')

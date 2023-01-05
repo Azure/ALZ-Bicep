@@ -6,14 +6,14 @@ Custom Role Definitions for ALZ Bicep
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parAssignableScopeManagementGroupId | No       | The management group scope to which the role can be assigned. This management group ID will be used for the assignableScopes property in the role definition. Default: alz
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry. Default: false
+parAssignableScopeManagementGroupId | No       | The management group scope to which the role can be assigned. This management group ID will be used for the assignableScopes property in the role definition.
+parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parAssignableScopeManagementGroupId
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The management group scope to which the role can be assigned. This management group ID will be used for the assignableScopes property in the role definition. Default: alz
+The management group scope to which the role can be assigned. This management group ID will be used for the assignableScopes property in the role definition.
 
 - Default value: `alz`
 
@@ -21,7 +21,7 @@ The management group scope to which the role can be assigned. This management gr
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set Parameter to true to Opt-out of deployment telemetry. Default: false
+Set Parameter to true to Opt-out of deployment telemetry.
 
 - Default value: `False`
 

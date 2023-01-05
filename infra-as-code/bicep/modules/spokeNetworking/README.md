@@ -30,7 +30,7 @@ Module deploys the following resources:
 
 ## Parameters
 
-- [Parameters for Azure Commercial Cloud](generateddocs/spokeNetworking.bicep.md)
+- [Link to Parameters](generateddocs/spokeNetworking.bicep.md)
 
 ## Outputs
 

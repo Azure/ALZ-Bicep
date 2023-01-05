@@ -1,19 +1,19 @@
 metadata name = 'ALZ Bicep - Hub Networking Module'
 metadata description = 'ALZ Bicep Module used to set up Hub Networking'
 
-@sys.description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
+@sys.description('The Azure Region to deploy the resources into.')
 param parLocation string = resourceGroup().location
 
-@sys.description('Prefix value which will be prepended to all resource names. Default: alz')
+@sys.description('Prefix value which will be prepended to all resource names.')
 param parCompanyPrefix string = 'alz'
 
-@sys.description('Prefix Used for Hub Network. Default: {parCompanyPrefix}-hub-{parLocation}')
+@sys.description('Prefix Used for Hub Network.')
 param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 
-@sys.description('The IP address range for all virtual networks to use. Default: 10.10.0.0/16')
+@sys.description('The IP address range for all virtual networks to use.')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
-@sys.description('The name and IP address range for each subnet in the virtual networks. Default: AzureBastionSubnet, GatewaySubnet, AzureFirewallSubnet')
+@sys.description('The name and IP address range for each subnet in the virtual networks.')
 param parSubnets array = [
   {
     name: 'AzureBastionSubnet'
@@ -29,10 +29,10 @@ param parSubnets array = [
   }
 ]
 
-@sys.description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
+@sys.description('Array of DNS Server IP addresses for VNet.')
 param parDnsServerIps array = []
 
-@sys.description('Public IP Address SKU. Default: Standard')
+@sys.description('Public IP Address SKU.')
 @allowed([
   'Basic'
   'Standard'
@@ -42,31 +42,31 @@ param parPublicIpSku string = 'Standard'
 @sys.description('Switch to enable/disable Azure Bastion deployment. Default: true')
 param parAzBastionEnabled bool = true
 
-@sys.description('Name Associated with Bastion Service:  Default: {parCompanyPrefix}-bastion')
+@sys.description('Name Associated with Bastion Service.')
 param parAzBastionName string = '${parCompanyPrefix}-bastion'
 
-@sys.description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard. Default: Standard')
+@sys.description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard.')
 param parAzBastionSku string = 'Standard'
 
-@sys.description('NSG Name for Azure Bastion Subnet NSG. Default: nsg-AzureBastionSubnet')
+@sys.description('NSG Name for Azure Bastion Subnet NSG.')
 param parAzBastionNsgName string = 'nsg-AzureBastionSubnet'
 
-@sys.description('Switch to enable/disable DDoS Network Protection deployment. Default: true')
+@sys.description('Switch to enable/disable DDoS Network Protection deployment.')
 param parDdosEnabled bool = true
 
-@sys.description('DDoS Plan Name. Default: {parCompanyPrefix}-ddos-plan')
+@sys.description('DDoS Plan Name.')
 param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
 
-@sys.description('Switch to enable/disable Azure Firewall deployment. Default: true')
+@sys.description('Switch to enable/disable Azure Firewall deployment.')
 param parAzFirewallEnabled bool = true
 
-@sys.description('Azure Firewall Name. Default: {parCompanyPrefix}-azure-firewall')
+@sys.description('Azure Firewall Name.')
 param parAzFirewallName string = '${parCompanyPrefix}-azfw-${parLocation}'
 
-@sys.description('Azure Firewall Policies Name. Default: {parCompanyPrefix}-fwpol-{parLocation}')
+@sys.description('Azure Firewall Policies Name.')
 param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
 
-@sys.description('Azure Firewall Tier associated with the Firewall to deploy. Default: Standard')
+@sys.description('Azure Firewall Tier associated with the Firewall to deploy.')
 @allowed([
   'Standard'
   'Premium'
@@ -78,7 +78,7 @@ param parAzFirewallTier string = 'Standard'
   '2'
   '3'
 ])
-@sys.description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty. Default: Empty Array')
+@sys.description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
 param parAzFirewallAvailabilityZones array = []
 
 @allowed([
@@ -86,7 +86,7 @@ param parAzFirewallAvailabilityZones array = []
   '2'
   '3'
 ])
-@sys.description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP. Default: Empty Array')
+@sys.description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.')
 param parAzErGatewayAvailabilityZones array = []
 
 @allowed([
@@ -94,22 +94,22 @@ param parAzErGatewayAvailabilityZones array = []
   '2'
   '3'
 ])
-@sys.description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP. Default: Empty Array')
+@sys.description('Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.')
 param parAzVpnGatewayAvailabilityZones array = []
 
-@sys.description('Switch to enable/disable Azure Firewall DNS Proxy. Default: true')
+@sys.description('Switch to enable/disable Azure Firewall DNS Proxy.')
 param parAzFirewallDnsProxyEnabled bool = true
 
-@sys.description('Name of Route table to create for the default route of Hub. Default: {parCompanyPrefix}-hub-routetable')
+@sys.description('Name of Route table to create for the default route of Hub.')
 param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 
-@sys.description('Switch to enable/disable BGP Propagation on route table. Default: false')
+@sys.description('Switch to enable/disable BGP Propagation on route table.')
 param parDisableBgpRoutePropagation bool = false
 
-@sys.description('Switch to enable/disable Private DNS Zones deployment. Default: true')
+@sys.description('Switch to enable/disable Private DNS Zones deployment.')
 param parPrivateDnsZonesEnabled bool = true
 
-@sys.description('Resource Group Name for Private DNS Zones. Default: resourceGroup().name')
+@sys.description('Resource Group Name for Private DNS Zones.')
 param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 
 @sys.description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
@@ -229,10 +229,10 @@ param parExpressRouteGatewayConfig object = {
   }
 }
 
-@sys.description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
+@sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 var varSubnetProperties = [for subnet in parSubnets: {

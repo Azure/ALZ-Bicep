@@ -15,7 +15,7 @@ Module deploys the following resources:
 
 ## Parameters
 
-- [Parameters for Azure Commercial Cloud](generateddocs/vnetPeering.bicep.md)
+- [Link to Parameters](generateddocs/vnetPeering.bicep.md)
 
 ## Outputs
 

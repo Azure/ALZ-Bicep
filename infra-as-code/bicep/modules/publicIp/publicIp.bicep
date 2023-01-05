@@ -1,7 +1,7 @@
 metadata name = 'ALZ Bicep - Public IP creation module'
 metadata description = 'Module used to set up Public IP for Azure Landing Zones'
 
-@sys.description('Azure Region to deploy Public IP Address to. Default: resourceGroup().location')
+@sys.description('Azure Region to deploy Public IP Address to.')
 param parLocation string = resourceGroup().location
 
 @sys.description('Name of Public IP to create in Azure.')
@@ -18,13 +18,13 @@ param parPublicIpProperties object
   '2'
   '3'
 ])
-@sys.description('Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty. Default: Empty Array')
+@sys.description('Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty.')
 param parAvailabilityZones array = []
 
-@sys.description('Tags to be applied to resource when deployed. Default: Empty Object')
+@sys.description('Tags to be applied to resource when deployed.')
 param parTags object = {}
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

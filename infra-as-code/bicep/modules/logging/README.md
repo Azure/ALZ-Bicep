@@ -8,7 +8,6 @@ The module will deploy the following Log Analytics Workspace solutions by defaul
 
 - AgentHealthAssessment
 - AntiMalware
-- AzureActivity
 - ChangeTracking
 - Security
 - SecurityInsights (Azure Sentinel)
@@ -24,6 +23,8 @@ The module will deploy the following Log Analytics Workspace solutions by defaul
 ## Parameters
 
 - [Parameters for Azure Commercial Cloud](generateddocs/logging.bicep.md)
+
+> **NOTE:** Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
 
 ## Deployment
 

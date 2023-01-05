@@ -9,10 +9,10 @@ param parLocation string
 @sys.description('Name of Resource Group to be created.')
 param parResourceGroupName string
 
-@sys.description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
+@sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id
