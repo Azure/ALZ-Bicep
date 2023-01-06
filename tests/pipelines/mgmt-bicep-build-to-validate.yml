@@ -1,6 +1,8 @@
 # Description:This pipeline is used to allow contributors to quickly test changes made to MG structure, subscription moves, custom roles, custom policy definitions/sets, and policy assignments.
 name: "ALZ-Bicep Management-RBAC-Policy-SubPlacement Module Tests"
 
+trigger: none
+
 variables:
   - group: csu-bicep-environment
   - name: ResourceGroupName
@@ -31,18 +33,19 @@ stages:
                 az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
 
           - task: Bash@3
-            displayName: Az CLI Create Subscription for PR
+            displayName: Az CLI Create Subscription
             name: create_subscription
             inputs:
               targetType: "inline"
               script: |
-                subid=$(az deployment mg create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file @tests/LZ-Vending/subscription/main.bicep --parameters @tests/LZ-Vending/subscription/subscription.parameters.json --parameters subscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) subscriptionDisplayName=$(SubscriptionName) | jq .properties.outputs.subscriptionId.value | tr -d '"')
+                az deployment mg create --name "deploy-$(SubscriptionName)" --location $(Location) --management-group-id $(azclitenant) --template-file tests/LZ-Vending/subscription/main.bicep --parameters @tests/LZ-Vending/subscription/subscription.parameters.json --parameters subscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) subscriptionDisplayName=$(SubscriptionName)
+                subId=$(az deployment mg show --name "$(SubscriptionName)" --management-group-id $(azclitenant) --query properties.outputs.subscriptionId.value)
                 echo $subId
-                echo "##vso[task.setvariable variable=subscriptionId]$subid"
-                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
+                echo "##vso[task.setvariable variable=subscriptionId]$subId"
+                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subId"
 
           - task: Bash@3
-            displayName: Az CLI Refresh subscription list
+            displayName: Az CLI Refresh Subscription List
             name: refresh_subscription
             inputs:
               targetType: "inline"
@@ -50,7 +53,7 @@ stages:
                 az account list --refresh
 
           - task: Bash@3
-            displayName: Az CLI Deploy Management Groups for PR
+            displayName: Az CLI Deploy Management Groups
             name: create_mgs
             inputs:
               targetType: "inline"
@@ -58,15 +61,7 @@ stages:
                 az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.min.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location)
 
           - task: Bash@3
-            displayName: Az CLI Deploy Custom Role Definitions for PR
-            name: create_rbac_roles
-            inputs:
-              targetType: "inline"
-              script: |
-                az deployment mg create --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.min.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
-
-          - task: Bash@3
-            displayName: Az CLI Deploy Custom Policy Definitions for PR
+            displayName: Az CLI Deploy Custom Policy Definitions
             name: create_policy_defs
             inputs:
               targetType: "inline"
@@ -74,27 +69,43 @@ stages:
                 az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.min.json parTargetManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
 
           - task: Bash@3
-            displayName: Az CLI Subscription Placement for PR
+            displayName: Az CLI Deploy Custom Role Definitions
+            name: create_rbac_roles
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment mg create --name "deploy-customroledefs-$(Build.BuildId)" --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.min.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
+                appOwnertRoleId = $(az deployment mg show --name "deploy-customroledefs-$(Build.BuildId)" --management-group-id $(azclitenant) --query properties.outputs.outRolesApplicationOwnerRoleId.value)
+                echo "##vso[task.setvariable variable=appOwnerRoleId]$appOwnertRoleId"
+
+          - task: Bash@3
+            displayName: Az CLI Deploy Custom Role Assignments
+            name: assign_rbac_roles
+            inputs:
+              targetType: "inline"
+              script: |
+                spnObjectId = $(Get-AzADServicePrincipal -DisplayName spn-lz-sub-vending.Id)
+                echo "az deployment mg create --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep  --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.min.json parAssigneeObjectId=$spnObjectId parRoleDefinitionId=$(appOwnerRoleId) --location $(Location) --management-group-id $(ManagementGroupPrefix)"
+
+          - task: Bash@3
+            displayName: Az CLI Subscription Placement
             name: move_sub
             inputs:
               targetType: "inline"
               script: |
-                az deployment mg create --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parPlatformConnectivityMgSubs='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
+                az deployment mg create --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parPlatformConnectivityMgSubs='[$(subscriptionId)]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
 
-          - task: AzurePowerShell@5
-            displayName: Az PwSh alzDefaultPolicyAssignments for PR
-            name: alz_default_policy_assignments
+          - task: Bash@3
+            displayName: Az CLI Deploy Default Policy Assignments
+            name: assign_default_policies
             inputs:
-              azureSubscription: "azserviceconnection"
-              ScriptType: "FilePath"
-              ScriptPath: ".github/scripts/Set-AlzDefaultPolicyAssignment.ps1"
-              ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\alzDefaults\parameters\alzDefaultPolicyAssignments.parameters.min.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix) -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $(Location) -parLogAnalyticsWorkspaceResourceId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" -parDdosProtectionPlanId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan" -parPrivateDnsResourceGroupId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)"'
-              azurePowerShellVersion: "LatestVersion"
-              pwsh: true
+              targetType: "inline"
+              script: |
+                az deployment mg create --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep  --parameters @infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.min.json parPolicyAssignmentDefinitionId="/providers/Microsoft.Management/managementGroups/$(ManagementGroupPrefix)/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP" --location $(Location) --management-group-id $(ManagementGroupPrefix)
 
           # Used to verify that WhatIf operator does not find differences between code and environment that's just been deployed.
           - task: Bash@3
-            displayName: Az CLI After Deployment What-If Management Groups for PR
+            displayName: Az CLI After Deployment What-If Management Groups
             name: whatif_mgs
             inputs:
               targetType: "inline"
@@ -112,7 +123,7 @@ stages:
         dependsOn: bicep_deploy_prfiles
         variables:
           isDeployed: $[ dependencies.bicep_deploy_prfiles.outputs['create_subscription.IsDeployed'] ]
-        displayName: Cleanup Bicep Deployment for PR
+        displayName: Cleanup Bicep Deployment
         pool:
           vmImage: ubuntu-latest
         steps:
@@ -143,8 +154,6 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
-          - checkout: none
-
           - bash: git checkout main
 
           - task: Bash@3
@@ -156,18 +165,20 @@ stages:
                 az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
 
           - task: Bash@3
-            displayName: Az CLI Create Subscription for PR
+            displayName: Az CLI Create Subscription
             name: create_subscription
             inputs:
               targetType: "inline"
               script: |
-                subid=$(az deployment mg create --name "deploy-$(SubscriptionName)" --location $(Location) --template-file @tests/LZ-Vending/subscription/main.bicep --parameters @tests/LZ-Vending/subscription/subscription.parameters.json --parameters subscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) subscriptionDisplayName=$(SubscriptionName) | jq .properties.outputs.subscriptionId.value | tr -d '"')
+                az deployment mg create --name "deploy-$(SubscriptionName)" --location $(Location) --management-group-id $(azclitenant) --template-file tests/LZ-Vending/subscription/main.bicep --parameters @tests/LZ-Vending/subscription/subscription.parameters.json --parameters subscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) subscriptionDisplayName=$(SubscriptionName)
+                subId=$(az deployment mg show --name "$(SubscriptionName)" --management-group-id $(azclitenant) --query properties.outputs.subscriptionId.value)
                 echo $subId
                 echo "##vso[task.setvariable variable=subscriptionId]$subid"
-                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subid"
+                echo "##vso[task.setvariable variable=subscriptionId;isoutput=true]$subId"
+                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subId"
 
           - task: Bash@3
-            displayName: Az CLI Refresh subscription list
+            displayName: Az CLI Refresh Subscription List
             name: refresh_subscription
             inputs:
               targetType: "inline"
@@ -175,7 +186,7 @@ stages:
                 az account list --refresh
 
           - task: Bash@3
-            displayName: Az CLI Deploy Management Groups for PR
+            displayName: Az CLI Deploy Management Groups
             name: create_mgs
             inputs:
               targetType: "inline"
@@ -183,15 +194,7 @@ stages:
                 az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.min.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location)
 
           - task: Bash@3
-            displayName: Az CLI Deploy Custom Role Definitions for PR
-            name: create_rbac_roles
-            inputs:
-              targetType: "inline"
-              script: |
-                az deployment mg create --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.min.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
-
-          - task: Bash@3
-            displayName: Az CLI Deploy Custom Policy Definitions for PR
+            displayName: Az CLI Deploy Custom Policy Definitions
             name: create_policy_defs
             inputs:
               targetType: "inline"
@@ -199,27 +202,43 @@ stages:
                 az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.min.json parTargetManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
 
           - task: Bash@3
-            displayName: Az CLI Subscription Placement for PR
+            displayName: Az CLI Deploy Custom Role Definitions
+            name: create_rbac_roles
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment mg create --name "deploy-customroledefs-$(Build.BuildId)" --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.min.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
+                appOwnertRoleId = $(az deployment mg show --name "deploy-customroledefs-$(Build.BuildId)" --management-group-id $(azclitenant) --query properties.outputs.outRolesApplicationOwnerRoleId.value)
+                echo "##vso[task.setvariable variable=appOwnerRoleId]$appOwnertRoleId"
+
+          - task: Bash@3
+            displayName: Az CLI Deploy Custom Role Assignments
+            name: assign_rbac_roles
+            inputs:
+              targetType: "inline"
+              script: |
+                spnObjectId = $(Get-AzADServicePrincipal -DisplayName spn-lz-sub-vending.Id)
+                echo "az deployment mg create --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep  --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.min.json parAssigneeObjectId=$spnObjectId parRoleDefinitionId=$(appOwnerRoleId) --location $(Location) --management-group-id $(ManagementGroupPrefix)"
+
+          - task: Bash@3
+            displayName: Az CLI Subscription Placement
             name: move_sub
             inputs:
               targetType: "inline"
               script: |
-                az deployment mg create --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parPlatformConnectivityMgSubs='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
+                az deployment mg create --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parPlatformConnectivityMgSubs='[$(subscriptionId)]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
 
-          - task: AzurePowerShell@5
-            displayName: Az PwSh alzDefaultPolicyAssignments for PR
-            name: alz_default_policy_assignments
-            inputs:
-              azureSubscription: "azserviceconnection"
-              ScriptType: "FilePath"
-              ScriptPath: ".github/scripts/Set-AlzDefaultPolicyAssignment.ps1"
-              ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\alzDefaults\parameters\alzDefaultPolicyAssignments.parameters.min.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix) -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $(Location) -parLogAnalyticsWorkspaceResourceId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" -parDdosProtectionPlanId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan" -parPrivateDnsResourceGroupId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)"'
-              azurePowerShellVersion: "LatestVersion"
-              pwsh: true
-
-          # Verify that WhatIf does not find differences between code and environment thats just been deployed
           - task: Bash@3
-            displayName: Az CLI After Deployment What-If Management Groups for PR
+            displayName: Az CLI Deploy Default Policy Assignments
+            name: assign_default_policies
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment mg create --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep  --parameters @infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.min.json parPolicyAssignmentDefinitionId="/providers/Microsoft.Management/managementGroups/$(ManagementGroupPrefix)/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP" --location $(Location) --management-group-id $(ManagementGroupPrefix)
+
+          # Used to verify that WhatIf operator does not find differences between code and environment that's just been deployed.
+          - task: Bash@3
+            displayName: Az CLI After Deployment What-If Management Groups
             name: whatif_mgs
             inputs:
               targetType: "inline"
@@ -235,6 +254,8 @@ stages:
       - job: bicep_deploy_prfiles
         displayName: Deploy Bicep Files for PR
         dependsOn: bicep_deploy_mainfiles
+        variables:
+          subscriptionId: $[ dependencies.bicep_deploy_mainfiles.outputs['passOutput.subscriptionId'] ]
         pool:
           vmImage: ubuntu-latest
         steps:
@@ -247,7 +268,7 @@ stages:
                 az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
 
           - task: Bash@3
-            displayName: Az CLI Refresh subscription list
+            displayName: Az CLI Refresh Subscription List
             name: refresh_subscription
             inputs:
               targetType: "inline"
@@ -255,7 +276,7 @@ stages:
                 az account list --refresh
 
           - task: Bash@3
-            displayName: Az CLI Deploy Management Groups for PR
+            displayName: Az CLI Deploy Management Groups
             name: create_mgs
             inputs:
               targetType: "inline"
@@ -263,15 +284,7 @@ stages:
                 az deployment tenant create --template-file infra-as-code/bicep/modules/managementGroups/managementGroups.bicep --parameters @infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.min.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location)
 
           - task: Bash@3
-            displayName: Az CLI Deploy Custom Role Definitions for PR
-            name: create_rbac_roles
-            inputs:
-              targetType: "inline"
-              script: |
-                az deployment mg create --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep  --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.min.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
-
-          - task: Bash@3
-            displayName: Az CLI Deploy Custom Policy Definitions for PR
+            displayName: Az CLI Deploy Custom Policy Definitions
             name: create_policy_defs
             inputs:
               targetType: "inline"
@@ -279,27 +292,43 @@ stages:
                 az deployment mg create --template-file infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep  --parameters @infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.min.json parTargetManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
 
           - task: Bash@3
-            displayName: Az CLI Subscription Placement for PR
+            displayName: Az CLI Deploy Custom Role Definitions
+            name: create_rbac_roles
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment mg create --name "deploy-customroledefs-$(Build.BuildId)" --template-file infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep --parameters @infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.min.json parAssignableScopeManagementGroupId=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix)
+                appOwnertRoleId = $(az deployment mg show --name "deploy-customroledefs-$(Build.BuildId)" --management-group-id $(azclitenant) --query properties.outputs.outRolesApplicationOwnerRoleId.value)
+                echo "##vso[task.setvariable variable=appOwnerRoleId]$appOwnertRoleId"
+
+          - task: Bash@3
+            displayName: Az CLI Deploy Custom Role Assignments
+            name: assign_rbac_roles
+            inputs:
+              targetType: "inline"
+              script: |
+                spnObjectId = $(Get-AzADServicePrincipal -DisplayName spn-lz-sub-vending.Id)
+                echo "az deployment mg create --template-file infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep  --parameters @infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.min.json parAssigneeObjectId=$spnObjectId parRoleDefinitionId=$(appOwnerRoleId) --location $(Location) --management-group-id $(ManagementGroupPrefix)"
+
+          - task: Bash@3
+            displayName: Az CLI Subscription Placement
             name: move_sub
             inputs:
               targetType: "inline"
               script: |
-                az deployment mg create --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parPlatformConnectivityMgSubs='["$(subscriptionId)"]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
+                az deployment mg create --template-file infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep --parameters @infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.min.json parTopLevelManagementGroupPrefix="$(ManagementGroupPrefix)" parPlatformConnectivityMgSubs='[$(subscriptionId)]' --location $(Location) --management-group-id $(ManagementGroupPrefix)
 
-          - task: AzurePowerShell@5
-            displayName: Az PwSh alzDefaultPolicyAssignments for PR
-            name: alz_default_policy_assignments
+          - task: Bash@3
+            displayName: Az CLI Deploy Default Policy Assignments
+            name: assign_default_policies
             inputs:
-              azureSubscription: "azserviceconnection"
-              ScriptType: "FilePath"
-              ScriptPath: ".github/scripts/Set-AlzDefaultPolicyAssignment.ps1"
-              ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\alzDefaults\parameters\alzDefaultPolicyAssignments.parameters.min.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix) -parLogAnalyticsWorkSpaceAndAutomationAccountLocation $(Location) -parLogAnalyticsWorkspaceResourceId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics" -parDdosProtectionPlanId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan" -parPrivateDnsResourceGroupId "/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)"'
-              azurePowerShellVersion: "LatestVersion"
-              pwsh: true
+              targetType: "inline"
+              script: |
+                az deployment mg create --template-file infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep  --parameters @infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.min.json parPolicyAssignmentDefinitionId="/providers/Microsoft.Management/managementGroups/$(ManagementGroupPrefix)/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP" --location $(Location) --management-group-id $(ManagementGroupPrefix)
 
           # Used to verify that WhatIf operator does not find differences between code and environment that's just been deployed.
           - task: Bash@3
-            displayName: Az CLI After Deployment What-If Management Groups for PR
+            displayName: Az CLI After Deployment What-If Management Groups
             name: whatif_mgs
             inputs:
               targetType: "inline"
@@ -317,7 +346,7 @@ stages:
         dependsOn: bicep_deploy_prfiles
         variables:
           isDeployed: $[ dependencies.bicep_deploy_mainfiles.outputs['create_subscription.IsDeployed'] ]
-        displayName: Cleanup Bicep Deployment for PR
+        displayName: Cleanup Bicep Deployment
         pool:
           vmImage: ubuntu-latest
         steps:
