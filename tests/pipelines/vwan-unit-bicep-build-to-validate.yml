@@ -144,3 +144,50 @@ jobs:
           ScriptArguments: '-tenantRootGroupID $(azclitenant) -intermediateRootGroupID "$(ManagementGroupPrefix)" -subscriptionName "$(SubscriptionName)"'
           azurePowerShellVersion: "LatestVersion"
           pwsh: true
+
+  # This stage will test the modules by first deploying the resources using the ALZ-Bicep main branch and then deploying over the top of those resources using the contributor's branch.
+  - stage: PROverMainFileDeploy
+    dependsOn: "PRFileDeployOnly"
+    variables:
+      - name: SubscriptionName
+        value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)-s2"
+      - name: ManagementGroupPrefix
+        value: "PR-$(System.PullRequest.PullRequestNumber)-S2"
+
+    # This job is used to create a subscription and test the modules and scenarios within the description at the top of this file.
+    jobs:
+      - job: bicep_deploy_mainfiles
+        displayName: Deploy Bicep Files for Main
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - bash: git checkout main
+
+          - task: Bash@3
+            displayName: Login to Azure
+            name: git_azlogin
+            inputs:
+              targetType: "inline"
+              script: |
+                az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+
+          - task: Bash@3
+            displayName: Az CLI Create Subscription
+            name: create_subscription
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment mg create --name "deploy-$(SubscriptionName)" --location $(Location) --management-group-id $(azclitenant) --template-file tests/LZ-Vending/subscription/main.bicep --parameters @tests/LZ-Vending/subscription/subscription.parameters.json --parameters subscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) subscriptionDisplayName=$(SubscriptionName)
+                subId=$(az deployment mg show --name "$(SubscriptionName)" --management-group-id $(azclitenant) --query properties.outputs.subscriptionId.value)
+                echo $subId
+                echo "##vso[task.setvariable variable=subscriptionId]$subid"
+                echo "##vso[task.setvariable variable=subscriptionId;isoutput=true]$subId"
+                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subId"
+
+          - task: Bash@3
+            displayName: Az CLI Refresh Subscription List
+            name: refresh_subscription
+            inputs:
+              targetType: "inline"
+              script: |
+                az account list --refresh
