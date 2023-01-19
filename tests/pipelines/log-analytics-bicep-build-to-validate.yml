@@ -1,0 +1,220 @@
+# Description:This pipeline is used to allow contributors to quickly test changes made to ALZ Bicep - Logging Module,Automation Account.
+name: "ALZ Bicep - Logging Module,Automation Account Module Tests"
+
+variables:
+  - group: csu-bicep-environment
+  - name: ResourceGroupName
+    value: "rsg-github-pr-$(System.PullRequest.PullRequestNumber)"
+
+stages:
+  # This stage will test the modules using the contributor's branch only.
+  - stage: PRFileDeployOnly
+    variables:
+      - name: SubscriptionName
+        value: "sub-unit-test-pr-$(System.PullRequest.PullRequestNumber)-s1"
+      - name: ManagementGroupPrefix
+        value: "PR-$(System.PullRequest.PullRequestNumber)-S1"
+
+    # This job is used to create a subscription and test the modules and scenarios within the description at the top of this file.
+    jobs:
+      - job: bicep_deploy_prfiles
+        displayName: Deploy Bicep Files for PR
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: Bash@3
+            displayName: Login to Azure
+            name: git_azlogin
+            inputs:
+              targetType: "inline"
+              script: |
+                az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+
+          - task: Bash@3
+            displayName: Az CLI Create Subscription
+            name: create_subscription
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment mg create --name "deploy-$(SubscriptionName)" --location $(Location) --management-group-id $(azclitenant) --template-file tests/LZ-Vending/subscription/main.bicep --parameters @tests/LZ-Vending/subscription/subscription.parameters.json --parameters subscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) subscriptionDisplayName=$(SubscriptionName)
+                subId=$(az deployment mg show --name "$(SubscriptionName)" --management-group-id $(azclitenant) --query properties.outputs.subscriptionId.value)
+                echo $subId
+                echo "##vso[task.setvariable variable=subscriptionId]$subId"
+                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subId"
+
+          - task: Bash@3
+            displayName: Az CLI Refresh subscription list
+            name: refresh_subscription
+            inputs:
+              targetType: "inline"
+              script: |
+                az account list --refresh
+
+          - task: Bash@3
+            displayName: Az CLI Create Resource Group for PR
+            name: create_rsg
+            inputs:
+              targetType: "inline"
+              script: |
+                az account set --subscription $(subscriptionId)
+                if [ $(az group exists --name $(ResourceGroupName) ) == false ]; then
+                    sleep 300
+                fi
+                az group create --name $(ResourceGroupName) --location $(Location)
+
+          - task: Bash@3
+            displayName: Az CLI Deploy Logging for PR
+            name: create_logging
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/parameters/logging.parameters.min.json
+
+      # Used to clean environment from all resources provisioned from the 'bicep_deploy_prfiles' job within the 'PRFileDeployOnly' stage.
+      - job: bicep_cleanup
+        dependsOn: bicep_deploy_prfiles
+        variables:
+          isDeployed: $[ dependencies.bicep_deploy_prfiles.outputs['create_subscription.IsDeployed'] ]
+        displayName: Cleanup Bicep Deployment for PR
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: AzurePowerShell@5
+            displayName: Az CLI Remove/Cleanup Deployment
+            condition: ne(variables['isDeployed'], '')
+            inputs:
+              azureSubscription: "azserviceconnection"
+              ScriptType: "FilePath"
+              ScriptPath: ".github/scripts/Wipe-AlzTenant.ps1"
+              ScriptArguments: '-tenantRootGroupID $(azclitenant) -intermediateRootGroupID "$(ManagementGroupPrefix)" -subscriptionName "$(SubscriptionName)"'
+              azurePowerShellVersion: "LatestVersion"
+              pwsh: true
+
+  # This stage will test the modules by first deploying the resources using the ALZ-Bicep main branch and then deploying over the top of those resources using the contributor's branch.
+  - stage: PROverMainFileDeploy
+    dependsOn: "PRFileDeployOnly"
+    variables:
+      - name: SubscriptionName
+        value: "sub-unit-test-pr-123-s2"
+      - name: ManagementGroupPrefix
+        value: "PR-123-S2"
+
+    # This job is used to create a subscription and test the modules and scenarios within the description at the top of this file.
+    jobs:
+      - job: bicep_deploy_mainfiles
+        displayName: Deploy Bicep Files for Main
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+
+          - bash: git checkout main
+
+          - task: Bash@3
+            displayName: Login to Azure
+            name: git_azlogin
+            inputs:
+              targetType: "inline"
+              script: |
+                az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+
+          - task: Bash@3
+            displayName: Az CLI Create Subscription
+            name: create_subscription
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment mg create --name "deploy-$(SubscriptionName)" --location $(Location) --management-group-id $(azclitenant) --template-file tests/LZ-Vending/subscription/main.bicep --parameters @tests/LZ-Vending/subscription/subscription.parameters.json --parameters subscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) subscriptionDisplayName=$(SubscriptionName)
+                subId=$(az deployment mg show --name "$(SubscriptionName)" --management-group-id $(azclitenant) --query properties.outputs.subscriptionId.value)
+                echo $subId
+                echo "##vso[task.setvariable variable=subscriptionId]$subId"
+                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subId"
+
+          - task: Bash@3
+            displayName: Az CLI Refresh subscription list
+            name: refresh_subscription
+            inputs:
+              targetType: "inline"
+              script: |
+                az account list --refresh
+
+          - task: Bash@3
+            displayName: Az CLI Create Resource Group for PR
+            name: create_rsg
+            inputs:
+              targetType: "inline"
+              script: |
+                az account set --subscription $(subscriptionId)
+                if [ $(az group exists --name $(ResourceGroupName) ) == false ]; then
+                    sleep 300
+                fi
+                az group create --name $(ResourceGroupName) --location $(Location)
+
+          - task: Bash@3
+            displayName: Az CLI Deploy Logging for PR
+            name: create_logging
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/parameters/logging.parameters.min.json
+
+      - job: bicep_deploy_prfiles
+        displayName: Deploy Bicep Files for PR
+        dependsOn: bicep_deploy_mainfiles
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: Bash@3
+            displayName: Login to Azure
+            name: git_azlogin
+            inputs:
+              targetType: "inline"
+              script: |
+                az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+
+          - task: Bash@3
+            displayName: Az CLI Create Subscription
+            name: create_subscription
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment mg create --name "deploy-$(SubscriptionName)" --location $(Location) --management-group-id $(azclitenant) --template-file tests/LZ-Vending/subscription/main.bicep --parameters @tests/LZ-Vending/subscription/subscription.parameters.json --parameters subscriptionBillingScope=$(ALZ-AZURE-SECRET-EA-BILLING-ACCOUNT) subscriptionDisplayName=$(SubscriptionName)
+                subId=$(az deployment mg show --name "$(SubscriptionName)" --management-group-id $(azclitenant) --query properties.outputs.subscriptionId.value)
+                echo $subId
+                echo "##vso[task.setvariable variable=subscriptionId]$subId"
+                echo "##vso[task.setvariable variable=IsDeployed;isoutput=true]$subId"
+
+          - task: Bash@3
+            displayName: Az CLI Refresh subscription list
+            name: refresh_subscription
+            inputs:
+              targetType: "inline"
+              script: |
+                az account list --refresh
+
+          - task: Bash@3
+            displayName: Az CLI Deploy Logging for PR
+            name: create_logging
+            inputs:
+              targetType: "inline"
+              script: |
+                az deployment group create --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/logging/logging.bicep --parameters @infra-as-code/bicep/modules/logging/parameters/logging.parameters.min.json
+
+      # Used to clean environment from all resources provisioned from the 'bicep_deploy_prfiles' job within the 'PROverMainFileDeploy' stage.
+      - job: bicep_cleanup
+        dependsOn: bicep_deploy_prfiles
+        variables:
+          isDeployed: $[ dependencies.bicep_deploy_mainfiles.outputs['create_subscription.IsDeployed'] ]
+        displayName: Cleanup Bicep Deployment for PR
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: AzurePowerShell@5
+            displayName: Az CLI Remove/Cleanup Deployment
+            condition: ne(variables['isDeployed'], '')
+            inputs:
+              azureSubscription: "azserviceconnection"
+              ScriptType: "FilePath"
+              ScriptPath: ".github/scripts/Wipe-AlzTenant.ps1"
+              ScriptArguments: '-tenantRootGroupID $(azclitenant) -intermediateRootGroupID "$(ManagementGroupPrefix)" -subscriptionName "$(SubscriptionName)"'
+              azurePowerShellVersion: "LatestVersion"
+              pwsh: true
