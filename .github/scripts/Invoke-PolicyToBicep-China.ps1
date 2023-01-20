@@ -276,7 +276,7 @@ function New-PolicyAssignmentsBicepInputTxtFile {
     $policyAssignmentNameNoHyphens = $policyAssignmentName.replace("-", "")
 
     Write-Information "==> Adding '$policyAssignmentName' to '$PWD/$assignmentsTxtFileName'" -InformationAction Continue
-    Add-Content -Path "$rootPath/$assignmentsLongPath/$assignmentsTxtFileName" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionId: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: loadJsonContent('../../policy/$assignmentsLongPath/$fileName')`r`n}`r`n"
+    Add-Content -Path "$rootPath/$assignmentsLongPath/$assignmentsTxtFileName" -Encoding "utf8" -Value "var varPolicyAssignment$policyAssignmentNameNoHyphens = {`r`n`tdefinitionId: '$policyAssignmentDefinitionID'`r`n`tlibDefinition: loadJsonContent('../../../policy/$assignmentsLongPath/$fileName')`r`n}`r`n"
   }
 
   Write-Information "====> Running '$assignmentsTxtFileName' through Line Endings" -InformationAction Continue
