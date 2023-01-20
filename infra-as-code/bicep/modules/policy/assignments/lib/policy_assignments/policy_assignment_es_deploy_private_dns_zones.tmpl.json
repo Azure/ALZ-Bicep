@@ -167,7 +167,7 @@
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureCognitiveSearchPrivateDnsZoneId]"
       }
     },
-    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelManagementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Private-DNS-Zones",
+    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Private-DNS-Zones",
     "scope": null,
     "enforcementMode": "Default"
   },
