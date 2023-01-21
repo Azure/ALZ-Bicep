@@ -14,6 +14,8 @@ This module contains 4 Bicep templates, you may optionally choose one of these m
 | roleAssignmentManagementGroupMany.bicep | Performs role assignment on one or more management groups.  This template uses `roleAssignmentManagementGroup.bicep` for the deployments. | Management Group |
 | roleAssignmentSubscription.bicep        | Performs role assignment on one subscription                                                                                              | Subscription     |
 | roleAssignmentSubscriptionMany.bicep    | Performs role assignment on one or more subscriptions.  This template uses `roleAssignmentSubscription.bicep` for the deployments.        | Management Group |
+| roleAssignmentResourceGroup.bicep       | Performs role assignment on one resource group                                                                                            | Resource Group   |
+| roleAssignmentResourceGroupMany.bicep   | Performs role assignment on one or more resource groups.  This template uses `roleAssignmentResourceGroup.bicep` for the deployments.     | Management Group |
 
 ## Parameters
 
@@ -79,6 +81,14 @@ Connect-AzureAD
 ### roleAssignmentSubscriptionMany.bicep
 
 - [Link to Parameters](generateddocs/roleAssignmentSubscriptionMany.bicep.md)
+
+### roleAssignmentResourceGroup.bicep
+
+- [Link to Parameters](generateddocs/roleAssignmentResourceGroup.bicep.md)
+
+### roleAssignmentResourceGroupMany.bicep
+
+- [Link to Parameters](generateddocs/roleAssignmentResourceGroupMany.bicep.md)
 
 ## Outputs
 
@@ -165,3 +175,11 @@ New-AzManagementGroupDeployment @inputObject
 ### Many Subscription Role Assignments
 
 ![Bicep Visualizer - Many Subscription Role Assignments](media/bicepVisualizerSubMany.png "Bicep Visualizer - Many Subscription Role Assignments")
+
+### Single Resource Group Role Assignment
+
+![Bicep Visualizer - Single Resource Group Role Assignment](media/bicepVisualizerSub.png "Bicep Visualizer - Single Resource Group Role Assignment")
+
+### Many Resource Group Role Assignments
+
+![Bicep Visualizer - Many Resource Group Role Assignments](media/bicepVisualizerSubMany.png "Bicep Visualizer - Many Resource Group Role Assignments")
