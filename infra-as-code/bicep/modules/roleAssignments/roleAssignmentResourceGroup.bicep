@@ -1,5 +1,3 @@
-targetScope = 'resourceGroup'
-
 metadata name = 'ALZ Bicep - Role Assignment to a Resource Group'
 metadata description = 'Module used to assign a Role Assignment to a Resource Group'
 
