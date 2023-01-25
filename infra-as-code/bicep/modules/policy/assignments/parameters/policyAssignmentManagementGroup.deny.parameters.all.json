@@ -38,6 +38,9 @@
         "parPolicyAssignmentIdentityRoleAssignmentsSubs": {
             "value": []
         },
+        "parPolicyAssignmentIdentityRoleAssignmentsResourceGroups": {
+          "value": []
+        },
         "parPolicyAssignmentIdentityRoleDefinitionIds": {
             "value": []
         },
