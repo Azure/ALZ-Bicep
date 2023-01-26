@@ -13,6 +13,7 @@ parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log re
 parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace.
 parAutomationAccountName | No       | Automation account name.
 parAutomationAccountLocation | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
+parAutomationAccountUseManagedIdentity | No       | Automation Account - use managed identity.
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parAutomationAccountTags | No       | Tags you would like to be applied to Automation Account.
 parLogAnalyticsWorkspaceTags | No       | Tags you would like to be applied to Log Analytics Workspace.
@@ -77,6 +78,14 @@ Automation account name.
 Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
 
 - Default value: `[resourceGroup().location]`
+
+### parAutomationAccountUseManagedIdentity
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Automation Account - use managed identity.
+
+- Default value: `True`
 
 ### parTags
 
@@ -163,6 +172,9 @@ outAutomationAccountId | string |
         },
         "parAutomationAccountLocation": {
             "value": "[resourceGroup().location]"
+        },
+        "parAutomationAccountUseManagedIdentity": {
+            "value": true
         },
         "parTags": {
             "value": {}

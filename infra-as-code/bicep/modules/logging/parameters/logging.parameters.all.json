@@ -35,6 +35,9 @@
     "parAutomationAccountLocation": {
       "value": "eastus2"
     },
+    "parAutomationAccountUseManagedIdentity": {
+      "value": true
+    },
     "parTags": {
       "value": {
         "Environment": "POC"
