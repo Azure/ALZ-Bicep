@@ -218,7 +218,7 @@ var varRbacRoleDefinitionIds = {
   aksContributor: 'ed7f3fbd-7b88-4dd4-9017-9adb7ce333f8'
 }
 
-// Managment Groups Varaibles - Used For Policy Assignments
+// Management Groups Variables - Used For Policy Assignments
 var varManagementGroupIds = {
   intRoot: parTopLevelManagementGroupPrefix
   platform: '${parTopLevelManagementGroupPrefix}-platform'
@@ -378,7 +378,7 @@ module modPolicyAssignmentIntRootDeployAscMonitoring '../../../policy/assignment
   }
 }
 
-// // Module - Policy Assignment - Deploy-Resource-Diag
+// Module - Policy Assignment - Deploy-Resource-Diag
 module modPolicyAssignmentIntRootDeployResourceDiag '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployResourceDiag
@@ -450,7 +450,7 @@ module modPolicyAssignmentIntRootDeployVmssMonitoring '../../../policy/assignmen
   }
 }
 
-// // Modules - Policy Assignments - Connectivity Management Group
+// Modules - Policy Assignments - Connectivity Management Group
 // Module - Policy Assignment - Enable-DDoS-VNET
 module modPolicyAssignmentConnEnableDdosVnet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!empty(parDdosProtectionPlanId)) {
   scope: managementGroup(varManagementGroupIds.platformConnectivity)
