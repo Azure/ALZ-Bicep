@@ -4,7 +4,7 @@
 
 This document outlines the prerequisites, dependencies and flow to help orchestrate an end-to-end Azure Landing Zone deployment.  The orchestration templates provided with this reference implementation have been pre-configured to follow the dependencies described in this document.
 
-> Have you seen our page in the Azure Architecture Center here: [Azure landing zones - Bicep modules design considerations](https://docs.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep)
+> Have you seen our page in the Azure Architecture Center here: [Azure landing zones - Bicep modules design considerations](https://docs.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
 
 ## Azure Enablement Show Videos
 
@@ -103,4 +103,4 @@ A service principal account is required to automate through Azure DevOps or GitH
 
 ## Consumption Methods
 
-The `ALZ-Bicep` modules can be consumed and used in a manner of different ways. For more information see the [Consumer Guide](https://github.com/Azure/ALZ-Bicep/wiki/ConsumerGuide)
+The `ALZ-Bicep` modules can be consumed and used in a manner of different ways. For more information see the [Consumer Guide](https://github.com/Azure/ALZ-Bicep/wiki/ConsumerGuide).
