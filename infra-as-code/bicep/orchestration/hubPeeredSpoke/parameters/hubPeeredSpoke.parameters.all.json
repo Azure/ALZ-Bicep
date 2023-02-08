@@ -31,7 +31,7 @@
       },
       "parDisableBgpRoutePropagation": {
         "value": false
-      },      
+      },
       "parSpoketoHubRouteTableName": {
         "value": "rtb-spoke-to-hub"
       },
@@ -46,7 +46,7 @@
       },
       "parTags": {
         "value": {
-          "Environment": "POC"
+          "Peerings": "Production"
         }
       },
       "parTelemetryOptOut": {

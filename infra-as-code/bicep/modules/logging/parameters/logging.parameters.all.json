@@ -33,14 +33,14 @@
       "value": "alz-automation-account"
     },
     "parAutomationAccountLocation": {
-      "value": "eastus2"
+      "value": "canadacentral"
     },
     "parAutomationAccountUseManagedIdentity": {
       "value": true
     },
     "parTags": {
       "value": {
-        "Environment": "POC"
+        "Loggings": "Production"
       }
     },
     "parTelemetryOptOut": {
