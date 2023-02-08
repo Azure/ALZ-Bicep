@@ -18,7 +18,7 @@ on: [workflow_dispatch]
 env:
   ManagementGroupPrefix: "alz"
   TopLevelManagementGroupDisplayName: "Azure Landing Zones"
-  Location: "eastus"
+  Location: "canadacentral"
   LoggingSubId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
   LoggingResourceGroupName: "alz-logging"
   HubNetworkSubId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
@@ -59,7 +59,7 @@ jobs:
           parameters: infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json
           deploymentName: create_policy_defs-${{ env.runNumber }}
           failOnStdErr: false
-        
+
       - name: Deploy Custom Role Definitions
         id: create_rbac_roles
         uses: azure/arm-deploy@v1

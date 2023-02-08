@@ -30,7 +30,7 @@ Prefix for the management group hierarchy.
 
 The region where the Log Analytics Workspace & Automation Account are deployed.
 
-- Default value: `eastus`
+- Default value: `canadacentral`
 
 ### parLogAnalyticsWorkspaceResourceId
 
@@ -98,7 +98,7 @@ Set Parameter to true to Opt-out of deployment telemetry
             "value": "alz"
         },
         "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
-            "value": "eastus"
+            "value": "canadacentral"
         },
         "parLogAnalyticsWorkspaceResourceId": {
             "value": ""

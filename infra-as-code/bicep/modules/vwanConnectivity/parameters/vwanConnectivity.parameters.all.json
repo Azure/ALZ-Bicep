@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "parLocation": {
-      "value": "eastus"
+      "value": "canadacentral"
     },
     "parCompanyPrefix": {
       "value": "alz"
@@ -30,25 +30,25 @@
       "value": true
     },
     "parVirtualWanName": {
-      "value": "alz-vwan-eastus"
+      "value": "alz-vwan-canadacentral"
     },
     "parVirtualWanHubName": {
-      "value": "alz-vhub-eastus"
+      "value": "alz-vhub-canadacentral"
     },
     "parVpnGatewayName": {
-      "value": "alz-vpngw-eastus"
+      "value": "alz-vpngw-canadacentral"
     },
     "parExpressRouteGatewayName": {
-      "value": "alz-ergw-eastus"
+      "value": "alz-ergw-canadacentral"
     },
     "parAzFirewallName": {
-      "value": "alz-fw-eastus"
+      "value": "alz-fw-canadacentral"
     },
     "parAzFirewallAvailabilityZones": {
       "value": []
     },
     "parAzFirewallPoliciesName": {
-      "value": "alz-azfwpolicy-eastus"
+      "value": "alz-azfwpolicy-canadacentral"
     },
     "parVpnGatewayScaleUnit": {
       "value": 1
@@ -67,10 +67,10 @@
     },
     "parPrivateDnsZones": {
       "value": [
-        "privatelink.xxxxxx.azmk8s.io", // Replace xxxxxx with target region (i.e. eastus)
-        "privatelink.xxxxxx.batch.azure.com", // Replace xxxxxx with target region (i.e. eastus)
-        "privatelink.xxxxxx.kusto.windows.net", // Replace xxxxxx with target region (i.e. eastus)
-        "privatelink.xxxxxx.backup.windowsazure.com", // Replace xxxxxx with target region geo code (i.e. for eastus, the geo code is eus)
+        "privatelink.xxxxxx.azmk8s.io", // Replace xxxxxx with target region (i.e. canadacentral)
+        "privatelink.xxxxxx.batch.azure.com", // Replace xxxxxx with target region (i.e. canadacentral)
+        "privatelink.xxxxxx.kusto.windows.net", // Replace xxxxxx with target region (i.e. canadacentral)
+        "privatelink.xxxxxx.backup.windowsazure.com", // Replace xxxxxx with target region geo code (i.e. for canadacentral, the geo code is eus)
         "privatelink.adf.azure.com",
         "privatelink.afs.azure.net",
         "privatelink.agentsvc.azure-automation.net",
@@ -137,7 +137,7 @@
       ]
     },
     "parVirtualNetworkIdToLink": {
-      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
+      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-canadacentral"
     },
     "parTags": {
       "value": {

@@ -27,9 +27,9 @@ Module deploys the following resources which can be configured by parameters:
 > - `privatelink.xxxxxx.batch.azure.com`
 >
 > Will become:
-> - `privatelink.eastus.azmk8s.io`
-> - `privatelink.eastus.backup.windowsazure.com`
-> - `privatelink.eastus.batch.azure.com`
+> - `privatelink.canadacentral.azmk8s.io`
+> - `privatelink.canadacentral.backup.windowsazure.com`
+> - `privatelink.canadacentral.batch.azure.com`
 <!-- markdownlint-restore -->
 
 ## Outputs
@@ -38,12 +38,12 @@ The module will generate the following outputs:
 
 | Output                | Type   | Example                                                                                                                                                                                                  |
 | --------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| outVirtualWanName     | string | alz-vwan-eastus                                                                                                                                                                                          |
-| outVirtualWanId       | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualWans/alz-vwan-eastus                                                               |
-| outVirtualHubName     | string | alz-vhub-eastus                                                                                                                                                                                          |
-| outVirtualHubId       | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus                                                               |
-| outDdosPlanResourceId | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan                                                         |
-| outPrivateDnsZones    | array  | `["name": "privatelink.azurecr.io", "id": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/net-lz-spk-eastus-rg/providers/Microsoft.Network/privateDnsZones/privatelink.azurecr.io"]` |
+| outVirtualWanName     | string | alz-vwan-canadacentral                                                                                                                                                                                          |
+| outVirtualWanId       | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-canadacentral/providers/Microsoft.Network/virtualWans/alz-vwan-canadacentral                                                               |
+| outVirtualHubName     | string | alz-vhub-canadacentral                                                                                                                                                                                          |
+| outVirtualHubId       | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-canadacentral/providers/Microsoft.Network/virtualHubs/alz-vhub-canadacentral                                                               |
+| outDdosPlanResourceId | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-canadacentral/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan                                                         |
+| outPrivateDnsZones    | array  | `["name": "privatelink.azurecr.io", "id": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/net-lz-spk-canadacentral-rg/providers/Microsoft.Network/privateDnsZones/privatelink.azurecr.io"]` |
 
 ## Deployment
 
@@ -75,7 +75,7 @@ PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnect
 # Create Resource Group - optional when using an existing resource group
 az group create \
   --name $GROUP \
-  --location eastus
+  --location canadacentral
 
 az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -126,7 +126,7 @@ $inputObject = @{
 
 New-AzResourceGroup `
   -Name $inputObject.ResourceGroupName `
-  -Location 'EastUs'
+  -Location 'canadacentral'
 
 New-AzResourceGroupDeployment @inputObject
 ```

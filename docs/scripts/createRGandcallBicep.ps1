@@ -1,6 +1,6 @@
 
 $azureResourceGroup='rsg-private-bicep-registry'
-$azureLocation='eastus'
+$azureLocation='canadacentral'
 
 #Create resource group
 New-AzResourceGroup -Name $azureResourceGroup -Location $azureLocation

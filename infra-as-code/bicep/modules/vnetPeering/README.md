@@ -58,7 +58,7 @@ PARAMETERS="@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.para
 # Create Resource Group - optional when using an existing resource group
 az group create \
   --name $GROUP \
-  --location eastus
+  --location canadacentral
 
 az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -101,7 +101,7 @@ $TopLevelMGPrefix = "alz"
 # Create Resource Group - optional when using an existing resource group
 New-AzResourceGroup `
   -Name $inputObject.ResourceGroupName `
-  -Location eastus
+  -Location canadacentral
 
 # Parameters necessary for deployment
 $inputObject = @{

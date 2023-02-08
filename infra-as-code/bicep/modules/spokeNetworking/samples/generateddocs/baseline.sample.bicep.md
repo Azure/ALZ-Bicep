@@ -12,7 +12,7 @@ location       | No       | Specifies the location for resources.
 
 Specifies the location for resources.
 
-- Default value: `eastus`
+- Default value: `canadacentral`
 
 ## Snippets
 
@@ -27,7 +27,7 @@ Specifies the location for resources.
     },
     "parameters": {
         "location": {
-            "value": "eastus"
+            "value": "canadacentral"
         }
     }
 }

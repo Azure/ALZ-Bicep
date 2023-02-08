@@ -20,7 +20,7 @@ variables:
   ServiceConnectionName: "ALZPipelineConnection"
   ManagementGroupPrefix: "alz"
   TopLevelManagementGroupDisplayName: "Azure Landing Zones"
-  Location: "eastus"
+  Location: "canadacentral"
   LoggingSubId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
   LoggingResourceGroupName: "alz-logging"
   HubNetworkSubId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
@@ -211,5 +211,5 @@ jobs:
         --resource-group $(SpokeNetworkResourceGroupName) \
         --template-file infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep \
         --parameters @infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json \
-        --name create_spoke_network-$(RunNumber)    
+        --name create_spoke_network-$(RunNumber)
 ```

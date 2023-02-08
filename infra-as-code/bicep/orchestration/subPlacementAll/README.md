@@ -96,7 +96,7 @@ This however may be done as part of another process, for example upon Subscripti
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-SubPlacementAll-${dateYMD}"
-LOCATION="eastus"
+LOCATION="canadacentral"
 MGID="alz"
 TEMPLATEFILE="infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
 PARAMETERS="@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json"
@@ -126,7 +126,7 @@ az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-gr
 
 $inputObject = @{
   DeploymentName        = 'alz-SubPlacementAll-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  Location              = 'EastUS'
+  Location              = 'canadacentral'
   ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
   TemplateParameterFile = 'infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json'

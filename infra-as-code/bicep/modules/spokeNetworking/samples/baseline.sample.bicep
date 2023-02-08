@@ -11,7 +11,7 @@ targetScope = 'resourceGroup'
 // PARAMETERS
 // ----------
 @description('Specifies the location for resources.')
-param location string = 'eastus'
+param location string = 'canadacentral'
 // ---------
 // RESOURCES
 // ---------

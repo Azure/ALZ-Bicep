@@ -1,7 +1,7 @@
 #!/bin/bash
 
 azureResourceGroup='rsg-private-bicep-registry'
-azureLocation='eastus'
+azureLocation='canadacentral'
 
 #Create resource group
 az group create --name $azureResourceGroup --location $azureLocation
@@ -22,4 +22,4 @@ do
   filename=$(echo $f| cut  -d'.' -f 1| tr '[:upper:]' '[:lower:]')
   echo "Publishing $filename.bicep to ACR: $azureContainerRegistryName"
   az bicep publish --file $file --target "br:$azureContainerRegistryName/bicep/modules/$filename:V1"
-done       
+done
