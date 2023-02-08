@@ -53,14 +53,14 @@ For many scenarios, it may also make sense to take a more modular approach to AL
 
 ### GitHub Actions
 
-- [Deploy Azure resources by using Bicep and GitHub Actions](https://docs.microsoft.com/learn/paths/bicep-github-actions/)
+- [Deploy Azure resources by using Bicep and GitHub Actions](https://learn.microsoft.com/learn/paths/bicep-github-actions/)
 - [How to automatically trigger GitHub Actions workflows](https://docs.github.com/actions/using-workflows/triggering-a-workflow)
 - [Using jobs in a GitHub Actions workflow](https://docs.github.com/actions/using-jobs/using-jobs-in-a-workflow)
 - [Managing a branch protection rule](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule)
 
 ### Azure DevOps Pipelines
 
-- [Deploy Azure resources by using Bicep and Azure Pipelines](https://docs.microsoft.com/learn/paths/bicep-azure-pipelines/)
-- [Azure DevOps Pipelines triggers](https://docs.microsoft.com/azure/devops/pipelines/build/triggers?view=azure-devops)
-- [Azure DevOps Pipelines stages, dependencies, and conditions](https://docs.microsoft.com/azure/devops/pipelines/process/stages?view=azure-devops&tabs=yaml)
-- [Azure DevOps Branch policies and settings](https://docs.microsoft.com/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser)
+- [Deploy Azure resources by using Bicep and Azure Pipelines](https://learn.microsoft.com/learn/paths/bicep-azure-pipelines/)
+- [Azure DevOps Pipelines triggers](https://learn.microsoft.com/azure/devops/pipelines/build/triggers?view=azure-devops)
+- [Azure DevOps Pipelines stages, dependencies, and conditions](https://learn.microsoft.com/azure/devops/pipelines/process/stages?view=azure-devops&tabs=yaml)
+- [Azure DevOps Branch policies and settings](https://learn.microsoft.com/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser)

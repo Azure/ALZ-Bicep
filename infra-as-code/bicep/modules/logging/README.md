@@ -18,7 +18,7 @@ The module will deploy the following Log Analytics Workspace solutions by defaul
 - Updates
 - VMInsights
 
- > Only certain regions are supported to link Log Analytics Workspace & Automation Account together (linked workspaces). Reference:  [Supported regions for linked Log Analytics workspace](https://docs.microsoft.com/azure/automation/how-to/region-mappings)
+ > Only certain regions are supported to link Log Analytics Workspace & Automation Account together (linked workspaces). Reference:  [Supported regions for linked Log Analytics workspace](https://learn.microsoft.com/azure/automation/how-to/region-mappings)
 
 ## Parameters
 
