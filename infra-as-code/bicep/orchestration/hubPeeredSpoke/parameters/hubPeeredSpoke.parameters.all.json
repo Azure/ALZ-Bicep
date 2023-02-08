@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "parLocation": {
-        "value": "westeurope"
+        "value": "canadacentral"
       },
       "parTopLevelManagementGroupPrefix": {
         "value": "alz"
@@ -39,7 +39,7 @@
         "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-westeurope-hub-networking/providers/Microsoft.Network/virtualNetworks/alz-hub-westeurope"
       },
       "parAllowSpokeForwardedTraffic": {
-        "value": false
+        "value": true
       },
       "parAllowHubVPNGatewayTransit": {
         "value": true
