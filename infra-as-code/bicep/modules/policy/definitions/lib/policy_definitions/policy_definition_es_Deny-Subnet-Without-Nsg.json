@@ -40,7 +40,7 @@
         },
         "defaultValue": [
           "GatewaySubnet",
-          "AzureFirewallSubnet",
+          "FirewallSubnet",
           "AzureFirewallManagementSubnet"
         ]
       }

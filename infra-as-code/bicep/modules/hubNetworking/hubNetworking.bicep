@@ -24,7 +24,7 @@ param parSubnets array = [
     ipAddressRange: '10.10.252.0/24'
   }
   {
-    name: 'AzureFirewallSubnet'
+    name: 'FirewallSubnet'
     ipAddressRange: '10.10.254.0/24'
   }
 ]
@@ -524,7 +524,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2022-07-01' = [for
 
 resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-08-01' existing = {
   parent: resHubVnet
-  name: 'AzureFirewallSubnet'
+  name: 'FirewallSubnet'
 }
 
 module modAzureFirewallPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewallEnabled) {
@@ -559,7 +559,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-08-01' = i
   }
 }
 
-// AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
+// FirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.
 resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-08-01' = if (parAzFirewallEnabled) {
   name: parAzFirewallName

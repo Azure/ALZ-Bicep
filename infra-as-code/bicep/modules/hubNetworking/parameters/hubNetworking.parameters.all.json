@@ -25,7 +25,7 @@
           "ipAddressRange": "10.20.254.0/24"
         },
         {
-          "name": "AzureFirewallSubnet",
+          "name": "FirewallSubnet",
           "ipAddressRange": "10.20.255.0/24"
         }
       ]
