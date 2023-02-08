@@ -54,9 +54,6 @@ var varPlatformIdentityMg = {
   displayName: 'Identity'
 }
 
-// Used if parPlatformMgAlzDefaultsEnable == true
-var varPlatformNoChildren = {}
-
 // Landing Zones & Child Management Groups
 var varLandingZoneMg = {
   name: '${parTopLevelManagementGroupPrefix}-landingzones'
@@ -85,7 +82,7 @@ var varLandingZoneMgChildrenConfidential = {
 
 // Build final onject based on input parameters for child MGs of LZs
 var varLandingZoneMgChildrenUnioned = (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential, parLandingZoneMgChildren) : (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenAlzDefault, parLandingZoneMgChildren) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? varLandingZoneMgChildrenAlzDefault : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenConfidential, parLandingZoneMgChildren) : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? varLandingZoneMgChildrenConfidential : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? parLandingZoneMgChildren : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? {} : {}
-var varPlatformMgChildrenUnioned = (parPlatformMgAlzDefaultsEnable) ? union(varPlatformManagementMg, varPlatformConnectivityMg, varPlatformIdentityMg) : varPlatformNoChildren
+var varPlatformMgChildrenUnioned = (parPlatformMgAlzDefaultsEnable) ? union(varPlatformManagementMg, varPlatformConnectivityMg, varPlatformIdentityMg) : {}
 
 
 // Sandbox Management Group

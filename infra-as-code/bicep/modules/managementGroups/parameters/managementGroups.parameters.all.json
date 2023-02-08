@@ -14,6 +14,9 @@
     "parLandingZoneMgAlzDefaultsEnable": {
       "value": true
     },
+    "parPlatformMgAlzDefaultsEnable": {
+      "value": true
+    },
     "parLandingZoneMgConfidentialEnable": {
       "value": false
     },
