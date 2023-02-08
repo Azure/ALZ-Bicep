@@ -1,6 +1,6 @@
 # Support
 
-## How to file issues and get help  
+## How to file issues and get help
 
 This project uses GitHub Issues to track bugs and feature requests. Please search the existing issues before filing new issues to avoid duplicates.  For new issues, file your bug or feature request as a new Issue.
 
@@ -27,4 +27,3 @@ Project maintainers and community aim to get issues resolved in timely fashion a
 ## Community Support Policy
 
 Project maintainers will aim to respond within 3 business days to get a meaningful response for any new issues.
-

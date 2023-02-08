@@ -46,7 +46,7 @@ This customized module can then be deployed into your environment to deliver the
 
 <!-- markdownlint-disable -->
 > **IMPORTANT:** If you believe the changes you have made should be more easily available to be customized by a parameter etc. in the module, then please raise an [issue](https://github.com/Azure/ALZ-Bicep/issues) for a 'Feature Request' on the repository 👍
-> 
+>
 > If you wish to, also feel free to submit a pull request relating to the issue which we can review and work with you to potentially implement the suggestion/feature request 👍
 <!-- markdownlint-restore -->
 
@@ -62,4 +62,4 @@ Whilst most of the modules rely upon the Intermediate Root Management Group (e.g
 
 So if you customize the Management Group hierarchy you must also change references in other modules, as shown above. These are generally held in `variables` within each module to make it easier to customize in a single location per module, rather than multiple places per module.
 
-> This is mainly in the [`alzDefaultPolicyAssignments`](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) module, but this module is designed to be prescriptive in its delivery of the ALZ conceptual architecture
+> This is mainly in the [`alzDefaultPolicyAssignments`](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) module, but this module is designed to be prescriptive in its delivery of the ALZ conceptual architecture.
