@@ -37,7 +37,7 @@
       "value": "Standard"
     },
     "parAzBastionEnabled": {
-      "value": true
+      "value": false
     },
     "parAzBastionName": {
       "value": "alz-bastion"
@@ -49,13 +49,13 @@
       "value": "nsg-AzureBastionSubnet"
     },
     "parDdosEnabled": {
-      "value": true
+      "value": false
     },
     "parDdosPlanName": {
       "value": "alz-ddos-plan"
     },
     "parAzFirewallEnabled": {
-      "value": true
+      "value": false
     },
     "parAzFirewallName": {
       "value": "alz-azfw-canadacentral"
@@ -85,7 +85,7 @@
       "value": false
     },
     "parPrivateDnsZonesEnabled": {
-      "value": true
+      "value": false
     },
     "parPrivateDnsZones": {
       "value": [
