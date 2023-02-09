@@ -11,11 +11,17 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @sys.description('Array of strings to allow additional or different child Management Groups of the Landing Zones Management Group.')
 param parLandingZoneMgChildren array = []
 
+@sys.description('Array of strings to allow additional or different child Management Groups of the Platform Management Group.')
+param parPlatformMgChildren array = []
+
 @sys.description('Log Analytics Workspace Resource ID.')
 param parLogAnalyticsWorkspaceResourceId string
 
 @sys.description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true')
 param parLandingZoneMgAlzDefaultsEnable bool = true
+
+@sys.description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true')
+param parPlatformMgAlzDefaultsEnable bool = true
 
 @sys.description('Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true. Default: false')
 param parLandingZoneMgConfidentialEnable bool = false
@@ -40,6 +46,13 @@ var varLandingZoneMgChildrenAlzDefault = {
   landingZonesOnline: '${parTopLevelManagementGroupPrefix}-landingzones-online'
 }
 
+// Used if parPlatformMgAlzDefaultsEnable == true
+var varPlatformMgChildrenAlzDefault = {
+  platformManagement: '${parTopLevelManagementGroupPrefix}-platform-management'
+  platformConnectivity: '${parTopLevelManagementGroupPrefix}-platform-connectivity'
+  platformIdentity: '${parTopLevelManagementGroupPrefix}-platform-identity'
+}
+
 // Used if parLandingZoneMgConfidentialEnable == true
 var varLandingZoneMgChildrenConfidential = {
   landingZonesConfidentialCorp: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-corp'
@@ -51,8 +64,16 @@ var varLandingZoneMgCustomChildren = [for customMg in parLandingZoneMgChildren: 
   mgId: '${parTopLevelManagementGroupPrefix}-landingzones-${customMg}'
 }]
 
+// Used if parLandingZoneMgConfidentialEnable not empty
+var varPlatformMgCustomChildren = [for customMg in parPlatformMgChildren: {
+  mgId: '${parTopLevelManagementGroupPrefix}-platform-${customMg}'
+}]
+
 // Build final object based on input parameters for default and confidential child MGs of LZs
 var varLandingZoneMgDefaultChildrenUnioned = (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable) ? varLandingZoneMgChildrenAlzDefault : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable) ? varLandingZoneMgChildrenConfidential : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable) ? {} : {}
+
+// Build final object based on input parameters for default child MGs of Platform LZs
+var varPlatformMgDefaultChildrenUnioned = (parPlatformMgAlzDefaultsEnable) ? varLandingZoneMgChildrenAlzDefault : (parPlatformMgAlzDefaultsEnable) ? varPlatformMgChildrenAlzDefault : (!parPlatformMgAlzDefaultsEnable) ? {} : (!parPlatformMgAlzDefaultsEnable) ? {} : {}
 
 // Customer Usage Attribution Id
 var varCuaid = 'f49c8dfb-c0ce-4ee0-b316-5e4844474dd0'
@@ -74,8 +95,26 @@ module modMgLandingZonesDiagSet '../../modules/mgDiagSettings/mgDiagSettings.bic
   }
 }]
 
+// Default Children Landing Zone Management Groups
+module modMgPlatformDiagSet '../../modules/mgDiagSettings/mgDiagSettings.bicep' = [for childMg in items(varPlatformMgDefaultChildrenUnioned): {
+  scope: managementGroup(childMg.value)
+  name: 'mg-diag-set-${childMg.value}'
+  params: {
+    parLogAnalyticsWorkspaceResourceId: parLogAnalyticsWorkspaceResourceId
+  }
+}]
+
 // Custom Children Landing Zone Management Groups
 module modMgChildrenDiagSet '../../modules/mgDiagSettings/mgDiagSettings.bicep' = [for childMg in varLandingZoneMgCustomChildren: {
+  scope: managementGroup(childMg.mgId)
+  name: 'mg-diag-set-${childMg.mgId}'
+  params: {
+    parLogAnalyticsWorkspaceResourceId: parLogAnalyticsWorkspaceResourceId
+  }
+}]
+
+// Custom Children Platform Management Groups
+module modPlatformMgChildrenDiagSet '../../modules/mgDiagSettings/mgDiagSettings.bicep' = [for childMg in varPlatformMgCustomChildren: {
   scope: managementGroup(childMg.mgId)
   name: 'mg-diag-set-${childMg.mgId}'
   params: {
