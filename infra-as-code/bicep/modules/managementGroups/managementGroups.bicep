@@ -27,6 +27,9 @@ param parLandingZoneMgConfidentialEnable bool = false
 @sys.description('Dictionary Object to allow additional or different child Management Groups of Landing Zones Management Group to be deployed.')
 param parLandingZoneMgChildren object = {}
 
+@sys.description('Dictionary Object to allow additional or different child Management Groups of Platform Management Group to be deployed.')
+param parPlatformMgChildren object = {}
+
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
@@ -36,22 +39,17 @@ var varPlatformMg = {
   displayName: 'Platform'
 }
 
-// Used if parPlatformMgAlzDefaultsEnable == true
-var varPlatformManagementMg = {
-  name: '${parTopLevelManagementGroupPrefix}-platform-management'
-  displayName: 'Management'
-}
-
-// Used if parPlatformMgAlzDefaultsEnable == true
-var varPlatformConnectivityMg = {
-  name: '${parTopLevelManagementGroupPrefix}-platform-connectivity'
-  displayName: 'Connectivity'
-}
-
-// Used if parPlatformMgAlzDefaultsEnable == true
-var varPlatformIdentityMg = {
-  name: '${parTopLevelManagementGroupPrefix}-platform-identity'
-  displayName: 'Identity'
+// Used if parLandingZoneMgAlzDefaultsEnable == true
+var varPlatformMgChildrenAlzDefault = {
+  '${parTopLevelManagementGroupPrefix}-platform-identity': {
+    displayName: 'Identity'
+  }
+  '${parTopLevelManagementGroupPrefix}-platform-connectivity': {
+    displayName: 'Connectivity'
+  }
+  '${parTopLevelManagementGroupPrefix}-platform-management': {
+    displayName: 'Management'
+  }
 }
 
 // Landing Zones & Child Management Groups
@@ -82,8 +80,7 @@ var varLandingZoneMgChildrenConfidential = {
 
 // Build final onject based on input parameters for child MGs of LZs
 var varLandingZoneMgChildrenUnioned = (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential, parLandingZoneMgChildren) : (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenAlzDefault, parLandingZoneMgChildren) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? varLandingZoneMgChildrenAlzDefault : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenConfidential, parLandingZoneMgChildren) : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? varLandingZoneMgChildrenConfidential : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? parLandingZoneMgChildren : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? {} : {}
-var varPlatformMgChildrenUnioned = (parPlatformMgAlzDefaultsEnable) ? union(varPlatformManagementMg, varPlatformConnectivityMg, varPlatformIdentityMg) : {}
-
+var varPlatformMgChildrenUnioned = (parPlatformMgAlzDefaultsEnable && (!empty(parPlatformMgChildren))) ? union(varPlatformMgChildrenAlzDefault, parPlatformMgChildren) : (parPlatformMgAlzDefaultsEnable && (empty(parPlatformMgChildren))) ? varPlatformMgChildrenAlzDefault : (parPlatformMgAlzDefaultsEnable && (!empty(parPlatformMgChildren))) ? union(varPlatformMgChildrenAlzDefault, parPlatformMgChildren) : (parPlatformMgAlzDefaultsEnable && (empty(parPlatformMgChildren))) ? varPlatformMgChildrenAlzDefault : (!parPlatformMgAlzDefaultsEnable && (!empty(parPlatformMgChildren))) ? parPlatformMgChildren : (!parPlatformMgAlzDefaultsEnable && (empty(parPlatformMgChildren))) ? {} : (!parPlatformMgAlzDefaultsEnable && (!empty(parPlatformMgChildren))) ? parPlatformMgChildren : (!parPlatformMgAlzDefaultsEnable && (empty(parLandingZoneMgChildren))) ? {} : {}
 
 // Sandbox Management Group
 var varSandboxMg = {
@@ -199,11 +196,11 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdTen
 output outTopLevelManagementGroupId string = resTopLevelMg.id
 
 output outPlatformManagementGroupId string = resPlatformMg.id
-output outPlatformChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-platform-${mg.key}' ]
-output outPlatformChildrenManagementGroupNames array = [for mg in items(varPlatformMgChildrenUnioned): mg.value.displayName ]
+output outPlatformChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-platform-${mg.key}']
+output outPlatformChildrenManagementGroupNames array = [for mg in items(varPlatformMgChildrenUnioned): mg.value.displayName]
 
 output outLandingZonesManagementGroupId string = resLandingZonesMg.id
-output outLandingZoneChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}' ]
+output outLandingZoneChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}']
 output outSandboxManagementGroupId string = resSandboxMg.id
 
 output outDecommissionedManagementGroupId string = resDecommissionedMg.id
@@ -214,7 +211,7 @@ output outTopLevelManagementGroupName string = resTopLevelMg.name
 output outPlatformManagementGroupName string = resPlatformMg.name
 
 output outLandingZonesManagementGroupName string = resLandingZonesMg.name
-output outLandingZoneChildrenManagementGroupNames array = [for mg in items(varLandingZoneMgChildrenUnioned): mg.value.displayName ]
+output outLandingZoneChildrenManagementGroupNames array = [for mg in items(varLandingZoneMgChildrenUnioned): mg.value.displayName]
 
 output outSandboxManagementGroupName string = resSandboxMg.name
 
