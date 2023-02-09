@@ -4,7 +4,7 @@
 
 ### Intro
 
-This deploys a [hub and spoke](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/hub-spoke) network topology to the Azure Landing Zone foundation.
+This deploys a [hub and spoke](https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/hub-spoke) network topology to the Azure Landing Zone foundation.
 
 > Please review and run the [Deployment Flow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) before running these modules.
 

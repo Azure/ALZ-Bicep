@@ -29,13 +29,13 @@ Before you start contributing to the ALZ Bicep code, it is **highly recommended*
 
 ### Bicep
 
-- [Deploy and manage resources in Azure by using Bicep](https://docs.microsoft.com/learn/paths/bicep-deploy/)
-- [Structure your Bicep code for collaboration](https://docs.microsoft.com/learn/modules/structure-bicep-code-collaboration/)
-- [Manage changes to your Bicep code by using Git](https://docs.microsoft.com/learn/modules/manage-changes-bicep-code-git/)
+- [Deploy and manage resources in Azure by using Bicep](https://learn.microsoft.com/learn/paths/bicep-deploy/)
+- [Structure your Bicep code for collaboration](https://learn.microsoft.com/learn/modules/structure-bicep-code-collaboration/)
+- [Manage changes to your Bicep code by using Git](https://learn.microsoft.com/learn/modules/manage-changes-bicep-code-git/)
 
 ### Git
 
-- [Introduction to version control with Git](https://docs.microsoft.com/learn/paths/intro-to-vc-git/)
+- [Introduction to version control with Git](https://learn.microsoft.com/learn/paths/intro-to-vc-git/)
 
 ## Tooling
 
@@ -44,7 +44,7 @@ Before you start contributing to the ALZ Bicep code, it is **highly recommended*
 To contribute to this project the following tooling is required:
 
 - [Git](https://git-scm.com/downloads)
-- [Bicep](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install#install-manually)
+- [Bicep](https://learn.microsoft.com/azure/azure-resource-manager/bicep/install#install-manually)
 - [Visual Studio Code](https://code.visualstudio.com/download)
   - [Bicep extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep)
 
@@ -68,7 +68,7 @@ The below guidelines should be adhered to whilst contributing to this projects B
 
 ### Bicep Best Practices
 
-Throughout the development of Bicep code you should follow the [Bicep Best Practices](https://docs.microsoft.com/azure/azure-resource-manager/bicep/best-practices).
+Throughout the development of Bicep code you should follow the [Bicep Best Practices](https://learn.microsoft.com/azure/azure-resource-manager/bicep/best-practices).
 
 > It is suggested to keep this page open whilst developing for easy reference
 
@@ -83,8 +83,8 @@ Throughout the development of Bicep code you should follow the [Bicep Best Pract
     - Outputs
 - All `par` and `out` values in Bicep templates should include full product name instead of `camelCased` abbreviation, for example: `parExpressRouteGwName` instead of `parErGwName`
 - Services with "Azure" in the name are abbreviated "Az", for example: `parAzBastionName` instead of `parAzureBastionName`
-- Use [parameter decorators](https://docs.microsoft.com/azure/azure-resource-manager/bicep/parameters#decorators) to ensure integrity of user inputs are complete and therefore enable successful deployment
-  - Only use the [`@secure()` parameter decorator](https://docs.microsoft.com/azure/azure-resource-manager/bicep/parameters#secure-parameters) for inputs. Never for outputs as this is not stored securely and will be stored/shown as plain-text!
+- Use [parameter decorators](https://learn.microsoft.com/azure/azure-resource-manager/bicep/parameters#decorators) to ensure integrity of user inputs are complete and therefore enable successful deployment
+  - Only use the [`@secure()` parameter decorator](https://learn.microsoft.com/azure/azure-resource-manager/bicep/parameters#secure-parameters) for inputs. Never for outputs as this is not stored securely and will be stored/shown as plain-text!
 - A description is required on parameters to provide an explanation into their function. As metadata is used in Bicep modules, `sys.description('description here')` is the chosen formatting. More information can be found in the [Azure Bicep documentation](https://learn.microsoft.com/azure/azure-resource-manager/bicep/parameters#decorators)
 - Comments should be provided where additional information/description of what is happening is required, except when a decorator like `@sys.description('Example description')` is providing adequate coverage
   - Single-line `// <comment here>` and multi-line `/* <comment here> */` comments are both welcomed
@@ -189,7 +189,7 @@ On your Pull Request (PR), the following steps will happen:
 ### `bicepconfig.json`
 
 - A `bicepconfig.json` for each module in the root of its own folder.
-  - [Bicep Linting Documentation](https://docs.microsoft.com/azure/azure-resource-manager/bicep/linter)
+  - [Bicep Linting Documentation](https://learn.microsoft.com/azure/azure-resource-manager/bicep/linter)
   - The `bicepconfig.json` file should contain the following:
 
     ```json

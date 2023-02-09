@@ -4,7 +4,7 @@
 
 This document outlines the prerequisites, dependencies and flow to setup a Private/Organizational Azure Container Registry.  Once deployed, you can then upload the modules contained within this repository, and deploy.
 
-> This is based on the official Bicep docs here: [Create private registry for Bicep modules](https://docs.microsoft.com/azure/azure-resource-manager/bicep/private-module-registry)
+> This is based on the official Bicep docs here: [Create private registry for Bicep modules](https://learn.microsoft.com/azure/azure-resource-manager/bicep/private-module-registry)
 
 ## Prerequisites
 

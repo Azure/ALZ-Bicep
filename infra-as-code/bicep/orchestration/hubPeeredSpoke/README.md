@@ -17,7 +17,7 @@ Note that only one peering type can be created with this module, so either tradi
 <!-- markdownlint-disable -->
 > You can use this module to enable Landing Zones (aka Subscriptions) with platform resources, as defined above, and also place them into the correct location in the hierarchy to meet governance requirements. For example, you can also use this module to deploy the Identity Landing Zone Subscription's vNet and peer it back to the hub vNet.
 >
-> You could also use it in a [loop](https://docs.microsoft.com/azure/azure-resource-manager/bicep/loops) to enable multiple Landing Zone Subscriptions at a time in a single deployment.
+> You could also use it in a [loop](https://learn.microsoft.com/azure/azure-resource-manager/bicep/loops) to enable multiple Landing Zone Subscriptions at a time in a single deployment.
 <!-- markdownlint-restore -->
 
 ## Parameters
