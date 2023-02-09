@@ -13,6 +13,7 @@ parLandingZoneMgAlzDefaultsEnable | No       | Deploys Corp & Online Management 
 parPlatformMgAlzDefaultsEnable | No       | Deploys Management, Identity and Connectivity Management Groups beneath Platform Management Group if set to true.
 parLandingZoneMgConfidentialEnable | No       | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.
 parLandingZoneMgChildren | No       | Dictionary Object to allow additional or different child Management Groups of Landing Zones Management Group to be deployed.
+parPlatformMgChildren | No       | Dictionary Object to allow additional or different child Management Groups of Platform Management Group to be deployed.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parTopLevelManagementGroupPrefix
@@ -66,6 +67,12 @@ Deploys Confidential Corp & Confidential Online Management Groups beneath Landin
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Dictionary Object to allow additional or different child Management Groups of Landing Zones Management Group to be deployed.
+
+### parPlatformMgChildren
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Dictionary Object to allow additional or different child Management Groups of Platform Management Group to be deployed.
 
 ### parTelemetryOptOut
 
@@ -125,6 +132,9 @@ outDecommissionedManagementGroupName | string |
             "value": false
         },
         "parLandingZoneMgChildren": {
+            "value": {}
+        },
+        "parPlatformMgChildren": {
             "value": {}
         },
         "parTelemetryOptOut": {
