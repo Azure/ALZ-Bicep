@@ -27,7 +27,7 @@ param parDdosProtectionPlanId string = ''
 @sys.description('Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group.')
 param parPrivateDnsResourceGroupId string = ''
 
-@sys.description('Disable all default Policies deployed by the solution.')
+@sys.description('Set Enforcement Mode of all default Policies assignments to Do Not Enforce.')
 param parDisableDefaultPolicies bool = false
 
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
