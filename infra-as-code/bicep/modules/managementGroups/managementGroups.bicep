@@ -41,13 +41,13 @@ var varPlatformMg = {
 
 // Used if parLandingZoneMgAlzDefaultsEnable == true
 var varPlatformMgChildrenAlzDefault = {
-  '${parTopLevelManagementGroupPrefix}-platform-identity': {
-    displayName: 'Identity'
-  }
-  '${parTopLevelManagementGroupPrefix}-platform-connectivity': {
+  connectivity: {
     displayName: 'Connectivity'
   }
-  '${parTopLevelManagementGroupPrefix}-platform-management': {
+  identity: {
+    displayName: 'Identity'
+  }
+  management: {
     displayName: 'Management'
   }
 }

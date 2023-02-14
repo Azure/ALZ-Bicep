@@ -23,6 +23,9 @@
     "parLandingZoneMgChildren": {
       "value": {}
     },
+    "parPlatformMgChildren": {
+      "value": {}
+    },
     "parTelemetryOptOut": {
       "value": false
     }
