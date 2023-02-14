@@ -27,7 +27,7 @@
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/rg-alz-hub-networking-001"
     },
     "parDisableAlzDefaultPolicies": {
-      "value": true
+      "value": false
     },
     "parTelemetryOptOut": {
       "value": false
