@@ -14,6 +14,7 @@ parAutomationAccountName | No       | Automation account name.
 parMsDefenderForCloudEmailSecurityContact | No       | An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.
 parDdosProtectionPlanId | No       | ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.
 parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group.
+parDisableAlzDefaultPolicies | No       | Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
 ### parTopLevelManagementGroupPrefix
@@ -74,6 +75,14 @@ ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If l
 
 Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group.
 
+### parDisableAlzDefaultPolicies
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
+
+- Default value: `False`
+
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -117,6 +126,9 @@ Set Parameter to true to Opt-out of deployment telemetry
         },
         "parPrivateDnsResourceGroupId": {
             "value": ""
+        },
+        "parDisableAlzDefaultPolicies": {
+            "value": false
         },
         "parTelemetryOptOut": {
             "value": false
