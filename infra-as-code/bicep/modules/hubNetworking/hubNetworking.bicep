@@ -235,26 +235,26 @@ param parTags object = {}
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
-@sys.description('Define inbound destination port range for HTTPS')
+@sys.description('Define inbound destination port or a range for HTTPS')
 param parHttpsPort string = '443'
 
-@sys.description('Define inbound destination port range for gateway manager')
+@sys.description('Define inbound destination port or a range for gateway manager')
 param parGatewayManagerPort string  ='443'
 
-@sys.description('Define inbound destination port range for load balancer')
+@sys.description('Define inbound destination port or a range for load balancer')
 param parLoadBalancerPort string = '443'
 
-@sys.description('Define inbound destination port ranges for Bastion Host Communication')
-param parBastionCommunicationHostPortRanges array = ['8080','5701']
+@sys.description('Define inbound destination ports or ranges for Bastion Host Communication')
+param parBastionHostCommunicationPorts array = ['8080','5701']
 
-@sys.description('Define outbound destination port ranges for SshRDPOutbound')
-param parSshRDPPortRange array = ['22','3389']
+@sys.description('Define outbound destination ports or ranges for SshRDPOutbound')
+param parSshRDPPort array = ['22','3389']
 
 @sys.description('Define outbound azure cloud destination port range for Azure cloud ')
 param parAzureCloudPort string = '443'
 
 @sys.description('Define outbound destination port ranges for Bastion Communication')
-param parBastionCommunicationPortRanges array = ['8080','5701']
+param parBastionCommunicationPorts array = ['8080','5701']
 
 @sys.description('Define outbound get session destination port range for Get Session Information')
 param parGetSessionPort string = '80'
@@ -391,7 +391,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          destinationPortRanges: parBastionCommunicationHostPortRanges
+          destinationPortRanges: parBastionHostCommunicationPorts
         }
       }
       {
@@ -418,7 +418,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: '*'
           sourcePortRange: '*'
-          destinationPortRanges: parSshRDPPortRange
+          destinationPortRanges: parSshRDPPort
         }
       }
       {
@@ -444,7 +444,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: '*'
           sourcePortRange: '*'
-          destinationPortRanges: parBastionCommunicationPortRanges
+          destinationPortRanges: parBastionCommunicationPorts
         }
       }
       {

@@ -215,20 +215,20 @@
     "parLoadBalancerPort": {
       "value":"443"
     },
-    "parBastionCommunicationHostPortRanges": {
+    "parBastionHostCommunicationPorts": {
       "value": ["8080","5701"]
     }, 
-    "parSshRDPPortRange": {
+    "parSshRDPPort": {
       "value": ["22","3389"]
     },
     "parAzureCloudPort": {
       "value": "443"
     },
+    "parBastionCommunicationPorts":{
+      "value": ["8080","5701"]
+    },
     "parGetSessionPort": {
       "value": "80"
-    },
-    "parBastionCommunicationPortRanges":{
-      "value": ["8080","5701"]
     }
   }
 }
