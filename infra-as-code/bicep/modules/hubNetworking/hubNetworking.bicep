@@ -235,6 +235,30 @@ param parTags object = {}
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
+@sys.description('Define inbound destination port range for HTTPS')
+param parHttpsPort string = '443'
+
+@sys.description('Define inbound destination port range for gateway manager')
+param parGatewayManagerPort string  ='443'
+
+@sys.description('Define inbound destination port range for load balancer')
+param parLoadBalancerPort string = '443'
+
+@sys.description('Define inbound destination port ranges for Bastion Host Communication')
+param parBastionCommunicationHostPortRanges array = ['8080','5701']
+
+@sys.description('Define outbound destination port ranges for SshRDPOutbound')
+param parSshRDPPortRange array = ['22','3389']
+
+@sys.description('Define outbound azure cloud destination port range for Azure cloud ')
+param parAzureCloudPort string = '443'
+
+@sys.description('Define outbound destination port ranges for Bastion Communication')
+param parBastionCommunicationPortRanges array = ['8080','5701']
+
+@sys.description('Define outbound get session destination port range for Get Session Information')
+param parGetSessionPort string = '80'
+
 var varSubnetProperties = [for subnet in parSubnets: {
   name: subnet.name
   properties: {
@@ -328,7 +352,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: '*'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          destinationPortRange: '443'
+          destinationPortRange: parHttpsPort
         }
       }
       {
@@ -341,7 +365,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: '*'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          destinationPortRange: '443'
+          destinationPortRange: parGatewayManagerPort
         }
       }
       {
@@ -354,7 +378,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: '*'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          destinationPortRange: '443'
+          destinationPortRange: parLoadBalancerPort
         }
       }
       {
@@ -367,10 +391,20 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          destinationPortRanges: [
-            '8080'
-            '5701'
-          ]
+          destinationPortRanges: parBastionCommunicationHostPortRanges
+        }
+      }
+      {
+        name: 'DenyAllInbound'
+        properties: {
+          access: 'Deny'
+          direction: 'Inbound'
+          priority: 4096
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: '*'
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRange: '*'
         }
       }
       // Outbound Rules
@@ -384,10 +418,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: '*'
           sourcePortRange: '*'
-          destinationPortRanges: [
-            '22'
-            '3389'
-          ]
+          destinationPortRanges: parSshRDPPortRange
         }
       }
       {
@@ -400,7 +431,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'AzureCloud'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          destinationPortRange: '443'
+          destinationPortRange: parAzureCloudPort
         }
       }
       {
@@ -413,10 +444,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: '*'
           sourcePortRange: '*'
-          destinationPortRanges: [
-            '8080'
-            '5701'
-          ]
+          destinationPortRanges: parBastionCommunicationPortRanges
         }
       }
       {
@@ -429,7 +457,20 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'Internet'
           protocol: '*'
           sourcePortRange: '*'
-          destinationPortRange: '80'
+          destinationPortRange: parGetSessionPort
+        }
+      }
+      {
+        name: 'DenyAllOutbound'
+        properties: {
+          access: 'Deny'
+          direction: 'Outbound'
+          priority: 4096
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: '*'
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRange: '*'
         }
       }
     ]
