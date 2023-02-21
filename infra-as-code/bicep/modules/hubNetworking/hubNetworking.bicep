@@ -250,7 +250,7 @@ param parBastionHostCommunicationPorts array = ['8080','5701']
 @sys.description('Define outbound destination ports or ranges for SshRDPOutbound. Default:[22,3389]')
 param parSshRDPPort array = ['22','3389']
 
-@sys.description('Define outbound azure cloud destination port range for Azure cloud. Default:443 ')
+@sys.description('Define outbound azure cloud destination port range for Azure cloud. Default:443')
 param parAzureCloudPort string = '443'
 
 @sys.description('Define outbound destination port ranges for Bastion Communication. Default:[8080, 5701]')

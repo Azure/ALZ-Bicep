@@ -179,7 +179,7 @@
     },
     "parBastionHostCommunicationPorts": {
       "value": ["8080","5701"]
-    }, 
+    },
     "parSshRDPPort": {
       "value": ["22","3389"]
     },
