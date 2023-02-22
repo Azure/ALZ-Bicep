@@ -13,6 +13,7 @@ parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log re
 parAutomationAccountName | No       | Automation account name.
 parMsDefenderForCloudEmailSecurityContact | No       | An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.
 parDdosProtectionPlanId | No       | ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.
+parDisableAlzDefaultPolicies | No       | Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
 ### parTopLevelManagementGroupPrefix
@@ -67,6 +68,14 @@ An e-mail address that you want Microsoft Defender for Cloud alerts to be sent t
 
 ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.
 
+### parDisableAlzDefaultPolicies
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
+
+- Default value: `False`
+
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -107,6 +116,9 @@ Set Parameter to true to Opt-out of deployment telemetry
         },
         "parDdosProtectionPlanId": {
             "value": ""
+        },
+        "parDisableAlzDefaultPolicies": {
+            "value": false
         },
         "parTelemetryOptOut": {
             "value": false
