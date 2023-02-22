@@ -20,18 +20,21 @@ module minimum_vwan_conn '../vwanConnectivity.bicep' = {
   name: 'minimum_vwan_conn'
   params: {
     parLocation: parLocation
-    parVirtualHubAddressPrefix: '10.100.0.0/23'
     parAzFirewallTier: 'Standard'
     parVirtualHubEnabled: true
-    parVpnGatewayEnabled: true
-    parExpressRouteGatewayEnabled: true
-    parAzFirewallEnabled: true
+    parVirtualWanHubs:[{
+      parVpnGatewayEnabled: true
+      parExpressRouteGatewayEnabled: true
+      parAzFirewallEnabled: true
+      parVirtualHubAddressPrefix: '10.100.0.0/23'
+      Hublocation: 'centralus'
+    }]
     parAzFirewallDnsProxyEnabled: true
     parVirtualWanName: '${parCompanyPrefix}-vwan-${parLocation}'
-    parVirtualWanHubName: '${parCompanyPrefix}-vhub-${parLocation}'
-    parVpnGatewayName: '${parCompanyPrefix}-vpngw-${parLocation}'
-    parExpressRouteGatewayName: '${parCompanyPrefix}-ergw-${parLocation}'
-    parAzFirewallName: '${parCompanyPrefix}-fw-${parLocation}'
+    parVirtualWanHubName: '${parCompanyPrefix}-vhub'
+    parVpnGatewayName: '${parCompanyPrefix}-vpngw'
+    parExpressRouteGatewayName: '${parCompanyPrefix}-ergw'
+    parAzFirewallName: '${parCompanyPrefix}-fw'
     parAzFirewallAvailabilityZones: [
       '1'
       '2'
@@ -45,9 +48,9 @@ module minimum_vwan_conn '../vwanConnectivity.bicep' = {
 
     parExpressRouteGatewayScaleUnit: 1
 
-    parDdosEnabled: true
+    parDdosEnabled: false
     parDdosPlanName: '${parCompanyPrefix}-ddos-plan'
-    parPrivateDnsZonesEnabled: true
+    parPrivateDnsZonesEnabled: false
 
     parPrivateDnsZonesResourceGroup: resourceGroup().name
     parPrivateDnsZones: [
