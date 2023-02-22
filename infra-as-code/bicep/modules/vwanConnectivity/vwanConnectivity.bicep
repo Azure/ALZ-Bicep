@@ -20,15 +20,6 @@ param parAzFirewallTier string = 'Standard'
 @sys.description('Switch to enable/disable Virtual Hub deployment.')
 param parVirtualHubEnabled bool = true
 
-//@sys.description('Switch to enable/disable VPN Gateway deployment.')
-//param parVpnGatewayEnabled bool = true
-
-//@sys.description('Switch to enable/disable ExpressRoute Gateway deployment.')
-//param parExpressRouteGatewayEnabled bool = true
-
-//@sys.description('Switch to enable/disable Azure Firewall deployment.')
-//param parAzFirewallEnabled bool = true
-
 @sys.description('Switch to enable/disable Azure Firewall DNS Proxy.')
 param parAzFirewallDnsProxyEnabled bool = true
 
