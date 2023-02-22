@@ -45,18 +45,18 @@
           "parExpressRouteGatewayEnabled": true,
           "parAzFirewallEnabled": true,
           "parVirtualHubAddressPrefix": "10.100.0.0/23",
-          "parHublocation": "eastus", //add vWAN hub location
-          "parhubRoutingPreference":"", //allowed values are 'ASN','VpnGateway','ExpressRoute'
-          "parvirtualRouterAutoScaleConfiguration": 2 //minimum capacity should be between 2 to 50
+          "parHublocation": "eastus",
+          "parhubRoutingPreference":"",
+          "parvirtualRouterAutoScaleConfiguration": 2
         },
         {
           "parVpnGatewayEnabled": true,
           "parExpressRouteGatewayEnabled": true,
           "parAzFirewallEnabled": true,
           "parVirtualHubAddressPrefix": "10.110.0.0/23",
-          "parHublocation": "westus", //add additional vWAN hub location
-          "parhubRoutingPreference":"", //allowed values are 'ASN','VpnGateway','ExpressRoute'
-          "parvirtualRouterAutoScaleConfiguration": 2 //minimum capacity should be between 2 to 50
+          "parHublocation": "westus",
+          "parhubRoutingPreference":"",
+          "parvirtualRouterAutoScaleConfiguration": 2
         }
       ]
   },
