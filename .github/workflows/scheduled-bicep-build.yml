@@ -72,3 +72,5 @@ jobs:
         if: ${{ failure() }}
         run: |
           gh issue create --title "Daily Bicep Build & Lint Worklfow Failed " --body "Check the latest run of the Daily Bicep Build & Lint Worklfow for details in the Actions tab."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
