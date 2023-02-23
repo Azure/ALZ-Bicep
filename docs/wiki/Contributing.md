@@ -186,6 +186,56 @@ On your Pull Request (PR), the following steps will happen:
   - Removal of the JSON files from the Bicep Build task is done.
   - A git status and push is then done to the same PR for the created/updated generated documentation to complete the workflow.
 
+### Manually Generating the Parameter Markdown Files
+
+Sometimes the Parameter Markdown Generation Workflow may fail due to you not allowing maintainers to push to your PR as documented [here](https://docs.github.com/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork). Or you may not wish to grant this permission but instead generate the documentation manually by running the below PowerShell Script (this is taken from the GitHub Action [Workflow](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/psdocs-mdtogit.yml).
+
+To do this copy and run the below PowerShell Script in your PR Branch and then stage and commit the files that are generated/updated once it has ran and completed. **You need to be in the root of the ALZ-Bicep repo directory you have cloned to your machine and on the correct branch that your are working on for the PR before running the script!**
+
+> Please note the script will try to install the `PSDocs.Azure` PowerShell Module as this is a requirement. You can install it by running the command `Install-Module -Name 'PSDocs.Azure' -Repository PSGallery -Force` or by following the instructions [here](https://azure.github.io/PSDocs.Azure/install-instructions/#installing-locally)
+
+```powershell
+# Build all Bicep Files in the infra-as-code/bicep/modules/ directory
+Get-ChildItem -Recurse -Path infra-as-code/bicep/modules/ -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep', 'orchHubSpoke.bicep' | ForEach-Object {
+  Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
+  $output = bicep build $_.FullName 2>&1
+  if ($LastExitCode -ne 0) {
+    throw $output
+  }
+  Else {
+    Write-Host $output
+  }
+}
+
+# Generate Markdown Documentation for all Bicep Files
+# Scan for Azure template file recursively in the infra-as-code/bicep/modules/ directory
+Get-AzDocTemplateFile -Path infra-as-code/bicep/modules/ | ForEach-Object {
+  # Generate a standard name of the markdown file. i.e. <name>_<version>.md
+  $template = Get-Item -Path $_.TemplateFile;
+  $templateraw = Get-Content -Raw -Path $_.Templatefile;
+  $docNameWithoutExtension = [System.IO.Path]::GetFileNameWithoutExtension($template.Name);
+  $jobj = ConvertFrom-Json -InputObject $templateraw
+  $outputpathformds = $template.DirectoryName + '/generateddocs'
+  New-Item -Path $outputpathformds -ItemType Directory -Force
+  # Conversion
+  $templatepath = $template.DirectoryName
+  $convertedtemplatename = $template.Name
+  $convertedfullpath = $templatepath + "\" + $convertedtemplatename
+  $jobj | ConvertTo-Json -Depth 100 | Set-Content -Path $convertedfullpath
+  $mdname = ($docNameWithoutExtension) + '.bicep'
+  # Generate markdown
+  Invoke-PSDocument -Module PSDocs.Azure -OutputPath $outputpathformds -InputObject $template.FullName -InstanceName $mdname -Culture en-US;
+}
+
+# Remove all generated JSON files from the Bicep Build
+Get-ChildItem -Recurse -Path infra-as-code/bicep/modules/ -Filter '*.json' -Exclude 'bicepconfig.json', '*.parameters.json', '*.parameters.*.json', 'policy_*' | ForEach-Object {
+  Write-Information "==> Removing generated JSON file $_ from Bicep Build" -InformationAction Continue
+  Remove-Item -Path $_.FullName
+}
+```
+
+> **IMPORTANT:** Once the workflow has finished all it should of generated/updated is `.md` files and nothing else. Please carefully check the git changes it has made before staging and committing anything.
+
 ### `bicepconfig.json`
 
 - A `bicepconfig.json` for each module in the root of its own folder.
