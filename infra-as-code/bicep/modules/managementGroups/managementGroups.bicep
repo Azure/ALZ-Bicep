@@ -226,7 +226,7 @@ output outPlatformConnectivityManagementGroupId string = resPlatformConnectivity
 output outPlatformIdentityManagementGroupId string = resPlatformIdentityMg.id
 
 output outLandingZonesManagementGroupId string = resLandingZonesMg.id
-output outLandingZoneChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}' ]
+output outLandingZoneChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}${parTopLevelManagementGroupSuffix}' ]
 
 output outSandboxManagementGroupId string = resSandboxMg.id
 
