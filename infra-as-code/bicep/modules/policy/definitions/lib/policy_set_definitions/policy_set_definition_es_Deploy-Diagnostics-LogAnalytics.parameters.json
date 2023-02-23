@@ -701,6 +701,19 @@
       }
     }
   },
+  "StorageAccountBlobServicesDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('StorageAccountsLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
   "StorageAccountDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {
@@ -708,6 +721,48 @@
       },
       "effect": {
         "value": "[[parameters('StorageAccountsLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "StorageAccountFileServicesDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('StorageAccountsLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "StorageAccountQueueServicesDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('StorageAccountsLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
+  "StorageAccountTableServicesDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('StorageAccountsLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
       }
     }
   },
