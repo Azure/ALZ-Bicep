@@ -36,14 +36,7 @@ parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway t
 parExpressRouteGatewayConfig | No       | Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parExpressRouteGatewayConfig": {   "value": {} }
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
-parHttpsPort   | No       | Define inbound destination port or a range for HTTPS. Default:443
-parGatewayManagerPort | No       | Define inbound destination port or a range for gateway manager. Default:443
-parLoadBalancerPort | No       | Define inbound destination port or a range for load balancer. Default:443
-parBastionHostCommunicationPorts | No       | Define inbound destination ports or ranges for Bastion Host Communication. Default:[8080, 5701]
-parSshRDPPort  | No       | Define outbound destination ports or ranges for SshRDPOutbound. Default:[22,3389]
-parAzureCloudPort | No       | Define outbound azure cloud destination port range for Azure cloud. Default:443
-parBastionCommunicationPorts | No       | Define outbound destination port ranges for Bastion Communication. Default:[8080, 5701]
-parGetSessionPort | No       | Define outbound get session destination port range for Get Session Information. Default:80
+parBastionOutboundSshRDPPort | No       | Define outbound destination ports or ranges for SshRDPOutbound. Default:[22,3389]
 
 ### parLocation
 
@@ -291,69 +284,13 @@ Set Parameter to true to Opt-out of deployment telemetry.
 
 - Default value: `False`
 
-### parHttpsPort
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Define inbound destination port or a range for HTTPS. Default:443
-
-- Default value: `443`
-
-### parGatewayManagerPort
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Define inbound destination port or a range for gateway manager. Default:443
-
-- Default value: `443`
-
-### parLoadBalancerPort
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Define inbound destination port or a range for load balancer. Default:443
-
-- Default value: `443`
-
-### parBastionHostCommunicationPorts
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Define inbound destination ports or ranges for Bastion Host Communication. Default:[8080, 5701]
-
-- Default value: `8080 5701`
-
-### parSshRDPPort
+### parBastionOutboundSshRDPPort
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Define outbound destination ports or ranges for SshRDPOutbound. Default:[22,3389]
 
 - Default value: `22 3389`
-
-### parAzureCloudPort
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Define outbound azure cloud destination port range for Azure cloud. Default:443
-
-- Default value: `443`
-
-### parBastionCommunicationPorts
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Define outbound destination port ranges for Bastion Communication. Default:[8080, 5701]
-
-- Default value: `8080 5701`
-
-### parGetSessionPort
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Define outbound get session destination port range for Get Session Information. Default:80
-
-- Default value: `80`
 
 ## Outputs
 
@@ -582,38 +519,11 @@ outHubVirtualNetworkId | string |
         "parTelemetryOptOut": {
             "value": false
         },
-        "parHttpsPort": {
-            "value": "443"
-        },
-        "parGatewayManagerPort": {
-            "value": "443"
-        },
-        "parLoadBalancerPort": {
-            "value": "443"
-        },
-        "parBastionHostCommunicationPorts": {
-            "value": [
-                "8080",
-                "5701"
-            ]
-        },
-        "parSshRDPPort": {
+        "parBastionOutboundSshRDPPort": {
             "value": [
                 "22",
                 "3389"
             ]
-        },
-        "parAzureCloudPort": {
-            "value": "443"
-        },
-        "parBastionCommunicationPorts": {
-            "value": [
-                "8080",
-                "5701"
-            ]
-        },
-        "parGetSessionPort": {
-            "value": "80"
         }
     }
 }

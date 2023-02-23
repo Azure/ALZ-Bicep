@@ -206,29 +206,8 @@
     "parTelemetryOptOut": {
       "value": false
     },
-    "parHttpsPort": {
-      "value":"443"
-    },
-    "parGatewayManagerPort": {
-      "value":"443"
-    },
-    "parLoadBalancerPort": {
-      "value":"443"
-    },
-    "parBastionHostCommunicationPorts": {
-      "value": ["8080","5701"]
-    },
-    "parSshRDPPort": {
+    "parBastionOutboundSshRDPPort": {
       "value": ["22","3389"]
-    },
-    "parAzureCloudPort": {
-      "value": "443"
-    },
-    "parBastionCommunicationPorts":{
-      "value": ["8080","5701"]
-    },
-    "parGetSessionPort": {
-      "value": "80"
     }
   }
 }

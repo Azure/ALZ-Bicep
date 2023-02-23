@@ -235,29 +235,8 @@ param parTags object = {}
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
-@sys.description('Define inbound destination port or a range for HTTPS. Default:443')
-param parHttpsPort string = '443'
-
-@sys.description('Define inbound destination port or a range for gateway manager. Default:443')
-param parGatewayManagerPort string  ='443'
-
-@sys.description('Define inbound destination port or a range for load balancer. Default:443')
-param parLoadBalancerPort string = '443'
-
-@sys.description('Define inbound destination ports or ranges for Bastion Host Communication. Default:[8080, 5701]')
-param parBastionHostCommunicationPorts array = ['8080','5701']
-
 @sys.description('Define outbound destination ports or ranges for SshRDPOutbound. Default:[22,3389]')
-param parSshRDPPort array = ['22','3389']
-
-@sys.description('Define outbound azure cloud destination port range for Azure cloud. Default:443')
-param parAzureCloudPort string = '443'
-
-@sys.description('Define outbound destination port ranges for Bastion Communication. Default:[8080, 5701]')
-param parBastionCommunicationPorts array = ['8080','5701']
-
-@sys.description('Define outbound get session destination port range for Get Session Information. Default:80')
-param parGetSessionPort string = '80'
+param parBastionOutboundSshRDPPort array = ['22','3389']
 
 var varSubnetProperties = [for subnet in parSubnets: {
   name: subnet.name
@@ -352,7 +331,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: '*'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          destinationPortRange: parHttpsPort
+          destinationPortRange: '443'
         }
       }
       {
@@ -365,7 +344,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: '*'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          destinationPortRange: parGatewayManagerPort
+          destinationPortRange: '443'
         }
       }
       {
@@ -378,7 +357,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: '*'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          destinationPortRange: parLoadBalancerPort
+          destinationPortRange: '443'
         }
       }
       {
@@ -391,7 +370,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          destinationPortRanges: parBastionHostCommunicationPorts
+          destinationPortRanges: ['8080','5701']
         }
       }
       {
@@ -418,7 +397,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: '*'
           sourcePortRange: '*'
-          destinationPortRanges: parSshRDPPort
+          destinationPortRanges: parBastionOutboundSshRDPPort
         }
       }
       {
@@ -431,7 +410,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'AzureCloud'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          destinationPortRange: parAzureCloudPort
+          destinationPortRange: '443'
         }
       }
       {
@@ -444,7 +423,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: '*'
           sourcePortRange: '*'
-          destinationPortRanges: parBastionCommunicationPorts
+          destinationPortRanges: ['8080','5701']
         }
       }
       {
@@ -457,7 +436,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'Internet'
           protocol: '*'
           sourcePortRange: '*'
-          destinationPortRange: parGetSessionPort
+          destinationPortRange: '80'
         }
       }
       {
