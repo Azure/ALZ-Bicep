@@ -29,7 +29,7 @@ If applicable, add screenshots to help explain your problem. Please feel free to
 
 ## Correlation ID
 
-A correlation ID really helps us investigate your issue further. Please provide one if possible. Details on how to find a correlation ID can be found here: [Correlation ID and support](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-history?tabs=azure-portal#correlation-id-and-support)
+A correlation ID really helps us investigate your issue further. Please provide one if possible. Details on how to find a correlation ID can be found here: [Correlation ID and support](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-history?tabs=azure-portal#correlation-id-and-support)
 
 ## Additional context
 

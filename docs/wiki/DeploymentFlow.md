@@ -4,7 +4,7 @@
 
 This document outlines the prerequisites, dependencies and flow to help orchestrate an end-to-end Azure Landing Zone deployment.  The orchestration templates provided with this reference implementation have been pre-configured to follow the dependencies described in this document.
 
-> Have you seen our page in the Azure Architecture Center here: [Azure landing zones - Bicep modules design considerations](https://docs.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
+> Have you seen our page in the Azure Architecture Center here: [Azure landing zones - Bicep modules design considerations](https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
 
 ## Azure Enablement Show Videos
 
@@ -54,7 +54,7 @@ Modules in this reference implementation must be deployed in the following order
 
 ## Network Topology Deployment
 
-You can decide which network topology to implement that meets your requirements. Please review the network topologies [here](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/define-an-azure-network-topology). The following lists examples of network topology deployment based on the recommended enterprise-scale architecture:
+You can decide which network topology to implement that meets your requirements. Please review the network topologies [here](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/define-an-azure-network-topology). The following lists examples of network topology deployment based on the recommended enterprise-scale architecture:
 
 - [Traditional VNet Hub and Spoke](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowHS) - Supports communication, shared resources and centralized security policy.
 - [Virtual WAN](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowVWAN) - Supports large-scale branch-to-branch and branch-to-Azure communications.
@@ -82,24 +82,24 @@ The current available orchestration modules are listed below:
 
 ## Deployment Identity
 
-> When first working with Management Groups, the Azure AD Global Administrator must assign the User Access Administrator role to themselves at the `/` scope first before being able to further delegate. See [Elevate access to manage all Azure subscriptions and management groups](https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin) documentation for further information.
+> When first working with Management Groups, the Azure AD Global Administrator must assign the User Access Administrator role to themselves at the `/` scope first before being able to further delegate. See [Elevate access to manage all Azure subscriptions and management groups](https://learn.microsoft.com/azure/role-based-access-control/elevate-access-global-admin) documentation for further information.
 
 ### Service Principal Account
 
-A service principal account is required to automate through Azure DevOps or GitHub Workflows. This can be created through the [Portal](https://docs.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal), [Azure PowerShell](https://docs.microsoft.com/azure/active-directory/develop/howto-authenticate-service-principal-powershell) or [Azure CLI](https://docs.microsoft.com/cli/azure/create-an-azure-service-principal-azure-cli).
+A service principal account is required to automate through Azure DevOps or GitHub Workflows. This can be created through the [Portal](https://learn.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal), [Azure PowerShell](https://learn.microsoft.com/azure/active-directory/develop/howto-authenticate-service-principal-powershell) or [Azure CLI](https://learn.microsoft.com/cli/azure/create-an-azure-service-principal-azure-cli).
 
 - **Service Principal Name**:  any name (i.e. `spn-azure-platform-ops`)
 - **RBAC Assignment**
   - Scope:  `/` (Root Management Group)
   - Role Assignment:  `Owner`
 
-> See [step-by-step instructions on Azure Docs](https://docs.microsoft.com/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-powershell#required-access) to configure the role assignment at `/` root management group.
+> See [step-by-step instructions on Azure Docs](https://learn.microsoft.com/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-powershell#required-access) to configure the role assignment at `/` root management group.
 
 ### Configure Service Principal Account in Azure DevOps or GitHub
 
-- Azure DevOps: [Setup Service Connection](https://docs.microsoft.com/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml)
+- Azure DevOps: [Setup Service Connection](https://learn.microsoft.com/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml)
 
-- GitHub: [Connect GitHub Actions to Azure](https://docs.microsoft.com/azure/developer/github/connect-from-azure)
+- GitHub: [Connect GitHub Actions to Azure](https://learn.microsoft.com/azure/developer/github/connect-from-azure)
 
 ## Consumption Methods
 
