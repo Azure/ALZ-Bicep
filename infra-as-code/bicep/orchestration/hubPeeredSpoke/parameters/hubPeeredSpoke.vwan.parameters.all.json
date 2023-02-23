@@ -8,6 +8,9 @@
       "parTopLevelManagementGroupPrefix": {
         "value": "alz"
       },
+      "parTopLevelManagementGroupSuffix": {
+        "value": ""
+      },
       "parPeeredVnetSubscriptionId": {
         "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
       },
