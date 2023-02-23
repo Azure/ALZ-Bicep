@@ -34,7 +34,7 @@ Array Used for multiple Virtual WAN Hubs deployment. Each object in the array re
 "parVirtualHubAddressPrefix" - The IP address range in CIDR notation for the vWAN virtual Hub to use.
 "parHublocation" - The Virtual WAN Hub location.
 "parHubRoutingPreference" - The Virtual WAN Hub routing preference. The allowed values are ASN, VpnGateway, ExpressRoute.
-"parVirtualRouterAutoScaleConfiguration" - The Virtual WAN Hub capacity. The value should be between 2 to 50. 
+"parVirtualRouterAutoScaleConfiguration" - The Virtual WAN Hub capacity. The value should be between 2 to 50.
 ''')
 param parVirtualWanHubs array = [ {
     parVpnGatewayEnabled: true
