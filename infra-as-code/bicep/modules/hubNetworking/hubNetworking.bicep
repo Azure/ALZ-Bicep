@@ -370,7 +370,10 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          destinationPortRanges: ['8080','5701']
+          destinationPortRanges: [
+            '8080'
+            '5701'
+          ]
         }
       }
       {
@@ -423,7 +426,10 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: '*'
           sourcePortRange: '*'
-          destinationPortRanges: ['8080','5701']
+          destinationPortRanges: [
+            '8080'
+            '5701'
+          ]
         }
       }
       {
