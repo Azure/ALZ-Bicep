@@ -14,7 +14,6 @@ param parLocation string = deployment().location
 param parTopLevelManagementGroupPrefix string = 'alz'
 
 @sys.description('Optional suffix for the management group hierarchy. This suffix will be appended to management group names. Include a preceeding dash if required. Example: -suffix')
-@minLength(0)
 @maxLength(10)
 param parTopLevelManagementGroupSuffix string = ''
 
