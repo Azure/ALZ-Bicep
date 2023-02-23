@@ -26,7 +26,16 @@ param parVirtualWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
 @sys.description('Prefix Used for Virtual WAN Hub.')
 param parVirtualWanHubName string = '${parCompanyPrefix}-vhub'
 
-@sys.description('Prefix Used for Virtual WAN Hub.')
+@sys.description('''
+Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects to meet the number of Virtual WAN Hub requirement.
+"parVpnGatewayEnabled" - Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub.
+"parExpressRouteGatewayEnabled" - Switch to enable/disable ExpressRoute Gateway deployment on the respective Virtual WAN Hub.
+"parAzFirewallEnabled" - Switch to enable/disable Azure Firewall deployment on the respective Virtual WAN Hub.
+"parVirtualHubAddressPrefix" - The IP address range in CIDR notation for the vWAN virtual Hub to use.
+"parHublocation" - The Virtual WAN Hub location.
+"parHubRoutingPreference" - The Virtual WAN Hub routing preference. The allowed values are ASN, VpnGateway, ExpressRoute.
+"parVirtualRouterAutoScaleConfiguration" - The Virtual WAN Hub capacity. The value should be between 2 to 50. 
+''')
 param parVirtualWanHubs array = [ {
     parVpnGatewayEnabled: true
     parExpressRouteGatewayEnabled: true
@@ -34,7 +43,7 @@ param parVirtualWanHubs array = [ {
     parVirtualHubAddressPrefix: '10.100.0.0/23'
     parHublocation: 'centralus'
     parHubRoutingPreference:'' //allowed values are 'ASN','VpnGateway','ExpressRoute'
-    parVirtualRouterAutoScaleConfiguration:'' //minimum capacity should be between 2 to 50
+    parVirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
   }
   {
     parVpnGatewayEnabled: true
@@ -43,7 +52,7 @@ param parVirtualWanHubs array = [ {
     parVirtualHubAddressPrefix: '10.110.0.0/23'
     parHublocation: 'eastus'
     parHubRoutingPreference:'' //allowed values are 'ASN','VpnGateway','ExpressRoute'
-    parVirtualRouterAutoScaleConfiguration:'' //minimum capacity should be between 2 to 50
+    parVirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
   }
 ]
 
