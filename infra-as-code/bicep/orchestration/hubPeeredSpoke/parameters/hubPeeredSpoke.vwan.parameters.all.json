@@ -31,8 +31,8 @@
       },
       "parDisableBgpRoutePropagation": {
         "value": false
-      },      
-      "parSpoketoHubRouteTableName": {
+      },
+      "parSpokeToHubRouteTableName": {
         "value": "rtb-spoke-to-hub"
       },
       "parHubVirtualNetworkId": {
@@ -41,7 +41,7 @@
       "parAllowSpokeForwardedTraffic": {
         "value": false
       },
-      "parAllowHubVPNGatewayTransit": {
+      "parAllowHubVpnGatewayTransit": {
         "value": true
       },
       "parTags": {
