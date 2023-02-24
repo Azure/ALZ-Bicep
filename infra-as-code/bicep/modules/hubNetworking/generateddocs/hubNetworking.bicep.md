@@ -284,7 +284,7 @@ Set Parameter to true to Opt-out of deployment telemetry.
 
 - Default value: `False`
 
-### parBastionOutboundSshRDPPorts
+### parBastionOutboundSshRdpPorts
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
