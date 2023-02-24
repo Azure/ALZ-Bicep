@@ -391,7 +391,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
       }
       // Outbound Rules
       {
-        name: 'AllowSshRDPOutbound'
+        name: 'AllowSshRdpOutbound'
         properties: {
           access: 'Allow'
           direction: 'Outbound'
