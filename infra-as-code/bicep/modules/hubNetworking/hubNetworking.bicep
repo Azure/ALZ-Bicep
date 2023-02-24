@@ -235,8 +235,8 @@ param parTags object = {}
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
-@sys.description('Define outbound destination ports or ranges for SshRDPOutbound. Default:[22,3389]')
-param parBastionOutboundSshRDPPort array = ['22','3389']
+@sys.description('Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.)
+param parBastionOutboundSshRdpPorts array = ['22','3389']
 
 var varSubnetProperties = [for subnet in parSubnets: {
   name: subnet.name
@@ -400,7 +400,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: '*'
           sourcePortRange: '*'
-          destinationPortRanges: parBastionOutboundSshRDPPort
+          destinationPortRanges: parBastionOutboundSshRdpPorts
         }
       }
       {

@@ -206,7 +206,7 @@
     "parTelemetryOptOut": {
       "value": false
     },
-    "parBastionOutboundSshRDPPort": {
+    "parBastionOutboundSshRdpPorts": {
       "value": ["22","3389"]
     }
   }
