@@ -84,7 +84,7 @@ The current available orchestration modules are listed below:
 
 When first working with Management Groups, the Azure AD Global Administrator must assign the User Access Administrator role to themselves at the `/` scope first before being able to further delegate. See [Elevate access to manage all Azure subscriptions and management groups](https://learn.microsoft.com/azure/role-based-access-control/elevate-access-global-admin) documentation for further information.
 
-In addition, the identity that wants to create a Tenant scope deployment must have the _Owner_ role assigned to the `/` root management group. Whether this is your Global Administrator account or a Service Principal. See [Required access for Tenant deployments on Azure Docs](https://learn.microsoft.com/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-powershell#required-access).
+In addition, the identity that wants to create a Tenant scope deployment must have the _Owner_ role assigned to the `/` root management group. Whether this is your user account (even if a Global Administrator) or a Service Principal. See [Required access for Tenant deployments on Azure Docs](https://learn.microsoft.com/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-powershell#required-access).
 
 ### Service Principal Account
 
