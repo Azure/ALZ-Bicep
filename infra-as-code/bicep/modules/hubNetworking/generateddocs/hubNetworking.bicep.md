@@ -36,6 +36,7 @@ parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway t
 parExpressRouteGatewayConfig | No       | Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parExpressRouteGatewayConfig": {   "value": {} }
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
+parBastionOutboundSshRdpPorts | No       | Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.
 
 ### parLocation
 
@@ -283,6 +284,14 @@ Set Parameter to true to Opt-out of deployment telemetry.
 
 - Default value: `False`
 
+### parBastionOutboundSshRdpPorts
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.
+
+- Default value: `22 3389`
+
 ## Outputs
 
 Name | Type | Description
@@ -509,6 +518,12 @@ outHubVirtualNetworkId | string |
         },
         "parTelemetryOptOut": {
             "value": false
+        },
+        "parBastionOutboundSshRdpPorts": {
+            "value": [
+                "22",
+                "3389"
+            ]
         }
     }
 }

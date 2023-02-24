@@ -82,7 +82,9 @@ The current available orchestration modules are listed below:
 
 ## Deployment Identity
 
-> When first working with Management Groups, the Azure AD Global Administrator must assign the User Access Administrator role to themselves at the `/` scope first before being able to further delegate. See [Elevate access to manage all Azure subscriptions and management groups](https://learn.microsoft.com/azure/role-based-access-control/elevate-access-global-admin) documentation for further information.
+When first working with Management Groups, the Azure AD Global Administrator must assign the User Access Administrator role to themselves at the `/` scope first before being able to further delegate. See [Elevate access to manage all Azure subscriptions and management groups](https://learn.microsoft.com/azure/role-based-access-control/elevate-access-global-admin) documentation for further information.
+
+In addition, the identity that wants to create a Tenant scope deployment must have the *Owner* role assigned to the `/` root management group. Whether this is your user account (even if a Global Administrator) or a Service Principal. See [Required access for Tenant deployments on Azure Docs](https://learn.microsoft.com/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-powershell#required-access).
 
 ### Service Principal Account
 
@@ -92,8 +94,6 @@ A service principal account is required to automate through Azure DevOps or GitH
 - **RBAC Assignment**
   - Scope:  `/` (Root Management Group)
   - Role Assignment:  `Owner`
-
-> See [step-by-step instructions on Azure Docs](https://learn.microsoft.com/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-powershell#required-access) to configure the role assignment at `/` root management group.
 
 ### Configure Service Principal Account in Azure DevOps or GitHub
 
