@@ -7,6 +7,7 @@ ALZ Bicep Module to set up Management Group structure
 Parameter name | Required | Description
 -------------- | -------- | -----------
 parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy. This management group will be created as part of the deployment.
+parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 parTopLevelManagementGroupDisplayName | No       | Display name for top level management group. This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter.
 parTopLevelManagementGroupParentId | No       | Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group.
 parLandingZoneMgAlzDefaultsEnable | No       | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.
@@ -21,6 +22,12 @@ parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment t
 Prefix for the management group hierarchy. This management group will be created as part of the deployment.
 
 - Default value: `alz`
+
+### parTopLevelManagementGroupSuffix
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 
 ### parTopLevelManagementGroupDisplayName
 
@@ -103,6 +110,9 @@ outDecommissionedManagementGroupName | string |
     "parameters": {
         "parTopLevelManagementGroupPrefix": {
             "value": "alz"
+        },
+        "parTopLevelManagementGroupSuffix": {
+            "value": ""
         },
         "parTopLevelManagementGroupDisplayName": {
             "value": "Azure Landing Zones"

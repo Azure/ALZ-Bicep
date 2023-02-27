@@ -5,6 +5,9 @@
     "parTopLevelManagementGroupPrefix": {
       "value": "alz"
     },
+    "parTopLevelManagementGroupSuffix": {
+      "value": ""
+    },
     "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
       "value": "eastus"
     },

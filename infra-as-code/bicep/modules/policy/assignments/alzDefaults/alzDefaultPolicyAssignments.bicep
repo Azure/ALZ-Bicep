@@ -6,6 +6,10 @@ metadata description = 'This policy assignment will assign the ALZ Default Polic
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
+@sys.description('Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix')
+@maxLength(10)
+param parTopLevelManagementGroupSuffix string = ''
+
 @sys.description('The region where the Log Analytics Workspace & Automation Account are deployed.')
 param parLogAnalyticsWorkSpaceAndAutomationAccountLocation string = 'eastus'
 
@@ -223,16 +227,16 @@ var varRbacRoleDefinitionIds = {
 
 // Management Groups Variables - Used For Policy Assignments
 var varManagementGroupIds = {
-  intRoot: parTopLevelManagementGroupPrefix
-  platform: '${parTopLevelManagementGroupPrefix}-platform'
-  platformManagement: '${parTopLevelManagementGroupPrefix}-platform-management'
-  platformConnectivity: '${parTopLevelManagementGroupPrefix}-platform-connectivity'
-  platformIdentity: '${parTopLevelManagementGroupPrefix}-platform-identity'
-  landingZones: '${parTopLevelManagementGroupPrefix}-landingzones'
-  landingZonesCorp: '${parTopLevelManagementGroupPrefix}-landingzones-corp'
-  landingZonesOnline: '${parTopLevelManagementGroupPrefix}-landingzones-online'
-  decommissioned: '${parTopLevelManagementGroupPrefix}-decommissioned'
-  sandbox: '${parTopLevelManagementGroupPrefix}-sandbox'
+  intRoot: '${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}'
+  platform: '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
+  platformManagement: '${parTopLevelManagementGroupPrefix}-platform-management${parTopLevelManagementGroupSuffix}'
+  platformConnectivity: '${parTopLevelManagementGroupPrefix}-platform-connectivity${parTopLevelManagementGroupSuffix}'
+  platformIdentity: '${parTopLevelManagementGroupPrefix}-platform-identity${parTopLevelManagementGroupSuffix}'
+  landingZones: '${parTopLevelManagementGroupPrefix}-landingzones${parTopLevelManagementGroupSuffix}'
+  landingZonesCorp: '${parTopLevelManagementGroupPrefix}-landingzones-corp${parTopLevelManagementGroupSuffix}'
+  landingZonesOnline: '${parTopLevelManagementGroupPrefix}-landingzones-online${parTopLevelManagementGroupSuffix}'
+  decommissioned: '${parTopLevelManagementGroupPrefix}-decommissioned${parTopLevelManagementGroupSuffix}'
+  sandbox: '${parTopLevelManagementGroupPrefix}-sandbox${parTopLevelManagementGroupSuffix}'
 }
 
 var varTopLevelManagementGroupResourceId = '/providers/Microsoft.Management/managementGroups/${varManagementGroupIds.intRoot}'

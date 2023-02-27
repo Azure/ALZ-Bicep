@@ -7,6 +7,7 @@ This policy assignment will assign the ALZ Default Policy to management groups
 Parameter name | Required | Description
 -------------- | -------- | -----------
 parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy.
+parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 parLogAnalyticsWorkSpaceAndAutomationAccountLocation | No       | The region where the Log Analytics Workspace & Automation Account are deployed.
 parLogAnalyticsWorkspaceResourceId | No       | Log Analytics Workspace Resource ID.
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
@@ -24,6 +25,12 @@ parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment t
 Prefix for the management group hierarchy.
 
 - Default value: `alz`
+
+### parTopLevelManagementGroupSuffix
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 
 ### parLogAnalyticsWorkSpaceAndAutomationAccountLocation
 
@@ -105,6 +112,9 @@ Set Parameter to true to Opt-out of deployment telemetry
     "parameters": {
         "parTopLevelManagementGroupPrefix": {
             "value": "alz"
+        },
+        "parTopLevelManagementGroupSuffix": {
+            "value": ""
         },
         "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
             "value": "eastus"

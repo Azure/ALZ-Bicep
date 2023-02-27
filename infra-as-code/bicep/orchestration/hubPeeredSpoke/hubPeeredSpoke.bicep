@@ -13,6 +13,10 @@ param parLocation string = deployment().location
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
+@sys.description('Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix')
+@maxLength(10)
+param parTopLevelManagementGroupSuffix string = ''
+
 @sys.description('Subscription Id to the Virtual Network Hub object. Default: Empty String')
 param parPeeredVnetSubscriptionId string = ''
 
@@ -100,14 +104,14 @@ var varVirtualHubSubscriptionId = (!empty(parHubVirtualNetworkId) && contains(pa
 // **Modules**
 // Module - Customer Usage Attribution - Telemetry
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
-  scope: managementGroup(parTopLevelManagementGroupPrefix)
+  scope: managementGroup('${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}')
   name: 'pid-${varCuaid}-${uniqueString(parLocation, parPeeredVnetSubscriptionId)}'
   params: {}
 }
 
 // Module - Subscription Placement - Management
 module modSubscriptionPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = if (!empty(parPeeredVnetSubscriptionMgPlacement)) {
-  scope: managementGroup(parTopLevelManagementGroupPrefix)
+  scope: managementGroup('${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}')
   name: varModuleDeploymentNames.modSubscriptionPlacement
   params: {
     parTargetManagementGroupId: parPeeredVnetSubscriptionMgPlacement
