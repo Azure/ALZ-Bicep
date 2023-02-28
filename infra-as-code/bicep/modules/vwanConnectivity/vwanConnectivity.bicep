@@ -42,7 +42,7 @@ param parVirtualWanHubs array = [ {
     parAzFirewallEnabled: true
     parVirtualHubAddressPrefix: '10.100.0.0/23'
     parHublocation: 'centralus'
-    parHubRoutingPreference:'' //allowed values are 'ASN','VpnGateway','ExpressRoute'. Default value is 'ExpressRoute'
+    parHubRoutingPreference: 'ExpressRoute' //allowed values are 'ASN','VpnGateway','ExpressRoute'.
     parVirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
   }
   {
@@ -51,7 +51,7 @@ param parVirtualWanHubs array = [ {
     parAzFirewallEnabled: true
     parVirtualHubAddressPrefix: '10.110.0.0/23'
     parHublocation: 'eastus'
-    parHubRoutingPreference:'' //allowed values are 'ASN','VpnGateway','ExpressRoute'. Default value is 'ExpressRoute'
+    parHubRoutingPreference: 'ExpressRoute' //allowed values are 'ASN','VpnGateway','ExpressRoute'.
     parVirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
   }
 ]
