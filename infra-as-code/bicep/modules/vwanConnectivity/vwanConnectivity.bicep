@@ -42,7 +42,7 @@ param parVirtualWanHubs array = [ {
     parAzFirewallEnabled: true
     parVirtualHubAddressPrefix: '10.100.0.0/23'
     parHublocation: 'centralus'
-    parHubRoutingPreference:'' //allowed values are 'ASN','VpnGateway','ExpressRoute'
+    parHubRoutingPreference:'' //allowed values are 'ASN','VpnGateway','ExpressRoute'. Default value is 'ExpressRoute'
     parVirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
   }
   {
@@ -51,7 +51,7 @@ param parVirtualWanHubs array = [ {
     parAzFirewallEnabled: true
     parVirtualHubAddressPrefix: '10.110.0.0/23'
     parHublocation: 'eastus'
-    parHubRoutingPreference:'' //allowed values are 'ASN','VpnGateway','ExpressRoute'
+    parHubRoutingPreference:'' //allowed values are 'ASN','VpnGateway','ExpressRoute'. Default value is 'ExpressRoute'
     parVirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
   }
 ]
@@ -200,9 +200,9 @@ resource resVhub 'Microsoft.Network/virtualHubs@2022-01-01' = [for hub in parVir
       id: resVwan.id
     }
     virtualRouterAutoScaleConfiguration:{
-      minCapacity:hub.parVirtualRouterAutoScaleConfiguration
+      minCapacity: hub.parVirtualRouterAutoScaleConfiguration
     }
-    hubRoutingPreference:hub.parHubRoutingPreference
+    hubRoutingPreference: hub.parHubRoutingPreference
   }
 }]
 
