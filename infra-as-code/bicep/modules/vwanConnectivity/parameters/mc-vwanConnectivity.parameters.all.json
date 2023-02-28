@@ -46,7 +46,7 @@
           "parAzFirewallEnabled": true,
           "parVirtualHubAddressPrefix": "10.100.0.0/23",
           "parHublocation": "chinaeast2",
-          "parHubRoutingPreference":"",
+          "parHubRoutingPreference": "ExpressRoute",
           "parVirtualRouterAutoScaleConfiguration": 2
         }
       ]
