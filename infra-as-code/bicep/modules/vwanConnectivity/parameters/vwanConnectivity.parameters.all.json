@@ -45,7 +45,7 @@
           "parExpressRouteGatewayEnabled": true,
           "parAzFirewallEnabled": true,
           "parVirtualHubAddressPrefix": "10.100.0.0/23",
-          "parHublocation": "eastus",
+          "parHubLocation": "eastus",
           "parHubRoutingPreference": "ExpressRoute",
           "parVirtualRouterAutoScaleConfiguration": 2
         },
@@ -54,7 +54,7 @@
           "parExpressRouteGatewayEnabled": true,
           "parAzFirewallEnabled": true,
           "parVirtualHubAddressPrefix": "10.110.0.0/23",
-          "parHublocation": "westus",
+          "parHubLocation": "westus",
           "parHubRoutingPreference": "ExpressRoute",
           "parVirtualRouterAutoScaleConfiguration": 2
         }
