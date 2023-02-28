@@ -7,9 +7,6 @@ param parLocation string = resourceGroup().location
 @sys.description('Prefix value which will be prepended to all resource names.')
 param parCompanyPrefix string = 'alz'
 
-@sys.description('The IP address range in CIDR notation for the vWAN virtual Hub to use.')
-param parVirtualHubAddressPrefix string = '10.100.0.0/23'
-
 @sys.description('Azure Firewall Tier associated with the Firewall to deploy.')
 @allowed([
   'Standard'
@@ -20,15 +17,6 @@ param parAzFirewallTier string = 'Standard'
 @sys.description('Switch to enable/disable Virtual Hub deployment.')
 param parVirtualHubEnabled bool = true
 
-@sys.description('Switch to enable/disable VPN Gateway deployment.')
-param parVpnGatewayEnabled bool = true
-
-@sys.description('Switch to enable/disable ExpressRoute Gateway deployment.')
-param parExpressRouteGatewayEnabled bool = true
-
-@sys.description('Switch to enable/disable Azure Firewall deployment.')
-param parAzFirewallEnabled bool = true
-
 @sys.description('Switch to enable/disable Azure Firewall DNS Proxy.')
 param parAzFirewallDnsProxyEnabled bool = true
 
@@ -36,16 +24,47 @@ param parAzFirewallDnsProxyEnabled bool = true
 param parVirtualWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
 
 @sys.description('Prefix Used for Virtual WAN Hub.')
-param parVirtualWanHubName string = '${parCompanyPrefix}-vhub-${parLocation}'
+param parVirtualWanHubName string = '${parCompanyPrefix}-vhub'
+
+@sys.description('''Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects in the array to meet the number of Virtual WAN Hubs required.
+
+- `parVpnGatewayEnabled` - Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub.
+- `parExpressRouteGatewayEnabled` - Switch to enable/disable ExpressRoute Gateway deployment on the respective Virtual WAN Hub.
+- `parAzFirewallEnabled` - Switch to enable/disable Azure Firewall deployment on the respective Virtual WAN Hub.
+- `parVirtualHubAddressPrefix` - The IP address range in CIDR notation for the vWAN virtual Hub to use.
+- `parHublocation` - The Virtual WAN Hub location.
+- `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASN`, `VpnGateway`, `ExpressRoute`.
+- `parVirtualRouterAutoScaleConfiguration` - The Virtual WAN Hub capacity. The value should be between 2 to 50.
+
+''')
+param parVirtualWanHubs array = [ {
+    parVpnGatewayEnabled: true
+    parExpressRouteGatewayEnabled: true
+    parAzFirewallEnabled: true
+    parVirtualHubAddressPrefix: '10.100.0.0/23'
+    parHublocation: 'centralus'
+    parHubRoutingPreference: 'ExpressRoute' //allowed values are 'ASN','VpnGateway','ExpressRoute'.
+    parVirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
+  }
+  {
+    parVpnGatewayEnabled: true
+    parExpressRouteGatewayEnabled: true
+    parAzFirewallEnabled: true
+    parVirtualHubAddressPrefix: '10.110.0.0/23'
+    parHublocation: 'eastus'
+    parHubRoutingPreference: 'ExpressRoute' //allowed values are 'ASN','VpnGateway','ExpressRoute'.
+    parVirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
+  }
+]
 
 @sys.description('Prefix Used for VPN Gateway.')
-param parVpnGatewayName string = '${parCompanyPrefix}-vpngw-${parLocation}'
+param parVpnGatewayName string = '${parCompanyPrefix}-vpngw'
 
 @sys.description('Prefix Used for ExpressRoute Gateway.')
-param parExpressRouteGatewayName string = '${parCompanyPrefix}-ergw-${parLocation}'
+param parExpressRouteGatewayName string = '${parCompanyPrefix}-ergw'
 
 @sys.description('Azure Firewall Name.')
-param parAzFirewallName string = '${parCompanyPrefix}-fw-${parLocation}'
+param parAzFirewallName string = '${parCompanyPrefix}-fw'
 
 @allowed([
   '1'
@@ -159,7 +178,7 @@ param parTelemetryOptOut bool = false
 var varCuaid = '7f94f23b-7a59-4a5c-9a8d-2a253a566f61'
 
 // Virtual WAN resource
-resource resVwan 'Microsoft.Network/virtualWans@2021-08-01' = {
+resource resVwan 'Microsoft.Network/virtualWans@2022-01-01' = {
   name: parVirtualWanName
   location: parLocation
   tags: parTags
@@ -171,21 +190,25 @@ resource resVwan 'Microsoft.Network/virtualWans@2021-08-01' = {
   }
 }
 
-resource resVhub 'Microsoft.Network/virtualHubs@2021-08-01' = if (parVirtualHubEnabled && !empty(parVirtualHubAddressPrefix)) {
-  name: parVirtualWanHubName
-  location: parLocation
+resource resVhub 'Microsoft.Network/virtualHubs@2022-01-01' = [for hub in parVirtualWanHubs: if (parVirtualHubEnabled && !empty(hub.parVirtualHubAddressPrefix)) {
+  name: '${parVirtualWanHubName}-${hub.parHublocation}'
+  location: hub.parHublocation
   tags: parTags
   properties: {
-    addressPrefix: parVirtualHubAddressPrefix
+    addressPrefix: hub.parVirtualHubAddressPrefix
     sku: 'Standard'
     virtualWan: {
       id: resVwan.id
     }
+    virtualRouterAutoScaleConfiguration:{
+      minCapacity: hub.parVirtualRouterAutoScaleConfiguration
+    }
+    hubRoutingPreference: hub.parHubRoutingPreference
   }
-}
+}]
 
-resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2021-08-01' = if (parVirtualHubEnabled && parAzFirewallEnabled) {
-  parent: resVhub
+resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2022-01-01' = [for (hub, i) in parVirtualWanHubs: if (parVirtualHubEnabled && hub.parAzFirewallEnabled) {
+  parent: resVhub[i]
   name: 'defaultRouteTable'
   properties: {
     labels: [
@@ -198,16 +221,17 @@ resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2021-08
           '0.0.0.0/0'
         ]
         destinationType: 'CIDR'
-        nextHop: (parVirtualHubEnabled && parAzFirewallEnabled) ? resAzureFirewall.id : ''
+        nextHop: (parVirtualHubEnabled && hub.parAzFirewallEnabled) ? resAzureFirewall[i].id : ''
         nextHopType: 'ResourceID'
       }
     ]
   }
-}
+}]
 
-resource resVpnGateway 'Microsoft.Network/vpnGateways@2021-05-01' = if (parVirtualHubEnabled && parVpnGatewayEnabled) {
-  name: parVpnGatewayName
-  location: parLocation
+resource resVpnGateway 'Microsoft.Network/vpnGateways@2021-05-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parVpnGatewayEnabled)) {
+  dependsOn: resVhub
+  name: '${parVpnGatewayName}-${hub.parHublocation}'
+  location: hub.parHublocation
   tags: parTags
   properties: {
     bgpSettings: {
@@ -216,19 +240,20 @@ resource resVpnGateway 'Microsoft.Network/vpnGateways@2021-05-01' = if (parVirtu
       peerWeight: 5
     }
     virtualHub: {
-      id: resVhub.id
+      id: resVhub[i].id
     }
     vpnGatewayScaleUnit: parVpnGatewayScaleUnit
   }
-}
+}]
 
-resource resErGateway 'Microsoft.Network/expressRouteGateways@2021-05-01' = if (parVirtualHubEnabled && parExpressRouteGatewayEnabled) {
-  name: parExpressRouteGatewayName
-  location: parLocation
+resource resErGateway 'Microsoft.Network/expressRouteGateways@2021-05-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parExpressRouteGatewayEnabled)) {
+  dependsOn: resVhub
+  name: '${parExpressRouteGatewayName}-${hub.parHublocation}'
+  location: hub.parHublocation
   tags: parTags
   properties: {
     virtualHub: {
-      id: resVhub.id
+      id: resVhub[i].id
     }
     autoScaleConfiguration: {
       bounds: {
@@ -236,9 +261,9 @@ resource resErGateway 'Microsoft.Network/expressRouteGateways@2021-05-01' = if (
       }
     }
   }
-}
+}]
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2022-05-01' = if (parVirtualHubEnabled && parAzFirewallEnabled) {
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2022-05-01' = if (parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled) {
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
@@ -252,9 +277,9 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2022-05-01' = i
   }
 }
 
-resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2022-05-01' = if (parVirtualHubEnabled && parAzFirewallEnabled) {
-  name: parAzFirewallName
-  location: parLocation
+resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2022-05-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parAzFirewallEnabled)) {
+  name: '${parAzFirewallName}-${hub.parHublocation}'
+  location: hub.parHublocation
   tags: parTags
   zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : json('null'))
   properties: {
@@ -268,13 +293,13 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2022-05-01' = if (pa
       tier: parAzFirewallTier
     }
     virtualHub: {
-      id: parVirtualHubEnabled ? resVhub.id : ''
+      id: parVirtualHubEnabled ? resVhub[i].id : ''
     }
     firewallPolicy: {
-      id: (parVirtualHubEnabled && parAzFirewallEnabled) ? resFirewallPolicies.id : ''
+      id: (parVirtualHubEnabled && hub.parAzFirewallEnabled) ? resFirewallPolicies.id : ''
     }
   }
-}
+}]
 
 // DDoS plan is deployed even though not supported to attach to Virtual WAN today as per https://docs.microsoft.com/azure/firewall-manager/overview#known-issues - However, it can still be linked via policy to spoke VNets etc.
 resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-08-01' = if (parDdosEnabled) {
@@ -295,20 +320,27 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
   }
 }
 
+
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
   name: 'pid-${varCuaid}-${uniqueString(parLocation)}'
   params: {}
 }
 
+
 // Output Virtual WAN name and ID
 output outVirtualWanName string = resVwan.name
 output outVirtualWanId string = resVwan.id
 
 // Output Virtual WAN Hub name and ID
-output outVirtualHubName string = resVhub.name
-output outVirtualHubId string = resVhub.id
+output outVirtualHubName array = [ for (hub, i) in parVirtualWanHubs: {
+  virtualhubname: resVhub[i].name
+  virtualhubid: resVhub[i].id
+}]
 
+output outVirtualHubId array = [ for (hub, i) in parVirtualWanHubs: {
+  virtualhubid: resVhub[i].id
+}]
 // Output DDoS Plan ID
 output outDdosPlanResourceId string = resDdosProtectionPlan.id
 

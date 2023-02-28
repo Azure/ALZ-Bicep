@@ -20,18 +20,23 @@ module minimum_vwan_conn '../vwanConnectivity.bicep' = {
   name: 'minimum_vwan_conn'
   params: {
     parLocation: parLocation
-    parVirtualHubAddressPrefix: '10.100.0.0/23'
     parAzFirewallTier: 'Standard'
     parVirtualHubEnabled: true
-    parVpnGatewayEnabled: true
-    parExpressRouteGatewayEnabled: true
-    parAzFirewallEnabled: true
+    parVirtualWanHubs:[{
+      parVpnGatewayEnabled: true
+      parExpressRouteGatewayEnabled: true
+      parAzFirewallEnabled: true
+      parVirtualHubAddressPrefix: '10.100.0.0/23'
+      parHublocation: 'centralus'
+      parhubRoutingPreference: 'ExpressRoute' //allowed values are 'ASN','VpnGateway','ExpressRoute'
+      parvirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
+    }]
     parAzFirewallDnsProxyEnabled: true
     parVirtualWanName: '${parCompanyPrefix}-vwan-${parLocation}'
-    parVirtualWanHubName: '${parCompanyPrefix}-vhub-${parLocation}'
-    parVpnGatewayName: '${parCompanyPrefix}-vpngw-${parLocation}'
-    parExpressRouteGatewayName: '${parCompanyPrefix}-ergw-${parLocation}'
-    parAzFirewallName: '${parCompanyPrefix}-fw-${parLocation}'
+    parVirtualWanHubName: '${parCompanyPrefix}-vhub'
+    parVpnGatewayName: '${parCompanyPrefix}-vpngw'
+    parExpressRouteGatewayName: '${parCompanyPrefix}-ergw'
+    parAzFirewallName: '${parCompanyPrefix}-fw'
     parAzFirewallAvailabilityZones: [
       '1'
       '2'
