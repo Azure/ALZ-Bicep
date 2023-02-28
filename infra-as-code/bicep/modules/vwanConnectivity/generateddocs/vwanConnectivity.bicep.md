@@ -102,6 +102,8 @@ Array Used for multiple Virtual WAN Hubs deployment. Each object in the array re
 - `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASN`, `VpnGateway`, `ExpressRoute`.
 - `parVirtualRouterAutoScaleConfiguration` - The Virtual WAN Hub capacity. The value should be between 2 to 50.
 
+
+
 - Default value: ` `
 
 ### parVpnGatewayName
