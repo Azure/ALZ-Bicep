@@ -8,15 +8,12 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parLocation    | No       | Region in which the resource group was created.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
-parVirtualHubAddressPrefix | No       | The IP address range in CIDR notation for the vWAN virtual Hub to use.
 parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
 parVirtualHubEnabled | No       | Switch to enable/disable Virtual Hub deployment.
-parVpnGatewayEnabled | No       | Switch to enable/disable VPN Gateway deployment.
-parExpressRouteGatewayEnabled | No       | Switch to enable/disable ExpressRoute Gateway deployment.
-parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment.
 parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
 parVirtualWanName | No       | Prefix Used for Virtual WAN.
 parVirtualWanHubName | No       | Prefix Used for Virtual WAN Hub.
+parVirtualWanHubs | No       | Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects to meet the number of Virtual WAN Hub requirement. "parVpnGatewayEnabled" - Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub. "parExpressRouteGatewayEnabled" - Switch to enable/disable ExpressRoute Gateway deployment on the respective Virtual WAN Hub. "parAzFirewallEnabled" - Switch to enable/disable Azure Firewall deployment on the respective Virtual WAN Hub. "parVirtualHubAddressPrefix" - The IP address range in CIDR notation for the vWAN virtual Hub to use. "parHublocation" - The Virtual WAN Hub location. "parHubRoutingPreference" - The Virtual WAN Hub routing preference. The allowed values are ASN, VpnGateway, ExpressRoute. "parVirtualRouterAutoScaleConfiguration" - The Virtual WAN Hub capacity. The value should be between 2 to 50. 
 parVpnGatewayName | No       | Prefix Used for VPN Gateway.
 parExpressRouteGatewayName | No       | Prefix Used for ExpressRoute Gateway.
 parAzFirewallName | No       | Azure Firewall Name.
@@ -49,14 +46,6 @@ Prefix value which will be prepended to all resource names.
 
 - Default value: `alz`
 
-### parVirtualHubAddressPrefix
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-The IP address range in CIDR notation for the vWAN virtual Hub to use.
-
-- Default value: `10.100.0.0/23`
-
 ### parAzFirewallTier
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -72,30 +61,6 @@ Azure Firewall Tier associated with the Firewall to deploy.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Switch to enable/disable Virtual Hub deployment.
-
-- Default value: `True`
-
-### parVpnGatewayEnabled
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Switch to enable/disable VPN Gateway deployment.
-
-- Default value: `True`
-
-### parExpressRouteGatewayEnabled
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Switch to enable/disable ExpressRoute Gateway deployment.
-
-- Default value: `True`
-
-### parAzFirewallEnabled
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Switch to enable/disable Azure Firewall deployment.
 
 - Default value: `True`
 
@@ -121,7 +86,23 @@ Prefix Used for Virtual WAN.
 
 Prefix Used for Virtual WAN Hub.
 
-- Default value: `[format('{0}-vhub-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
+- Default value: `[format('{0}-vhub', parameters('parCompanyPrefix'))]`
+
+### parVirtualWanHubs
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects to meet the number of Virtual WAN Hub requirement.
+"parVpnGatewayEnabled" - Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub.
+"parExpressRouteGatewayEnabled" - Switch to enable/disable ExpressRoute Gateway deployment on the respective Virtual WAN Hub.
+"parAzFirewallEnabled" - Switch to enable/disable Azure Firewall deployment on the respective Virtual WAN Hub.
+"parVirtualHubAddressPrefix" - The IP address range in CIDR notation for the vWAN virtual Hub to use.
+"parHublocation" - The Virtual WAN Hub location.
+"parHubRoutingPreference" - The Virtual WAN Hub routing preference. The allowed values are ASN, VpnGateway, ExpressRoute.
+"parVirtualRouterAutoScaleConfiguration" - The Virtual WAN Hub capacity. The value should be between 2 to 50.
+
+
+- Default value: ` `
 
 ### parVpnGatewayName
 
@@ -129,7 +110,7 @@ Prefix Used for Virtual WAN Hub.
 
 Prefix Used for VPN Gateway.
 
-- Default value: `[format('{0}-vpngw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
+- Default value: `[format('{0}-vpngw', parameters('parCompanyPrefix'))]`
 
 ### parExpressRouteGatewayName
 
@@ -137,7 +118,7 @@ Prefix Used for VPN Gateway.
 
 Prefix Used for ExpressRoute Gateway.
 
-- Default value: `[format('{0}-ergw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
+- Default value: `[format('{0}-ergw', parameters('parCompanyPrefix'))]`
 
 ### parAzFirewallName
 
@@ -145,7 +126,7 @@ Prefix Used for ExpressRoute Gateway.
 
 Azure Firewall Name.
 
-- Default value: `[format('{0}-fw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
+- Default value: `[format('{0}-fw', parameters('parCompanyPrefix'))]`
 
 ### parAzFirewallAvailabilityZones
 
@@ -245,8 +226,8 @@ Name | Type | Description
 ---- | ---- | -----------
 outVirtualWanName | string |
 outVirtualWanId | string |
-outVirtualHubName | string |
-outVirtualHubId | string |
+outVirtualHubName | array |
+outVirtualHubId | array |
 outDdosPlanResourceId | string |
 outPrivateDnsZones | array |
 
@@ -268,22 +249,10 @@ outPrivateDnsZones | array |
         "parCompanyPrefix": {
             "value": "alz"
         },
-        "parVirtualHubAddressPrefix": {
-            "value": "10.100.0.0/23"
-        },
         "parAzFirewallTier": {
             "value": "Standard"
         },
         "parVirtualHubEnabled": {
-            "value": true
-        },
-        "parVpnGatewayEnabled": {
-            "value": true
-        },
-        "parExpressRouteGatewayEnabled": {
-            "value": true
-        },
-        "parAzFirewallEnabled": {
             "value": true
         },
         "parAzFirewallDnsProxyEnabled": {
@@ -293,16 +262,38 @@ outPrivateDnsZones | array |
             "value": "[format('{0}-vwan-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
         },
         "parVirtualWanHubName": {
-            "value": "[format('{0}-vhub-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
+            "value": "[format('{0}-vhub', parameters('parCompanyPrefix'))]"
+        },
+        "parVirtualWanHubs": {
+            "value": [
+                {
+                    "parVpnGatewayEnabled": true,
+                    "parExpressRouteGatewayEnabled": true,
+                    "parAzFirewallEnabled": true,
+                    "parVirtualHubAddressPrefix": "10.100.0.0/23",
+                    "parHublocation": "centralus",
+                    "parHubRoutingPreference": "ExpressRoute",
+                    "parVirtualRouterAutoScaleConfiguration": 2
+                },
+                {
+                    "parVpnGatewayEnabled": true,
+                    "parExpressRouteGatewayEnabled": true,
+                    "parAzFirewallEnabled": true,
+                    "parVirtualHubAddressPrefix": "10.110.0.0/23",
+                    "parHublocation": "eastus",
+                    "parHubRoutingPreference": "ExpressRoute",
+                    "parVirtualRouterAutoScaleConfiguration": 2
+                }
+            ]
         },
         "parVpnGatewayName": {
-            "value": "[format('{0}-vpngw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
+            "value": "[format('{0}-vpngw', parameters('parCompanyPrefix'))]"
         },
         "parExpressRouteGatewayName": {
-            "value": "[format('{0}-ergw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
+            "value": "[format('{0}-ergw', parameters('parCompanyPrefix'))]"
         },
         "parAzFirewallName": {
-            "value": "[format('{0}-fw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
+            "value": "[format('{0}-fw', parameters('parCompanyPrefix'))]"
         },
         "parAzFirewallAvailabilityZones": {
             "value": []
