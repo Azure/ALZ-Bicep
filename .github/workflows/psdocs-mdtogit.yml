@@ -48,7 +48,7 @@ jobs:
       - name: Bicep Build
         shell: pwsh
         run: |
-          Get-ChildItem -Recurse -Path infra-as-code/bicep/modules/ -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
+          Get-ChildItem -Recurse -Path infra-as-code/bicep/ -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
               Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
               $output = bicep build $_.FullName 2>&1
               if ($LastExitCode -ne 0)
@@ -64,8 +64,8 @@ jobs:
       - name: Generate ARM markdowns
         run: |
           Install-Module -Name 'PSDocs.Azure' -Repository PSGallery -force;
-          # Scan for Azure template file recursively in the infra-as-code/bicep/modules/ directory
-          Get-AzDocTemplateFile -Path infra-as-code/bicep/modules/ | ForEach-Object {
+          # Scan for Azure template file recursively in the infra-as-code/bicep/ directory
+          Get-AzDocTemplateFile -Path infra-as-code/bicep/ | ForEach-Object {
             # Generate a standard name of the markdown file. i.e. <name>_<version>.md
             $template = Get-Item -Path $_.TemplateFile;
             $templateraw = Get-Content -Raw -Path $_.Templatefile;
@@ -94,7 +94,7 @@ jobs:
       - name: Remove Generated JSONs
         shell: pwsh
         run: |
-          Get-ChildItem -Recurse -Path infra-as-code/bicep/modules/ -Filter '*.json' -Exclude 'bicepconfig.json','*.parameters.json','*.parameters.*.json','policy_*' | ForEach-Object {
+          Get-ChildItem -Recurse -Path infra-as-code/bicep/ -Filter '*.json' -Exclude 'bicepconfig.json','*.parameters.json','*.parameters.*.json','policy_*' | ForEach-Object {
               Write-Information "==> Removing generated JSON file $_ from Bicep Build" -InformationAction Continue
               Remove-Item -Path $_.FullName
           }
