@@ -44,7 +44,7 @@ These three parameters are then used to collate a single variable that is used t
 
 > Investigate the variable called `varLandingZoneMgChildrenUnioned` if you want to see how this works in the module.
 
-#### `parLandingZoneMgChildren` Input Examples
+#### `parLandingZoneMgChildren` and `parPlatformMgChildren` Input Examples
 
 Below are some examples of how to use this input parameter in both Bicep & JSON formats.
 
@@ -59,12 +59,31 @@ parLandingZoneMgChildren: {
     displayName: 'Another Example'
   }
 }
+
+parPlatformMgChildren: {
+  pci: {
+    displayName: 'PCI'
+  }
+  'another-example': {
+    displayName: 'Another Example'
+  }
+}
 ```
 
 ##### JSON Parameter File Input Example
 
 ```json
 "parLandingZoneMgChildren": {
+    "value": {
+        "pci": {
+          "displayName": "PCI"
+        },
+        "another-example": {
+          "displayName": "Another Example"
+        }
+    }
+},
+"parPlatformMgChildren": {
     "value": {
         "pci": {
           "displayName": "PCI"

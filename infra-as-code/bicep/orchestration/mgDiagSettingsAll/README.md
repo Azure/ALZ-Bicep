@@ -44,7 +44,7 @@ This module considers the same flexibility used when creating the child Landing 
   - **Optional**
   - Deploys whatever you specify in the object as child Landing Zone Management groups.
 
-#### `parLandingZoneMgChildren` Input Examples
+#### `parLandingZoneMgChildren` and `parPlatformMgChildren` Input Examples
 
 Below are some examples of how to use this input parameter in both Bicep & JSON formats.
 
@@ -55,12 +55,23 @@ parLandingZoneMgChildren = [
   'pci',
   'another-example'
 ]
+
+parPlatformMgChildren = [
+  'pci',
+  'another-example'
+]
 ```
 
 ##### JSON Parameter File Input Example
 
 ```json
     "parLandingZoneMgChildren": {
+      "value": [
+        "pci",
+        "another-example"
+    ]
+  },
+    "parPlatformMgChildren": {
       "value": [
         "pci",
         "another-example"
