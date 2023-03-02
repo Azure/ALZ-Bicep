@@ -8,10 +8,6 @@ This module does not deploy any resources
 
 This module does not require any inputs
 
-| Parameter | Type | Default | Description | Requirement | Example |
-| --------- | ---- | ------- | ----------- | ----------- | ------- |
-
-
 ## Outputs
 
 The module does not generate any outputs
