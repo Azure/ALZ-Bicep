@@ -235,6 +235,9 @@ param parTags object = {}
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
+@sys.description('Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.')
+param parBastionOutboundSshRdpPorts array = ['22','3389']
+
 var varSubnetProperties = [for subnet in parSubnets: {
   name: subnet.name
   properties: {
@@ -373,9 +376,22 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           ]
         }
       }
+      {
+        name: 'DenyAllInbound'
+        properties: {
+          access: 'Deny'
+          direction: 'Inbound'
+          priority: 4096
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: '*'
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRange: '*'
+        }
+      }
       // Outbound Rules
       {
-        name: 'AllowSshRDPOutbound'
+        name: 'AllowSshRdpOutbound'
         properties: {
           access: 'Allow'
           direction: 'Outbound'
@@ -384,10 +400,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           destinationAddressPrefix: 'VirtualNetwork'
           protocol: '*'
           sourcePortRange: '*'
-          destinationPortRanges: [
-            '22'
-            '3389'
-          ]
+          destinationPortRanges: parBastionOutboundSshRdpPorts
         }
       }
       {
@@ -430,6 +443,19 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
           protocol: '*'
           sourcePortRange: '*'
           destinationPortRange: '80'
+        }
+      }
+      {
+        name: 'DenyAllOutbound'
+        properties: {
+          access: 'Deny'
+          direction: 'Outbound'
+          priority: 4096
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: '*'
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRange: '*'
         }
       }
     ]

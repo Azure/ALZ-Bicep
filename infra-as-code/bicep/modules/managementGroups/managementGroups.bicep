@@ -8,6 +8,10 @@ metadata description = 'ALZ Bicep Module to set up Management Group structure'
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
+@sys.description('Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix')
+@maxLength(10)
+param parTopLevelManagementGroupSuffix string = ''
+
 @sys.description('Display name for top level management group. This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter.')
 @minLength(2)
 param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
@@ -35,7 +39,7 @@ param parTelemetryOptOut bool = false
 
 // Platform and Child Management Groups
 var varPlatformMg = {
-  name: '${parTopLevelManagementGroupPrefix}-platform'
+  name: '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
   displayName: 'Platform'
 }
 
@@ -54,7 +58,7 @@ var varPlatformMgChildrenAlzDefault = {
 
 // Landing Zones & Child Management Groups
 var varLandingZoneMg = {
-  name: '${parTopLevelManagementGroupPrefix}-landingzones'
+  name: '${parTopLevelManagementGroupPrefix}-landingzones${parTopLevelManagementGroupSuffix}'
   displayName: 'Landing Zones'
 }
 
@@ -84,13 +88,13 @@ var varPlatformMgChildrenUnioned = (parPlatformMgAlzDefaultsEnable && (!empty(pa
 
 // Sandbox Management Group
 var varSandboxMg = {
-  name: '${parTopLevelManagementGroupPrefix}-sandbox'
+  name: '${parTopLevelManagementGroupPrefix}-sandbox${parTopLevelManagementGroupSuffix}'
   displayName: 'Sandbox'
 }
 
 // Decomissioned Management Group
 var varDecommissionedMg = {
-  name: '${parTopLevelManagementGroupPrefix}-decommissioned'
+  name: '${parTopLevelManagementGroupPrefix}-decommissioned${parTopLevelManagementGroupSuffix}'
   displayName: 'Decommissioned'
 }
 
@@ -99,7 +103,7 @@ var varCuaid = '9b7965a0-d77c-41d6-85ef-ec3dfea4845b'
 
 // Level 1
 resource resTopLevelMg 'Microsoft.Management/managementGroups@2021-04-01' = {
-  name: parTopLevelManagementGroupPrefix
+  name: '${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}'
   properties: {
     displayName: parTopLevelManagementGroupDisplayName
     details: {
@@ -161,7 +165,7 @@ resource resDecommissionedMg 'Microsoft.Management/managementGroups@2021-04-01' 
 
 // Level 3 - Child Management Groups under Landing Zones MG
 resource resLandingZonesChildMgs 'Microsoft.Management/managementGroups@2021-04-01' = [for mg in items(varLandingZoneMgChildrenUnioned): if (!empty(varLandingZoneMgChildrenUnioned)) {
-  name: '${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}'
+  name: '${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}${parTopLevelManagementGroupSuffix}'
   properties: {
     displayName: mg.value.displayName
     details: {
@@ -200,7 +204,8 @@ output outPlatformChildrenManagementGroupIds array = [for mg in items(varLanding
 output outPlatformChildrenManagementGroupNames array = [for mg in items(varPlatformMgChildrenUnioned): mg.value.displayName]
 
 output outLandingZonesManagementGroupId string = resLandingZonesMg.id
-output outLandingZoneChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}']
+output outLandingZoneChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}${parTopLevelManagementGroupSuffix}' ]
+
 output outSandboxManagementGroupId string = resSandboxMg.id
 
 output outDecommissionedManagementGroupId string = resDecommissionedMg.id
