@@ -56,12 +56,40 @@ parLandingZoneMgChildrenSubs: {
       ]
     }
 }
+parPlatformMgChildrenSubs: {
+    custom: {
+      subscriptions: [
+        'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+        'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy'
+      ]
+    }
+    'custom-two': {
+      subscriptions: [
+        'zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz'
+      ]
+    }
+}
 ```
 
 #### JSON Parameter File Input Example
 
 ```json
 "parLandingZoneMgChildrenSubs": {
+  "value": {
+      "pci": {
+        "subscriptions": [
+          "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+          "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy"
+        ]
+      },
+      "another-example": {
+        "subscriptions": [
+          "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"
+        ]
+      }
+  }
+},
+"parPlatformMgChildrenSubs": {
   "value": {
       "pci": {
         "subscriptions": [
