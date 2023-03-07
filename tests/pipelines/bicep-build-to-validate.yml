@@ -142,14 +142,14 @@ jobs:
             fi
             az group create --name $(ResourceGroupName) --location $(Location)
 
-      - task: Bash@3
-        displayName: Az CLI Register Resource Providers for PR
-        name: register_providers
-        inputs:
-          targetType: "inline"
-          script: |
-            az account set --subscription $(subscriptionId)
-            az provider register -n 'Microsoft.Insights'
+#       - task: Bash@3
+#         displayName: Az CLI Register Resource Providers for PR
+#         name: register_providers
+#         inputs:
+#           targetType: "inline"
+#           script: |
+#             az account set --subscription $(subscriptionId)
+#             az provider register -n 'Microsoft.Insights'
 
       - task: Bash@3
         displayName: Az CLI Deploy Management Groups for PR
