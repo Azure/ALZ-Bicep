@@ -38,6 +38,9 @@ param parResourceGroupNameForSpokeNetworking string = '${parTopLevelManagementGr
 @sys.description('Existing DDoS Protection plan to utilize. Default: Empty string')
 param parDdosProtectionPlanId string = ''
 
+@sys.description('The Resource IDs of the Private DNS Zones to associate with spokes.')
+param parPrivateDnsZoneResourceIds array = []
+
 @sys.description('The Name of the Spoke Virtual Network. Default: vnet-spoke')
 param parSpokeNetworkName string = 'vnet-spoke'
 
@@ -154,6 +157,16 @@ module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' 
     parLocation: parLocation
   }
 }
+
+// Module - Private DNS Zone Virtual Network Link to Spoke
+module modPrivateDnsZoneLinkToSpoke '../../modules/privateDNSZoneLinks/privateDNSZoneLinks.bicep' = [for zones in parPrivateDnsZoneResourceIds: if (!empty(parPrivateDnsZoneResourceIds)) {
+  scope: resourceGroup(split(zones, '/')[1], split(zones, '/')[4] )
+  name: 'name'
+  params: {
+     parPrivateDnsZoneResourceIds: parPrivateDnsZoneResourceIds
+     parSpokeVirtualNetworkResourceId: modSpokeNetworking.outputs.outSpokeVirtualNetworkId
+  }
+}]
 
 // Module - Hub to Spoke peering.
 module modHubPeeringToSpoke '../../modules/vnetPeering/vnetPeering.bicep' = if (!empty(varHubVirtualNetworkName)) {
