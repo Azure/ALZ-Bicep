@@ -8,7 +8,7 @@ param parPrivateDnsZoneResourceIds array = []
 
 resource resPrivateDnsZoneLinkToSpoke 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for zones in parPrivateDnsZoneResourceIds: if (!empty(parPrivateDnsZoneResourceIds)) {
   location: 'global'
-  name: '${zones}/dnslink'
+  name: '${split(zones, '/')[8]}/dnslink'
   properties: {
     registrationEnabled: false
     virtualNetwork: {
