@@ -43,40 +43,40 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\ALZ-Deploy-ManagementGroups.ps1
+            .\pipeline-scripts\Deploy-ALZManagementGroups.ps1
           azPSVersion: "latest"
 
       - name: "Logging and Sentinel Resource Group Deployment"
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\ALZ-Deploy-LoggingAndSentinelResourceGroup.ps1
+            .\pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1
           azPSVersion: "latest"
 
       - name: "Logging and Sentinel Deployment"
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\ALZ-Deploy-LoggingAndSentinel.ps1
+            .\pipeline-scripts\Deploy-ALZLoggingAndSentinel.ps1
           azPSVersion: "latest"
 
       - name: "Custom Policy Definitions Deployment"
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\ALZ-Deploy-CustomPolicyDefinitions.ps1
+            .\pipeline-scripts\Deploy-ALZCustomPolicyDefinitions.ps1
           azPSVersion: "latest"
 
       - name: "Custom Role Definitions Deployment"
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\ALZ-Deploy-CustomRoleDefinitions.ps1
+            .\pipeline-scripts\Deploy-ALZCustomRoleDefinitions.ps1
           azPSVersion: "latest"
 
       - name: "Custom Management Group Diagnostic Settings"
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\ALZ-Deploy-MGDiagnosticSettings.ps1
+            .\pipeline-scripts\Deploy-ALZMGDiagnosticSettings.ps1
           azPSVersion: "latest"

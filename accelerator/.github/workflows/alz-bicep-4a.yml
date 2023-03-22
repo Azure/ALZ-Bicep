@@ -40,12 +40,12 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\ALZ-Deploy-ConnectivityResourceGroup.ps1
+            .\pipeline-scripts\Deploy-ALZConnectivityResourceGroup.ps1
           azPSVersion: "latest"
 
       - name: "Hub (Hub-and-Spoke) Deployment"
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\ALZ-Deploy-Hub-HubAndSpoke.ps1
+            .\pipeline-scripts\Deploy-ALZHub-HubAndSpoke.ps1
           azPSVersion: "latest"
