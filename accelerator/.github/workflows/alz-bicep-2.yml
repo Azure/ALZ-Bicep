@@ -40,12 +40,12 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\Deploy-RoleAssignments.ps1
+            .\pipeline-scripts\ALZ-Deploy-RoleAssignments.ps1
           azPSVersion: "latest"
 
       - name: "Built-in and Custom Policy Assignments Deployment"
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\Deploy-PolicyAssignments.ps1
+            .\pipeline-scripts\ALZ-Deploy-PolicyAssignments.ps1
           azPSVersion: "latest"

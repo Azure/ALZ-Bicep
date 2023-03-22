@@ -38,5 +38,5 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\Deploy-SubscriptionPlacement.ps1
+            .\pipeline-scripts\ALZ-Deploy-SubscriptionPlacement.ps1
           azPSVersion: "latest"
