@@ -1,7 +1,7 @@
 param (
   [Parameter()]
   [String]$Location = "$($env:LOCATION)",
-  
+
   [Parameter()]
   [String]$TopLevelMGPrefix = "$($env:TOP_LEVEL_MG_PREFIX)",
 
