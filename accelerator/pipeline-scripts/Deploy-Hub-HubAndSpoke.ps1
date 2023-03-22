@@ -1,10 +1,7 @@
 param (
   [Parameter()]
-  [String]$Location = "$($env:LOCATION)",
-
-  [Parameter()]
   [String]$ConnectivitySubscriptionId = "$($env:CONNECTIVITY_SUBSCRIPTION_ID)",
-  
+
   [Parameter()]
   [String]$TopLevelMGPrefix = "$($env:TOP_LEVEL_MG_PREFIX)",
 

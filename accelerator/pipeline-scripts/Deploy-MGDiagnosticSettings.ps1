@@ -1,12 +1,9 @@
 param (
   [Parameter()]
   [String]$Location = "$($env:LOCATION)",
-  
-  [Parameter()]
-  [String]$TopLevelMGPrefix = "$($env:TOP_LEVEL_MG_PREFIX)",
 
   [Parameter()]
-  [String]$ManagementSubscriptionId = "$($env:MANAGEMENT_SUBSCRIPTION_ID)",
+  [String]$TopLevelMGPrefix = "$($env:TOP_LEVEL_MG_PREFIX)",
 
   [Parameter()]
   [String]$TemplateFile = "upstream-releases\$($env:UPSTREAM_RELEASE_VERSION)\infra-as-code\bicep\orchestration\mgDiagSettingsAll\mgDiagSettingsAll.bicep",
