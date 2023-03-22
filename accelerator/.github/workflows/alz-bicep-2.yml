@@ -1,0 +1,51 @@
+name: ALZ-Bicep-2 Workflow
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "config/custom-parameters/roleAssignmentManagementGroupMany.servicePrincipal.parameters.all.json"
+      - "config/custom-parameters/policyAssignmentManagementGroup.dine.parameters.all.json"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  LOCATION: ""
+  UPSTREAM_RELEASE_VERSION: ""
+  MANAGEMENT_SUBSCRIPTION_ID: ""
+  TOP_LEVEL_MG_PREFIX: ""
+
+jobs:
+  ALZ_Bicep_2_Workflow_Job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: OIDC Login to Tenant
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
+
+      - name: "Role Assignments Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZRoleAssignments.ps1
+          azPSVersion: "latest"
+
+      - name: "Built-in and Custom Policy Assignments Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZPolicyAssignments.ps1
+          azPSVersion: "latest"

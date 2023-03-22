@@ -104,8 +104,6 @@ Array Used for multiple Virtual WAN Hubs deployment. Each object in the array re
 
 
 
-- Default value: ` `
-
 ### parVpnGatewayName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -273,15 +271,6 @@ outPrivateDnsZones | array |
                     "parExpressRouteGatewayEnabled": true,
                     "parAzFirewallEnabled": true,
                     "parVirtualHubAddressPrefix": "10.100.0.0/23",
-                    "parHubLocation": "centralus",
-                    "parHubRoutingPreference": "ExpressRoute",
-                    "parVirtualRouterAutoScaleConfiguration": 2
-                },
-                {
-                    "parVpnGatewayEnabled": true,
-                    "parExpressRouteGatewayEnabled": true,
-                    "parAzFirewallEnabled": true,
-                    "parVirtualHubAddressPrefix": "10.110.0.0/23",
                     "parHubLocation": "eastus",
                     "parHubRoutingPreference": "ExpressRoute",
                     "parVirtualRouterAutoScaleConfiguration": 2
