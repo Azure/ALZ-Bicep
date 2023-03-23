@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "parTopLevelManagementGroupPrefix": {
-      "value": "tmnas"
+      "value": "tmnas1"
     },
     "parTopLevelManagementGroupSuffix": {
       "value": ""
