@@ -1,0 +1,63 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "parLocation": {
+            "value": "eastus2"
+        },
+        "parDisableBgpRoutePropagation": {
+            "value": false
+        },
+        "parDdosProtectionPlanId": {
+            "value": ""
+        },
+        "parSpokeNetworkAddressPrefix": {
+            "value": "10.126.0.0/16"
+        },
+        "parSpokeNetworkName": {
+            "value": "vnet-00-infra-eus2-001"
+        },
+        "parDnsServerIps": {
+            "value": ["10.122.200.16","10.50.200.16"]
+        },
+        "parSubnets": {
+          "value": [
+            {
+              "name": "snet-00-infra-adf-eus2-001",
+              "ipAddressRange": "10.126.1.0/24"
+            },
+            {
+              "name": "snet-infra-cloudera-5",
+              "ipAddressRange": "10.126.5.0/24"
+            },
+            {
+              "name": "snet-infra-cloudera-6",
+              "ipAddressRange": "10.126.0.0/24"
+            },
+            {
+              "name": "snet-infra-keyvault-001",
+              "ipAddressRange": "10.126.3.0/24"
+            }
+            ,
+            {
+              "name": "snet-infra-webapp-001",
+              "ipAddressRange": "10.126.2.0/24"
+            }
+          ]
+        },
+        "parNextHopIpAddress": {
+            "value": ""
+        },
+        "parSpokeToHubRouteTableName": {
+            "value": "rtable-00-infra-eus2-001"
+        },
+        "parTags": {
+            "value": {
+              "Environment": "dev"
+            }
+        },
+        "parTelemetryOptOut": {
+            "value": false
+        }
+    }
+}
