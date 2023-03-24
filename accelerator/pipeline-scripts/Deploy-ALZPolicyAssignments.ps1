@@ -6,10 +6,10 @@ param (
   [String]$TopLevelMGPrefix = "$($env:TOP_LEVEL_MG_PREFIX)",
 
   [Parameter()]
-  [String]$TemplateFile = "upstream-releases\$($env:UPSTREAM_RELEASE_VERSION)\infra-as-code\bicep\modules\policy\assignments\policyAssignmentManagementGroup.bicep",
+  [String]$TemplateFile = "upstream-releases\$($env:UPSTREAM_RELEASE_VERSION)\infra-as-code\bicep\modules\policy\assignments\alzDefaults\alzDefaultPolicyAssignments.bicep",
 
   [Parameter()]
-  [String]$TemplateParameterFile = "config\custom-parameters\policyAssignmentManagementGroup.dine.parameters.all.json"
+  [String]$TemplateParameterFile = "config\custom-parameters\alzDefaultPolicyAssignments.parameters.all.json"
 )
 
 # Parameters necessary for deployment
