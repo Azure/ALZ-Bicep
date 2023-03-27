@@ -36,12 +36,13 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true
 
-      - name: "Role Assignments Deployment"
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            .\pipeline-scripts\Deploy-ALZRoleAssignments.ps1
-          azPSVersion: "latest"
+      # Example: Modify Deploy-ALZRoleAssignments.ps1 with applicable pararameter file and uncomment lines below to enable Role Assignments Deployment.
+      # - name: "Role Assignments Deployment"
+      #   uses: azure/powershell@v1
+      #   with:
+      #     inlineScript: |
+      #       .\pipeline-scripts\Deploy-ALZRoleAssignments.ps1
+      #     azPSVersion: "latest"
 
       - name: "Built-in and Custom Policy Assignments Deployment"
         uses: azure/powershell@v1
