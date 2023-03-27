@@ -16,6 +16,8 @@ parMsDefenderForCloudEmailSecurityContact | No       | An e-mail address that yo
 parDdosProtectionPlanId | No       | ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.
 parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group.
 parDisableAlzDefaultPolicies | No       | Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
+parVmBackupExclusionTagName | No       | Name of the tag to use for excluding VMs from the scope of this policy. This should be used along with the Exclusion Tag Value parameter.
+parVmBackupExclusionTagValue | No       | Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
 ### parTopLevelManagementGroupPrefix
@@ -90,6 +92,18 @@ Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
 
 - Default value: `False`
 
+### parVmBackupExclusionTagName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Name of the tag to use for excluding VMs from the scope of this policy. This should be used along with the Exclusion Tag Value parameter.
+
+### parVmBackupExclusionTagValue
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.
+
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -139,6 +153,12 @@ Set Parameter to true to Opt-out of deployment telemetry
         },
         "parDisableAlzDefaultPolicies": {
             "value": false
+        },
+        "parVmBackupExclusionTagName": {
+            "value": ""
+        },
+        "parVmBackupExclusionTagValue": {
+            "value": []
         },
         "parTelemetryOptOut": {
             "value": false
