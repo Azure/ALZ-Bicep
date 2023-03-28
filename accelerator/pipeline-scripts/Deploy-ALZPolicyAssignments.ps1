@@ -6,15 +6,15 @@ param (
   [String]$TopLevelMGPrefix = "$($env:TOP_LEVEL_MG_PREFIX)",
 
   [Parameter()]
-  [String]$TemplateFile = "upstream-releases\$($env:UPSTREAM_RELEASE_VERSION)\infra-as-code\bicep\modules\policy\assignments\policyAssignmentManagementGroup.bicep",
+  [String]$TemplateFile = "upstream-releases\$($env:UPSTREAM_RELEASE_VERSION)\infra-as-code\bicep\modules\policy\assignments\alzDefaults\alzDefaultPolicyAssignments.bicep",
 
   [Parameter()]
-  [String]$TemplateParameterFile = "config\custom-parameters\policyAssignmentManagementGroup.dine.parameters.all.json"
+  [String]$TemplateParameterFile = "config\custom-parameters\alzDefaultPolicyAssignments.parameters.all.json"
 )
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'alz-RoleAssignmentsDeployment-{0}' -f ( -join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = 'alz-PolicyAssignmentsDeployment-{0}' -f ( -join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   Location              = $Location
   ManagementGroupId     = $TopLevelMGPrefix
   TemplateFile          = $TemplateFile
