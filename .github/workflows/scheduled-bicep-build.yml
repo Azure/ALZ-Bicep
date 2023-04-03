@@ -12,6 +12,7 @@ on:
 jobs:
   bicep_unit_tests:
     name: Bicep Build & Lint All Modules
+    if: github.repository == 'Azure/ALZ-Bicep'
     runs-on: ubuntu-latest
 
     steps:
