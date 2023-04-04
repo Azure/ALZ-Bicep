@@ -29,6 +29,9 @@
     "parDnsServerIps": {
       "value": []
     },
+    "parPrivateDnsZoneResourceIds":{
+      "value": []
+    },
     "parNextHopIpAddress": {
       "value": "10.20.255.4"
     },

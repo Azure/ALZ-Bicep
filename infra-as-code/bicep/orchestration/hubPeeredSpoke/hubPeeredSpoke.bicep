@@ -88,6 +88,7 @@ var varModuleDeploymentNames = {
   modSpokePeeringToHub: take('${varDeploymentNameWrappers.basePrefix}-modVnetPeering-ToHub-${varDeploymentNameWrappers.baseSuffixResourceGroup}', 61)
   modSpokePeeringFromHub: take('${varDeploymentNameWrappers.basePrefix}-modVnetPeering-FromHub-${varDeploymentNameWrappers.baseSuffixResourceGroup}', 61)
   modVnetPeeringVwan: take('${varDeploymentNameWrappers.basePrefix}-modVnetPeeringVwan-${varDeploymentNameWrappers.baseSuffixResourceGroup}', 61)
+  modPrivateDnsZoneLinkToSpoke: take('${varDeploymentNameWrappers.basePrefix}-modPDnsLinkToSpoke-${varDeploymentNameWrappers.baseSuffixResourceGroup}', 61)
 }
 
 var varHubVirtualNetworkName = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkId, '/')[8] : '' )
@@ -161,7 +162,7 @@ module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' 
 // Module - Private DNS Zone Virtual Network Link to Spoke
 module modPrivateDnsZoneLinkToSpoke '../../modules/privateDNSZoneLinks/privateDNSZoneLinks.bicep' = [for zones in parPrivateDnsZoneResourceIds: if (!empty(parPrivateDnsZoneResourceIds)) {
   scope: resourceGroup(split(zones, '/')[1], split(zones, '/')[4] )
-  name: 'name'
+  name: varModuleDeploymentNames.modPrivateDnsZoneLinkToSpoke
   params: {
      parPrivateDnsZoneResourceIds: parPrivateDnsZoneResourceIds
      parSpokeVirtualNetworkResourceId: modSpokeNetworking.outputs.outSpokeVirtualNetworkId
