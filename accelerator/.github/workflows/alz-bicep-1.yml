@@ -6,6 +6,7 @@ on:
       - "main"
     paths:
       - "config/custom-parameters/managementGroups.parameters.all.json"
+      - "config/custom-parameters/resourceGroupLoggingAndSentinel.parameters.all.json"
       - "config/custom-parameters/logging.parameters.all.json"
       - "config/custom-parameters/customPolicyDefinitions.parameters.all.json"
       - "config/custom-parameters/customRoleDefinitions.parameters.all.json"
