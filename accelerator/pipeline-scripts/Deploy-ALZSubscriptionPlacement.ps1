@@ -6,10 +6,10 @@ param (
   [String]$TopLevelMGPrefix = "$($env:TOP_LEVEL_MG_PREFIX)",
 
   [Parameter()]
-  [String]$TemplateFile = "upstream-releases\$($env:UPSTREAM_RELEASE_VERSION)\infra-as-code\bicep\modules\subscriptionPlacement\subscriptionPlacement.bicep",
+  [String]$TemplateFile = "upstream-releases\$($env:UPSTREAM_RELEASE_VERSION)\infra-as-code\bicep\orchestration\subPlacementAll\subPlacementAll.bicep",
 
   [Parameter()]
-  [String]$TemplateParameterFile = "config\custom-parameters\subscriptionPlacement.parameters.all.json"
+  [String]$TemplateParameterFile = "config\custom-parameters\subPlacementAll.parameters.all.json"
 )
 
 # Parameters necessary for deployment

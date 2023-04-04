@@ -162,14 +162,17 @@
     },
     "parTags": {
       "value": {
-        "Environment": "POC"
+        "Environment": "Live"
       }
     },
     "parTelemetryOptOut": {
       "value": false
     },
     "parBastionOutboundSshRdpPorts": {
-      "value": ["22","3389"]
+      "value": [
+        "22",
+        "3389"
+      ]
     }
   }
 }

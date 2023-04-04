@@ -49,7 +49,7 @@
     },
     "parTags": {
       "value": {
-        "Environment": "POC"
+        "Environment": "Live"
       }
     },
     "parTelemetryOptOut": {
