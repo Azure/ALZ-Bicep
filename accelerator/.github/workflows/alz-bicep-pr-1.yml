@@ -45,15 +45,21 @@ jobs:
 
       - name: Check for Custom Modules
         shell: pwsh
+        working-directory: config
         run: |
-          if (Test-Path -Path .config/custom-modules/*)
+          if (Test-Path -Path ./custom-modules/*)
           {
-            echo "CUSTOM_MODULES=TRUE" >> $GITHUB_ENV
+            echo "CUSTOM_MODULES=true" >> $env:GITHUB_ENV
+            echo "Set CUSTOM_MODULES to true"
+          }
+          else
+          {
+            echo "Set CUSTOM_MODULES to false"
           }
 
       - name: Bicep Build & Lint All Custom Modules
         shell: pwsh
-        if: env.CUSTOM_MODULES == true
+        if: ${{ env.CUSTOM_MODULES == 'true' }}
         working-directory: config/custom-modules
         run: |
           $output = @()
@@ -66,7 +72,7 @@ jobs:
                   $output += "$($item) `r`n"
                 }
               }
-              Else
+              else
               {
                 echo "Bicep Build Successful for File: $_"
               }
