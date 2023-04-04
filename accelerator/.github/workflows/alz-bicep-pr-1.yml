@@ -43,12 +43,21 @@ jobs:
           $bicepVersion = bicep --version
           Write-Information "=====> Now installed Bicep version is: $bicepVersion <=====" -InformationAction Continue
 
+      - name: Check for Custom Modules
+        shell: pwsh
+        run: |
+          if (Test-Path -Path .config/custom-modules/*)
+          {
+            echo "CUSTOM_MODULES=TRUE" >> $GITHUB_ENV
+          }
+
       - name: Bicep Build & Lint All Custom Modules
         shell: pwsh
+        if: env.CUSTOM_MODULES == true
         working-directory: config/custom-modules
         run: |
           $output = @()
-          Get-ChildItem -Recurse -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
+          Get-ChildItem -Recurse -Filter '*.bicep' | ForEach-Object {
               Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
               $bicepOutput = bicep build $_.FullName 2>&1
               if ($LastExitCode -ne 0)
