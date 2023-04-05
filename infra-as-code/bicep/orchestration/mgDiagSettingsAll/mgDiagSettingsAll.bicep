@@ -67,7 +67,7 @@ var varLandingZoneMgCustomChildren = [for customMg in parLandingZoneMgChildren: 
 
 // Used if parLandingZoneMgConfidentialEnable not empty
 var varPlatformMgCustomChildren = [for customMg in parPlatformMgChildren: {
-  mgId: '${parTopLevelManagementGroupPrefix}-platform-${customMg}'
+  mgId: '${parTopLevelManagementGroupPrefix}-platform-${customMg}${parTopLevelManagementGroupSuffix}'
 }]
 
 // Build final object based on input parameters for default and confidential child MGs of LZs
