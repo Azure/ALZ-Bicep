@@ -139,7 +139,7 @@ module modplatformIdentityMgSubPlacement '../../modules/subscriptionPlacement/su
 // Custom Children Platform Management Groups
 module modPlatformMgChildrenSubPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = [for mg in items(parPlatformMgChildrenSubs): if (!empty(parPlatformMgChildrenSubs)) {
   name: take('modPlatformMgChildrenSubPlacement-${uniqueString(mg.key, string(length(mg.value.subscriptions)), deployment().name)}', 64)
-  scope: managementGroup('${parTopLevelManagementGroupPrefix}-platform-${mg.key}')
+  scope: managementGroup('${parTopLevelManagementGroupPrefix}-platform-${mg.key}${parTopLevelManagementGroupSuffix}')
   params: {
     parTargetManagementGroupId: '${parTopLevelManagementGroupPrefix}-platform-${mg.key}'
     parSubscriptionIds: mg.value.subscriptions
