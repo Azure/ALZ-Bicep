@@ -178,7 +178,7 @@ resource resLandingZonesChildMgs 'Microsoft.Management/managementGroups@2021-04-
 
 //Level 3 - Child Management Groups under Platform MG
 resource resPlatformChildMgs 'Microsoft.Management/managementGroups@2021-04-01' = [for mg in items(varPlatformMgChildrenUnioned): if (!empty(varPlatformMgChildrenUnioned)) {
-  name: '${parTopLevelManagementGroupPrefix}-platform-${mg.key}'
+  name: '${parTopLevelManagementGroupPrefix}-platform-${mg.key}${parTopLevelManagementGroupSuffix}'
   properties: {
     displayName: mg.value.displayName
     details: {
