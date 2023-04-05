@@ -141,7 +141,7 @@ module modPlatformMgChildrenSubPlacement '../../modules/subscriptionPlacement/su
   name: take('modPlatformMgChildrenSubPlacement-${uniqueString(mg.key, string(length(mg.value.subscriptions)), deployment().name)}', 64)
   scope: managementGroup('${parTopLevelManagementGroupPrefix}-platform-${mg.key}${parTopLevelManagementGroupSuffix}')
   params: {
-    parTargetManagementGroupId: '${parTopLevelManagementGroupPrefix}-platform-${mg.key}'
+    parTargetManagementGroupId: '${parTopLevelManagementGroupPrefix}-platform-${mg.key}${parTopLevelManagementGroupSuffix}'
     parSubscriptionIds: mg.value.subscriptions
   }
 }]
