@@ -50,7 +50,7 @@
           "parVirtualRouterAutoScaleConfiguration": 2
         }
       ]
-  },
+    },
     "parVpnGatewayScaleUnit": {
       "value": 1
     },
@@ -104,7 +104,7 @@
     },
     "parTags": {
       "value": {
-        "Environment": "POC"
+        "Environment": "Live"
       }
     },
     "parTelemetryOptOut": {
