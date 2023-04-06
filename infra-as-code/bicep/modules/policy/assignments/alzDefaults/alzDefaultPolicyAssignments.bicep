@@ -34,6 +34,12 @@ param parPrivateDnsResourceGroupId string = ''
 @sys.description('Set Enforcement Mode of all default Policies assignments to Do Not Enforce.')
 param parDisableAlzDefaultPolicies bool = false
 
+@sys.description('Name of the tag to use for excluding VMs from the scope of this policy. This should be used along with the Exclusion Tag Value parameter.')
+param parVmBackupExclusionTagName string = ''
+
+@sys.description('Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.')
+param parVmBackupExclusionTagValue array = []
+
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
@@ -541,6 +547,14 @@ module modPolicyAssignmentIdentDeployVmBackup '../../../policy/assignments/polic
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMBackup.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMBackup.libDefinition.properties.description
     parPolicyAssignmentParameters: varPolicyAssignmentDeployVMBackup.libDefinition.properties.parameters
+    parPolicyAssignmentParameterOverrides: {
+      exclusionTagName: {
+        value: parVmBackupExclusionTagName
+      }
+      exclusionTagValue: {
+        value: parVmBackupExclusionTagValue
+      }
+    }
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMBackup.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMBackup.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -649,6 +663,14 @@ module modPolicyAssignmentLzsDeployVmBackup '../../../policy/assignments/policyA
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMBackup.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMBackup.libDefinition.properties.description
     parPolicyAssignmentParameters: varPolicyAssignmentDeployVMBackup.libDefinition.properties.parameters
+    parPolicyAssignmentParameterOverrides: {
+      exclusionTagName: {
+        value: parVmBackupExclusionTagName
+      }
+      exclusionTagValue: {
+        value: parVmBackupExclusionTagValue
+      }
+    }
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMBackup.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMBackup.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [

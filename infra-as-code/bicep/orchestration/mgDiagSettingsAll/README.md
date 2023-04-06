@@ -10,19 +10,9 @@ It also enables Diagnostic Settings for existing custom child landing zones if t
 
 ## Parameters
 
-The module requires the following inputs:
+- [Parameters for Azure Commercial Cloud](generateddocs/mgDiagSettingsAll.bicep.md)
 
-| Parameter                             | Type   | Description                                                                                                                                                                          | Requirements                      | Example                                                                                 |
-| ------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------- | --------------------------------------------------------------------------------------- |
-| parTopLevelManagementGroupPrefix      | string | Prefix for the management group hierarchy.  This management group will be created as part of the deployment.                                                                         | 2-10 characters                   | `alz`
-| parTopLevelManagementGroupSuffix      | string | Suffix for the management group hierarchy.  This suffix will be added to management group names/IDs created as part of the deployment.                                                                         | 1-10 characters                   | `-suffix`                                                                                   |
-| parLandingZoneMgAlzDefaultsEnable     | bool   | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.                                                                                       | Mandatory input, default: `true`  | `true`                                                                                  |
-| parLandingZoneMgConfidentialEnable    | bool   | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.                                                             | Mandatory input, default: `false` | `false`                                                                                 |
-| parLogAnalyticsWorkspaceResourceId | string   | Resource ID of the Log Analytics Workspace                                                             | Mandatory input | `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics` |
-| parLandingZoneMgChildren              | array | Array of strings to allow additional child Management Groups of Landing Zones Management Group to be deployed.                                                         | Not required input, default `[]`  | {"value": ["pci","another-example"]}                                                         |
-| parTelemetryOptOut                    | bool   | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                             | Mandatory input, default: `false` | `false`                                                                                 |
-
-### Diagnostic Settings for Child Landing Zone Management Groups
+### Diagnostic Settings for Child Landing Zone and Platform Management Groups
 
 This module considers the same flexibility used when creating the child Landing Zone Management Groups during deployment of the Management Groups module. The three parameters detailed below should correspond to the values used during Management Groups module deployment. All of these parameters can be used together to enable diagnostic settings on the child Landing Zone Management Groups.
 
