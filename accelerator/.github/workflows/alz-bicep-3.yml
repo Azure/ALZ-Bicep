@@ -5,7 +5,7 @@ on:
     branches:
       - "main"
     paths:
-      - "config/custom-parameters/subscriptionPlacement.parameters.all.json"
+      - "config/custom-parameters/subPlacementAll.parameters.all.json"
   workflow_dispatch:
 
 permissions:
@@ -13,9 +13,7 @@ permissions:
   contents: read
 
 env:
-  LOCATION: ""
-  UPSTREAM_RELEASE_VERSION: ""
-  TOP_LEVEL_MG_PREFIX: ""
+  ENV_FILE: ".env"
 
 jobs:
   ALZ_Bicep_3_Workflow_Job:
@@ -25,6 +23,17 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
+      - name: "Remove Quotation Marks from Environment File"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            Write-Host $ENV_FILE
+            (Get-Content -Path $env:ENV_FILE -Encoding UTF8) | ForEach-Object {$_ -replace '"',''} | Out-File -FilePath $env:ENV_FILE -Encoding UTF8
+          azPSVersion: "latest"
+
+      - name: Import Environment Variables from File
+        run: cat ${{ env.ENV_FILE }} >> $GITHUB_ENV
 
       - name: OIDC Login to Tenant
         uses: azure/login@v1
