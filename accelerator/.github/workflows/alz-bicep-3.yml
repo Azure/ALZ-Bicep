@@ -5,7 +5,7 @@ on:
     branches:
       - "main"
     paths:
-      - "config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json"
+      - "config/custom-parameters/subPlacementAll.parameters.all.json"
   workflow_dispatch:
 
 permissions:
