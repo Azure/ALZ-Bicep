@@ -1,0 +1,31 @@
+{
+  "GcIdentity": {
+    "parameters": {}
+  },
+  "GcLinux": {
+    "parameters": {}
+  },
+  "GcWindows": {
+    "parameters": {}
+  },
+  "LinAcsb": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      },
+      "IncludeArcMachines": {
+        "value": "[[parameters('includeArcMachines')]"
+      }
+    }
+  },
+  "WinAcsb": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      },
+      "IncludeArcMachines": {
+        "value": "[[parameters('includeArcMachines')]"
+      }
+    }
+  }
+}

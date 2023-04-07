@@ -12,6 +12,20 @@
       }
     }
   },
+  "azurePolicyForKubernetes": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForContainers')]"
+      }
+    }
+  },
+  "defenderForApis": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForApis')]"
+      }
+    }
+  },
   "defenderForAppServices": {
     "parameters": {
       "effect": {
@@ -40,6 +54,13 @@
       }
     }
   },
+  "defenderForCspm": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForCspm')]"
+      }
+    }
+  },
   "defenderForDns": {
     "parameters": {
       "effect": {
@@ -51,6 +72,16 @@
     "parameters": {
       "Effect": {
         "value": "[[parameters('enableAscForKeyVault')]"
+      }
+    }
+  },
+  "defenderforKubernetes": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForContainers')]"
+      },
+      "logAnalyticsWorkspaceResourceId": {
+        "value": "[[parameters('logAnalytics')]"
       }
     }
   },
@@ -86,6 +117,16 @@
     "parameters": {
       "effect": {
         "value": "[[parameters('enableAscForServers')]"
+      }
+    }
+  },
+  "defenderForVMVulnerabilityAssessment": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForServersVulnerabilityAssessments')]"
+      },
+      "vaType": {
+        "value": "[[parameters('vulnerabilityAssessmentProvider')]"
       }
     }
   },
