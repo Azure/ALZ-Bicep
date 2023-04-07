@@ -1,0 +1,12 @@
+{
+  "DecomDenyResources": {
+    "parameters": {
+      "listOfResourceTypesAllowed": {
+        "value": "[[parameters('listOfResourceTypesAllowed')]"
+      }
+    }
+  },
+  "DecomShutdownMachines": {
+    "parameters": {}
+  }
+}

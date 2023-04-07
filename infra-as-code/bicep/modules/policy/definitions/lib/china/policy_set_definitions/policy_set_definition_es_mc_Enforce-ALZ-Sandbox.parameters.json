@@ -1,0 +1,19 @@
+{
+  "SandboxDenyVnetPeering": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectDenyVnetPeering')]"
+      }
+    }
+  },
+  "SandboxNotAllowed": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectNotAllowedResources')]"
+      },
+      "listOfResourceTypesNotAllowed": {
+        "value": "[[parameters('listOfResourceTypesNotAllowed')]"
+      }
+    }
+  }
+}

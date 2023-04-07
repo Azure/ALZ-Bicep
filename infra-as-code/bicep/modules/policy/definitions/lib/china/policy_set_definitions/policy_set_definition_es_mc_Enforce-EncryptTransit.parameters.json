@@ -13,13 +13,6 @@
       }
     }
   },
-  "APIAppServiceLatestTlsEffect": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('APIAppServiceLatestTlsEffect')]"
-      }
-    }
-  },
   "AppServiceHttpEffect": {
     "parameters": {
       "effect": {

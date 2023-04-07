@@ -1,5 +1,29 @@
 var varCustomPolicySetDefinitionsArray = [
 	{
+		name: 'Audit-UnusedResourcesCostOptimization'
+		libSetDefinition: loadJsonContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_Audit-UnusedResourcesCostOptimization.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'AuditDisksUnusedResourcesCostOptimization'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-Disks-UnusedResourcesCostOptimization'
+				definitionParameters: varPolicySetDefinitionEsMcAuditUnusedResourcesCostOptimizationParameters.AuditDisksUnusedResourcesCostOptimization.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'AuditPublicIpAddressesUnusedResourcesCostOptimization'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-PublicIpAddresses-UnusedResourcesCostOptimization'
+				definitionParameters: varPolicySetDefinitionEsMcAuditUnusedResourcesCostOptimizationParameters.AuditPublicIpAddressesUnusedResourcesCostOptimization.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'AuditServerFarmsUnusedResourcesCostOptimization'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-ServerFarms-UnusedResourcesCostOptimization'
+				definitionParameters: varPolicySetDefinitionEsMcAuditUnusedResourcesCostOptimizationParameters.AuditServerFarmsUnusedResourcesCostOptimization.parameters
+				definitionGroups: []
+			}
+		]
+	}
+	{
 		name: 'Deploy-Sql-Security'
 		libSetDefinition: loadJsonContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_Deploy-Sql-Security.json')
 		libSetChildDefinitions: [
@@ -17,7 +41,7 @@ var varCustomPolicySetDefinitionsArray = [
 			}
 			{
 				definitionReferenceId: 'SqlDbTdeDeploySqlSecurity'
-				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-Tde'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/86a912f6-9a06-4e26-b447-11b16ba8659f'
 				definitionParameters: varPolicySetDefinitionEsMcDeploySqlSecurityParameters.SqlDbTdeDeploySqlSecurity.parameters
 				definitionGroups: []
 			}
@@ -25,6 +49,42 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'SqlDbVulnerabilityAssessmentsDeploySqlSecurity'
 				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-vulnerabilityAssessments'
 				definitionParameters: varPolicySetDefinitionEsMcDeploySqlSecurityParameters.SqlDbVulnerabilityAssessmentsDeploySqlSecurity.parameters
+				definitionGroups: []
+			}
+		]
+	}
+	{
+		name: 'Enforce-ALZ-Decomm'
+		libSetDefinition: loadJsonContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_Enforce-ALZ-Decomm.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'DecomDenyResources'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a08ec900-254a-4555-9bf5-e42af04b5c5c'
+				definitionParameters: varPolicySetDefinitionEsMcEnforceALZDecommParameters.DecomDenyResources.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DecomShutdownMachines'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Vm-autoShutdown'
+				definitionParameters: varPolicySetDefinitionEsMcEnforceALZDecommParameters.DecomShutdownMachines.parameters
+				definitionGroups: []
+			}
+		]
+	}
+	{
+		name: 'Enforce-ALZ-Sandbox'
+		libSetDefinition: loadJsonContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_Enforce-ALZ-Sandbox.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'SandboxDenyVnetPeering'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-VNET-Peer-Cross-Sub'
+				definitionParameters: varPolicySetDefinitionEsMcEnforceALZSandboxParameters.SandboxDenyVnetPeering.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'SandboxNotAllowed'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/6c112d4e-5bc7-47ae-a041-ea2d9dccd749'
+				definitionParameters: varPolicySetDefinitionEsMcEnforceALZSandboxParameters.SandboxNotAllowed.parameters
 				definitionGroups: []
 			}
 		]
@@ -43,12 +103,6 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'APIAppServiceHttpsEffect'
 				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-AppServiceApiApp-http'
 				definitionParameters: varPolicySetDefinitionEsMcEnforceEncryptTransitParameters.APIAppServiceHttpsEffect.parameters
-				definitionGroups: []
-			}
-			{
-				definitionReferenceId: 'APIAppServiceLatestTlsEffect'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/8cb6aa8b-9e41-4f4e-aa25-089a7ac2581e'
-				definitionParameters: varPolicySetDefinitionEsMcEnforceEncryptTransitParameters.APIAppServiceLatestTlsEffect.parameters
 				definitionGroups: []
 			}
 			{
@@ -167,12 +221,74 @@ var varCustomPolicySetDefinitionsArray = [
 			}
 		]
 	}
+	{
+		name: 'Enforce-Guardrails-KeyVault'
+		libSetDefinition: loadJsonContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_Enforce-Guardrails-KeyVault.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'KvCertLifetime'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/12ef42cb-9903-4e39-9c26-422d29570417'
+				definitionParameters: varPolicySetDefinitionEsMcEnforceGuardrailsKeyVaultParameters.KvCertLifetime.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvFirewallEnabled'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/55615ac9-af46-4a59-874e-391cc3dfb490'
+				definitionParameters: varPolicySetDefinitionEsMcEnforceGuardrailsKeyVaultParameters.KvFirewallEnabled.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvKeysExpire'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/152b15f7-8e1f-4c1f-ab71-8c010ba5dbc0'
+				definitionParameters: varPolicySetDefinitionEsMcEnforceGuardrailsKeyVaultParameters.KvKeysExpire.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvKeysLifetime'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/5ff38825-c5d8-47c5-b70e-069a21955146'
+				definitionParameters: varPolicySetDefinitionEsMcEnforceGuardrailsKeyVaultParameters.KvKeysLifetime.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvPurgeProtection'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/0b60c0b2-2dc2-4e1c-b5c9-abbed971de53'
+				definitionParameters: varPolicySetDefinitionEsMcEnforceGuardrailsKeyVaultParameters.KvPurgeProtection.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvSecretsExpire'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/98728c90-32c7-4049-8429-847dc0f4fe37'
+				definitionParameters: varPolicySetDefinitionEsMcEnforceGuardrailsKeyVaultParameters.KvSecretsExpire.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvSecretsLifetime'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b0eb591a-5e70-4534-a8bf-04b9c489584a'
+				definitionParameters: varPolicySetDefinitionEsMcEnforceGuardrailsKeyVaultParameters.KvSecretsLifetime.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvSoftDelete'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1e66c121-a66a-4b1f-9b83-0fd99bf0fc2d'
+				definitionParameters: varPolicySetDefinitionEsMcEnforceGuardrailsKeyVaultParameters.KvSoftDelete.parameters
+				definitionGroups: []
+			}
+		]
+	}
 ]
 
 
 // Policy Set/Initiative Definition Parameter Variables
 
+var varPolicySetDefinitionEsMcAuditUnusedResourcesCostOptimizationParameters = loadJsonContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_Audit-UnusedResourcesCostOptimization.parameters.json')
+
 var varPolicySetDefinitionEsMcDeploySqlSecurityParameters = loadJsonContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_Deploy-Sql-Security.parameters.json')
 
+var varPolicySetDefinitionEsMcEnforceALZDecommParameters = loadJsonContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_Enforce-ALZ-Decomm.parameters.json')
+
+var varPolicySetDefinitionEsMcEnforceALZSandboxParameters = loadJsonContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_Enforce-ALZ-Sandbox.parameters.json')
+
 var varPolicySetDefinitionEsMcEnforceEncryptTransitParameters = loadJsonContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_Enforce-EncryptTransit.parameters.json')
+
+var varPolicySetDefinitionEsMcEnforceGuardrailsKeyVaultParameters = loadJsonContent('lib/china/policy_set_definitions/policy_set_definition_es_mc_Enforce-Guardrails-KeyVault.parameters.json')
 
