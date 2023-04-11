@@ -18,6 +18,7 @@ We authored the modules with this in mind to help consumers accelerate their jou
 
 There are various ways to consume the Bicep modules included in `ALZ-Bicep`. The options are:
 
+- Utilize ALZ Accelerator documentation which will configure framework and incorporate production ready CI/CD pipelines
 - Clone this repository
 - Fork & Clone this repository
 - Download a `.zip` copy of this repo
