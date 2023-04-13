@@ -8,6 +8,10 @@ metadata description = 'Orchestration module that helps to define where all Subs
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
+@sys.description('Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix')
+@maxLength(10)
+param parTopLevelManagementGroupSuffix string = ''
+
 @sys.description('An array of Subscription IDs to place in the Intermediate Root Management Group. Default: Empty Array')
 param parIntRootMgSubs array = []
 
@@ -51,18 +55,18 @@ param parSandboxMgSubs array = []
 param parTelemetryOptOut bool = false
 
 var varMgIds = {
-  intRoot: parTopLevelManagementGroupPrefix
-  platform: '${parTopLevelManagementGroupPrefix}-platform'
-  platformManagement: '${parTopLevelManagementGroupPrefix}-platform-management'
-  platformConnectivity: '${parTopLevelManagementGroupPrefix}-platform-connectivity'
-  platformIdentity: '${parTopLevelManagementGroupPrefix}-platform-identity'
-  landingZones: '${parTopLevelManagementGroupPrefix}-landingzones'
-  landingZonesCorp: '${parTopLevelManagementGroupPrefix}-landingzones-corp'
-  landingZonesOnline: '${parTopLevelManagementGroupPrefix}-landingzones-online'
-  landingZonesConfidentialCorp: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-corp'
-  landingZonesConfidentialOnline: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-online'
-  decommissioned: '${parTopLevelManagementGroupPrefix}-decommissioned'
-  sandbox: '${parTopLevelManagementGroupPrefix}-sandbox'
+  intRoot: '${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}'
+  platform: '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
+  platformManagement: '${parTopLevelManagementGroupPrefix}-platform-management${parTopLevelManagementGroupSuffix}'
+  platformConnectivity: '${parTopLevelManagementGroupPrefix}-platform-connectivity${parTopLevelManagementGroupSuffix}'
+  platformIdentity: '${parTopLevelManagementGroupPrefix}-platform-identity${parTopLevelManagementGroupSuffix}'
+  landingZones: '${parTopLevelManagementGroupPrefix}-landingzones${parTopLevelManagementGroupSuffix}'
+  landingZonesCorp: '${parTopLevelManagementGroupPrefix}-landingzones-corp${parTopLevelManagementGroupSuffix}'
+  landingZonesOnline: '${parTopLevelManagementGroupPrefix}-landingzones-online${parTopLevelManagementGroupSuffix}'
+  landingZonesConfidentialCorp: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-corp${parTopLevelManagementGroupSuffix}'
+  landingZonesConfidentialOnline: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-online${parTopLevelManagementGroupSuffix}'
+  decommissioned: '${parTopLevelManagementGroupPrefix}-decommissioned${parTopLevelManagementGroupSuffix}'
+  sandbox: '${parTopLevelManagementGroupPrefix}-sandbox${parTopLevelManagementGroupSuffix}'
 }
 
 var varDeploymentNames = {
@@ -179,9 +183,9 @@ module modLandingZonesConfidentialOnlineMgSubPlacement '../../modules/subscripti
 // Custom Children Landing Zone Management Groups
 module modLandingZonesMgChildrenSubPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = [for mg in items(parLandingZoneMgChildrenSubs): if (!empty(parLandingZoneMgChildrenSubs)) {
   name: take('modLandingZonesMgChildrenSubPlacement-${uniqueString(mg.key, string(length(mg.value.subscriptions)), deployment().name)}', 64)
-  scope: managementGroup('${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}')
+  scope: managementGroup('${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}${parTopLevelManagementGroupSuffix}')
   params: {
-    parTargetManagementGroupId: '${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}'
+    parTargetManagementGroupId: '${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}${parTopLevelManagementGroupSuffix}'
     parSubscriptionIds: mg.value.subscriptions
   }
 }]

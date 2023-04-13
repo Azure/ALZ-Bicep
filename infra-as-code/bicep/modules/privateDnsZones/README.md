@@ -32,7 +32,7 @@ The following DNS Zone use a geo code associated to the Azure Region.
 
 If the Azure Region entered in `parLocation` matches a lookup to the map in `varAzBackupGeoCodes` we will append Geo Codes (value) used to generate region-specific DNS zone names for Azure Backup private endpoints. then insert Azure Backup Private DNS Zone with appropriate geo code inserted alongside zones in `parPrivateDnsZones` into a new array called `varPrivateDnsZonesMerge`. If not just return `parPrivateDnsZones` as the only values in `varPrivateDnsZonesMerge`.
 
-> For more information on Azure Backup and Private Link, or geo codes, please refer to: [Create and use private endpoints for Azure Backup](https://docs.microsoft.com/azure/backup/private-endpoints#when-using-custom-dns-server-or-host-files)
+> For more information on Azure Backup and Private Link, or geo codes, please refer to: [Create and use private endpoints for Azure Backup](https://learn.microsoft.com/azure/backup/private-endpoints#when-using-custom-dns-server-or-host-files)
 
 ### Prefixed DNS Zone
 
@@ -43,7 +43,7 @@ You can add the zone to your parameters file with the required DNS Prefix in the
 ### All Zones and more details
 
 For more details on private DNS Zones please refer to this link:
-[https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration](https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration)
+[https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration)
 
 ## Outputs
 
@@ -58,7 +58,7 @@ The module will generate the following outputs:
 
 In this example, the hub resources will be deployed to the resource group specified. According to the Azure Landing Zone Conceptual Architecture, the hub resources should be deployed into the Platform connectivity subscription. During the deployment step, we will take the default values and not pass any parameters.
 
-There are two different sets of input parameters; one for deploying to Azure global regions, and another for deploying specifically to Azure China regions. This is due to different private DNS zone names for Azure services in Azure global regions and Azure China. The recommended private DNS zone names are available [here](https://docs.microsoft.com/azure/private-link/private-endpoint-dns). Other differences in Azure China regions are as follow:
+There are two different sets of input parameters; one for deploying to Azure global regions, and another for deploying specifically to Azure China regions. This is due to different private DNS zone names for Azure services in Azure global regions and Azure China. The recommended private DNS zone names are available [here](https://learn.microsoft.com/azure/private-link/private-endpoint-dns). Other differences in Azure China regions are as follow:
 - DDoS Protection feature is not available. parDdosEnabled parameter is set as false.
 - The SKUs available for an ExpressRoute virtual network gateway are Standard, HighPerformance and UltraPerformance. Sku is set as "Standard" in the example parameters file.
 

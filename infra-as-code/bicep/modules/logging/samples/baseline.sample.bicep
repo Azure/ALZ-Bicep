@@ -39,6 +39,7 @@ module baseline_logging '../logging.bicep' = {
       'VMInsights'
     ]
     parAutomationAccountName: 'alz-automation-account'
+    parAutomationAccountUseManagedIdentity: true
     parTelemetryOptOut: false
   }
 }

@@ -59,6 +59,9 @@ param parAutomationAccountName string = 'alz-automation-account'
 @sys.description('Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.')
 param parAutomationAccountLocation string = resourceGroup().location
 
+@sys.description('Automation Account - use managed identity.')
+param parAutomationAccountUseManagedIdentity bool = true
+
 @sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
 
@@ -78,6 +81,9 @@ resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2021-06-2
   name: parAutomationAccountName
   location: parAutomationAccountLocation
   tags: parAutomationAccountTags
+  identity: parAutomationAccountUseManagedIdentity ? {
+    type: 'SystemAssigned'
+  } : null
   properties: {
     sku: {
       name: 'Basic'
