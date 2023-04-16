@@ -100,15 +100,13 @@ Public IP Address SKU.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Public IP Address Prefix.
-
-- Default value: ` `
+Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
 
 ### parPublicIpSuffix
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Public IP Address Suffix.
+Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix
 
 - Default value: `-PublicIP`
 
@@ -366,6 +364,12 @@ outHubVirtualNetworkId | string |
         },
         "parPublicIpSku": {
             "value": "Standard"
+        },
+        "parPublicIpPrefix": {
+            "value": ""
+        },
+        "parPublicIpSuffix": {
+            "value": "-PublicIP"
         },
         "parAzBastionEnabled": {
             "value": true
