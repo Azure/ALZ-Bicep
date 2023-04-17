@@ -18,6 +18,7 @@ parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group that
 parDisableAlzDefaultPolicies | No       | Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
 parVmBackupExclusionTagName | No       | Name of the tag to use for excluding VMs from the scope of this policy. This should be used along with the Exclusion Tag Value parameter.
 parVmBackupExclusionTagValue | No       | Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.
+parExcludedPolicyAssignments | No       | Adding assignment definition names to this array will exclude the specific policies from assignment. See documentation on how to get the correct input values to this array: https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies#what-if-i-want-to-exclude-specific-policy-assignments-from-alz-default-assignments
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
 ### parTopLevelManagementGroupPrefix
@@ -104,6 +105,12 @@ Name of the tag to use for excluding VMs from the scope of this policy. This sho
 
 Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.
 
+### parExcludedPolicyAssignments
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Adding assignment definition names to this array will exclude the specific policies from assignment. See documentation on how to get the correct input values to this array: https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies#what-if-i-want-to-exclude-specific-policy-assignments-from-alz-default-assignments
+
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -158,6 +165,9 @@ Set Parameter to true to Opt-out of deployment telemetry
             "value": ""
         },
         "parVmBackupExclusionTagValue": {
+            "value": []
+        },
+        "parExcludedPolicyAssignments": {
             "value": []
         },
         "parTelemetryOptOut": {
