@@ -625,7 +625,7 @@ module modPolicyAssignmentLzsDenyIpForwarding '../../../policy/assignments/polic
 }
 
 // Module - Policy Assignment - Deny-RDP-From-Internet
-module modPolicyAssignmentLzsDenyRdpFromInternet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
+module modPolicyAssignmentLzsDenyRdpFromInternet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyRDPFromInternet.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyRdpFromInternet
   params: {
