@@ -38,7 +38,7 @@
     "parVmBackupExclusionTagValue" : {
       "value": []
     },
-    "parExcludeAlzDefaultPolicies" : {
+    "parExcludedPolicyAssignments" : {
       "value": []
     },
     "parTelemetryOptOut": {

@@ -40,8 +40,8 @@ param parVmBackupExclusionTagName string = ''
 @sys.description('Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.')
 param parVmBackupExclusionTagValue array = []
 
-@sys.description('Adding assignment definition names to this array will exclude the specific policies from assignment. ')
-param parExcludeAlzDefaultPolicies array = []
+@sys.description('Adding assignment definition names to this array will exclude the specific policies from assignment. See documentation on how to get the correct input values to this array: https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies#what-if-i-want-to-exclude-specific-policy-assignments-from-alz-default-assignments')
+param parExcludedPolicyAssignments array = []
 
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
@@ -322,7 +322,7 @@ module modCustomerUsageAttribution '../../../../CRML/customerUsageAttribution/cu
 
 // Modules - Policy Assignments - Intermediate Root Management Group
 // Module - Policy Assignment - Deploy-MDFC-Config
-module modPolicyAssignmentIntRootDeployMdfcConfig '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDeployMDFCConfig.libDefinition.name)) {
+module modPolicyAssignmentIntRootDeployMdfcConfig '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMDFCConfig.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployMdfcConfig
   params: {
@@ -352,7 +352,7 @@ module modPolicyAssignmentIntRootDeployMdfcConfig '../../../policy/assignments/p
 }
 
 // Module - Policy Assignment - Deploy-AzActivity-Log
-module modPolicyAssignmentIntRootDeployAzActivityLog '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDeployAzActivityLog.libDefinition.name)) {
+module modPolicyAssignmentIntRootDeployAzActivityLog '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployAzActivityLog.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployAzActivityLog
   params: {
@@ -376,7 +376,7 @@ module modPolicyAssignmentIntRootDeployAzActivityLog '../../../policy/assignment
 }
 
 // Module - Policy Assignment - Deploy-ASC-Monitoring
-module modPolicyAssignmentIntRootDeployAscMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDeployASCMonitoring.libDefinition.name)) {
+module modPolicyAssignmentIntRootDeployAscMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployASCMonitoring.libDefinition.name)) {
   // dependsOn: [
   //   modCustomPolicyDefinitions
   // ]
@@ -395,7 +395,7 @@ module modPolicyAssignmentIntRootDeployAscMonitoring '../../../policy/assignment
 }
 
 // Module - Policy Assignment - Deploy-Resource-Diag
-module modPolicyAssignmentIntRootDeployResourceDiag '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDeployResourceDiag.libDefinition.name)) {
+module modPolicyAssignmentIntRootDeployResourceDiag '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployResourceDiag.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployResourceDiag
   params: {
@@ -419,7 +419,7 @@ module modPolicyAssignmentIntRootDeployResourceDiag '../../../policy/assignments
 }
 
 // Module - Policy Assignment - Deploy-VM-Monitoring
-module modPolicyAssignmentIntRootDeployVmMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDeployVMMonitoring.libDefinition.name)) {
+module modPolicyAssignmentIntRootDeployVmMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMMonitoring.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployVmMonitoring
   params: {
@@ -443,7 +443,7 @@ module modPolicyAssignmentIntRootDeployVmMonitoring '../../../policy/assignments
 }
 
 // Module - Policy Assignment - Deploy-VMSS-Monitoring
-module modPolicyAssignmentIntRootDeployVmssMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDeployVMSSMonitoring.libDefinition.name)) {
+module modPolicyAssignmentIntRootDeployVmssMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMSSMonitoring.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployVmssMonitoring
   params: {
@@ -493,7 +493,7 @@ module modPolicyAssignmentConnEnableDdosVnet '../../../policy/assignments/policy
 
 // Modules - Policy Assignments - Identity Management Group
 // Module - Policy Assignment - Deny-Public-IP
-module modPolicyAssignmentIdentDenyPublicIp '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDenyPublicIP.libDefinition.name)) {
+module modPolicyAssignmentIdentDenyPublicIp '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicIP.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.platformIdentity)
   name: varModuleDeploymentNames.modPolicyAssignmentIdentDenyPublicIp
   params: {
@@ -509,7 +509,7 @@ module modPolicyAssignmentIdentDenyPublicIp '../../../policy/assignments/policyA
 }
 
 // Module - Policy Assignment - Deny-RDP-From-Internet
-module modPolicyAssignmentIdentDenyRdpFromInternet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDenyRDPFromInternet.libDefinition.name)) {
+module modPolicyAssignmentIdentDenyRdpFromInternet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyRDPFromInternet.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.platformIdentity)
   name: varModuleDeploymentNames.modPolicyAssignmentIdentDenyRdpFromInternet
   params: {
@@ -525,7 +525,7 @@ module modPolicyAssignmentIdentDenyRdpFromInternet '../../../policy/assignments/
 }
 
 // Module - Policy Assignment - Deny-Subnet-Without-Nsg
-module modPolicyAssignmentIdentDenySubnetWithoutNsg '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) {
+module modPolicyAssignmentIdentDenySubnetWithoutNsg '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.platformIdentity)
   name: varModuleDeploymentNames.modPolicyAssignmentIdentDenySubnetWithoutNsg
   params: {
@@ -541,7 +541,7 @@ module modPolicyAssignmentIdentDenySubnetWithoutNsg '../../../policy/assignments
 }
 
 // Module - Policy Assignment - Deploy-VM-Backup
-module modPolicyAssignmentIdentDeployVmBackup '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDeployVMBackup.libDefinition.name)) {
+module modPolicyAssignmentIdentDeployVmBackup '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMBackup.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.platformIdentity)
   name: varModuleDeploymentNames.modPolicyAssignmentIdentDeployVmBackup
   params: {
@@ -569,7 +569,7 @@ module modPolicyAssignmentIdentDeployVmBackup '../../../policy/assignments/polic
 
 // Modules - Policy Assignments - Management Management Group
 // Module - Policy Assignment - Deploy-Log-Analytics
-module modPolicyAssignmentMgmtDeployLogAnalytics '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDeployLogAnalytics.libDefinition.name)) {
+module modPolicyAssignmentMgmtDeployLogAnalytics '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployLogAnalytics.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.platformManagement)
   name: varModuleDeploymentNames.modPolicyAssignmentMgmtDeployLogAnalytics
   params: {
@@ -609,7 +609,7 @@ module modPolicyAssignmentMgmtDeployLogAnalytics '../../../policy/assignments/po
 
 // Modules - Policy Assignments - Landing Zones Management Group
 // Module - Policy Assignment - Deny-IP-Forwarding
-module modPolicyAssignmentLzsDenyIpForwarding '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDenyIPForwarding.libDefinition.name)) {
+module modPolicyAssignmentLzsDenyIpForwarding '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyIPForwarding.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyIpForwarding
   params: {
@@ -641,7 +641,7 @@ module modPolicyAssignmentLzsDenyRdpFromInternet '../../../policy/assignments/po
 }
 
 // Module - Policy Assignment - Deny-Subnet-Without-Nsg
-module modPolicyAssignmentLzsDenySubnetWithoutNsg '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) {
+module modPolicyAssignmentLzsDenySubnetWithoutNsg '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenySubnetWithoutNsg
   params: {
@@ -657,7 +657,7 @@ module modPolicyAssignmentLzsDenySubnetWithoutNsg '../../../policy/assignments/p
 }
 
 // Module - Policy Assignment - Deploy-VM-Backup
-module modPolicyAssignmentLzsDeployVmBackup '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDeployVMBackup.libDefinition.name)) {
+module modPolicyAssignmentLzsDeployVmBackup '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMBackup.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployVmBackup
   params: {
@@ -708,7 +708,7 @@ module modPolicyAssignmentLzsEnableDdosVnet '../../../policy/assignments/policyA
 }
 
 // Module - Policy Assignment - Deny-Storage-http
-module modPolicyAssignmentLzsDenyStorageHttp '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDenyStoragehttp.libDefinition.name)) {
+module modPolicyAssignmentLzsDenyStorageHttp '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyStoragehttp.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyStorageHttp
   params: {
@@ -724,7 +724,7 @@ module modPolicyAssignmentLzsDenyStorageHttp '../../../policy/assignments/policy
 }
 
 // Module - Policy Assignment - Deploy-AKS-Policy
-module modPolicyAssignmentLzsDeployAksPolicy '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDeployAKSPolicy.libDefinition.name)) {
+module modPolicyAssignmentLzsDeployAksPolicy '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployAKSPolicy.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployAksPolicy
   params: {
@@ -743,7 +743,7 @@ module modPolicyAssignmentLzsDeployAksPolicy '../../../policy/assignments/policy
 }
 
 // Module - Policy Assignment - Deny-Priv-Escalation-AKS
-module modPolicyAssignmentLzsDenyPrivEscalationAks '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.name)) {
+module modPolicyAssignmentLzsDenyPrivEscalationAks '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyPrivEscalationAks
   params: {
@@ -759,7 +759,7 @@ module modPolicyAssignmentLzsDenyPrivEscalationAks '../../../policy/assignments/
 }
 
 // Module - Policy Assignment - Deny-Priv-Containers-AKS
-module modPolicyAssignmentLzsDenyPrivContainersAks '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDenyPrivContainersAKS.libDefinition.name)) {
+module modPolicyAssignmentLzsDenyPrivContainersAks '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPrivContainersAKS.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyPrivContainersAks
   params: {
@@ -775,7 +775,7 @@ module modPolicyAssignmentLzsDenyPrivContainersAks '../../../policy/assignments/
 }
 
 // Module - Policy Assignment - Enforce-AKS-HTTPS
-module modPolicyAssignmentLzsEnforceAksHttps '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentEnforceAKSHTTPS.libDefinition.name)) {
+module modPolicyAssignmentLzsEnforceAksHttps '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceAKSHTTPS.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsEnforceAksHttps
   params: {
@@ -791,7 +791,7 @@ module modPolicyAssignmentLzsEnforceAksHttps '../../../policy/assignments/policy
 }
 
 // Module - Policy Assignment - Enforce-TLS-SSL
-module modPolicyAssignmentLzsEnforceTlsSsl '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentEnforceTLSSSL.libDefinition.name)) {
+module modPolicyAssignmentLzsEnforceTlsSsl '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceTLSSSL.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsEnforceTlsSsl
   params: {
@@ -807,7 +807,7 @@ module modPolicyAssignmentLzsEnforceTlsSsl '../../../policy/assignments/policyAs
 }
 
 // Module - Policy Assignment - Deploy-SQL-DB-Auditing
-module modPolicyAssignmentLzsDeploySqlDbAuditing '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDeploySQLDBAuditing.libDefinition.name)) {
+module modPolicyAssignmentLzsDeploySqlDbAuditing '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeploySQLDBAuditing.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeploySqlDbAuditing
   params: {
@@ -826,7 +826,7 @@ module modPolicyAssignmentLzsDeploySqlDbAuditing '../../../policy/assignments/po
 }
 
 // Module - Policy Assignment - Deploy-SQL-Threat
-module modPolicyAssignmentLzsDeploySqlThreat '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDeploySQLThreat.libDefinition.name)) {
+module modPolicyAssignmentLzsDeploySqlThreat '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeploySQLThreat.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeploySqlThreat
   params: {
@@ -846,7 +846,7 @@ module modPolicyAssignmentLzsDeploySqlThreat '../../../policy/assignments/policy
 
 // Modules - Policy Assignments - Corp Management Group
 // Module - Policy Assignment - Deny-Public-Endpoints
-module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDenyPublicEndpoints.libDefinition.name)) {
+module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicEndpoints.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyPublicEndpoints
   params: {
@@ -862,7 +862,7 @@ module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/po
 }
 
 // Module - Policy Assignment - Deny-DataB-Pip
-module modPolicyAssignmentLzsDenyDataBPip '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDenyDataBPip.libDefinition.name)) {
+module modPolicyAssignmentLzsDenyDataBPip '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyDataBPip.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyDataBPip
   params: {
@@ -878,7 +878,7 @@ module modPolicyAssignmentLzsDenyDataBPip '../../../policy/assignments/policyAss
 }
 
 // Module - Policy Assignment - Deny-DataB-Sku
-module modPolicyAssignmentLzsDenyDataBSku '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDenyDataBSku.libDefinition.name)) {
+module modPolicyAssignmentLzsDenyDataBSku '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyDataBSku.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyDataBSku
   params: {
@@ -894,7 +894,7 @@ module modPolicyAssignmentLzsDenyDataBSku '../../../policy/assignments/policyAss
 }
 
 // Module - Policy Assignment - Deny-DataB-Vnet
-module modPolicyAssignmentLzsDenyDataBVnet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludeAlzDefaultPolicies, varPolicyAssignmentDenyDataBVnet.libDefinition.name)) {
+module modPolicyAssignmentLzsDenyDataBVnet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyDataBVnet.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyDataBVnet
   params: {
