@@ -65,6 +65,27 @@ The steps explained in the above section to extend the [ALZ Default Policy Assig
 
 You will also need to ensure you create unique deployment names for each policy assignment as we do in the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) in the variable named `varModuleDeploymentNames` which is referenced for each policy assignment to its associated deployment name.
 
+## What if I want to exclude specific policy assignments from ALZ Default Policy Assignments?
+
+If specific ALZ default policies does not fit your organization you can exclude policies from the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) by following the process below:
+
+1. Navigate to the Policy Assignments `lib` directory:
+`infra-as-code\bicep\modules\policy\assignments\lib\policy_assignments`
+
+2. Open the `.json` file for the policy that you want to exclude and find/copy the `name` property.
+Example `"name": "Deploy-VM-Monitoring"` in `policy_assignment_es_deploy_vm_monitoring.tmpl.json`
+
+3. Add the `name` property to the parameter array `parExcludedPolicyAssignments` in [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults)
+Example:
+
+```json
+    "parExcludedPolicyAssignments" : {
+      "value": [
+        "Deploy-VM-Monitoring"
+      ]
+    }
+```
+
 ## Support
 
 If you have any issues or require any assistance or advice please raise a [GitHub Issue](https://github.com/Azure/ALZ-Bicep/issues/new/choose) on the repo and we will work with you to assist where possible.
