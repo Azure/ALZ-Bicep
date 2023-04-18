@@ -40,7 +40,7 @@ param parVmBackupExclusionTagName string = ''
 @sys.description('Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.')
 param parVmBackupExclusionTagValue array = []
 
-@sys.description('Adding assignment definition names to this array will exclude the specific policies from assignment. Find the correct values to this array in the following documentation: https://github.com/Azure/ALZ-Bicep/wiki/AssigningPoliciesAssigningPolicies.md#what-if-i-want-to-exclude-specific-policy-assignments-from-alz-default-policy-assignments')
+@sys.description('Adding assignment definition names to this array will exclude the specific policies from assignment. Find the correct values to this array in the following documentation: https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies#what-if-i-want-to-exclude-specific-policy-assignments-from-alz-default-policy-assignments')
 param parExcludedPolicyAssignments array = []
 
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
