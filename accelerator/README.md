@@ -1,5 +1,5 @@
 <!-- markdownlint-disable -->
-## Azure Landing Zones Bicep - Accelerator
+## ALZ Bicep Accelerator
 <!-- markdownlint-restore -->
 
 This document provides prescriptive guidance around implementing, automating, and maintaining your ALZ Bicep framework with the ALZ Bicep Accelerator.
@@ -59,9 +59,9 @@ In order to setup the Accelerator framework with the production ready pipelines,
 
 1. Follow this [GitHub documentation](https://docs.github.com/en/enterprise-cloud@latest/get-started/quickstart/create-a-repo#create-a-repository) to create a new remote Git repository
 
-1. If you need to authenticate Git from your local workstation or from the Azure Cloud Shell, please following the steps provided [here](https://docs.github.com/en/get-started/quickstart/set-up-git#authenticating-with-github-from-git). Otherwise, proceed to the next step if Git had been authenticated to GitHub prior.
+1. If you need to authenticate Git from your local workstation or from the Azure Cloud Shell, please following the steps provided [here](https://docs.github.com/en/get-started/quickstart/set-up-git#authenticating-with-github-from-git). Otherwise, proceed to the next step.
 
-1. Run the following Git commands to get your local branch in sync with your remote branch
+1. Run the following Git commands to get your remote branch in-sync with the local branch
 
     ```shell
     # Matches the remote URL with a name
@@ -81,6 +81,8 @@ In order to setup the Accelerator framework with the production ready pipelines,
     1. [Create an Azure Active Directory application/service principal](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#create-an-azure-active-directory-application-and-service-principal)
     1. [Add your federated credentials](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#add-federated-credentials-preview)
     1. [Create GitHub secrets](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#create-github-secrets)
+        > **Note:**
+        > The workflows reference secret names AZURE_TENANT_ID and AZURE_CLIENT_ID. If you choose to use different names, you will need to update the workflows accordingly.
     1. [Create RBAC Assignment for the app registration/service](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation)
 
 1. All workflows are now ready to be deployed! For the initial deployment, manually trigger each workflow in the following order
@@ -114,4 +116,34 @@ As part of the framework, we include two PR workflows. The pipelines will perfor
 
 ### Upgrading ALZ-Bicep Version
 
-### Incorporating Modified or Custom Modules
+### Incorporating Modified ALZ Modules
+
+We recommend that you do not modify the ALZ Bicep modules directly within the upstream-releases directory. Instead, we recommend that you copy the module file (e.g., logging.bicep, hubNetworking.bicep, etc.) that you would like to modify to the config\custom-modules directory. This will allow you to easily upgrade the ALZ Bicep version without having to worry about losing your customizations.
+
+#### Example Steps to follow for ALZ-Bicep Logging, Automation & Sentinel Module
+
+1. Copy logging.bicep module file from upstream-releases directory to config\custom-modules directory
+
+1. Modify the copied module file in custom-modules directory as needed. If new parameters are added to the module, you will need to update the relevant parameter file in the config\custom-parameters directory as well.
+
+1. Update the config\custom-modules\logging.bicep file with the following comment at the top of the file:
+
+    `// This module has been modified from the upstream-releases version <UpstreamReleaseVersion>`
+
+1. Update the pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1 file and change the TemplateFile variable to point to the modified module file location as shown below:
+
+    ```powershell
+    [Parameter()]
+    [String]$TemplateFile = "config\custom-modules\logging.bicep",
+    ```
+
+1. In order to trigger new deployments when subsequent changes as made, add new module file path to the path-based event trigger in the ALZ-Bicep-1 workflow file as shown below:
+
+    ```yaml
+    on:
+      push:
+        paths:
+          - "config/custom-modules/logging.bicep"
+    ```
+
+1. You are now ready to commit your changes to the main branch and trigger a new deployment.
