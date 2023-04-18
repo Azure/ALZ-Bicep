@@ -36,6 +36,12 @@
     "parPublicIpSku": {
       "value": "Standard"
     },
+    "parPublicIpPrefix": {
+      "value": ""
+    },
+    "parPublicIpSuffix": {
+      "value": "-PublicIP"
+    },
     "parAzBastionEnabled": {
       "value": true
     },

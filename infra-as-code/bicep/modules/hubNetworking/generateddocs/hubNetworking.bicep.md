@@ -13,6 +13,8 @@ parHubNetworkAddressPrefix | No       | The IP address range for all virtual net
 parSubnets     | No       | The name and IP address range for each subnet in the virtual networks.
 parDnsServerIps | No       | Array of DNS Server IP addresses for VNet.
 parPublicIpSku | No       | Public IP Address SKU.
+parPublicIpPrefix | No       | Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
+parPublicIpSuffix | No       | Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix
 parAzBastionEnabled | No       | Switch to enable/disable Azure Bastion deployment. Default: true
 parAzBastionName | No       | Name Associated with Bastion Service.
 parAzBastionSku | No       | Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard.
@@ -93,6 +95,20 @@ Public IP Address SKU.
 - Default value: `Standard`
 
 - Allowed values: `Basic`, `Standard`
+
+### parPublicIpPrefix
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
+
+### parPublicIpSuffix
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix
+
+- Default value: `-PublicIP`
 
 ### parAzBastionEnabled
 
@@ -348,6 +364,12 @@ outHubVirtualNetworkId | string |
         },
         "parPublicIpSku": {
             "value": "Standard"
+        },
+        "parPublicIpPrefix": {
+            "value": ""
+        },
+        "parPublicIpSuffix": {
+            "value": "-PublicIP"
         },
         "parAzBastionEnabled": {
             "value": true
