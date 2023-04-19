@@ -11,6 +11,9 @@
     "parLandingZoneMgAlzDefaultsEnable": {
       "value": true
     },
+    "parPlatformMgAlzDefaultsEnable": {
+      "value": true
+    },
     "parLandingZoneMgConfidentialEnable": {
       "value": false
     },
@@ -18,6 +21,9 @@
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/alz-logging/providers/microsoft.operationalinsights/workspaces/alz-log-analytics"
     },
     "parLandingZoneMgChildren": {
+      "value": []
+    },
+    "parPlatformMgChildren": {
       "value": []
     },
     "parTelemetryOptOut": {
