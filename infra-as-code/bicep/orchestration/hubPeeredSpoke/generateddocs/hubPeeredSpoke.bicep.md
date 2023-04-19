@@ -15,6 +15,7 @@ parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment t
 parPeeredVnetSubscriptionMgPlacement | No       | The Management Group Id to place the subscription in. Default: Empty String
 parResourceGroupNameForSpokeNetworking | No       | Name of Resource Group to be created to contain spoke networking resources like the virtual network. Default: {parTopLevelManagementGroupPrefix}-{parLocation}-spoke-networking
 parDdosProtectionPlanId | No       | Existing DDoS Protection plan to utilize. Default: Empty string
+parPrivateDnsZoneResourceIds | No       | The Resource IDs of the Private DNS Zones to associate with spokes.
 parSpokeNetworkName | No       | The Name of the Spoke Virtual Network. Default: vnet-spoke
 parSpokeNetworkAddressPrefix | No       | CIDR for Spoke Network. Default: 10.11.0.0/16
 parDnsServerIps | No       | Array of DNS Server IP addresses for VNet. Default: Empty Array
@@ -86,6 +87,12 @@ Name of Resource Group to be created to contain spoke networking resources like 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Existing DDoS Protection plan to utilize. Default: Empty string
+
+### parPrivateDnsZoneResourceIds
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+The Resource IDs of the Private DNS Zones to associate with spokes.
 
 ### parSpokeNetworkName
 
@@ -198,6 +205,9 @@ outSpokeVirtualNetworkId | string |
         },
         "parDdosProtectionPlanId": {
             "value": ""
+        },
+        "parPrivateDnsZoneResourceIds": {
+            "value": []
         },
         "parSpokeNetworkName": {
             "value": "vnet-spoke"
