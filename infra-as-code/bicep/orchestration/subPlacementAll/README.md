@@ -39,13 +39,13 @@ parLandingZoneMgChildrenSubs: {
     }
 }
 parPlatformMgChildrenSubs: {
-    custom: {
+    security: {
       subscriptions: [
         'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
         'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy'
       ]
     }
-    'custom-two': {
+    'yet-another-example': {
       subscriptions: [
         'zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz'
       ]
@@ -73,13 +73,13 @@ parPlatformMgChildrenSubs: {
 },
 "parPlatformMgChildrenSubs": {
   "value": {
-      "pci": {
+      "security": {
         "subscriptions": [
           "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
           "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy"
         ]
       },
-      "another-example": {
+      "yet-another-example": {
         "subscriptions": [
           "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"
         ]
