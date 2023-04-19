@@ -46,10 +46,6 @@ We have created a short 3-part series of video on the Azure Enablement Show that
 [![Part 3 - Azure Landing Zones Bicep - Enabling landing zones](https://img.youtube.com/vi/cZ7IN3zGbyM/hqdefault.jpg)](https://aka.ms/azenable/96)
 <!-- markdownlint-restore -->
 
-
-
-
-
  [//]: # (************************)
  [//]: # (INSERT LINK LABELS BELOW)
  [//]: # (************************)
@@ -75,8 +71,4 @@ Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to her
 [wiki_pipelines_gh]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub "Wiki - Sample Pipelines - GitHub Actions"
 [wiki_pipelines_ado]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO "Wiki - Sample Pipelines - Azure DevOps"
 [code_tours]:                                   https://github.com/Azure/ALZ-Bicep/wiki/CodeTour "Wiki - Code tours"
-[aes_part_1]:                                   https://aka.ms/azenable/94 "Part 1 - Introduction to Azure Landing Zones Bicep"
-[aes_part_2]:                                   https://aka.ms/azenable/95 "Part 2 - Enabling platform services"
-[aes_part_3]:                                   https://aka.ms/azenable/96 "Part 3 - Enabling landing zones"
 [aac_article]:                                  https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep "Azure Architecture Center - Azure landing zones - Bicep modules design considerations"
-
