@@ -14,7 +14,7 @@ It also enables Diagnostic Settings for existing custom child landing zones if t
 
 ### Diagnostic Settings for Child Landing Zone and Platform Management Groups
 
-This module considers the same flexibility used when creating the child Landing Zone Management Groups during deployment of the Management Groups module. The three parameters detailed below should correspond to the values used during Management Groups module deployment. All of these parameters can be used together to enable diagnostic settings on the child Landing Zone Management Groups.
+This module considers the same flexibility used when creating the child Landing Zone and child Platform Management Groups during deployment of the Management Groups module. The parameters detailed below should correspond to the values used during Management Groups module deployment. All of these parameters can be used together to enable diagnostic settings on the child Landing Zone Management Groups.
 
 - `parLandingZoneMgAlzDefaultsEnable`
   - Boolean - defaults to `true`
@@ -33,8 +33,12 @@ This module considers the same flexibility used when creating the child Landing 
   - Object - default is an empty array `[]`
   - **Optional**
   - Deploys whatever you specify in the object as child Landing Zone Management groups.
+- `parPlatformMgChildren`
+  - Object - default is an empty array `[]`
+  - **Optional**
+  - Deploys whatever you specify in the object as child Landing Zone Management groups.
 
-#### `parLandingZoneMgChildren` Input Examples
+#### `parLandingZoneMgChildren` and `parPlatformMgChildren` Input Examples
 
 Below are some examples of how to use this input parameter in both Bicep & JSON formats.
 
@@ -45,6 +49,11 @@ parLandingZoneMgChildren = [
   'pci',
   'another-example'
 ]
+
+parPlatformMgChildren = [
+  'security',
+  'yet-another-example'
+]
 ```
 
 ##### JSON Parameter File Input Example
@@ -54,6 +63,12 @@ parLandingZoneMgChildren = [
       "value": [
         "pci",
         "another-example"
+    ]
+  },
+    "parPlatformMgChildren": {
+      "value": [
+        "security",
+        "yet-another-example"
     ]
   }
 ```

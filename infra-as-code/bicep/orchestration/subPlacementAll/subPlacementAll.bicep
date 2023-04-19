@@ -24,6 +24,9 @@ param parPlatformManagementMgSubs array = []
 @sys.description('An array of Subscription IDs to place in the (Platform) Connectivity Management Group. Default: Empty Array')
 param parPlatformConnectivityMgSubs array = []
 
+@sys.description('Dictionary Object to allow additional or different child Management Groups of the Platform Management Group describing the Subscription IDs which each of them contain. Default: Empty Object')
+param parPlatformMgChildrenSubs object = {}
+
 @sys.description('An array of Subscription IDs to place in the (Platform) Identity Management Group. Default: Empty Array')
 param parPlatformIdentityMgSubs array = []
 
@@ -132,6 +135,16 @@ module modplatformIdentityMgSubPlacement '../../modules/subscriptionPlacement/su
     parSubscriptionIds: parPlatformIdentityMgSubs
   }
 }
+
+// Custom Children Platform Management Groups
+module modPlatformMgChildrenSubPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = [for mg in items(parPlatformMgChildrenSubs): if (!empty(parPlatformMgChildrenSubs)) {
+  name: take('modPlatformMgChildrenSubPlacement-${uniqueString(mg.key, string(length(mg.value.subscriptions)), deployment().name)}', 64)
+  scope: managementGroup('${parTopLevelManagementGroupPrefix}-platform-${mg.key}${parTopLevelManagementGroupSuffix}')
+  params: {
+    parTargetManagementGroupId: '${parTopLevelManagementGroupPrefix}-platform-${mg.key}${parTopLevelManagementGroupSuffix}'
+    parSubscriptionIds: mg.value.subscriptions
+  }
+}]
 
 // Landing Zone Management Groups
 module modLandingZonesMgSubPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = if (!empty(parLandingZonesMgSubs)) {

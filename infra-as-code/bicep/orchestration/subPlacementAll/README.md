@@ -12,11 +12,11 @@ Module deploys the following resources:
 
 - [Parameters for Azure Commercial Cloud](generateddocs/subPlacementAll.bicep.md)
 
-### `parLandingZoneMgChildrenSubs` Input Examples
+### `parLandingZoneMgChildrenSubs` and `parPlatformMgChildrenSubs` Input Examples
 
-The `parLandingZoneMgChildrenSubs` is only used if you have deployed different Management Groups beneath the Landing Zones Management Group using the `parLandingZoneMgChildren` parameter in the [`managementGroups.bicep` module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/managementGroups).
+The `parLandingZoneMgChildrenSubs` and `parPlatformMgChildrenSubs` are only used if you have deployed different Management Groups beneath the Landing Zones and Platform Management Group using the `parLandingZoneMgChildren` and/or `parPlatformMgChildren` parameter in the [`managementGroups.bicep` module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/managementGroups).
 
-Below are some examples of how to use this input parameter in both Bicep & JSON formats.
+Below are some examples of how to use these input parameters in both Bicep & JSON formats.
 
 > **NOTE:** The keys of each object in the dictionary object only need to match the last part of the Management Group ID, as the concatenation of the rest of the Management Group ID is automatically handled in the module.
 > For Example:
@@ -38,6 +38,19 @@ parLandingZoneMgChildrenSubs: {
       ]
     }
 }
+parPlatformMgChildrenSubs: {
+    security: {
+      subscriptions: [
+        'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+        'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy'
+      ]
+    }
+    'yet-another-example': {
+      subscriptions: [
+        'zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz'
+      ]
+    }
+}
 ```
 
 #### JSON Parameter File Input Example
@@ -52,6 +65,21 @@ parLandingZoneMgChildrenSubs: {
         ]
       },
       "another-example": {
+        "subscriptions": [
+          "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"
+        ]
+      }
+  }
+},
+"parPlatformMgChildrenSubs": {
+  "value": {
+      "security": {
+        "subscriptions": [
+          "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+          "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy"
+        ]
+      },
+      "yet-another-example": {
         "subscriptions": [
           "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"
         ]

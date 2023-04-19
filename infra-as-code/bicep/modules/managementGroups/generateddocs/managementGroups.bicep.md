@@ -11,8 +11,10 @@ parTopLevelManagementGroupSuffix | No       | Optional suffix for the management
 parTopLevelManagementGroupDisplayName | No       | Display name for top level management group. This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter.
 parTopLevelManagementGroupParentId | No       | Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group.
 parLandingZoneMgAlzDefaultsEnable | No       | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.
+parPlatformMgAlzDefaultsEnable | No       | Deploys Management, Identity and Connectivity Management Groups beneath Platform Management Group if set to true.
 parLandingZoneMgConfidentialEnable | No       | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.
 parLandingZoneMgChildren | No       | Dictionary Object to allow additional or different child Management Groups of Landing Zones Management Group to be deployed.
+parPlatformMgChildren | No       | Dictionary Object to allow additional or different child Management Groups of Platform Management Group to be deployed.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parTopLevelManagementGroupPrefix
@@ -51,6 +53,14 @@ Deploys Corp & Online Management Groups beneath Landing Zones Management Group i
 
 - Default value: `True`
 
+### parPlatformMgAlzDefaultsEnable
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Deploys Management, Identity and Connectivity Management Groups beneath Platform Management Group if set to true.
+
+- Default value: `True`
+
 ### parLandingZoneMgConfidentialEnable
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -64,6 +74,12 @@ Deploys Confidential Corp & Confidential Online Management Groups beneath Landin
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Dictionary Object to allow additional or different child Management Groups of Landing Zones Management Group to be deployed.
+
+### parPlatformMgChildren
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Dictionary Object to allow additional or different child Management Groups of Platform Management Group to be deployed.
 
 ### parTelemetryOptOut
 
@@ -79,18 +95,14 @@ Name | Type | Description
 ---- | ---- | -----------
 outTopLevelManagementGroupId | string |
 outPlatformManagementGroupId | string |
-outPlatformManagementManagementGroupId | string |
-outPlatformConnectivityManagementGroupId | string |
-outPlatformIdentityManagementGroupId | string |
+outPlatformChildrenManagementGroupIds | array |
 outLandingZonesManagementGroupId | string |
 outLandingZoneChildrenManagementGroupIds | array |
 outSandboxManagementGroupId | string |
 outDecommissionedManagementGroupId | string |
 outTopLevelManagementGroupName | string |
 outPlatformManagementGroupName | string |
-outPlatformManagementManagementGroupName | string |
-outPlatformConnectivityManagementGroupName | string |
-outPlatformIdentityManagementGroupName | string |
+outPlatformChildrenManagementGroupNames | array |
 outLandingZonesManagementGroupName | string |
 outLandingZoneChildrenManagementGroupNames | array |
 outSandboxManagementGroupName | string |
@@ -123,10 +135,16 @@ outDecommissionedManagementGroupName | string |
         "parLandingZoneMgAlzDefaultsEnable": {
             "value": true
         },
+        "parPlatformMgAlzDefaultsEnable": {
+            "value": true
+        },
         "parLandingZoneMgConfidentialEnable": {
             "value": false
         },
         "parLandingZoneMgChildren": {
+            "value": {}
+        },
+        "parPlatformMgChildren": {
             "value": {}
         },
         "parTelemetryOptOut": {

@@ -9,8 +9,10 @@ Parameter name | Required | Description
 parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy in the managementGroups module. Default: alz
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 parLandingZoneMgChildren | No       | Array of strings to allow additional or different child Management Groups of the Landing Zones Management Group.
+parPlatformMgChildren | No       | Array of strings to allow additional or different child Management Groups of the Platform Management Group.
 parLogAnalyticsWorkspaceResourceId | Yes      | Log Analytics Workspace Resource ID.
 parLandingZoneMgAlzDefaultsEnable | No       | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
+parPlatformMgAlzDefaultsEnable | No       | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
 parLandingZoneMgConfidentialEnable | No       | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true. Default: false
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry. Default: false
 
@@ -34,6 +36,12 @@ Optional suffix for the management group hierarchy. This suffix will be appended
 
 Array of strings to allow additional or different child Management Groups of the Landing Zones Management Group.
 
+### parPlatformMgChildren
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Array of strings to allow additional or different child Management Groups of the Platform Management Group.
+
 ### parLogAnalyticsWorkspaceResourceId
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
@@ -41,6 +49,14 @@ Array of strings to allow additional or different child Management Groups of the
 Log Analytics Workspace Resource ID.
 
 ### parLandingZoneMgAlzDefaultsEnable
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
+
+- Default value: `True`
+
+### parPlatformMgAlzDefaultsEnable
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
@@ -85,10 +101,16 @@ Set Parameter to true to Opt-out of deployment telemetry. Default: false
         "parLandingZoneMgChildren": {
             "value": []
         },
+        "parPlatformMgChildren": {
+            "value": []
+        },
         "parLogAnalyticsWorkspaceResourceId": {
             "value": ""
         },
         "parLandingZoneMgAlzDefaultsEnable": {
+            "value": true
+        },
+        "parPlatformMgAlzDefaultsEnable": {
             "value": true
         },
         "parLandingZoneMgConfidentialEnable": {
