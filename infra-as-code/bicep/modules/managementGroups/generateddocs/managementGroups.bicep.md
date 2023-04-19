@@ -96,13 +96,13 @@ Name | Type | Description
 outTopLevelManagementGroupId | string |
 outPlatformManagementGroupId | string |
 outPlatformChildrenManagementGroupIds | array |
-outPlatformChildrenManagementGroupNames | array |
 outLandingZonesManagementGroupId | string |
 outLandingZoneChildrenManagementGroupIds | array |
 outSandboxManagementGroupId | string |
 outDecommissionedManagementGroupId | string |
 outTopLevelManagementGroupName | string |
 outPlatformManagementGroupName | string |
+outPlatformChildrenManagementGroupNames | array |
 outLandingZonesManagementGroupName | string |
 outLandingZoneChildrenManagementGroupNames | array |
 outSandboxManagementGroupName | string |
