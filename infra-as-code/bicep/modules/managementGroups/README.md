@@ -128,7 +128,7 @@ The module will generate the following outputs:
 | outSandboxManagementGroupId                | string | /providers/Microsoft.Management/managementGroups/alz-sandbox                                                                                         |
 | outDecommissionedManagementGroupId         | string | /providers/Microsoft.Management/managementGroups/alz-decommissioned                                                                                  |
 | outTopLevelManagementGroupName             | string | Azure Landing Zones                                                                                                                                                  |
-| outPlatformManagementGroupName             | string | Platform                                                                                                                                         | 
+| outPlatformManagementGroupName             | string | Platform                                                                                                                                         |
 | outPlatformChildrenManagementGroupNames | array  | `[Management, Connectivity, Identity]`                                                                                                                                |
 | outLandingZonesManagementGroupName         | string | Landing Zones                                                                                                                                     |
 | outLandingZoneChildrenManagementGroupNames | array  | `[Corp, Online]`                                                                                                                                     |
