@@ -51,8 +51,8 @@ parLandingZoneMgChildren = [
 ]
 
 parPlatformMgChildren = [
-  'pci',
-  'another-example'
+  'security',
+  'yet-another-example'
 ]
 ```
 
@@ -67,8 +67,8 @@ parPlatformMgChildren = [
   },
     "parPlatformMgChildren": {
       "value": [
-        "pci",
-        "another-example"
+        "security",
+        "yet-another-example"
     ]
   }
 ```
