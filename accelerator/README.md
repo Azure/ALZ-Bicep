@@ -35,8 +35,10 @@ The only thing that differs across the workflows is which ALZ Bicep modules are 
 | [ALZ-Bicep-4b Workflow](https://github.com/Azure/ALZ-Bicep/blob/main/accelerator/.github/workflows/alz-bicep-4b.yml) | Connectivity Resource Group Deployment, Hub (VWAN) Deployment
 =======
   > Currently we only provide support for GitHub Action workflows, but there are plans to add support for Azure Pipelines and GitLab pipelines in the future.
+
 - Provides framework to not only stay in-sync with new [ALZ Bicep releases](https://github.com/Azure/ALZ-Bicep/releases), but also incorporates guidance around editing existing ALZ Bicep modules or associating custom modules to the framework
 - Offers branching strategy with pull request pipelines for linting repository as well as validating custom Bicep modules
+
 >>>>>>> parent of 0230c5a... Additional updates for ALZ-Accelerator
 
 ### Getting Started
@@ -79,6 +81,7 @@ In order to setup the Accelerator framework with the production ready pipelines,
     > If the directory structure specified for the output location does not exist, the module will create the directory structure programatically.
 
 <<<<<<< HEAD
+
 1. Depending upon your preferred [network topology deployment](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation),  remove the associated workflow file for each deployment model
     - Traditional VNet Hub and Spoke = .github\workflows\alz-bicep-4a.yml
     - Virtual WAN = .github\workflows\alz-bicep-4b.yml
@@ -86,6 +89,7 @@ In order to setup the Accelerator framework with the production ready pipelines,
 1. Depending upon your preferred [network topology deployment](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation),  remove the assocaited workflow file for each deployment model
     - Traditional VNet Hub and Spoke = accelerator\.github\workflows\alz-bicep-4a.yml
     - Virtual WAN = accelerator\.github\workflows\alz-bicep-4b.yml
+
 >>>>>>> parent of 0230c5a... Additional updates for ALZ-Accelerator
 
     > **Note:**
@@ -125,14 +129,7 @@ In order to setup the Accelerator framework with the production ready pipelines,
     1. ALZ-Bicep-3 Workflow
     1. ALZ-Bicep-4a Workflow or ALZ-Bicep-4b Workflow
 
-<<<<<<< HEAD
 1. As part of the [branching strategy](#incoporating-a-branching-strategy), setup the branch protection rules against the main branch with the following selected as a starting point:
-=======
-   > **Note:**
-   > The workflows utilize [triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows), so ALZ deployment workflows deployments will occur as a result of a push against the main branch along with changes to file paths that are associated with the workflow.
-
-1. As part of the [branching strategy documentation](#incoporating-a-branching-strategy), setup the branch protection rules against the main branch with the following selected as a starting point:
->>>>>>> parent of 0230c5a... Additional updates for ALZ-Accelerator
 
     - Require a pull request before merging
       - Require approvals
@@ -197,11 +194,7 @@ We recommend that you do not modify the ALZ Bicep modules directly within the up
     [String]$TemplateFile = "config\custom-modules\logging.bicep",
     ```
 
-<<<<<<< HEAD
 1. In order to trigger new deployments when subsequent changes are made, add the new module file path to the path-based filter workflow trigger in the ALZ-Bicep-1 workflow file as shown below:
-=======
-1. In order to trigger new deployments when subsequent changes as made, add new module file path to the path-based event trigger in the ALZ-Bicep-1 workflow file as shown below:
->>>>>>> parent of 0230c5a... Additional updates for ALZ-Accelerator
 
     ```yaml
     on:
