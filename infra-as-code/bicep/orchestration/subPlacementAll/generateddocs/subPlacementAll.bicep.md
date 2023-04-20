@@ -12,6 +12,7 @@ parIntRootMgSubs | No       | An array of Subscription IDs to place in the Inter
 parPlatformMgSubs | No       | An array of Subscription IDs to place in the Platform Management Group. Default: Empty Array
 parPlatformManagementMgSubs | No       | An array of Subscription IDs to place in the (Platform) Management Management Group. Default: Empty Array
 parPlatformConnectivityMgSubs | No       | An array of Subscription IDs to place in the (Platform) Connectivity Management Group. Default: Empty Array
+parPlatformMgChildrenSubs | No       | Dictionary Object to allow additional or different child Management Groups of the Platform Management Group describing the Subscription IDs which each of them contain. Default: Empty Object
 parPlatformIdentityMgSubs | No       | An array of Subscription IDs to place in the (Platform) Identity Management Group. Default: Empty Array
 parLandingZonesMgSubs | No       | An array of Subscription IDs to place in the Landing Zones Management Group. Default: Empty Array
 parLandingZonesCorpMgSubs | No       | An array of Subscription IDs to place in the Corp (Landing Zones) Management Group. Default: Empty Array
@@ -60,6 +61,12 @@ An array of Subscription IDs to place in the (Platform) Management Management Gr
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 An array of Subscription IDs to place in the (Platform) Connectivity Management Group. Default: Empty Array
+
+### parPlatformMgChildrenSubs
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Dictionary Object to allow additional or different child Management Groups of the Platform Management Group describing the Subscription IDs which each of them contain. Default: Empty Object
 
 ### parPlatformIdentityMgSubs
 
@@ -152,6 +159,9 @@ Set Parameter to true to Opt-out of deployment telemetry. Default: false
         },
         "parPlatformConnectivityMgSubs": {
             "value": []
+        },
+        "parPlatformMgChildrenSubs": {
+            "value": {}
         },
         "parPlatformIdentityMgSubs": {
             "value": []
