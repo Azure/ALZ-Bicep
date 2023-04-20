@@ -35,9 +35,12 @@ The only thing that differs across the workflows is which ALZ Bicep modules are 
 
 ### Getting Started
 
-In order to setup the Accelerator framework, the following steps must be completed in the order listed:
+In order to setup the Accelerator framework with the production ready pipelines, the following steps must be completed in the order listed:
 
 1. Install the [ALZ PowerShell Module](https://github.com/Azure/ALZ-PowerShell-Module#installation) on your local development machine or within the Azure Cloud Shell using the following command:
+
+    > **Warning:**
+    > In order to use this module, [PowerShell 7.1 or higher](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3) needs to be installed
 
     ```powershell
     Install-Module -Name ALZ
@@ -51,11 +54,11 @@ In order to setup the Accelerator framework, the following steps must be complet
 
     Currently this tests for:
 
-    - [PowerShell 7.1 or higher](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3)
-    - [Azure PowerShell Module](https://learn.microsoft.com/en-us/powershell/azure/install-azure-powershell?view=azps-9.6.0)
-    - [Git](https://git-scm.com/downloads)
-    - [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli#install)
-    - [Azure Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install)
+    - Supported minimum PowerShell version
+    - Azure PowerShell Module
+    - Git
+    - Azure CLI
+    - Bicep
 
 1. Create your ALZ Bicep Accelerator framework with the following command:
 
@@ -155,7 +158,7 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
 
 We recommend that you do not modify the ALZ Bicep modules directly within the upstream-releases directory. Instead, we recommend that you copy the module file (e.g., logging.bicep, hubNetworking.bicep, etc.) that you would like to modify to the config\custom-modules directory. This will allow you to easily upgrade the ALZ Bicep version without having to worry about losing your customizations.
 
-#### Example: Steps to follow for Modifying ALZ-Bicep Logging, Automation & Sentinel Module
+#### Example Steps to follow for ALZ-Bicep Logging, Automation & Sentinel Module
 
 1. Copy logging.bicep module file from upstream-releases directory to config\custom-modules directory
 
