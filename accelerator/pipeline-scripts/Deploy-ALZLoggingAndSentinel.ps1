@@ -6,6 +6,9 @@ param (
   [String]$TopLevelMGPrefix = "$($env:TOP_LEVEL_MG_PREFIX)",
 
   [Parameter()]
+  [String]$LoggingResourceGroup = "$($env:LOGGING_RESOURCE_GROUP)",
+
+  [Parameter()]
   [String]$TemplateFile = "upstream-releases\$($env:UPSTREAM_RELEASE_VERSION)\infra-as-code\bicep\modules\logging\logging.bicep",
 
   [Parameter()]
@@ -15,7 +18,7 @@ param (
 # Parameters necessary for deployment
 $inputObject = @{
   DeploymentName        = 'alz-LoggingDeploy-{0}' -f ( -join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = "rg-$TopLevelMGPrefix-logging"
+  ResourceGroupName     = $LoggingResourceGroup
   TemplateFile          = $TemplateFile
   TemplateParameterFile = $TemplateParameterFile
   Verbose               = $true
