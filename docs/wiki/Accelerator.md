@@ -14,6 +14,10 @@ The ALZ Bicep Accelerator framework was developed to provide end-users with the 
 - Provides framework to not only stay in-sync with new [ALZ Bicep releases](https://github.com/Azure/ALZ-Bicep/releases), but also incorporates guidance around modifiying existing ALZ Bicep modules and/or associating custom modules to the framework
 - Offers branching strategy guidance and pull request pipelines for linting the repository as well as validating any existing custom and/or modified Bicep modules
 
+Accelerator Directory Tree:
+
+![Accelerator Directory Tree](media/alz-bicep-accelerator-tree-output.png)
+
 ### Overview of Included ALZ Deployment Pipelines
 
 We attempted to make the pipelines as flexible as possible while also reducing overall complexity. Essentially, the ALZ Bicep Accelerator is made up four distinct deployment pipelines that represent different phases of the ALZ Bicep deployment. Each workflow shares a common set of workflow configurations and deployment scripts including the following:
@@ -39,8 +43,6 @@ In order to setup the Accelerator framework with the production ready pipelines,
 
 1. Install the [ALZ PowerShell Module](https://github.com/Azure/ALZ-PowerShell-Module#installation) on your local development machine or within the Azure Cloud Shell using the following command:
 
-    > **Warning:**
-    > In order to use this module, [PowerShell 7.1 or higher](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3) needs to be installed
     > **Warning:**
     > In order to use this module, [PowerShell 7.1 or higher](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3) needs to be installed
 
@@ -125,6 +127,8 @@ Branching strategies offer the ability to manage and organize changes to a codeb
 
 For this framework, we recommend utilizing the [GitHub Flow branching strategy](https://docs.github.com/en/get-started/quickstart/github-flow) which is a lightweight, branch-based workflow.
 
+![GitHub Flow Branching Strategy Diagram](media/alz-bicep-accelerator-branching-strategy-diagram.png)
+
 As part of the framework, we include two PR workflows. The pipelines will perform the following tasks:
 
 | Workflow Name           | Trigger   | Tasks               |
@@ -160,7 +164,7 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
 
 We recommend that you do not modify the ALZ Bicep modules directly within the upstream-releases directory. Instead, we recommend that you copy the module file (e.g., logging.bicep, hubNetworking.bicep, etc.) that you would like to modify to the config\custom-modules directory. This will allow you to easily upgrade the ALZ Bicep version without having to worry about losing your customizations.
 
-#### Example Steps to follow for ALZ-Bicep Logging, Automation & Sentinel Module
+#### Example: Steps to follow for ALZ-Bicep Logging, Automation & Sentinel Module
 
 1. Copy logging.bicep module file from upstream-releases directory to config\custom-modules directory
 
