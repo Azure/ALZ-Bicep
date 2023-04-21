@@ -5,7 +5,7 @@ This module is used by the Hub Peered Spoke orchestration module to create virtu
 
 ## Parameters
 
-- [Link to Parameters](generateddocs/privateDNSZoneLinks.bicep.md)
+- [Link to Parameters](generateddocs/privateDnsZoneLinks.bicep.md)
 
 ## Outputs
 
@@ -56,10 +56,6 @@ New-AzResourceGroupDeployment `
   -TemplateParameterFile @infra-as-code/bicep/modules/privateDnsZoneLinks/parameters/privateDnsZoneLinks.parameters.all.json `
   -Location chinaeast2
 ```
-
-## Validation
-
-To validate if the module has worked check t
 
 ## Bicep Visualizer
 
