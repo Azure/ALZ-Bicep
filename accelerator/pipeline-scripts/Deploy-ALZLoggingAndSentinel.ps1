@@ -3,9 +3,6 @@ param (
   [String]$ManagementSubscriptionId = "$($env:MANAGEMENT_SUBSCRIPTION_ID)",
 
   [Parameter()]
-  [String]$TopLevelMGPrefix = "$($env:TOP_LEVEL_MG_PREFIX)",
-
-  [Parameter()]
   [String]$LoggingResourceGroup = "$($env:LOGGING_RESOURCE_GROUP)",
 
   [Parameter()]

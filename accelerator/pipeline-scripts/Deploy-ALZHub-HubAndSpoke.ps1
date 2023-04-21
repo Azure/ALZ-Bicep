@@ -3,9 +3,6 @@ param (
   [String]$ConnectivitySubscriptionId = "$($env:CONNECTIVITY_SUBSCRIPTION_ID)",
 
   [Parameter()]
-  [String]$TopLevelMGPrefix = "$($env:TOP_LEVEL_MG_PREFIX)",
-
-  [Parameter()]
   [String]$ConnectivityResourceGroup = "$($env:CONNECTIVITY_RESOURCE_GROUP)",
 
   [Parameter()]
