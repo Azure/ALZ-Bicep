@@ -93,6 +93,7 @@ module modPolicyIdentityRoleAssignmentMgsMany '../../roleAssignments/roleAssignm
     parAssigneeObjectId: resPolicyAssignment.identity.principalId
     parAssigneePrincipalType: 'ServicePrincipal'
     parRoleDefinitionId: roles
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }]
 
@@ -104,6 +105,7 @@ module modPolicyIdentityRoleAssignmentSubsMany '../../roleAssignments/roleAssign
     parAssigneeObjectId: resPolicyAssignment.identity.principalId
     parAssigneePrincipalType: 'ServicePrincipal'
     parRoleDefinitionId: roles
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }]
 
@@ -115,6 +117,7 @@ module modPolicyIdentityRoleAssignmentResourceGroupMany '../../roleAssignments/r
     parAssigneeObjectId: resPolicyAssignment.identity.principalId
     parAssigneePrincipalType: 'ServicePrincipal'
     parRoleDefinitionId: roles
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }]
 
