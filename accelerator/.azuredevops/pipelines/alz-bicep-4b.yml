@@ -1,0 +1,48 @@
+name: ALZ-Bicep-4b Workflow
+
+
+trigger:
+  branches:
+    include:
+      - "main"
+  paths:
+    include:
+      - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
+      - "config/custom-parameters/vwanConnectivity.parameters.all.json"
+
+
+variables:
+  SERVICE_CONNECTION_NAME: ""
+  LOCATION: ""
+  UPSTREAM_RELEASE_VERSION: ""
+  CONNECTIVITY_SUBSCRIPTION_ID: ""
+  TOP_LEVEL_MG_PREFIX: ""
+
+
+jobs:
+  - job: ALZ_Bicep_4b_Workflow_Job
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - checkout: self
+        displayName: Checkout Repo
+
+      - task: AzurePowerShell@5
+        displayName: "Connectivity Resource Group Deployment"
+        inputs:
+          azureSubscription: ${{ variables.SERVICE_CONNECTION_NAME }}
+          azurePowerShellVersion: "LatestVersion"
+          pwsh: true
+          ScriptType: "InlineScript"
+          Inline: |
+            .\accelerator\pipeline-scripts\Deploy-ALZConnectivityResourceGroup.ps1
+
+      - task: AzurePowerShell@5
+        displayName: "Hub (VWAN) Deployment"
+        inputs:
+          azureSubscription: ${{ variables.SERVICE_CONNECTION_NAME }}
+          azurePowerShellVersion: "LatestVersion"
+          pwsh: true
+          ScriptType: "InlineScript"
+          Inline: |
+            .\accelerator\pipeline-scripts\Deploy-ALZHub-VWAN.ps1

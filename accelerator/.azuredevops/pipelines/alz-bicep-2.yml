@@ -1,0 +1,36 @@
+name: ALZ-Bicep-2 Workflow
+
+
+trigger:
+  branches:
+    include:
+      - "main"
+  paths:
+    include:
+      - "config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json"
+
+
+variables:
+  SERVICE_CONNECTION_NAME: ""
+  LOCATION: ""
+  UPSTREAM_RELEASE_VERSION: ""
+  TOP_LEVEL_MG_PREFIX: ""
+
+
+jobs:
+  - job: ALZ_Bicep_2_Workflow_Job
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - checkout: self
+        displayName: Checkout Repo
+
+      - task: AzurePowerShell@5
+        displayName: "Built-in and Custom Policy Assignments Deployment"
+        inputs:
+          azureSubscription: ${{ variables.SERVICE_CONNECTION_NAME }}
+          azurePowerShellVersion: "LatestVersion"
+          pwsh: true
+          ScriptType: "InlineScript"
+          Inline: |
+            .\accelerator\pipeline-scripts\Deploy-ALZPolicyAssignments.ps1
