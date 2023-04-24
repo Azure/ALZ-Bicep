@@ -53,6 +53,7 @@ Set Parameter to true to Opt-out of deployment telemetry.
 Name | Type | Description
 ---- | ---- | -----------
 outPrivateDnsZones | array |
+outPrivateDnsZonesNames | array |
 
 ## Snippets
 
