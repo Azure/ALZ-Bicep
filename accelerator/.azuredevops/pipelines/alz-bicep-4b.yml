@@ -45,7 +45,7 @@ jobs:
           pwsh: true
           ScriptType: "InlineScript"
           Inline: |
-            .\accelerator\pipeline-scripts\Deploy-ALZConnectivityResourceGroup.ps1
+            .\pipeline-scripts\Deploy-ALZConnectivityResourceGroup.ps1
 
       - task: AzurePowerShell@5
         displayName: "Hub (VWAN) Deployment"
@@ -55,4 +55,4 @@ jobs:
           pwsh: true
           ScriptType: "InlineScript"
           Inline: |
-            .\accelerator\pipeline-scripts\Deploy-ALZHub-VWAN.ps1
+            .\pipeline-scripts\Deploy-ALZHub-VWAN.ps1

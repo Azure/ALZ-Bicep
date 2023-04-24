@@ -49,7 +49,7 @@ jobs:
           pwsh: true
           ScriptType: "InlineScript"
           Inline: |
-            .\accelerator\pipeline-scripts\Deploy-ALZManagementGroups.ps1
+            .\pipeline-scripts\Deploy-ALZManagementGroups.ps1
 
       - task: AzurePowerShell@5
         displayName: "Logging and Sentinel Resource Group Deployment"
@@ -59,7 +59,7 @@ jobs:
           pwsh: true
           ScriptType: "InlineScript"
           Inline: |
-            .\accelerator\pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1
+            .\pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1
 
       - task: AzurePowerShell@5
         displayName: "Logging and Sentinel Deployment"
@@ -69,7 +69,7 @@ jobs:
           pwsh: true
           ScriptType: "InlineScript"
           Inline: |
-            .\accelerator\pipeline-scripts\Deploy-ALZLoggingAndSentinel.ps1
+            .\pipeline-scripts\Deploy-ALZLoggingAndSentinel.ps1
 
       - task: AzurePowerShell@5
         displayName: "Custom Policy Definitions Deployment"
@@ -79,7 +79,7 @@ jobs:
           pwsh: true
           ScriptType: "InlineScript"
           Inline: |
-            .\accelerator\pipeline-scripts\Deploy-ALZCustomPolicyDefinitions.ps1
+            .\pipeline-scripts\Deploy-ALZCustomPolicyDefinitions.ps1
 
       - task: AzurePowerShell@5
         displayName: "Custom Role Definitions Deployment"
@@ -89,7 +89,7 @@ jobs:
           pwsh: true
           ScriptType: "InlineScript"
           Inline: |
-            .\accelerator\pipeline-scripts\Deploy-ALZCustomRoleDefinitions.ps1
+            .\pipeline-scripts\Deploy-ALZCustomRoleDefinitions.ps1
 
       - task: AzurePowerShell@5
         displayName: "Custom Management Group Diagnostic Settings"
@@ -99,4 +99,4 @@ jobs:
           pwsh: true
           ScriptType: "InlineScript"
           Inline: |
-            .\accelerator\pipeline-scripts\Deploy-ALZMGDiagnosticSettings.ps1
+            .\pipeline-scripts\Deploy-ALZMGDiagnosticSettings.ps1

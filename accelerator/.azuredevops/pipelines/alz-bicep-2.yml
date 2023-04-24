@@ -44,4 +44,4 @@ jobs:
           pwsh: true
           ScriptType: "InlineScript"
           Inline: |
-            .\accelerator\pipeline-scripts\Deploy-ALZPolicyAssignments.ps1
+            .\pipeline-scripts\Deploy-ALZPolicyAssignments.ps1
