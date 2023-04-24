@@ -92,6 +92,8 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentLzsDeploySqlThreat: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deploySQLThreat-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDenyPublicEndpoints: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPublicEndpoints-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDeployPrivateDnsZones: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployPrivateDNS-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentDecommEnforceAlz: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceAlz-decomm-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentSandboxEnforceAlz: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceAlz-sbox-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
 }
 
 // Policy Assignments Modules Variables
@@ -206,6 +208,16 @@ var varPolicyAssignmentEnableDDoSVNET = {
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enable_ddos_vnet.tmpl.json')
 }
 
+var varPolicyAssignmentEnforceALZDecomm = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-ALZ-Decomm'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_alz_decomm.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceALZSandbox = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-ALZ-Sandbox'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_alz_sandbox.tmpl.json')
+}
+
 var varPolicyAssignmentEnforceTLSSSL = {
   definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-EncryptTransit'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_tls_ssl.tmpl.json')
@@ -219,6 +231,7 @@ var varRbacRoleDefinitionIds = {
   aksContributor: 'ed7f3fbd-7b88-4dd4-9017-9adb7ce333f8'
   logAnalyticsContributor: '92aaf0da-9dab-42b6-94a3-d43ce8d16293'
   sqlSecurityManager: '056cd41c-7e88-42e1-933e-88ba6a50c9c3'
+  vmContributor: '9980e02c-c2be-4d73-94e8-173b1dc7cf3c'
 }
 
 // Management Groups Variables - Used For Policy Assignments
@@ -1030,6 +1043,43 @@ module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments
     parPolicyAssignmentIdentityRoleAssignmentsSubs: [
       varPrivateDnsZonesResourceGroupSubscriptionId
     ]
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Modules - Policy Assignments - Decommissioned Management Group
+// Module - Policy Assignment - Enforce-ALZ-Decomm
+module modPolicyAssignmentDecommEnforceAlz '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceALZDecomm.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.decommissioned)
+  name: varModuleDeploymentNames.modPolicyAssignmentDecommEnforceAlz
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceALZDecomm.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceALZDecomm.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceALZDecomm.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceALZDecomm.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceALZDecomm.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceALZDecomm.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceALZDecomm.libDefinition.properties.enforcementMode
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.vmContributor
+    ]
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Modules - Policy Assignments - Sandbox Management Group
+// Module - Policy Assignment - Enforce-ALZ-Sandbox
+module modPolicyAssignmentSandboxEnforceAlz '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceALZSandbox.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.sandbox)
+  name: varModuleDeploymentNames.modPolicyAssignmentSandboxEnforceAlz
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceALZSandbox.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceALZSandbox.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceALZSandbox.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceALZSandbox.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceALZSandbox.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceALZSandbox.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceALZSandbox.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
