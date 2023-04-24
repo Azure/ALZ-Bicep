@@ -1,5 +1,5 @@
 metadata name = 'ALZ Bicep - ALZ Default Policy Assignments'
-metadata description = 'This policy assignment will assign the ALZ Default Policy to management groups'
+metadata description = 'This module will assign the ALZ Default Policy Assignments to the ALZ Management Group hierarchy'
 
 @sys.description('Prefix for the management group hierarchy.')
 @minLength(2)
