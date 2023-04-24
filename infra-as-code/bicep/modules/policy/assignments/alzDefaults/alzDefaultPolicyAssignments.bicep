@@ -1086,8 +1086,6 @@ module modPolicyAssignmentLzsAuditAppGwWaf '../../../policy/assignments/policyAs
   }
 }
 
-
-
 // Modules - Policy Assignments - Corp Management Group
 // Module - Policy Assignment - Deny-Public-Endpoints
 module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicEndpoints.libDefinition.name)) {
