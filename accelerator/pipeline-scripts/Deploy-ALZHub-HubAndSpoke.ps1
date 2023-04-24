@@ -3,7 +3,7 @@ param (
   [String]$ConnectivitySubscriptionId = "$($env:CONNECTIVITY_SUBSCRIPTION_ID)",
 
   [Parameter()]
-  [String]$TopLevelMGPrefix = "$($env:TOP_LEVEL_MG_PREFIX)",
+  [String]$ConnectivityResourceGroup = "$($env:CONNECTIVITY_RESOURCE_GROUP)",
 
   [Parameter()]
   [String]$TemplateFile = "upstream-releases\$($env:UPSTREAM_RELEASE_VERSION)\infra-as-code\bicep\modules\hubNetworking\hubNetworking.bicep",
@@ -15,7 +15,7 @@ param (
 # Parameters necessary for deployment
 $inputObject = @{
   DeploymentName        = 'alz-Hub-and-SpokeDeploy-{0}' -f ( -join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = "rg-$TopLevelMGPrefix-connectivity"
+  ResourceGroupName     = $ConnectivityResourceGroup
   TemplateFile          = $TemplateFile
   TemplateParameterFile = $TemplateParameterFile
   Verbose               = $true
