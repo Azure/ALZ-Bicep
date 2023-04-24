@@ -59,9 +59,9 @@ Number of days of log retention for Log Analytics Workspace.
 
 Solutions that will be added to the Log Analytics Workspace.
 
-- Default value: `AgentHealthAssessment AntiMalware ChangeTracking Security SecurityInsights ServiceMap SQLAdvancedThreatProtection SQLVulnerabilityAssessment SQLAssessment Updates VMInsights`
+- Default value: `AgentHealthAssessment AntiMalware ChangeTracking Security SecurityInsights SQLAdvancedThreatProtection SQLVulnerabilityAssessment SQLAssessment Updates VMInsights`
 
-- Allowed values: `AgentHealthAssessment`, `AntiMalware`, `ChangeTracking`, `Security`, `SecurityInsights`, `ServiceMap`, `SQLAdvancedThreatProtection`, `SQLVulnerabilityAssessment`, `SQLAssessment`, `Updates`, `VMInsights`
+- Allowed values: `AgentHealthAssessment`, `AntiMalware`, `ChangeTracking`, `Security`, `SecurityInsights`, `SQLAdvancedThreatProtection`, `SQLVulnerabilityAssessment`, `SQLAssessment`, `Updates`, `VMInsights`
 
 ### parAutomationAccountName
 
@@ -159,7 +159,6 @@ outAutomationAccountId | string |
                 "ChangeTracking",
                 "Security",
                 "SecurityInsights",
-                "ServiceMap",
                 "SQLAdvancedThreatProtection",
                 "SQLVulnerabilityAssessment",
                 "SQLAssessment",

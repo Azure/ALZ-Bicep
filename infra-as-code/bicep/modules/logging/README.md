@@ -11,7 +11,6 @@ The module will deploy the following Log Analytics Workspace solutions by defaul
 - ChangeTracking
 - Security
 - SecurityInsights (Azure Sentinel)
-- ServiceMap
 - SQLAdvancedThreatProtection
 - SQLVulnerabilityAssessment
 - SQLAssessment

@@ -31,7 +31,6 @@ module baseline_logging '../logging.bicep' = {
       'ChangeTracking'
       'Security'
       'SecurityInsights'
-      'ServiceMap'
       'SQLAdvancedThreatProtection'
       'SQLVulnerabilityAssessment'
       'SQLAssessment'
