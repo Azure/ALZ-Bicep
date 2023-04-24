@@ -31,7 +31,7 @@ param parDdosProtectionPlanId string = ''
 @sys.description('Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group.')
 param parPrivateDnsResourceGroupId string = ''
 
-@sys.description('Provide an array/list of Private DNS Zones that you wish to audit if deployed into Subscriptions in the Corp Management Group. NOTE: The policy default values include all the static Private DNS Zones, only the zones that have a region or region shortcode in are not in the default array/list, but you can proivde just those here and the default array/list and the values provided here will be merged.')
+@sys.description('Provide an array/list of Private DNS Zones that you wish to audit if deployed into Subscriptions in the Corp Management Group. NOTE: The policy default values include all the static Private Link Private DNS Zones, e.g. all the DNS Zones that dont have a region or region shortcode in them. If you wish for these to be audited also you must provide a complete array/list to this parameter for ALL Private DNS Zones you wish to audit, including the static Private Link ones, as this parameter performs an overwrite operation. You can get all the Private DNS Zone Names form the `outPrivateDnsZonesNames` output in the Hub Networking or Private DNS Zone modules.')
 param parPrivateDnsZonesNamesToAuditInCorp array = []
 
 @sys.description('Set Enforcement Mode of all default Policies assignments to Do Not Enforce.')
@@ -1019,7 +1019,7 @@ module modPolicyAssignmentLzsDeployAzSqlDbAuditing '../../../policy/assignments/
     parPolicyAssignmentParameters: varPolicyAssignmentDeployAzSqlDbAuditing.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       logAnalyticsWorkspaceId: {
-        vale: parLogAnalyticsWorkspaceResourceId
+        value: parLogAnalyticsWorkspaceResourceId
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployAzSqlDbAuditing.libDefinition.identity.type
@@ -1321,8 +1321,8 @@ module modPolicyAssignmentLzsCorpAuditPeDnsZones '../../../policy/assignments/po
     parPolicyAssignmentName: varPolicyAssignmentAuditPeDnsZones.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentAuditPeDnsZones.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentAuditPeDnsZones.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentAuditPeDnsZones.libDefinition.properties.parameters.privateLinkDnsZones
-    parPolicyAssignmentParameterOverrides: {
+    parPolicyAssignmentParameters: varPolicyAssignmentAuditPeDnsZones.libDefinition.properties.parameters
+    parPolicyAssignmentParameterOverrides: empty(parPrivateDnsZonesNamesToAuditInCorp) ? {} : {
       privateLinkDnsZones: {
         value: parPrivateDnsZonesNamesToAuditInCorp
       }
