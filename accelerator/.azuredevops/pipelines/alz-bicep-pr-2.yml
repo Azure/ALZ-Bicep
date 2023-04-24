@@ -24,14 +24,12 @@ jobs:
           docker pull github/super-linter:latest
           docker run \
             -e RUN_LOCAL=true \
-            -e VALIDATE_ALL_CODEBASE=false \
             -e VALIDATE_JSON=true \
             -e VALIDATE_MARKDOWN=true \
-            -e VALIDATE_JSON=true \
             -e VALIDATE_POWERSHELL=true \
             -e VALIDATE_YAML=true \
             -e VALIDATE_EDITORCONFIG=true \
-            -e FILTER_REGEX_EXCLUDE=".*generateddocs/.*.bicep.md" \
+            -e "FILTER_REGEX_EXCLUDE=.*infra-as-code/bicep/modules/policy/(definitions|assignments)/lib/.*/.*.json|.*generateddocs/.*.bicep.md" \
             -v $(System.DefaultWorkingDirectory):/tmp/lint \
             github/super-linter
         displayName: Run github/super-linter
