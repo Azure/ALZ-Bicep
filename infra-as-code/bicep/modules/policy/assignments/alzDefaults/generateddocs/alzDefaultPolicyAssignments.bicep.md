@@ -1,6 +1,6 @@
 # ALZ Bicep - ALZ Default Policy Assignments
 
-This policy assignment will assign the ALZ Default Policy to management groups
+This module will assign the ALZ Default Policy Assignments to the ALZ Management Group hierarchy
 
 ## Parameters
 
