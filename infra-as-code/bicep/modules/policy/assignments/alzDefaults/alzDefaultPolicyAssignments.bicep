@@ -89,27 +89,9 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentLzsDeploySqlThreat: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deploySQLThreat-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDenyPublicEndpoints: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPublicEndpoints-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDeployPrivateDnsZones: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployPrivateDNS-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolicyAssignmentLzsDenyDataBPip: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyDataBPip-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolicyAssignmentLzsDenyDataBSku: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyDataBSku-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolicyAssignmentLzsDenyDataBVnet: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyDataBVnet-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
 }
 
 // Policy Assignments Modules Variables
-
-var varPolicyAssignmentDenyDataBPip = {
-  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-NoPublicIp'
-  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_public_ip.tmpl.json')
-}
-
-var varPolicyAssignmentDenyDataBSku = {
-  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-Sku'
-  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_sku.tmpl.json')
-}
-
-var varPolicyAssignmentDenyDataBVnet = {
-  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-VirtualNetwork'
-  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_vnet.tmpl.json')
-}
 
 var varPolicyAssignmentEnforceAKSHTTPS = {
   definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d'
@@ -857,54 +839,6 @@ module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/po
     parPolicyAssignmentParameters: varPolicyAssignmentDenyPublicEndpoints.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPublicEndpoints.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDenyPublicEndpoints.libDefinition.properties.enforcementMode
-    parTelemetryOptOut: parTelemetryOptOut
-  }
-}
-
-// Module - Policy Assignment - Deny-DataB-Pip
-module modPolicyAssignmentLzsDenyDataBPip '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyDataBPip.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZonesCorp)
-  name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyDataBPip
-  params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyDataBPip.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDenyDataBPip.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyDataBPip.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyDataBPip.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDenyDataBPip.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyDataBPip.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDenyDataBPip.libDefinition.properties.enforcementMode
-    parTelemetryOptOut: parTelemetryOptOut
-  }
-}
-
-// Module - Policy Assignment - Deny-DataB-Sku
-module modPolicyAssignmentLzsDenyDataBSku '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyDataBSku.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZonesCorp)
-  name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyDataBSku
-  params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyDataBSku.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDenyDataBSku.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyDataBSku.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyDataBSku.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDenyDataBSku.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyDataBSku.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDenyDataBSku.libDefinition.properties.enforcementMode
-    parTelemetryOptOut: parTelemetryOptOut
-  }
-}
-
-// Module - Policy Assignment - Deny-DataB-Vnet
-module modPolicyAssignmentLzsDenyDataBVnet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if(!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyDataBVnet.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZonesCorp)
-  name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyDataBVnet
-  params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyDataBVnet.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDenyDataBVnet.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyDataBVnet.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyDataBVnet.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDenyDataBVnet.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyDataBVnet.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDenyDataBVnet.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
