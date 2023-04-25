@@ -2,6 +2,10 @@
 ## ALZ Bicep Accelerator
 <!-- markdownlint-restore -->
 
+> **Note:**
+> This is an MVP release of the ALZ Bicep Accelerator. We are actively working on adding additional features and functionality to the Accelerator. Please check back often for updates.
+
+
 This document provides prescriptive guidance around implementing, automating, and maintaining your ALZ Bicep module with the ALZ Bicep Accelerator.
 
 ### What is the ALZ Bicep Accelerator?
