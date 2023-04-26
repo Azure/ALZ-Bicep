@@ -1,0 +1,18 @@
+{
+  "name": "Deploy-MDFC-OssDb",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "Enable Advanced Threat Protection on your non-Basic tier open-source relational databases to detect anomalous activities indicating unusual and potentially harmful attempts to access or exploit databases. See https://aka.ms/AzDforOpenSourceDBsDocu.",
+    "displayName": "Configure Advanced Threat Protection to be enabled on open-source relational databases",
+    "notScopes": [],
+    "parameters": {},
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/e77fc0b3-f7e9-4c58-bc13-cb753ed8e46e",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}
