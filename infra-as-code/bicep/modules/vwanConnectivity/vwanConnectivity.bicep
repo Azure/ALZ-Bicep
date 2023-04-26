@@ -165,8 +165,12 @@ param parTags object = {}
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
-// Customer Usage Attribution Id
+// Customer Usage Attribution Id Telemetry
 var varCuaid = '7f94f23b-7a59-4a5c-9a8d-2a253a566f61'
+
+// ZTN Telemetry
+var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
+var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub => hub.parAzFirewallEnabled), false)) && (parAzFirewallTier == 'Premium')) ? true : false
 
 // Virtual WAN resource
 resource resVwan 'Microsoft.Network/virtualWans@2022-01-01' = {
@@ -312,9 +316,14 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
 }
 
 
-// Optional Deployment for Customer Usage Attribution
+// Optional Deployments for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
   name: 'pid-${varCuaid}-${uniqueString(parLocation)}'
+  params: {}
+}
+
+module modCustomerUsageAttributionZtnP1 '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut && varZtnP1Trigger) {
+  name: 'pid-${varZtnP1CuaId}-${uniqueString(parLocation)}'
   params: {}
 }
 

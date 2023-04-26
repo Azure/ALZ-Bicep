@@ -263,16 +263,20 @@ var varGwConfig = [
   varErGwConfig
 ]
 
-// Customer Usage Attribution Id
+// Customer Usage Attribution Id Telemetry
 var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
 
+// ZTN Telemetry
+var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
+var varZtnP1Trigger = (parDdosEnabled && parAzFirewallEnabled && (parAzFirewallTier == 'Premium')) ? true : false
+
+//DDos Protection plan will only be enabled if parDdosEnabled is true.
 resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-08-01' = if (parDdosEnabled) {
   name: parDdosPlanName
   location: parLocation
   tags: parTags
 }
 
-//DDos Protection plan will only be enabled if parDdosEnabled is true.
 resource resHubVnet 'Microsoft.Network/virtualNetworks@2021-08-01' = {
   dependsOn: [
     resBastionNsg
@@ -654,10 +658,16 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
   }
 }
 
-// Optional Deployment for Customer Usage Attribution
+// Optional Deployments for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
   #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
   name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
+}
+
+module modCustomerUsageAttributionZtnP1 '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut && varZtnP1Trigger) {
+  #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
+  name: 'pid-${varZtnP1CuaId}-${uniqueString(resourceGroup().location)}'
   params: {}
 }
 
