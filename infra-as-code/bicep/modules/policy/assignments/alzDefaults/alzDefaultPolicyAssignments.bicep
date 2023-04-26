@@ -55,8 +55,12 @@ var varLogAnalyticsWorkspaceResourceGroupName = split(parLogAnalyticsWorkspaceRe
 
 var varLogAnalyticsWorkspaceSubscription = split(parLogAnalyticsWorkspaceResourceId, '/')[2]
 
-// Customer Usage Attribution Id
+// Customer Usage Attribution Id Telemetry
 var varCuaid = '98cef979-5a6b-403b-83c7-10c8f04ac9a2'
+
+// ZTN Telemetry
+var varZtnP1CuaId = '4eaba1fc-d30a-4e63-a57f-9e6c3d86a318'
+var varZtnP1Trigger = ((!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyStoragehttp.libDefinition.name))) ? true : false
 
 // **Variables**
 // Orchestration Module Variables
@@ -388,10 +392,16 @@ var varPrivateDnsZonesFinalResourceIds = {
 // **Scope**
 targetScope = 'managementGroup'
 
-// Optional Deployment for Customer Usage Attribution
+// Optional Deployments for Customer Usage Attribution
 module modCustomerUsageAttribution '../../../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
   #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
   name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
+  params: {}
+}
+
+module modCustomerUsageAttributionZtnP1 '../../../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut && varZtnP1Trigger) {
+  #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
+  name: 'pid-${varZtnP1CuaId}-${uniqueString(deployment().location)}'
   params: {}
 }
 
@@ -665,7 +675,6 @@ module modPolicyAssignmentIntRootDenyClassicRes '../../../policy/assignments/pol
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
-
 
 // Modules - Policy Assignments - Connectivity Management Group
 // Module - Policy Assignment - Enable-DDoS-VNET
