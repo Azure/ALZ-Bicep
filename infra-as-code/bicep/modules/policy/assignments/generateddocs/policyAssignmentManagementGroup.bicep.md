@@ -15,6 +15,8 @@ parPolicyAssignmentParameterOverrides | No       | An object containing paramete
 parPolicyAssignmentNonComplianceMessages | No       | An array containing object/s for the non-compliance messages for the policy to be assigned. See https://docs.microsoft.com/en-us/azure/governance/policy/concepts/assignment-structure#non-compliance-messages for more details on use.
 parPolicyAssignmentNotScopes | No       | An array containing a list of scope Resource IDs to be excluded for the policy assignment. e.g. ['/providers/Microsoft.Management/managementgroups/alz', '/providers/Microsoft.Management/managementgroups/alz-sandbox' ].
 parPolicyAssignmentEnforcementMode | No       | The enforcement mode for the policy assignment. See https://aka.ms/EnforcementMode for more details on use.
+parPolicyAssignmentOverrides | No       | An array containing a list of objects containing the required overrides to be set on the assignment. See https://learn.microsoft.com/azure/governance/policy/concepts/assignment-structure#overrides-preview for more details on use.
+parPolicyAssignmentResourceSelectors | No       | An array containing a list of objects containing the required resource selectors to be set on the assignment. See https://learn.microsoft.com/azure/governance/policy/concepts/assignment-structure#resource-selectors-preview for more details on use.
 parPolicyAssignmentIdentityType | No       | The type of identity to be created and associated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects.
 parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs | No       | An array containing a list of additional Management Group IDs (as the Management Group deployed to is included automatically) that the System-assigned Managed Identity, associated to the policy assignment, will be assigned to additionally. e.g. ['alz', 'alz-sandbox' ].
 parPolicyAssignmentIdentityRoleAssignmentsSubs | No       | An array containing a list of Subscription IDs that the System-assigned Managed Identity associated to the policy assignment will be assigned to in addition to the Management Group the policy is deployed/assigned to. e.g. ['8200b669-cbc6-4e6c-b6d8-f4797f924074', '7d58dc5d-93dc-43cd-94fc-57da2e74af0d' ].
@@ -79,6 +81,18 @@ The enforcement mode for the policy assignment. See https://aka.ms/EnforcementMo
 - Default value: `Default`
 
 - Allowed values: `Default`, `DoNotEnforce`
+
+### parPolicyAssignmentOverrides
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+An array containing a list of objects containing the required overrides to be set on the assignment. See https://learn.microsoft.com/azure/governance/policy/concepts/assignment-structure#overrides-preview for more details on use.
+
+### parPolicyAssignmentResourceSelectors
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+An array containing a list of objects containing the required resource selectors to be set on the assignment. See https://learn.microsoft.com/azure/governance/policy/concepts/assignment-structure#resource-selectors-preview for more details on use.
 
 ### parPolicyAssignmentIdentityType
 
@@ -160,6 +174,12 @@ Set Parameter to true to Opt-out of deployment telemetry
         },
         "parPolicyAssignmentEnforcementMode": {
             "value": "Default"
+        },
+        "parPolicyAssignmentOverrides": {
+            "value": []
+        },
+        "parPolicyAssignmentResourceSelectors": {
+            "value": []
         },
         "parPolicyAssignmentIdentityType": {
             "value": "None"

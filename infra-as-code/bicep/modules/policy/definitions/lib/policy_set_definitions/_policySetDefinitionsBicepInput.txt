@@ -1,5 +1,29 @@
 var varCustomPolicySetDefinitionsArray = [
 	{
+		name: 'Audit-UnusedResourcesCostOptimization'
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Audit-UnusedResourcesCostOptimization.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'AuditDisksUnusedResourcesCostOptimization'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-Disks-UnusedResourcesCostOptimization'
+				definitionParameters: varPolicySetDefinitionEsAuditUnusedResourcesCostOptimizationParameters.AuditDisksUnusedResourcesCostOptimization.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'AuditPublicIpAddressesUnusedResourcesCostOptimization'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-PublicIpAddresses-UnusedResourcesCostOptimization'
+				definitionParameters: varPolicySetDefinitionEsAuditUnusedResourcesCostOptimizationParameters.AuditPublicIpAddressesUnusedResourcesCostOptimization.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'AuditServerFarmsUnusedResourcesCostOptimization'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-ServerFarms-UnusedResourcesCostOptimization'
+				definitionParameters: varPolicySetDefinitionEsAuditUnusedResourcesCostOptimizationParameters.AuditServerFarmsUnusedResourcesCostOptimization.parameters
+				definitionGroups: []
+			}
+		]
+	}
+	{
 		name: 'Deny-PublicPaaSEndpoints'
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Deny-PublicPaaSEndpoints.json')
 		libSetChildDefinitions: [
@@ -22,9 +46,45 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'ApiManDenyPublicIP'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/df73bd95-24da-4a4f-96b9-4e8b94b402bd'
+				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.ApiManDenyPublicIP.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'AppConfigDenyPublicIP'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/3d9f5e4c-9947-4579-9539-2a7695fbc187'
+				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.AppConfigDenyPublicIP.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'AsDenyPublicIP'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1b5ef780-c53c-4a64-87f3-bb9c8c8094ba'
+				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.AsDenyPublicIP.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'AseDenyPublicIP'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/2d048aca-6479-4923-88f5-e2ac295d9af3'
+				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.AseDenyPublicIP.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'AutomationDenyPublicIP'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/955a914f-bf86-4f0e-acd5-e0766b0efcb6'
+				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.AutomationDenyPublicIP.parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'BatchDenyPublicIP'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/74c5a0ae-5e48-4738-b093-65e23a060488'
 				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.BatchDenyPublicIP.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'BotServiceDenyPublicIP'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/5e8168db-69e3-4beb-9822-57cb59202a9d'
+				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.BotServiceDenyPublicIP.parameters
 				definitionGroups: []
 			}
 			{
@@ -34,9 +94,27 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'FunctionDenyPublicIP'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/969ac98b-88a8-449f-883c-2e9adb123127'
+				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.FunctionDenyPublicIP.parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'KeyVaultDenyPaasPublicIP'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/55615ac9-af46-4a59-874e-391cc3dfb490'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/405c5871-3e91-4644-8a63-58e19d68ff5b'
 				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.KeyVaultDenyPaasPublicIP.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'MariaDbDenyPublicIP'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-MariaDB'
+				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.MariaDbDenyPublicIP.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'MlDenyPublicIP'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-MachineLearning-PublicNetworkAccess'
+				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.MlDenyPublicIP.parameters
 				definitionGroups: []
 			}
 			{
@@ -52,6 +130,12 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'RedisCacheDenyPublicIP'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/470baccb-7e51-4549-8b1a-3e5be069f663'
+				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.RedisCacheDenyPublicIP.parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'SqlServerDenyPaasPublicIP'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1b8ca024-1d5c-4dec-8995-b1a932b41780'
 				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.SqlServerDenyPaasPublicIP.parameters
@@ -59,7 +143,7 @@ var varCustomPolicySetDefinitionsArray = [
 			}
 			{
 				definitionReferenceId: 'StorageDenyPaasPublicIP'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/34c877ad-507e-4c82-993e-3452a6e0ad3c'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b2982f36-99f2-4db5-8eff-283140c09693'
 				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.StorageDenyPaasPublicIP.parameters
 				definitionGroups: []
 			}
@@ -466,6 +550,12 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'VWanS2SVPNGWDeployDiagnosticLogDeployLogAnalytics'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VWanS2SVPNGW'
+				definitionParameters: varPolicySetDefinitionEsDeployDiagnosticsLogAnalyticsParameters.VWanS2SVPNGWDeployDiagnosticLogDeployLogAnalytics.parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'WVDAppGroupDeployDiagnosticLogDeployLogAnalytics'
 				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-WVDAppGroup'
 				definitionParameters: varPolicySetDefinitionEsDeployDiagnosticsLogAnalyticsParameters.WVDAppGroupDeployDiagnosticLogDeployLogAnalytics.parameters
@@ -496,6 +586,18 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'azurePolicyForKubernetes'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a8eff44f-8c92-45c3-a3fb-9880802d67a7'
+				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfigParameters.azurePolicyForKubernetes.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'defenderForApis'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e54d2be9-5f2e-4d65-98e4-4f0e670b23d6'
+				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfigParameters.defenderForApis.parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'defenderForAppServices'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b40e7bcd-a1e5-47fe-b9cf-2f534d0bfb7d'
 				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfigParameters.defenderForAppServices.parameters
@@ -520,6 +622,12 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'defenderForCspm'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/689f7782-ef2c-4270-a6d0-7664869076bd'
+				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfigParameters.defenderForCspm.parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'defenderForDns'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/2370a3c1-4a25-4283-a91a-c9c1a145fb2f'
 				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfigParameters.defenderForDns.parameters
@@ -529,6 +637,12 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'defenderForKeyVaults'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1f725891-01c0-420a-9059-4fa46cb770b7'
 				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfigParameters.defenderForKeyVaults.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'defenderforKubernetes'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/64def556-fbad-4622-930e-72d1d5589bf5'
+				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfigParameters.defenderforKubernetes.parameters
 				definitionGroups: []
 			}
 			{
@@ -559,6 +673,12 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'defenderForVM'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/8e86a5b6-b9bd-49d1-8e21-4bb8a0862222'
 				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfigParameters.defenderForVM.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'defenderForVMVulnerabilityAssessment'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/13ce0167-8ca6-4048-8e6b-f996402e3c1b'
+				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfigParameters.defenderForVMVulnerabilityAssessment.parameters
 				definitionGroups: []
 			}
 			{
@@ -875,7 +995,7 @@ var varCustomPolicySetDefinitionsArray = [
 			}
 			{
 				definitionReferenceId: 'SqlDbTdeDeploySqlSecurity'
-				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-Tde'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/86a912f6-9a06-4e26-b447-11b16ba8659f'
 				definitionParameters: varPolicySetDefinitionEsDeploySqlSecurityParameters.SqlDbTdeDeploySqlSecurity.parameters
 				definitionGroups: []
 			}
@@ -883,6 +1003,78 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'SqlDbVulnerabilityAssessmentsDeploySqlSecurity'
 				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-vulnerabilityAssessments'
 				definitionParameters: varPolicySetDefinitionEsDeploySqlSecurityParameters.SqlDbVulnerabilityAssessmentsDeploySqlSecurity.parameters
+				definitionGroups: []
+			}
+		]
+	}
+	{
+		name: 'Enforce-ACSB'
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-ACSB.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'GcIdentity'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/3cf2ab00-13f1-4d0c-8971-2ac904541a7e'
+				definitionParameters: varPolicySetDefinitionEsEnforceACSBParameters.GcIdentity.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'GcLinux'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/331e8ea8-378a-410f-a2e5-ae22f38bb0da'
+				definitionParameters: varPolicySetDefinitionEsEnforceACSBParameters.GcLinux.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'GcWindows'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/385f5831-96d4-41db-9a3c-cd3af78aaae6'
+				definitionParameters: varPolicySetDefinitionEsEnforceACSBParameters.GcWindows.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'LinAcsb'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/fc9b3da7-8347-4380-8e70-0a0361d8dedd'
+				definitionParameters: varPolicySetDefinitionEsEnforceACSBParameters.LinAcsb.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'WinAcsb'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/72650e9f-97bc-4b2a-ab5f-9781a9fcecbc'
+				definitionParameters: varPolicySetDefinitionEsEnforceACSBParameters.WinAcsb.parameters
+				definitionGroups: []
+			}
+		]
+	}
+	{
+		name: 'Enforce-ALZ-Decomm'
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-ALZ-Decomm.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'DecomDenyResources'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a08ec900-254a-4555-9bf5-e42af04b5c5c'
+				definitionParameters: varPolicySetDefinitionEsEnforceALZDecommParameters.DecomDenyResources.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DecomShutdownMachines'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Vm-autoShutdown'
+				definitionParameters: varPolicySetDefinitionEsEnforceALZDecommParameters.DecomShutdownMachines.parameters
+				definitionGroups: []
+			}
+		]
+	}
+	{
+		name: 'Enforce-ALZ-Sandbox'
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-ALZ-Sandbox.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'SandboxDenyVnetPeering'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-VNET-Peer-Cross-Sub'
+				definitionParameters: varPolicySetDefinitionEsEnforceALZSandboxParameters.SandboxDenyVnetPeering.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'SandboxNotAllowed'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/6c112d4e-5bc7-47ae-a041-ea2d9dccd749'
+				definitionParameters: varPolicySetDefinitionEsEnforceALZSandboxParameters.SandboxNotAllowed.parameters
 				definitionGroups: []
 			}
 		]
@@ -953,7 +1145,7 @@ var varCustomPolicySetDefinitionsArray = [
 			}
 			{
 				definitionReferenceId: 'SqlServerTDECMKEffect'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/0d134df8-db83-46fb-ad72-fe0c9428c8dd'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/0a370ff3-6cab-4e85-8995-295fd854c5b8'
 				definitionParameters: varPolicySetDefinitionEsEnforceEncryptionCMKParameters.SqlServerTDECMKEffect.parameters
 				definitionGroups: []
 			}
@@ -997,12 +1189,6 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'APIAppServiceHttpsEffect'
 				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-AppServiceApiApp-http'
 				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransitParameters.APIAppServiceHttpsEffect.parameters
-				definitionGroups: []
-			}
-			{
-				definitionReferenceId: 'APIAppServiceLatestTlsEffect'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/8cb6aa8b-9e41-4f4e-aa25-089a7ac2581e'
-				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransitParameters.APIAppServiceLatestTlsEffect.parameters
 				definitionGroups: []
 			}
 			{
@@ -1121,10 +1307,66 @@ var varCustomPolicySetDefinitionsArray = [
 			}
 		]
 	}
+	{
+		name: 'Enforce-Guardrails-KeyVault'
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-KeyVault.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'KvCertLifetime'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/12ef42cb-9903-4e39-9c26-422d29570417'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters.KvCertLifetime.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvFirewallEnabled'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/55615ac9-af46-4a59-874e-391cc3dfb490'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters.KvFirewallEnabled.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvKeysExpire'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/152b15f7-8e1f-4c1f-ab71-8c010ba5dbc0'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters.KvKeysExpire.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvKeysLifetime'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/5ff38825-c5d8-47c5-b70e-069a21955146'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters.KvKeysLifetime.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvPurgeProtection'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/0b60c0b2-2dc2-4e1c-b5c9-abbed971de53'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters.KvPurgeProtection.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvSecretsExpire'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/98728c90-32c7-4049-8429-847dc0f4fe37'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters.KvSecretsExpire.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvSecretsLifetime'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b0eb591a-5e70-4534-a8bf-04b9c489584a'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters.KvSecretsLifetime.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'KvSoftDelete'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1e66c121-a66a-4b1f-9b83-0fd99bf0fc2d'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters.KvSoftDelete.parameters
+				definitionGroups: []
+			}
+		]
+	}
 ]
 
 
 // Policy Set/Initiative Definition Parameter Variables
+
+var varPolicySetDefinitionEsAuditUnusedResourcesCostOptimizationParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Audit-UnusedResourcesCostOptimization.parameters.json')
 
 var varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Deny-PublicPaaSEndpoints.parameters.json')
 
@@ -1136,7 +1378,15 @@ var varPolicySetDefinitionEsDeployPrivateDNSZonesParameters = loadJsonContent('l
 
 var varPolicySetDefinitionEsDeploySqlSecurityParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Deploy-Sql-Security.parameters.json')
 
+var varPolicySetDefinitionEsEnforceACSBParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-ACSB.parameters.json')
+
+var varPolicySetDefinitionEsEnforceALZDecommParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-ALZ-Decomm.parameters.json')
+
+var varPolicySetDefinitionEsEnforceALZSandboxParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-ALZ-Sandbox.parameters.json')
+
 var varPolicySetDefinitionEsEnforceEncryptionCMKParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Encryption-CMK.parameters.json')
 
 var varPolicySetDefinitionEsEnforceEncryptTransitParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-EncryptTransit.parameters.json')
+
+var varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-KeyVault.parameters.json')
 

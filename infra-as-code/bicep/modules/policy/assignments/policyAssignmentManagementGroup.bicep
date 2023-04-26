@@ -36,6 +36,12 @@ param parPolicyAssignmentNotScopes array = []
 @sys.description('The enforcement mode for the policy assignment. See https://aka.ms/EnforcementMode for more details on use.')
 param parPolicyAssignmentEnforcementMode string = 'Default'
 
+@sys.description('An array containing a list of objects containing the required overrides to be set on the assignment. See https://learn.microsoft.com/azure/governance/policy/concepts/assignment-structure#overrides-preview for more details on use.')
+param parPolicyAssignmentOverrides array = []
+
+@sys.description('An array containing a list of objects containing the required resource selectors to be set on the assignment. See https://learn.microsoft.com/azure/governance/policy/concepts/assignment-structure#resource-selectors-preview for more details on use.')
+param parPolicyAssignmentResourceSelectors array = []
+
 @allowed([
   'None'
   'SystemAssigned'
@@ -67,7 +73,7 @@ var varPolicyAssignmentIdentityRoleAssignmentsMgsConverged = parPolicyAssignment
 // Customer Usage Attribution Id
 var varCuaid = '78001e36-9738-429c-a343-45cc84e8a527'
 
-resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2021-06-01' = {
+resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01' = {
   name: parPolicyAssignmentName
   properties: {
     displayName: parPolicyAssignmentDisplayName
@@ -77,6 +83,8 @@ resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2021-06-
     nonComplianceMessages: parPolicyAssignmentNonComplianceMessages
     notScopes: parPolicyAssignmentNotScopes
     enforcementMode: parPolicyAssignmentEnforcementMode
+    overrides: parPolicyAssignmentOverrides
+    resourceSelectors: parPolicyAssignmentResourceSelectors
   }
   identity: {
     type: varPolicyIdentity

@@ -857,6 +857,19 @@
       }
     }
   },
+  "VWanS2SVPNGWDeployDiagnosticLogDeployLogAnalytics": {
+    "parameters": {
+      "logAnalytics": {
+        "value": "[[parameters('logAnalytics')]"
+      },
+      "effect": {
+        "value": "[[parameters('VWanS2SVPNGWLogAnalyticsEffect')]"
+      },
+      "profileName": {
+        "value": "[[parameters('profileName')]"
+      }
+    }
+  },
   "WVDAppGroupDeployDiagnosticLogDeployLogAnalytics": {
     "parameters": {
       "logAnalytics": {

@@ -187,3 +187,5 @@ output outPrivateDnsZones array = [for i in range(0, length(varPrivateDnsZonesMe
   name: resPrivateDnsZones[i].name
   id: resPrivateDnsZones[i].id
 }]
+
+output outPrivateDnsZonesNames array = [for i in range(0, length(varPrivateDnsZonesMerge)): resPrivateDnsZones[i].name ]

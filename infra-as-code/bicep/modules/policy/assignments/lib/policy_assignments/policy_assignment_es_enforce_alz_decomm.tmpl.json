@@ -1,0 +1,35 @@
+{
+  "name": "Enforce-ALZ-Decomm",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "This initiative will help enforce and govern subscriptions that are placed within the decommissioned Management Group as part of your Subscription decommissioning process. See https://aka.ms/alz/policies for more information.",
+    "displayName": "Enforce ALZ Decommissioned Guardrails",
+    "notScopes": [],
+    "parameters": {
+      "listOfResourceTypesAllowed": {
+        "value": [
+          "microsoft.consumption/tags",
+          "microsoft.authorization/roleassignments",
+          "microsoft.authorization/roledefinitions",
+          "microsoft.authorization/policyassignments",
+          "microsoft.authorization/locks",
+          "microsoft.authorization/policydefinitions",
+          "microsoft.authorization/policysetdefinitions",
+          "microsoft.resources/tags",
+          "microsoft.authorization/roleeligibilityschedules",
+          "microsoft.authorization/roleeligibilityscheduleinstances",
+          "microsoft.authorization/roleassignmentschedules",
+          "microsoft.authorization/roleassignmentscheduleinstances"
+        ]
+      }
+    },
+    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-ALZ-Decomm",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

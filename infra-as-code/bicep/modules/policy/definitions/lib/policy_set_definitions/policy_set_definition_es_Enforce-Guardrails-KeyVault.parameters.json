@@ -1,0 +1,70 @@
+{
+  "KvCertLifetime": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvCertLifetime')]"
+      },
+      "maximumPercentageLife": {
+        "value": "[[parameters('maximumCertLifePercentageLife')]"
+      },
+      "minimumDaysBeforeExpiry": {
+        "value": "[[parameters('minimumCertLifeDaysBeforeExpiry')]"
+      }
+    }
+  },
+  "KvFirewallEnabled": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvFirewallEnabled')]"
+      }
+    }
+  },
+  "KvKeysExpire": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvKeysExpire')]"
+      }
+    }
+  },
+  "KvKeysLifetime": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvKeysLifetime')]"
+      },
+      "minimumDaysBeforeExpiration": {
+        "value": "[[parameters('minimumKeysLifeDaysBeforeExpiry')]"
+      }
+    }
+  },
+  "KvPurgeProtection": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvPurgeProtection')]"
+      }
+    }
+  },
+  "KvSecretsExpire": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvSecretsExpire')]"
+      }
+    }
+  },
+  "KvSecretsLifetime": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvSecretsLifetime')]"
+      },
+      "minimumDaysBeforeExpiration": {
+        "value": "[[parameters('minimumSecretsLifeDaysBeforeExpiry')]"
+      }
+    }
+  },
+  "KvSoftDelete": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvSoftDelete')]"
+      }
+    }
+  }
+}
