@@ -74,6 +74,7 @@ param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLo
 
 @sys.description('Azure Firewall Tier associated with the Firewall to deploy.')
 @allowed([
+  'Basic'
   'Standard'
   'Premium'
 ])
