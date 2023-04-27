@@ -13,19 +13,22 @@ param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 @sys.description('The IP address range for all virtual networks to use.')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
-@sys.description('The name and IP address range for each subnet in the virtual networks.')
+@sys.description('The name, IP address range and route table for each subnet in the virtual networks.')
 param parSubnets array = [
   {
     name: 'AzureBastionSubnet'
     ipAddressRange: '10.10.15.0/24'
+    routeTableId: ''
   }
   {
     name: 'GatewaySubnet'
     ipAddressRange: '10.10.252.0/24'
+    routeTableId: ''
   }
   {
     name: 'AzureFirewallSubnet'
     ipAddressRange: '10.10.254.0/24'
+    routeTableId: ''
   }
 ]
 
@@ -251,6 +254,9 @@ var varSubnetProperties = [for subnet in parSubnets: {
     networkSecurityGroup: subnet.name != 'AzureBastionSubnet' ? null : {
       id: '${resourceGroup().id}/providers/Microsoft.Network/networkSecurityGroups/${parAzBastionNsgName}'
     }
+    routeTable: (!empty(subnet.routeTableId)) ? {
+      id: 'string'
+    } : null
   }
 }]
 
