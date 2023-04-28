@@ -13,7 +13,7 @@ param parCompanyPrefix string = 'alz'
   'Standard'
   'Premium'
 ])
-param parAzFirewallTier string = 'Standard'
+param parAzFirewallTier string = 'Basic'
 
 @sys.description('Switch to enable/disable Virtual Hub deployment.')
 param parVirtualHubEnabled bool = true
@@ -39,8 +39,8 @@ param parVirtualWanHubName string = '${parCompanyPrefix}-vhub'
 
 ''')
 param parVirtualWanHubs array = [ {
-    parVpnGatewayEnabled: true
-    parExpressRouteGatewayEnabled: true
+    parVpnGatewayEnabled: false
+    parExpressRouteGatewayEnabled: false
     parAzFirewallEnabled: true
     parVirtualHubAddressPrefix: '10.100.0.0/23'
     parHubLocation: 'eastus'
@@ -196,7 +196,7 @@ resource resVhub 'Microsoft.Network/virtualHubs@2022-01-01' = [for hub in parVir
     virtualWan: {
       id: resVwan.id
     }
-    virtualRouterAutoScaleConfiguration:{
+    virtualRouterAutoScaleConfiguration: {
       minCapacity: hub.parVirtualRouterAutoScaleConfiguration
     }
     hubRoutingPreference: hub.parHubRoutingPreference
@@ -263,8 +263,12 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2022-05-01' = i
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
-  properties: {
-    dnsSettings: (parAzFirewallTier == 'Basic') ? {} : {
+  properties: (parAzFirewallTier == 'Basic') ? {
+    sku: {
+      tier: parAzFirewallTier
+    }
+  } : {
+    dnsSettings: {
       enableProxy: parAzFirewallDnsProxyEnabled
     }
     sku: {
@@ -316,7 +320,6 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
   }
 }
 
-
 // Optional Deployments for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
   name: 'pid-${varCuaid}-${uniqueString(parLocation)}'
@@ -328,18 +331,17 @@ module modCustomerUsageAttributionZtnP1 '../../CRML/customerUsageAttribution/cua
   params: {}
 }
 
-
 // Output Virtual WAN name and ID
 output outVirtualWanName string = resVwan.name
 output outVirtualWanId string = resVwan.id
 
 // Output Virtual WAN Hub name and ID
-output outVirtualHubName array = [ for (hub, i) in parVirtualWanHubs: {
+output outVirtualHubName array = [for (hub, i) in parVirtualWanHubs: {
   virtualhubname: resVhub[i].name
   virtualhubid: resVhub[i].id
 }]
 
-output outVirtualHubId array = [ for (hub, i) in parVirtualWanHubs: {
+output outVirtualHubId array = [for (hub, i) in parVirtualWanHubs: {
   virtualhubid: resVhub[i].id
 }]
 // Output DDoS Plan ID

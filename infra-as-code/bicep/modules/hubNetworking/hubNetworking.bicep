@@ -82,7 +82,7 @@ param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLo
   'Standard'
   'Premium'
 ])
-param parAzFirewallTier string = 'Standard'
+param parAzFirewallTier string = 'Basic'
 
 @allowed([
   '1'
@@ -613,8 +613,12 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-08-01' = i
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
-  properties: {
-    dnsSettings: (parAzFirewallTier == 'Basic') ? {} : {
+  properties: (parAzFirewallTier == 'Basic') ? {
+    sku: {
+      tier: parAzFirewallTier
+    }
+  } : {
+    dnsSettings: {
       enableProxy: parAzFirewallDnsProxyEnabled
     }
     sku: {
