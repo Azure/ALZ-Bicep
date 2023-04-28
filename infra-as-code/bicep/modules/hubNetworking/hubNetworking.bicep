@@ -27,6 +27,10 @@ param parSubnets array = [
     name: 'AzureFirewallSubnet'
     ipAddressRange: '10.10.254.0/24'
   }
+  {
+    name: 'AzureFirewallManagementSubnet'
+    ipAddressRange: '10.10.253.0/24'
+  }
 ]
 
 @sys.description('Array of DNS Server IP addresses for VNet.')
@@ -74,6 +78,7 @@ param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLo
 
 @sys.description('Azure Firewall Tier associated with the Firewall to deploy.')
 @allowed([
+  'Basic'
   'Standard'
   'Premium'
 ])
@@ -242,7 +247,7 @@ param parTags object = {}
 param parTelemetryOptOut bool = false
 
 @sys.description('Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.')
-param parBastionOutboundSshRdpPorts array = ['22','3389']
+param parBastionOutboundSshRdpPorts array = [ '22', '3389' ]
 
 var varSubnetProperties = [for subnet in parSubnets: {
   name: subnet.name
@@ -563,6 +568,11 @@ resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@20
   name: 'AzureFirewallSubnet'
 }
 
+resource resAzureFirewallMgmtSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-08-01' existing = if (parAzFirewallEnabled && (contains(map(parSubnets, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
+  parent: resHubVnet
+  name: 'AzureFirewallManagementSubnet'
+}
+
 module modAzureFirewallPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewallEnabled) {
   name: 'deploy-Firewall-Public-IP'
   params: {
@@ -581,12 +591,30 @@ module modAzureFirewallPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewall
   }
 }
 
+module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewallEnabled && (contains(map(parSubnets, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
+  name: 'deploy-Firewall-mgmt-Public-IP'
+  params: {
+    parLocation: parLocation
+    parAvailabilityZones: parAzFirewallAvailabilityZones
+    parPublicIpName: '${parPublicIpPrefix}${parAzFirewallName}-mgmt-${parPublicIpSuffix}'
+    parPublicIpProperties: {
+      publicIpAddressVersion: 'IPv4'
+      publicIpAllocationMethod: 'Static'
+    }
+    parPublicIpSku: {
+      name: 'Standard'
+    }
+    parTags: parTags
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
 resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-08-01' = if (parAzFirewallEnabled) {
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
   properties: {
-    dnsSettings: {
+    dnsSettings: (parAzFirewallTier == 'Basic') ? {} : {
       enableProxy: parAzFirewallDnsProxyEnabled
     }
     sku: {
@@ -616,6 +644,17 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-08-01' = if (pa
         }
       }
     ]
+    managementIpConfiguration: (parAzFirewallTier == 'Basic') ? {
+      name: 'mgmtIpConfig'
+      properties: {
+        publicIPAddress: {
+          id: parAzFirewallEnabled ? modAzureFirewallMgmtPublicIp.outputs.outPublicIpId : ''
+        }
+        subnet: {
+          id: resAzureFirewallMgmtSubnetRef.id
+        }
+      }
+    } : {}
     sku: {
       name: 'AZFW_VNet'
       tier: parAzFirewallTier

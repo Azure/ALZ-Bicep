@@ -9,6 +9,7 @@ param parCompanyPrefix string = 'alz'
 
 @sys.description('Azure Firewall Tier associated with the Firewall to deploy.')
 @allowed([
+  'Basic'
   'Standard'
   'Premium'
 ])
@@ -263,7 +264,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2022-05-01' = i
   location: parLocation
   tags: parTags
   properties: {
-    dnsSettings: {
+    dnsSettings: (parAzFirewallTier == 'Basic') ? {} : {
       enableProxy: parAzFirewallDnsProxyEnabled
     }
     sku: {
