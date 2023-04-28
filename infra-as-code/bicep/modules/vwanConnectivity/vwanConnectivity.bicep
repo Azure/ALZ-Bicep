@@ -13,7 +13,7 @@ param parCompanyPrefix string = 'alz'
   'Standard'
   'Premium'
 ])
-param parAzFirewallTier string = 'Basic'
+param parAzFirewallTier string = 'Standard'
 
 @sys.description('Switch to enable/disable Virtual Hub deployment.')
 param parVirtualHubEnabled bool = true
