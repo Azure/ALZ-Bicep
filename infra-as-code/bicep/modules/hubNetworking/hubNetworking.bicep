@@ -254,9 +254,9 @@ var varSubnetProperties = [for subnet in parSubnets: {
     networkSecurityGroup: subnet.name != 'AzureBastionSubnet' ? null : {
       id: '${resourceGroup().id}/providers/Microsoft.Network/networkSecurityGroups/${parAzBastionNsgName}'
     }
-    routeTable: (!empty(subnet.routeTableId)) ? {
+    routeTable: (empty(subnet.routeTableId)) ? null : {
       id: 'string'
-    } : null
+    }
   }
 }]
 
