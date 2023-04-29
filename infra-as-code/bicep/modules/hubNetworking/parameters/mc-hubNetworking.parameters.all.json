@@ -140,7 +140,6 @@
         "activeActive": false,
         "enableBgpRouteTranslationForNat": false,
         "enableDnsForwarding": false,
-        "asn": "65515",
         "bgpPeeringAddress": "",
         "bgpsettings": {
           "asn": "65515",
@@ -160,7 +159,6 @@
         "activeActive": false,
         "enableBgpRouteTranslationForNat": false,
         "enableDnsForwarding": false,
-        "asn": "65515",
         "bgpPeeringAddress": "",
         "bgpsettings": {
           "asn": "65515",
