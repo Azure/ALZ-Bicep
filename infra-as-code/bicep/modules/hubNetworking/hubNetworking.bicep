@@ -208,7 +208,6 @@ param parVpnGatewayConfig object = {
   activeActive: false
   enableBgpRouteTranslationForNat: false
   enableDnsForwarding: false
-  asn: 65515
   bgpPeeringAddress: ''
   bgpsettings: {
     asn: 65515
@@ -231,7 +230,6 @@ param parExpressRouteGatewayConfig object = {
   activeActive: false
   enableBgpRouteTranslationForNat: false
   enableDnsForwarding: false
-  asn: '65515'
   bgpPeeringAddress: ''
   bgpsettings: {
     asn: '65515'

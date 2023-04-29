@@ -273,7 +273,7 @@ Configuration for VPN virtual network gateway to be deployed. If a VPN virtual n
   "value": {}
 }
 
-- Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; asn=65515; bgpPeeringAddress=; bgpsettings=}`
+- Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=}`
 
 ### parExpressRouteGatewayConfig
 
@@ -284,7 +284,7 @@ Configuration for ExpressRoute virtual network gateway to be deployed. If a Expr
   "value": {}
 }
 
-- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; asn=65515; bgpPeeringAddress=; bgpsettings=}`
+- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=}`
 
 ### parTags
 
@@ -511,7 +511,6 @@ outHubVirtualNetworkId | string |
                 "activeActive": false,
                 "enableBgpRouteTranslationForNat": false,
                 "enableDnsForwarding": false,
-                "asn": 65515,
                 "bgpPeeringAddress": "",
                 "bgpsettings": {
                     "asn": 65515,
@@ -531,7 +530,6 @@ outHubVirtualNetworkId | string |
                 "activeActive": false,
                 "enableBgpRouteTranslationForNat": false,
                 "enableDnsForwarding": false,
-                "asn": "65515",
                 "bgpPeeringAddress": "",
                 "bgpsettings": {
                     "asn": "65515",
