@@ -18,16 +18,19 @@ param parSubnets array = [
   {
     name: 'AzureBastionSubnet'
     ipAddressRange: '10.10.15.0/24'
+    networkSecurityGroupId: ''
     routeTableId: ''
   }
   {
     name: 'GatewaySubnet'
     ipAddressRange: '10.10.252.0/24'
+    networkSecurityGroupId: ''
     routeTableId: ''
   }
   {
     name: 'AzureFirewallSubnet'
     ipAddressRange: '10.10.254.0/24'
+    networkSecurityGroupId: ''
     routeTableId: ''
   }
 ]
