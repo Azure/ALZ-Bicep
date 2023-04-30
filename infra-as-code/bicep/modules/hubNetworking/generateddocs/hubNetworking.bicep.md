@@ -76,7 +76,7 @@ The IP address range for all virtual networks to use.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The name, IP address range and route table for each subnet in the virtual networks.
+The name, IP address range, network security group and route table for each subnet in the virtual networks.
 
 - Default value: `  `
 
