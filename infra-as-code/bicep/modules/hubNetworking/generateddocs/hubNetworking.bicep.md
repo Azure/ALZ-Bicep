@@ -10,7 +10,7 @@ parLocation    | No       | The Azure Region to deploy the resources into.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
 parHubNetworkName | No       | Prefix Used for Hub Network.
 parHubNetworkAddressPrefix | No       | The IP address range for all virtual networks to use.
-parSubnets     | No       | The name, IP address range and route table for each subnet in the virtual networks.
+parSubnets     | No       | The name, IP address range, network security group and route table for each subnet in the virtual networks.
 parDnsServerIps | No       | Array of DNS Server IP addresses for VNet.
 parPublicIpSku | No       | Public IP Address SKU.
 parPublicIpPrefix | No       | Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
