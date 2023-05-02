@@ -594,7 +594,7 @@ module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFire
   params: {
     parLocation: parLocation
     parAvailabilityZones: parAzFirewallAvailabilityZones
-    parPublicIpName: '${parPublicIpPrefix}${parAzFirewallName}-mgmt-${parPublicIpSuffix}'
+    parPublicIpName: '${parPublicIpPrefix}${parAzFirewallName}-mgmt${parPublicIpSuffix}'
     parPublicIpProperties: {
       publicIpAddressVersion: 'IPv4'
       publicIpAllocationMethod: 'Static'
