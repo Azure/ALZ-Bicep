@@ -188,7 +188,7 @@ Azure Firewall Policies Name.
 
 Azure Firewall Tier associated with the Firewall to deploy.
 
-- Default value: `Basic`
+- Default value: `Standard`
 
 - Allowed values: `Basic`, `Standard`, `Premium`
 
@@ -404,7 +404,7 @@ outHubVirtualNetworkId | string |
             "value": "[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
         },
         "parAzFirewallTier": {
-            "value": "Basic"
+            "value": "Standard"
         },
         "parAzFirewallAvailabilityZones": {
             "value": []
