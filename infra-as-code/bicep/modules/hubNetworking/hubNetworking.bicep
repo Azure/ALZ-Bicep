@@ -632,7 +632,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-08-01' = if (pa
   location: parLocation
   tags: parTags
   zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : [])
-  properties: {
+  properties: parAzFirewallTier == 'Basic' ? {
     ipConfigurations: [
       {
         name: 'ipconfig1'
@@ -646,7 +646,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-08-01' = if (pa
         }
       }
     ]
-    managementIpConfiguration: (parAzFirewallTier == 'Basic') ? {
+    managementIpConfiguration: {
       name: 'mgmtIpConfig'
       properties: {
         publicIPAddress: {
@@ -656,7 +656,28 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-08-01' = if (pa
           id: resAzureFirewallMgmtSubnetRef.id
         }
       }
-    } : {}
+    }
+    sku: {
+      name: 'AZFW_VNet'
+      tier: parAzFirewallTier
+    }
+    firewallPolicy: {
+      id: resFirewallPolicies.id
+    }
+  } : {
+    ipConfigurations: [
+      {
+        name: 'ipconfig1'
+        properties: {
+          subnet: {
+            id: resAzureFirewallSubnetRef.id
+          }
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? modAzureFirewallPublicIp.outputs.outPublicIpId : ''
+          }
+        }
+      }
+    ]
     sku: {
       name: 'AZFW_VNet'
       tier: parAzFirewallTier
