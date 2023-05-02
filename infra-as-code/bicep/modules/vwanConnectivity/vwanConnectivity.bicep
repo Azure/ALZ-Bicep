@@ -224,7 +224,7 @@ resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2022-01
   }
 }]
 
-resource resVpnGateway 'Microsoft.Network/vpnGateways@2021-05-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parVpnGatewayEnabled)) {
+resource resVpnGateway 'Microsoft.Network/vpnGateways@2022-09-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parVpnGatewayEnabled)) {
   dependsOn: resVhub
   name: '${parVpnGatewayName}-${hub.parHubLocation}'
   location: hub.parHubLocation
@@ -242,7 +242,7 @@ resource resVpnGateway 'Microsoft.Network/vpnGateways@2021-05-01' = [for (hub, i
   }
 }]
 
-resource resErGateway 'Microsoft.Network/expressRouteGateways@2021-05-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parExpressRouteGatewayEnabled)) {
+resource resErGateway 'Microsoft.Network/expressRouteGateways@2022-09-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parExpressRouteGatewayEnabled)) {
   dependsOn: resVhub
   name: '${parExpressRouteGatewayName}-${hub.parHubLocation}'
   location: hub.parHubLocation
