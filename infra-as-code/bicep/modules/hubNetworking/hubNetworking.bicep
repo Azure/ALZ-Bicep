@@ -82,7 +82,7 @@ param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLo
   'Standard'
   'Premium'
 ])
-param parAzFirewallTier string = 'Basic'
+param parAzFirewallTier string = 'Standard'
 
 @allowed([
   '1'
