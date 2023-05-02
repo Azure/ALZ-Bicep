@@ -245,7 +245,7 @@ param parTags object = {}
 param parTelemetryOptOut bool = false
 
 @sys.description('Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.')
-param parBastionOutboundSshRdpPorts array = [ '22', '3389' ]
+param parBastionOutboundSshRdpPorts array = ['22','3389']
 
 var varSubnetProperties = [for subnet in parSubnets: {
   name: subnet.name
@@ -628,9 +628,6 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2021-08-01' = i
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.
 resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2021-08-01' = if (parAzFirewallEnabled) {
-  dependsOn: [
-    resGateway
-  ]
   name: parAzFirewallName
   location: parLocation
   tags: parTags
