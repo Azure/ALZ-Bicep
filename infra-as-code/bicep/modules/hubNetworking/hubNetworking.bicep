@@ -36,6 +36,8 @@ param parSubnets array = [
   {
     name: 'AzureFirewallManagementSubnet'
     ipAddressRange: '10.10.253.0/24'
+    networkSecurityGroupId: ''
+    routeTableId: ''
   }
 ]
 
