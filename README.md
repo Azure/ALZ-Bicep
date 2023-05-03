@@ -17,6 +17,7 @@ Detailed information about how to use, deploy and extend artifacts found in this
   - [Network Topology: Hub and Spoke][wiki_deployment_flow_hs]
   - [Network Topology: Virtual WAN][wiki_deployment_flow_vwan]
 - [Consumer Guide][wiki_consumer_guide]
+  - [Accelerator][accelerator]
 - [How Does ALZ-Bicep Implement Azure Policies?][wiki_policy_deep_dive]
   - [Adding Custom Azure Policy Definitions][wiki_policy_defs]
   - [Assigning Azure Policies][wiki_policy_assignments]
@@ -120,3 +121,4 @@ For support on the artifacts contained in this repository, please refer to [this
 [wiki_pipelines_ado]:                          https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO "Wiki - Sample Pipelines - Azure DevOps"
 [code_tours]:                                   https://github.com/Azure/ALZ-Bicep/wiki/CodeTour "Wiki - Code tours"
 [aac_article]:                                  https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep "Azure Architecture Center - Azure landing zones - Bicep modules design considerations"
+[accelerator]:                                https://github.com/Azure/ALZ-Bicep/wiki/Accelerator "Accelerator"
