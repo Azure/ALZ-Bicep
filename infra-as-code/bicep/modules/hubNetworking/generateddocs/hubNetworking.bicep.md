@@ -10,7 +10,7 @@ parLocation    | No       | The Azure Region to deploy the resources into.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
 parHubNetworkName | No       | Prefix Used for Hub Network.
 parHubNetworkAddressPrefix | No       | The IP address range for all virtual networks to use.
-parSubnets     | No       | The name and IP address range for each subnet in the virtual networks.
+parSubnets     | No       | The name, IP address range, network security group and route table for each subnet in the virtual networks.
 parDnsServerIps | No       | Array of DNS Server IP addresses for VNet.
 parPublicIpSku | No       | Public IP Address SKU.
 parPublicIpPrefix | No       | Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
@@ -76,7 +76,7 @@ The IP address range for all virtual networks to use.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The name and IP address range for each subnet in the virtual networks.
+The name, IP address range, network security group and route table for each subnet in the virtual networks.
 
 - Default value: `   `
 
@@ -348,19 +348,27 @@ outHubVirtualNetworkId | string |
             "value": [
                 {
                     "name": "AzureBastionSubnet",
-                    "ipAddressRange": "10.10.15.0/24"
+                    "ipAddressRange": "10.10.15.0/24",
+                    "networkSecurityGroupId": "",
+                    "routeTableId": ""
                 },
                 {
                     "name": "GatewaySubnet",
-                    "ipAddressRange": "10.10.252.0/24"
+                    "ipAddressRange": "10.10.252.0/24",
+                    "networkSecurityGroupId": "",
+                    "routeTableId": ""
                 },
                 {
                     "name": "AzureFirewallSubnet",
-                    "ipAddressRange": "10.10.254.0/24"
+                    "ipAddressRange": "10.10.254.0/24",
+                    "networkSecurityGroupId": "",
+                    "routeTableId": ""
                 },
                 {
                     "name": "AzureFirewallManagementSubnet",
-                    "ipAddressRange": "10.10.253.0/24"
+                    "ipAddressRange": "10.10.253.0/24",
+                    "networkSecurityGroupId": "",
+                    "routeTableId": ""
                 }
             ]
         },
