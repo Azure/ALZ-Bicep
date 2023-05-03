@@ -5,7 +5,7 @@
 Parameter name | Required | Description
 -------------- | -------- | -----------
 parSpokeVirtualNetworkResourceId | No       | The Spoke Virtual Network Resource ID.
-parPrivateDnsZoneResourceIds | No       | The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
+parPrivateDnsZoneResourceId | No       | The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
 
 ### parSpokeVirtualNetworkResourceId
 
@@ -13,7 +13,7 @@ parPrivateDnsZoneResourceIds | No       | The Private DNS Zone Resource IDs to a
 
 The Spoke Virtual Network Resource ID.
 
-### parPrivateDnsZoneResourceIds
+### parPrivateDnsZoneResourceId
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
@@ -34,8 +34,8 @@ The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
         "parSpokeVirtualNetworkResourceId": {
             "value": ""
         },
-        "parPrivateDnsZoneResourceIds": {
-            "value": []
+        "parPrivateDnsZoneResourceId": {
+            "value": ""
         }
     }
 }
