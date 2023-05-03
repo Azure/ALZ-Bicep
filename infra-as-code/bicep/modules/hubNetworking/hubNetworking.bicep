@@ -253,9 +253,16 @@ param parTags object = {}
 param parTelemetryOptOut bool = false
 
 @sys.description('Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.')
-param parBastionOutboundSshRdpPorts array = ['22','3389']
+param parBastionOutboundSshRdpPorts array = [ '22', '3389' ]
 
-var varSubnetProperties = [for subnet in parSubnets: {
+var varSubnetMap = map(range(0, length(parSubnets)), i => {
+    name: parSubnets[i].name
+    ipAddressRange: parSubnets[i].ipAddressRange
+    networkSecurityGroupId: contains(parSubnets[i], 'networkSecurityGroupId') ? parSubnets[i].networkSecurityGroupId : ''
+    routeTableId: contains(parSubnets[i], 'routeTableId') ? parSubnets[i].routeTableId : ''
+  })
+
+var varSubnetProperties = [for subnet in varSubnetMap: {
   name: subnet.name
   properties: {
     addressPrefix: subnet.ipAddressRange
