@@ -78,7 +78,7 @@ The IP address range for all virtual networks to use.
 
 The name and IP address range for each subnet in the virtual networks.
 
-- Default value: `  `
+- Default value: `   `
 
 ### parDnsServerIps
 
@@ -190,7 +190,7 @@ Azure Firewall Tier associated with the Firewall to deploy.
 
 - Default value: `Standard`
 
-- Allowed values: `Standard`, `Premium`
+- Allowed values: `Basic`, `Standard`, `Premium`
 
 ### parAzFirewallAvailabilityZones
 
@@ -357,6 +357,10 @@ outHubVirtualNetworkId | string |
                 {
                     "name": "AzureFirewallSubnet",
                     "ipAddressRange": "10.10.254.0/24"
+                },
+                {
+                    "name": "AzureFirewallManagementSubnet",
+                    "ipAddressRange": "10.10.253.0/24"
                 }
             ]
         },
