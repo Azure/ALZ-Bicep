@@ -14,7 +14,7 @@ targetScope = 'resourceGroup'
 param parSpokeVirtualNetworkResourceId string = '/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/<RG-NAME>/providers/Microsoft.Network/virtualNetworks/<VNET-NAME>'
 
 @sys.description('The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.')
-param parPrivateDnsZoneResourceIds array = []
+param parPrivateDnsZoneResourceId string = '/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/<RG-NAME>/providers/Microsoft.Network/privateDnsZones/<ZONE-NAME>'
 
 // ---------
 // RESOURCES
@@ -24,7 +24,7 @@ param parPrivateDnsZoneResourceIds array = []
 module baseline_private_dns_zone_linking '../privateDnsZoneLinks.bicep' = {
   name: 'baseline_vnet_peering'
   params: {
-    parPrivateDnsZoneResourceIds: parPrivateDnsZoneResourceIds
+    parPrivateDnsZoneResourceId: parPrivateDnsZoneResourceId
     parSpokeVirtualNetworkResourceId: parSpokeVirtualNetworkResourceId
   }
 }

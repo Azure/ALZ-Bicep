@@ -160,11 +160,11 @@ module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' 
 }
 
 // Module - Private DNS Zone Virtual Network Link to Spoke
-module modPrivateDnsZoneLinkToSpoke '../../modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep' = [for zones in parPrivateDnsZoneResourceIds: if (!empty(parPrivateDnsZoneResourceIds)) {
-  scope: resourceGroup(split(zones, '/')[1], split(zones, '/')[4] )
-  name: varModuleDeploymentNames.modPrivateDnsZoneLinkToSpoke
+module modPrivateDnsZoneLinkToSpoke '../../modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep' = [for zone in parPrivateDnsZoneResourceIds: if (!empty(parPrivateDnsZoneResourceIds)) {
+  scope: resourceGroup(split(zone, '/')[2], split(zone, '/')[4] )
+  name: take('${varModuleDeploymentNames.modPrivateDnsZoneLinkToSpoke}-${uniqueString(zone)}', 64)
   params: {
-     parPrivateDnsZoneResourceIds: parPrivateDnsZoneResourceIds
+     parPrivateDnsZoneResourceId: zone
      parSpokeVirtualNetworkResourceId: modSpokeNetworking.outputs.outSpokeVirtualNetworkId
   }
 }]

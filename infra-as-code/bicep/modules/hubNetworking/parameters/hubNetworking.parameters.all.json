@@ -27,6 +27,10 @@
         {
           "name": "AzureFirewallSubnet",
           "ipAddressRange": "10.20.255.0/24"
+        },
+        {
+          "name": "AzureFirewallManagementSubnet",
+          "ipAddressRange": "10.10.253.0/24"
         }
       ]
     },
@@ -175,7 +179,6 @@
         "activeActive": false,
         "enableBgpRouteTranslationForNat": false,
         "enableDnsForwarding": false,
-        "asn": "65515",
         "bgpPeeringAddress": "",
         "bgpsettings": {
           "asn": "65515",
@@ -195,7 +198,6 @@
         "activeActive": false,
         "enableBgpRouteTranslationForNat": false,
         "enableDnsForwarding": false,
-        "asn": "65515",
         "bgpPeeringAddress": "",
         "bgpsettings": {
           "asn": "65515",

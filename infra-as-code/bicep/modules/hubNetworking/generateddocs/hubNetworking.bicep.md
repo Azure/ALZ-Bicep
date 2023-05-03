@@ -78,7 +78,7 @@ The IP address range for all virtual networks to use.
 
 The name and IP address range for each subnet in the virtual networks.
 
-- Default value: `  `
+- Default value: `   `
 
 ### parDnsServerIps
 
@@ -190,7 +190,7 @@ Azure Firewall Tier associated with the Firewall to deploy.
 
 - Default value: `Standard`
 
-- Allowed values: `Standard`, `Premium`
+- Allowed values: `Basic`, `Standard`, `Premium`
 
 ### parAzFirewallAvailabilityZones
 
@@ -273,7 +273,7 @@ Configuration for VPN virtual network gateway to be deployed. If a VPN virtual n
   "value": {}
 }
 
-- Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; asn=65515; bgpPeeringAddress=; bgpsettings=}`
+- Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=}`
 
 ### parExpressRouteGatewayConfig
 
@@ -284,7 +284,7 @@ Configuration for ExpressRoute virtual network gateway to be deployed. If a Expr
   "value": {}
 }
 
-- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; asn=65515; bgpPeeringAddress=; bgpsettings=}`
+- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=}`
 
 ### parTags
 
@@ -315,6 +315,7 @@ Name | Type | Description
 outAzFirewallPrivateIp | string |
 outAzFirewallName | string |
 outPrivateDnsZones | array |
+outPrivateDnsZonesNames | array |
 outDdosPlanResourceId | string |
 outHubVirtualNetworkName | string |
 outHubVirtualNetworkId | string |
@@ -356,6 +357,10 @@ outHubVirtualNetworkId | string |
                 {
                     "name": "AzureFirewallSubnet",
                     "ipAddressRange": "10.10.254.0/24"
+                },
+                {
+                    "name": "AzureFirewallManagementSubnet",
+                    "ipAddressRange": "10.10.253.0/24"
                 }
             ]
         },
@@ -506,7 +511,6 @@ outHubVirtualNetworkId | string |
                 "activeActive": false,
                 "enableBgpRouteTranslationForNat": false,
                 "enableDnsForwarding": false,
-                "asn": 65515,
                 "bgpPeeringAddress": "",
                 "bgpsettings": {
                     "asn": 65515,
@@ -526,7 +530,6 @@ outHubVirtualNetworkId | string |
                 "activeActive": false,
                 "enableBgpRouteTranslationForNat": false,
                 "enableDnsForwarding": false,
-                "asn": "65515",
                 "bgpPeeringAddress": "",
                 "bgpsettings": {
                     "asn": "65515",
