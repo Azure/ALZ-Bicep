@@ -259,7 +259,7 @@ var varSubnetProperties = [for subnet in parSubnets: {
   name: subnet.name
   properties: {
     addressPrefix: subnet.ipAddressRange
-    
+
     networkSecurityGroup: (subnet.name == 'AzureBastionSubnet') ? {
       id: '${resourceGroup().id}/providers/Microsoft.Network/networkSecurityGroups/${parAzBastionNsgName}'
     } : (!empty(subnet.networkSecurityGroupId)) ? {
