@@ -22,6 +22,10 @@ resource resStorageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   kind: 'StorageV2'
   properties: {
     supportsHttpsTrafficOnly: true
+    "networkAcls": {
+          "defaultAction": "Deny",
+          "bypass": "AzureServices"
+        }
     encryption: {
       services: {
         file: {
