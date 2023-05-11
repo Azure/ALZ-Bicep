@@ -13,7 +13,7 @@ param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 @sys.description('The IP address range for all virtual networks to use.')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
-@sys.description('The name, IP address range, network security group and route table for each subnet in the virtual networks.')
+@sys.description('The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks.')
 param parSubnets array = [
   {
     name: 'AzureBastionSubnet'

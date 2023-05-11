@@ -39,6 +39,16 @@
           "ipAddressRange": "10.10.253.0/24",
           "networkSecurityGroupId": "",
           "routeTableId": ""
+        },
+        {
+          "name": "snet-privatednsresolver-inbound",
+          "ipAddressRange": "10.20.252.0/24",
+          "delegation": "Microsoft.Network/dnsResolvers"
+        },
+        {
+          "name": "snet-privatednsresolver-outbound",
+          "ipAddressRange": "10.20.251.0/24",
+          "delegation": "Microsoft.Network/dnsResolvers"
         }
       ]
     },
