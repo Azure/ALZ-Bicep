@@ -17,7 +17,7 @@ parPublicIpPrefix | No       | Optional Prefix for Public IPs. Include a succede
 parPublicIpSuffix | No       | Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix
 parAzBastionEnabled | No       | Switch to enable/disable Azure Bastion deployment.
 parAzBastionName | No       | Name Associated with Bastion Service.
-parAzBastionSku | No       | Azure Bastion SKU or Tier to deploy. Currently two options exist Basic and Standard.
+parAzBastionSku | No       | Azure Bastion SKU.
 parAzBastionNsgName | No       | Name for Azure Bastion Subnet NSG.
 parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment.
 parDdosPlanName | No       | DDoS Plan Name.
@@ -130,9 +130,11 @@ Name Associated with Bastion Service.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Azure Bastion SKU or Tier to deploy. Currently two options exist Basic and Standard.
+Azure Bastion SKU.
 
 - Default value: `Standard`
+
+- Allowed values: `Basic`, `Standard`
 
 ### parAzBastionNsgName
 
