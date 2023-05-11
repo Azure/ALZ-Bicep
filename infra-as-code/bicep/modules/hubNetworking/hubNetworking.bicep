@@ -39,6 +39,16 @@ param parSubnets array = [
     networkSecurityGroupId: ''
     routeTableId: ''
   }
+  {
+    name: 'snet-privatednsresolver-inbound'
+    ipAddressRange: '10.10.252.0/24'
+    delegation: 'Microsoft.Network/dnsResolvers'
+  }
+  {
+    name: 'snet-privatednsresolver-outbound'
+    ipAddressRange: '10.10.251.0/24'
+    delegation: 'Microsoft.Network/dnsResolvers'
+  }
 ]
 
 @sys.description('Array of DNS Server IP addresses for VNet.')
@@ -260,18 +270,26 @@ var varSubnetMap = map(range(0, length(parSubnets)), i => {
     ipAddressRange: parSubnets[i].ipAddressRange
     networkSecurityGroupId: contains(parSubnets[i], 'networkSecurityGroupId') ? parSubnets[i].networkSecurityGroupId : ''
     routeTableId: contains(parSubnets[i], 'routeTableId') ? parSubnets[i].routeTableId : ''
+    delegation: contains(parSubnets[i], 'delegation') ? parSubnets[i].delegation : ''
   })
 
 var varSubnetProperties = [for subnet in varSubnetMap: {
   name: subnet.name
   properties: {
     addressPrefix: subnet.ipAddressRange
+    
+    delegations: (empty(subnet.delegation)) ? null : {
+      name: subnet.delegation
+      properties: {
+        serviceName: subnet.delegation
+      }
+    }
 
     networkSecurityGroup: (subnet.name == 'AzureBastionSubnet') ? {
       id: '${resourceGroup().id}/providers/Microsoft.Network/networkSecurityGroups/${parAzBastionNsgName}'
-    } : (!empty(subnet.networkSecurityGroupId)) ? {
+    } : (empty(subnet.networkSecurityGroupId)) ? null : {
       id: subnet.networkSecurityGroupId
-    } : null
+    }
 
     routeTable: (empty(subnet.routeTableId)) ? null : {
       id: subnet.routeTableId
