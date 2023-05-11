@@ -8,9 +8,9 @@
     "parAcrSku": {
       "value": "Basic"
     },
-    "parTags":{
-      "value":{
-        "Environment": "POC"
+    "parTags": {
+      "value": {
+        "Environment": "Live"
       }
     }
   }

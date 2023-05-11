@@ -21,10 +21,10 @@ There are a few options for you to make additional Policy Assignments using Bice
    - Calling and using the [Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments) `N` number of times
    - *(optional)* Deploy after [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) from `ALZ-Bicep` in your flow
 3. Define the assignment via "native" Bicep and deploy as a separate deployment
-   - Using API schema for [Policy Assignments](https://docs.microsoft.com/azure/templates/microsoft.authorization/policyassignments?tabs=bicep)
+   - Using API schema for [Policy Assignments](https://learn.microsoft.com/azure/templates/microsoft.authorization/policyassignments?tabs=bicep)
    - Example can be seen [here](https://github.com/Azure/azure-quickstart-templates/blob/master/managementgroup-deployments/mg-policy/main.bicep)
    - Need to ensure you make the required RBAC Role Assignments also as a separate resource declaration for policies that use Managed Identities for remediation tasks like `DeployIfNotExists` and `Modify`
-     - Using API schema for [RBAC Role Assignments](https://docs.microsoft.com/azure/templates/microsoft.authorization/roleassignments?tabs=bicep)
+     - Using API schema for [RBAC Role Assignments](https://learn.microsoft.com/azure/templates/microsoft.authorization/roleassignments?tabs=bicep)
 
 > For options 1 & 2 the use of `.json` files in the lib is completely optional, you can also call the [Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments) and pass in the parameter values in a "hardcoded" fashion. You can even mix these approaches and pass in some parameter values from the `.json` files in the `lib` and others via "hardcoded" values. <br><br>
 > When mixing policy assignment parameter values from `.json` files in the `lib` and also "hardcoded" values ensure you use the module parameter of [`parPolicyAssignmentParameterOverrides`](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments#parameters) to ensure your "hardcoded" values take precedence over those values from the `.json` files in the `lib` referenced via the associated variables for each policy assignment.
@@ -64,6 +64,27 @@ To extend the [ALZ Default Policy Assignments module](https://github.com/Azure/A
 The steps explained in the above section to extend the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) still apply and should be followed however you will do this in a separate Bicep file instead.
 
 You will also need to ensure you create unique deployment names for each policy assignment as we do in the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) in the variable named `varModuleDeploymentNames` which is referenced for each policy assignment to its associated deployment name.
+
+## What if I want to exclude specific policy assignments from ALZ Default Policy Assignments?
+
+If specific ALZ default policies does not fit your organization you can exclude policies from the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) by following the process below:
+
+1. Navigate to the Policy Assignments `lib` directory:
+`infra-as-code\bicep\modules\policy\assignments\lib\policy_assignments`
+
+2. Open the `.json` file for the policy that you want to exclude and find/copy the `name` property.
+Example `"name": "Deploy-VM-Monitoring"` in `policy_assignment_es_deploy_vm_monitoring.tmpl.json`
+
+3. Add the `name` property to the parameter array `parExcludedPolicyAssignments` in [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults)
+Example:
+
+```json
+    "parExcludedPolicyAssignments" : {
+      "value": [
+        "Deploy-VM-Monitoring"
+      ]
+    }
+```
 
 ## Support
 

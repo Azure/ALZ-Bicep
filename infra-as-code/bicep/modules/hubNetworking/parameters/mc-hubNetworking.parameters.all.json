@@ -18,15 +18,27 @@
       "value": [
         {
           "name": "AzureBastionSubnet",
-          "ipAddressRange": "10.20.0.0/24"
+          "ipAddressRange": "10.20.0.0/24",
+          "networkSecurityGroupId": "",
+          "routeTableId": ""
         },
         {
           "name": "GatewaySubnet",
-          "ipAddressRange": "10.20.254.0/24"
+          "ipAddressRange": "10.20.254.0/24",
+          "networkSecurityGroupId": "",
+          "routeTableId": ""
         },
         {
           "name": "AzureFirewallSubnet",
-          "ipAddressRange": "10.20.255.0/24"
+          "ipAddressRange": "10.20.255.0/24",
+          "networkSecurityGroupId": "",
+          "routeTableId": ""
+        },
+        {
+          "name": "AzureFirewallManagementSubnet",
+          "ipAddressRange": "10.10.253.0/24",
+          "networkSecurityGroupId": "",
+          "routeTableId": ""
         }
       ]
     },
@@ -35,6 +47,12 @@
     },
     "parPublicIpSku": {
       "value": "Standard"
+    },
+    "parPublicIpPrefix": {
+      "value": ""
+    },
+    "parPublicIpSuffix": {
+      "value": "-PublicIP"
     },
     "parAzBastionEnabled": {
       "value": true
@@ -131,7 +149,6 @@
         "activeActive": false,
         "enableBgpRouteTranslationForNat": false,
         "enableDnsForwarding": false,
-        "asn": "65515",
         "bgpPeeringAddress": "",
         "bgpsettings": {
           "asn": "65515",
@@ -151,7 +168,6 @@
         "activeActive": false,
         "enableBgpRouteTranslationForNat": false,
         "enableDnsForwarding": false,
-        "asn": "65515",
         "bgpPeeringAddress": "",
         "bgpsettings": {
           "asn": "65515",
@@ -162,11 +178,17 @@
     },
     "parTags": {
       "value": {
-        "Environment": "POC"
+        "Environment": "Live"
       }
     },
     "parTelemetryOptOut": {
       "value": false
+    },
+    "parBastionOutboundSshRdpPorts": {
+      "value": [
+        "22",
+        "3389"
+      ]
     }
   }
 }

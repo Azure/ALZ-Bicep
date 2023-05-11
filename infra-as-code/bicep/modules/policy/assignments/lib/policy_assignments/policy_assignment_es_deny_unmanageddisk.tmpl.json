@@ -1,0 +1,24 @@
+{
+  "name": "Deny-UnmanagedDisk",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2022-06-01",
+  "properties": {
+    "description": "Deny virtual machines that do not use managed disk. It checks the managed disk property on virtual machine OS Disk fields.",
+    "displayName": "Deny virtual machines and virtual machine scale sets that do not use managed disk",
+    "notScopes": [],
+    "parameters": {},
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
+    "scope": null,
+    "enforcementMode": "Default",
+    "overrides": [
+      {
+        "kind": "policyEffect",
+        "value": "Deny"
+      }
+    ]
+  },
+  "location": null,
+  "identity": {
+    "type": "None"
+  }
+}

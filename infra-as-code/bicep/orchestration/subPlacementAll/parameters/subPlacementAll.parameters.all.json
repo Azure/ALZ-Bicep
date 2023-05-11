@@ -5,6 +5,9 @@
     "parTopLevelManagementGroupPrefix": {
       "value": "alz"
     },
+    "parTopLevelManagementGroupSuffix": {
+      "value": ""
+    },
     "parIntRootMgSubs": {
       "value": []
     },
@@ -36,6 +39,9 @@
       "value": []
     },
     "parLandingZoneMgChildrenSubs": {
+      "value": {}
+    },
+    "parPlatformMgChildrenSubs": {
       "value": {}
     },
     "parDecommissionedMgSubs": {

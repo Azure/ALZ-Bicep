@@ -9,16 +9,16 @@ param parLocation string
 @sys.description('Name of Resource Group to be created.')
 param parResourceGroupName string
 
-@sys.description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
+@sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id
 var varCuaid = 'b6718c54-b49e-4748-a466-88e3d7c789c8'
 
-resource resResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+resource resResourceGroup 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   location: parLocation
   name: parResourceGroupName
   tags: parTags

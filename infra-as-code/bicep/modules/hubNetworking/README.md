@@ -18,7 +18,11 @@ Module deploys the following resources:
 
 - [Parameters for Azure Commercial Cloud](generateddocs/hubNetworking.bicep.md)
 
-> NOTE: When deploying using the `parameters/hubNetworking.parameters.all.json` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region or geo code, for Azure Backup. Failure to do so will cause these services to be unreachable over private endpoints.
+> **NOTE:**
+> - Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
+>
+> - When deploying using the `parameters/hubNetworking.parameters.all.json` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region or geo code, for Azure Backup. Failure to do so will cause these services to be unreachable over private endpoints.
+>
 > For example, if deploying to East US the following zone entries:
 > - `privatelink.xxxxxx.azmk8s.io`
 > - `privatelink.xxxxxx.backup.windowsazure.com`
@@ -30,7 +34,6 @@ Module deploys the following resources:
 > - `privatelink.eastus.batch.azure.com`
 >
 > See child module, [`privateDnsZones.bicep` docs](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/privateDnsZones#dns-zones) for more info on how this works
-
 
 ## Outputs
 
@@ -50,7 +53,7 @@ The module will generate the following outputs:
 
 In this example, the hub resources will be deployed to the resource group specified. According to the Azure Landing Zone Conceptual Architecture, the hub resources should be deployed into the Platform connectivity subscription. During the deployment step, we will take the default values and not pass any parameters.
 
-There are two different sets of input parameters; one for deploying to Azure global regions, and another for deploying specifically to Azure China regions. This is due to different private DNS zone names for Azure services in Azure global regions and Azure China. The recommended private DNS zone names are available [here](https://docs.microsoft.com/azure/private-link/private-endpoint-dns). Other differences in Azure China regions are as follow:
+There are two different sets of input parameters; one for deploying to Azure global regions, and another for deploying specifically to Azure China regions. This is due to different private DNS zone names for Azure services in Azure global regions and Azure China. The recommended private DNS zone names are available [here](https://learn.microsoft.com/azure/private-link/private-endpoint-dns). Other differences in Azure China regions are as follow:
 - DDoS Protection feature is not available. parDdosEnabled parameter is set as false.
 - The SKUs available for an ExpressRoute virtual network gateway are Standard, HighPerformance and UltraPerformance. Sku is set as "Standard" in the example parameters file.
 

@@ -5,6 +5,9 @@
     "parTopLevelManagementGroupPrefix": {
       "value": "alz"
     },
+    "parTopLevelManagementGroupSuffix": {
+      "value": ""
+    },
     "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
       "value": "eastus"
     },
@@ -25,6 +28,21 @@
     },
     "parPrivateDnsResourceGroupId": {
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/rg-alz-hub-networking-001"
+    },
+    "parPrivateDnsZonesNamesToAuditInCorp": {
+      "value": []
+    },
+    "parDisableAlzDefaultPolicies": {
+      "value": false
+    },
+    "parVmBackupExclusionTagName": {
+      "value": ""
+    },
+    "parVmBackupExclusionTagValue": {
+      "value": []
+    },
+    "parExcludedPolicyAssignments": {
+      "value": []
     },
     "parTelemetryOptOut": {
       "value": false

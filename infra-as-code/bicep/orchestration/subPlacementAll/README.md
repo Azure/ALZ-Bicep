@@ -10,31 +10,13 @@ Module deploys the following resources:
 
 ## Parameters
 
-The module requires the following inputs:
+- [Parameters for Azure Commercial Cloud](generateddocs/subPlacementAll.bicep.md)
 
- | Parameter                               | Type   | Default | Description                                                                                                                                                               | Required | Example                                                                            |
- | --------------------------------------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ---------------------------------------------------------------------------------- |
- | parTopLevelManagementGroupPrefix        | string | `'alz'` | Prefix for the management group hierarchy                                                                                                                                 | Yes      | `'alz'`                                                                             |
- | parIntRootMgSubs                        | array  | `[]`    | An array of Subscription IDs to place in the Intermediate Root Management Group.                                                                                          | No       | `['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy']` |
- | parPlatformMgSubs                       | array  | `[]`    | An array of Subscription IDs to place in the Platform Management Group.                                                                                                   | No       | `['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy']` |
- | parPlatformManagementMgSubs             | array  | `[]`    | An array of Subscription IDs to place in the (Platform) Management Management Group.                                                                                      | No       | `['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy']` |
- | parPlatformConnectivityMgSubs           | array  | `[]`    | An array of Subscription IDs to place in the (Platform) Connectivity Management Group.                                                                                    | No       | `['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy']` |
- | parPlatformIdentityMgSubs               | array  | `[]`    | An array of Subscription IDs to place in the (Platform) Identity Management Group.                                                                                        | No       | `['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy']` |
- | parLandingZonesMgSubs                   | array  | `[]`    | An array of Subscription IDs to place in the Landing Zones Management Group.                                                                                              | No       | `['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy']` |
- | parLandingZonesCorpMgSubs               | array  | `[]`    | An array of Subscription IDs to place in the Corp (Landing Zones) Management Group.                                                                                       | No       | `['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy']` |
- | parLandingZonesOnlineMgSubs             | array  | `[]`    | An array of Subscription IDs to place in the Online (Landing Zones) Management Group.                                                                                     | No       | `['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy']` |
- | parLandingZonesConfidentialCorpMgSubs   | array  | `[]`    | An array of Subscription IDs to place in the Confidential Corp (Landing Zones) Management Group.                                                                          | No       | `['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy']` |
- | parLandingZonesConfidentialOnlineMgSubs | array  | `[]`    | An array of Subscription IDs to place in the Confidential Online (Landing Zones) Management Group.                                                                        | No       | `['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy']` |
- | parLandingZoneMgChildrenSubs            | object | `{}`    | Dictionary Object to allow additional or different child Management Groups of the Landing Zones Management Group describing the subscriptions which each of them contain. | No       | [See below](#parlandingzonemgchildrensubs-input-examples)                          |
- | parDecommissionedMgSubs                 | array  | `[]`    | An array of Subscription IDs to place in the Decommissioned Management Group.                                                                                             | No       | `['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy']` |
- | parSandboxMgSubs                        | array  | `[]`    | An array of Subscription IDs to place in the Sandbox Management Group.                                                                                                    | No       | `['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy']` |
- | parTelemetryOptOut                      | bool   | `false` | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                  | No       | false                                                                              |
+### `parLandingZoneMgChildrenSubs` and `parPlatformMgChildrenSubs` Input Examples
 
-### `parLandingZoneMgChildrenSubs` Input Examples
+The `parLandingZoneMgChildrenSubs` and `parPlatformMgChildrenSubs` are only used if you have deployed different Management Groups beneath the Landing Zones and Platform Management Group using the `parLandingZoneMgChildren` and/or `parPlatformMgChildren` parameter in the [`managementGroups.bicep` module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/managementGroups).
 
-The `parLandingZoneMgChildrenSubs` is only used if you have deployed different Management Groups beneath the Landing Zones Management Group using the `parLandingZoneMgChildren` parameter in the [`managementGroups.bicep` module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/managementGroups).
-
-Below are some examples of how to use this input parameter in both Bicep & JSON formats.
+Below are some examples of how to use these input parameters in both Bicep & JSON formats.
 
 > **NOTE:** The keys of each object in the dictionary object only need to match the last part of the Management Group ID, as the concatenation of the rest of the Management Group ID is automatically handled in the module.
 > For Example:
@@ -56,6 +38,19 @@ parLandingZoneMgChildrenSubs: {
       ]
     }
 }
+parPlatformMgChildrenSubs: {
+    security: {
+      subscriptions: [
+        'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+        'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy'
+      ]
+    }
+    'yet-another-example': {
+      subscriptions: [
+        'zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz'
+      ]
+    }
+}
 ```
 
 #### JSON Parameter File Input Example
@@ -70,6 +65,21 @@ parLandingZoneMgChildrenSubs: {
         ]
       },
       "another-example": {
+        "subscriptions": [
+          "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"
+        ]
+      }
+  }
+},
+"parPlatformMgChildrenSubs": {
+  "value": {
+      "security": {
+        "subscriptions": [
+          "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+          "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy"
+        ]
+      },
+      "yet-another-example": {
         "subscriptions": [
           "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"
         ]

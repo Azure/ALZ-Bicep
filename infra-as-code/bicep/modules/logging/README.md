@@ -8,22 +8,22 @@ The module will deploy the following Log Analytics Workspace solutions by defaul
 
 - AgentHealthAssessment
 - AntiMalware
-- AzureActivity
 - ChangeTracking
 - Security
 - SecurityInsights (Azure Sentinel)
-- ServiceMap
 - SQLAdvancedThreatProtection
 - SQLVulnerabilityAssessment
 - SQLAssessment
 - Updates
 - VMInsights
 
- > Only certain regions are supported to link Log Analytics Workspace & Automation Account together (linked workspaces). Reference:  [Supported regions for linked Log Analytics workspace](https://docs.microsoft.com/azure/automation/how-to/region-mappings)
+ > Only certain regions are supported to link Log Analytics Workspace & Automation Account together (linked workspaces). Reference:  [Supported regions for linked Log Analytics workspace](https://learn.microsoft.com/azure/automation/how-to/region-mappings)
 
 ## Parameters
 
 - [Parameters for Azure Commercial Cloud](generateddocs/logging.bicep.md)
+
+> **NOTE:** Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
 
 ## Deployment
 

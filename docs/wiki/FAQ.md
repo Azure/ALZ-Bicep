@@ -4,7 +4,7 @@
 
 This wiki page answers frequently asked questions (FAQs) relating to the Azure Landing Zones Bicep modules.
 
-Some FAQ questions that relate more to the architecture are based over in the CAF docs here: [Enterprise-scale architecture FAQ](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/faq)
+Some FAQ questions that relate more to the architecture are based over in the CAF docs here: [Enterprise-scale architecture FAQ](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/faq)
 
 > Log an issue or create a pull request if you have a question that is not answered here, we are happy to help and have community contributions 👍
 
@@ -41,7 +41,7 @@ There are a couple of ways you can ensure you get notified of the latest release
 
 ## Why are some linter rules disabled via the `#disable-next-line` Bicep function?
 
-In some of the ALZ-Bicep modules some of linter rules are disabled using the `#disable-next-line` Bicep feature. Today, this is primarily for disabling the [no-loc-expr-outside-params linter rule](https://docs.microsoft.com/azure/azure-resource-manager/bicep/linter-rule-no-loc-expr-outside-params) for the, optional, telemetry module as we want to ensure this telemetry deployment is stored in the same location as specified by the `location` input when deploying the Bicep module, instead of in the same location as specified by `parLocation` as this may be different from the region targeted by the deployment to ARM.
+In some of the ALZ-Bicep modules some of linter rules are disabled using the `#disable-next-line` Bicep feature. Today, this is primarily for disabling the [no-loc-expr-outside-params linter rule](https://learn.microsoft.com/azure/azure-resource-manager/bicep/linter-rule-no-loc-expr-outside-params) for the, optional, telemetry module as we want to ensure this telemetry deployment is stored in the same location as specified by the `location` input when deploying the Bicep module, instead of in the same location as specified by `parLocation` as this may be different from the region targeted by the deployment to ARM.
 
 You may also see it in some location for resources that do not require a region for deployment, like Azure Policies, so instead of making users input an additional parameter for the region, we just use the one that was targeted by the deployment to ARM when the module was deployed.
 
@@ -71,6 +71,6 @@ C:\Source\ALZ-Bicep\policyDefinitions.bicep(3,15) : Error BCP104: The referenced
 
 You'll note that the error message above is stating it is using Bicep `v0.5.6` however, the `loadJsonContent` is available in `v0.7.4` and later.
 
-So to fix this issue all you need to do is update the version of Bicep to the [latest release](https://github.com/Azure/bicep/releases) or follow the installation instructions here: [Install Bicep tools](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install)
+So to fix this issue all you need to do is update the version of Bicep to the [latest release](https://github.com/Azure/bicep/releases) or follow the installation instructions here: [Install Bicep tools](https://learn.microsoft.com/azure/azure-resource-manager/bicep/install)
 
 Then just re-run the deployment or `bicep build` and you should see success 👍🥳

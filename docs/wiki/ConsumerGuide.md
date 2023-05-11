@@ -18,6 +18,7 @@ We authored the modules with this in mind to help consumers accelerate their jou
 
 There are various ways to consume the Bicep modules included in `ALZ-Bicep`. The options are:
 
+- **(Recommended)** Utilize the [ALZ Bicep Accelerator and associated documentation](https://github.com/Azure/ALZ-Bicep/wiki/Accelerator)
 - Clone this repository
 - Fork & Clone this repository
 - Download a `.zip` copy of this repo
@@ -26,10 +27,10 @@ There are various ways to consume the Bicep modules included in `ALZ-Bicep`. The
   - Private Bicep Module Registry
     - See:
       - [Azure Landing Zones - Private/Organizational Azure Container Registry Deployment (also known as private registry for Bicep modules)](https://github.com/Azure/ALZ-Bicep/wiki/ACRDeployment)
-      - [Create private registry for Bicep modules](https://docs.microsoft.com/azure/azure-resource-manager/bicep/private-module-registry)
+      - [Create private registry for Bicep modules](https://learn.microsoft.com/azure/azure-resource-manager/bicep/private-module-registry)
   - Template Specs
     - See:
-      - [Azure Resource Manager template specs in Bicep](https://docs.microsoft.com/azure/azure-resource-manager/bicep/template-specs)
+      - [Azure Resource Manager template specs in Bicep](https://learn.microsoft.com/azure/azure-resource-manager/bicep/template-specs)
 - Use and reference the modules directly from the Microsoft Public Bicep Registry - ***Coming Soon (awaiting feature release in Bicep)***
 
 The option to use will be different per consumer based on their experience and skill levels with the various pieces of technology and their features.
@@ -46,7 +47,7 @@ This customized module can then be deployed into your environment to deliver the
 
 <!-- markdownlint-disable -->
 > **IMPORTANT:** If you believe the changes you have made should be more easily available to be customized by a parameter etc. in the module, then please raise an [issue](https://github.com/Azure/ALZ-Bicep/issues) for a 'Feature Request' on the repository 👍
-> 
+>
 > If you wish to, also feel free to submit a pull request relating to the issue which we can review and work with you to potentially implement the suggestion/feature request 👍
 <!-- markdownlint-restore -->
 
@@ -62,4 +63,4 @@ Whilst most of the modules rely upon the Intermediate Root Management Group (e.g
 
 So if you customize the Management Group hierarchy you must also change references in other modules, as shown above. These are generally held in `variables` within each module to make it easier to customize in a single location per module, rather than multiple places per module.
 
-> This is mainly in the [`alzDefaultPolicyAssignments`](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) module, but this module is designed to be prescriptive in its delivery of the ALZ conceptual architecture
+> This is mainly in the [`alzDefaultPolicyAssignments`](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) module, but this module is designed to be prescriptive in its delivery of the ALZ conceptual architecture.

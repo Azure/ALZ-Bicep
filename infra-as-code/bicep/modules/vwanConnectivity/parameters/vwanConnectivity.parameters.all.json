@@ -8,22 +8,10 @@
     "parCompanyPrefix": {
       "value": "alz"
     },
-    "parVirtualHubAddressPrefix": {
-      "value": "10.100.0.0/23"
-    },
     "parAzFirewallTier": {
       "value": "Standard"
     },
     "parVirtualHubEnabled": {
-      "value": true
-    },
-    "parVpnGatewayEnabled": {
-      "value": true
-    },
-    "parExpressRouteGatewayEnabled": {
-      "value": true
-    },
-    "parAzFirewallEnabled": {
       "value": true
     },
     "parAzFirewallDnsProxyEnabled": {
@@ -33,22 +21,35 @@
       "value": "alz-vwan-eastus"
     },
     "parVirtualWanHubName": {
-      "value": "alz-vhub-eastus"
+      "value": "alz-vhub"
     },
     "parVpnGatewayName": {
-      "value": "alz-vpngw-eastus"
+      "value": "alz-vpngw"
     },
     "parExpressRouteGatewayName": {
-      "value": "alz-ergw-eastus"
+      "value": "alz-ergw"
     },
     "parAzFirewallName": {
-      "value": "alz-fw-eastus"
+      "value": "alz-fw"
     },
     "parAzFirewallAvailabilityZones": {
       "value": []
     },
     "parAzFirewallPoliciesName": {
       "value": "alz-azfwpolicy-eastus"
+    },
+    "parVirtualWanHubs": {
+      "value": [
+        {
+          "parVpnGatewayEnabled": true,
+          "parExpressRouteGatewayEnabled": true,
+          "parAzFirewallEnabled": true,
+          "parVirtualHubAddressPrefix": "10.100.0.0/23",
+          "parHubLocation": "eastus",
+          "parHubRoutingPreference": "ExpressRoute",
+          "parVirtualRouterAutoScaleConfiguration": 2
+        }
+      ]
     },
     "parVpnGatewayScaleUnit": {
       "value": 1
@@ -141,7 +142,7 @@
     },
     "parTags": {
       "value": {
-        "Environment": "POC"
+        "Environment": "Live"
       }
     },
     "parTelemetryOptOut": {

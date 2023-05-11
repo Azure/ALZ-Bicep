@@ -13,6 +13,10 @@ param parLocation string = deployment().location
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
+@sys.description('Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix')
+@maxLength(10)
+param parTopLevelManagementGroupSuffix string = ''
+
 @sys.description('Subscription Id to the Virtual Network Hub object. Default: Empty String')
 param parPeeredVnetSubscriptionId string = ''
 
@@ -33,6 +37,9 @@ param parResourceGroupNameForSpokeNetworking string = '${parTopLevelManagementGr
 // Spoke Networking Module Parameters
 @sys.description('Existing DDoS Protection plan to utilize. Default: Empty string')
 param parDdosProtectionPlanId string = ''
+
+@sys.description('The Resource IDs of the Private DNS Zones to associate with spokes.')
+param parPrivateDnsZoneResourceIds array = []
 
 @sys.description('The Name of the Spoke Virtual Network. Default: vnet-spoke')
 param parSpokeNetworkName string = 'vnet-spoke'
@@ -81,6 +88,7 @@ var varModuleDeploymentNames = {
   modSpokePeeringToHub: take('${varDeploymentNameWrappers.basePrefix}-modVnetPeering-ToHub-${varDeploymentNameWrappers.baseSuffixResourceGroup}', 61)
   modSpokePeeringFromHub: take('${varDeploymentNameWrappers.basePrefix}-modVnetPeering-FromHub-${varDeploymentNameWrappers.baseSuffixResourceGroup}', 61)
   modVnetPeeringVwan: take('${varDeploymentNameWrappers.basePrefix}-modVnetPeeringVwan-${varDeploymentNameWrappers.baseSuffixResourceGroup}', 61)
+  modPrivateDnsZoneLinkToSpoke: take('${varDeploymentNameWrappers.basePrefix}-modPDnsLinkToSpoke-${varDeploymentNameWrappers.baseSuffixResourceGroup}', 61)
 }
 
 var varHubVirtualNetworkName = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkId, '/')[8] : '' )
@@ -100,14 +108,14 @@ var varVirtualHubSubscriptionId = (!empty(parHubVirtualNetworkId) && contains(pa
 // **Modules**
 // Module - Customer Usage Attribution - Telemetry
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
-  scope: managementGroup(parTopLevelManagementGroupPrefix)
+  scope: managementGroup('${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}')
   name: 'pid-${varCuaid}-${uniqueString(parLocation, parPeeredVnetSubscriptionId)}'
   params: {}
 }
 
 // Module - Subscription Placement - Management
 module modSubscriptionPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = if (!empty(parPeeredVnetSubscriptionMgPlacement)) {
-  scope: managementGroup(parTopLevelManagementGroupPrefix)
+  scope: managementGroup('${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}')
   name: varModuleDeploymentNames.modSubscriptionPlacement
   params: {
     parTargetManagementGroupId: parPeeredVnetSubscriptionMgPlacement
@@ -150,6 +158,16 @@ module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' 
     parLocation: parLocation
   }
 }
+
+// Module - Private DNS Zone Virtual Network Link to Spoke
+module modPrivateDnsZoneLinkToSpoke '../../modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep' = [for zone in parPrivateDnsZoneResourceIds: if (!empty(parPrivateDnsZoneResourceIds)) {
+  scope: resourceGroup(split(zone, '/')[2], split(zone, '/')[4] )
+  name: take('${varModuleDeploymentNames.modPrivateDnsZoneLinkToSpoke}-${uniqueString(zone)}', 64)
+  params: {
+     parPrivateDnsZoneResourceId: zone
+     parSpokeVirtualNetworkResourceId: modSpokeNetworking.outputs.outSpokeVirtualNetworkId
+  }
+}]
 
 // Module - Hub to Spoke peering.
 module modHubPeeringToSpoke '../../modules/vnetPeering/vnetPeering.bicep' = if (!empty(varHubVirtualNetworkName)) {

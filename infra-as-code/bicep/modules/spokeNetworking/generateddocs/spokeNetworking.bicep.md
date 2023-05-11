@@ -6,22 +6,22 @@ This module creates spoke networking resources
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parLocation    | No       | The Azure Region to deploy the resources into. Default: resourceGroup().location
-parDisableBgpRoutePropagation | No       | Switch to enable/disable BGP Propagation on route table. Default: false
-parDdosProtectionPlanId | No       | Id of the DdosProtectionPlan which will be applied to the Virtual Network. Default: Empty String
-parSpokeNetworkAddressPrefix | No       | The IP address range for all virtual networks to use. Default: 10.11.0.0/16
-parSpokeNetworkName | No       | The Name of the Spoke Virtual Network. Default: vnet-spoke
-parDnsServerIps | No       | Array of DNS Server IP addresses for VNet. Default: Empty Array
-parNextHopIpAddress | No       | IP Address where network traffic should route to leveraged with DNS Proxy. Default: Empty String
-parSpokeToHubRouteTableName | No       | Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub
-parTags        | No       | Tags you would like to be applied to all resources in this module. Default: Empty Object
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry. Default: false
+parLocation    | No       | The Azure Region to deploy the resources into.
+parDisableBgpRoutePropagation | No       | Switch to enable/disable BGP Propagation on route table.
+parDdosProtectionPlanId | No       | Id of the DdosProtectionPlan which will be applied to the Virtual Network.
+parSpokeNetworkAddressPrefix | No       | The IP address range for all virtual networks to use.
+parSpokeNetworkName | No       | The Name of the Spoke Virtual Network.
+parDnsServerIps | No       | Array of DNS Server IP addresses for VNet.
+parNextHopIpAddress | No       | IP Address where network traffic should route to leveraged with DNS Proxy.
+parSpokeToHubRouteTableName | No       | Name of Route table to create for the default route of Hub.
+parTags        | No       | Tags you would like to be applied to all resources in this module.
+parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parLocation
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The Azure Region to deploy the resources into. Default: resourceGroup().location
+The Azure Region to deploy the resources into.
 
 - Default value: `[resourceGroup().location]`
 
@@ -29,7 +29,7 @@ The Azure Region to deploy the resources into. Default: resourceGroup().location
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable BGP Propagation on route table. Default: false
+Switch to enable/disable BGP Propagation on route table.
 
 - Default value: `False`
 
@@ -37,13 +37,13 @@ Switch to enable/disable BGP Propagation on route table. Default: false
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Id of the DdosProtectionPlan which will be applied to the Virtual Network. Default: Empty String
+Id of the DdosProtectionPlan which will be applied to the Virtual Network.
 
 ### parSpokeNetworkAddressPrefix
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The IP address range for all virtual networks to use. Default: 10.11.0.0/16
+The IP address range for all virtual networks to use.
 
 - Default value: `10.11.0.0/16`
 
@@ -51,7 +51,7 @@ The IP address range for all virtual networks to use. Default: 10.11.0.0/16
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The Name of the Spoke Virtual Network. Default: vnet-spoke
+The Name of the Spoke Virtual Network.
 
 - Default value: `vnet-spoke`
 
@@ -59,19 +59,19 @@ The Name of the Spoke Virtual Network. Default: vnet-spoke
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Array of DNS Server IP addresses for VNet. Default: Empty Array
+Array of DNS Server IP addresses for VNet.
 
 ### parNextHopIpAddress
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-IP Address where network traffic should route to leveraged with DNS Proxy. Default: Empty String
+IP Address where network traffic should route to leveraged with DNS Proxy.
 
 ### parSpokeToHubRouteTableName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub
+Name of Route table to create for the default route of Hub.
 
 - Default value: `rtb-spoke-to-hub`
 
@@ -79,13 +79,13 @@ Name of Route table to create for the default route of Hub. Default: rtb-spoke-t
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Tags you would like to be applied to all resources in this module. Default: Empty Object
+Tags you would like to be applied to all resources in this module.
 
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set Parameter to true to Opt-out of deployment telemetry. Default: false
+Set Parameter to true to Opt-out of deployment telemetry.
 
 - Default value: `False`
 

@@ -6,28 +6,36 @@ This policy assignment will assign the ALZ Default Policy to management groups
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy. DEFAULT VALUE = alz
-parLogAnalyticsWorkSpaceAndAutomationAccountLocation | No       | The region where the Log Analytics Workspace & Automation Account are deployed. DEFAULT VALUE = chinaeast2
-parLogAnalyticsWorkspaceResourceID | No       | Log Analytics Workspace Resource ID. - DEFAULT VALUE: Empty String 
-parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace. - DEFAULT VALUE: 365
-parAutomationAccountName | No       | Automation account name. - DEFAULT VALUE: alz-automation-account
+parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy.
+parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
+parLogAnalyticsWorkSpaceAndAutomationAccountLocation | No       | The region where the Log Analytics Workspace & Automation Account are deployed.
+parLogAnalyticsWorkspaceResourceID | No       | Log Analytics Workspace Resource ID.
+parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
+parAutomationAccountName | No       | Automation account name.
 parMsDefenderForCloudEmailSecurityContact | No       | An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.
-parDdosProtectionPlanId | No       | ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues. Default: Empty String
+parDdosProtectionPlanId | No       | ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.
+parDisableAlzDefaultPolicies | No       | Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
 ### parTopLevelManagementGroupPrefix
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix for the management group hierarchy. DEFAULT VALUE = alz
+Prefix for the management group hierarchy.
 
 - Default value: `alz`
+
+### parTopLevelManagementGroupSuffix
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 
 ### parLogAnalyticsWorkSpaceAndAutomationAccountLocation
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The region where the Log Analytics Workspace & Automation Account are deployed. DEFAULT VALUE = chinaeast2
+The region where the Log Analytics Workspace & Automation Account are deployed.
 
 - Default value: `chinaeast2`
 
@@ -35,13 +43,13 @@ The region where the Log Analytics Workspace & Automation Account are deployed. 
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Log Analytics Workspace Resource ID. - DEFAULT VALUE: Empty String 
+Log Analytics Workspace Resource ID.
 
 ### parLogAnalyticsWorkspaceLogRetentionInDays
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Number of days of log retention for Log Analytics Workspace. - DEFAULT VALUE: 365
+Number of days of log retention for Log Analytics Workspace.
 
 - Default value: `365`
 
@@ -49,7 +57,7 @@ Number of days of log retention for Log Analytics Workspace. - DEFAULT VALUE: 36
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Automation account name. - DEFAULT VALUE: alz-automation-account
+Automation account name.
 
 - Default value: `alz-automation-account`
 
@@ -65,7 +73,15 @@ An e-mail address that you want Microsoft Defender for Cloud alerts to be sent t
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues. Default: Empty String
+ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.
+
+### parDisableAlzDefaultPolicies
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
+
+- Default value: `False`
 
 ### parTelemetryOptOut
 
@@ -90,6 +106,9 @@ Set Parameter to true to Opt-out of deployment telemetry
         "parTopLevelManagementGroupPrefix": {
             "value": "alz"
         },
+        "parTopLevelManagementGroupSuffix": {
+            "value": ""
+        },
         "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
             "value": "chinaeast2"
         },
@@ -107,6 +126,9 @@ Set Parameter to true to Opt-out of deployment telemetry
         },
         "parDdosProtectionPlanId": {
             "value": ""
+        },
+        "parDisableAlzDefaultPolicies": {
+            "value": false
         },
         "parTelemetryOptOut": {
             "value": false

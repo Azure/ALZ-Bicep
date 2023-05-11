@@ -10,19 +10,19 @@ param parSourceVirtualNetworkName string
 @sys.description('Name of destination virtual network we are peering.')
 param parDestinationVirtualNetworkName string
 
-@sys.description('Switch to enable/disable Virtual Network Access for the Network Peer. Default: true')
+@sys.description('Switch to enable/disable Virtual Network Access for the Network Peer.')
 param parAllowVirtualNetworkAccess bool = true
 
-@sys.description('Switch to enable/disable forwarded traffic for the Network Peer. Default: true')
+@sys.description('Switch to enable/disable forwarded traffic for the Network Peer.')
 param parAllowForwardedTraffic bool = true
 
-@sys.description('Switch to enable/disable gateway transit for the Network Peer. Default: false')
+@sys.description('Switch to enable/disable gateway transit for the Network Peer.')
 param parAllowGatewayTransit bool = false
 
-@sys.description('Switch to enable/disable remote gateway for the Network Peer. Default:false')
+@sys.description('Switch to enable/disable remote gateway for the Network Peer.')
 param parUseRemoteGateways bool = false
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id

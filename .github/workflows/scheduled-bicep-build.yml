@@ -1,0 +1,77 @@
+name: Unit Tests - Scheduled Bicep Build
+
+permissions:
+  contents: read
+  issues: write
+
+on:
+  schedule:
+    - cron: "0 8 * * 1-5"
+  workflow_dispatch: {}
+
+jobs:
+  bicep_unit_tests:
+    name: Bicep Build & Lint All Modules
+    if: github.repository == 'Azure/ALZ-Bicep'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: List Currently Installed Bicep Version
+        shell: pwsh
+        run: |
+          $bicepVersion = bicep --version
+          Write-Information "=====> Currently installed Bicep version is: $bicepVersion <=====" -InformationAction Continue
+
+      - name: Install latest version of Bicep
+        shell: sh
+        run: |
+          # From https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#linux
+          # Fetch the latest Bicep CLI binary
+          curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64
+          # Mark it as executable
+          chmod +x ./bicep
+          # Add bicep to your PATH (requires admin)
+          sudo mv ./bicep /usr/local/bin/bicep
+          # Verify you can now access the 'bicep' command
+          bicep --help
+          # Done!
+
+      - name: List Now Installed Bicep Version
+        shell: pwsh
+        run: |
+          $bicepVersion = bicep --version
+          Write-Information "=====> Now installed Bicep version is: $bicepVersion <=====" -InformationAction Continue
+
+      - name: Bicep Build & Lint All Modules
+        shell: pwsh
+        run: |
+          $output = @()
+          Get-ChildItem -Recurse -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
+              Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
+              $bicepOutput = bicep build $_.FullName 2>&1
+              if ($LastExitCode -ne 0)
+              {
+                foreach ($item in $bicepOutput) {
+                  $output += "$($item) `r`n"
+                }
+              }
+              Else
+              {
+                echo "Bicep Build Successful for File: $_"
+              }
+          }
+          if ($output.length -gt 0) {
+            throw $output
+          }
+
+      - name: Create GitHub Issue with Bicep Build & Lint Fails
+        if: ${{ failure() }}
+        run: |
+          gh issue create --title "Daily Bicep Build & Lint Worklfow Failed " --body "Check the latest run of the Daily Bicep Build & Lint Worklfow for details in the Actions tab."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,10 +1,10 @@
 metadata name = 'ALZ Bicep - Logging Module'
 metadata description = 'ALZ Bicep Module used to set up Logging'
 
-@sys.description('Log Analytics Workspace name. Default: alz-log-analytics')
+@sys.description('Log Analytics Workspace name.')
 param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 
-@sys.description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings. Default: resourceGroup().location')
+@sys.description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.')
 param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 
 @allowed([
@@ -17,18 +17,17 @@ param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
   'Standalone'
   'Standard'
 ])
-@sys.description('Log Analytics Workspace sku name. Default: PerGB2018')
+@sys.description('Log Analytics Workspace sku name.')
 param parLogAnalyticsWorkspaceSkuName string = 'PerGB2018'
 
 @minValue(30)
 @maxValue(730)
-@sys.description('Number of days of log retention for Log Analytics Workspace. Default: 365')
+@sys.description('Number of days of log retention for Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
 
 @allowed([
   'AgentHealthAssessment'
   'AntiMalware'
-  'AzureActivity'
   'ChangeTracking'
   'Security'
   'SecurityInsights'
@@ -39,15 +38,13 @@ param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
   'Updates'
   'VMInsights'
 ])
-@sys.description('Solutions that will be added to the Log Analytics Workspace. Default: [AgentHealthAssessment, AntiMalware, AzureActivity, ChangeTracking, Security, SecurityInsights, ServiceMap, SQLAssessment, Updates, VMInsights]')
+@sys.description('Solutions that will be added to the Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceSolutions array = [
   'AgentHealthAssessment'
   'AntiMalware'
-  'AzureActivity'
   'ChangeTracking'
   'Security'
   'SecurityInsights'
-  'ServiceMap'
   'SQLAdvancedThreatProtection'
   'SQLVulnerabilityAssessment'
   'SQLAssessment'
@@ -55,19 +52,22 @@ param parLogAnalyticsWorkspaceSolutions array = [
   'VMInsights'
 ]
 
-@sys.description('Automation account name. - Default: alz-automation-account')
+@sys.description('Automation account name.')
 param parAutomationAccountName string = 'alz-automation-account'
 
-@sys.description('Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings. Default: resourceGroup().location')
+@sys.description('Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.')
 param parAutomationAccountLocation string = resourceGroup().location
 
-@sys.description('Tags you would like to be applied to all resources in this module. Default: Empty Object')
+@sys.description('Automation Account - use managed identity.')
+param parAutomationAccountUseManagedIdentity bool = true
+
+@sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
 
-@sys.description('Tags you would like to be applied to Automation Account. Default: parTags')
+@sys.description('Tags you would like to be applied to Automation Account.')
 param parAutomationAccountTags object = parTags
 
-@sys.description('Tags you would like to be applied to Log Analytics Workspace. Default: parTags')
+@sys.description('Tags you would like to be applied to Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceTags object = parTags
 
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
@@ -80,6 +80,9 @@ resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2021-06-2
   name: parAutomationAccountName
   location: parAutomationAccountLocation
   tags: parAutomationAccountTags
+  identity: parAutomationAccountUseManagedIdentity ? {
+    type: 'SystemAssigned'
+  } : null
   properties: {
     sku: {
       name: 'Basic'

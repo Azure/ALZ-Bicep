@@ -6,15 +6,15 @@ Module used to place subscriptions in management groups
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parSubscriptionIds | No       | Array of Subscription Ids that should be moved to the new management group. Default: Empty Array
+parSubscriptionIds | No       | Array of Subscription Ids that should be moved to the new management group.
 parTargetManagementGroupId | Yes      | Target management group for the subscription. This management group must exist.
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry. Default: false
+parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parSubscriptionIds
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Array of Subscription Ids that should be moved to the new management group. Default: Empty Array
+Array of Subscription Ids that should be moved to the new management group.
 
 ### parTargetManagementGroupId
 
@@ -26,7 +26,7 @@ Target management group for the subscription. This management group must exist.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set Parameter to true to Opt-out of deployment telemetry. Default: false
+Set Parameter to true to Opt-out of deployment telemetry.
 
 - Default value: `False`
 

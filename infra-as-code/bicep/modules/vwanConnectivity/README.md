@@ -1,6 +1,6 @@
 # Module:  Virtual WAN
 
-This module is used to deploy the Virtual WAN network topology and its components according to the Azure Landing Zone conceptual architecture which can be found [here](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/virtual-wan-network-topology). This module draws parity with the Enterprise Scale implementation in the ARM template [here](https://github.com/Azure/Enterprise-Scale/blob/main/eslzArm/subscriptionTemplates/vwan-connectivity.json).
+This module is used to deploy the Virtual WAN network topology and its components according to the Azure Landing Zone conceptual architecture which can be found [here](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/virtual-wan-network-topology). This module draws parity with the Enterprise Scale implementation in the ARM template [here](https://github.com/Azure/Enterprise-Scale/blob/main/eslzArm/subscriptionTemplates/vwan-connectivity.json).
 
 Module deploys the following resources which can be configured by parameters:
 
@@ -11,12 +11,15 @@ Module deploys the following resources which can be configured by parameters:
 - Azure Firewall
 - Azure Firewall policy
 - DDoS Network Protection Plan
-- Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> [https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration](https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration)
+- Private DNS Zones - Details of all the Azure Private DNS zones can be found here --> [https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration)
 
 ## Parameters
 
 - [Parameters for Azure Commercial Cloud](generateddocs/vwanConnectivity.bicep.md)
 
+> **NOTE:** Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
+
+<!-- markdownlint-disable -->
 > NOTE: When deploying using the `parameters/vwanConnectivity.parameters.all.json` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region. Failure to do so will cause these services to be unreachable over private endpoints.
 > For example, if deploying to East US the following zone entries:
 > - `privatelink.xxxxxx.azmk8s.io`
@@ -27,6 +30,7 @@ Module deploys the following resources which can be configured by parameters:
 > - `privatelink.eastus.azmk8s.io`
 > - `privatelink.eastus.backup.windowsazure.com`
 > - `privatelink.eastus.batch.azure.com`
+<!-- markdownlint-restore -->
 
 ## Outputs
 
@@ -40,6 +44,7 @@ The module will generate the following outputs:
 | outVirtualHubId       | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/virtualHubs/alz-vhub-eastus                                                               |
 | outDdosPlanResourceId | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-vwan-eastus/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan                                                         |
 | outPrivateDnsZones    | array  | `["name": "privatelink.azurecr.io", "id": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/net-lz-spk-eastus-rg/providers/Microsoft.Network/privateDnsZones/privatelink.azurecr.io"]` |
+
 ## Deployment
 
 In this example, the resources required for Virtual WAN connectivity will be deployed to the resource group specified. According to the Azure Landing Zone Conceptual Architecture, the Virtual WAN resources should be deployed into the Platform connectivity subscription. During the deployment step, we will take parameters provided in the example parameters file.

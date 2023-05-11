@@ -5,6 +5,9 @@
     "parTopLevelManagementGroupPrefix": {
       "value": "alz"
     },
+    "parTopLevelManagementGroupSuffix": {
+      "value": ""
+    },
     "parTopLevelManagementGroupDisplayName": {
       "value": "Azure Landing Zones"
     },
@@ -14,10 +17,16 @@
     "parLandingZoneMgAlzDefaultsEnable": {
       "value": true
     },
+    "parPlatformMgAlzDefaultsEnable": {
+      "value": true
+    },
     "parLandingZoneMgConfidentialEnable": {
       "value": false
     },
     "parLandingZoneMgChildren": {
+      "value": {}
+    },
+    "parPlatformMgChildren": {
       "value": {}
     },
     "parTelemetryOptOut": {

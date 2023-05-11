@@ -28,11 +28,9 @@ module baseline_logging '../logging.bicep' = {
     parLogAnalyticsWorkspaceSolutions: [
       'AgentHealthAssessment'
       'AntiMalware'
-      'AzureActivity'
       'ChangeTracking'
       'Security'
       'SecurityInsights'
-      'ServiceMap'
       'SQLAdvancedThreatProtection'
       'SQLVulnerabilityAssessment'
       'SQLAssessment'
@@ -40,6 +38,7 @@ module baseline_logging '../logging.bicep' = {
       'VMInsights'
     ]
     parAutomationAccountName: 'alz-automation-account'
+    parAutomationAccountUseManagedIdentity: true
     parTelemetryOptOut: false
   }
 }

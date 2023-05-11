@@ -11,7 +11,7 @@
         "value": "Deny"
       }
     },
-    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelManagementGroupId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-Sku",
+    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Databricks-Sku",
     "scope": null,
     "enforcementMode": "Default"
   },

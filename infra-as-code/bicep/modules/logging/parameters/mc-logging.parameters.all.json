@@ -18,11 +18,9 @@
       "value": [
         "AgentHealthAssessment",
         "AntiMalware",
-        "AzureActivity",
         "ChangeTracking",
         "Security",
         "SecurityInsights",
-        "ServiceMap",
         "SQLAdvancedThreatProtection",
         "SQLVulnerabilityAssessment",
         "SQLAssessment",
@@ -36,9 +34,12 @@
     "parAutomationAccountLocation": {
       "value": "chinaeast2"
     },
+    "parAutomationAccountUseManagedIdentity": {
+      "value": true
+    },
     "parTags": {
       "value": {
-        "Environment": "POC"
+        "Environment": "Live"
       }
     },
     "parTelemetryOptOut": {

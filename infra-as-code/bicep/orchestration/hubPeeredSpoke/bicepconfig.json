@@ -58,28 +58,28 @@
         "max-variables": {
           "level": "error"
         },
-        "artifacts-parameters":{
+        "artifacts-parameters": {
           "level": "error"
         },
-        "no-unused-existing-resources":{
+        "no-unused-existing-resources": {
           "level": "error"
         },
-        "prefer-unquoted-property-names":{
+        "prefer-unquoted-property-names": {
           "level": "error"
         },
-        "secure-params-in-nested-deploy":{
+        "secure-params-in-nested-deploy": {
           "level": "error"
         },
-        "secure-secrets-in-params":{
+        "secure-secrets-in-params": {
           "level": "error"
         },
-        "use-recent-api-versions":{
+        "use-recent-api-versions": {
           "level": "error"
         },
-        "use-resource-id-functions":{
+        "use-resource-id-functions": {
           "level": "error"
         },
-        "use-stable-resource-identifiers":{
+        "use-stable-resource-identifiers": {
           "level": "error"
         }
       }

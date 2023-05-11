@@ -1,6 +1,6 @@
 # Module: Custom Policy Definitions
 
-This module deploys the custom Azure Policy Definitions & Initiatives supplied by the Azure Landing Zones conceptual architecture and reference implementation defined [here](https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/architecture) to the specified Management Group.
+This module deploys the custom Azure Policy Definitions & Initiatives supplied by the Azure Landing Zones conceptual architecture and reference implementation defined [here](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/architecture) to the specified Management Group.
 
 For a list of the custom policy definitions that are deployed, please see the below links:
 
@@ -15,7 +15,7 @@ If you wish to add your own additional custom Azure Policy Definitions please re
 ## Parameters
 
 - [Parameters for Azure Commercial Cloud](generateddocs/customPolicyDefinitions.bicep.md)
-- [Parameters for Azure Commercial Cloud](generateddocs/mc-customPolicyDefinitions.bicep.md)
+- [Parameters for Azure China Cloud](generateddocs/mc-customPolicyDefinitions.bicep.md)
 
 ## Outputs
 

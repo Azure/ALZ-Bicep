@@ -1,6 +1,6 @@
 # Module:  Role Assignments for Management Groups & Subscriptions
 
-This module provides role assignment capabilities across Management Group & Subscription scopes. Role assignments are part of [Identity and Access Management (IAM)](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management), which is one of the critical design areas in Enterprise-Scale Architecture. The role assignments can be performed for:
+This module provides role assignment capabilities across Management Group & Subscription scopes. Role assignments are part of [Identity and Access Management (IAM)](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management), which is one of the critical design areas in Enterprise-Scale Architecture. The role assignments can be performed for:
 
 - Managed Identities (System and User Assigned)
 - Service Principals
@@ -14,6 +14,8 @@ This module contains 4 Bicep templates, you may optionally choose one of these m
 | roleAssignmentManagementGroupMany.bicep | Performs role assignment on one or more management groups.  This template uses `roleAssignmentManagementGroup.bicep` for the deployments. | Management Group |
 | roleAssignmentSubscription.bicep        | Performs role assignment on one subscription                                                                                              | Subscription     |
 | roleAssignmentSubscriptionMany.bicep    | Performs role assignment on one or more subscriptions.  This template uses `roleAssignmentSubscription.bicep` for the deployments.        | Management Group |
+| roleAssignmentResourceGroup.bicep       | Performs role assignment on one resource group                                                                                            | Resource Group   |
+| roleAssignmentResourceGroupMany.bicep   | Performs role assignment on one or more resource groups.  This template uses `roleAssignmentResourceGroup.bicep` for the deployments.     | Management Group |
 
 ## Parameters
 
@@ -66,19 +68,27 @@ Connect-AzureAD
 
 ### roleAssignmentManagementGroup.bicep
 
-- [Parameters for Azure Commercial Cloud](generateddocs/roleAssignmentManagementGroup.bicep.md)
+- [Link to Parameters](generateddocs/roleAssignmentManagementGroup.bicep.md)
 
 ### roleAssignmentManagementGroupMany.bicep
 
-- [Parameters for Azure Commercial Cloud](generateddocs/roleAssignmentManagementGroupMany.bicep.md)
+- [Link to Parameters](generateddocs/roleAssignmentManagementGroupMany.bicep.md)
 
 ### roleAssignmentSubscription.bicep
 
-- [Parameters for Azure Commercial Cloud](generateddocs/roleAssignmentSubscription.bicep.md)
+- [Link to Parameters](generateddocs/roleAssignmentSubscription.bicep.md)
 
 ### roleAssignmentSubscriptionMany.bicep
 
-- [Parameters for Azure Commercial Cloud](generateddocs/roleAssignmentSubscriptionMany.bicep.md)
+- [Link to Parameters](generateddocs/roleAssignmentSubscriptionMany.bicep.md)
+
+### roleAssignmentResourceGroup.bicep
+
+- [Link to Parameters](generateddocs/roleAssignmentResourceGroup.bicep.md)
+
+### roleAssignmentResourceGroupMany.bicep
+
+- [Link to Parameters](generateddocs/roleAssignmentResourceGroupMany.bicep.md)
 
 ## Outputs
 
@@ -165,3 +175,11 @@ New-AzManagementGroupDeployment @inputObject
 ### Many Subscription Role Assignments
 
 ![Bicep Visualizer - Many Subscription Role Assignments](media/bicepVisualizerSubMany.png "Bicep Visualizer - Many Subscription Role Assignments")
+
+### Single Resource Group Role Assignment
+
+![Bicep Visualizer - Single Resource Group Role Assignment](media/bicepVisualizerSub.png "Bicep Visualizer - Single Resource Group Role Assignment")
+
+### Many Resource Group Role Assignments
+
+![Bicep Visualizer - Many Resource Group Role Assignments](media/bicepVisualizerSubMany.png "Bicep Visualizer - Many Resource Group Role Assignments")

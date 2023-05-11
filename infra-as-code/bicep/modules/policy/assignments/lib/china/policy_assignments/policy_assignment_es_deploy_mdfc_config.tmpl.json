@@ -29,7 +29,7 @@
         "value": "DeployIfNotExists"
       }
     },
-    "policyDefinitionId": "${modManagementGroups.outputs.outTopLevelMGId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config",
+    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config",
     "scope": null,
     "enforcementMode": "Default"
   },

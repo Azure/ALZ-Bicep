@@ -1,10 +1,10 @@
 metadata name = 'ALZ Bicep - Private DNS Zones'
 metadata description = 'Module used to set up Private DNS Zones in accordance to Azure Landing Zones'
 
-@sys.description('The Azure Region to deploy the resources into. Default: resourceGroup().location')
+@sys.description('The Azure Region to deploy the resources into.')
 param parLocation string = resourceGroup().location
 
-@sys.description('Array of custom DNS Zones to provision in Hub Virtual Network. Default: all known private link DNS zones deployed')
+@sys.description('Array of custom DNS Zones to provision in Hub Virtual Network.')
 param parPrivateDnsZones array = [
   'privatelink.${toLower(parLocation)}.azmk8s.io'
   'privatelink.${toLower(parLocation)}.batch.azure.com'
@@ -74,13 +74,13 @@ param parPrivateDnsZones array = [
   'privatelink.webpubsub.azure.com'
 ]
 
-@sys.description('Tags you would like to be applied to all resources in this module. Default: empty object')
+@sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
 
-@sys.description('Resource ID of VNet for Private DNS Zone VNet Links. Default: Empty String')
+@sys.description('Resource ID of VNet for Private DNS Zone VNet Links.')
 param parVirtualNetworkIdToLink string = ''
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 var varAzBackupGeoCodes = {
@@ -187,3 +187,5 @@ output outPrivateDnsZones array = [for i in range(0, length(varPrivateDnsZonesMe
   name: resPrivateDnsZones[i].name
   id: resPrivateDnsZones[i].id
 }]
+
+output outPrivateDnsZonesNames array = [for i in range(0, length(varPrivateDnsZonesMerge)): resPrivateDnsZones[i].name ]
