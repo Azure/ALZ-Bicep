@@ -63,7 +63,11 @@ param parAzBastionEnabled bool = true
 @sys.description('Name Associated with Bastion Service.')
 param parAzBastionName string = '${parCompanyPrefix}-bastion'
 
-@sys.description('Azure Bastion SKU or Tier to deploy. Currently two options exist Basic and Standard.')
+@sys.description('Azure Bastion SKU.')
+@allowed([
+  'Basic'
+  'Standard'
+])
 param parAzBastionSku string = 'Standard'
 
 @sys.description('Name for Azure Bastion Subnet NSG.')
