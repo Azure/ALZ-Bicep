@@ -5,10 +5,10 @@ metadata description = 'Orchestration module used to create and configure a spok
 
 // **Parameters**
 // Generic Parameters - Used in multiple modules
-@sys.description('The region to deploy all resources into. Default: deployment().location')
+@sys.description('The region to deploy all resources into.')
 param parLocation string = deployment().location
 
-@sys.description('Prefix for the management group hierarchy. Default: alz')
+@sys.description('Prefix for the management group hierarchy.')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
@@ -23,7 +23,7 @@ param parPeeredVnetSubscriptionId string = ''
 @sys.description('Array of Tags to be applied to all resources in module. Default: Empty Object')
 param parTags object = {}
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 // Subscription Module Parameters
@@ -31,42 +31,42 @@ param parTelemetryOptOut bool = false
 param parPeeredVnetSubscriptionMgPlacement string = ''
 
 // Resource Group Module Parameters
-@sys.description('Name of Resource Group to be created to contain spoke networking resources like the virtual network. Default: {parTopLevelManagementGroupPrefix}-{parLocation}-spoke-networking')
+@sys.description('Name of Resource Group to be created to contain spoke networking resources like the virtual network.')
 param parResourceGroupNameForSpokeNetworking string = '${parTopLevelManagementGroupPrefix}-${parLocation}-spoke-networking'
 
 // Spoke Networking Module Parameters
 @sys.description('Existing DDoS Protection plan to utilize. Default: Empty string')
 param parDdosProtectionPlanId string = ''
 
-@sys.description('The Resource IDs of the Private DNS Zones to associate with spokes.')
+@sys.description('The Resource IDs of the Private DNS Zones to associate with spokes. Default: Empty Array')
 param parPrivateDnsZoneResourceIds array = []
 
-@sys.description('The Name of the Spoke Virtual Network. Default: vnet-spoke')
+@sys.description('The Name of the Spoke Virtual Network.')
 param parSpokeNetworkName string = 'vnet-spoke'
 
-@sys.description('CIDR for Spoke Network. Default: 10.11.0.0/16')
+@sys.description('CIDR for Spoke Network.')
 param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 
 @sys.description('Array of DNS Server IP addresses for VNet. Default: Empty Array')
-param parDnsServerIps  array = []
+param parDnsServerIps array = []
 
 @sys.description('IP Address where network traffic should route to. Default: Empty string')
 param parNextHopIpAddress string = ''
 
-@sys.description('Switch which allows BGP Route Propogation to be disabled on the route table. Default: false')
+@sys.description('Switch which allows BGP Route Propogation to be disabled on the route table.')
 param parDisableBgpRoutePropagation bool = false
 
-@sys.description('Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub')
+@sys.description('Name of Route table to create for the default route of Hub.')
 param parSpokeToHubRouteTableName string = 'rtb-spoke-to-hub'
 
 // Peering Modules Parameters
 @sys.description('Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID.')
 param parHubVirtualNetworkId string
 
-@sys.description('Switch to enable/disable forwarded Traffic from outside spoke network. Default: false')
+@sys.description('Switch to enable/disable forwarded Traffic from outside spoke network.')
 param parAllowSpokeForwardedTraffic bool = false
 
-@sys.description('Switch to enable/disable VPN Gateway for the hub network peering. Default: false')
+@sys.description('Switch to enable/disable VPN Gateway for the hub network peering.')
 param parAllowHubVpnGatewayTransit bool = false
 
 // **Variables**
