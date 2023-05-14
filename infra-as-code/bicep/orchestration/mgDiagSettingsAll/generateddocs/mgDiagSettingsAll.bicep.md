@@ -11,9 +11,9 @@ parTopLevelManagementGroupSuffix | No       | Optional suffix for the management
 parLandingZoneMgChildren | No       | Array of strings to allow additional or different child Management Groups of the Landing Zones Management Group.
 parPlatformMgChildren | No       | Array of strings to allow additional or different child Management Groups of the Platform Management Group.
 parLogAnalyticsWorkspaceResourceId | Yes      | Log Analytics Workspace Resource ID.
-parLandingZoneMgAlzDefaultsEnable | No       | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
-parPlatformMgAlzDefaultsEnable | No       | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
-parLandingZoneMgConfidentialEnable | No       | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true. Default: false
+parLandingZoneMgAlzDefaultsEnable | No       | Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
+parPlatformMgAlzDefaultsEnable | No       | Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
+parLandingZoneMgConfidentialEnable | No       | Deploys Diagnostic Settings on Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true. Default: false
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry. Default: false
 
 ### parTopLevelManagementGroupPrefix
@@ -52,7 +52,7 @@ Log Analytics Workspace Resource ID.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
+Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
 
 - Default value: `True`
 
@@ -60,7 +60,7 @@ Deploys Corp & Online Management Groups beneath Landing Zones Management Group i
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
+Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
 
 - Default value: `True`
 
@@ -68,7 +68,7 @@ Deploys Corp & Online Management Groups beneath Landing Zones Management Group i
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true. Default: false
+Deploys Diagnostic Settings on Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true. Default: false
 
 - Default value: `False`
 
