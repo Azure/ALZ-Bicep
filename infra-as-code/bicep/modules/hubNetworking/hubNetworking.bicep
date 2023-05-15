@@ -282,12 +282,14 @@ var varSubnetProperties = [for subnet in varSubnetMap: {
   properties: {
     addressPrefix: subnet.ipAddressRange
     
-    delegations: (empty(subnet.delegation)) ? null : {
-      name: subnet.delegation
-      properties: {
-        serviceName: subnet.delegation
+    delegations: (empty(subnet.delegation)) ? null : [
+      {
+        name: subnet.delegation
+        properties: {
+          serviceName: subnet.delegation
+        }
       }
-    }
+    ]
 
     networkSecurityGroup: (subnet.name == 'AzureBastionSubnet') ? {
       id: '${resourceGroup().id}/providers/Microsoft.Network/networkSecurityGroups/${parAzBastionNsgName}'
