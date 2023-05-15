@@ -78,7 +78,7 @@ The IP address range for all virtual networks to use.
 
 The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks.
 
-- Default value: `   `
+- Default value: `     `
 
 ### parDnsServerIps
 
@@ -372,14 +372,14 @@ outHubVirtualNetworkId | string |
                 },
                 {
                     "name": "snet-privatednsresolver-inbound",
-                    "ipAddressRange": "10.10.251.0/24",
+                    "ipAddressRange": "10.10.252.0/24",
                     "networkSecurityGroupId": "",
                     "routeTableId": "",
                     "delegation": "Microsoft.Network/dnsResolvers"
                 },
                 {
                     "name": "snet-privatednsresolver-outbound",
-                    "ipAddressRange": "10.10.250.0/24",
+                    "ipAddressRange": "10.10.251.0/24",
                     "networkSecurityGroupId": "",
                     "routeTableId": "",
                     "delegation": "Microsoft.Network/dnsResolvers"
