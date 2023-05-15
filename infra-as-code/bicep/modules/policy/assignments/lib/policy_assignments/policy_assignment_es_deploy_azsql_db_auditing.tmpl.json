@@ -1,0 +1,25 @@
+{
+  "name": "Deploy-AzSqlDb-Auditing",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "To ensure the operations performed against your SQL assets are captured, SQL servers should have auditing enabled. If auditing is not enabled, this policy will configure auditing events to flow to the specified Log Analytics workspace.",
+    "displayName": "Configure SQL servers to have auditing enabled to Log Analytics workspace",
+    "notScopes": [],
+    "parameters": {
+      "effect": {
+        "value": "DeployIfNotExists"
+      },
+      "logAnalyticsWorkspaceId": {
+        "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/${parTopLevelManagementGroupPrefix}-mgmt/providers/Microsoft.OperationalInsights/workspaces/${parTopLevelManagementGroupPrefix}-la"
+      }
+    },
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/25da7dfb-0666-4a15-a8f5-402127efd8bb",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

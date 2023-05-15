@@ -2,6 +2,10 @@
 ## ALZ Bicep Accelerator
 <!-- markdownlint-restore -->
 
+> **Note:**
+> This is an MVP release of the ALZ Bicep Accelerator. We are actively working on adding additional features and functionality to the Accelerator. Please check back often for updates.
+
+
 This document provides prescriptive guidance around implementing, automating, and maintaining your ALZ Bicep module with the ALZ Bicep Accelerator.
 
 ### What is the ALZ Bicep Accelerator?
@@ -13,7 +17,6 @@ The ALZ Bicep Accelerator framework was developed to provide end-users with the 
   > Currently we only provide support for GitHub Action workflows, but there are plans to add support for Azure Pipelines and GitLab pipelines in the future
 - Provides framework to not only stay in-sync with new [ALZ Bicep releases](https://github.com/Azure/ALZ-Bicep/releases), but also incorporates guidance around modifiying existing ALZ Bicep modules and/or associating custom modules to the framework
 - Offers branching strategy guidance and pull request pipelines for linting the repository as well as validating any existing custom and/or modified Bicep modules
-
 Accelerator Directory Tree:
 
 ![Accelerator Directory Tree](media/alz-bicep-accelerator-tree-output.png)
@@ -25,6 +28,7 @@ We attempted to make the pipelines as flexible as possible while also reducing o
 - Event based triggers (i.e. pushes to main and path filters for each workflow associated Bicep parameter file)
 - OpenID Connect (OIDC) authentication to Azure with the workflow permissions necessary to access the OIDC JWT ID token
 - PowerShell deployment scripts for each module that are referenced within [Azure PowerShell Action](https://github.com/marketplace/actions/azure-powershell-action) steps
+  - The PowerShell scripts reference the modules and parameter files used within the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow#module-deployment-sequence). Therefore, we recommend you review the deployment flow documentation to understand the purpose of each module and the parameters that are used within the deployment scripts.
 - Environment variables file (.env) which is used to store variables that are accessed within the PowerShell scripts
 
 The only thing that differs across the workflows is which ALZ Bicep modules are deployed as shown in the following table:
@@ -72,13 +76,14 @@ In order to setup the Accelerator framework with the production ready pipelines,
 
     > **Note:**
     > If the directory structure specified for the output location does not exist, the module will create the directory structure programatically.
-
 1. Depending upon your preferred [network topology deployment](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation),  remove the associated workflow file for each deployment model
     - Traditional VNet Hub and Spoke = .github\workflows\alz-bicep-4a.yml
     - Virtual WAN = .github\workflows\alz-bicep-4b.yml
 
     > **Note:**
     > These workflow files and associated deployment scripts will be programatically removed in the future.
+
+1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration.
 
 1. Follow this [GitHub documentation](https://docs.github.com/en/enterprise-cloud@latest/get-started/quickstart/create-a-repo#create-a-repository) to create a new remote Git repository
 
@@ -89,13 +94,10 @@ In order to setup the Accelerator framework with the production ready pipelines,
     ```shell
     # Matches the remote URL with a name
     git remote add origin https://github.com/<OrganizationName>/<RepositoryName>.git
-
     # Adds all changes in the working directory to the staging area.
     git add .
-
     # Records a snapshot of your repository's staging area.
     git commit -m "Initial commit"
-
     # Updates the remote branch with the local commit(s)
     git push -u origin main
     ```

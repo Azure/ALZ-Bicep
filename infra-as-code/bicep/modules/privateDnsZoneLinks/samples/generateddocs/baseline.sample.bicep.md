@@ -5,7 +5,7 @@
 Parameter name | Required | Description
 -------------- | -------- | -----------
 parSpokeVirtualNetworkResourceId | No       | The Spoke Virtual Network Resource ID.
-parPrivateDnsZoneResourceIds | No       | The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
+parPrivateDnsZoneResourceId | No       | The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
 
 ### parSpokeVirtualNetworkResourceId
 
@@ -15,11 +15,13 @@ The Spoke Virtual Network Resource ID.
 
 - Default value: `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/<RG-NAME>/providers/Microsoft.Network/virtualNetworks/<VNET-NAME>`
 
-### parPrivateDnsZoneResourceIds
+### parPrivateDnsZoneResourceId
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
+
+- Default value: `/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/<RG-NAME>/providers/Microsoft.Network/privateDnsZones/<ZONE-NAME>`
 
 ## Snippets
 
@@ -36,8 +38,8 @@ The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
         "parSpokeVirtualNetworkResourceId": {
             "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/<RG-NAME>/providers/Microsoft.Network/virtualNetworks/<VNET-NAME>"
         },
-        "parPrivateDnsZoneResourceIds": {
-            "value": []
+        "parPrivateDnsZoneResourceId": {
+            "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/<RG-NAME>/providers/Microsoft.Network/privateDnsZones/<ZONE-NAME>"
         }
     }
 }

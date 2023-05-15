@@ -31,6 +31,7 @@ param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
   'ChangeTracking'
   'Security'
   'SecurityInsights'
+  'ServiceMap'
   'SQLAdvancedThreatProtection'
   'SQLVulnerabilityAssessment'
   'SQLAssessment'

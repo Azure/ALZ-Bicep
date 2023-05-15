@@ -9,6 +9,7 @@ param parCompanyPrefix string = 'alz'
 
 @sys.description('Azure Firewall Tier associated with the Firewall to deploy.')
 @allowed([
+  'Basic'
   'Standard'
   'Premium'
 ])
@@ -165,8 +166,12 @@ param parTags object = {}
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
-// Customer Usage Attribution Id
+// Customer Usage Attribution Id Telemetry
 var varCuaid = '7f94f23b-7a59-4a5c-9a8d-2a253a566f61'
+
+// ZTN Telemetry
+var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
+var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub => hub.parAzFirewallEnabled), false)) && (parAzFirewallTier == 'Premium')) ? true : false
 
 // Virtual WAN resource
 resource resVwan 'Microsoft.Network/virtualWans@2022-01-01' = {
@@ -191,7 +196,7 @@ resource resVhub 'Microsoft.Network/virtualHubs@2022-01-01' = [for hub in parVir
     virtualWan: {
       id: resVwan.id
     }
-    virtualRouterAutoScaleConfiguration:{
+    virtualRouterAutoScaleConfiguration: {
       minCapacity: hub.parVirtualRouterAutoScaleConfiguration
     }
     hubRoutingPreference: hub.parHubRoutingPreference
@@ -219,7 +224,7 @@ resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2022-01
   }
 }]
 
-resource resVpnGateway 'Microsoft.Network/vpnGateways@2021-05-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parVpnGatewayEnabled)) {
+resource resVpnGateway 'Microsoft.Network/vpnGateways@2022-09-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parVpnGatewayEnabled)) {
   dependsOn: resVhub
   name: '${parVpnGatewayName}-${hub.parHubLocation}'
   location: hub.parHubLocation
@@ -237,7 +242,7 @@ resource resVpnGateway 'Microsoft.Network/vpnGateways@2021-05-01' = [for (hub, i
   }
 }]
 
-resource resErGateway 'Microsoft.Network/expressRouteGateways@2021-05-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parExpressRouteGatewayEnabled)) {
+resource resErGateway 'Microsoft.Network/expressRouteGateways@2022-09-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parExpressRouteGatewayEnabled)) {
   dependsOn: resVhub
   name: '${parExpressRouteGatewayName}-${hub.parHubLocation}'
   location: hub.parHubLocation
@@ -258,7 +263,11 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2022-05-01' = i
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
-  properties: {
+  properties: (parAzFirewallTier == 'Basic') ? {
+    sku: {
+      tier: parAzFirewallTier
+    }
+  } : {
     dnsSettings: {
       enableProxy: parAzFirewallDnsProxyEnabled
     }
@@ -311,25 +320,28 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
   }
 }
 
-
-// Optional Deployment for Customer Usage Attribution
+// Optional Deployments for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
   name: 'pid-${varCuaid}-${uniqueString(parLocation)}'
   params: {}
 }
 
+module modCustomerUsageAttributionZtnP1 '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut && varZtnP1Trigger) {
+  name: 'pid-${varZtnP1CuaId}-${uniqueString(parLocation)}'
+  params: {}
+}
 
 // Output Virtual WAN name and ID
 output outVirtualWanName string = resVwan.name
 output outVirtualWanId string = resVwan.id
 
 // Output Virtual WAN Hub name and ID
-output outVirtualHubName array = [ for (hub, i) in parVirtualWanHubs: {
+output outVirtualHubName array = [for (hub, i) in parVirtualWanHubs: {
   virtualhubname: resVhub[i].name
   virtualhubid: resVhub[i].id
 }]
 
-output outVirtualHubId array = [ for (hub, i) in parVirtualWanHubs: {
+output outVirtualHubId array = [for (hub, i) in parVirtualWanHubs: {
   virtualhubid: resVhub[i].id
 }]
 // Output DDoS Plan ID

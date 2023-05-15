@@ -54,7 +54,7 @@ Azure Firewall Tier associated with the Firewall to deploy.
 
 - Default value: `Standard`
 
-- Allowed values: `Standard`, `Premium`
+- Allowed values: `Basic`, `Standard`, `Premium`
 
 ### parVirtualHubEnabled
 

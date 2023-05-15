@@ -1,0 +1,31 @@
+{
+  "name": "Deploy-MDEndpoints",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "Deploy Microsoft Defender for Endpoint agent on applicable images.",
+    "displayName": "[Preview]: Deploy Microsoft Defender for Endpoint agent",
+    "notScopes": [],
+    "parameters": {
+      "microsoftDefenderForEndpointWindowsVmAgentDeployEffect": {
+        "value": "DeployIfNotExists"
+      },
+      "microsoftDefenderForEndpointLinuxVmAgentDeployEffect": {
+        "value": "DeployIfNotExists"
+      },
+      "microsoftDefenderForEndpointWindowsArcAgentDeployEffect": {
+        "value": "DeployIfNotExists"
+      },
+      "microsoftDefenderForEndpointLinuxArcAgentDeployEffect": {
+        "value": "DeployIfNotExists"
+      }
+    },
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/e20d08c5-6d64-656d-6465-ce9e37fd0ebc",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

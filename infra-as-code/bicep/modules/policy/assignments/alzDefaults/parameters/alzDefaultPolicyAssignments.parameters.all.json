@@ -29,16 +29,19 @@
     "parPrivateDnsResourceGroupId": {
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/rg-alz-hub-networking-001"
     },
+    "parPrivateDnsZonesNamesToAuditInCorp": {
+      "value": []
+    },
     "parDisableAlzDefaultPolicies": {
       "value": false
     },
-    "parVmBackupExclusionTagName" : {
+    "parVmBackupExclusionTagName": {
       "value": ""
     },
-    "parVmBackupExclusionTagValue" : {
+    "parVmBackupExclusionTagValue": {
       "value": []
     },
-    "parExcludedPolicyAssignments" : {
+    "parExcludedPolicyAssignments": {
       "value": []
     },
     "parTelemetryOptOut": {
