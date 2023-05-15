@@ -373,11 +373,15 @@ outHubVirtualNetworkId | string |
                 {
                     "name": "snet-privatednsresolver-inbound",
                     "ipAddressRange": "10.10.251.0/24",
+                    "networkSecurityGroupId": "",
+                    "routeTableId": "",
                     "delegation": "Microsoft.Network/dnsResolvers"
                 },
                 {
                     "name": "snet-privatednsresolver-outbound",
                     "ipAddressRange": "10.10.250.0/24",
+                    "networkSecurityGroupId": "",
+                    "routeTableId": "",
                     "delegation": "Microsoft.Network/dnsResolvers"
                 }
             ]
