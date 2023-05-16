@@ -8,17 +8,17 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parLocation    | No       | The Azure Region to deploy the resources into.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
-parHubNetworkName | No       | Prefix Used for Hub Network.
-parHubNetworkAddressPrefix | No       | The IP address range for all virtual networks to use.
-parSubnets     | No       | The name, IP address range, network security group and route table for each subnet in the virtual networks.
+parHubNetworkName | No       | Name for Hub Network.
+parHubNetworkAddressPrefix | No       | The IP address range for Hub Network.
+parSubnets     | No       | The name, IP address range, network security group and route table for each subnet in the Hub Network.
 parDnsServerIps | No       | Array of DNS Server IP addresses for VNet.
 parPublicIpSku | No       | Public IP Address SKU.
 parPublicIpPrefix | No       | Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
 parPublicIpSuffix | No       | Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix
-parAzBastionEnabled | No       | Switch to enable/disable Azure Bastion deployment. Default: true
+parAzBastionEnabled | No       | Switch to enable/disable Azure Bastion deployment.
 parAzBastionName | No       | Name Associated with Bastion Service.
-parAzBastionSku | No       | Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard.
-parAzBastionNsgName | No       | NSG Name for Azure Bastion Subnet NSG.
+parAzBastionSku | No       | Azure Bastion SKU.
+parAzBastionNsgName | No       | Name for Azure Bastion Subnet NSG.
 parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment.
 parDdosPlanName | No       | DDoS Plan Name.
 parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment.
@@ -60,7 +60,7 @@ Prefix value which will be prepended to all resource names.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix Used for Hub Network.
+Name for Hub Network.
 
 - Default value: `[format('{0}-hub-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
@@ -68,7 +68,7 @@ Prefix Used for Hub Network.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The IP address range for all virtual networks to use.
+The IP address range for Hub Network.
 
 - Default value: `10.10.0.0/16`
 
@@ -76,7 +76,7 @@ The IP address range for all virtual networks to use.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The name, IP address range, network security group and route table for each subnet in the virtual networks.
+The name, IP address range, network security group and route table for each subnet in the Hub Network.
 
 - Default value: `   `
 
@@ -114,7 +114,7 @@ Optional Suffix for Public IPs. Include a preceding dash if required. Example: -
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable Azure Bastion deployment. Default: true
+Switch to enable/disable Azure Bastion deployment.
 
 - Default value: `True`
 
@@ -130,15 +130,17 @@ Name Associated with Bastion Service.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard.
+Azure Bastion SKU.
 
 - Default value: `Standard`
+
+- Allowed values: `Basic`, `Standard`
 
 ### parAzBastionNsgName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-NSG Name for Azure Bastion Subnet NSG.
+Name for Azure Bastion Subnet NSG.
 
 - Default value: `nsg-AzureBastionSubnet`
 
