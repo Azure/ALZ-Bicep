@@ -39,20 +39,6 @@ param parSubnets array = [
     networkSecurityGroupId: ''
     routeTableId: ''
   }
-  {
-    name: 'snet-privatednsresolver-inbound'
-    ipAddressRange: '10.10.252.0/24'
-    networkSecurityGroupId: ''
-    routeTableId: ''
-    delegation: 'Microsoft.Network/dnsResolvers'
-  }
-  {
-    name: 'snet-privatednsresolver-outbound'
-    ipAddressRange: '10.10.251.0/24'
-    networkSecurityGroupId: ''
-    routeTableId: ''
-    delegation: 'Microsoft.Network/dnsResolvers'
-  }
 ]
 
 @sys.description('Array of DNS Server IP addresses for VNet.')
