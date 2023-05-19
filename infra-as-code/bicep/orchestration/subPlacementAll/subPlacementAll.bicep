@@ -3,7 +3,7 @@ targetScope = 'managementGroup'
 metadata name = 'ALZ Bicep orchestration - Subscription Placement - ALL'
 metadata description = 'Orchestration module that helps to define where all Subscriptions should be placed in the ALZ Management Group Hierarchy'
 
-@sys.description('Prefix for the management group hierarchy.  This management group will be created as part of the deployment. Default: alz')
+@sys.description('Prefix for the management group hierarchy.  This management group will be created as part of the deployment.')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
@@ -54,7 +54,7 @@ param parDecommissionedMgSubs array = []
 @sys.description('An array of Subscription IDs to place in the Sandbox Management Group. Default: Empty Array')
 param parSandboxMgSubs array = []
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
+@sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 var varMgIds = {
