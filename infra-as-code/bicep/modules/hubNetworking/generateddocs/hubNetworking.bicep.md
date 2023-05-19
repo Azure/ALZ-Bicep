@@ -78,7 +78,7 @@ The IP address range for Hub Network.
 
 The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks.
 
-- Default value: `     `
+- Default value: `   `
 
 ### parDnsServerIps
 
