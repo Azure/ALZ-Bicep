@@ -1,6 +1,5 @@
 name: ALZ-Bicep-1 Workflow
 
-
 trigger:
   branches:
     include:
@@ -14,11 +13,9 @@ trigger:
       - "config/custom-parameters/customRoleDefinitions.parameters.all.json"
       - "config/custom-parameters/mgDiagSettingsAll.parameters.all.json"
 
-
 variables:
   ENV_FILE: ".env"
   SERVICE_CONNECTION_NAME: "[your service connection name here]"
-
 
 jobs:
   - job: ALZ_Bicep_1_Workflow_Job

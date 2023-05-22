@@ -1,6 +1,5 @@
 name: ALZ-Bicep-4b Workflow
 
-
 trigger:
   branches:
     include:
@@ -10,11 +9,9 @@ trigger:
       - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
       - "config/custom-parameters/vwanConnectivity.parameters.all.json"
 
-
 variables:
   ENV_FILE: ".env"
   SERVICE_CONNECTION_NAME: "[your service connection name here]"
-
 
 jobs:
   - job: ALZ_Bicep_4b_Workflow_Job
