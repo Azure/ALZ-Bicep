@@ -27,7 +27,7 @@ jobs:
             -e VALIDATE_POWERSHELL=true \
             -e VALIDATE_YAML=true \
             -e VALIDATE_EDITORCONFIG=true \
-            -e "FILTER_REGEX_EXCLUDE=.*infra-as-code/bicep/modules/policy/(definitions|assignments)/lib/.*/.*.json|.*generateddocs/.*.bicep.md" \
+            -e "FILTER_REGEX_EXCLUDE=.*upstream-releases/*|.*generateddocs/.*.bicep.md" \
             -v $(System.DefaultWorkingDirectory):/tmp/lint \
             github/super-linter
         displayName: Run github/super-linter
