@@ -9,7 +9,11 @@ param (
   [String]$TemplateFile = "upstream-releases\$($env:UPSTREAM_RELEASE_VERSION)\infra-as-code\bicep\orchestration\mgDiagSettingsAll\mgDiagSettingsAll.bicep",
 
   [Parameter()]
-  [String]$TemplateParameterFile = "config\custom-parameters\mgDiagSettingsAll.parameters.all.json"
+  [String]$TemplateParameterFile = "config\custom-parameters\mgDiagSettingsAll.parameters.all.json",
+
+  [Parameter()]
+  [Boolean]$WhatIf
+
 )
 
 # Parameters necessary for deployment
@@ -20,6 +24,7 @@ $inputObject = @{
   TemplateFile          = $TemplateFile
   TemplateParameterFile = $TemplateParameterFile
   Verbose               = $true
+  WhatIf                = $WhatIf
 }
 
 New-AzManagementGroupDeployment @inputObject
