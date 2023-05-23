@@ -1,15 +1,13 @@
 name: ALZ-Bicep-PR-2 Workflow
 
-
 trigger: none
-# YAML PR triggers are supported only in GitHub and Bitbucket Cloud. 
+# YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
 # If you use Azure Repos Git, you can configure a branch policy for build validation to trigger your build pipeline for validation.
 # https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies#build-validation
 pr:
   branches:
     include:
       - "main"
-
 
 jobs:
   - job: pr_lint
@@ -29,7 +27,7 @@ jobs:
             -e VALIDATE_POWERSHELL=true \
             -e VALIDATE_YAML=true \
             -e VALIDATE_EDITORCONFIG=true \
-            -e "FILTER_REGEX_EXCLUDE=.*infra-as-code/bicep/modules/policy/(definitions|assignments)/lib/.*/.*.json|.*generateddocs/.*.bicep.md" \
+            -e "FILTER_REGEX_EXCLUDE=.*upstream-releases/*|.*generateddocs/.*.bicep.md" \
             -v $(System.DefaultWorkingDirectory):/tmp/lint \
             github/super-linter
         displayName: Run github/super-linter
