@@ -60,6 +60,9 @@ jobs:
 
   ALZ_Bicep_2_Workflow_Job:
     runs-on: ubuntu-latest
+    needs: Validate_ALZ_Bicep_2
+    environment:
+      name: production
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
