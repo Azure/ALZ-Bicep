@@ -21,6 +21,7 @@ The following DNS Zones are region specific and will be deployed with the provid
 
 - `privatelink.xxxxxx.batch.azure.com`
 - `privatelink.xxxxxx.azmk8s.io`
+- `privatelink.xxxxxx.kusto.windows.net`
 
 **Note:** The region specific zones are included in the parameters files with the region set as `xxxxxx`. For these zones to deploy properly, replace `xxxxxx` with the target region. For example: `privatelink.xxxxxx.azmk8s.io` would become `privatelink.eastus.azmk8s.io` for a deployment targeting the East US region.
 
