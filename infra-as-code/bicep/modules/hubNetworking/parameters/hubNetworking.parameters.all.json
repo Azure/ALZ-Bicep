@@ -176,6 +176,9 @@
         "privatelink.webpubsub.azure.com"
       ]
     },
+    "parPrivateDnsZoneAutoMergeAzureBackupZone": {
+      "value": true
+    },
     "parVpnGatewayConfig": {
       "value": {
         "name": "alz-Vpn-Gateway",

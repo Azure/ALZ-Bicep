@@ -205,6 +205,9 @@ param parPrivateDnsZones array = [
   'privatelink.webpubsub.azure.com'
 ]
 
+@sys.description('Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.')
+param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
+
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
 @sys.description('''Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
 "parVpnGatewayConfig": {
@@ -745,6 +748,7 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
     parTags: parTags
     parVirtualNetworkIdToLink: resHubVnet.id
     parPrivateDnsZones: parPrivateDnsZones
+    parPrivateDnsZoneAutoMergeAzureBackupZone: parPrivateDnsZoneAutoMergeAzureBackupZone
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
