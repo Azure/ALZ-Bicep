@@ -239,6 +239,7 @@ outVirtualHubName | array |
 outVirtualHubId | array |
 outDdosPlanResourceId | string |
 outPrivateDnsZones | array |
+outPrivateDnsZonesNames | array |
 
 ## Snippets
 
