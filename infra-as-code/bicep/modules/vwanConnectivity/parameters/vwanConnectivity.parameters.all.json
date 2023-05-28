@@ -137,6 +137,9 @@
         "privatelink.webpubsub.azure.com"
       ]
     },
+    "parPrivateDnsZoneAutoMergeAzureBackupZone": {
+      "value": true
+    },
     "parVirtualNetworkIdToLink": {
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
     },
