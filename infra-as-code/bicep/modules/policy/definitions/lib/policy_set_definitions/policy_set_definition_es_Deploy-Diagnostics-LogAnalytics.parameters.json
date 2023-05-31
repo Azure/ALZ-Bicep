@@ -345,6 +345,9 @@
       "logAnalytics": {
         "value": "[[parameters('logAnalytics')]"
       },
+      "logAnalyticsDestinationType": {
+        "value": "[[parameters('FirewallLogAnalyticsDestinationType')]"
+      },
       "effect": {
         "value": "[[parameters('FirewallLogAnalyticsEffect')]"
       },
