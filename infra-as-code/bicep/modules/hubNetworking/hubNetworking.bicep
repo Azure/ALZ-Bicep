@@ -7,13 +7,13 @@ param parLocation string = resourceGroup().location
 @sys.description('Prefix value which will be prepended to all resource names.')
 param parCompanyPrefix string = 'alz'
 
-@sys.description('Prefix Used for Hub Network.')
+@sys.description('Name for Hub Network.')
 param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 
-@sys.description('The IP address range for all virtual networks to use.')
+@sys.description('The IP address range for Hub Network.')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
-@sys.description('The name, IP address range, network security group and route table for each subnet in the virtual networks.')
+@sys.description('The name, IP address range, network security group and route table for each subnet in the Hub Network.')
 param parSubnets array = [
   {
     name: 'AzureBastionSubnet'
@@ -57,16 +57,20 @@ param parPublicIpPrefix string = ''
 @sys.description('Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix')
 param parPublicIpSuffix string = '-PublicIP'
 
-@sys.description('Switch to enable/disable Azure Bastion deployment. Default: true')
+@sys.description('Switch to enable/disable Azure Bastion deployment.')
 param parAzBastionEnabled bool = true
 
 @sys.description('Name Associated with Bastion Service.')
 param parAzBastionName string = '${parCompanyPrefix}-bastion'
 
-@sys.description('Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard.')
+@sys.description('Azure Bastion SKU.')
+@allowed([
+  'Basic'
+  'Standard'
+])
 param parAzBastionSku string = 'Standard'
 
-@sys.description('NSG Name for Azure Bastion Subnet NSG.')
+@sys.description('Name for Azure Bastion Subnet NSG.')
 param parAzBastionNsgName string = 'nsg-AzureBastionSubnet'
 
 @sys.description('Switch to enable/disable DDoS Network Protection deployment.')

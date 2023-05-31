@@ -6,21 +6,21 @@ Orchestration module that helps enable Diagnostic Settings on the Management Gro
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy in the managementGroups module. Default: alz
+parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy in the managementGroups module.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 parLandingZoneMgChildren | No       | Array of strings to allow additional or different child Management Groups of the Landing Zones Management Group.
 parPlatformMgChildren | No       | Array of strings to allow additional or different child Management Groups of the Platform Management Group.
 parLogAnalyticsWorkspaceResourceId | Yes      | Log Analytics Workspace Resource ID.
-parLandingZoneMgAlzDefaultsEnable | No       | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
-parPlatformMgAlzDefaultsEnable | No       | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
-parLandingZoneMgConfidentialEnable | No       | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true. Default: false
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry. Default: false
+parLandingZoneMgAlzDefaultsEnable | No       | Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true.
+parPlatformMgAlzDefaultsEnable | No       | Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true.
+parLandingZoneMgConfidentialEnable | No       | Deploys Diagnostic Settings on Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.
+parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parTopLevelManagementGroupPrefix
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix used for the management group hierarchy in the managementGroups module. Default: alz
+Prefix used for the management group hierarchy in the managementGroups module.
 
 - Default value: `alz`
 
@@ -52,7 +52,7 @@ Log Analytics Workspace Resource ID.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
+Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true.
 
 - Default value: `True`
 
@@ -60,7 +60,7 @@ Deploys Corp & Online Management Groups beneath Landing Zones Management Group i
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true. Default: true
+Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true.
 
 - Default value: `True`
 
@@ -68,7 +68,7 @@ Deploys Corp & Online Management Groups beneath Landing Zones Management Group i
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true. Default: false
+Deploys Diagnostic Settings on Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.
 
 - Default value: `False`
 
@@ -76,7 +76,7 @@ Deploys Confidential Corp & Confidential Online Management Groups beneath Landin
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set Parameter to true to Opt-out of deployment telemetry. Default: false
+Set Parameter to true to Opt-out of deployment telemetry.
 
 - Default value: `False`
 
