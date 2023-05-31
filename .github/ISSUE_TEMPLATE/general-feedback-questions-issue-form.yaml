@@ -1,0 +1,41 @@
+name: General Feedback
+description: Tell us what you think!
+title: "[PLACEHOLDER] - Place a descriptive title here"
+labels: ["feedback"]
+assignees:
+  - test
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We always appreciate the community involvement! Let us know your questions.
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: true
+  - type: textarea
+    id: describe-feedback
+    attributes:
+      label: Let us know the feedback or general question
+      value: "Feedback - Question"
+    validations:
+      required: true
+  - type: textarea
+    id: version
+    attributes:
+      label: Version
+      description: What version of our repo are you running?
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
