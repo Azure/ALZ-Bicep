@@ -93,7 +93,7 @@ resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2021-06-2
   }
 }
 
-resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
+resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: parLogAnalyticsWorkspaceName
   location: parLogAnalyticsWorkspaceLocation
   tags: parLogAnalyticsWorkspaceTags
