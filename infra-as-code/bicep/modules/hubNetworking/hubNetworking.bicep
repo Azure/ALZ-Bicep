@@ -271,7 +271,7 @@ var varSubnetProperties = [for subnet in varSubnetMap: {
   name: subnet.name
   properties: {
     addressPrefix: subnet.ipAddressRange
-    
+
     delegations: (empty(subnet.delegation)) ? null : [
       {
         name: subnet.delegation
