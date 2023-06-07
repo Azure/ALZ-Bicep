@@ -13,7 +13,7 @@ param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 @sys.description('The IP address range for Hub Network.')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
-@sys.description('The name, IP address range, network security group and route table for each subnet in the Hub Network.')
+@sys.description('The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks.')
 param parSubnets array = [
   {
     name: 'AzureBastionSubnet'
@@ -264,6 +264,7 @@ var varSubnetMap = map(range(0, length(parSubnets)), i => {
     ipAddressRange: parSubnets[i].ipAddressRange
     networkSecurityGroupId: contains(parSubnets[i], 'networkSecurityGroupId') ? parSubnets[i].networkSecurityGroupId : ''
     routeTableId: contains(parSubnets[i], 'routeTableId') ? parSubnets[i].routeTableId : ''
+    delegation: contains(parSubnets[i], 'delegation') ? parSubnets[i].delegation : ''
   })
 
 var varSubnetProperties = [for subnet in varSubnetMap: {
@@ -271,11 +272,20 @@ var varSubnetProperties = [for subnet in varSubnetMap: {
   properties: {
     addressPrefix: subnet.ipAddressRange
 
+    delegations: (empty(subnet.delegation)) ? null : [
+      {
+        name: subnet.delegation
+        properties: {
+          serviceName: subnet.delegation
+        }
+      }
+    ]
+
     networkSecurityGroup: (subnet.name == 'AzureBastionSubnet') ? {
       id: '${resourceGroup().id}/providers/Microsoft.Network/networkSecurityGroups/${parAzBastionNsgName}'
-    } : (!empty(subnet.networkSecurityGroupId)) ? {
+    } : (empty(subnet.networkSecurityGroupId)) ? null : {
       id: subnet.networkSecurityGroupId
-    } : null
+    }
 
     routeTable: (empty(subnet.routeTableId)) ? null : {
       id: subnet.routeTableId
