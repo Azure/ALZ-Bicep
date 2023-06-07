@@ -8,6 +8,7 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
+parPlatformMgAlzDefaultsEnable | No       | Management, Identity and Connectivity Management Groups beneath Platform Management Group have been deployed. If set to false, platform policies are assigned to the Platform Management Group; otherwise policies are assigned to the child management groups.
 parLogAnalyticsWorkSpaceAndAutomationAccountLocation | No       | The region where the Log Analytics Workspace & Automation Account are deployed.
 parLogAnalyticsWorkspaceResourceId | No       | Log Analytics Workspace Resource ID.
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
@@ -35,6 +36,14 @@ Prefix for the management group hierarchy.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
+
+### parPlatformMgAlzDefaultsEnable
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Management, Identity and Connectivity Management Groups beneath Platform Management Group have been deployed. If set to false, platform policies are assigned to the Platform Management Group; otherwise policies are assigned to the child management groups.
+
+- Default value: `True`
 
 ### parLogAnalyticsWorkSpaceAndAutomationAccountLocation
 
@@ -143,6 +152,9 @@ Set Parameter to true to Opt-out of deployment telemetry
         },
         "parTopLevelManagementGroupSuffix": {
             "value": ""
+        },
+        "parPlatformMgAlzDefaultsEnable": {
+            "value": true
         },
         "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
             "value": "eastus"
