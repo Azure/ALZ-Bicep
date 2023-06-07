@@ -10,7 +10,7 @@ parLocation    | No       | The Azure Region to deploy the resources into.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
 parHubNetworkName | No       | Name for Hub Network.
 parHubNetworkAddressPrefix | No       | The IP address range for Hub Network.
-parSubnets     | No       | The name, IP address range, network security group and route table for each subnet in the Hub Network.
+parSubnets     | No       | The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks.
 parDnsServerIps | No       | Array of DNS Server IP addresses for VNet.
 parPublicIpSku | No       | Public IP Address SKU.
 parPublicIpPrefix | No       | Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
@@ -76,7 +76,7 @@ The IP address range for Hub Network.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The name, IP address range, network security group and route table for each subnet in the Hub Network.
+The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks.
 
 - Default value: `   `
 
