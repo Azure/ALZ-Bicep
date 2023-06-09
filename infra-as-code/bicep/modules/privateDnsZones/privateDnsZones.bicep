@@ -74,6 +74,9 @@ param parPrivateDnsZones array = [
   'privatelink.webpubsub.azure.com'
 ]
 
+@sys.description('Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.')
+param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
+
 @sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
 
@@ -154,7 +157,7 @@ var varAzBackupGeoCodes = {
 }
 
 // If region entered in parLocation and matches a lookup to varAzBackupGeoCodes then insert Azure Backup Private DNS Zone with appropriate geo code inserted alongside zones in parPrivateDnsZones. If not just return parPrivateDnsZones
-var varPrivateDnsZonesMerge = contains(varAzBackupGeoCodes, parLocation) ? union(parPrivateDnsZones, [ 'privatelink.${varAzBackupGeoCodes[toLower(parLocation)]}.backup.windowsazure.com' ]) : parPrivateDnsZones
+var varPrivateDnsZonesMerge = parPrivateDnsZoneAutoMergeAzureBackupZone && contains(varAzBackupGeoCodes, parLocation) ? union(parPrivateDnsZones, [ 'privatelink.${varAzBackupGeoCodes[toLower(parLocation)]}.backup.windowsazure.com' ]) : parPrivateDnsZones
 
 // Customer Usage Attribution Id
 var varCuaid = '981733dd-3195-4fda-a4ee-605ab959edb6'
