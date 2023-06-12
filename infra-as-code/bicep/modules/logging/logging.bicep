@@ -55,7 +55,6 @@ param parLogAnalyticsWorkspaceSolutions array = [
 @sys.description('Log Analytics Workspace should be linked with the automation account.')
 param parLogAnalyticsWorkspaceLinkAutomationAccount bool = true
 
-
 @sys.description('Automation account name.')
 param parAutomationAccountName string = 'alz-automation-account'
 
