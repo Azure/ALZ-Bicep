@@ -2,7 +2,7 @@
 
 This guide will review how to deploy the Azure landing zone Bicep accelerator with a jump start on Zero Trust Networking Principles for Azure landing zones.
 
-For more information on Zero Trust security model and principles visit [Embrace proactive security with Zero Trust](https://learn.microsoft.com/security/zero-trust/deploy/networks).
+For more information on Zero Trust security model and principles visit [Secure networks with Zero Trust](https://learn.microsoft.com/security/zero-trust/deploy/networks).
 
 Deploying Zero Trust network principles with the Bicep deployment will involve setting certain module parameters to a value.  Some of these are already the default values, and do not need to be changed.  Others will need to be changed from their default values.
 
