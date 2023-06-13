@@ -22,7 +22,7 @@ This will deploy a DDoS Protection Plan to use to protect your networking resour
 
 ## Default Policies
 
-In the [Policy Assignment module parameters](../../infra-as-code/bicep/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json), use the following parameter values:
+In the [Policy Assignment module parameters](../../infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json), use the following parameter values:
 
 | Parameter value | Zero Trust Value | Default Value |
 |---|---|---|
