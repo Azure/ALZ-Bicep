@@ -52,6 +52,9 @@ param parLogAnalyticsWorkspaceSolutions array = [
   'VMInsights'
 ]
 
+@sys.description('Log Analytics Workspace should be linked with the automation account.')
+param parLogAnalyticsWorkspaceLinkAutomationAccount bool = true
+
 @sys.description('Automation account name.')
 param parAutomationAccountName string = 'alz-automation-account'
 
@@ -120,7 +123,7 @@ resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solut
   }
 }]
 
-resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2020-08-01' = {
+resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2020-08-01' = if (parLogAnalyticsWorkspaceLinkAutomationAccount) {
   name: '${resLogAnalyticsWorkspace.name}/Automation'
   properties: {
     resourceId: resAutomationAccount.id
