@@ -83,4 +83,4 @@ Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to her
 [aes_part_3]:                                   https://aka.ms/azenable/96 "Part 3 - Enabling landing zones"
 [aac_article]:                                  https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep "Azure Architecture Center - Azure landing zones - Bicep modules design considerations"
 [accelerator]:                                https://github.com/Azure/ALZ-Bicep/wiki/Accelerator "Accelerator"
-[wiki_zt_networking]:                         DeploymentGuideHSZT.md "Zero Trust Networking Guide: Hub and Spoke"
+[wiki_zt_networking]:                        https://github.com/Azure/ALZ-Bicep/wiki/DeploymentGuideHSZT "Zero Trust Networking Guide: Hub and Spoke"

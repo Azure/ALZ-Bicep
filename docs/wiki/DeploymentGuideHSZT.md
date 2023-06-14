@@ -14,11 +14,11 @@ In the [hubNetworking module parameters](../../infra-as-code/bicep/modules/hubNe
 
 | Parameter value | Zero Trust Value | Default Value |
 |---|---|---|
-|parDdosEnabled| TRUE | TRUE |
-| parAzFirewallEnabled | TRUE | TRUE |
-| parAzFirewallTier | **Premium** | Standard |
+| `parDdosEnabled` | `true` | `true` |
+| `parAzFirewallEnabled` | `true` | `true` |
+| `parAzFirewallTier` | `Premium` | `Standard` |
 
-This will deploy a DDoS Protection Plan to use to protect your networking resources from DDoS Attacks.  In addition, it will deploy an Azure Firewall with a Premium SKU that will enable you to set up TLS inspection in your environment.
+This will deploy a DDoS Network Protection Plan to use to protect your networking resources from DDoS Attacks.  In addition, it will deploy an Azure Firewall with a Premium SKU that will enable you to set up TLS inspection in your environment.
 
 ## Default Policies
 
@@ -26,7 +26,7 @@ In the [Policy Assignment module parameters](../../infra-as-code/bicep/modules/p
 
 | Parameter value | Zero Trust Value | Default Value |
 |---|---|---|
-| parDisableAlzDefaultPolicies | FALSE | FALSE |
+| `parDisableAlzDefaultPolicies` | `false` | `false`|
 
 This makes sure that the default policies are deployed, which contain policies related to Network Security Groups that will help you adopt Zero Trust for networking.
 
