@@ -10,7 +10,7 @@ These parameters reside within the parameters folder of each module.  Below is a
 
 ## Hub Networking Parameters
 
-In the [hubNetworking module parameters](../../infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json), use the following parameter values:
+In the [hubNetworking module parameters](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json), use the following parameter values:
 
 | Parameter value | Zero Trust Value | Default Value |
 |---|---|---|
@@ -22,7 +22,7 @@ This will deploy a DDoS Network Protection Plan to use to protect your networkin
 
 ## Default Policies
 
-In the [Policy Assignment module parameters](../../infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json), use the following parameter values:
+In the [Policy Assignment module parameters](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json), use the following parameter values:
 
 | Parameter value | Zero Trust Value | Default Value |
 |---|---|---|
