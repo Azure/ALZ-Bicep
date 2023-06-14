@@ -484,9 +484,6 @@ module modPolicyAssignmentIntRootDeployAzActivityLog '../../../policy/assignment
 
 // Module - Policy Assignment - Deploy-ASC-Monitoring
 module modPolicyAssignmentIntRootDeployAscMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployASCMonitoring.libDefinition.name)) {
-  // dependsOn: [
-  //   modCustomPolicyDefinitions
-  // ]
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployAscMonitoring
   params: {
