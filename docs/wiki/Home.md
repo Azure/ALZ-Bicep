@@ -16,6 +16,7 @@ Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` 
 * [Deployment Flow][wiki_deployment_flow]
   * [Network Topology: Hub and Spoke][wiki_deployment_flow_hs]
   * [Network Topology: Virtual WAN][wiki_deployment_flow_vwan]
+  * [Zero Trust Networking Guide: Hub and Spoke][wiki_zt_networking]
 * [Consumer Guide][wiki_consumer_guide]
   * [Accelerator][accelerator]
 * [How Does ALZ-Bicep Implement Azure Policies?][wiki_policy_deep_dive]
@@ -82,4 +83,4 @@ Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to her
 [aes_part_3]:                                   https://aka.ms/azenable/96 "Part 3 - Enabling landing zones"
 [aac_article]:                                  https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep "Azure Architecture Center - Azure landing zones - Bicep modules design considerations"
 [accelerator]:                                https://github.com/Azure/ALZ-Bicep/wiki/Accelerator "Accelerator"
-
+[wiki_zt_networking]:                        https://github.com/Azure/ALZ-Bicep/wiki/DeploymentGuideHSZT "Zero Trust Networking Guide: Hub and Spoke"
