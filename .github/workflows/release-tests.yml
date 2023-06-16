@@ -1,0 +1,41 @@
+name: Pre-Release Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+jobs:
+  release-tests:
+    name: Pre-Release Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        id: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Pester Tests
+        id: pester
+        if: contains(github.head_ref, 'release')
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            Import-Module Pester -Force
+            $pesterConfiguration = @{
+              Run    = @{
+                Container = New-PesterContainer -Path "./.github/pester/release.tests.ps1"
+                PassThru  = $true
+              }
+              Output = @{
+                Verbosity = 'Detailed'
+              }
+            }
+            $result = Invoke-Pester -Configuration $pesterConfiguration
+            exit $result.FailedCount
+          azPSVersion: "latest"
+
+
