@@ -9,6 +9,7 @@ Parameter name | Required | Description
 parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 parPlatformMgAlzDefaultsEnable | No       | Management, Identity and Connectivity Management Groups beneath Platform Management Group have been deployed. If set to false, platform policies are assigned to the Platform Management Group; otherwise policies are assigned to the child management groups.
+parLandingZoneChildrenMgAlzDefaultsEnable | No       | Corp & Online Management Groups beneath Landing Zones Management Groups have been deployed. If set to false, policies will not try to be assigned to corp or onlone Management Groups.
 parLogAnalyticsWorkSpaceAndAutomationAccountLocation | No       | The region where the Log Analytics Workspace & Automation Account are deployed.
 parLogAnalyticsWorkspaceResourceId | No       | Log Analytics Workspace Resource ID.
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
@@ -42,6 +43,14 @@ Optional suffix for the management group hierarchy. This suffix will be appended
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Management, Identity and Connectivity Management Groups beneath Platform Management Group have been deployed. If set to false, platform policies are assigned to the Platform Management Group; otherwise policies are assigned to the child management groups.
+
+- Default value: `True`
+
+### parLandingZoneChildrenMgAlzDefaultsEnable
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Corp & Online Management Groups beneath Landing Zones Management Groups have been deployed. If set to false, policies will not try to be assigned to corp or onlone Management Groups.
 
 - Default value: `True`
 
@@ -154,6 +163,9 @@ Set Parameter to true to Opt-out of deployment telemetry
             "value": ""
         },
         "parPlatformMgAlzDefaultsEnable": {
+            "value": true
+        },
+        "parLandingZoneChildrenMgAlzDefaultsEnable": {
             "value": true
         },
         "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
