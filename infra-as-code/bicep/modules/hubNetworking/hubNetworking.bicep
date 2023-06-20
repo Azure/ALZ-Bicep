@@ -13,7 +13,7 @@ param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 @sys.description('The IP address range for Hub Network.')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
-@sys.description('The name, IP address range, network security group and route table for each subnet in the Hub Network.')
+@sys.description('The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks.')
 param parSubnets array = [
   {
     name: 'AzureBastionSubnet'
@@ -205,6 +205,9 @@ param parPrivateDnsZones array = [
   'privatelink.webpubsub.azure.com'
 ]
 
+@sys.description('Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.')
+param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
+
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
 @sys.description('''Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
 "parVpnGatewayConfig": {
@@ -264,6 +267,7 @@ var varSubnetMap = map(range(0, length(parSubnets)), i => {
     ipAddressRange: parSubnets[i].ipAddressRange
     networkSecurityGroupId: contains(parSubnets[i], 'networkSecurityGroupId') ? parSubnets[i].networkSecurityGroupId : ''
     routeTableId: contains(parSubnets[i], 'routeTableId') ? parSubnets[i].routeTableId : ''
+    delegation: contains(parSubnets[i], 'delegation') ? parSubnets[i].delegation : ''
   })
 
 var varSubnetProperties = [for subnet in varSubnetMap: {
@@ -271,11 +275,20 @@ var varSubnetProperties = [for subnet in varSubnetMap: {
   properties: {
     addressPrefix: subnet.ipAddressRange
 
+    delegations: (empty(subnet.delegation)) ? null : [
+      {
+        name: subnet.delegation
+        properties: {
+          serviceName: subnet.delegation
+        }
+      }
+    ]
+
     networkSecurityGroup: (subnet.name == 'AzureBastionSubnet') ? {
       id: '${resourceGroup().id}/providers/Microsoft.Network/networkSecurityGroups/${parAzBastionNsgName}'
-    } : (!empty(subnet.networkSecurityGroupId)) ? {
+    } : (empty(subnet.networkSecurityGroupId)) ? null : {
       id: subnet.networkSecurityGroupId
-    } : null
+    }
 
     routeTable: (empty(subnet.routeTableId)) ? null : {
       id: subnet.routeTableId
@@ -745,6 +758,7 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
     parTags: parTags
     parVirtualNetworkIdToLink: resHubVnet.id
     parPrivateDnsZones: parPrivateDnsZones
+    parPrivateDnsZoneAutoMergeAzureBackupZone: parPrivateDnsZoneAutoMergeAzureBackupZone
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
