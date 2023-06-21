@@ -107,13 +107,13 @@ var varCustomPolicySetDefinitionsArray = [
 			}
 			{
 				definitionReferenceId: 'MariaDbDenyPublicIP'
-				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-MariaDB'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/fdccbe47-f3e3-4213-ad5d-ea459b2fa077'
 				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.MariaDbDenyPublicIP.parameters
 				definitionGroups: []
 			}
 			{
 				definitionReferenceId: 'MlDenyPublicIP'
-				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-MachineLearning-PublicNetworkAccess'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/438c38d2-3772-465a-a9cc-7a6666a275ce'
 				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.MlDenyPublicIP.parameters
 				definitionGroups: []
 			}
