@@ -14,7 +14,7 @@ The ALZ Bicep Accelerator framework was developed to provide end-users with the 
 
 - Allows for rapid onboarding and deployment of ALZ Bicep using full-fledged CI/CD pipelines with user provided input
   > **Note**
-  > Currently we only provide support for GitHub Action workflows, but there are plans to add support for Azure Pipelines and GitLab pipelines in the future
+  > Currently we offer support for [GitHub Action Workflows](#getting-started-if-youre-using-github-actions) and [Azure DevOps Pipelines](#getting-started-if-youre-using-azure-devops-pipelines), but there are plans to add support for GitLab pipelines in the future
 - Provides framework to not only stay in-sync with new [ALZ Bicep releases](https://github.com/Azure/ALZ-Bicep/releases), but also incorporates guidance around modifiying existing ALZ Bicep modules and/or associating custom modules to the framework
 - Offers branching strategy guidance and pull request pipelines for linting the repository as well as validating any existing custom and/or modified Bicep modules
 Accelerator Directory Tree:
@@ -26,7 +26,6 @@ Accelerator Directory Tree:
 We attempted to make the pipelines as flexible as possible while also reducing overall complexity. Essentially, the ALZ Bicep Accelerator is made up four distinct deployment pipelines that represent different phases of the ALZ Bicep deployment. Each workflow shares a common set of workflow configurations and deployment scripts including the following:
 
 - Event based triggers (i.e. pushes to main and path filters for each workflow associated Bicep parameter file)
-- OpenID Connect (OIDC) authentication to Azure with the workflow permissions necessary to access the OIDC JWT ID token
 - PowerShell deployment scripts for each module that are referenced within [Azure PowerShell Action](https://github.com/marketplace/actions/azure-powershell-action) steps
   - The PowerShell scripts reference the modules and parameter files used within the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow#module-deployment-sequence). Therefore, we recommend you review the deployment flow documentation to understand the purpose of each module and the parameters that are used within the deployment scripts.
 - Environment variables file (.env) which is used to store variables that are accessed within the PowerShell scripts
@@ -35,15 +34,15 @@ The only thing that differs across the workflows is which ALZ Bicep modules are 
 
 | Workflow Name            | Modules Deployed              |
 |------------------------- |-------------------------------|
-| [ALZ-Bicep-1 Workflow](https://github.com/Azure/ALZ-Bicep/blob/main/accelerator/.github/workflows/alz-bicep-1.yml) | Management Groups Deployment, Logging and Sentinel Resource Group Deployment, Logging and Sentinel Deployment, Custom Policy Definitions Deployment, Custom Management Group Diagnostic Settings
-| [ALZ-Bicep-2 Workflow](https://github.com/Azure/ALZ-Bicep/blob/main/accelerator/.github/workflows/alz-bicep-2.yml) | Built-in and Custom Policy Assignments Deployment
-| [ALZ-Bicep-3 Workflow](https://github.com/Azure/ALZ-Bicep/blob/main/accelerator/.github/workflows/alz-bicep-3.yml) | Deploy Subscription Placement
-| [ALZ-Bicep-4a Workflow](https://github.com/Azure/ALZ-Bicep/blob/main/accelerator/.github/workflows/alz-bicep-4a.yml) | Connectivity Resource Group Deployment, Hub (Hub-and-Spoke) Deployment
-| [ALZ-Bicep-4b Workflow](https://github.com/Azure/ALZ-Bicep/blob/main/accelerator/.github/workflows/alz-bicep-4b.yml) | Connectivity Resource Group Deployment, Hub (VWAN) Deployment
+| ALZ-Bicep-1 Workflow | Management Groups Deployment, Logging and Sentinel Resource Group Deployment, Logging and Sentinel Deployment, Custom Policy Definitions Deployment, Custom Management Group Diagnostic Settings
+| ALZ-Bicep-2 Workflow | Built-in and Custom Policy Assignments Deployment
+| ALZ-Bicep-3 Workflow | Deploy Subscription Placement
+| ALZ-Bicep-4a Workflow | Connectivity Resource Group Deployment, Hub (Hub-and-Spoke) Deployment
+| ALZ-Bicep-4b Workflow | Connectivity Resource Group Deployment, Hub (VWAN) Deployment
 
-### Getting Started
+### Getting Started if you're using GitHub Actions
 
-In order to setup the Accelerator framework with the production ready pipelines, the following steps must be completed in the order listed:
+In order to setup the Accelerator framework with the production GitHub Action Workflows, the following steps must be completed in the order listed:
 
 1. Install the [ALZ PowerShell Module](https://github.com/Azure/ALZ-PowerShell-Module#installation) on your local development machine or within the Azure Cloud Shell using the following command:
 
@@ -123,6 +122,89 @@ In order to setup the Accelerator framework with the production ready pipelines,
     - Require conversation resolution before merging
     - Do not allow bypassing the above settings
 
+### Getting Started if you're using Azure DevOps Pipelines
+
+In order to setup the Accelerator framework with the production ready Azure DevOps Pipelines, the following steps must be completed in the order listed:
+
+1. Install the [ALZ PowerShell Module](https://github.com/Azure/ALZ-PowerShell-Module#installation) on your local development machine or within the Azure Cloud Shell using the following command:
+
+    > **Warning:**
+    > In order to use this module, [PowerShell 7.1 or higher](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3) needs to be installed
+
+    ```powershell
+    Install-Module -Name ALZ
+    ```
+
+1. Before you can utilize the module, ensure you have the prerequisites installed with the following command:
+
+    ```powershell
+    Test-ALZRequirement
+    ```
+
+    Currently this tests for:
+
+    - Supported minimum PowerShell version
+    - Azure PowerShell Module
+    - Git
+    - Azure CLI
+    - Bicep
+
+1. Create your ALZ Bicep Accelerator framework with the following command:
+
+    ```powershell
+    New-ALZEnvironment -o <output_directory> -cicd "azuredevops"
+    ```
+
+    > **Note:**
+    > If the directory structure specified for the output location does not exist, the module will create the directory structure programatically.
+1. Depending upon your preferred [network topology deployment](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation),  remove the associated workflow file for each deployment model
+    - Traditional VNet Hub and Spoke = .azuredevops\workflows\alz-bicep-4a.yml
+    - Virtual WAN = .azuredevops\workflows\alz-bicep-4b.yml
+
+    > **Note:**
+    > These workflow files and associated deployment scripts will be programatically removed in the future.
+
+1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration.
+
+1. Create an [Azure Active Directory application/service principal](https://learn.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal)
+
+1. Create an [Azure Resource Manager Service Connection within Azure DevOps](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/connect-to-azure?view=azure-devops#create-an-azure-resource-manager-service-connection-with-an-existing-service-principal) at the Scope Level of Management Group. All pipeline files, except for the PR pipeline files reference a variable called SERVICE_CONNECTION_NAME. You will need to update the variable with the name of the service connection you created within this step.
+
+1. Create an [RBAC Assignment for the application/service principal](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation)
+
+1. Follow this [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops#create-a-repo-using-the-web-portal) to create a new remote Git repository
+
+1. If you need to authenticate Git from your local workstation or from the Azure Cloud Shell, please following the steps provided [here](https://learn.microsoft.com/en-us/azure/devops/repos/git/auth-overview?view=azure-devops). Otherwise, proceed to the next step.
+
+1. Run the following Git commands to get your remote branch in-sync with the local branch
+
+    ```shell
+    # Matches the remote URL with a name
+    git remote add origin https://dev.azure.com/<OrganizationName>/<ProjectName>/_git/<RepositoryName>
+    # Adds all changes in the working directory to the staging area.
+    git add .
+    # Records a snapshot of your repository's staging area.
+    git commit -m "Initial commit"
+    # Updates the remote branch with the local commit(s)
+    git push -u origin main
+
+1. Create your new pipelines within Azure DevOps. Ensure you select "Existing Azure Pipelines YAML file" when prompted  and select the pipeline files from the .azuredevops/pipelines
+
+1. [Assign pipeline permissions to access the Service Connection you created previously](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml#pipeline-permissions)    ```
+
+1. All pipelines are now ready to be deployed! For the initial deployment, manually trigger each workflow in the following order
+    1. ALZ-Bicep-1 Workflow
+    1. ALZ-Bicep-2 Workflow
+    1. ALZ-Bicep-3 Workflow
+    1. ALZ-Bicep-4a Workflow or ALZ-Bicep-4b Workflow
+
+1. As part of the [branching strategy](#incoporating-a-branching-strategy), setup the branch protection rules against the main branch with the following selected as a starting point:
+
+    - Require a pull request before merging
+      - Require approvals
+    - Require conversation resolution before merging
+    - Do not allow bypassing the above settings
+
 ### Incoporating a Branching Strategy
 
 Branching strategies offer the ability to manage and organize changes to a codebase, reduce errors, improve collaboration, and support best practices such as testing, continuous integration and deployment, and release management.
@@ -148,16 +230,16 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
 
 1. Using the ALZ PowerShell Module, there is a cmdlet called `Get-ALZBicepRelease`. This will download a specified release version from the remote ALZ-Bicep repository and pull down to the local directory where your Accelerator framework was initially deployed.
 
-    Here is an example of using the cmdlet to pull down version v0.13.0:
+    Here is an example of using the cmdlet to pull down version v0.15.0:
 
     ```powershell
-    Get-ALZGithubRelease -githubRepoUrl "https://github.com/Azure/ALZ-Bicep" -releases "v0.13.0" -directoryForReleases "C:\Repos\ALZ\accelerator\upstream-releases\"
+    Get-ALZGithubRelease -githubRepoUrl "https://github.com/Azure/ALZ-Bicep" -releases "v0.15.0" -directoryForReleases "C:\Repos\ALZ\accelerator\upstream-releases\"
     ```
 
-1. Once the ALZ Bicep release has been downloaded, you will need to update `upstream-releases-version` within the environment variables file (.env) with the version number of the release that you just downloaded. For example, if you downloaded v0.13.0, you would update the file with the following:
+1. Once the ALZ Bicep release has been downloaded, you will need to update `upstream-releases-version` within the environment variables file (.env) with the version number of the release that you just downloaded. For example, if you downloaded v0.15.0, you would update the file with the following:
 
     ```text
-    UPSTREAM_RELEASE_VERSION="v0.13.0"
+    UPSTREAM_RELEASE_VERSION="v0.15.0"
     ```
 
 1. You can now deploy the updated modules.
