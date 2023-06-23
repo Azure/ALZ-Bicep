@@ -1,3 +1,4 @@
 * text=auto eol=lf
 *.bicep -text
 *.bicepparam -text
+*issue-form.yaml eol=crlf
