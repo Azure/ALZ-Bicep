@@ -34,7 +34,7 @@
     },
     "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8e3e61b3-0b32-22d5-4edf-55f87fdb5955",
     "scope": null,
-    "enforcementMode": "Default"
+    "enforcementMode": "DoNotEnforce"
   },
   "location": null,
   "identity": {
