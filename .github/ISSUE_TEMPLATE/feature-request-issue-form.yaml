@@ -48,7 +48,7 @@ body:
     attributes:
       label: Feature Implementation
       description: Did you successfully implement the feature on your own? Do you have code to share? Link to your branch, if applicable.
-      render: shell
+      render: Shell
     validations:
       required: false
   - type: checkboxes
