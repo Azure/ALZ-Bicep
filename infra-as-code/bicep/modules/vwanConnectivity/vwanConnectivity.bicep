@@ -157,6 +157,9 @@ param parPrivateDnsZones array = [
   'privatelink.webpubsub.azure.com'
 ]
 
+@sys.description('Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.')
+param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
+
 @sys.description('Resource ID of VNet for Private DNS Zone VNet Links')
 param parVirtualNetworkIdToLink string = ''
 
@@ -315,8 +318,9 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
   params: {
     parLocation: parLocation
     parTags: parTags
-    parVirtualNetworkIdToLink: parVirtualNetworkIdToLink
     parPrivateDnsZones: parPrivateDnsZones
+    parPrivateDnsZoneAutoMergeAzureBackupZone: parPrivateDnsZoneAutoMergeAzureBackupZone
+    parVirtualNetworkIdToLink: parVirtualNetworkIdToLink
   }
 }
 
@@ -349,3 +353,4 @@ output outDdosPlanResourceId string = resDdosProtectionPlan.id
 
 // Output Private DNS Zones
 output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
+output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZonesNames : [])

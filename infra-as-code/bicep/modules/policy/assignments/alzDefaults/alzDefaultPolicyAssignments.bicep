@@ -10,6 +10,12 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @maxLength(10)
 param parTopLevelManagementGroupSuffix string = ''
 
+@sys.description('Management, Identity and Connectivity Management Groups beneath Platform Management Group have been deployed. If set to false, platform policies are assigned to the Platform Management Group; otherwise policies are assigned to the child management groups.')
+param parPlatformMgAlzDefaultsEnable bool = true
+
+@sys.description('Corp & Online Management Groups beneath Landing Zones Management Groups have been deployed. If set to false, policies will not try to be assigned to corp or onlone Management Groups.')
+param parLandingZoneChildrenMgAlzDefaultsEnable bool = true
+
 @sys.description('The region where the Log Analytics Workspace & Automation Account are deployed.')
 param parLogAnalyticsWorkSpaceAndAutomationAccountLocation string = 'eastus'
 
@@ -317,9 +323,9 @@ var varRbacRoleDefinitionIds = {
 var varManagementGroupIds = {
   intRoot: '${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}'
   platform: '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
-  platformManagement: '${parTopLevelManagementGroupPrefix}-platform-management${parTopLevelManagementGroupSuffix}'
-  platformConnectivity: '${parTopLevelManagementGroupPrefix}-platform-connectivity${parTopLevelManagementGroupSuffix}'
-  platformIdentity: '${parTopLevelManagementGroupPrefix}-platform-identity${parTopLevelManagementGroupSuffix}'
+  platformManagement: parPlatformMgAlzDefaultsEnable ? '${parTopLevelManagementGroupPrefix}-platform-management${parTopLevelManagementGroupSuffix}' : '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
+  platformConnectivity: parPlatformMgAlzDefaultsEnable ? '${parTopLevelManagementGroupPrefix}-platform-connectivity${parTopLevelManagementGroupSuffix}' : '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
+  platformIdentity: parPlatformMgAlzDefaultsEnable ? '${parTopLevelManagementGroupPrefix}-platform-identity${parTopLevelManagementGroupSuffix}' : '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
   landingZones: '${parTopLevelManagementGroupPrefix}-landingzones${parTopLevelManagementGroupSuffix}'
   landingZonesCorp: '${parTopLevelManagementGroupPrefix}-landingzones-corp${parTopLevelManagementGroupSuffix}'
   landingZonesOnline: '${parTopLevelManagementGroupPrefix}-landingzones-online${parTopLevelManagementGroupSuffix}'
@@ -481,9 +487,6 @@ module modPolicyAssignmentIntRootDeployAzActivityLog '../../../policy/assignment
 
 // Module - Policy Assignment - Deploy-ASC-Monitoring
 module modPolicyAssignmentIntRootDeployAscMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployASCMonitoring.libDefinition.name)) {
-  // dependsOn: [
-  //   modCustomPolicyDefinitions
-  // ]
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployAscMonitoring
   params: {
@@ -1097,7 +1100,7 @@ module modPolicyAssignmentLzsAuditAppGwWaf '../../../policy/assignments/policyAs
 
 // Modules - Policy Assignments - Corp Management Group
 // Module - Policy Assignment - Deny-Public-Endpoints
-module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicEndpoints.libDefinition.name)) {
+module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicEndpoints.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyPublicEndpoints
   params: {
@@ -1113,7 +1116,7 @@ module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/po
 }
 
 // Module - Policy Assignment - Deploy-Private-DNS-Zones
-module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if ((!empty(varPrivateDnsZonesResourceGroupSubscriptionId)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployPrivateDNSZones.libDefinition.name))) {
+module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if ((!empty(varPrivateDnsZonesResourceGroupSubscriptionId)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployPrivateDNSZones.libDefinition.name)) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployPrivateDnsZones
   params: {
@@ -1290,7 +1293,7 @@ module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments
 }
 
 // Module - Policy Assignment - Deny-Public-IP-On-NIC
-module modPolicyAssignmentLzsCorpDenyPipOnNic '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.name)) {
+module modPolicyAssignmentLzsCorpDenyPipOnNic '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsCorpDenyPipOnNic
   params: {
@@ -1306,7 +1309,7 @@ module modPolicyAssignmentLzsCorpDenyPipOnNic '../../../policy/assignments/polic
 }
 
 // Module - Policy Assignment - Deny-HybridNetworking
-module modPolicyAssignmentLzsCorpDenyHybridNet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyHybridNetworking.libDefinition.name)) {
+module modPolicyAssignmentLzsCorpDenyHybridNet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyHybridNetworking.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsCorpDenyHybridNet
   params: {
@@ -1322,7 +1325,7 @@ module modPolicyAssignmentLzsCorpDenyHybridNet '../../../policy/assignments/poli
 }
 
 // Module - Policy Assignment - Audit-PeDnsZones
-module modPolicyAssignmentLzsCorpAuditPeDnsZones '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentAuditPeDnsZones.libDefinition.name)) {
+module modPolicyAssignmentLzsCorpAuditPeDnsZones '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentAuditPeDnsZones.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsCorpAuditPeDnsZones
   params: {

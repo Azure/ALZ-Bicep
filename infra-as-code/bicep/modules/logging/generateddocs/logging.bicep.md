@@ -11,6 +11,7 @@ parLogAnalyticsWorkspaceLocation | No       | Log Analytics region name - Ensure
 parLogAnalyticsWorkspaceSkuName | No       | Log Analytics Workspace sku name.
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
 parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace.
+parLogAnalyticsWorkspaceLinkAutomationAccount | No       | Log Analytics Workspace should be linked with the automation account.
 parAutomationAccountName | No       | Automation account name.
 parAutomationAccountLocation | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
 parAutomationAccountUseManagedIdentity | No       | Automation Account - use managed identity.
@@ -62,6 +63,14 @@ Solutions that will be added to the Log Analytics Workspace.
 - Default value: `AgentHealthAssessment AntiMalware ChangeTracking Security SecurityInsights SQLAdvancedThreatProtection SQLVulnerabilityAssessment SQLAssessment Updates VMInsights`
 
 - Allowed values: `AgentHealthAssessment`, `AntiMalware`, `ChangeTracking`, `Security`, `SecurityInsights`, `ServiceMap`, `SQLAdvancedThreatProtection`, `SQLVulnerabilityAssessment`, `SQLAssessment`, `Updates`, `VMInsights`
+
+### parLogAnalyticsWorkspaceLinkAutomationAccount
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Log Analytics Workspace should be linked with the automation account.
+
+- Default value: `True`
 
 ### parAutomationAccountName
 
@@ -165,6 +174,9 @@ outAutomationAccountId | string |
                 "Updates",
                 "VMInsights"
             ]
+        },
+        "parLogAnalyticsWorkspaceLinkAutomationAccount": {
+            "value": true
         },
         "parAutomationAccountName": {
             "value": "alz-automation-account"
