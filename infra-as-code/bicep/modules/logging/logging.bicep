@@ -79,7 +79,7 @@ param parTelemetryOptOut bool = false
 // Customer Usage Attribution Id
 var varCuaid = 'f8087c67-cc41-46b2-994d-66e4b661860d'
 
-resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' = {
+resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2022-08-08' = {
   name: parAutomationAccountName
   location: parAutomationAccountLocation
   tags: parAutomationAccountTags
@@ -124,7 +124,8 @@ resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solut
 }]
 
 resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2020-08-01' = if (parLogAnalyticsWorkspaceLinkAutomationAccount) {
-  name: '${resLogAnalyticsWorkspace.name}/Automation'
+  parent: resLogAnalyticsWorkspace
+  name: 'Automation'
   properties: {
     resourceId: resAutomationAccount.id
   }
