@@ -256,3 +256,9 @@ Get-ChildItem -Recurse -Path infra-as-code/bicep/modules/ -Filter '*.json' -Excl
 Each resource must use the latest available, working, API version. If the latest API version cannot be used for any reason, a comment must be placed above the resource in the module file stating why and also called out as part of the PR.
 
 > The Bicep linter rule `use-recent-api-versions` will now also check for this 👍
+
+### Release Process Diagram
+
+When adding new parameters to a module, changing existing parameter names, or creating a new module, there are some additional steps that must be considered to ensure the [Accelerator](https://github.com/Azure/ALZ-Bicep/wiki/Accelerator) and the associated [ALZ-PowerShell-Module](https://github.com/Azure/Alz-powershell-module) remain in-sync. The following diagram outlines the steps for release process and provides additional context for changes that may be required:
+
+![Release Process](media/alz-bicep-release-process.png)
