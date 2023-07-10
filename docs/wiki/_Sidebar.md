@@ -4,6 +4,7 @@
 * [Deployment Flow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow)
   * [Network Topology: Hub and Spoke](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowHS)
   * [Network Topology: Virtual WAN](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowVWAN)
+  * [Zero Trust Networking Guide: Hub and Spoke](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentGuideHSZT)
 * [Consumer Guide](https://github.com/Azure/ALZ-Bicep/wiki/ConsumerGuide)
   * [Accelerator](https://github.com/Azure/ALZ-Bicep/wiki/Accelerator)
 * [How Does ALZ-Bicep Implement Azure Policies?](https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive)

@@ -76,6 +76,9 @@
         "privatelink.webpubsub.azure.com"
       ]
     },
+    "parPrivateDnsZoneAutoMergeAzureBackupZone": {
+      "value": true
+    },
     "parTags": {
       "value": {
         "Environment": "Live"

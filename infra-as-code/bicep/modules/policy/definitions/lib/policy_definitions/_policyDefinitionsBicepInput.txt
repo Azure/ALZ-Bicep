@@ -71,6 +71,22 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Databricks-VirtualNetwork.json')
 }
 {
+	name: 'Deny-FileServices-InsecureAuth'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureAuth.json')
+}
+{
+	name: 'Deny-FileServices-InsecureKerberos'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureKerberos.json')
+}
+{
+	name: 'Deny-FileServices-InsecureSmbChannel'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureSmbChannel.json')
+}
+{
+	name: 'Deny-FileServices-InsecureSmbVersions'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureSmbVersions.json')
+}
+{
 	name: 'Deny-MachineLearning-Aks'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-Aks.json')
 }
@@ -147,12 +163,28 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-minTLS.json')
 }
 {
+	name: 'Deny-Storage-SFTP'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-SFTP.json')
+}
+{
+	name: 'Deny-StorageAccount-CustomDomain'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-StorageAccount-CustomDomain.json')
+}
+{
 	name: 'Deny-Subnet-Without-Nsg'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Subnet-Without-Nsg.json')
 }
 {
+	name: 'Deny-Subnet-Without-Penp'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Subnet-Without-Penp.json')
+}
+{
 	name: 'Deny-Subnet-Without-Udr'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Subnet-Without-Udr.json')
+}
+{
+	name: 'Deny-UDR-With-Specific-NextHop'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-UDR-With-Specific-NextHop.json')
 }
 {
 	name: 'Deny-VNET-Peer-Cross-Sub'
