@@ -478,6 +478,10 @@ var varCustomPolicyDefinitionsArray = [
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-Tde.json')
   }
   {
+    name: 'Deploy-Sql-vulnerabilityAssessments_20230706'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-vulnerabilityAssessments_20230706.json')
+  }
+  {
     name: 'Deploy-Sql-vulnerabilityAssessments'
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-vulnerabilityAssessments.json')
   }
