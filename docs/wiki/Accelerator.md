@@ -109,19 +109,13 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
         > The workflows reference secret names AZURE_TENANT_ID and AZURE_CLIENT_ID. If you choose to use different names, you will need to update the workflows accordingly.
     1. [Create RBAC Assignment for the application/service principal](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation)
 
-1. Add the production environment to your GitHub repo for validation
-   1. Go to Settings > Environments
-   2. Click New environment
-   3. Enter 'production' in the Name field and click Configure environment
-   4. Tick *Required reviewers* and add members / teams that you would like to review the changes to the environment.
-
-2. All workflows are now ready to be deployed! For the initial deployment, manually trigger each workflow in the following order
+1. All workflows are now ready to be deployed! For the initial deployment, manually trigger each workflow in the following order
     1. ALZ-Bicep-1 Workflow
-    2. ALZ-Bicep-2 Workflow
-    3. ALZ-Bicep-3 Workflow
-    4. ALZ-Bicep-4a Workflow or ALZ-Bicep-4b Workflow
+    1. ALZ-Bicep-2 Workflow
+    1. ALZ-Bicep-3 Workflow
+    1. ALZ-Bicep-4a Workflow or ALZ-Bicep-4b Workflow
 
-3. As part of the [branching strategy](#incoporating-a-branching-strategy), setup the branch protection rules against the main branch with the following selected as a starting point:
+1. As part of the [branching strategy](#incoporating-a-branching-strategy), setup the branch protection rules against the main branch with the following selected as a starting point:
 
     - Require a pull request before merging
       - Require approvals
