@@ -12,7 +12,7 @@ param (
   [String]$TemplateParameterFile = "config\custom-parameters\customPolicyDefinitions.parameters.all.json",
 
   [Parameter()]
-  [Boolean]$WhatIf
+  [Boolean]$WhatIfEnabled = [System.Convert]::ToBoolean($($env:IS_PULL_REQUEST))
 )
 
 # Parameters necessary for deployment
@@ -22,8 +22,8 @@ $inputObject = @{
   ManagementGroupId     = $TopLevelMGPrefix
   TemplateFile          = $TemplateFile
   TemplateParameterFile = $TemplateParameterFile
+  WhatIf                = $WhatIfEnabled
   Verbose               = $true
-  WhatIf                = $WhatIf
 }
 
 New-AzManagementGroupDeployment @inputObject
