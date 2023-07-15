@@ -284,7 +284,7 @@ var varSubnetProperties = [for subnet in varSubnetMap: {
       }
     ]
 
-    networkSecurityGroup: (subnet.name == 'AzureBastionSubnet') ? {
+    networkSecurityGroup: (subnet.name == 'AzureBastionSubnet' && parAzBastionEnabled) ? {
       id: '${resourceGroup().id}/providers/Microsoft.Network/networkSecurityGroups/${parAzBastionNsgName}'
     } : (empty(subnet.networkSecurityGroupId)) ? null : {
       id: subnet.networkSecurityGroupId
