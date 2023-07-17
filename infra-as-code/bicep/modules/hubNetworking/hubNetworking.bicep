@@ -284,7 +284,7 @@ var varSubnetProperties = [for subnet in varSubnetMap: {
       }
     ]
 
-    networkSecurityGroup: (subnet.name == 'AzureBastionSubnet') ? {
+    networkSecurityGroup: (subnet.name == 'AzureBastionSubnet' && parAzBastionEnabled) ? {
       id: '${resourceGroup().id}/providers/Microsoft.Network/networkSecurityGroups/${parAzBastionNsgName}'
     } : (empty(subnet.networkSecurityGroupId)) ? null : {
       id: subnet.networkSecurityGroupId
@@ -365,7 +365,7 @@ resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2021-08-
   name: 'AzureBastionSubnet'
 }
 
-resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
+resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2021-08-01' = if (parAzBastionEnabled) {
   name: parAzBastionNsgName
   location: parLocation
   tags: parTags
