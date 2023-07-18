@@ -41,6 +41,14 @@ The only thing that differs across the workflows is which ALZ Bicep modules are 
 | [ALZ-Bicep-4a Workflow](https://github.com/Azure/ALZ-Bicep/blob/main/accelerator/.github/workflows/alz-bicep-4a.yml) | Connectivity Resource Group Deployment, Hub (Hub-and-Spoke) Deployment
 | [ALZ-Bicep-4b Workflow](https://github.com/Azure/ALZ-Bicep/blob/main/accelerator/.github/workflows/alz-bicep-4b.yml) | Connectivity Resource Group Deployment, Hub (VWAN) Deployment
 
+The following diagram illustrates the workflows at a high level:
+
+
+
+All of the GitHub Actions follow a similar high level workflow as follows:
+
+
+
 ### Getting Started
 
 In order to setup the Accelerator framework with the production ready pipelines, the following steps must be completed in the order listed:
