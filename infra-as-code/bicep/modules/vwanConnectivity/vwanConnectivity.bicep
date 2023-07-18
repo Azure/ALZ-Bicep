@@ -43,7 +43,7 @@ param parVirtualWanHubs array = [ {
     parExpressRouteGatewayEnabled: true
     parAzFirewallEnabled: true
     parVirtualHubAddressPrefix: '10.100.0.0/23'
-    parHubLocation: 'eastus'
+    parHubLocation: parLocation
     parHubRoutingPreference: 'ExpressRoute' //allowed values are 'ASN','VpnGateway','ExpressRoute'.
     parVirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
   }
@@ -177,7 +177,7 @@ var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
 var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub => hub.parAzFirewallEnabled), false)) && (parAzFirewallTier == 'Premium')) ? true : false
 
 // Virtual WAN resource
-resource resVwan 'Microsoft.Network/virtualWans@2022-01-01' = {
+resource resVwan 'Microsoft.Network/virtualWans@2023-02-01' = {
   name: parVirtualWanName
   location: parLocation
   tags: parTags
@@ -189,7 +189,7 @@ resource resVwan 'Microsoft.Network/virtualWans@2022-01-01' = {
   }
 }
 
-resource resVhub 'Microsoft.Network/virtualHubs@2022-01-01' = [for hub in parVirtualWanHubs: if (parVirtualHubEnabled && !empty(hub.parVirtualHubAddressPrefix)) {
+resource resVhub 'Microsoft.Network/virtualHubs@2023-02-01' = [for hub in parVirtualWanHubs: if (parVirtualHubEnabled && !empty(hub.parVirtualHubAddressPrefix)) {
   name: '${parVirtualWanHubName}-${hub.parHubLocation}'
   location: hub.parHubLocation
   tags: parTags
@@ -206,7 +206,7 @@ resource resVhub 'Microsoft.Network/virtualHubs@2022-01-01' = [for hub in parVir
   }
 }]
 
-resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2022-01-01' = [for (hub, i) in parVirtualWanHubs: if (parVirtualHubEnabled && hub.parAzFirewallEnabled) {
+resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2023-02-01' = [for (hub, i) in parVirtualWanHubs: if (parVirtualHubEnabled && hub.parAzFirewallEnabled) {
   parent: resVhub[i]
   name: 'defaultRouteTable'
   properties: {
@@ -227,7 +227,7 @@ resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2022-01
   }
 }]
 
-resource resVpnGateway 'Microsoft.Network/vpnGateways@2022-09-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parVpnGatewayEnabled)) {
+resource resVpnGateway 'Microsoft.Network/vpnGateways@2023-02-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parVpnGatewayEnabled)) {
   dependsOn: resVhub
   name: '${parVpnGatewayName}-${hub.parHubLocation}'
   location: hub.parHubLocation
@@ -245,7 +245,7 @@ resource resVpnGateway 'Microsoft.Network/vpnGateways@2022-09-01' = [for (hub, i
   }
 }]
 
-resource resErGateway 'Microsoft.Network/expressRouteGateways@2022-09-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parExpressRouteGatewayEnabled)) {
+resource resErGateway 'Microsoft.Network/expressRouteGateways@2023-02-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parExpressRouteGatewayEnabled)) {
   dependsOn: resVhub
   name: '${parExpressRouteGatewayName}-${hub.parHubLocation}'
   location: hub.parHubLocation
@@ -262,7 +262,7 @@ resource resErGateway 'Microsoft.Network/expressRouteGateways@2022-09-01' = [for
   }
 }]
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2022-05-01' = if (parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled) {
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = if (parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled) {
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
@@ -280,7 +280,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2022-05-01' = i
   }
 }
 
-resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2022-05-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parAzFirewallEnabled)) {
+resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parAzFirewallEnabled)) {
   name: '${parAzFirewallName}-${hub.parHubLocation}'
   location: hub.parHubLocation
   tags: parTags
@@ -305,7 +305,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2022-05-01' = [for (
 }]
 
 // DDoS plan is deployed even though not supported to attach to Virtual WAN today as per https://docs.microsoft.com/azure/firewall-manager/overview#known-issues - However, it can still be linked via policy to spoke VNets etc.
-resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2021-08-01' = if (parDdosEnabled) {
+resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01' = if (parDdosEnabled) {
   name: parDdosPlanName
   location: parLocation
   tags: parTags
