@@ -1,4 +1,4 @@
-name: ALZ-Bicep-PR-2 Workflow
+name: ALZ-Bicep-PR2-Lint
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  pr_lint:
+  ALZ_Bicep_PR2_Lint:
     name: Lint Code Base (except Bicep Modules and Files)
     runs-on: ubuntu-latest
     steps:
