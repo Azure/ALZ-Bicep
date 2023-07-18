@@ -12,7 +12,7 @@ param (
   [String]$TemplateParameterFile = "config\custom-parameters\resourceGroupConnectivity.parameters.all.json",
 
   [Parameter()]
-  [Boolean]$WhatIf
+  [Boolean]$WhatIfEnabled = [System.Convert]::ToBoolean($($env:IS_PULL_REQUEST))
 )
 
 # Parameters necessary for deployment
@@ -21,8 +21,8 @@ $inputObject = @{
   Location              = $Location
   TemplateFile          = $TemplateFile
   TemplateParameterFile = $TemplateParameterFile
+  WhatIf                = $WhatIfEnabled
   Verbose               = $true
-  WhatIf                = $WhatIf
 }
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
