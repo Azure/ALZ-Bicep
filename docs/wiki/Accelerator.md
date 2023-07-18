@@ -43,11 +43,12 @@ The only thing that differs across the workflows is which ALZ Bicep modules are 
 
 The following diagram illustrates the workflows at a high level:
 
+![Accelerator Directory Tree](media/AzAcceleratorWorkflows.png)
 
 
 All of the GitHub Actions follow a similar high level workflow as follows:
 
-
+![Accelerator Directory Tree](media/AzAcceleratorWorkflowsHLD.png)
 
 ### Getting Started
 
