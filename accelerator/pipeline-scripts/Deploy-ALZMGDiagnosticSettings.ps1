@@ -13,7 +13,6 @@ param (
 
   [Parameter()]
   [Boolean]$WhatIfEnabled = [System.Convert]::ToBoolean($($env:IS_PULL_REQUEST))
-
 )
 
 # Parameters necessary for deployment
