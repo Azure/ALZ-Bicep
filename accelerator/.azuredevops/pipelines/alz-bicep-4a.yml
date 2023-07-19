@@ -10,7 +10,7 @@ trigger:
   paths:
     include:
       - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
-      - "config/custom-parameters/vwanConnectivity.parameters.all.json"
+      - "config/custom-parameters/hubNetworking.parameters.all.json"
 pr:
   branches:
     include:
@@ -18,7 +18,7 @@ pr:
 paths:
   include:
     - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
-    - "config/custom-parameters/vwanConnectivity.parameters.all.json"
+    - "config/custom-parameters/hubNetworking.parameters.all.json"
 
 variables:
   ENV_FILE: ".env"
