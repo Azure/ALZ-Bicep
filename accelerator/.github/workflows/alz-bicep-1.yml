@@ -54,7 +54,6 @@ jobs:
           enable-AzPSSession: true
 
       - name: "Management Groups Deployment"
-        id: managementgroupsdeployment
         uses: azure/powershell@v1
         with:
           inlineScript: |
