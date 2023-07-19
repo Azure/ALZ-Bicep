@@ -84,7 +84,7 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
 
 1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration.
 
-1. Follow this [GitHub documentation](https://docs.github.com/en/enterprise-cloud@latest/get-started/quickstart/create-a-repo#create-a-repository) to create a new remote GitHub repository that is NOT initialized.
+1. Follow this [GitHub documentation](https://docs.github.com/en/enterprise-cloud@latest/get-started/quickstart/create-a-repo#create-a-repository) to create a new remote GitHub repository that is NOT initialized
 
 1. If you need to authenticate the GitHub remote repository from your local workstation or from the Azure Cloud Shell, please select an option below depending upon your preferences and requirements:
     - [Git Credential Manager](https://github.com/git-ecosystem/git-credential-manager) - This will automatically prompt you to login when you attempt to push your commit in the following step
