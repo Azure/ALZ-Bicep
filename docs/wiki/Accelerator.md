@@ -61,11 +61,11 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
 
     Currently this tests for:
 
-    - Supported minimum PowerShell version
-    - Azure PowerShell Module
-    - Git
-    - Azure CLI
-    - Bicep
+    - [Supported minimum PowerShell version](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3)
+    - [Azure PowerShell Module](https://learn.microsoft.com/en-us/powershell/azure/install-azure-powershell?view=azps-10.1.0)
+    - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+    - [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+    - [Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#install-manually)
 
 1. Create your ALZ Bicep Accelerator framework with the following command:
 
@@ -84,22 +84,37 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
 
 1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration.
 
-1. Follow this [GitHub documentation](https://docs.github.com/en/enterprise-cloud@latest/get-started/quickstart/create-a-repo#create-a-repository) to create a new remote Git repository
+1. Follow this [GitHub documentation](https://docs.github.com/en/enterprise-cloud@latest/get-started/quickstart/create-a-repo#create-a-repository) to create a new remote GitHub repository that is NOT initialized.
 
-1. If you need to authenticate Git from your local workstation or from the Azure Cloud Shell, please following the steps provided [here](https://docs.github.com/en/get-started/quickstart/set-up-git#authenticating-with-github-from-git). Otherwise, proceed to the next step.
+1. If you need to authenticate the GitHub remote repository from your local workstation or from the Azure Cloud Shell, please select an option below depending upon your preferences and requirements:
+    - [Git Credential Manager](https://github.com/git-ecosystem/git-credential-manager) - This will automatically prompt you to login when you attempt to push your commit in the following step
+    - [GitHub Desktop](https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/getting-started-with-github-desktop)
+    - [GitHub CLI](https://docs.github.com/en/github-cli/github-cli/quickstart)
+    - [SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+    - [Personal Access Token with SAML](https://docs.github.com/en/enterprise-cloud@latest/authentication/authenticating-with-saml-single-sign-on/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on)
+
+    Otherwise, proceed to the next step.
 
 1. Run the following Git commands to get your remote branch in-sync with the local branch
 
     ```shell
+    # Changes the current working directory to the newly created directory
+    cd <output_directory>
     # Matches the remote URL with a name
     git remote add origin https://github.com/<OrganizationName>/<RepositoryName>.git
-    # Adds all changes in the working directory to the staging area.
+    # Ensures that your local branch name is set to main
+    git branch -m main
+    # Adds all changes in the working directory to the staging area
     git add .
-    # Records a snapshot of your repository's staging area.
+    # Records a snapshot of your repository's staging area
     git commit -m "Initial commit"
-    # Updates the remote branch with the local commit(s)
+    # Updates the remote branch with the local commit(s) if you did not initialize your remote repository.
     git push -u origin main
     ```
+
+    >> **Note:**
+    >> If you initialized your remote repository with a README.md file, you will need to run the following command to force the push to the remote repository
+    >> ```git push -u origin main --force```
 
 1. Now that the remote branch has the latest commit(s), you can configure your OpenID Connect (OIDC) identity provider with GitHub which will give the workflows access to your Azure environment.
     1. [Create an Azure Active Directory application/service principal](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#create-an-azure-active-directory-application-and-service-principal)
@@ -143,11 +158,11 @@ In order to setup the Accelerator framework with the production ready Azure DevO
 
     Currently this tests for:
 
-    - Supported minimum PowerShell version
-    - Azure PowerShell Module
-    - Git
-    - Azure CLI
-    - Bicep
+    - [Supported minimum PowerShell version](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3)
+    - [Azure PowerShell Module](https://learn.microsoft.com/en-us/powershell/azure/install-azure-powershell?view=azps-10.1.0)
+    - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+    - [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+    - [Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#install-manually)
 
 1. Create your ALZ Bicep Accelerator framework with the following command:
 
@@ -172,21 +187,34 @@ In order to setup the Accelerator framework with the production ready Azure DevO
 
 1. Create an [RBAC Assignment for the application/service principal](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation)
 
-1. Follow this [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops#create-a-repo-using-the-web-portal) to create a new remote Git repository
+1. Follow this [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops#create-a-repo-using-the-web-portal) to create a new remote Azure DevOps Git repository that is NOT initialized with a README.md file.
 
-1. If you need to authenticate Git from your local workstation or from the Azure Cloud Shell, please following the steps provided [here](https://learn.microsoft.com/en-us/azure/devops/repos/git/auth-overview?view=azure-devops). Otherwise, proceed to the next step.
+1. If you need to authenticate the Azure DevOps remote repository from your local workstation or from the Azure Cloud Shell, please select an option below depending upon your preferences and requirements:
+    - [SSH](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops)
+    - [Git Credential Manager](https://learn.microsoft.com/en-us/azure/devops/repos/git/set-up-credential-managers?view=azure-devops)
+
+    Otherwise, proceed to the next step.
 
 1. Run the following Git commands to get your remote branch in-sync with the local branch
 
     ```shell
+    # Changes the current working directory to the newly created directory
+    cd <output_directory>
     # Matches the remote URL with a name
-    git remote add origin https://dev.azure.com/<OrganizationName>/<ProjectName>/_git/<RepositoryName>
-    # Adds all changes in the working directory to the staging area.
+    git remote add origin https://github.com/<OrganizationName>/<RepositoryName>.git
+    # Ensures that your local branch name is set to main
+    git branch -m main
+    # Adds all changes in the working directory to the staging area
     git add .
-    # Records a snapshot of your repository's staging area.
+    # Records a snapshot of your repository's staging area
     git commit -m "Initial commit"
-    # Updates the remote branch with the local commit(s)
+    # Updates the remote branch with the local commit(s) if you did not initialize your remote repository.
     git push -u origin main
+    ```
+
+    >> **Note:**
+    >> If you initialized your remote repository with a README.md file, you will need to run the following command to force the push to the remote repository
+    >> ```git push -u origin main --force```
 
 1. Create your new pipelines within Azure DevOps. Ensure you select "Existing Azure Pipelines YAML file" when prompted  and select the pipeline files from the .azuredevops/pipelines
 
