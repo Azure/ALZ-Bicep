@@ -14,13 +14,14 @@ pr:
   branches:
     include:
       - "main"
-paths:
-  include:
-    - "config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json"
+  paths:
+    include:
+      - "config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json"
 
 variables:
   ENV_FILE: ".env"
   SERVICE_CONNECTION_NAME: "[your service connection name here]"
+  IS_PULL_REQUEST: "false"
 
 jobs:
   - job: ALZ_Bicep_2_Workflow_Job
