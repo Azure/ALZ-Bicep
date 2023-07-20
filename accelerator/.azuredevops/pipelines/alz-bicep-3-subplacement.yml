@@ -14,9 +14,9 @@ pr:
   branches:
     include:
       - "main"
-paths:
-  include:
-    - "config/custom-parameters/subPlacementAll.parameters.all.json"
+  paths:
+    include:
+      - "config/custom-parameters/subPlacementAll.parameters.all.json"
 
 variables:
   ENV_FILE: ".env"

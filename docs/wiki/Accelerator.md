@@ -29,6 +29,10 @@ We attempted to make the pipelines as flexible as possible while also reducing o
 - PowerShell deployment scripts for each module that are referenced within [Azure PowerShell Action](https://github.com/marketplace/actions/azure-powershell-action) steps
   - The PowerShell scripts reference the modules and parameter files used within the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow#module-deployment-sequence). Therefore, we recommend you review the deployment flow documentation to understand the purpose of each module and the parameters that are used within the deployment scripts.
 - Environment variables file (.env) which is used to store variables that are accessed within the PowerShell scripts
+- What-If Deploment conditions which are triggered automatically if a pull request is created against the main branch. This allows for a user to validate the deployment and potential changes before merging the pull request into the main branch.
+- Deployment conditions which are triggered automatically if a push is made to the main branch. This allows for a user to validate the deployment and potential changes before merging the pull request into the main branch.
+  > **Note:**
+  > Currently, the output of the GitHub Action workflows or the Azure DevOps Pipelines need to viewed within the respective portal. We are working on adding support for sending the output to the Pull Request comments section in the future.
 
 The only thing that differs across the workflows is which ALZ Bicep modules are deployed as shown in the following table:
 
@@ -119,6 +123,8 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
 1. Now that the remote branch has the latest commit(s), you can configure your OpenID Connect (OIDC) identity provider with GitHub which will give the workflows access to your Azure environment.
     1. [Create an Azure Active Directory application/service principal](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#create-an-azure-active-directory-application-and-service-principal)
     1. [Add your federated credentials](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#add-federated-credentials-preview)
+        1. Add one federated credential with the entity type set to 'Branch' and with a value for "Based on Selection" set to 'main'
+        1. Add a secondary federated credential with the entity type set to 'Pull Request'
     1. [Create GitHub secrets](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#create-github-secrets)
         > **Note:**
         > The workflows reference secret names AZURE_TENANT_ID and AZURE_CLIENT_ID. If you choose to use different names, you will need to update the workflows accordingly.
@@ -232,6 +238,9 @@ In order to setup the Accelerator framework with the production ready Azure DevO
       - Require approvals
     - Require conversation resolution before merging
     - Do not allow bypassing the above settings
+    - Setup automated and required build valdiation reuquirements for all of the pipelines. This will ensure that all changes to the main branch are validated before merging as well as to provide a What-If analysis for the changes made to your ALZ environment. Finally, ensure you match the path filters for each build validation to what is specified in the pipeline files.
+      > **Note:**
+      > This last step is required if you are using GitHub and Bitbucket as your repository and integrating with Azure DevOps Pipelines.
 
 ### Incoporating a Branching Strategy
 
