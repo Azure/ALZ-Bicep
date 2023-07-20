@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - "main"
+  pull_request:
+    branches:
+      - "main"
     paths:
       - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
       - "config/custom-parameters/hubNetworking.parameters.all.json"
@@ -12,9 +15,11 @@ on:
 permissions:
   id-token: write
   contents: read
+  pull-requests: write
 
 env:
   ENV_FILE: ".env"
+  IS_PULL_REQUEST: "${{ github.event_name == 'pull_request' }}"
 
 jobs:
   ALZ_Bicep_4a_Workflow_Job:

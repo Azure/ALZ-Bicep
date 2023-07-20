@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - "main"
+  pull_request:
+    branches:
+      - "main"
     paths:
       - "config/custom-parameters/managementGroups.parameters.all.json"
       - "config/custom-parameters/resourceGroupLoggingAndSentinel.parameters.all.json"
@@ -16,9 +19,11 @@ on:
 permissions:
   id-token: write
   contents: read
+  pull-requests: write
 
 env:
   ENV_FILE: ".env"
+  IS_PULL_REQUEST: "${{ github.event_name == 'pull_request' }}"
 
 jobs:
   ALZ_Bicep_1_Workflow_Job:

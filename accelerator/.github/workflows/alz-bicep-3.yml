@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - "main"
+  pull_request:
+    branches:
+      - "main"
     paths:
       - "config/custom-parameters/subPlacementAll.parameters.all.json"
   workflow_dispatch:
@@ -11,9 +14,11 @@ on:
 permissions:
   id-token: write
   contents: read
+  pull-requests: write
 
 env:
   ENV_FILE: ".env"
+  IS_PULL_REQUEST: "${{ github.event_name == 'pull_request' }}"
 
 jobs:
   ALZ_Bicep_3_Workflow_Job:
