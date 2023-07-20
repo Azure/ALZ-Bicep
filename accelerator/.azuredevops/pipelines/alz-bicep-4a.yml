@@ -15,10 +15,10 @@ pr:
   branches:
     include:
       - "main"
-paths:
-  include:
-    - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
-    - "config/custom-parameters/hubNetworking.parameters.all.json"
+  paths:
+    include:
+      - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
+      - "config/custom-parameters/hubNetworking.parameters.all.json"
 
 variables:
   ENV_FILE: ".env"
