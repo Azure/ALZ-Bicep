@@ -20,6 +20,19 @@ param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 @sys.description('Log Analytics Workspace sku name.')
 param parLogAnalyticsWorkspaceSkuName string = 'PerGB2018'
 
+@allowed([
+  100
+  200
+  300
+  400
+  500
+  1000
+  2000
+  5000
+])
+@sys.description('Log Analytics Workspace Capacity Reservation Level. Only used if parLogAnalyticsWorkspaceSkuName is set to CapacityReservation.')
+param parLogAnalyticsWorkspaceCapacityReservationLevel int = 100
+
 @minValue(30)
 @maxValue(730)
 @sys.description('Number of days of log retention for Log Analytics Workspace.')
@@ -73,6 +86,9 @@ param parAutomationAccountTags object = parTags
 @sys.description('Tags you would like to be applied to Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceTags object = parTags
 
+@sys.description('Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.')
+param parUseSentinelClassicPricingTiers bool = false
+
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
@@ -103,6 +119,7 @@ resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022
   properties: {
     sku: {
       name: parLogAnalyticsWorkspaceSkuName
+      capacityReservationLevel: parLogAnalyticsWorkspaceSkuName == 'CapacityReservation' ? parLogAnalyticsWorkspaceCapacityReservationLevel : null
     }
     retentionInDays: parLogAnalyticsWorkspaceLogRetentionInDays
   }
@@ -112,7 +129,12 @@ resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solut
   name: '${solution}(${resLogAnalyticsWorkspace.name})'
   location: parLogAnalyticsWorkspaceLocation
   tags: parTags
-  properties: {
+  properties: solution == 'SecurityInsights' ? {
+    workspaceResourceId: resLogAnalyticsWorkspace.id
+    sku: parUseSentinelClassicPricingTiers ? null : {
+      name: 'Unified'
+    }
+  } : {
     workspaceResourceId: resLogAnalyticsWorkspace.id
   }
   plan: {
