@@ -11,6 +11,9 @@
     "parLogAnalyticsWorkspaceSkuName": {
       "value": "PerGB2018"
     },
+    "parLogAnalyticsWorkspaceCapacityReservationLevel": {
+      "value": 100
+    },
     "parLogAnalyticsWorkspaceLogRetentionInDays": {
       "value": 365
     },
@@ -44,6 +47,9 @@
       "value": {
         "Environment": "Live"
       }
+    },
+    "parUseSentinelClassicPricingTiers": {
+      "value": false
     },
     "parTelemetryOptOut": {
       "value": false
