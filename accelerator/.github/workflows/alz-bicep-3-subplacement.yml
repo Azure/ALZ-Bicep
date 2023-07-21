@@ -1,4 +1,4 @@
-name: ALZ-Bicep-2 Workflow
+name: ALZ-Bicep-3-SubPlacement
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
     branches:
       - "main"
     paths:
-      - "config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json"
+      - "config/custom-parameters/subPlacementAll.parameters.all.json"
   workflow_dispatch:
 
 permissions:
@@ -21,7 +21,7 @@ env:
   IS_PULL_REQUEST: "${{ github.event_name == 'pull_request' }}"
 
 jobs:
-  ALZ_Bicep_2_Workflow_Job:
+  ALZ_Bicep_3_SubPlacement:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -48,17 +48,9 @@ jobs:
           subscription-id: ${{ env.MANAGEMENT_SUBSCRIPTION_ID }}
           enable-AzPSSession: true
 
-      # Example: Modify Deploy-ALZRoleAssignments.ps1 with applicable pararameter file and uncomment lines below to enable Role Assignments Deployment.
-      # - name: "Role Assignments Deployment"
-      #   uses: azure/powershell@v1
-      #   with:
-      #     inlineScript: |
-      #       .\pipeline-scripts\Deploy-ALZRoleAssignments.ps1
-      #     azPSVersion: "latest"
-
-      - name: "Built-in and Custom Policy Assignments Deployment"
+      - name: "Deploy Subscription Placement"
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\Deploy-ALZPolicyAssignments.ps1
+            .\pipeline-scripts\Deploy-ALZSubscriptionPlacement.ps1
           azPSVersion: "latest"

@@ -36,13 +36,13 @@ We attempted to make the pipelines as flexible as possible while also reducing o
 
 The only thing that differs across the workflows is which ALZ Bicep modules are deployed as shown in the following table:
 
-| Workflow Name            | Modules Deployed              |
+| Workflow/Pipeline Name            | Modules Deployed              |
 |------------------------- |-------------------------------|
-| ALZ-Bicep-1 Workflow | Management Groups Deployment, Logging and Sentinel Resource Group Deployment, Logging and Sentinel Deployment, Custom Policy Definitions Deployment, Custom Management Group Diagnostic Settings
-| ALZ-Bicep-2 Workflow | Built-in and Custom Policy Assignments Deployment
-| ALZ-Bicep-3 Workflow | Deploy Subscription Placement
-| ALZ-Bicep-4a Workflow | Connectivity Resource Group Deployment, Hub (Hub-and-Spoke) Deployment
-| ALZ-Bicep-4b Workflow | Connectivity Resource Group Deployment, Hub (VWAN) Deployment
+| ALZ-Bicep-1-Core | Management Groups Deployment, Logging and Sentinel Resource Group Deployment, Logging and Sentinel Deployment, Custom Policy Definitions Deployment, Custom Management Group Diagnostic Settings
+| ALZ-Bicep-2-PolicyAssignments | Built-in and Custom Policy Assignments Deployment
+| ALZ-Bicep-3-SubPlacement| Deploy Subscription Placement
+| ALZ-Bicep-4A-HubSpoke| Connectivity Resource Group Deployment, Hub (Hub-and-Spoke) Deployment
+| ALZ-Bicep-4B-VWAN | Connectivity Resource Group Deployment, Hub (VWAN) Deployment
 
 ### Getting Started if you're using GitHub Actions
 
@@ -80,8 +80,8 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
     > **Note:**
     > If the directory structure specified for the output location does not exist, the module will create the directory structure programatically.
 1. Depending upon your preferred [network topology deployment](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation),  remove the associated workflow file for each deployment model
-    - Traditional VNet Hub and Spoke = .github\workflows\alz-bicep-4a.yml
-    - Virtual WAN = .github\workflows\alz-bicep-4b.yml
+    - Traditional VNet Hub and Spoke = .github\workflows\alz-bicep-4a-hubspoke.yml
+    - Virtual WAN = .github\workflows\alz-bicep-4b-vwan.yml
 
     > **Note:**
     > These workflow files and associated deployment scripts will be programatically removed in the future.
@@ -131,10 +131,10 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
     1. [Create RBAC Assignment for the application/service principal](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation)
 
 1. All workflows are now ready to be deployed! For the initial deployment, manually trigger each workflow in the following order
-    1. ALZ-Bicep-1 Workflow
-    1. ALZ-Bicep-2 Workflow
-    1. ALZ-Bicep-3 Workflow
-    1. ALZ-Bicep-4a Workflow or ALZ-Bicep-4b Workflow
+    1. ALZ-Bicep-1-Core
+    1. ALZ-Bicep-2-PolicyAssignments
+    1. ALZ-Bicep-3-SubPlacement
+    1. ALZ-Bicep-4A-HubSpoke or ALZ-Bicep-4B-VWAN
 
 1. As part of the [branching strategy](#incoporating-a-branching-strategy), setup the branch protection rules against the main branch with the following selected as a starting point:
 
@@ -179,8 +179,8 @@ In order to setup the Accelerator framework with the production ready Azure DevO
     > **Note:**
     > If the directory structure specified for the output location does not exist, the module will create the directory structure programatically.
 1. Depending upon your preferred [network topology deployment](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation),  remove the associated workflow file for each deployment model
-    - Traditional VNet Hub and Spoke = .azuredevops\workflows\alz-bicep-4a.yml
-    - Virtual WAN = .azuredevops\workflows\alz-bicep-4b.yml
+    - Traditional VNet Hub and Spoke = .azuredevops\workflows\alz-bicep-4a-hubspoke.yml
+    - Virtual WAN = .azuredevops\workflows\alz-bicep-4b-vwan.yml
 
     > **Note:**
     > These workflow files and associated deployment scripts will be programatically removed in the future.
@@ -227,10 +227,10 @@ In order to setup the Accelerator framework with the production ready Azure DevO
 1. [Assign pipeline permissions to access the Service Connection you created previously](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml#pipeline-permissions)    ```
 
 1. All pipelines are now ready to be deployed! For the initial deployment, manually trigger each workflow in the following order
-    1. ALZ-Bicep-1 Workflow
-    1. ALZ-Bicep-2 Workflow
-    1. ALZ-Bicep-3 Workflow
-    1. ALZ-Bicep-4a Workflow or ALZ-Bicep-4b Workflow
+    1. ALZ-Bicep-1-Core
+    1. ALZ-Bicep-2-PolicyAssignments
+    1. ALZ-Bicep-3-SubPlacement
+    1. ALZ-Bicep-4A-HubSpoke or ALZ-Bicep-4B-VWAN
 
 1. As part of the [branching strategy](#incoporating-a-branching-strategy), setup the branch protection rules against the main branch with the following selected as a starting point:
 
@@ -254,8 +254,8 @@ As part of the framework, we include two PR workflows. The pipelines will perfor
 
 | Workflow Name           | Trigger   | Tasks               |
 |-------------------------|-----------|---------------------|
-| ALZ-Bicep-PR-1 Workflow | Pull request against main branch and changes to any Bicep file or Bicep config file.             | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile.
-| ALZ-Bicep-PR-2 Workflow | Pull request against main branch. | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.
+| ALZ-Bicep-PR1-Build | Pull request against main branch and changes to any Bicep file or Bicep config file.             | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile.
+| ALZ-Bicep-PR2-Lint | Pull request against main branch. | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.
 
 ### Upgrading ALZ-Bicep Versions
 

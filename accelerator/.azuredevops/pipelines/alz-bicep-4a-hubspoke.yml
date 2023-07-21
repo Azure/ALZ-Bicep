@@ -1,4 +1,4 @@
-name: ALZ-Bicep-4b Workflow
+name: ALZ-Bicep-4A-HubSpoke
 
 trigger:
 # YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
@@ -10,7 +10,7 @@ trigger:
   paths:
     include:
       - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
-      - "config/custom-parameters/vwanConnectivity.parameters.all.json"
+      - "config/custom-parameters/hubNetworking.parameters.all.json"
 pr:
   branches:
     include:
@@ -18,7 +18,7 @@ pr:
   paths:
     include:
       - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
-      - "config/custom-parameters/vwanConnectivity.parameters.all.json"
+      - "config/custom-parameters/hubNetworking.parameters.all.json"
 
 variables:
   ENV_FILE: ".env"
@@ -26,7 +26,7 @@ variables:
   IS_PULL_REQUEST: "false"
 
 jobs:
-  - job: ALZ_Bicep_4b_Workflow_Job
+  - job: ALZ_Bicep_4A_HubSpoke
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -62,11 +62,11 @@ jobs:
             .\pipeline-scripts\Deploy-ALZConnectivityResourceGroup.ps1
 
       - task: AzurePowerShell@5
-        displayName: "Hub (VWAN) Deployment"
+        displayName: "Hub (Hub-and-Spoke) Deployment"
         inputs:
           azureSubscription: ${{ variables.SERVICE_CONNECTION_NAME }}
           azurePowerShellVersion: "LatestVersion"
           pwsh: true
           ScriptType: "InlineScript"
           Inline: |
-            .\pipeline-scripts\Deploy-ALZHub-VWAN.ps1
+            .\pipeline-scripts\Deploy-ALZHub-HubAndSpoke.ps1
