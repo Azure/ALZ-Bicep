@@ -1,4 +1,4 @@
-name: ALZ-Bicep-3 Workflow
+name: ALZ-Bicep-3-SubPlacement
 
 trigger:
 # YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
@@ -24,7 +24,7 @@ variables:
   IS_PULL_REQUEST: "false"
 
 jobs:
-  - job: ALZ_Bicep_3_Workflow_Job
+  - job: ALZ_Bicep_3_SubPlacement
     pool:
       vmImage: ubuntu-latest
     steps:

@@ -1,4 +1,4 @@
-name: ALZ-Bicep-2 Workflow
+name: ALZ-Bicep-2-PolicyAssignments
 
 trigger:
 # YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
@@ -24,7 +24,7 @@ variables:
   IS_PULL_REQUEST: "false"
 
 jobs:
-  - job: ALZ_Bicep_2_Workflow_Job
+  - job: ALZ_Bicep_2_PolicyAssignments
     pool:
       vmImage: ubuntu-latest
     steps:

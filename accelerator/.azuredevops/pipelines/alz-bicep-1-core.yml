@@ -1,4 +1,4 @@
-name: ALZ-Bicep-1 Workflow
+name: ALZ-Bicep-1-Core
 
 trigger:
 # YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
@@ -34,7 +34,7 @@ variables:
   IS_PULL_REQUEST: "false"
 
 jobs:
-  - job: ALZ_Bicep_1_Workflow_Job
+  - job: ALZ_Bicep_1_Core
     pool:
       vmImage: ubuntu-latest
     steps:
