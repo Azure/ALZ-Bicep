@@ -47,6 +47,7 @@ To contribute to this project the following tooling is required:
 - [Bicep](https://learn.microsoft.com/azure/azure-resource-manager/bicep/install#install-manually)
 - [Visual Studio Code](https://code.visualstudio.com/download)
   - [Bicep extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep)
+  - [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 
 ![Bicep Logo](media/bicep-vs-code.png)
 
@@ -60,7 +61,7 @@ The following tooling/extensions are recommended to assist you developing for th
 - [PSRule extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bewhite.psrule-vscode)
 - [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 - For visibility of Bracket Pairs:
-  - Inside Visual Studio Code, add "editor.bracketPairColorization.enabled": true to your settings.json, to enable bracket pair colorization.
+  - Inside Visual Studio Code, add `editor.bracketPairColorization.enabled`: true to your `settings.json`, to enable bracket pair colorization.
 
 ## Bicep Formatting Guidelines
 
@@ -238,102 +239,10 @@ Get-ChildItem -Recurse -Path infra-as-code/bicep/modules/ -Filter '*.json' -Excl
 
 ### `bicepconfig.json`
 
-- A `bicepconfig.json` for each module in the root of its own folder.
-  - [Bicep Linting Documentation](https://learn.microsoft.com/azure/azure-resource-manager/bicep/linter)
-  - The `bicepconfig.json` file should contain the following:
-
-    ```json
-          {
-            "analyzers": {
-              "core": {
-                "enabled": true,
-                "verbose": true,
-                "rules": {
-                  "adminusername-should-not-be-literal": {
-                    "level": "error"
-                  },
-                  "no-hardcoded-env-urls": {
-                    "level": "error"
-                  },
-                  "no-unnecessary-dependson": {
-                    "level": "error"
-                  },
-                  "no-unused-params": {
-                    "level": "error"
-                  },
-                  "no-unused-vars": {
-                    "level": "error"
-                  },
-                  "outputs-should-not-contain-secrets": {
-                    "level": "error"
-                  },
-                  "prefer-interpolation": {
-                    "level": "error"
-                  },
-                  "secure-parameter-default": {
-                    "level": "error"
-                  },
-                  "simplify-interpolation": {
-                    "level": "error"
-                  },
-                  "protect-commandtoexecute-secrets": {
-                    "level": "error"
-                  },
-                  "use-stable-vm-image": {
-                    "level": "error"
-                  },
-                  "explicit-values-for-loc-params": {
-                    "level": "error"
-                  },
-                  "no-hardcoded-location": {
-                    "level": "error"
-                  },
-                  "no-loc-expr-outside-params": {
-                    "level": "error"
-                  },
-                  "max-outputs": {
-                    "level": "error"
-                  },
-                  "max-params": {
-                    "level": "error"
-                  },
-                  "max-resources": {
-                    "level": "error"
-                  },
-                  "max-variables": {
-                    "level": "error"
-                  },
-                  "artifacts-parameters":{
-                    "level": "error"
-                  },
-                  "no-unused-existing-resources":{
-                    "level": "error"
-                  },
-                  "prefer-unquoted-property-names":{
-                    "level": "error"
-                  },
-                  "secure-params-in-nested-deploy":{
-                    "level": "error"
-                  },
-                  "secure-secrets-in-params":{
-                    "level": "error"
-                  },
-                  "use-recent-api-versions":{
-                    "level": "error"
-                  },
-                  "use-resource-id-functions":{
-                    "level": "error"
-                  },
-                  "use-stable-resource-identifiers":{
-                    "level": "error"
-                  }
-                }
-              }
-            }
-          }
-    ```
-
-- The Bicep module file
+- A `bicepconfig.json` for each module in the root of its own folder **is no longer required**, as we have a central one in `./infra-as-code/bicep/bicepconfig.json` to help keep maintenance simplified.
+  - There are still separate `bicepconfig.json` files for networking related modules, due to specific overrides required to some linter rules
+  - If you are facing linter errors that justify a override then please create a `bicepconfig.json` in the root of the module's directory to configure the override of the rules from the central one in `./infra-as-code/bicep/bicepconfig.json` by following the [Bicep Linting Documentation](https://learn.microsoft.com/azure/azure-resource-manager/bicep/linter)
+- The Bicep module file itself
 - A `parameters` folder that will contain the parameters files for the module
 - Parameters `...all.json` and `...min.json` files based on file naming convention below
 - Parameter files should be named according to the convention: `<module>.<parameterSet>.parameters.<min|all>.json`
@@ -347,3 +256,9 @@ Get-ChildItem -Recurse -Path infra-as-code/bicep/modules/ -Filter '*.json' -Excl
 Each resource must use the latest available, working, API version. If the latest API version cannot be used for any reason, a comment must be placed above the resource in the module file stating why and also called out as part of the PR.
 
 > The Bicep linter rule `use-recent-api-versions` will now also check for this 👍
+
+### Release Process Diagram
+
+When adding new parameters to a module, changing existing parameter names, or creating a new module, there are some additional steps that must be considered to ensure the [Accelerator](https://github.com/Azure/ALZ-Bicep/wiki/Accelerator) and the associated [ALZ-PowerShell-Module](https://github.com/Azure/Alz-powershell-module) remain in-sync. The following diagram outlines the steps for release process and provides additional context for changes that may be required:
+
+![Release Process](media/alz-bicep-release-process.png)

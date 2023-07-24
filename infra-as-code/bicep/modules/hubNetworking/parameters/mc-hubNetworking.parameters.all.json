@@ -138,6 +138,9 @@
         "privatelink.redis.cache.chinacloudapi.cn"
       ]
     },
+    "parPrivateDnsZoneAutoMergeAzureBackupZone": {
+      "value": true
+    },
     "parVpnGatewayConfig": {
       "value": {
         "name": "alz-Vpn-Gateway",
