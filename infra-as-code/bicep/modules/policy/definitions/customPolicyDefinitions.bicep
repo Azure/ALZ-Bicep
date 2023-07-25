@@ -34,6 +34,10 @@ var varCustomPolicyDefinitionsArray = [
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-Redis-sslEnforcement.json')
   }
   {
+    name: 'Audit-AzureHybridBenefit'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-AzureHybridBenefit.json')
+  }
+  {
     name: 'Audit-Disks-UnusedResourcesCostOptimization'
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-Disks-UnusedResourcesCostOptimization.json')
   }
@@ -513,6 +517,12 @@ var varCustomPolicySetDefinitionsArray = [
     name: 'Audit-UnusedResourcesCostOptimization'
     libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Audit-UnusedResourcesCostOptimization.json')
     libSetChildDefinitions: [
+      {
+        definitionReferenceId: 'AuditAzureHybridBenefitUnusedResourcesCostOptimization'
+        definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-AzureHybridBenefit'
+        definitionParameters: varPolicySetDefinitionEsAuditUnusedResourcesCostOptimizationParameters.AuditAzureHybridBenefitUnusedResourcesCostOptimization.parameters
+        definitionGroups: []
+      }
       {
         definitionReferenceId: 'AuditDisksUnusedResourcesCostOptimization'
         definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-Disks-UnusedResourcesCostOptimization'

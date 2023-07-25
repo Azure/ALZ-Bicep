@@ -4,6 +4,12 @@ var varCustomPolicySetDefinitionsArray = [
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Audit-UnusedResourcesCostOptimization.json')
 		libSetChildDefinitions: [
 			{
+				definitionReferenceId: 'AuditAzureHybridBenefitUnusedResourcesCostOptimization'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-AzureHybridBenefit'
+				definitionParameters: varPolicySetDefinitionEsAuditUnusedResourcesCostOptimizationParameters.AuditAzureHybridBenefitUnusedResourcesCostOptimization.parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'AuditDisksUnusedResourcesCostOptimization'
 				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-Disks-UnusedResourcesCostOptimization'
 				definitionParameters: varPolicySetDefinitionEsAuditUnusedResourcesCostOptimizationParameters.AuditDisksUnusedResourcesCostOptimization.parameters
