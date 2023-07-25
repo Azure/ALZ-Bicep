@@ -7,13 +7,10 @@
     "displayName": "Limit allowed locations for Resources",
     "notScopes": [],
     "parameters": {
-      "effect": {
-        "value": "deny"
-      },
       "listOfAllowedLocations": {
         "value": [
-          "uksouth",
-          "ukwest"
+          "chinanorth",
+          "chinaeast"
         ]
       }
     },
