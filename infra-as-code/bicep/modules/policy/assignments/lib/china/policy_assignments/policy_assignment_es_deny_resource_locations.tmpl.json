@@ -9,8 +9,8 @@
     "parameters": {
       "listOfAllowedLocations": {
         "value": [
-          "uksouth",
-          "ukwest"
+          "chinanorth",
+          "chinaeast"
         ]
       }
     },
