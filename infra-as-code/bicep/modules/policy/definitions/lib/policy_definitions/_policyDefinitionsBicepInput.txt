@@ -19,6 +19,10 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-Redis-sslEnforcement.json')
 }
 {
+	name: 'Audit-AzureHybridBenefit'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-AzureHybridBenefit.json')
+}
+{
 	name: 'Audit-Disks-UnusedResourcesCostOptimization'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-Disks-UnusedResourcesCostOptimization.json')
 }
