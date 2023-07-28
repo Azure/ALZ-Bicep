@@ -1,0 +1,279 @@
+id:
+name: GitOps.PullRequestIssueManagement
+description: GitOps.PullRequestIssueManagement primitive
+owner:
+resource: repository
+disabled: false
+where:
+configuration:
+  resourceManagementConfiguration:
+    scheduledSearches:
+    - description:
+      frequencies:
+      - hourly:
+          hour: 3
+      filters:
+      - isIssue
+      - isOpen
+      - hasLabel:
+          label: 'Needs: Author Feedback'
+      - hasLabel:
+          label: 'Status: No Recent Activity'
+      - noActivitySince:
+          days: 3
+      actions:
+      - closeIssue
+    - description:
+      frequencies:
+      - hourly:
+          hour: 3
+      filters:
+      - isIssue
+      - isOpen
+      - hasLabel:
+          label: 'Needs: Author Feedback'
+      - noActivitySince:
+          days: 4
+      - isNotLabeledWith:
+          label: 'Status: No Recent Activity'
+      actions:
+      - addLabel:
+          label: 'Status: No Recent Activity'
+      - addReply:
+          reply: This issue has been automatically marked as stale because it has been marked as requiring author feedback but has not had any activity for **4 days**. It will be closed if no further activity occurs **within 3 days of this comment**.
+    - description:
+      frequencies:
+      - hourly:
+          hour: 3
+      filters:
+      - isIssue
+      - isOpen
+      - hasLabel:
+          label: 'Resolution: Duplicate'
+      - noActivitySince:
+          days: 1
+      actions:
+      - addReply:
+          reply: This issue has been marked as duplicate and has not had any activity for **1 day**. It will be closed for housekeeping purposes.
+      - closeIssue
+    - description:
+      frequencies:
+      - hourly:
+          hour: 3
+      filters:
+      - isPullRequest
+      - isOpen
+      - hasLabel:
+          label: 'Needs: Author Feedback'
+      - hasLabel:
+          label: 'Status: No Recent Activity'
+      - noActivitySince:
+          days: 7
+      actions:
+      - closeIssue
+    - description:
+      frequencies:
+      - hourly:
+          hour: 3
+      filters:
+      - isPullRequest
+      - isOpen
+      - hasLabel:
+          label: 'Needs: Author Feedback'
+      - noActivitySince:
+          days: 7
+      - isNotLabeledWith:
+          label: 'Status: No Recent Activity'
+      actions:
+      - addLabel:
+          label: 'Status: No Recent Activity'
+      - addReply:
+          reply: This pull request has been automatically marked as stale because it has been marked as requiring author feedback but has not had any activity for **7 days**. It will be closed if no further activity occurs **within 7 days of this comment**.
+    eventResponderTasks:
+    - if:
+      - payloadType: Issue_Comment
+      - isAction:
+          action: Created
+      - isActivitySender:
+          issueAuthor: True
+      - hasLabel:
+          label: 'Needs: Author Feedback'
+      - isOpen
+      then:
+      - addLabel:
+          label: 'Needs: Attention :wave:'
+      - removeLabel:
+          label: 'Needs: Author Feedback'
+      description:
+    - if:
+      - payloadType: Issues
+      - not:
+          isAction:
+            action: Closed
+      - hasLabel:
+          label: 'Status: No Recent Activity'
+      then:
+      - removeLabel:
+          label: 'Status: No Recent Activity'
+      description:
+    - if:
+      - payloadType: Issue_Comment
+      - hasLabel:
+          label: 'Status: No Recent Activity'
+      then:
+      - removeLabel:
+          label: 'Status: No Recent Activity'
+      description:
+    - if:
+      - payloadType: Pull_Request
+      then:
+      - inPrLabel:
+          label: 'Status: In PR'
+      description:
+    - if:
+      - payloadType: Pull_Request_Review
+      - isAction:
+          action: Submitted
+      - isReviewState:
+          reviewState: Changes_requested
+      then:
+      - addLabel:
+          label: 'Needs: Author Feedback'
+      description:
+    - if:
+      - payloadType: Pull_Request
+      - isActivitySender:
+          issueAuthor: True
+      - not:
+          isAction:
+            action: Closed
+      - hasLabel:
+          label: 'Needs: Author Feedback'
+      then:
+      - removeLabel:
+          label: 'Needs: Author Feedback'
+      description:
+    - if:
+      - payloadType: Issue_Comment
+      - isActivitySender:
+          issueAuthor: True
+      - hasLabel:
+          label: 'Needs: Author Feedback'
+      then:
+      - removeLabel:
+          label: 'Needs: Author Feedback'
+      description:
+    - if:
+      - payloadType: Pull_Request_Review
+      - isActivitySender:
+          issueAuthor: True
+      - hasLabel:
+          label: 'Needs: Author Feedback'
+      then:
+      - removeLabel:
+          label: 'Needs: Author Feedback'
+      description:
+    - if:
+      - payloadType: Pull_Request
+      - not:
+          isAction:
+            action: Closed
+      - hasLabel:
+          label: 'Status: No Recent Activity'
+      then:
+      - removeLabel:
+          label: 'Status: No Recent Activity'
+      description:
+    - if:
+      - payloadType: Issue_Comment
+      - hasLabel:
+          label: 'Status: No Recent Activity'
+      then:
+      - removeLabel:
+          label: 'Status: No Recent Activity'
+      description:
+    - if:
+      - payloadType: Pull_Request_Review
+      - hasLabel:
+          label: 'Status: No Recent Activity'
+      then:
+      - removeLabel:
+          label: 'Status: No Recent Activity'
+      description:
+    - if:
+      - payloadType: Issue_Comment
+      then:
+      - cleanEmailReply
+      description:
+    - if:
+      - payloadType: Pull_Request
+      - isAction:
+          action: Opened
+      - or:
+        - includesModifiedFiles:
+            files:
+            - infra-as-code/bicep/modules/policy/definitions/lib
+        - includesModifiedFiles:
+            files:
+            - infra-as-code/bicep/modules/policy/assignments/lib/policy_assignments
+      then:
+      - addReply:
+          reply: >-
+            Hey ${issueAuthor}, thanks for creating this PR.
+
+
+            We noticed that this PR is ammending some things related to policies (definitions or assignments) :mag:
+
+
+            Thanks for this however, please keep in mind we replicate all policies from our upstream repo https://github.com/Azure/Enterprise-Scale (via some GitHub Actions) into these Bicep modules.
+
+
+            So it may be that this PR may be closed and we ask you to re-submit the changes to the respective code in our other repo.
+
+
+            However, we will review and advise further anyway but this is just a friendly premptive message and reminder of how policies are used and updated in this repo.
+
+
+            Thanks from your friendly msft-bot.
+      - addLabel:
+          label: 'Area: Policy'
+      description:
+    - if:
+      - payloadType: Pull_Request
+      - labelAdded:
+          label: 'Needs: upstream policy changes :up:'
+      then:
+      - addReply:
+          reply: >-
+            Hey ${issueAuthor}, thanks for creating this PR.
+
+
+            We noticed that this PR is ammending some things related to policies (definitions or assignments) :mag:
+
+
+            Thanks for this however, please keep in mind we replicate all policies from our upstream repo https://github.com/Azure/Enterprise-Scale (via some GitHub Actions) into these Bicep modules.
+
+
+            We have determined, upon our review, that the changes here are required to be made to the upstream policies in the repo: https://github.com/Azure/Enterprise-Scale
+
+
+            Thanks from the team and our friendly msft-bot.
+      - closeIssue
+      description:
+    - if:
+      - payloadType: Pull_Request
+      - hasLabel:
+          label: 'auto-merge :heavy_check_mark:'
+      then:
+      - enableAutoMerge:
+          mergeMethod: Squash
+      description:
+    - if:
+      - payloadType: Pull_Request
+      - labelRemoved:
+          label: 'auto-merge :heavy_check_mark:'
+      then:
+      - disableAutoMerge
+      description:
+onFailure:
+onSuccess:

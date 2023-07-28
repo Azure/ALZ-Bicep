@@ -1,0 +1,72 @@
+name: ALZ-Bicep-4A-HubSpoke
+
+trigger:
+# YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
+# If you use Azure Repos Git, you can configure a branch policy for build validation to trigger your build pipeline for validation.
+# https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies#build-validation
+  branches:
+    include:
+      - "main"
+  paths:
+    include:
+      - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
+      - "config/custom-parameters/hubNetworking.parameters.all.json"
+pr:
+  branches:
+    include:
+      - "main"
+  paths:
+    include:
+      - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
+      - "config/custom-parameters/hubNetworking.parameters.all.json"
+
+variables:
+  ENV_FILE: ".env"
+  SERVICE_CONNECTION_NAME: "[your service connection name here]"
+  IS_PULL_REQUEST: "false"
+
+jobs:
+  - job: ALZ_Bicep_4A_HubSpoke
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - checkout: self
+        displayName: Checkout Repo
+
+      - pwsh: |
+          (Get-Content -Path $env:ENV_FILE -Encoding UTF8) | ForEach-Object {$_ -replace '"',''} | Out-File -FilePath $env:ENV_FILE -Encoding UTF8
+        displayName: Remove Quotation Marks from Environment File
+
+      - pwsh: |
+          Write-Host $env:ENV_FILE
+          Get-Content -Path $env:ENV_FILE -Encoding UTF8 | ForEach-Object {
+            $envVarName, $envVarValue = ($_ -replace '"','').split('=')
+            echo "##vso[task.setvariable variable=$envVarName;]$envVarValue"
+            echo "Set $envVarName to $envVarValue]"
+          }
+        displayName: Import Environment Variables from File
+
+      - pwsh: |
+          echo "##vso[task.setvariable variable=IS_PULL_REQUEST;]true"
+        condition: eq(variables['Build.Reason'], 'PullRequest')
+        displayName: Set IS_PULL_REQUEST Variable to True
+
+      - task: AzurePowerShell@5
+        displayName: "Connectivity Resource Group Deployment"
+        inputs:
+          azureSubscription: ${{ variables.SERVICE_CONNECTION_NAME }}
+          azurePowerShellVersion: "LatestVersion"
+          pwsh: true
+          ScriptType: "InlineScript"
+          Inline: |
+            .\pipeline-scripts\Deploy-ALZConnectivityResourceGroup.ps1
+
+      - task: AzurePowerShell@5
+        displayName: "Hub (Hub-and-Spoke) Deployment"
+        inputs:
+          azureSubscription: ${{ variables.SERVICE_CONNECTION_NAME }}
+          azurePowerShellVersion: "LatestVersion"
+          pwsh: true
+          ScriptType: "InlineScript"
+          Inline: |
+            .\pipeline-scripts\Deploy-ALZHub-HubAndSpoke.ps1

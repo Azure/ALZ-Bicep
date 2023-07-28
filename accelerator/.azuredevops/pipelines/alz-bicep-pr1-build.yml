@@ -1,0 +1,76 @@
+name: ALZ-Bicep-PR1-Build
+
+trigger: none
+# YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
+# If you use Azure Repos Git, you can configure a branch policy for build validation to trigger your build pipeline for validation.
+# https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies#build-validation
+pr:
+  branches:
+    include:
+      - "main"
+  paths:
+    include:
+      - "**/bicepconfig.json"
+      - "**.bicep"
+
+jobs:
+  - job: ALZ_Bicep_PR1_Build
+    displayName: Bicep Build & Lint All Bicep Modules
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - checkout: self
+        displayName: Checkout Repo
+
+      - pwsh: |
+            $bicepVersion = bicep --version
+            Write-Information "=====> Currently installed Bicep version is: $bicepVersion <=====" -InformationAction Continue
+        displayName: List Currently Installed Bicep Version
+
+      - bash: |
+          curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64
+          chmod +x ./bicep
+          sudo mv ./bicep /usr/local/bin/bicep
+          bicep --help
+        displayName: Install Latest Version of Bicep
+
+      - pwsh: |
+          $bicepVersion = bicep --version
+          Write-Information "=====> Now installed Bicep version is: $bicepVersion <=====" -InformationAction Continue
+        displayName: List Now Installed Bicep Version
+
+      - pwsh: |
+          if (Test-Path -Path ./custom-modules/*)
+          {
+            echo "##vso[task.setvariable variable=CUSTOM_MODULES;]true"
+            echo "Set CUSTOM_MODULES to true"
+          }
+          else
+          {
+            echo "Set CUSTOM_MODULES to false"
+          }
+        workingDirectory: config
+        displayName: Check for Custom Modules
+
+      - pwsh: |
+          $output = @()
+          Get-ChildItem -Recurse -Filter '*.bicep' | ForEach-Object {
+              Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
+              $bicepOutput = bicep build $_.FullName 2>&1
+              if ($LastExitCode -ne 0)
+              {
+                foreach ($item in $bicepOutput) {
+                  $output += "$($item) `r`n"
+                }
+              }
+              else
+              {
+                echo "Bicep Build Successful for File: $_"
+              }
+          }
+          if ($output.length -gt 0) {
+            throw $output
+          }
+        workingDirectory: config/custom-modules
+        condition: eq(variables['CUSTOM_MODULES'], 'true')
+        displayName: Bicep Build & Lint All Custom Modules

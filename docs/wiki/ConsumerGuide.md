@@ -31,7 +31,7 @@ There are various ways to consume the Bicep modules included in `ALZ-Bicep`. The
   - Template Specs
     - See:
       - [Azure Resource Manager template specs in Bicep](https://learn.microsoft.com/azure/azure-resource-manager/bicep/template-specs)
-- Use and reference the modules directly from the Microsoft Public Bicep Registry - ***Coming Soon (awaiting feature release in Bicep)***
+- Use and reference the modules directly from the Microsoft Public Bicep Registry - ***Coming Soon (we have something in our plans) - ETA for draft/proposal/MVP == end of 2023 - Stay Tuned!***
 
 The option to use will be different per consumer based on their experience and skill levels with the various pieces of technology and their features.
 
