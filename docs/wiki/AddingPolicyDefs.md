@@ -21,6 +21,8 @@ Install the [ALZ PowerShell Module](https://github.com/Azure/ALZ-PowerShell-Modu
 Install-Module -Name ALZ
 ```
 
+> Version `0.2.8` or higher must be installed of the `ALZ` module, you can check this with `Get-Module -Name ALZ`
+
 ## What are the options?
 
 There are a few options for you to deploy your own custom Azure Policy Definitions and Initiatives using Bicep and more specifically `ALZ-Bicep`.
