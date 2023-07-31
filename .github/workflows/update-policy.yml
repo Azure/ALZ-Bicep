@@ -74,14 +74,18 @@ jobs:
               -Reset
           azPSVersion: "latest"
 
+      - name: Install ALZ PowerShell Module
+        shell: pwsh
+        run: |
+          Install-Module -Name 'ALZ' -Force
+
       - name: Update Policy Definition Bicep Input Files
         uses: azure/powershell@v1
         with:
           inlineScript: |
             cd ${{ github.workspace }}/${{ github.repository }}
             Write-Information "==> Running script..." -InformationAction Continue
-            .github/scripts/Invoke-PolicyToBicep.ps1 `
-              -alzToolsPath "${{ github.workspace }}/${{ env.remote_repository }}/src/Alz.Tools/"
+            .github/scripts/Invoke-PolicyToBicep.ps1
           azPSVersion: "latest"
 
       - name: Check for changes
