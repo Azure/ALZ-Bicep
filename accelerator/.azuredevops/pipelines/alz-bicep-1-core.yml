@@ -1,6 +1,21 @@
-name: ALZ-Bicep-1 Workflow
+name: ALZ-Bicep-1-Core
 
 trigger:
+# YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
+# If you use Azure Repos Git, you can configure a branch policy for build validation to trigger your build pipeline for validation.
+# https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies#build-validation
+  branches:
+    include:
+      - "main"
+  paths:
+    include:
+      - "config/custom-parameters/managementGroups.parameters.all.json"
+      - "config/custom-parameters/resourceGroupLoggingAndSentinel.parameters.all.json"
+      - "config/custom-parameters/logging.parameters.all.json"
+      - "config/custom-parameters/customPolicyDefinitions.parameters.all.json"
+      - "config/custom-parameters/customRoleDefinitions.parameters.all.json"
+      - "config/custom-parameters/mgDiagSettingsAll.parameters.all.json"
+pr:
   branches:
     include:
       - "main"
@@ -16,9 +31,10 @@ trigger:
 variables:
   ENV_FILE: ".env"
   SERVICE_CONNECTION_NAME: "[your service connection name here]"
+  IS_PULL_REQUEST: "false"
 
 jobs:
-  - job: ALZ_Bicep_1_Workflow_Job
+  - job: ALZ_Bicep_1_Core
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -37,6 +53,11 @@ jobs:
             echo "Set $envVarName to $envVarValue]"
           }
         displayName: Import Environment Variables from File
+
+      - pwsh: |
+          echo "##vso[task.setvariable variable=IS_PULL_REQUEST;]true"
+        condition: eq(variables['Build.Reason'], 'PullRequest')
+        displayName: Set IS_PULL_REQUEST Variable to True
 
       - task: AzurePowerShell@5
         displayName: "Management Groups Deployment"

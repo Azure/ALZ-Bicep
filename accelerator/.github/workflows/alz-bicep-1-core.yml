@@ -1,7 +1,10 @@
-name: ALZ-Bicep-1 Workflow
+name: ALZ-Bicep-1-Core
 
 on:
   push:
+    branches:
+      - "main"
+  pull_request:
     branches:
       - "main"
     paths:
@@ -16,12 +19,14 @@ on:
 permissions:
   id-token: write
   contents: read
+  pull-requests: write
 
 env:
   ENV_FILE: ".env"
+  IS_PULL_REQUEST: "${{ github.event_name == 'pull_request' }}"
 
 jobs:
-  ALZ_Bicep_1_Workflow_Job:
+  ALZ_Bicep_1_Core:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
