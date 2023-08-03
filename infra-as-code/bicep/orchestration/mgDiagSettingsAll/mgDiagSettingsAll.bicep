@@ -24,7 +24,7 @@ param parLogAnalyticsWorkspaceResourceId string
 @sys.description('Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
 param parLandingZoneMgAlzDefaultsEnable bool = true
 
-@sys.description('Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
+@sys.description('Deploys Diagnostic Settings on Management, Connectivity and Identity Management Groups beneath Platform Management Group if set to true.')
 param parPlatformMgAlzDefaultsEnable bool = true
 
 @sys.description('Deploys Diagnostic Settings on Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.')
