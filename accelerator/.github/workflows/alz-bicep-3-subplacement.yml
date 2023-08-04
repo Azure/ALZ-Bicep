@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - "main"
+    paths:
+      - "config/custom-parameters/subPlacementAll.parameters.all.json"
   pull_request:
     branches:
       - "main"
