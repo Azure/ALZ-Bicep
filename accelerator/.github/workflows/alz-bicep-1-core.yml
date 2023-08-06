@@ -1,0 +1,103 @@
+name: ALZ-Bicep-1-Core
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "config/custom-parameters/managementGroups.parameters.all.json"
+      - "config/custom-parameters/resourceGroupLoggingAndSentinel.parameters.all.json"
+      - "config/custom-parameters/logging.parameters.all.json"
+      - "config/custom-parameters/customPolicyDefinitions.parameters.all.json"
+      - "config/custom-parameters/customRoleDefinitions.parameters.all.json"
+      - "config/custom-parameters/mgDiagSettingsAll.parameters.all.json"
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - "config/custom-parameters/managementGroups.parameters.all.json"
+      - "config/custom-parameters/resourceGroupLoggingAndSentinel.parameters.all.json"
+      - "config/custom-parameters/logging.parameters.all.json"
+      - "config/custom-parameters/customPolicyDefinitions.parameters.all.json"
+      - "config/custom-parameters/customRoleDefinitions.parameters.all.json"
+      - "config/custom-parameters/mgDiagSettingsAll.parameters.all.json"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+env:
+  ENV_FILE: ".env"
+  IS_PULL_REQUEST: "${{ github.event_name == 'pull_request' }}"
+
+jobs:
+  ALZ_Bicep_1_Core:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: "Remove Quotation Marks from Environment File"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            Write-Host $ENV_FILE
+            (Get-Content -Path $env:ENV_FILE -Encoding UTF8) | ForEach-Object {$_ -replace '"',''} | Out-File -FilePath $env:ENV_FILE -Encoding UTF8
+          azPSVersion: "latest"
+
+      - name: Import Environment Variables from File
+        run: cat ${{ env.ENV_FILE }} >> $GITHUB_ENV
+
+      - name: OIDC Login to Tenant
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.MANAGEMENT_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
+
+      - name: "Management Groups Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZManagementGroups.ps1
+          azPSVersion: "latest"
+
+      - name: "Logging and Sentinel Resource Group Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1
+          azPSVersion: "latest"
+
+      - name: "Logging and Sentinel Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZLoggingAndSentinel.ps1
+          azPSVersion: "latest"
+
+      - name: "Custom Policy Definitions Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZCustomPolicyDefinitions.ps1
+          azPSVersion: "latest"
+
+      - name: "Custom Role Definitions Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZCustomRoleDefinitions.ps1
+          azPSVersion: "latest"
+
+      - name: "Custom Management Group Diagnostic Settings"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZMGDiagnosticSettings.ps1
+          azPSVersion: "latest"

@@ -6,12 +6,13 @@
   "properties": {
     "policyType": "Custom",
     "mode": "Indexed",
-    "displayName": "Public network access should be disabled for MariaDB",
+    "displayName": "[Deprecated] Public network access should be disabled for MariaDB",
     "description": "This policy denies the creation of Maria DB accounts with exposed public endpoints",
     "metadata": {
-      "version": "1.0.0",
+      "version": "1.0.0-deprecated",
       "category": "SQL",
       "source": "https://github.com/Azure/Enterprise-Scale/",
+      "deprecated": true,
       "alzCloudEnvironments": [
         "AzureCloud",
         "AzureChinaCloud",

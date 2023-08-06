@@ -10,6 +10,12 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @maxLength(10)
 param parTopLevelManagementGroupSuffix string = ''
 
+@sys.description('Management, Identity and Connectivity Management Groups beneath Platform Management Group have been deployed. If set to false, platform policies are assigned to the Platform Management Group; otherwise policies are assigned to the child management groups.')
+param parPlatformMgAlzDefaultsEnable bool = true
+
+@sys.description('Corp & Online Management Groups beneath Landing Zones Management Groups have been deployed. If set to false, policies will not try to be assigned to corp or onlone Management Groups.')
+param parLandingZoneChildrenMgAlzDefaultsEnable bool = true
+
 @sys.description('The region where the Log Analytics Workspace & Automation Account are deployed.')
 param parLogAnalyticsWorkSpaceAndAutomationAccountLocation string = 'eastus'
 
@@ -104,6 +110,7 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentLzsDeploySqlDbAuditing: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deploySQLDBAudit-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDeployAzSqlDbAuditing: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployAzSQLDBAudit-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDeploySqlThreat: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deploySQLThreat-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentLzsDeploySqlTde: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deploySQLTde-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsEnforceGrKeyVault: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceGrKeyVault-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsAuditAppGwWaf: take('${varDeploymentNameWrappers.basePrefix}-polAssi-auditAppGwWaf-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDenyPublicEndpoints: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPublicEndpoints-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -252,6 +259,11 @@ var varPolicyAssignmentDeployResourceDiag = {
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_resource_diag.tmpl.json')
 }
 
+var varPolicyAssignmentDeploySQLTDE = {
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/86a912f6-9a06-4e26-b447-11b16ba8659f'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_sql_tde.tmpl.json')
+}
+
 var varPolicyAssignmentDeploySQLThreat = {
   definitionId: '/providers/Microsoft.Authorization/policyDefinitions/36d49e87-48c4-4f2e-beed-ba4ed02b71f5'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_sql_threat.tmpl.json')
@@ -317,9 +329,9 @@ var varRbacRoleDefinitionIds = {
 var varManagementGroupIds = {
   intRoot: '${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}'
   platform: '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
-  platformManagement: '${parTopLevelManagementGroupPrefix}-platform-management${parTopLevelManagementGroupSuffix}'
-  platformConnectivity: '${parTopLevelManagementGroupPrefix}-platform-connectivity${parTopLevelManagementGroupSuffix}'
-  platformIdentity: '${parTopLevelManagementGroupPrefix}-platform-identity${parTopLevelManagementGroupSuffix}'
+  platformManagement: parPlatformMgAlzDefaultsEnable ? '${parTopLevelManagementGroupPrefix}-platform-management${parTopLevelManagementGroupSuffix}' : '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
+  platformConnectivity: parPlatformMgAlzDefaultsEnable ? '${parTopLevelManagementGroupPrefix}-platform-connectivity${parTopLevelManagementGroupSuffix}' : '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
+  platformIdentity: parPlatformMgAlzDefaultsEnable ? '${parTopLevelManagementGroupPrefix}-platform-identity${parTopLevelManagementGroupSuffix}' : '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
   landingZones: '${parTopLevelManagementGroupPrefix}-landingzones${parTopLevelManagementGroupSuffix}'
   landingZonesCorp: '${parTopLevelManagementGroupPrefix}-landingzones-corp${parTopLevelManagementGroupSuffix}'
   landingZonesOnline: '${parTopLevelManagementGroupPrefix}-landingzones-online${parTopLevelManagementGroupSuffix}'
@@ -481,9 +493,6 @@ module modPolicyAssignmentIntRootDeployAzActivityLog '../../../policy/assignment
 
 // Module - Policy Assignment - Deploy-ASC-Monitoring
 module modPolicyAssignmentIntRootDeployAscMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployASCMonitoring.libDefinition.name)) {
-  // dependsOn: [
-  //   modCustomPolicyDefinitions
-  // ]
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployAscMonitoring
   params: {
@@ -1063,6 +1072,25 @@ module modPolicyAssignmentLzsDeploySqlThreat '../../../policy/assignments/policy
   }
 }
 
+// Module - Policy Assignment - Deploy-SQL-TDE
+module modPolicyAssignmentLzsDeploySqlTde '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeploySQLTDE.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModuleDeploymentNames.modPolicyAssignmentLzsDeploySqlTde
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeploySQLTDE.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeploySQLTDE.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeploySQLTDE.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeploySQLTDE.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeploySQLTDE.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeploySQLTDE.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeploySQLTDE.libDefinition.properties.enforcementMode
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.sqlSecurityManager
+    ]
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
 // Module - Policy Assignment - Enforce-GR-KeyVault
 module modPolicyAssignmentLzsEnforceGrKeyVault '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRKeyVault.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
@@ -1097,7 +1125,7 @@ module modPolicyAssignmentLzsAuditAppGwWaf '../../../policy/assignments/policyAs
 
 // Modules - Policy Assignments - Corp Management Group
 // Module - Policy Assignment - Deny-Public-Endpoints
-module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicEndpoints.libDefinition.name)) {
+module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicEndpoints.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyPublicEndpoints
   params: {
@@ -1113,7 +1141,7 @@ module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/po
 }
 
 // Module - Policy Assignment - Deploy-Private-DNS-Zones
-module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if ((!empty(varPrivateDnsZonesResourceGroupSubscriptionId)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployPrivateDNSZones.libDefinition.name))) {
+module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if ((!empty(varPrivateDnsZonesResourceGroupSubscriptionId)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployPrivateDNSZones.libDefinition.name)) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployPrivateDnsZones
   params: {
@@ -1290,7 +1318,7 @@ module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments
 }
 
 // Module - Policy Assignment - Deny-Public-IP-On-NIC
-module modPolicyAssignmentLzsCorpDenyPipOnNic '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.name)) {
+module modPolicyAssignmentLzsCorpDenyPipOnNic '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsCorpDenyPipOnNic
   params: {
@@ -1306,7 +1334,7 @@ module modPolicyAssignmentLzsCorpDenyPipOnNic '../../../policy/assignments/polic
 }
 
 // Module - Policy Assignment - Deny-HybridNetworking
-module modPolicyAssignmentLzsCorpDenyHybridNet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyHybridNetworking.libDefinition.name)) {
+module modPolicyAssignmentLzsCorpDenyHybridNet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyHybridNetworking.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsCorpDenyHybridNet
   params: {
@@ -1322,7 +1350,7 @@ module modPolicyAssignmentLzsCorpDenyHybridNet '../../../policy/assignments/poli
 }
 
 // Module - Policy Assignment - Audit-PeDnsZones
-module modPolicyAssignmentLzsCorpAuditPeDnsZones '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentAuditPeDnsZones.libDefinition.name)) {
+module modPolicyAssignmentLzsCorpAuditPeDnsZones '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentAuditPeDnsZones.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsCorpAuditPeDnsZones
   params: {

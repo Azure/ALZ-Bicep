@@ -96,7 +96,7 @@ jobs:
           $resourceTypesFullList.Keys | Sort-Object
 
   azure_waf:
-    name: Test Azure Well-Architected Framework
+    name: Test Azure Well-Architected Framework (PSRule)
     runs-on: ubuntu-latest
 
     steps:
@@ -108,8 +108,8 @@ jobs:
       # Add pipeline tests for Azure Well-Architected Framework.
       # See https://aka.ms/ps-rule-action for configuration options.
       - name: Run PSRule analysis
-        uses: Microsoft/ps-rule@v2.7.0
+        uses: Microsoft/ps-rule@v2
         with:
           modules: PSRule.Rules.Azure
-          baseline: Azure.GA_2022_12
+          baseline: Azure.Preview
         continue-on-error: true

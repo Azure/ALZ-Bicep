@@ -1,0 +1,30 @@
+name: ALZ-Bicep-PR2-Lint
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+jobs:
+  ALZ_Bicep_PR2_Lint:
+    name: Lint Code Base (except Bicep Modules and Files)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Run github/super-linter
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_JSON: true
+          VALIDATE_MARKDOWN: true
+          VALIDATE_POWERSHELL: true
+          VALIDATE_YAML: true
+          VALIDATE_EDITORCONFIG: true
+          FILTER_REGEX_EXCLUDE: ".*generateddocs/.*.bicep.md"

@@ -8,17 +8,17 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parLocation    | No       | The Azure Region to deploy the resources into.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
-parHubNetworkName | No       | Prefix Used for Hub Network.
-parHubNetworkAddressPrefix | No       | The IP address range for all virtual networks to use.
-parSubnets     | No       | The name, IP address range, network security group and route table for each subnet in the virtual networks.
+parHubNetworkName | No       | Name for Hub Network.
+parHubNetworkAddressPrefix | No       | The IP address range for Hub Network.
+parSubnets     | No       | The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks.
 parDnsServerIps | No       | Array of DNS Server IP addresses for VNet.
 parPublicIpSku | No       | Public IP Address SKU.
 parPublicIpPrefix | No       | Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
 parPublicIpSuffix | No       | Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix
-parAzBastionEnabled | No       | Switch to enable/disable Azure Bastion deployment. Default: true
+parAzBastionEnabled | No       | Switch to enable/disable Azure Bastion deployment.
 parAzBastionName | No       | Name Associated with Bastion Service.
-parAzBastionSku | No       | Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard.
-parAzBastionNsgName | No       | NSG Name for Azure Bastion Subnet NSG.
+parAzBastionSku | No       | Azure Bastion SKU.
+parAzBastionNsgName | No       | Name for Azure Bastion Subnet NSG.
 parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment.
 parDdosPlanName | No       | DDoS Plan Name.
 parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment.
@@ -34,6 +34,7 @@ parDisableBgpRoutePropagation | No       | Switch to enable/disable BGP Propagat
 parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment.
 parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones.
 parPrivateDnsZones | No       | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones
+parPrivateDnsZoneAutoMergeAzureBackupZone | No       | Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.
 parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parVpnGatewayConfig": {   "value": {} }
 parExpressRouteGatewayConfig | No       | Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parExpressRouteGatewayConfig": {   "value": {} }
 parTags        | No       | Tags you would like to be applied to all resources in this module.
@@ -60,7 +61,7 @@ Prefix value which will be prepended to all resource names.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix Used for Hub Network.
+Name for Hub Network.
 
 - Default value: `[format('{0}-hub-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
@@ -68,7 +69,7 @@ Prefix Used for Hub Network.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The IP address range for all virtual networks to use.
+The IP address range for Hub Network.
 
 - Default value: `10.10.0.0/16`
 
@@ -76,7 +77,7 @@ The IP address range for all virtual networks to use.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The name, IP address range, network security group and route table for each subnet in the virtual networks.
+The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks.
 
 - Default value: `   `
 
@@ -114,7 +115,7 @@ Optional Suffix for Public IPs. Include a preceding dash if required. Example: -
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable Azure Bastion deployment. Default: true
+Switch to enable/disable Azure Bastion deployment.
 
 - Default value: `True`
 
@@ -130,15 +131,17 @@ Name Associated with Bastion Service.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard.
+Azure Bastion SKU.
 
 - Default value: `Standard`
+
+- Allowed values: `Basic`, `Standard`
 
 ### parAzBastionNsgName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-NSG Name for Azure Bastion Subnet NSG.
+Name for Azure Bastion Subnet NSG.
 
 - Default value: `nsg-AzureBastionSubnet`
 
@@ -263,6 +266,14 @@ Resource Group Name for Private DNS Zones.
 Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones
 
 - Default value: `[format('privatelink.{0}.azmk8s.io', toLower(parameters('parLocation')))] [format('privatelink.{0}.batch.azure.com', toLower(parameters('parLocation')))] [format('privatelink.{0}.kusto.windows.net', toLower(parameters('parLocation')))] privatelink.adf.azure.com privatelink.afs.azure.net privatelink.agentsvc.azure-automation.net privatelink.analysis.windows.net privatelink.api.azureml.ms privatelink.azconfig.io privatelink.azure-api.net privatelink.azure-automation.net privatelink.azurecr.io privatelink.azure-devices.net privatelink.azure-devices-provisioning.net privatelink.azurehdinsight.net privatelink.azurehealthcareapis.com privatelink.azurestaticapps.net privatelink.azuresynapse.net privatelink.azurewebsites.net privatelink.batch.azure.com privatelink.blob.core.windows.net privatelink.cassandra.cosmos.azure.com privatelink.cognitiveservices.azure.com privatelink.database.windows.net privatelink.datafactory.azure.net privatelink.dev.azuresynapse.net privatelink.dfs.core.windows.net privatelink.dicom.azurehealthcareapis.com privatelink.digitaltwins.azure.net privatelink.directline.botframework.com privatelink.documents.azure.com privatelink.eventgrid.azure.net privatelink.file.core.windows.net privatelink.gremlin.cosmos.azure.com privatelink.guestconfiguration.azure.com privatelink.his.arc.azure.com privatelink.kubernetesconfiguration.azure.com privatelink.managedhsm.azure.net privatelink.mariadb.database.azure.com privatelink.media.azure.net privatelink.mongo.cosmos.azure.com privatelink.monitor.azure.com privatelink.mysql.database.azure.com privatelink.notebooks.azure.net privatelink.ods.opinsights.azure.com privatelink.oms.opinsights.azure.com privatelink.pbidedicated.windows.net privatelink.postgres.database.azure.com privatelink.prod.migration.windowsazure.com privatelink.purview.azure.com privatelink.purviewstudio.azure.com privatelink.queue.core.windows.net privatelink.redis.cache.windows.net privatelink.redisenterprise.cache.azure.net privatelink.search.windows.net privatelink.service.signalr.net privatelink.servicebus.windows.net privatelink.siterecovery.windowsazure.com privatelink.sql.azuresynapse.net privatelink.table.core.windows.net privatelink.table.cosmos.azure.com privatelink.tip1.powerquery.microsoft.com privatelink.token.botframework.com privatelink.vaultcore.azure.net privatelink.web.core.windows.net privatelink.webpubsub.azure.com`
+
+### parPrivateDnsZoneAutoMergeAzureBackupZone
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.
+
+- Default value: `True`
 
 ### parVpnGatewayConfig
 
@@ -507,6 +518,9 @@ outHubVirtualNetworkId | string |
                 "privatelink.web.core.windows.net",
                 "privatelink.webpubsub.azure.com"
             ]
+        },
+        "parPrivateDnsZoneAutoMergeAzureBackupZone": {
+            "value": true
         },
         "parVpnGatewayConfig": {
             "value": {

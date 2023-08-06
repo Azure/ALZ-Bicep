@@ -6,31 +6,31 @@ Orchestration module used to create and configure a spoke network to deliver the
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parLocation    | No       | The region to deploy all resources into. Default: deployment().location
-parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy. Default: alz
+parLocation    | No       | The region to deploy all resources into.
+parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 parPeeredVnetSubscriptionId | No       | Subscription Id to the Virtual Network Hub object. Default: Empty String
 parTags        | No       | Array of Tags to be applied to all resources in module. Default: Empty Object
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry. Default: false
+parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 parPeeredVnetSubscriptionMgPlacement | No       | The Management Group Id to place the subscription in. Default: Empty String
-parResourceGroupNameForSpokeNetworking | No       | Name of Resource Group to be created to contain spoke networking resources like the virtual network. Default: {parTopLevelManagementGroupPrefix}-{parLocation}-spoke-networking
+parResourceGroupNameForSpokeNetworking | No       | Name of Resource Group to be created to contain spoke networking resources like the virtual network.
 parDdosProtectionPlanId | No       | Existing DDoS Protection plan to utilize. Default: Empty string
-parPrivateDnsZoneResourceIds | No       | The Resource IDs of the Private DNS Zones to associate with spokes.
-parSpokeNetworkName | No       | The Name of the Spoke Virtual Network. Default: vnet-spoke
-parSpokeNetworkAddressPrefix | No       | CIDR for Spoke Network. Default: 10.11.0.0/16
+parPrivateDnsZoneResourceIds | No       | The Resource IDs of the Private DNS Zones to associate with spokes. Default: Empty Array
+parSpokeNetworkName | No       | The Name of the Spoke Virtual Network.
+parSpokeNetworkAddressPrefix | No       | CIDR for Spoke Network.
 parDnsServerIps | No       | Array of DNS Server IP addresses for VNet. Default: Empty Array
 parNextHopIpAddress | No       | IP Address where network traffic should route to. Default: Empty string
-parDisableBgpRoutePropagation | No       | Switch which allows BGP Route Propogation to be disabled on the route table. Default: false
-parSpokeToHubRouteTableName | No       | Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub
+parDisableBgpRoutePropagation | No       | Switch which allows BGP Route Propogation to be disabled on the route table.
+parSpokeToHubRouteTableName | No       | Name of Route table to create for the default route of Hub.
 parHubVirtualNetworkId | Yes      | Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID.
-parAllowSpokeForwardedTraffic | No       | Switch to enable/disable forwarded Traffic from outside spoke network. Default: false
-parAllowHubVpnGatewayTransit | No       | Switch to enable/disable VPN Gateway for the hub network peering. Default: false
+parAllowSpokeForwardedTraffic | No       | Switch to enable/disable forwarded Traffic from outside spoke network.
+parAllowHubVpnGatewayTransit | No       | Switch to enable/disable VPN Gateway for the hub network peering.
 
 ### parLocation
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The region to deploy all resources into. Default: deployment().location
+The region to deploy all resources into.
 
 - Default value: `[deployment().location]`
 
@@ -38,7 +38,7 @@ The region to deploy all resources into. Default: deployment().location
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix for the management group hierarchy. Default: alz
+Prefix for the management group hierarchy.
 
 - Default value: `alz`
 
@@ -64,7 +64,7 @@ Array of Tags to be applied to all resources in module. Default: Empty Object
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set Parameter to true to Opt-out of deployment telemetry. Default: false
+Set Parameter to true to Opt-out of deployment telemetry.
 
 - Default value: `False`
 
@@ -78,7 +78,7 @@ The Management Group Id to place the subscription in. Default: Empty String
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Name of Resource Group to be created to contain spoke networking resources like the virtual network. Default: {parTopLevelManagementGroupPrefix}-{parLocation}-spoke-networking
+Name of Resource Group to be created to contain spoke networking resources like the virtual network.
 
 - Default value: `[format('{0}-{1}-spoke-networking', parameters('parTopLevelManagementGroupPrefix'), parameters('parLocation'))]`
 
@@ -92,13 +92,13 @@ Existing DDoS Protection plan to utilize. Default: Empty string
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The Resource IDs of the Private DNS Zones to associate with spokes.
+The Resource IDs of the Private DNS Zones to associate with spokes. Default: Empty Array
 
 ### parSpokeNetworkName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The Name of the Spoke Virtual Network. Default: vnet-spoke
+The Name of the Spoke Virtual Network.
 
 - Default value: `vnet-spoke`
 
@@ -106,7 +106,7 @@ The Name of the Spoke Virtual Network. Default: vnet-spoke
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-CIDR for Spoke Network. Default: 10.11.0.0/16
+CIDR for Spoke Network.
 
 - Default value: `10.11.0.0/16`
 
@@ -126,7 +126,7 @@ IP Address where network traffic should route to. Default: Empty string
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch which allows BGP Route Propogation to be disabled on the route table. Default: false
+Switch which allows BGP Route Propogation to be disabled on the route table.
 
 - Default value: `False`
 
@@ -134,7 +134,7 @@ Switch which allows BGP Route Propogation to be disabled on the route table. Def
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Name of Route table to create for the default route of Hub. Default: rtb-spoke-to-hub
+Name of Route table to create for the default route of Hub.
 
 - Default value: `rtb-spoke-to-hub`
 
@@ -148,7 +148,7 @@ Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable forwarded Traffic from outside spoke network. Default: false
+Switch to enable/disable forwarded Traffic from outside spoke network.
 
 - Default value: `False`
 
@@ -156,7 +156,7 @@ Switch to enable/disable forwarded Traffic from outside spoke network. Default: 
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable VPN Gateway for the hub network peering. Default: false
+Switch to enable/disable VPN Gateway for the hub network peering.
 
 - Default value: `False`
 

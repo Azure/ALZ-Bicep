@@ -1,0 +1,82 @@
+name: ALZ-Bicep-PR1-Build
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "**/bicepconfig.json"
+      - "**.bicep"
+  workflow_dispatch: {}
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  ALZ_Bicep_PR1_Build:
+    name: Bicep Build & Lint All Modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: List Currently Installed Bicep Version
+        shell: pwsh
+        run: |
+          $bicepVersion = bicep --version
+          Write-Information "=====> Currently installed Bicep version is: $bicepVersion <=====" -InformationAction Continue
+
+      - name: Install Latest Version of Bicep
+        shell: sh
+        run: |
+          curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64
+          chmod +x ./bicep
+          sudo mv ./bicep /usr/local/bin/bicep
+          bicep --help
+
+      - name: List Now Installed Bicep Version
+        shell: pwsh
+        run: |
+          $bicepVersion = bicep --version
+          Write-Information "=====> Now installed Bicep version is: $bicepVersion <=====" -InformationAction Continue
+
+      - name: Check for Custom Modules
+        shell: pwsh
+        working-directory: config
+        run: |
+          if (Test-Path -Path ./custom-modules/*)
+          {
+            echo "CUSTOM_MODULES=true" >> $env:GITHUB_ENV
+            echo "Set CUSTOM_MODULES to true"
+          }
+          else
+          {
+            echo "Set CUSTOM_MODULES to false"
+          }
+
+      - name: Bicep Build & Lint All Custom Modules
+        shell: pwsh
+        if: ${{ env.CUSTOM_MODULES == 'true' }}
+        working-directory: config/custom-modules
+        run: |
+          $output = @()
+          Get-ChildItem -Recurse -Filter '*.bicep' | ForEach-Object {
+              Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
+              $bicepOutput = bicep build $_.FullName 2>&1
+              if ($LastExitCode -ne 0)
+              {
+                foreach ($item in $bicepOutput) {
+                  $output += "$($item) `r`n"
+                }
+              }
+              else
+              {
+                echo "Bicep Build Successful for File: $_"
+              }
+          }
+          if ($output.length -gt 0) {
+            throw $output
+          }

@@ -1,0 +1,67 @@
+name: ALZ-Bicep-4A-HubSpoke
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
+      - "config/custom-parameters/hubNetworking.parameters.all.json"
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
+      - "config/custom-parameters/hubNetworking.parameters.all.json"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+env:
+  ENV_FILE: ".env"
+  IS_PULL_REQUEST: "${{ github.event_name == 'pull_request' }}"
+
+jobs:
+  ALZ_Bicep_4a_HubSpoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: "Remove Quotation Marks from Environment File"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            Write-Host $ENV_FILE
+            (Get-Content -Path $env:ENV_FILE -Encoding UTF8) | ForEach-Object {$_ -replace '"',''} | Out-File -FilePath $env:ENV_FILE -Encoding UTF8
+          azPSVersion: "latest"
+
+      - name: Import Environment Variables from File
+        run: cat ${{ env.ENV_FILE }} >> $GITHUB_ENV
+
+      - name: OIDC Login to Tenant
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.CONNECTIVITY_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
+
+      - name: "Connectivity Resource Group Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZConnectivityResourceGroup.ps1
+          azPSVersion: "latest"
+
+      - name: "Hub (Hub-and-Spoke) Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZHub-HubAndSpoke.ps1
+          azPSVersion: "latest"
