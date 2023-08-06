@@ -83,6 +83,10 @@ param parTags object = {}
 @sys.description('Resource ID of VNet for Private DNS Zone VNet Links.')
 param parVirtualNetworkIdToLink string = ''
 
+@sys.description('Resource ID of VNet for Failover Private DNS Zone VNet Links.')
+param parVirtualNetworkIdToLinkFailover string = ''
+
+
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
@@ -175,6 +179,18 @@ resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetwork
     registrationEnabled: false
     virtualNetwork: {
       id: parVirtualNetworkIdToLink
+    }
+  }
+  dependsOn: resPrivateDnsZones
+}]
+
+resource fallbackresbVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLink)) {
+  name: '${privateDnsZoneName}/${take('fallbacklink-${uniqueString(parVirtualNetworkIdToLinkFailover)}', 80)}'
+  location: 'global'
+  properties: {
+    registrationEnabled: false
+    virtualNetwork: {
+      id: parVirtualNetworkIdToLinkFailover
     }
   }
   dependsOn: resPrivateDnsZones
