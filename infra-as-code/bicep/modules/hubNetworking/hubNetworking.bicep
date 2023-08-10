@@ -319,7 +319,7 @@ resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01
   tags: parTags
 }
 
-resource resHubVnet 'Microsoft.Network/virtualNetworks@2023-02-01' = {
+resource resHubVnet 'Microsoft.Network/virtualNetworks@2023-02-01' = if (parAzBastionEnabled) {
   dependsOn: [
     resBastionNsg
   ]
