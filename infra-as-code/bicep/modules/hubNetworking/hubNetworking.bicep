@@ -319,7 +319,7 @@ resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01
   tags: parTags
 }
 
-resource resHubVnet 'Microsoft.Network/virtualNetworks@2023-02-01' = if (parAzBastionEnabled) {
+resource resHubVnet 'Microsoft.Network/virtualNetworks@2023-02-01' = {
   dependsOn: [
     resBastionNsg
   ]
@@ -365,7 +365,7 @@ resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-
   name: 'AzureBastionSubnet'
 }
 
-resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = {
+resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = if (parAzBastionEnabled) {
   name: parAzBastionNsgName
   location: parLocation
   tags: parTags
