@@ -70,6 +70,9 @@ param parAzBastionName string = '${parCompanyPrefix}-bastion'
 ])
 param parAzBastionSku string = 'Standard'
 
+@sys.description('Switch to enable/disable Bastion native client support.')
+param parBastionTunneling bool = false
+
 @sys.description('Name for Azure Bastion Subnet NSG.')
 param parAzBastionNsgName string = 'nsg-AzureBastionSubnet'
 
@@ -526,6 +529,7 @@ resource resBastion 'Microsoft.Network/bastionHosts@2023-02-01' = if (parAzBasti
   }
   properties: {
     dnsName: uniqueString(resourceGroup().id)
+    enableTunneling: parBastionTunneling
     ipConfigurations: [
       {
         name: 'IpConf'
