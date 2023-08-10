@@ -365,7 +365,7 @@ resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-
   name: 'AzureBastionSubnet'
 }
 
-resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = {
+resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = if (parAzBastionEnabled) {
   name: parAzBastionNsgName
   location: parLocation
   tags: parTags
