@@ -529,7 +529,7 @@ resource resBastion 'Microsoft.Network/bastionHosts@2023-02-01' = if (parAzBasti
   }
   properties: {
     dnsName: uniqueString(resourceGroup().id)
-    enableTunneling: parBastionTunneling
+    enableTunneling: (parAzBastionSku == 'Standard' && parAzBastionTunneling) ? parAzBastionTunneling : false
     ipConfigurations: [
       {
         name: 'IpConf'
