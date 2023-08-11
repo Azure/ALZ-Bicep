@@ -184,7 +184,7 @@ resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetwork
   dependsOn: resPrivateDnsZones
 }]
 
-resource fallbackresbVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLink)) {
+resource resVirtualNetworkLinkFailover 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLinkFailover)) {
   name: '${privateDnsZoneName}/${take('fallbacklink-${uniqueString(parVirtualNetworkIdToLinkFailover)}', 80)}'
   location: 'global'
   properties: {
