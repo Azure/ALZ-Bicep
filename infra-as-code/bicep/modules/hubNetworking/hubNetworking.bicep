@@ -70,7 +70,7 @@ param parAzBastionName string = '${parCompanyPrefix}-bastion'
 ])
 param parAzBastionSku string = 'Standard'
 
-@sys.description('Switch to enable/disable Bastion native client support.')
+@sys.description('Switch to enable/disable Bastion native client support. This is only supported when the Standard SKU is used for Bastion as documented here: https://learn.microsoft.com/azure/bastion/native-client')
 param parBastionTunneling bool = false
 
 @sys.description('Name for Azure Bastion Subnet NSG.')
