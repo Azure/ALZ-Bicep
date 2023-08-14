@@ -9,6 +9,12 @@ param parVirtualWanHubResourceId string
 @sys.description('Remote Spoke virtual network resource ID.')
 param parRemoteVirtualNetworkResourceId string
 
+@sys.description('Optional Virtual Hub Connection Name Prefix.')
+param parVirtualHubConnectionPrefix string = ''
+
+@sys.description('Optional Virtual Hub Connection Name Suffix. Example: -vhc')
+param parVirtualHubConnectionSuffix string = '-vhc'
+
 @sys.description('Enable Internet Security for the Virtual Hub Connection.')
 param parEnableInternetSecurity bool = false
 
@@ -30,9 +36,11 @@ var varModhubVirtualNetworkConnectionDeploymentName = take('deploy-vnet-peering-
 module modhubVirtualNetworkConnection 'hubVirtualNetworkConnection.bicep' = if (!empty(parVirtualWanHubResourceId) && !empty(parRemoteVirtualNetworkResourceId)) {
   scope: resourceGroup(varVwanSubscriptionId, varVwanResourceGroup)
   name: varModhubVirtualNetworkConnectionDeploymentName
-    params: {
+  params: {
     parVirtualWanHubResourceId: parVirtualWanHubResourceId
     parRemoteVirtualNetworkResourceId: parRemoteVirtualNetworkResourceId
+    parVirtualHubConnectionPrefix: parVirtualHubConnectionPrefix
+    parVirtualHubConnectionSuffix: parVirtualHubConnectionSuffix
     parEnableInternetSecurity: parEnableInternetSecurity
   }
 }

@@ -47,6 +47,12 @@
     "parAllowHubVPNGatewayTransit": {
       "value": true
     },
+    "parVirtualHubConnectionPrefix": {
+      "value": ""
+    },
+    "parVirtualHubConnectionSuffix": {
+      "value": "-vhc"
+    },
     "parEnableInternetSecurity": {
       "value": false
     },
