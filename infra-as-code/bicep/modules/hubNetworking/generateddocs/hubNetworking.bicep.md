@@ -18,6 +18,7 @@ parPublicIpSuffix | No       | Optional Suffix for Public IPs. Include a precedi
 parAzBastionEnabled | No       | Switch to enable/disable Azure Bastion deployment.
 parAzBastionName | No       | Name Associated with Bastion Service.
 parAzBastionSku | No       | Azure Bastion SKU.
+parAzBastionTunneling | No       | Switch to enable/disable Bastion native client support. This is only supported when the Standard SKU is used for Bastion as documented here: https://learn.microsoft.com/azure/bastion/native-client
 parAzBastionNsgName | No       | Name for Azure Bastion Subnet NSG.
 parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment.
 parDdosPlanName | No       | DDoS Plan Name.
@@ -136,6 +137,14 @@ Azure Bastion SKU.
 - Default value: `Standard`
 
 - Allowed values: `Basic`, `Standard`
+
+### parAzBastionTunneling
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable Bastion native client support. This is only supported when the Standard SKU is used for Bastion as documented here: https://learn.microsoft.com/azure/bastion/native-client
+
+- Default value: `False`
 
 ### parAzBastionNsgName
 
@@ -403,6 +412,9 @@ outHubVirtualNetworkId | string |
         },
         "parAzBastionSku": {
             "value": "Standard"
+        },
+        "parAzBastionTunneling": {
+            "value": false
         },
         "parAzBastionNsgName": {
             "value": "nsg-AzureBastionSubnet"
