@@ -40,8 +40,8 @@ param parVirtualWanHubName string = '${parCompanyPrefix}-vhub'
 
 ''')
 param parVirtualWanHubs array = [ {
-    parVpnGatewayEnabled: false
-    parExpressRouteGatewayEnabled: false
+    parVpnGatewayEnabled: true
+    parExpressRouteGatewayEnabled: true
     parAzFirewallEnabled: true
     parVirtualHubAddressPrefix: '10.100.0.0/23'
     parHubLocation: parLocation
