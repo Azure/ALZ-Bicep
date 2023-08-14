@@ -8,6 +8,9 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parVirtualWanHubResourceId | Yes      | Virtual WAN Hub resource ID.
 parRemoteVirtualNetworkResourceId | Yes      | Remote Spoke virtual network resource ID.
+parVirtualHubConnectionPrefix | No       | Optional Virtual Hub Connection Name Prefix.
+parVirtualHubConnectionSuffix | No       | Optional Virtual Hub Connection Name Suffix. Example: -vhc
+parEnableInternetSecurity | No       | Enable Internet Security for the Virtual Hub Connection.
 
 ### parVirtualWanHubResourceId
 
@@ -20,6 +23,28 @@ Virtual WAN Hub resource ID.
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
 Remote Spoke virtual network resource ID.
+
+### parVirtualHubConnectionPrefix
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional Virtual Hub Connection Name Prefix.
+
+### parVirtualHubConnectionSuffix
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional Virtual Hub Connection Name Suffix. Example: -vhc
+
+- Default value: `-vhc`
+
+### parEnableInternetSecurity
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Enable Internet Security for the Virtual Hub Connection.
+
+- Default value: `False`
 
 ## Outputs
 
@@ -45,6 +70,15 @@ outHubVirtualNetworkConnectionResourceId | string |
         },
         "parRemoteVirtualNetworkResourceId": {
             "value": ""
+        },
+        "parVirtualHubConnectionPrefix": {
+            "value": ""
+        },
+        "parVirtualHubConnectionSuffix": {
+            "value": "-vhc"
+        },
+        "parEnableInternetSecurity": {
+            "value": false
         }
     }
 }

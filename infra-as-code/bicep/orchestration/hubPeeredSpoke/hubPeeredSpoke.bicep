@@ -69,6 +69,17 @@ param parAllowSpokeForwardedTraffic bool = false
 @sys.description('Switch to enable/disable VPN Gateway for the hub network peering.')
 param parAllowHubVpnGatewayTransit bool = false
 
+// VWAN Module Parameters
+
+@sys.description('Optional Virtual Hub Connection Name Prefix.')
+param parVirtualHubConnectionPrefix string = ''
+
+@sys.description('Optional Virtual Hub Connection Name Suffix. Example: -vhc')
+param parVirtualHubConnectionSuffix string = '-vhc'
+
+@sys.description('Enable Internet Security for the Virtual Hub Connection.')
+param parEnableInternetSecurity bool = false
+
 // **Variables**
 // Customer Usage Attribution Id
 var varCuaid = '8ea6f19a-d698-4c00-9afb-5c92d4766fd2'
@@ -91,19 +102,19 @@ var varModuleDeploymentNames = {
   modPrivateDnsZoneLinkToSpoke: take('${varDeploymentNameWrappers.basePrefix}-modPDnsLinkToSpoke-${varDeploymentNameWrappers.baseSuffixResourceGroup}', 61)
 }
 
-var varHubVirtualNetworkName = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkId, '/')[8] : '' )
+var varHubVirtualNetworkName = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkId, '/')[8] : '')
 
-var varHubVirtualNetworkResourceGroup = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkId, '/')[4] : '' )
+var varHubVirtualNetworkResourceGroup = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkId, '/')[4] : '')
 
-var varHubVirtualNetworkSubscriptionId = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkId, '/')[2] : '' )
+var varHubVirtualNetworkSubscriptionId = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? split(parHubVirtualNetworkId, '/')[2] : '')
 
-var varNextHopIPAddress = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? parNextHopIpAddress : '' )
+var varNextHopIPAddress = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualNetworks/') ? parNextHopIpAddress : '')
 
-var varVirtualHubResourceId = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualHubs/') ? parHubVirtualNetworkId : '' )
+var varVirtualHubResourceId = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualHubs/') ? parHubVirtualNetworkId : '')
 
-var varVirtualHubResourceGroup = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualHubs/') ? split(parHubVirtualNetworkId, '/')[4] : '' )
+var varVirtualHubResourceGroup = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualHubs/') ? split(parHubVirtualNetworkId, '/')[4] : '')
 
-var varVirtualHubSubscriptionId = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualHubs/') ? split(parHubVirtualNetworkId, '/')[2] : '' )
+var varVirtualHubSubscriptionId = (!empty(parHubVirtualNetworkId) && contains(parHubVirtualNetworkId, '/providers/Microsoft.Network/virtualHubs/') ? split(parHubVirtualNetworkId, '/')[2] : '')
 
 // **Modules**
 // Module - Customer Usage Attribution - Telemetry
@@ -140,7 +151,7 @@ module modResourceGroup '../../modules/resourceGroup/resourceGroup.bicep' = {
 
 // Module - Spoke Virtual Network
 module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' = {
-  scope: resourceGroup(parPeeredVnetSubscriptionId,parResourceGroupNameForSpokeNetworking)
+  scope: resourceGroup(parPeeredVnetSubscriptionId, parResourceGroupNameForSpokeNetworking)
   name: varModuleDeploymentNames.modSpokeNetworking
   dependsOn: [
     modResourceGroup
@@ -161,17 +172,17 @@ module modSpokeNetworking '../../modules/spokeNetworking/spokeNetworking.bicep' 
 
 // Module - Private DNS Zone Virtual Network Link to Spoke
 module modPrivateDnsZoneLinkToSpoke '../../modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep' = [for zone in parPrivateDnsZoneResourceIds: if (!empty(parPrivateDnsZoneResourceIds)) {
-  scope: resourceGroup(split(zone, '/')[2], split(zone, '/')[4] )
+  scope: resourceGroup(split(zone, '/')[2], split(zone, '/')[4])
   name: take('${varModuleDeploymentNames.modPrivateDnsZoneLinkToSpoke}-${uniqueString(zone)}', 64)
   params: {
-     parPrivateDnsZoneResourceId: zone
-     parSpokeVirtualNetworkResourceId: modSpokeNetworking.outputs.outSpokeVirtualNetworkId
+    parPrivateDnsZoneResourceId: zone
+    parSpokeVirtualNetworkResourceId: modSpokeNetworking.outputs.outSpokeVirtualNetworkId
   }
 }]
 
 // Module - Hub to Spoke peering.
 module modHubPeeringToSpoke '../../modules/vnetPeering/vnetPeering.bicep' = if (!empty(varHubVirtualNetworkName)) {
-  scope: resourceGroup(varHubVirtualNetworkSubscriptionId,varHubVirtualNetworkResourceGroup)
+  scope: resourceGroup(varHubVirtualNetworkSubscriptionId, varHubVirtualNetworkResourceGroup)
   name: varModuleDeploymentNames.modSpokePeeringFromHub
   params: {
     parDestinationVirtualNetworkId: (!empty(varHubVirtualNetworkName) ? modSpokeNetworking.outputs.outSpokeVirtualNetworkId : '')
@@ -185,7 +196,7 @@ module modHubPeeringToSpoke '../../modules/vnetPeering/vnetPeering.bicep' = if (
 
 // Module - Spoke to Hub peering.
 module modSpokePeeringToHub '../../modules/vnetPeering/vnetPeering.bicep' = if (!empty(varHubVirtualNetworkName)) {
-  scope: resourceGroup(parPeeredVnetSubscriptionId,parResourceGroupNameForSpokeNetworking)
+  scope: resourceGroup(parPeeredVnetSubscriptionId, parResourceGroupNameForSpokeNetworking)
   name: varModuleDeploymentNames.modSpokePeeringToHub
   params: {
     parDestinationVirtualNetworkId: parHubVirtualNetworkId
@@ -203,6 +214,9 @@ module modhubVirtualNetworkConnection '../../modules/vnetPeeringVwan/hubVirtualN
   params: {
     parVirtualWanHubResourceId: varVirtualHubResourceId
     parRemoteVirtualNetworkResourceId: modSpokeNetworking.outputs.outSpokeVirtualNetworkId
+    parVirtualHubConnectionPrefix: parVirtualHubConnectionPrefix
+    parVirtualHubConnectionSuffix: parVirtualHubConnectionSuffix
+    parEnableInternetSecurity: parEnableInternetSecurity
   }
 }
 

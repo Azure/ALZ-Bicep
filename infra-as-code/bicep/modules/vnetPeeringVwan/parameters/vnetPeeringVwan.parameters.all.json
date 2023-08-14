@@ -8,6 +8,15 @@
     "parRemoteVirtualNetworkResourceId": {
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/spokevnet-rg/providers/Microsoft.Network/virtualNetworks/vnet-spoke"
     },
+    "parVirtualHubConnectionPrefix": {
+      "value": ""
+    },
+    "parVirtualHubConnectionSuffix": {
+      "value": "-vhc"
+    },
+    "parEnableInternetSecurity": {
+      "value": false
+    },
     "parTelemetryOptOut": {
       "value": false
     }
