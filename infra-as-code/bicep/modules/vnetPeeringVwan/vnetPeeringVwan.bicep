@@ -9,6 +9,9 @@ param parVirtualWanHubResourceId string
 @sys.description('Remote Spoke virtual network resource ID.')
 param parRemoteVirtualNetworkResourceId string
 
+@sys.description('Enable Internet Security for the Virtual Hub Connection.')
+param parEnableInternetSecurity bool = false
+
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry. Default: false')
 param parTelemetryOptOut bool = false
 
@@ -30,6 +33,7 @@ module modhubVirtualNetworkConnection 'hubVirtualNetworkConnection.bicep' = if (
     params: {
     parVirtualWanHubResourceId: parVirtualWanHubResourceId
     parRemoteVirtualNetworkResourceId: parRemoteVirtualNetworkResourceId
+    parEnableInternetSecurity: parEnableInternetSecurity
   }
 }
 

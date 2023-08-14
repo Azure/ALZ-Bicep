@@ -47,6 +47,9 @@
     "parAllowHubVPNGatewayTransit": {
       "value": true
     },
+    "parEnableInternetSecurity": {
+      "value": false
+    },
     "parTags": {
       "value": {
         "Environment": "Live"

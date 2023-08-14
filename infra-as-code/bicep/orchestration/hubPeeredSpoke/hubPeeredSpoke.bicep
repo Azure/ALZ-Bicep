@@ -69,6 +69,11 @@ param parAllowSpokeForwardedTraffic bool = false
 @sys.description('Switch to enable/disable VPN Gateway for the hub network peering.')
 param parAllowHubVpnGatewayTransit bool = false
 
+// VWAN Module Parameters
+
+@sys.description('Enable Internet Security for the Virtual Hub Connection.')
+param parEnableInternetSecurity bool = false
+
 // **Variables**
 // Customer Usage Attribution Id
 var varCuaid = '8ea6f19a-d698-4c00-9afb-5c92d4766fd2'
@@ -203,6 +208,7 @@ module modhubVirtualNetworkConnection '../../modules/vnetPeeringVwan/hubVirtualN
   params: {
     parVirtualWanHubResourceId: varVirtualHubResourceId
     parRemoteVirtualNetworkResourceId: modSpokeNetworking.outputs.outSpokeVirtualNetworkId
+    parEnableInternetSecurity: parEnableInternetSecurity
   }
 }
 

@@ -8,6 +8,9 @@
     "parRemoteVirtualNetworkResourceId": {
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/spokevnet-rg/providers/Microsoft.Network/virtualNetworks/vnet-spoke"
     },
+    "parEnableInternetSecurity": {
+      "value": false
+    },
     "parTelemetryOptOut": {
       "value": false
     }
