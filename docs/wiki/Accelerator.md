@@ -5,7 +5,6 @@
 > **Note:**
 > This is an MVP release of the ALZ Bicep Accelerator. We are actively working on adding additional features and functionality to the Accelerator. Please check back often for updates.
 
-
 This document provides prescriptive guidance around implementing, automating, and maintaining your ALZ Bicep module with the ALZ Bicep Accelerator.
 
 ### What is the ALZ Bicep Accelerator?
@@ -17,9 +16,10 @@ The ALZ Bicep Accelerator framework was developed to provide end-users with the 
   > Currently we offer support for [GitHub Action Workflows](#getting-started-if-youre-using-github-actions) and [Azure DevOps Pipelines](#getting-started-if-youre-using-azure-devops-pipelines), but there are plans to add support for GitLab pipelines in the future
 - Provides framework to not only stay in-sync with new [ALZ Bicep releases](https://github.com/Azure/ALZ-Bicep/releases), but also incorporates guidance around modifiying existing ALZ Bicep modules and/or associating custom modules to the framework
 - Offers branching strategy guidance and pull request pipelines for linting the repository as well as validating any existing custom and/or modified Bicep modules
+
 Accelerator Directory Tree:
 
-![Accelerator Directory Tree](media/alz-bicep-accelerator-tree-output.png)
+![Accelerator Directory Tree](media/alz-bicep-accelerator-tree-output.png "Accelerator Directory Tree")
 
 ### Overview of Included ALZ Deployment Pipelines
 
@@ -34,15 +34,13 @@ We attempted to make the pipelines as flexible as possible while also reducing o
   > **Note:**
   > Currently, the output of the GitHub Action workflows or the Azure DevOps Pipelines need to viewed within the respective portal. We are working on adding support for sending the output to the Pull Request comments section in the future.
 
-The only thing that differs across the workflows is which ALZ Bicep modules are deployed as shown in the following table:
+All of the GitHub Actions follow a similar high level workflow as follows:
 
-| Workflow/Pipeline Name            | Modules Deployed              |
-|------------------------- |-------------------------------|
-| ALZ-Bicep-1-Core | Management Groups Deployment, Logging and Sentinel Resource Group Deployment, Logging and Sentinel Deployment, Custom Policy Definitions Deployment, Custom Management Group Diagnostic Settings
-| ALZ-Bicep-2-PolicyAssignments | Built-in and Custom Policy Assignments Deployment
-| ALZ-Bicep-3-SubPlacement| Deploy Subscription Placement
-| ALZ-Bicep-4A-HubSpoke| Connectivity Resource Group Deployment, Hub (Hub-and-Spoke) Deployment
-| ALZ-Bicep-4B-VWAN | Connectivity Resource Group Deployment, Hub (VWAN) Deployment
+![Accelerator Workflows High Level Diagram](media/alz-bicep-accelerator-workflow-hld.png "Accelerator Workflows High Level Diagram")
+
+The only thing that differs across the workflows is which ALZ Bicep modules are deployed as shown in the following low level diagram:
+
+![Accelerator Workflows Low Level Diagram](media/alz-bicep-accelerator-workflow-lld.png "Accelerator Workflows Low Level Diagram")
 
 ### Getting Started if you're using GitHub Actions
 
