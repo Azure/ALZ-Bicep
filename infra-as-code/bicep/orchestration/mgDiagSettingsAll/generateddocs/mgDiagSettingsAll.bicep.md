@@ -12,7 +12,7 @@ parLandingZoneMgChildren | No       | Array of strings to allow additional or di
 parPlatformMgChildren | No       | Array of strings to allow additional or different child Management Groups of the Platform Management Group.
 parLogAnalyticsWorkspaceResourceId | Yes      | Log Analytics Workspace Resource ID.
 parLandingZoneMgAlzDefaultsEnable | No       | Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true.
-parPlatformMgAlzDefaultsEnable | No       | Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true.
+parPlatformMgAlzDefaultsEnable | No       | Deploys Diagnostic Settings on Management, Connectivity and Identity Management Groups beneath Platform Management Group if set to true.
 parLandingZoneMgConfidentialEnable | No       | Deploys Diagnostic Settings on Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
@@ -60,7 +60,7 @@ Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Z
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true.
+Deploys Diagnostic Settings on Management, Connectivity and Identity Management Groups beneath Platform Management Group if set to true.
 
 - Default value: `True`
 
