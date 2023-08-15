@@ -42,32 +42,20 @@ The only thing that differs across the workflows is which ALZ Bicep modules are 
 
 ![Accelerator Workflows Low Level Diagram](media/alz-bicep-accelerator-workflow-lld.png "Accelerator Workflows Low Level Diagram")
 
+### Pre-Requisites
+
+Below are the required pre-requisites that need to be installed prior to using the ALZ Bicep Accelerator framework:
+
+1. [PowerShell 7.1 or higher](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3)
+1. [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+1. [Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#install-manually)
+1. [Visual Studio Code](https://code.visualstudio.com/#alt-downloads)
+1. [Azure PowerShell Module](https://learn.microsoft.com/en-us/powershell/azure/install-azure-powershell?view=azps-10.1.0)
+1. [ALZ PowerShell Module](https://github.com/Azure/ALZ-PowerShell-Module#installation)
+
 ### Getting Started if you're using GitHub Actions
 
 In order to setup the Accelerator framework with the production GitHub Action Workflows, the following steps must be completed in the order listed:
-
-1. Install the [ALZ PowerShell Module](https://github.com/Azure/ALZ-PowerShell-Module#installation) on your local development machine or within the Azure Cloud Shell using the following command:
-
-    > **Warning:**
-    > In order to use this module, [PowerShell 7.1 or higher](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3) needs to be installed
-
-    ```powershell
-    Install-Module -Name ALZ
-    ```
-
-1. Before you can utilize the module, ensure you have the prerequisites installed with the following command:
-
-    ```powershell
-    Test-ALZRequirement
-    ```
-
-    Currently this tests for:
-
-    - [Supported minimum PowerShell version](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3)
-    - [Azure PowerShell Module](https://learn.microsoft.com/en-us/powershell/azure/install-azure-powershell?view=azps-10.1.0)
-    - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-    - [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
-    - [Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#install-manually)
 
 1. Create your ALZ Bicep Accelerator framework with the following command:
 
@@ -144,29 +132,6 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
 ### Getting Started if you're using Azure DevOps Pipelines
 
 In order to setup the Accelerator framework with the production ready Azure DevOps Pipelines, the following steps must be completed in the order listed:
-
-1. Install the [ALZ PowerShell Module](https://github.com/Azure/ALZ-PowerShell-Module#installation) on your local development machine or within the Azure Cloud Shell using the following command:
-
-    > **Warning:**
-    > In order to use this module, [PowerShell 7.1 or higher](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3) needs to be installed
-
-    ```powershell
-    Install-Module -Name ALZ
-    ```
-
-1. Before you can utilize the module, ensure you have the prerequisites installed with the following command:
-
-    ```powershell
-    Test-ALZRequirement
-    ```
-
-    Currently this tests for:
-
-    - [Supported minimum PowerShell version](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3)
-    - [Azure PowerShell Module](https://learn.microsoft.com/en-us/powershell/azure/install-azure-powershell?view=azps-10.1.0)
-    - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-    - [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
-    - [Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#install-manually)
 
 1. Create your ALZ Bicep Accelerator framework with the following command:
 
