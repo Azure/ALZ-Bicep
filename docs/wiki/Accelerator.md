@@ -100,10 +100,6 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
     git push
     ```
 
-    >> **Note:**
-    >> If you initialized your remote repository with a README.md file, you will need to run the following command to force the push to the remote repository
-    >> ```git push -f```
-
 1. Now that the remote branch has the latest commit(s), you can configure your OpenID Connect (OIDC) identity provider with GitHub which will give the workflows access to your Azure environment.
     1. [Create an Azure Active Directory service principal](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#create-an-azure-active-directory-application-and-service-principal)
     1. [Add your federated credentials](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#add-federated-credentials)
@@ -177,10 +173,6 @@ In order to setup the Accelerator framework with the production ready Azure DevO
     # Updates the remote branch with the local commit(s) if you did not initialize your remote repository.
     git push
     ```
-
-    >> **Note:**
-    >> If you initialized your remote repository with a README.md file, you will need to run the following command to force the push to the remote repository
-    >> ```git push -f```
 
 1. Create your new pipelines within Azure DevOps. Ensure you select "Existing Azure Pipelines YAML file" when prompted  and select the pipeline files from the .azuredevops/pipelines
 
