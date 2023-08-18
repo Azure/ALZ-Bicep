@@ -25,6 +25,9 @@ parSpokeToHubRouteTableName | No       | Name of Route table to create for the d
 parHubVirtualNetworkId | Yes      | Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID.
 parAllowSpokeForwardedTraffic | No       | Switch to enable/disable forwarded Traffic from outside spoke network.
 parAllowHubVpnGatewayTransit | No       | Switch to enable/disable VPN Gateway for the hub network peering.
+parVirtualHubConnectionPrefix | No       | Optional Virtual Hub Connection Name Prefix.
+parVirtualHubConnectionSuffix | No       | Optional Virtual Hub Connection Name Suffix. Example: -vhc
+parEnableInternetSecurity | No       | Enable Internet Security for the Virtual Hub Connection.
 
 ### parLocation
 
@@ -160,6 +163,28 @@ Switch to enable/disable VPN Gateway for the hub network peering.
 
 - Default value: `False`
 
+### parVirtualHubConnectionPrefix
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional Virtual Hub Connection Name Prefix.
+
+### parVirtualHubConnectionSuffix
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional Virtual Hub Connection Name Suffix. Example: -vhc
+
+- Default value: `-vhc`
+
+### parEnableInternetSecurity
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Enable Internet Security for the Virtual Hub Connection.
+
+- Default value: `False`
+
 ## Outputs
 
 Name | Type | Description
@@ -234,6 +259,15 @@ outSpokeVirtualNetworkId | string |
             "value": false
         },
         "parAllowHubVpnGatewayTransit": {
+            "value": false
+        },
+        "parVirtualHubConnectionPrefix": {
+            "value": ""
+        },
+        "parVirtualHubConnectionSuffix": {
+            "value": "-vhc"
+        },
+        "parEnableInternetSecurity": {
             "value": false
         }
     }

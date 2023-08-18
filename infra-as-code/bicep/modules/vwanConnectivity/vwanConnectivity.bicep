@@ -36,6 +36,7 @@ param parVirtualWanHubName string = '${parCompanyPrefix}-vhub'
 - `parHubLocation` - The Virtual WAN Hub location.
 - `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASN`, `VpnGateway`, `ExpressRoute`.
 - `parVirtualRouterAutoScaleConfiguration` - The Virtual WAN Hub capacity. The value should be between 2 to 50.
+- `parVirtualHubRoutingIntentDestinations` - The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.
 
 ''')
 param parVirtualWanHubs array = [ {
@@ -46,6 +47,7 @@ param parVirtualWanHubs array = [ {
     parHubLocation: parLocation
     parHubRoutingPreference: 'ExpressRoute' //allowed values are 'ASN','VpnGateway','ExpressRoute'.
     parVirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
+    parVirtualHubRoutingIntentDestinations: []
   }
 ]
 
@@ -177,7 +179,7 @@ var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
 var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub => hub.parAzFirewallEnabled), false)) && (parAzFirewallTier == 'Premium')) ? true : false
 
 // Virtual WAN resource
-resource resVwan 'Microsoft.Network/virtualWans@2023-02-01' = {
+resource resVwan 'Microsoft.Network/virtualWans@2023-04-01' = {
   name: parVirtualWanName
   location: parLocation
   tags: parTags
@@ -189,7 +191,7 @@ resource resVwan 'Microsoft.Network/virtualWans@2023-02-01' = {
   }
 }
 
-resource resVhub 'Microsoft.Network/virtualHubs@2023-02-01' = [for hub in parVirtualWanHubs: if (parVirtualHubEnabled && !empty(hub.parVirtualHubAddressPrefix)) {
+resource resVhub 'Microsoft.Network/virtualHubs@2023-04-01' = [for hub in parVirtualWanHubs: if (parVirtualHubEnabled && !empty(hub.parVirtualHubAddressPrefix)) {
   name: '${parVirtualWanHubName}-${hub.parHubLocation}'
   location: hub.parHubLocation
   tags: parTags
@@ -206,7 +208,7 @@ resource resVhub 'Microsoft.Network/virtualHubs@2023-02-01' = [for hub in parVir
   }
 }]
 
-resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2023-02-01' = [for (hub, i) in parVirtualWanHubs: if (parVirtualHubEnabled && hub.parAzFirewallEnabled) {
+resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2023-04-01' = [for (hub, i) in parVirtualWanHubs: if (parVirtualHubEnabled && hub.parAzFirewallEnabled && empty(hub.parVirtualHubRoutingIntentDestinations)) {
   parent: resVhub[i]
   name: 'defaultRouteTable'
   properties: {
@@ -224,6 +226,20 @@ resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2023-02
         nextHopType: 'ResourceID'
       }
     ]
+  }
+}]
+
+resource resVhubRoutingIntent 'Microsoft.Network/virtualHubs/routingIntent@2023-04-01' = [for (hub, i) in parVirtualWanHubs: if (parVirtualHubEnabled && hub.parAzFirewallEnabled && !empty(hub.parVirtualHubRoutingIntentDestinations)) {
+  parent: resVhub[i]
+  name: '${parVirtualWanHubName}-${hub.parHubLocation}-Routing-Intent'
+  properties: {
+    routingPolicies: [for destination in hub.parVirtualHubRoutingIntentDestinations: {
+      name: destination == 'Internet' ? 'PublicTraffic' : destination == 'PrivateTraffic' ? 'PrivateTraffic' : 'N/A'
+      destinations: [
+        destination
+      ]
+      nextHop: resAzureFirewall[i].id
+    }]
   }
 }]
 
