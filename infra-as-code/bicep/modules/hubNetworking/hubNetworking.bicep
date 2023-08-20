@@ -780,7 +780,7 @@ module modCustomerUsageAttributionZtnP1 '../../CRML/customerUsageAttribution/cua
   params: {}
 }
 
-//If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
+//If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall. 
 output outAzFirewallPrivateIp string = parAzFirewallEnabled ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress : ''
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
