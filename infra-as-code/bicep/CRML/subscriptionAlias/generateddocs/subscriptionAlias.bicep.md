@@ -10,7 +10,7 @@ parSubscriptionName | Yes      | Name of the subscription to be created. Will al
 parSubscriptionBillingScope | Yes      | The full resource ID of billing scope associated to the EA, MCA or MPA account you wish to create the subscription in.
 parTags        | No       | Tags you would like to be applied.
 parManagementGroupId | No       | The ID of the existing management group where the subscription will be placed. Also known as its parent management group. (Optional)
-parSubscriptionOwnerId | No       | The object ID of a responsible user, AAD group or service principal. (Optional)
+parSubscriptionOwnerId | No       | The object ID of a responsible user, Microsoft Entra group or service principal. (Optional)
 parSubscriptionOfferType | No       | The offer type of the EA, MCA or MPA subscription to be created. Defaults to = Production
 parTenantId    | No       | The ID of the tenant. Defaults to = tenant().tenantId
 
@@ -42,7 +42,7 @@ The ID of the existing management group where the subscription will be placed. A
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The object ID of a responsible user, AAD group or service principal. (Optional)
+The object ID of a responsible user, Microsoft Entra group or service principal. (Optional)
 
 ### parSubscriptionOfferType
 

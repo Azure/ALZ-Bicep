@@ -1,9 +1,9 @@
 [CmdletBinding()]
 param (
     #Added this back into parameters as error occurs if multiple tenants are found when using Get-AzTenant
-    [Parameter(Mandatory = $true, Position = 1, HelpMessage = "Please the Insert Tenant ID (GUID) of your Azure AD tenant e.g.'f73a2b89-6c0e-4382-899f-ea227cd6b68f'")]
+    [Parameter(Mandatory = $true, Position = 1, HelpMessage = "Please the Insert Tenant ID (GUID) of your Microsoft Entra tenant e.g.'f73a2b89-6c0e-4382-899f-ea227cd6b68f'")]
     [string]
-    $tenantRootGroupID = "<Insert the Tenant ID (GUID) of your Azure AD tenant>",
+    $tenantRootGroupID = "<Insert the Tenant ID (GUID) of your Microsoft Entra tenant>",
 
     [Parameter(Mandatory = $true, Position = 2, HelpMessage = "Insert the name of your intermediate root Management Group e.g. 'Contoso'")]
     [string]
@@ -52,12 +52,12 @@ $subDeployments | ForEach-Object -Parallel {
 }
 
 
-# Get all AAD Tenant level deployments
-$tenantDeployments = Get-AzTenantDeployment | Where-Object {$PSItem.DeploymentName -like "$intermediateRootGroupID*"}
+# Get all Microsoft Entra Tenant level deployments
+$tenantDeployments = Get-AzTenantDeployment | Where-Object { $PSItem.DeploymentName -like "$intermediateRootGroupID*" }
 
 Write-Output "Removing all Tenant level deployments prefixed with $intermediateRootGroupID"
 
-# For each AAD Tenant level deployment, remove it
+# For each Microsoft Entra Tenant level deployment, remove it
 $tenantDeployments | ForEach-Object -Parallel {
     Write-Output "Removing $($_.DeploymentName) ..."
     Remove-AzTenantDeployment -Id $_.Id

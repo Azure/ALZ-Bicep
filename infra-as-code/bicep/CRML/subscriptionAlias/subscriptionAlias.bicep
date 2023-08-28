@@ -24,7 +24,7 @@ param parTags object = {}
 @sys.description('The ID of the existing management group where the subscription will be placed. Also known as its parent management group. (Optional)')
 param parManagementGroupId string = ''
 
-@sys.description('The object ID of a responsible user, AAD group or service principal. (Optional)')
+@sys.description('The object ID of a responsible user, Microsoft Entra group or service principal. (Optional)')
 param parSubscriptionOwnerId string = ''
 
 @allowed([
