@@ -1,22 +1,28 @@
-name: ALZ-Bicep-3 Workflow
+name: ALZ-Bicep-4A-HubSpoke
 
 on:
   push:
     branches:
       - "main"
+  pull_request:
+    branches:
+      - "main"
     paths:
-      - "config/custom-parameters/subPlacementAll.parameters.all.json"
+      - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
+      - "config/custom-parameters/hubNetworking.parameters.all.json"
   workflow_dispatch:
 
 permissions:
   id-token: write
   contents: read
+  pull-requests: write
 
 env:
   ENV_FILE: ".env"
+  IS_PULL_REQUEST: "${{ github.event_name == 'pull_request' }}"
 
 jobs:
-  ALZ_Bicep_3_Workflow_Job:
+  ALZ_Bicep_4a_HubSpoke:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -40,12 +46,19 @@ jobs:
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ env.MANAGEMENT_SUBSCRIPTION_ID }}
+          subscription-id: ${{ env.CONNECTIVITY_SUBSCRIPTION_ID }}
           enable-AzPSSession: true
 
-      - name: "Deploy Subscription Placement"
+      - name: "Connectivity Resource Group Deployment"
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\Deploy-ALZSubscriptionPlacement.ps1
+            .\pipeline-scripts\Deploy-ALZConnectivityResourceGroup.ps1
+          azPSVersion: "latest"
+
+      - name: "Hub (Hub-and-Spoke) Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZHub-HubAndSpoke.ps1
           azPSVersion: "latest"

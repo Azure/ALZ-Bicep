@@ -281,7 +281,7 @@ outPrivateDnsZonesNames | array |
                     "parExpressRouteGatewayEnabled": true,
                     "parAzFirewallEnabled": true,
                     "parVirtualHubAddressPrefix": "10.100.0.0/23",
-                    "parHubLocation": "eastus",
+                    "parHubLocation": "[parameters('parLocation')]",
                     "parHubRoutingPreference": "ExpressRoute",
                     "parVirtualRouterAutoScaleConfiguration": 2
                 }

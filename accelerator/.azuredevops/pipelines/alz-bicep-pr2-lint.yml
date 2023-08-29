@@ -1,4 +1,4 @@
-name: ALZ-Bicep-PR-2 Workflow
+name: ALZ-Bicep-PR2-Lint
 
 trigger: none
 # YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
@@ -10,7 +10,7 @@ pr:
       - "main"
 
 jobs:
-  - job: pr_lint
+  - job: ALZ_Bicep_PR2_Lint
     displayName: Lint Code Base (except Bicep Modules and Files)
     pool:
       vmImage: ubuntu-latest

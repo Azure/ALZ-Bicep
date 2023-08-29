@@ -1,4 +1,11 @@
 {
+  "AuditAzureHybridBenefitUnusedResourcesCostOptimization": {
+    "parameters": {
+      "effect": {
+        "value": "Audit"
+      }
+    }
+  },
   "AuditDisksUnusedResourcesCostOptimization": {
     "parameters": {
       "effect": {

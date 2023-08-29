@@ -10,6 +10,19 @@ However, it is expected that most customers will want or need to add their own c
 
 This is where this wiki article will help explain how this is possible and advise of the various ways this can also be done.
 
+## Pre-Reqs
+
+Install the [ALZ PowerShell Module](https://github.com/Azure/ALZ-PowerShell-Module#installation) on your local development machine or within the Azure Cloud Shell using the following command:
+
+> **Warning:**
+> In order to use this module, [PowerShell 7.1 or higher](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3) needs to be installed
+
+```powershell
+Install-Module -Name ALZ
+```
+
+> Version `0.2.8` or higher must be installed of the `ALZ` module, you can check this with `Get-Module -Name ALZ`
+
 ## What are the options?
 
 There are a few options for you to deploy your own custom Azure Policy Definitions and Initiatives using Bicep and more specifically `ALZ-Bicep`.
