@@ -1,6 +1,6 @@
 name: Bug Report
-description: File a bug report \U0001FAB2
-title: "\U0001FAB2 [PLACEHOLDER] - Place a descriptive title here"
+description: File a bug report
+title: "[PLACEHOLDER] - Place a descriptive title here"
 labels: ["bug"]
 assignees:
   - test
@@ -28,7 +28,7 @@ body:
     attributes:
       label: What was the expected outcome?
     validations:
-      required: true
+      required: false
   - type: textarea
     id: logs
     attributes:
