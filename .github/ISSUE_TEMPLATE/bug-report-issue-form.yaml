@@ -2,8 +2,6 @@ name: Bug Report
 description: File a bug report
 title: "[PLACEHOLDER] - Place a descriptive title here"
 labels: ["bug"]
-assignees:
-  - test
 body:
   - type: markdown
     attributes:
@@ -22,7 +20,7 @@ body:
       label: Please provide the correlation id associated with your error or bug. You can use the example here on how to find it https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-history?tabs=azure-portal
       value: "A bug happened!"
     validations:
-      required: true
+      required: false
   - type: textarea
     id: what-is-expected
     attributes:
