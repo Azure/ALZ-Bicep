@@ -1,9 +1,7 @@
-name: Feature Request \U0001F4A1
+name: Feature Request
 description: Request a new feature!
-title: " \U0001F4A1 [PLACEHOLDER] - Place a descriptive title here"
+title: "[PLACEHOLDER] - Place a descriptive title here"
 labels: ["feature"]
-assignees:
-  - test
 body:
   - type: markdown
     attributes:
