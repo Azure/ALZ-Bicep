@@ -1,9 +1,7 @@
-name: ❓\U0001F442 General Feedback
+name: General Feedback
 description: Tell us what you think!
-title: "❓\U0001F442 [PLACEHOLDER] - Place a descriptive title here"
+title: "[PLACEHOLDER] - Place a descriptive title here"
 labels: ["feedback"]
-assignees:
-  - test
 body:
   - type: markdown
     attributes:
