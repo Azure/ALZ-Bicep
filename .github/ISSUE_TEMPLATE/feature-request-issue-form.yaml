@@ -1,7 +1,7 @@
 name: Feature Request
 description: Request a new feature!
 title: "[PLACEHOLDER] - Place a descriptive title here"
-labels: ["feature"]
+labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
@@ -23,7 +23,7 @@ body:
   - type: textarea
     id: correlation-id
     attributes:
-      label: Please provide the correlation id associated with your error or bug. You can use the example here on how to find it https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-history?tabs=azure-portal
+      label: Please provide the correlation id associated with your error or bug. You can use the example [here](https://learn.microsoft.com/azure/azure-resource-manager/templates/deployment-history?tabs=azure-portal) on how to find it 
       value: "A bug happened!"
     validations:
       required: false
@@ -45,7 +45,7 @@ body:
     id: previous-checks
     attributes:
       label: check previous github issues
-      description: By submitting this issue, you confirm that you have done a search for this issue in the current issue list (https://github.com/Azure/ALZ-Bicep/issues?q=is%3Aissue+sort%3Aupdated-desc+)
+      description: By submitting this issue, you confirm that you have done a search for this issue in the [current issue list](https://github.com/Azure/ALZ-Bicep/issues?q=is%3Aissue+sort%3Aupdated-desc+)
       options:
         - label: I have searched previous issues for this item
           required: true
