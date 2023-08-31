@@ -6,7 +6,7 @@
 
 > This guidance supports the [Deployment Flow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) guidance, it is not a replacement
 
-The `ALZ-Bicep` repository (this repository) has been created to help customers and partners to deploy and deliver the [Azure Landing Zones (ALZ) conceptual architecture](https://aka.ms/alz#azure-landing-zone-conceptual-architecture) into an Azure AD Tenant utilizing [Bicep](https://aka.ms/bicep) as the Infrastructure-as-Code (IaC) tooling and language.
+The `ALZ-Bicep` repository (this repository) has been created to help customers and partners to deploy and deliver the [Azure Landing Zones (ALZ) conceptual architecture](https://aka.ms/alz#azure-landing-zone-conceptual-architecture) into an Microsoft Entra Tenant utilizing [Bicep](https://aka.ms/bicep) as the Infrastructure-as-Code (IaC) tooling and language.
 
 The style in which the Bicep modules have been authored in this repo are aimed at consumers of all skill levels. This is in an effort to make the modules as accessible as possible; especially for those that are newer to the world of IaC and/or Bicep.
 
