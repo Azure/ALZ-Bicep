@@ -2,41 +2,31 @@ name: Bug Report
 description: File a bug report
 title: "[PLACEHOLDER] - Place a descriptive title here"
 labels: ["bug"]
-assignees:
-  - test
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
-  - type: input
-    id: contact
-    attributes:
-      label: Contact Details
-      description: How can we get in touch with you if we need more info?
-      placeholder: ex. email@example.com
-    validations:
-      required: true
   - type: textarea
     id: what-happened
     attributes:
       label: What happened? Provide a clear and concise description of the bug, including deployment details.
-      value: "A bug happened!"
     validations:
       required: true
+  - type: textarea
+    id: correlation-id
+    attributes:
+      label: Please provide the correlation id associated with your error or bug. 
+      description: You can use the example [here](https://learn.microsoft.com/azure/azure-resource-manager/templates/deployment-history?tabs=azure-portal) on how to find it
+      value: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    validations:
+      required: false
   - type: textarea
     id: what-is-expected
     attributes:
       label: What was the expected outcome?
     validations:
-      required: true
-  - type: textarea
-    id: version
-    attributes:
-      label: Version
-      description: What version of our repo are you running?
-    validations:
-      required: true
+      required: false
   - type: textarea
     id: logs
     attributes:
@@ -46,16 +36,16 @@ body:
   - type: checkboxes
     id: previous-checks
     attributes:
-      label: check previous github issues
-      description: By submitting this issue, you confirm that you have done a search for this issue in the current issue list
+      label: Check previous GitHub issues
+      description: By submitting this issue, you confirm that you have done a search for this issue in the [current and past issue list](https://github.com/Azure/ALZ-Bicep/issues?q=is%3Aissue+sort%3Aupdated-desc+)
       options:
-        - label: I have searched previous issues for this item
+        - label: I have searched the issues for this item and found no duplicate
           required: true
   - type: checkboxes
     id: terms
     attributes:
       label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/Azure/ALZ-Bicep/blob/main/CODE_OF_CONDUCT.md)
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true

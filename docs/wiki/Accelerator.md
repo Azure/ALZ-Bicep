@@ -101,7 +101,7 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
     ```
 
 1. Now that the remote branch has the latest commit(s), you can configure your OpenID Connect (OIDC) identity provider with GitHub which will give the workflows access to your Azure environment.
-    1. [Create an Azure Active Directory service principal](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#create-an-azure-active-directory-application-and-service-principal)
+    1. [Create an Microsoft Entra service principal](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#create-an-azure-active-directory-application-and-service-principal)
     1. [Add your federated credentials](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#add-federated-credentials)
         1. Add one federated credential with the entity type set to 'Branch' and with a value for "Based on Selection" set to 'main'
         1. Add a secondary federated credential with the entity type set to 'Pull Request'
