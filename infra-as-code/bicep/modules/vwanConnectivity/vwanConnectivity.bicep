@@ -163,6 +163,8 @@ param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
 @sys.description('Resource ID of VNet for Private DNS Zone VNet Links')
 param parVirtualNetworkIdToLink string = ''
 
+param parVirtualNetworkIdToLinkFailover string = ''
+
 @sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
 
