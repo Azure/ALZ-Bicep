@@ -165,6 +165,7 @@ param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
 @sys.description('Resource ID of VNet for Private DNS Zone VNet Links')
 param parVirtualNetworkIdToLink string = ''
 
+@sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links')
 param parVirtualNetworkIdToLinkFailover string = ''
 
 @sys.description('Tags you would like to be applied to all resources in this module.')
@@ -339,6 +340,7 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
     parPrivateDnsZones: parPrivateDnsZones
     parPrivateDnsZoneAutoMergeAzureBackupZone: parPrivateDnsZoneAutoMergeAzureBackupZone
     parVirtualNetworkIdToLink: parVirtualNetworkIdToLink
+    parVirtualNetworkIdToLinkFailover        : parVirtualNetworkIdToLinkFailover
   }
 }
 
