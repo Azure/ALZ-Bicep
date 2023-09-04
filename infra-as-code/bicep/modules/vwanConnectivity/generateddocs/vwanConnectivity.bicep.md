@@ -28,6 +28,7 @@ parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS
 parPrivateDnsZones | No       | Array of DNS Zones to provision in Hub Virtual Network.
 parPrivateDnsZoneAutoMergeAzureBackupZone | No       | Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.
 parVirtualNetworkIdToLink | No       | Resource ID of VNet for Private DNS Zone VNet Links
+parVirtualNetworkIdToLinkFailover | No       | Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
@@ -216,6 +217,12 @@ Set Parameter to false to skip the addition of a Private DNS Zone for Azure Back
 
 Resource ID of VNet for Private DNS Zone VNet Links
 
+### parVirtualNetworkIdToLinkFailover
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
+
 ### parTags
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -396,6 +403,9 @@ outPrivateDnsZonesNames | array |
             "value": true
         },
         "parVirtualNetworkIdToLink": {
+            "value": ""
+        },
+        "parVirtualNetworkIdToLinkFailover": {
             "value": ""
         },
         "parTags": {
