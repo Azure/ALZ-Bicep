@@ -340,7 +340,7 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
     parPrivateDnsZones: parPrivateDnsZones
     parPrivateDnsZoneAutoMergeAzureBackupZone: parPrivateDnsZoneAutoMergeAzureBackupZone
     parVirtualNetworkIdToLink: parVirtualNetworkIdToLink
-    parVirtualNetworkIdToLinkFailover        : parVirtualNetworkIdToLinkFailover
+    parVirtualNetworkIdToLinkFailover: parVirtualNetworkIdToLinkFailover
   }
 }
 

@@ -764,7 +764,7 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
     parLocation: parLocation
     parTags: parTags
     parVirtualNetworkIdToLink: resHubVnet.id
-    parVirtualNetworkIdToLinkFailover        : parVirtualNetworkIdToLinkFailover
+    parVirtualNetworkIdToLinkFailover: parVirtualNetworkIdToLinkFailover
     parPrivateDnsZones: parPrivateDnsZones
     parPrivateDnsZoneAutoMergeAzureBackupZone: parPrivateDnsZoneAutoMergeAzureBackupZone
     parTelemetryOptOut: parTelemetryOptOut
