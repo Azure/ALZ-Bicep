@@ -36,6 +36,7 @@ parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zone
 parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones.
 parPrivateDnsZones | No       | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones
 parPrivateDnsZoneAutoMergeAzureBackupZone | No       | Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.
+parVirtualNetworkIdToLinkFailover | No       | Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parVpnGatewayConfig": {   "value": {} }
 parExpressRouteGatewayConfig | No       | Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parExpressRouteGatewayConfig": {   "value": {} }
 parTags        | No       | Tags you would like to be applied to all resources in this module.
@@ -283,6 +284,12 @@ Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure
 Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.
 
 - Default value: `True`
+
+### parVirtualNetworkIdToLinkFailover
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 
 ### parVpnGatewayConfig
 
@@ -533,6 +540,9 @@ outHubVirtualNetworkId | string |
         },
         "parPrivateDnsZoneAutoMergeAzureBackupZone": {
             "value": true
+        },
+        "parVirtualNetworkIdToLinkFailover": {
+            "value": ""
         },
         "parVpnGatewayConfig": {
             "value": {

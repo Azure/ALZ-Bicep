@@ -8,7 +8,7 @@ This document outlines the prerequisites, dependencies and flow to setup a Priva
 
 ## Prerequisites
 
-1. Azure Active Directory Tenant.
+1. Microsoft Entra Tenant.
 2. Minimum 1 subscription.  Subscription(s) are required when configuring `Azure Container Registry` services.
 3. Deployment Identity with `Contributor` permission to the subscription.
 

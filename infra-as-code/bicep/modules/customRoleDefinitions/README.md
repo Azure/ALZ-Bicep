@@ -9,7 +9,7 @@ Module supports the following custom roles:
 - [*ManagementGroupId] Network management (NetOps)
 - [*ManagementGroupId] Security operations (SecOps)
 
-*The custom role names are prefixed with `[ManagementGroupId]` since custom roles scoped at Management Group level must be unique within the Azure AD tenant. This will alleviate any conflicts if you chose to deploy a [canary environment](https://aka.ms/alz/canary).
+*The custom role names are prefixed with `[ManagementGroupId]` since custom roles scoped at Management Group level must be unique within the Microsoft Entra tenant. This will alleviate any conflicts if you chose to deploy a [canary environment](https://aka.ms/alz/canary).
 For example, if the `ManagementGroupId` = **alz**, then each role will have this prefix **[alz]** like `[alz] Subscription owner`. See the [example output deployment](#example-deployment-output) below.
 
 ## Parameters
