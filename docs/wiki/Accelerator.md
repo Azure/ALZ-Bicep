@@ -76,9 +76,9 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
     > **Note:**
     > If the directory structure specified for the output location does not exist, the module will create the directory structure programatically.
 
-    Various prompts (listed below) will be displayed which will be used to replace parameter values as well as to create an environment variables file (.env) that will be used by the GitHub Action workflows.
+    Various prompts will be displayed which will be used to replace parameter values as well as to create an environment variables file (.env) that will be used by the GitHub Action workflows.
 
-1. Depending upon your preferred [network topology deployment](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation),  remove the associated workflow file for each deployment model
+1. Depending upon your preferred [network topology deployment](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow#network-topology-deployment),  remove the associated workflow file for each deployment model
     - Traditional VNet Hub and Spoke = .github\workflows\alz-bicep-4a-hubspoke.yml
     - Virtual WAN = .github\workflows\alz-bicep-4b-vwan.yml
 
@@ -135,7 +135,7 @@ In order to setup the Accelerator framework with the production ready Azure DevO
 
     ```powershell
     # Clones the remote repository to your local workstation
-    git clone https://ztrocinski@dev.azure.com/<OrganizationName>/<ProjectName>/_git/<RepositoryName>
+    git clone https://<OrganizationName>@dev.azure.com/<OrganizationName>/<ProjectName>/_git/<RepositoryName>
 
 1. Create your ALZ Bicep Accelerator framework with the following ALZ PowerShell Module cmdlet:
 
@@ -148,7 +148,7 @@ In order to setup the Accelerator framework with the production ready Azure DevO
 
     Various prompts will be displayed which will be used to replace parameter values as well as to create an environment variables file (.env) that will be used by the Azure DevOps pipelines.
 
-1. Depending upon your preferred [network topology deployment](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation),  remove the associated workflow file for each deployment model
+1. Depending upon your preferred [network topology deployment](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow#network-topology-deployment),  remove the associated workflow file for each deployment model
     - Traditional VNet Hub and Spoke = .azuredevops\workflows\alz-bicep-4a-hubspoke.yml
     - Virtual WAN = .azuredevops\workflows\alz-bicep-4b-vwan.yml
 
