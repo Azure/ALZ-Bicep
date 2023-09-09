@@ -126,6 +126,9 @@ param parAzVpnGatewayAvailabilityZones array = []
 @sys.description('Switch to enable/disable Azure Firewall DNS Proxy.')
 param parAzFirewallDnsProxyEnabled bool = true
 
+@sys.description('Array of custom DNS servers used by Azure Firewall')
+param parAzFirewallDnsServers array = []
+
 @sys.description('Name of Route table to create for the default route of Hub.')
 param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 
@@ -664,6 +667,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
   } : {
     dnsSettings: {
       enableProxy: parAzFirewallDnsProxyEnabled
+      servers: parAzFirewallDnsServers
     }
     sku: {
       tier: parAzFirewallTier
