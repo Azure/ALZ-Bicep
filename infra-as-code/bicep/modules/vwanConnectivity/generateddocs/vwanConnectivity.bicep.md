@@ -255,6 +255,7 @@ outVirtualHubId | array |
 outDdosPlanResourceId | string |
 outPrivateDnsZones | array |
 outPrivateDnsZonesNames | array |
+outAzFwPrivateIps | array |
 
 ## Snippets
 
