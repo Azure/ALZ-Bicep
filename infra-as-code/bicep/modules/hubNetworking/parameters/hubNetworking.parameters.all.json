@@ -63,6 +63,9 @@
     "parAzBastionSku": {
       "value": "Standard"
     },
+    "parAzBastionTunneling": {
+      "value": false
+    },
     "parAzBastionNsgName": {
       "value": "nsg-AzureBastionSubnet"
     },
@@ -95,6 +98,9 @@
     },
     "parAzFirewallDnsProxyEnabled": {
       "value": true
+    },
+    "parAzFirewallDnsServers": {
+      "value": []
     },
     "parHubRouteTableName": {
       "value": "alz-hub-routetable"

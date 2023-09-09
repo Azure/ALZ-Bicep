@@ -30,6 +30,7 @@ parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azu
 parAzErGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
 parAzVpnGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
 parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
+parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall
 parHubRouteTableName | No       | Name of Route table to create for the default route of Hub.
 parDisableBgpRoutePropagation | No       | Switch to enable/disable BGP Propagation on route table.
 parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment.
@@ -236,6 +237,12 @@ Availability Zones to deploy the VPN/ER PIP across. Region must support Availabi
 Switch to enable/disable Azure Firewall DNS Proxy.
 
 - Default value: `True`
+
+### parAzFirewallDnsServers
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Array of custom DNS servers used by Azure Firewall
 
 ### parHubRouteTableName
 
@@ -455,6 +462,9 @@ outHubVirtualNetworkId | string |
         },
         "parAzFirewallDnsProxyEnabled": {
             "value": true
+        },
+        "parAzFirewallDnsServers": {
+            "value": []
         },
         "parHubRouteTableName": {
             "value": "[format('{0}-hub-routetable', parameters('parCompanyPrefix'))]"

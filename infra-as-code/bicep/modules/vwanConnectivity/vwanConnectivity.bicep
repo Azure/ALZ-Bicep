@@ -21,6 +21,9 @@ param parVirtualHubEnabled bool = true
 @sys.description('Switch to enable/disable Azure Firewall DNS Proxy.')
 param parAzFirewallDnsProxyEnabled bool = true
 
+@sys.description('Array of custom DNS servers used by Azure Firewall')
+param parAzFirewallDnsServers array = []
+
 @sys.description('Prefix Used for Virtual WAN.')
 param parVirtualWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
 
@@ -295,6 +298,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
   } : {
     dnsSettings: {
       enableProxy: parAzFirewallDnsProxyEnabled
+      servers: parAzFirewallDnsServers
     }
     sku: {
       tier: parAzFirewallTier
