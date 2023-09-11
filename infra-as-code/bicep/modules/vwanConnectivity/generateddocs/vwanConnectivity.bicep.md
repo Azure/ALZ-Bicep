@@ -11,6 +11,7 @@ parCompanyPrefix | No       | Prefix value which will be prepended to all resour
 parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
 parVirtualHubEnabled | No       | Switch to enable/disable Virtual Hub deployment.
 parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
+parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall
 parVirtualWanName | No       | Prefix Used for Virtual WAN.
 parVirtualWanHubName | No       | Prefix Used for Virtual WAN Hub.
 parVirtualWanHubs | No       | Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects in the array to meet the number of Virtual WAN Hubs required.  - `parVpnGatewayEnabled` - Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub. - `parExpressRouteGatewayEnabled` - Switch to enable/disable ExpressRoute Gateway deployment on the respective Virtual WAN Hub. - `parAzFirewallEnabled` - Switch to enable/disable Azure Firewall deployment on the respective Virtual WAN Hub. - `parVirtualHubAddressPrefix` - The IP address range in CIDR notation for the vWAN virtual Hub to use. - `parHubLocation` - The Virtual WAN Hub location. - `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASN`, `VpnGateway`, `ExpressRoute`. - `parVirtualRouterAutoScaleConfiguration` - The Virtual WAN Hub capacity. The value should be between 2 to 50. - `parVirtualHubRoutingIntentDestinations` - The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.  
@@ -73,6 +74,12 @@ Switch to enable/disable Virtual Hub deployment.
 Switch to enable/disable Azure Firewall DNS Proxy.
 
 - Default value: `True`
+
+### parAzFirewallDnsServers
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Array of custom DNS servers used by Azure Firewall
 
 ### parVirtualWanName
 
@@ -248,6 +255,7 @@ outVirtualHubId | array |
 outDdosPlanResourceId | string |
 outPrivateDnsZones | array |
 outPrivateDnsZonesNames | array |
+outAzFwPrivateIps | array |
 
 ## Snippets
 
@@ -275,6 +283,9 @@ outPrivateDnsZonesNames | array |
         },
         "parAzFirewallDnsProxyEnabled": {
             "value": true
+        },
+        "parAzFirewallDnsServers": {
+            "value": []
         },
         "parVirtualWanName": {
             "value": "[format('{0}-vwan-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"

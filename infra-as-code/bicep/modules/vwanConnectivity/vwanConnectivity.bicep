@@ -21,6 +21,9 @@ param parVirtualHubEnabled bool = true
 @sys.description('Switch to enable/disable Azure Firewall DNS Proxy.')
 param parAzFirewallDnsProxyEnabled bool = true
 
+@sys.description('Array of custom DNS servers used by Azure Firewall')
+param parAzFirewallDnsServers array = []
+
 @sys.description('Prefix Used for Virtual WAN.')
 param parVirtualWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
 
@@ -181,6 +184,9 @@ var varCuaid = '7f94f23b-7a59-4a5c-9a8d-2a253a566f61'
 var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
 var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub => hub.parAzFirewallEnabled), false)) && (parAzFirewallTier == 'Premium')) ? true : false
 
+// Azure Firewalls in Hubs
+var varAzureFirewallInHubs = filter(parVirtualWanHubs, hub => hub.parAzFirewallEnabled == true)
+
 // Virtual WAN resource
 resource resVwan 'Microsoft.Network/virtualWans@2023-04-01' = {
   name: parVirtualWanName
@@ -292,6 +298,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
   } : {
     dnsSettings: {
       enableProxy: parAzFirewallDnsProxyEnabled
+      servers: parAzFirewallDnsServers
     }
     sku: {
       tier: parAzFirewallTier
@@ -368,9 +375,15 @@ output outVirtualHubName array = [for (hub, i) in parVirtualWanHubs: {
 output outVirtualHubId array = [for (hub, i) in parVirtualWanHubs: {
   virtualhubid: resVhub[i].id
 }]
+
 // Output DDoS Plan ID
 output outDdosPlanResourceId string = resDdosProtectionPlan.id
 
 // Output Private DNS Zones
 output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
 output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZonesNames : [])
+
+// Output Azure Firewall Private IP's
+output outAzFwPrivateIps array = [for (hub, i) in varAzureFirewallInHubs: {
+  '${parVirtualWanHubName}-${hub.parHubLocation}': resAzureFirewall[i].properties.hubIPAddresses.privateIPAddress
+}]

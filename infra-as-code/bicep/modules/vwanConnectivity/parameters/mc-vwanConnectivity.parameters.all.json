@@ -17,6 +17,9 @@
     "parAzFirewallDnsProxyEnabled": {
       "value": true
     },
+    "parAzFirewallDnsServers": {
+      "value": []
+    },
     "parVirtualWanName": {
       "value": "alz-vwan-chinaeast2"
     },
