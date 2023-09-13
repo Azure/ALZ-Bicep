@@ -1,4 +1,5 @@
 targetScope = 'managementGroup'
+// Test
 
 metadata name = 'ALZ Bicep - Custom Policy Defitions at Management Group Scope'
 metadata description = 'This policy definition is used to deploy custom policy definitions at management group scope'
