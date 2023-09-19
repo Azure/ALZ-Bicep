@@ -70,7 +70,7 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
 1. Create your ALZ Bicep Accelerator framework with the following ALZ PowerShell Module cmdlet:
 
     ```powershell
-    New-ALZEnvironment -o <output_directory>
+    New-ALZEnvironment -o <output_directory> -IaC "bicep" -cicd "github
     ```
 
     > **Note:**
@@ -140,7 +140,7 @@ In order to setup the Accelerator framework with the production ready Azure DevO
 1. Create your ALZ Bicep Accelerator framework with the following ALZ PowerShell Module cmdlet:
 
     ```powershell
-    New-ALZEnvironment -o <output_directory> -cicd "azuredevops"
+    New-ALZEnvironment -o <output_directory> -IaC "bicep" -cicd "azuredevops"
     ```
 
     > **Note:**
