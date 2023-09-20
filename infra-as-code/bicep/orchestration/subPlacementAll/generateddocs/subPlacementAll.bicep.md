@@ -28,7 +28,7 @@ parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment t
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix used for the management group hierarchy.  This management group will be created as part of the deployment.
+Prefix used for the management group hierarchy.
 
 - Default value: `alz`
 
