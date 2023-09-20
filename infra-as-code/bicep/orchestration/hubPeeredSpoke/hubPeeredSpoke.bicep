@@ -8,7 +8,7 @@ metadata description = 'Orchestration module used to create and configure a spok
 @sys.description('The region to deploy all resources into.')
 param parLocation string = deployment().location
 
-@sys.description('Prefix for the management group hierarchy.')
+@sys.description('Prefix used for the management group hierarchy.')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
