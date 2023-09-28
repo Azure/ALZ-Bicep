@@ -203,6 +203,14 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-VNet-Peering.json')
 }
 {
+	name: 'DenyAction-ActivityLogs'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-ActivityLogs.json')
+}
+{
+	name: 'DenyAction-DiagnosticLogs'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-DiagnosticLogs.json')
+}
+{
 	name: 'Deploy-ASC-SecurityContacts'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-ASC-SecurityContacts.json')
 }
