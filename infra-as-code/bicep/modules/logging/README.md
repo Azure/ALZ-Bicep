@@ -27,13 +27,13 @@ The module will deploy the following Log Analytics Workspace solutions by defaul
 
 ## Deployment
 
-In this example, a Log Analytics Workspace and Automation Account will be deployed to the resource group `alz-logging`.  The inputs for this module are defined in `logging.parameters.all.json`.
+In this example, a Log Analytics Workspace and Automation Account will be deployed to the resource group `alz-logging`.  The inputs for this module are defined in `logging.parameters.all.bicepparam`.
 
 There are separate input parameters files depending on which Azure cloud you are deploying because this module deploys resources into an existing resource group under the specified region. There is no change to the Bicep template file.
 | Azure Cloud    | Bicep template | Input parameters file                     |
 | -------------- | -------------- | ----------------------------------------- |
-| Global regions | logging.bicep  | parameters/logging.parameters.all.json    |
-| China regions  | logging.bicep  | parameters/mc-logging.parameters.all.json |
+| Global regions | logging.bicep  | parameters/logging.parameters.all.bicepparam    |
+| China regions  | logging.bicep  | parameters/mc-logging.parameters.all.bicepparam |
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 > If the deployment failed due an error that your alz-log-analytics/Automation resource of type 'Microsoft.OperationalInsights/workspaces/linkedServices' was not found, please retry the deployment step and it would succeed.
@@ -53,7 +53,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 GROUP="rg-$TopLevelMGPrefix-logging-001"
 NAME="alz-loggingDeployment-${dateYMD}"
 TEMPLATEFILE="infra-as-code/bicep/modules/logging/logging.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.bicepparam"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
@@ -77,7 +77,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 GROUP="rg-$TopLevelMGPrefix-logging-001"
 NAME="alz-loggingDeployment-${dateYMD}"
 TEMPLATEFILE="infra-as-code/bicep/modules/logging/logging.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/logging/parameters/mc-logging.parameters.all.bicepparam"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
@@ -103,7 +103,7 @@ $inputObject = @{
   DeploymentName        = 'alz-LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = "rg-$TopLevelMGPrefix-logging-001"
   TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
+  TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.bicepparam"
 }
 
 Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
@@ -129,7 +129,7 @@ $inputObject = @{
   DeploymentName        = 'alz-LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = "rg-$TopLevelMGPrefix-logging-001"
   TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
+  TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.bicepparam"
 }
 
 Select-AzSubscription -SubscriptionId $ManagementSubscriptionId

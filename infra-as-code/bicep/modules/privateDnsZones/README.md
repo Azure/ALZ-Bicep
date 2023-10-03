@@ -66,8 +66,8 @@ There are two different sets of input parameters; one for deploying to Azure glo
 
  | Azure Cloud    | Bicep template        | Input parameters file                      |
  | -------------- | --------------------- | ------------------------------------------ |
- | Global regions | privateDnsZones.bicep | parameters/privateDnsZones.parameters.all.json    |
- | China regions  | privateDnsZones.bicep | parameters/mc-privateDnsZones.parameters.all.json |
+ | Global regions | privateDnsZones.bicep | parameters/privateDnsZones.parameters.all.bicepparam    |
+ | China regions  | privateDnsZones.bicep | parameters/mc-privateDnsZones.parameters.all.bicepparam |
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
@@ -86,7 +86,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-PrivateDnsZonesDeployment-${dateYMD}"
 RESOURCEGROUP="rg-$TopLevelMGPrefix-private-dns-001"
 TEMPLATEFILE="infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.bicepparam"
 
 az group create --location eastus \
    --name $RESOURCEGROUP
@@ -107,7 +107,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-PrivateDnsZonesDeployment-${dateYMD}"
 RESOURCEGROUP="rg-$TopLevelMGPrefix-private-dns-001"
 TEMPLATEFILE="infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.bicepparam"
 
 az group create --location chinaeast2 \
    --name $RESOURCEGROUP
@@ -120,23 +120,23 @@ az deployment group create --name ${NAME:0:63} --resource-group $RESOURCEGROUP -
 ```powershell
 # For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription
-$ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
+$ConnectivitySubscriptionId = "7a348906-189d-4e8d-9d72-ffb597a3e1d4"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
 
-New-AzResourceGroup `
-  -Name $inputObject.ResourceGroupName `
-  -Location 'eastus'
-
 $inputObject = @{
   DeploymentName        = 'alz-PrivateDnsZonesDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = "rg-$TopLevelMGPrefix-private-dns-001"
   TemplateFile          = "infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
+  TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.bicepparam"
 }
+
+New-AzResourceGroup `
+  -Name $inputObject.ResourceGroupName `
+  -Location 'eastus'
 
 New-AzResourceGroupDeployment @inputObject
 ```
@@ -152,16 +152,16 @@ Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
 
-New-AzResourceGroup `
-  -Name $inputObject.ResourceGroupName `
-  -Location 'chinaeast2'
-
 $inputObject = @{
   DeploymentName        = 'alz-PrivateDnsZonesDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = "rg-$TopLevelMGPrefix-private-dns-001"
   TemplateFile          = "infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
+  TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.bicepparam"
 }
+
+New-AzResourceGroup `
+  -Name $inputObject.ResourceGroupName `
+  -Location 'chinaeast2'
 
 New-AzResourceGroupDeployment @inputObject
 ```

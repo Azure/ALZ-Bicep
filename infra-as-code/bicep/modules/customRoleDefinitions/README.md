@@ -36,12 +36,12 @@ There are two different sets of deployment; one for deploying to Azure global re
 
  | Azure Cloud    | Bicep template                 | Input parameters file                             |
  | -------------- | ------------------------------ | ------------------------------------------------- |
- | Global regions | customRoleDefinitions.bicep    | parameters/customRoleDefinitions.parameters.all.json |
- | China regions  | mc-customRoleDefinitions.bicep | parameters/customRoleDefinitions.parameters.all.json |
+ | Global regions | customRoleDefinitions.bicep    | parameters/customRoleDefinitions.parameters.all.bicepparam |
+ | China regions  | mc-customRoleDefinitions.bicep | parameters/customRoleDefinitions.parameters.all.bicepparam |
 
 In this example, the custom roles will be deployed to the `alz` management group (the intermediate root management group).
 
-Input parameter file `parameters/customRoleDefinitions.parameters.all.json` defines the assignable scope for the roles.  In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation. There is no change in the input parameter file for different Azure clouds because there is no change to the intermediate root management group.
+Input parameter file `parameters/customRoleDefinitions.parameters.all.bicepparam` defines the assignable scope for the roles.  In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation. There is no change in the input parameter file for different Azure clouds because there is no change to the intermediate root management group.
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
@@ -59,7 +59,7 @@ LOCATION="eastus"
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-CustomRoleDefsDeployment-${dateYMD}"
 TEMPLATEFILE="infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.bicepparam"
 
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -76,7 +76,7 @@ LOCATION="chinaeast2"
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-CustomRoleDefsDeployment-${dateYMD}"
 TEMPLATEFILE="infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.bicepparam"
 
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -91,7 +91,7 @@ $inputObject = @{
   Location              = 'eastus'
   ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.bicepparam'
 }
 
 New-AzManagementGroupDeployment @inputObject
@@ -105,7 +105,7 @@ $inputObject = @{
   Location              = 'chinaeast2'
   ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.bicepparam'
 }
 
 New-AzManagementGroupDeployment @inputObject

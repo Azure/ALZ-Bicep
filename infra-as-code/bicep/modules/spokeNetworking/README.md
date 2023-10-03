@@ -65,7 +65,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-SpokeNetworkingDeployment-${dateYMD}"
 GROUP="rg-$TopLevelMGPrefix-spoke-networking-001"
 TEMPLATEFILE="infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.bicepparam"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
@@ -89,7 +89,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-SpokeNetworkingDeployment-${dateYMD}"
 GROUP="rg-$TopLevelMGPrefix-spoke-networking-001"
 TEMPLATEFILE="infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.bicepparam"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
@@ -104,7 +104,7 @@ az deployment group create --name ${NAME:0:63} --resource-group $GROUP --templat
 ```powershell
 # For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription
-$LandingZoneSubscriptionId = "[your landing zone subscription ID]"
+$LandingZoneSubscriptionId = "716c5a22-62fe-4fdc-a29a-5fa62d8877a4"
 
 Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
 
@@ -115,7 +115,7 @@ $TopLevelMGPrefix = "alz"
 $inputObject = @{
   DeploymentName        = 'alz-SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = "rg-$TopLevelMGPrefix-spoke-networking-001"
-  TemplateParameterFile = "infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json"
+  TemplateParameterFile = "infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.bicepparam"
   TemplateFile          = "infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
 }
 
@@ -140,7 +140,7 @@ $TopLevelMGPrefix = "alz"
 $inputObject = @{
   DeploymentName        = 'alz-SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = "rg-$TopLevelMGPrefix-spoke-networking-001"
-  TemplateParameterFile = "infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json"
+  TemplateParameterFile = "infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.bicepparam"
   TemplateFile          = "infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
 }
 

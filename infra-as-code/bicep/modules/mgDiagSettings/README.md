@@ -13,7 +13,7 @@ This module enables the supported Diagnostic Settings categories on a Management
 
 ## Deployment
 
-The inputs for this module are defined in `parameters/mgDiagSettings.parameters.all.json`. The Diagnostic Settings resource will be named toLa but can be changed in the module if desired.
+The inputs for this module are defined in `parameters/mgDiagSettings.parameters.all.bicepparam`. The Diagnostic Settings resource will be named toLa but can be changed in the module if desired.
 
 > For the  examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
@@ -23,7 +23,7 @@ The inputs for this module are defined in `parameters/mgDiagSettings.parameters.
 # For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep \
-  --parameters @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json \
+  --parameters @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.bicepparam \
   --location eastus \
   --management-group-id alz
 ```
@@ -34,7 +34,7 @@ OR
 # For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep \
-  --parameters @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json \
+  --parameters @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.bicepparam \
   --location chinaeast2 \
   --management-group-id alz
 ```
@@ -44,10 +44,10 @@ az deployment mg create \
 ```powershell
 # For Azure global regions
 New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep `
-  -TemplateParameterFile @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json `
-  -Location eastus `
-  -ManagementGroupId alz
+  -TemplateFile "infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep" `
+  -TemplateParameterFile "infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.bicepparam" `
+  -Location "eastus" `
+  -ManagementGroupId "alz"
 ```
 
 OR
@@ -55,10 +55,10 @@ OR
 ```powershell
 # For Azure China regions
 New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep `
-  -TemplateParameterFile @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json `
-  -Location chinaeast2 `
-  -ManagementGroupId alz
+  -TemplateFile "infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep" `
+  -TemplateParameterFile "infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.bicepparam" `
+  -Location "chinaeast2" `
+  -ManagementGroupId "alz"
 ```
 
 ## Validation

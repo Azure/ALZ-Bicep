@@ -27,12 +27,12 @@ There are two different sets of deployment; one for deploying to Azure global re
 
  | Azure Cloud    | Bicep template                     | Input parameters file                             |
  | -------------- | ---------------------------------- | ------------------------------------------------- |
- | Global regions | customPolicyDefinitions.bicep    | parameters/customPolicyDefinitions.parameters.all.json |
- | China regions  | mc-customPolicyDefinitions.bicep | parameters/customPolicyDefinitions.parameters.all.json |
+ | Global regions | customPolicyDefinitions.bicep    | parameters/customPolicyDefinitions.parameters.all.bicepparam |
+ | China regions  | mc-customPolicyDefinitions.bicep | parameters/customPolicyDefinitions.parameters.all.bicepparam |
 
 In this example, the custom policy definitions and policy set definitions will be deployed to the `alz` management group (the intermediate root management group).
 
-The input parameter file `parameters/customPolicyDefinitions.parameters.all.json` defines the target management group to which the custom policy definitions will be deployed to. In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation. There is no change in the input parameter file for different Azure clouds because there is no change to the intermediate root management group.
+The input parameter file `parameters/customPolicyDefinitions.parameters.all.bicepparam` defines the target management group to which the custom policy definitions will be deployed to. In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation. There is no change in the input parameter file for different Azure clouds because there is no change to the intermediate root management group.
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 > If the deployment provisioning state has failed due to policy definitions could not be found, this is often due to a known replication delay. Please re-run the deployment step below, and the deployment should succeed.
@@ -47,7 +47,7 @@ NAME="alz-PolicyDefsDefaults-${dateYMD}"
 LOCATION="eastus"
 MGID="alz"
 TEMPLATEFILE="infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.bicepparam"
 
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -60,7 +60,7 @@ NAME="alz-PolicyDefsDefaults-${dateYMD}"
 LOCATION="chinaeast2"
 MGID="alz"
 TEMPLATEFILE="infra-as-code/bicep/modules/policy/definitions/mc-customPolicyDefinitions.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.bicepparam"
 
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -75,7 +75,7 @@ $inputObject = @{
   Location              = 'eastus'
   ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.bicepparam'
 }
 
 New-AzManagementGroupDeployment @inputObject
@@ -89,7 +89,7 @@ $inputObject = @{
   Location              = 'chinaeast2'
   ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/modules/policy/definitions/mc-customPolicyDefinitions.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.bicepparam'
 }
 New-AzManagementGroupDeployment @inputObject
 ```

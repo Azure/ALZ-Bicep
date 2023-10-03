@@ -21,7 +21,7 @@ Module deploys the following resources:
 > **NOTE:**
 > - Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
 >
-> - When deploying using the `parameters/hubNetworking.parameters.all.json` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region or geo code, for Azure Backup. Failure to do so will cause these services to be unreachable over private endpoints.
+> - When deploying using the `parameters/hubNetworking.parameters.all.bicepparam` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region or geo code, for Azure Backup. Failure to do so will cause these services to be unreachable over private endpoints.
 >
 > For example, if deploying to East US the following zone entries:
 > - `privatelink.xxxxxx.azmk8s.io`
@@ -60,8 +60,8 @@ There are two different sets of input parameters; one for deploying to Azure glo
 
  | Azure Cloud    | Bicep template      | Input parameters file                           |
  | -------------- | ------------------- | ----------------------------------------------- |
- | Global regions | hubNetworking.bicep | parameters/hubNetworking.parameters.all.json    |
- | China regions  | hubNetworking.bicep | parameters/mc-hubNetworking.parameters.all.json |
+ | Global regions | hubNetworking.bicep | parameters/hubNetworking.parameters.all.bicepparam    |
+ | China regions  | hubNetworking.bicep | parameters/mc-hubNetworking.parameters.all.bicepparam |
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
@@ -81,7 +81,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-HubNetworkingDeploy-${dateYMD}"
 GROUP="rg-$TopLevelMGPrefix-hub-networking-001"
 TEMPLATEFILE="infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.bicepparam"
 
 az group create --location eastus \
    --name $GROUP
@@ -103,7 +103,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-HubNetworkingDeploy-${dateYMD}"
 GROUP="rg-$TopLevelMGPrefix-hub-networking-001"
 TEMPLATEFILE="infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.bicepparam"
 
 az group create --location chinaeast2 \
    --name $GROUP
@@ -131,7 +131,7 @@ $inputObject = @{
   DeploymentName        = 'alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = "rg-$TopLevelMGPrefix-hub-networking-001"
   TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json"
+  TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.bicepparam"
 }
 
 New-AzResourceGroup `
@@ -156,7 +156,7 @@ $inputObject = @{
   DeploymentName        = 'alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = "rg-$TopLevelMGPrefix-hub-networking-001"
   TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.json"
+  TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/mc-hubNetworking.parameters.all.bicepparam"
 }
 
 New-AzResourceGroup `

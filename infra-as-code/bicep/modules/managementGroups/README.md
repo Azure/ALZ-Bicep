@@ -89,31 +89,6 @@ parPlatformMgChildren: {
 }
 ```
 
-##### JSON Parameter File Input Example
-
-```json
-"parLandingZoneMgChildren": {
-    "value": {
-        "pci": {
-          "displayName": "PCI"
-        },
-        "another-example": {
-          "displayName": "Another Example"
-        }
-    }
-},
-"parPlatformMgChildren": {
-    "value": {
-        "security": {
-          "displayName": "Security"
-        },
-        "yet-another-example": {
-          "displayName": "Yet Another Example"
-        }
-    }
-}
-```
-
 ## Outputs
 
 The module will generate the following outputs:
@@ -150,7 +125,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-MGDeployment-${dateYMD}"
 LOCATION="eastus"
 TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.bicepparam"
 
 az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -162,7 +137,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-MGDeployment-${dateYMD}"
 LOCATION="chinaeast2"
 TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.bicepparam"
 
 az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -176,7 +151,7 @@ $inputObject = @{
   DeploymentName        = 'alz-MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   Location              = 'EastUS'
   TemplateFile          = "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.bicepparam'
 }
 New-AzTenantDeployment @inputObject
 ```
@@ -188,7 +163,7 @@ $inputObject = @{
   DeploymentName        = 'alz-MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   Location              = 'chinaeast2'
   TemplateFile          = "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
+  TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.bicepparam'
 }
 New-AzTenantDeployment @inputObject
 ```
