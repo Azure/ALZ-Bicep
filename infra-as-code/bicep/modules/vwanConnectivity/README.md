@@ -1,6 +1,6 @@
 # Module:  Virtual WAN
 
-This module is used to deploy the Virtual WAN network topology and its components according to the Azure Landing Zone conceptual architecture which can be found [here](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/virtual-wan-network-topology). This module draws parity with the Enterprise Scale implementation in the ARM template [here](https://github.com/Azure/Enterprise-Scale/blob/main/eslzArm/subscriptionTemplates/vwan-connectivity.json).
+This module is used to deploy the Virtual WAN network topology and its components according to the Azure Landing Zone conceptual architecture which can be found [here](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/virtual-wan-network-topology). This module draws parity with the Enterprise Scale implementation in the ARM template [here](https://github.com/Azure/Enterprise-Scale/blob/main/eslzArm/subscriptionTemplates/vwan-connectivity.bicepparam).
 
 Module deploys the following resources which can be configured by parameters:
 
@@ -20,7 +20,7 @@ Module deploys the following resources which can be configured by parameters:
 > **NOTE:** Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
 
 <!-- markdownlint-disable -->
-> NOTE: When deploying using the `parameters/vwanConnectivity.parameters.all.json` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region. Failure to do so will cause these services to be unreachable over private endpoints.
+> NOTE: When deploying using the `parameters/vwanConnectivity.parameters.all.bicepparam` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region. Failure to do so will cause these services to be unreachable over private endpoints.
 > For example, if deploying to East US the following zone entries:
 > - `privatelink.xxxxxx.azmk8s.io`
 > - `privatelink.xxxxxx.backup.windowsazure.com`
@@ -52,8 +52,8 @@ In this example, the resources required for Virtual WAN connectivity will be dep
 
  | Azure Cloud    | Bicep template         | Input parameters file                             |
  | -------------- | ---------------------- | ------------------------------------------------- |
- | Global regions | vwanConnectivity.bicep | parameters/vwanConnectivity.parameters.all.json    |
- | China regions  | vwanConnectivity.bicep | parameters/mc-vwanConnectivity.parameters.all.json |
+ | Global regions | vwanConnectivity.bicep | parameters/vwanConnectivity.parameters.all.bicepparam    |
+ | China regions  | vwanConnectivity.bicep | parameters/mc-vwanConnectivity.parameters.all.bicepparam |
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
@@ -71,7 +71,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-vwanConnectivityDeploy-${dateYMD}"
 GROUP="rg-$TopLevelMGPrefix-vwan-001"
 TEMPLATEFILE="infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.bicepparam"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
@@ -94,7 +94,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-vwanConnectivityDeploy-${dateYMD}"
 GROUP="rg-$TopLevelMGPrefix-vwan-001"
 TEMPLATEFILE="infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.bicepparam"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
@@ -121,7 +121,7 @@ $inputObject = @{
   DeploymentName        = 'alz-vwanConnectivityDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = "rg-$TopLevelMGPrefix-vwan-001"
   TemplateFile          = "infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json"
+  TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.bicepparam"
 }
 
 
@@ -147,7 +147,7 @@ $inputObject = @{
   DeploymentName        = 'alz-vwanConnectivityDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
   ResourceGroupName     = "rg-$TopLevelMGPrefix-vwan-001"
   TemplateFile          = "infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json"
+  TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.bicepparam"
 }
 
 New-AzResourceGroup `

@@ -89,7 +89,7 @@ In this example, the Diagnostic Settings are enabled on the management groups th
 # For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep \
-  --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json \
+  --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.bicepparam \
   --location eastus \
   --management-group-id alz
 ```
@@ -100,7 +100,7 @@ OR
 # For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep \
-  --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json \
+  --parameters @infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.bicepparam \
   --location chinaeast2 \
   --management-group-id alz
 ```
@@ -110,10 +110,10 @@ az deployment mg create \
 ```powershell
 # For Azure global regions
 New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep `
-  -TemplateParameterFile infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json `
-  -Location eastus `
-  -ManagementGroupId alz
+  -TemplateFile "infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep" `
+  -TemplateParameterFile "infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.bicepparam" `
+  -Location "eastus" `
+  -ManagementGroupId "alz"
 
 ```
 
@@ -122,10 +122,10 @@ OR
 ```powershell
 # For Azure China regions
 New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep `
-  -TemplateParameterFile infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json `
-  -Location chinaeast2 `
-  -ManagementGroupId alz
+  -TemplateFile "infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep" `
+  -TemplateParameterFile "infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.bicepparam" `
+  -Location "chinaeast2" `
+  -ManagementGroupId "alz"
 
 ```
 

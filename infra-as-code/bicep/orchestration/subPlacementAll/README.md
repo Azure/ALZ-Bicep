@@ -109,7 +109,7 @@ NAME="alz-SubPlacementAll-${dateYMD}"
 LOCATION="eastus"
 MGID="alz"
 TEMPLATEFILE="infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
-PARAMETERS="@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.bicepparam"
 
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -124,7 +124,7 @@ NAME="alz-SubPlacementAll-${dateYMD}"
 LOCATION="chinaeast2"
 MGID="alz"
 TEMPLATEFILE="infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
-PARAMETERS="@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json"
+PARAMETERS="@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.bicepparam"
 
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -139,7 +139,7 @@ $inputObject = @{
   Location              = 'EastUS'
   ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json'
+  TemplateParameterFile = 'infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.bicepparam'
 }
 
 New-AzManagementGroupDeployment @inputObject
@@ -155,7 +155,7 @@ $inputObject = @{
   Location              = 'chinaeast2'
   ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json'
+  TemplateParameterFile = 'infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.bicepparam'
 }
 
 New-AzManagementGroupDeployment @inputObject
