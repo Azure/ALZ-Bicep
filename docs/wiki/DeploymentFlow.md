@@ -88,7 +88,7 @@ In addition, the identity that wants to create a Tenant scope deployment must ha
 
 ### Service Principal Account
 
-A service principal account is required to automate through Azure DevOps or GitHub Workflows. This can be created through the [Portal](https://learn.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal), [Azure PowerShell](https://learn.microsoft.com/azure/active-directory/develop/howto-authenticate-service-principal-powershell) or [Azure CLI](https://learn.microsoft.com/cli/azure/create-an-azure-service-principal-azure-cli).
+A service principal account is required to automate through Azure DevOps or GitHub Workflows. This can be created through the [Portal](https://learn.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal), [Azure PowerShell](https://learn.microsoft.com/azure/active-directory/develop/howto-authenticate-service-principal-powershell) or [Azure CLI](https://learn.microsoft.com/cli/azure/azure-cli-sp-tutorial-1).
 
 - **Service Principal Name**:  any name (i.e. `spn-azure-platform-ops`)
 - **RBAC Assignment**
