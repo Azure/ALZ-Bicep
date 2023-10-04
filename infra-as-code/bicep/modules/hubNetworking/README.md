@@ -38,7 +38,8 @@ Module deploys the following resources:
 To configure P2S VPN connections edit the vpnClientConfiguration value in the `parVpnGatewayConfig` parameter.
 
 AAD Authentication Example:
-```
+
+```bicep
 "vpnClientConfiguration": {
   "vpnClientAddressPool": {
     "addressPrefixes": [
@@ -56,6 +57,7 @@ AAD Authentication Example:
   "aadIssuer": "https://sts.windows.net/{AzureAD TenantID}/"
 }
 ```
+
 Replace the values for `aadTenant`, `aadAudience`, and `aadIssuer` as documented [here](https://learn.microsoft.com/en-us/azure/vpn-gateway/openvpn-azure-ad-tenant#enable-authentication)
 
 ## Outputs
