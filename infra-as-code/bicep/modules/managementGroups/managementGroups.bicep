@@ -3,7 +3,7 @@ targetScope = 'tenant'
 metadata name = 'ALZ Bicep - Management Groups Module'
 metadata description = 'ALZ Bicep Module to set up Management Group structure'
 
-@sys.description('Prefix for the management group hierarchy. This management group will be created as part of the deployment.')
+@sys.description('Prefix used for the management group hierarchy. This management group will be created as part of the deployment.')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'

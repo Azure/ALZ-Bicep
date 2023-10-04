@@ -1,7 +1,7 @@
 metadata name = 'ALZ Bicep - ALZ Default Policy Assignments'
 metadata description = 'This policy assignment will assign the ALZ Default Policy to management groups'
 
-@sys.description('Prefix for the management group hierarchy.')
+@sys.description('Prefix used for the management group hierarchy.')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'

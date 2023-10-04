@@ -3,7 +3,7 @@ targetScope = 'managementGroup'
 metadata name = 'ALZ Bicep orchestration - Management Group Diagnostic Settings - ALL'
 metadata description = 'Orchestration module that helps enable Diagnostic Settings on the Management Group hierarchy as was defined during the deployment of the Management Group module'
 
-@sys.description('Prefix used for the management group hierarchy in the managementGroups module.')
+@sys.description('Prefix used for the management group hierarchy.')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'

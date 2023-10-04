@@ -7,7 +7,7 @@ Orchestration module used to create and configure a spoke network to deliver the
 Parameter name | Required | Description
 -------------- | -------- | -----------
 parLocation    | No       | The region to deploy all resources into.
-parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy.
+parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 parPeeredVnetSubscriptionId | No       | Subscription Id to the Virtual Network Hub object. Default: Empty String
 parTags        | No       | Array of Tags to be applied to all resources in module. Default: Empty Object
@@ -41,7 +41,7 @@ The region to deploy all resources into.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix for the management group hierarchy.
+Prefix used for the management group hierarchy.
 
 - Default value: `alz`
 

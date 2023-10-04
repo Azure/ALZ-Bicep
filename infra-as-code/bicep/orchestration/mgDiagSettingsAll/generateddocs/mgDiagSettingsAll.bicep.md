@@ -6,7 +6,7 @@ Orchestration module that helps enable Diagnostic Settings on the Management Gro
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy in the managementGroups module.
+parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 parLandingZoneMgChildren | No       | Array of strings to allow additional or different child Management Groups of the Landing Zones Management Group.
 parPlatformMgChildren | No       | Array of strings to allow additional or different child Management Groups of the Platform Management Group.
@@ -20,7 +20,7 @@ parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment t
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix used for the management group hierarchy in the managementGroups module.
+Prefix used for the management group hierarchy.
 
 - Default value: `alz`
 

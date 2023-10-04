@@ -6,7 +6,7 @@ Orchestration module that helps to define where all Subscriptions should be plac
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy.  This management group will be created as part of the deployment.
+parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 parIntRootMgSubs | No       | An array of Subscription IDs to place in the Intermediate Root Management Group. Default: Empty Array
 parPlatformMgSubs | No       | An array of Subscription IDs to place in the Platform Management Group. Default: Empty Array
@@ -28,7 +28,7 @@ parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment t
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix for the management group hierarchy.  This management group will be created as part of the deployment.
+Prefix used for the management group hierarchy.
 
 - Default value: `alz`
 
