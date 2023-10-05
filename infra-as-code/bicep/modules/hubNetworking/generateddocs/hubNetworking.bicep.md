@@ -26,6 +26,7 @@ parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deploy
 parAzFirewallName | No       | Azure Firewall Name.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
 parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
+parThreatIntelMode | No       | Threat Intelligence Mode for Azure Firewall. If not specified, the default value is Alert.
 parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
 parAzErGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
 parAzVpnGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
@@ -205,6 +206,16 @@ Azure Firewall Tier associated with the Firewall to deploy.
 - Default value: `Standard`
 
 - Allowed values: `Basic`, `Standard`, `Premium`
+
+### parThreatIntelMode
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Threat Intelligence Mode for Azure Firewall. If not specified, the default value is Alert.
+
+- Default value: `Alert`
+
+- Allowed values: `Alert`, `Deny`, `Off`
 
 ### parAzFirewallAvailabilityZones
 
@@ -450,6 +461,9 @@ outHubVirtualNetworkId | string |
         },
         "parAzFirewallTier": {
             "value": "Standard"
+        },
+        "parThreatIntelMode":{
+            "value": "Alert"
         },
         "parAzFirewallAvailabilityZones": {
             "value": []
