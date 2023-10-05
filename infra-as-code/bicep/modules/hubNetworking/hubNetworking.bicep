@@ -105,7 +105,7 @@ param parAzFirewallTier string = 'Standard'
   'Deny'
   'Off'
 ])
-param parThreatIntelMode string = 'Alert'
+param parAzFirewallIntelMode string = 'Alert'
 
 @allowed([
   '1'
@@ -693,7 +693,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
     sku: {
       tier: parAzFirewallTier
     }
-    threatIntelMode: parThreatIntelMode
+    threatIntelMode: parAzFirewallIntelMode
   }
 }
 

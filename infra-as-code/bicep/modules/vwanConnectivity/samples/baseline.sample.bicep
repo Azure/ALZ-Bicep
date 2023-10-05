@@ -21,7 +21,7 @@ module minimum_vwan_conn '../vwanConnectivity.bicep' = {
   params: {
     parLocation: parLocation
     parAzFirewallTier: 'Standard'
-    parThreatIntelMode: 'Alert'
+    parAzFirewallIntelMode: 'Alert'
     parVirtualHubEnabled: true
     parVirtualWanHubs: [ {
         parVpnGatewayEnabled: true

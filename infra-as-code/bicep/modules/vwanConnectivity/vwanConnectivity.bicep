@@ -21,7 +21,7 @@ param parAzFirewallTier string = 'Standard'
   'Deny'
   'Off'
 ])
-param parThreatIntelMode string = 'Alert'
+param parAzFirewallIntelMode string = 'Alert'
 
 @sys.description('Switch to enable/disable Virtual Hub deployment.')
 param parVirtualHubEnabled bool = true
@@ -312,7 +312,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
     sku: {
       tier: parAzFirewallTier
     }
-    threatIntelMode: parThreatIntelMode
+    threatIntelMode: parAzFirewallIntelMode
   }
 }
 

@@ -87,7 +87,7 @@
     "parAzFirewallTier": {
       "value": "Standard"
     },
-    "parThreatIntelMode": {
+    "parAzFirewallIntelMode": {
       "value": "Alert"
     },
     "parAzFirewallAvailabilityZones": {
