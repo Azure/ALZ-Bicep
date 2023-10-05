@@ -43,6 +43,9 @@
       "azureDataFactoryPortalPrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureDataFactoryPortalPrivateDnsZoneId]"
       },
+      "azureDatabricksPrivateDnsZoneId": {
+        "value": "${varPrivateDnsZonesFinalResourceIds}.azureDatabricksPrivateDnsZoneId]"
+      },
       "azureHDInsightPrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureHDInsightPrivateDnsZoneId]"
       },

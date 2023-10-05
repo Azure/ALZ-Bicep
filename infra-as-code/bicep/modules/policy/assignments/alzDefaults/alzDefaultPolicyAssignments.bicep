@@ -358,6 +358,7 @@ var varPrivateDnsZonesFinalResourceIds = {
   azureCosmosTablePrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.table.cosmos.azure.com'
   azureDataFactoryPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.datafactory.azure.net'
   azureDataFactoryPortalPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.adf.azure.com'
+  azureDatabricksPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.azuredatabricks.net'
   azureHDInsightPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.azurehdinsight.net'
   azureMigratePrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.prod.migration.windowsazure.com'
   azureStorageBlobPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.blob.core.windows.net'
@@ -1180,6 +1181,9 @@ module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments
       }
       azureDataFactoryPortalPrivateDnsZoneId: {
         value: varPrivateDnsZonesFinalResourceIds.azureDataFactoryPortalPrivateDnsZoneId
+      }
+      azureDatabricksPrivateDnsZoneId: {
+        value: varPrivateDnsZonesFinalResourceIds.azureDatabricksPrivateDnsZoneId
       }
       azureHDInsightPrivateDnsZoneId: {
         value: varPrivateDnsZonesFinalResourceIds.azureHDInsightPrivateDnsZoneId
