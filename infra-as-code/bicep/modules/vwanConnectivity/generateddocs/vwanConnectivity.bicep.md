@@ -9,7 +9,7 @@ Parameter name | Required | Description
 parLocation    | No       | Region in which the resource group was created.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
 parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
-parAzFirewallIntelMode | No       | The Azure Firewall threat Intelligence mode to enable.
+parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.
 parVirtualHubEnabled | No       | Switch to enable/disable Virtual Hub deployment.
 parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
 parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall
@@ -64,7 +64,7 @@ Azure Firewall Tier associated with the Firewall to deploy.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The Azure Firewall threat Intelligence mode to enable.
+The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.
 
 - Default value: `Alert`
 
