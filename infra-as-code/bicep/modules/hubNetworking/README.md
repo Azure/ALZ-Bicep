@@ -35,6 +35,31 @@ Module deploys the following resources:
 >
 > See child module, [`privateDnsZones.bicep` docs](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/privateDnsZones#dns-zones) for more info on how this works
 
+To configure P2S VPN connections edit the vpnClientConfiguration value in the `parVpnGatewayConfig` parameter.
+
+AAD Authentication Example:
+
+```bicep
+"vpnClientConfiguration": {
+  "vpnClientAddressPool": {
+    "addressPrefixes": [
+      "172.16.0.0/24"
+    ]
+  },
+  "vpnClientProtocols": [
+    "OpenVPN"
+  ],
+  "vpnAuthenticationTypes": [
+    "AAD"
+  ],
+  "aadTenant": "https://login.microsoftonline.com/{AzureAD TenantID}",
+  "aadAudience": "41b23e61-6c1e-4545-b367-cd054e0ed4b4",
+  "aadIssuer": "https://sts.windows.net/{AzureAD TenantID}/"
+}
+```
+
+Replace the values for `aadTenant`, `aadAudience`, and `aadIssuer` as documented [here](https://learn.microsoft.com/en-us/azure/vpn-gateway/openvpn-azure-ad-tenant#enable-authentication)
+
 ## Outputs
 
 The module will generate the following outputs:

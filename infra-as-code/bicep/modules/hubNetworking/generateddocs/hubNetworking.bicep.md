@@ -307,7 +307,7 @@ Configuration for VPN virtual network gateway to be deployed. If a VPN virtual n
   "value": {}
 }
 
-- Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=}`
+- Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; vpnClientConfiguration=}`
 
 ### parExpressRouteGatewayConfig
 
@@ -570,7 +570,8 @@ outHubVirtualNetworkId | string |
                     "asn": 65515,
                     "bgpPeeringAddress": "",
                     "peerWeight": 5
-                }
+                },
+                "vpnClientConfiguration": {}
             }
         },
         "parExpressRouteGatewayConfig": {
