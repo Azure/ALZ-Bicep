@@ -323,6 +323,10 @@ var varRbacRoleDefinitionIds = {
   logAnalyticsContributor: '92aaf0da-9dab-42b6-94a3-d43ce8d16293'
   sqlSecurityManager: '056cd41c-7e88-42e1-933e-88ba6a50c9c3'
   vmContributor: '9980e02c-c2be-4d73-94e8-173b1dc7cf3c'
+  monitoringContributor: '749f88d5-cbae-40b8-bcfc-e573ddc772fa'
+  aksPolicyAddon: '18ed5180-3e48-46fd-8541-4ea054d57064'
+  sqlDbContributor: '9b7fa17d-e63e-47b0-bb0a-15c516ac86ec'
+  backupContributor: '5e467623-bb1f-42f4-a55d-6e525e11384b'
 }
 
 // Management Groups Variables - Used For Policy Assignments
@@ -485,7 +489,8 @@ module modPolicyAssignmentIntRootDeployAzActivityLog '../../../policy/assignment
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployAzActivityLog.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
-      varRbacRoleDefinitionIds.owner
+      varRbacRoleDefinitionIds.logAnalyticsContributor
+      varRbacRoleDefinitionIds.monitoringContributor
     ]
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployAzActivityLog.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
@@ -526,7 +531,8 @@ module modPolicyAssignmentIntRootDeployResourceDiag '../../../policy/assignments
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployResourceDiag.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployResourceDiag.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
-      varRbacRoleDefinitionIds.owner
+      varRbacRoleDefinitionIds.logAnalyticsContributor
+      varRbacRoleDefinitionIds.monitoringContributor
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -550,7 +556,7 @@ module modPolicyAssignmentIntRootDeployVmMonitoring '../../../policy/assignments
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMMonitoring.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
-      varRbacRoleDefinitionIds.owner
+      varRbacRoleDefinitionIds.logAnalyticsContributor
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -574,7 +580,7 @@ module modPolicyAssignmentIntRootDeployVmssMonitoring '../../../policy/assignmen
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
-      varRbacRoleDefinitionIds.owner
+      varRbacRoleDefinitionIds.logAnalyticsContributor
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -781,7 +787,8 @@ module modPolicyAssignmentIdentDeployVmBackup '../../../policy/assignments/polic
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMBackup.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMBackup.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
-      varRbacRoleDefinitionIds.owner
+      varRbacRoleDefinitionIds.backupContributor
+      varRbacRoleDefinitionIds.vmContributor
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -821,7 +828,7 @@ module modPolicyAssignmentMgmtDeployLogAnalytics '../../../policy/assignments/po
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployLogAnalytics.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployLogAnalytics.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
-      varRbacRoleDefinitionIds.owner
+      varRbacRoleDefinitionIds.contributor
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -957,6 +964,7 @@ module modPolicyAssignmentLzsDeployAksPolicy '../../../policy/assignments/policy
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.aksContributor
+      varRbacRoleDefinitionIds.aksPolicyAddon
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1086,7 +1094,7 @@ module modPolicyAssignmentLzsDeploySqlTde '../../../policy/assignments/policyAss
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeploySQLTDE.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeploySQLTDE.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
-      varRbacRoleDefinitionIds.sqlSecurityManager
+      varRbacRoleDefinitionIds.sqlDbContributor
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
