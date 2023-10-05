@@ -108,6 +108,7 @@ param parPrivateDnsZones array = [
   'privatelink.azurecr.io'
   'privatelink.azure-devices.net'
   'privatelink.azure-devices-provisioning.net'
+  'privatelink.azuredatabricks.net'
   'privatelink.azurehdinsight.net'
   'privatelink.azurehealthcareapis.com'
   'privatelink.azurestaticapps.net'
