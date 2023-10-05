@@ -11,6 +11,9 @@
     "parAzFirewallTier": {
       "value": "Standard"
     },
+    "parAzFirewallIntelMode": {
+      "value": "Alert"
+    },
     "parVirtualHubEnabled": {
       "value": true
     },

@@ -99,6 +99,14 @@ param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLo
 ])
 param parAzFirewallTier string = 'Standard'
 
+@sys.description('The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.')
+@allowed([
+  'Alert'
+  'Deny'
+  'Off'
+])
+param parAzFirewallIntelMode string = 'Alert'
+
 @allowed([
   '1'
   '2'
@@ -677,6 +685,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
     sku: {
       tier: parAzFirewallTier
     }
+    threatIntelMode: 'Alert'
   } : {
     dnsSettings: {
       enableProxy: parAzFirewallDnsProxyEnabled
@@ -685,6 +694,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
     sku: {
       tier: parAzFirewallTier
     }
+    threatIntelMode: parAzFirewallIntelMode
   }
 }
 
