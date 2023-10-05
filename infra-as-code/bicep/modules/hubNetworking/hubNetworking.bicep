@@ -760,7 +760,6 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (pa
     firewallPolicy: {
       id: resFirewallPolicies.id
     }
-    threatIntelMode: parThreatIntelMode
   }
 }
 

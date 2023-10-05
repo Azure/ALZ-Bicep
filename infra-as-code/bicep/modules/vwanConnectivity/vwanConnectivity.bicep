@@ -337,7 +337,6 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = [for (
     firewallPolicy: {
       id: (parVirtualHubEnabled && hub.parAzFirewallEnabled) ? resFirewallPolicies.id : ''
     }
-    threatIntelMode: parThreatIntelMode
   }
 }]
 
