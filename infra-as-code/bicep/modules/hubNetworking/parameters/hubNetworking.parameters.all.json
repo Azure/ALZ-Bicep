@@ -191,7 +191,7 @@
     "parVpnGatewayConfig": {
       "value": {
         "name": "alz-Vpn-Gateway",
-        "gatewayType": "Vpn",
+        "gatewayType": "VPN",
         "sku": "VpnGw1",
         "vpnType": "RouteBased",
         "generation": "Generation1",
@@ -204,7 +204,8 @@
           "asn": "65515",
           "bgpPeeringAddress": "",
           "peerWeight": "5"
-        }
+        },
+        "vpnClientConfiguration": {}
       }
     },
     "parExpressRouteGatewayConfig": {
