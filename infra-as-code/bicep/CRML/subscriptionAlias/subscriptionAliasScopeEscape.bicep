@@ -1,16 +1,7 @@
-/*
-SUMMARY: The Subscription Alias module deploys an EA, MCA or MPA Subscription into the tenants default Management Group
-DESCRIPTION:  The Subscription Alias module deploys an EA, MCA or MPA Subscription into the tenants default Management Group as per the docs here: https://docs.microsoft.com/azure/cost-management-billing/manage/programmatically-create-subscription
-AUTHOR/S: jtracey93, johnlokerse
-VERSION: 1.1.0
-  - Updated version of the API
-  - Added additional properties: parTags, parManagementGroupId, parSubscriptionOwnerId and subscriptionTenantId
-*/
+targetScope = 'managementGroup'
 
-targetScope = 'tenant'
-
-metadata name = 'ALZ Bicep CRML - Subscription Alias Module'
-metadata description = 'Module to deploy an Azure Subscription into an existing billing scope that can be from an EA, MCA or MPA'
+metadata name = 'ALZ Bicep CRML - Subscription Alias Module with Scope Escape'
+metadata description = 'Module to deploy an Azure Subscription into an existing billing scope that can be from an EA, MCA or MPA, using Scope Escaping feature of ARM to allow deployment not requiring tenant root scope access.'
 
 @sys.description('Name of the subscription to be created. Will also be used as the alias name. Whilst you can use any name you like we recommend it to be: all lowercase, no spaces, alphanumeric and hyphens only.')
 param parSubscriptionName string
@@ -38,6 +29,7 @@ param parSubscriptionOfferType string = 'Production'
 param parTenantId string = tenant().tenantId
 
 resource resSubscription 'Microsoft.Subscription/aliases@2021-10-01' = {
+  scope: tenant()
   name: parSubscriptionName
   properties: {
     additionalProperties: {
