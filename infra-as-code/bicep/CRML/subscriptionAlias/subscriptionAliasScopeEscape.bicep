@@ -34,7 +34,7 @@ resource resSubscription 'Microsoft.Subscription/aliases@2021-10-01' = {
   properties: {
     additionalProperties: {
       tags: parTags
-      managementGroupId: empty(parManagementGroupId) ? null : /providers/Microsoft.Management/managementGroups/${parManagementGroupId}
+      managementGroupId: empty(parManagementGroupId) ? null : '/providers/Microsoft.Management/managementGroups/${parManagementGroupId}'
       subscriptionOwnerId: empty(parSubscriptionOwnerId) ? null : parSubscriptionOwnerId
       subscriptionTenantId: parTenantId
     }
