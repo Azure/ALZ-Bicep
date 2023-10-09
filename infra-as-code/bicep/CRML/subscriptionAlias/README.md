@@ -1,6 +1,6 @@
 # Module:  Subscription Alias
 
-> **IMPORTANT:** We recommend moving to using the [Bicep Subscription Vending Module](https://aka.ms/sub-vending/bicep) instead of this module!
+> ⚠️⚠️ **IMPORTANT:** We recommend moving to using the [Bicep Subscription Vending Module](https://aka.ms/sub-vending/bicep) instead of this module! ⚠️⚠️
 
 The Subscription Alias module deploys an Azure Subscription into an existing billing scope that can be from an EA, MCA or MPA as documented in [Create Azure subscriptions programmatically](https://learn.microsoft.com/azure/cost-management-billing/manage/programmatically-create-subscription).
 
