@@ -34,23 +34,23 @@ Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
 
 $providers = @('Microsoft.insights')
 
-foreach ($provider in $providers ){
+foreach ($provider in $providers ) {
   $iterationCount = 0
   $maxIterations = 30
-  $providerStatus= (Get-AzResourceProvider -ListAvailable | Where-Object ProviderNamespace -eq $provider).registrationState
-  if($providerStatus -ne 'Registered'){
+  $providerStatus = (Get-AzResourceProvider -ListAvailable | Where-Object ProviderNamespace -eq $provider).registrationState
+  if ($providerStatus -ne 'Registered') {
     Write-Output "`n Registering the '$provider' provider"
     Register-AzResourceProvider -ProviderNamespace $provider
     do {
-      $providerStatus= (Get-AzResourceProvider -ListAvailable | Where-Object ProviderNamespace -eq $provider).registrationState
+      $providerStatus = (Get-AzResourceProvider -ListAvailable | Where-Object ProviderNamespace -eq $provider).registrationState
       $iterationCount++
       Write-Output "Waiting for the '$provider' provider registration to complete....waiting 10 seconds"
       Start-Sleep -Seconds 10
     } until ($providerStatus -eq 'Registered' -and $iterationCount -ne $maxIterations)
-    if($iterationCount -ne $maxIterations){
+    if ($iterationCount -ne $maxIterations) {
       Write-Output "`n The '$provider' has been registered successfully"
     }
-    else{
+    else {
       Write-Output "`n The '$provider' has not been registered successfully"
     }
   }
