@@ -99,6 +99,14 @@ param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLo
 ])
 param parAzFirewallTier string = 'Standard'
 
+@sys.description('The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.')
+@allowed([
+  'Alert'
+  'Deny'
+  'Off'
+])
+param parAzFirewallIntelMode string = 'Alert'
+
 @allowed([
   '1'
   '2'
@@ -157,6 +165,7 @@ param parPrivateDnsZones array = [
   'privatelink.azurecr.io'
   'privatelink.azure-devices.net'
   'privatelink.azure-devices-provisioning.net'
+  'privatelink.azuredatabricks.net'
   'privatelink.azurehdinsight.net'
   'privatelink.azurehealthcareapis.com'
   'privatelink.azurestaticapps.net'
@@ -238,6 +247,7 @@ param parVpnGatewayConfig object = {
     bgpPeeringAddress: ''
     peerWeight: 5
   }
+  vpnClientConfiguration: {}
 }
 
 @sys.description('''Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
@@ -593,6 +603,17 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for
       name: gateway.sku
       tier: gateway.sku
     }
+    vpnClientConfiguration: (gateway.gatewayType == 'VPN') ? {
+      vpnClientAddressPool: contains(gateway.vpnClientConfiguration, 'vpnClientAddressPool') ? gateway.vpnClientConfiguration.vpnClientAddressPool : ''
+      vpnClientProtocols: contains(gateway.vpnClientConfiguration, 'vpnClientProtocols') ? gateway.vpnClientConfiguration.vpnClientProtocols : ''
+      vpnAuthenticationTypes: contains(gateway.vpnClientConfiguration, 'vpnAuthenticationTypes') ? gateway.vpnClientConfiguration.vpnAuthenticationTypes : ''
+      aadTenant: contains(gateway.vpnClientConfiguration, 'aadTenant') ? gateway.vpnClientConfiguration.aadTenant : ''
+      aadAudience: contains(gateway.vpnClientConfiguration, 'aadAudience') ? gateway.vpnClientConfiguration.aadAudience : ''
+      aadIssuer: contains(gateway.vpnClientConfiguration, 'aadIssuer') ? gateway.vpnClientConfiguration.aadIssuer : ''
+      vpnClientRootCertificates: contains(gateway.vpnClientConfiguration, 'vpnClientRootCertificates') ? gateway.vpnClientConfiguration.vpnClientRootCertificates : ''
+      radiusServerAddress: contains(gateway.vpnClientConfiguration, 'radiusServerAddress') ? gateway.vpnClientConfiguration.radiusServerAddress : ''
+      radiusServerSecret: contains(gateway.vpnClientConfiguration, 'radiusServerSecret') ? gateway.vpnClientConfiguration.radiusServerSecret : ''
+    } : null
     ipConfigurations: [
       {
         id: resHubVnet.id
@@ -664,6 +685,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
     sku: {
       tier: parAzFirewallTier
     }
+    threatIntelMode: 'Alert'
   } : {
     dnsSettings: {
       enableProxy: parAzFirewallDnsProxyEnabled
@@ -672,6 +694,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
     sku: {
       tier: parAzFirewallTier
     }
+    threatIntelMode: parAzFirewallIntelMode
   }
 }
 

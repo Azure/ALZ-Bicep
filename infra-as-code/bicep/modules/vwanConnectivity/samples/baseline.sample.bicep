@@ -21,17 +21,18 @@ module minimum_vwan_conn '../vwanConnectivity.bicep' = {
   params: {
     parLocation: parLocation
     parAzFirewallTier: 'Standard'
+    parAzFirewallIntelMode: 'Alert'
     parVirtualHubEnabled: true
-    parVirtualWanHubs:[{
-      parVpnGatewayEnabled: true
-      parExpressRouteGatewayEnabled: true
-      parAzFirewallEnabled: true
-      parVirtualHubAddressPrefix: '10.100.0.0/23'
-      parHubLocation: 'centralus'
-      parhubRoutingPreference: 'ExpressRoute' //allowed values are 'ASN','VpnGateway','ExpressRoute'
-      parvirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
-      parVirtualHubRoutingIntentDestinations: []
-    }]
+    parVirtualWanHubs: [ {
+        parVpnGatewayEnabled: true
+        parExpressRouteGatewayEnabled: true
+        parAzFirewallEnabled: true
+        parVirtualHubAddressPrefix: '10.100.0.0/23'
+        parHubLocation: 'centralus'
+        parhubRoutingPreference: 'ExpressRoute' //allowed values are 'ASN','VpnGateway','ExpressRoute'
+        parvirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
+        parVirtualHubRoutingIntentDestinations: []
+      } ]
     parAzFirewallDnsProxyEnabled: true
     parVirtualWanName: '${parCompanyPrefix}-vwan-${parLocation}'
     parVirtualWanHubName: '${parCompanyPrefix}-vhub'
@@ -71,6 +72,7 @@ module minimum_vwan_conn '../vwanConnectivity.bicep' = {
       'privatelink.azurecr.io'
       'privatelink.azure-devices.net'
       'privatelink.azure-devices-provisioning.net'
+      'privatelink.azuredatabricks.net'
       'privatelink.azurehdinsight.net'
       'privatelink.azurehealthcareapis.com'
       'privatelink.azurestaticapps.net'

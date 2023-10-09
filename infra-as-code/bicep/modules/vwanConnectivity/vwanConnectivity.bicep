@@ -15,6 +15,14 @@ param parCompanyPrefix string = 'alz'
 ])
 param parAzFirewallTier string = 'Standard'
 
+@sys.description('The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.')
+@allowed([
+  'Alert'
+  'Deny'
+  'Off'
+])
+param parAzFirewallIntelMode string = 'Alert'
+
 @sys.description('Switch to enable/disable Virtual Hub deployment.')
 param parVirtualHubEnabled bool = true
 
@@ -108,6 +116,7 @@ param parPrivateDnsZones array = [
   'privatelink.azurecr.io'
   'privatelink.azure-devices.net'
   'privatelink.azure-devices-provisioning.net'
+  'privatelink.azuredatabricks.net'
   'privatelink.azurehdinsight.net'
   'privatelink.azurehealthcareapis.com'
   'privatelink.azurestaticapps.net'
@@ -295,6 +304,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
     sku: {
       tier: parAzFirewallTier
     }
+    threatIntelMode: 'Alert'
   } : {
     dnsSettings: {
       enableProxy: parAzFirewallDnsProxyEnabled
@@ -303,6 +313,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
     sku: {
       tier: parAzFirewallTier
     }
+    threatIntelMode: parAzFirewallIntelMode
   }
 }
 
