@@ -109,7 +109,7 @@ resource resTopLevelMg 'Microsoft.Management/managementGroups@2023-04-01' = {
     displayName: parTopLevelManagementGroupDisplayName
     details: {
       parent: {
-        id: empty(parTopLevelManagementGroupParentId) ? '/providers/Microsoft.Management/managementGroups/${tenant().tenantId}' : contains(parTopLevelManagementGroupParentId, '/providers/Microsoft.Management/managementGroups/') ? parTopLevelManagementGroupParentId : '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupParentId}'
+        id: empty(parTopLevelManagementGroupParentId) ? '/providers/Microsoft.Management/managementGroups/${tenant().tenantId}' : contains(toLower(parTopLevelManagementGroupParentId), toLower('/providers/Microsoft.Management/managementGroups/')) ? parTopLevelManagementGroupParentId : '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupParentId}'
       }
     }
   }
