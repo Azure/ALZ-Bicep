@@ -117,7 +117,7 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentLzsCorpDenyPublicEndpoints: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPublicEndpoints-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsConfidentialCorpDenyPublicEndpoints: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPublicEndpoints-confidential-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsCorpDeployPrivateDnsZones: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployPrivateDNS-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolicyAssignmentLzsConfidentialCorpDeployPrivateDnsZones : take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployPrivateDNS-confidential-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentLzsConfidentialCorpDeployPrivateDnsZones: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployPrivateDNS-confidential-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsCorpDenyPipOnNic: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPipOnNic-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsConfidentialCorpDenyPipOnNic: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPipOnNic-confidential-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsCorpDenyHybridNet: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyHybridNet-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -1166,7 +1166,7 @@ module modPolicyAssignmentLzsAuditAppGwWaf '../../../policy/assignments/policyAs
 // Module - Policy Assignment - Deny-Public-Endpoints
 module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = [for mgScope in varCorpManagementGroupIds: if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicEndpoints.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(mgScope)
-  name: contains(mgScope, 'confidential')? varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpDenyPublicEndpoints : varModuleDeploymentNames.modPolicyAssignmentLzsCorpDenyPublicEndpoints
+  name: contains(mgScope, 'confidential') ? varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpDenyPublicEndpoints : varModuleDeploymentNames.modPolicyAssignmentLzsCorpDenyPublicEndpoints
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPublicEndpoints.definitionId
     parPolicyAssignmentName: varPolicyAssignmentDenyPublicEndpoints.libDefinition.name
@@ -1182,7 +1182,7 @@ module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/po
 // Module - Policy Assignment - Deploy-Private-DNS-Zones
 module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = [for mgScope in varCorpManagementGroupIds: if ((!empty(varPrivateDnsZonesResourceGroupSubscriptionId)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployPrivateDNSZones.libDefinition.name)) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(mgScope)
-  name: contains(mgScope, 'confidential')?varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpDeployPrivateDnsZones : varModuleDeploymentNames.modPolicyAssignmentLzsCorpDeployPrivateDnsZones
+  name: contains(mgScope, 'confidential') ? varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpDeployPrivateDnsZones : varModuleDeploymentNames.modPolicyAssignmentLzsCorpDeployPrivateDnsZones
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployPrivateDNSZones.definitionId
     parPolicyAssignmentName: varPolicyAssignmentDeployPrivateDNSZones.libDefinition.name
@@ -1362,7 +1362,7 @@ module modPolicyAssignmentConnDeployPrivateDnsZones '../../../policy/assignments
 // Module - Policy Assignment - Deny-Public-IP-On-NIC
 module modPolicyAssignmentLzsCorpDenyPipOnNic '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = [for mgScope in varCorpManagementGroupIds: if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(mgScope)
-  name: contains(mgScope, 'confidential')?varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpDenyPipOnNic:varModuleDeploymentNames.modPolicyAssignmentLzsCorpDenyPipOnNic
+  name: contains(mgScope, 'confidential') ? varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpDenyPipOnNic : varModuleDeploymentNames.modPolicyAssignmentLzsCorpDenyPipOnNic
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPublicIPOnNIC.definitionId
     parPolicyAssignmentName: varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.name
@@ -1394,7 +1394,7 @@ module modPolicyAssignmentLzsCorpDenyHybridNet '../../../policy/assignments/poli
 // Module - Policy Assignment - Audit-PeDnsZones
 module modPolicyAssignmentLzsCorpAuditPeDnsZones '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = [for mgScope in varCorpManagementGroupIds: if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentAuditPeDnsZones.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(mgScope)
-  name: contains(mgScope, 'confidential')?varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpAuditPeDnsZones :varModuleDeploymentNames.modPolicyAssignmentLzsCorpAuditPeDnsZones
+  name: contains(mgScope, 'confidential') ? varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpAuditPeDnsZones : varModuleDeploymentNames.modPolicyAssignmentLzsCorpAuditPeDnsZones
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentAuditPeDnsZones.definitionId
     parPolicyAssignmentName: varPolicyAssignmentAuditPeDnsZones.libDefinition.name
