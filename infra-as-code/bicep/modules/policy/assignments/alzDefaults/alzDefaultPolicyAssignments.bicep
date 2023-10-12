@@ -17,7 +17,7 @@ param parPlatformMgAlzDefaultsEnable bool = true
 param parLandingZoneChildrenMgAlzDefaultsEnable bool = true
 
 @sys.description('Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group have been deployed. If set to false, policies will not try to be assigned to Confidential Corp & Confidential Online Management Groups')
-param parLandingZoneMgConfidentialEnable bool = true
+param parLandingZoneMgConfidentialEnable bool = false
 
 @sys.description('The region where the Log Analytics Workspace & Automation Account are deployed.')
 param parLogAnalyticsWorkSpaceAndAutomationAccountLocation string = 'eastus'
