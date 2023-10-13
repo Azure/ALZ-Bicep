@@ -3,6 +3,14 @@ targetScope = 'managementGroup'
 metadata name = 'ALZ Bicep - Management Group Policy Assignments'
 metadata description = 'Module used to assign policy definitions to management groups'
 
+type nonComplianceMessageType = {
+  @description('The message to display when the policy is non-compliant.')
+  message: string
+
+  @description('The reference ID of the policy definition.')
+  policyDefinitionReferenceId: string
+}[]
+
 @minLength(1)
 @maxLength(24)
 @sys.description('The name of the policy assignment. e.g. "Deny-Public-IP"')
@@ -24,7 +32,7 @@ param parPolicyAssignmentParameters object = {}
 param parPolicyAssignmentParameterOverrides object = {}
 
 @sys.description('An array containing object/s for the non-compliance messages for the policy to be assigned. See https://docs.microsoft.com/en-us/azure/governance/policy/concepts/assignment-structure#non-compliance-messages for more details on use.')
-param parPolicyAssignmentNonComplianceMessages array = []
+param parPolicyAssignmentNonComplianceMessages nonComplianceMessageType = []
 
 @sys.description('An array containing a list of scope Resource IDs to be excluded for the policy assignment. e.g. [\'/providers/Microsoft.Management/managementgroups/alz\', \'/providers/Microsoft.Management/managementgroups/alz-sandbox\' ].')
 param parPolicyAssignmentNotScopes array = []
