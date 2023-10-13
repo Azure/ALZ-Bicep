@@ -2,10 +2,20 @@ metadata name = 'ALZ Bicep - Hub Networking Module'
 metadata description = 'ALZ Bicep Module used to set up Hub Networking'
 
 type subnetOptionsType = ({
-    name: string
-    ipAddressRange: string
-    networkSecurityGroupId: string
-    routeTableId: string
+  @description('Name of subnet.')
+  name: string
+
+  @description('IP-address range for subnet.')
+  ipAddressRange: string
+
+  @description('Id of Network Security Group to associate with subnet.')
+  networkSecurityGroupId: string?
+
+  @description('Id of Route Table to associate with subnet.')
+  routeTableId: string?
+
+  @description('Name of the delegation to create for the subnet.')
+  delegation: string?
 })[]
 
 @sys.description('The Azure Region to deploy the resources into.')
