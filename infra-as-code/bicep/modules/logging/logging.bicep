@@ -89,6 +89,9 @@ param parLogAnalyticsWorkspaceTags object = parTags
 @sys.description('Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.')
 param parUseSentinelClassicPricingTiers bool = false
 
+@sys.description('Log Analytics LinkedService name for Automation Account.')
+param parLogAnalyticsLinkedServiceAutomationAccountName string = 'Automation'
+
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
@@ -147,7 +150,7 @@ resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solut
 
 resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2020-08-01' = if (parLogAnalyticsWorkspaceLinkAutomationAccount) {
   parent: resLogAnalyticsWorkspace
-  name: 'Automation'
+  name: parLogAnalyticsLinkedServiceAutomationAccountName
   properties: {
     resourceId: resAutomationAccount.id
   }
