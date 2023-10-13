@@ -20,6 +20,7 @@ parTags        | No       | Tags you would like to be applied to all resources i
 parAutomationAccountTags | No       | Tags you would like to be applied to Automation Account.
 parLogAnalyticsWorkspaceTags | No       | Tags you would like to be applied to Log Analytics Workspace.
 parUseSentinelClassicPricingTiers | No       | Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.
+parLogAnalyticsLinkedServiceAutomationAccountName | No       | Log Analytics LinkedService name for Automation Account.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
 ### parLogAnalyticsWorkspaceName
@@ -138,6 +139,14 @@ Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes i
 
 - Default value: `False`
 
+### parLogAnalyticsLinkedServiceAutomationAccountName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Log Analytics LinkedService name for Automation Account.
+
+- Default value: `Automation`
+
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -221,6 +230,9 @@ outAutomationAccountId | string |
         },
         "parUseSentinelClassicPricingTiers": {
             "value": false
+        },
+        "parLogAnalyticsLinkedServiceAutomationAccountName": {
+            "value": "Automation"
         },
         "parTelemetryOptOut": {
             "value": false
