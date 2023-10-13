@@ -219,16 +219,16 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
 
 1. Using the ALZ PowerShell Module, there is a cmdlet called `Get-ALZBicepRelease`. This will download a specified release version from the remote ALZ-Bicep repository and pull down to the local directory where your Accelerator framework was initially deployed.
 
-    Here is an example of using the cmdlet to pull down version v0.16.3:
+    Here is an example of using the cmdlet to pull down version v0.16.5:
 
     ```powershell
-    Get-ALZGithubRelease -githubRepoUrl "https://github.com/Azure/ALZ-Bicep" -releases "v0.16.3" -directoryForReleases "C:\Repos\ALZ\accelerator\upstream-releases\"
+    Get-ALZGithubRelease -githubRepoUrl "https://github.com/Azure/ALZ-Bicep" -releases "v0.16.5" -directoryForReleases "C:\Repos\ALZ\accelerator\upstream-releases\"
     ```
 
-1. Once the ALZ Bicep release has been downloaded, you will need to update `upstream-releases-version` within the environment variables file (.env) with the version number of the release that you just downloaded. For example, if you downloaded v0.16.3, you would update the file with the following:
+1. Once the ALZ Bicep release has been downloaded, you will need to update `upstream-releases-version` within the environment variables file (.env) with the version number of the release that you just downloaded. For example, if you downloaded v0.16.5, you would update the file with the following:
 
     ```text
-    UPSTREAM_RELEASE_VERSION="v0.16.3"
+    UPSTREAM_RELEASE_VERSION="v0.16.5"
     ```
 
 1. You can now deploy the updated modules.
