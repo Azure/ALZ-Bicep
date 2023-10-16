@@ -1,0 +1,554 @@
+{
+    "config_files": [
+        {
+            "source": "infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json",
+            "destination": "config/custom-parameters/customPolicyDefinitions.parameters.all.json"
+        },
+        {
+            "source": "infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json",
+            "destination": "config/custom-parameters/customRoleDefinitions.parameters.all.json"
+        },
+        {
+            "source": "infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json",
+            "destination": "config/custom-parameters/hubNetworking.parameters.all.json"
+        },
+        {
+            "source": "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json",
+            "destination": "config/custom-parameters/logging.parameters.all.json"
+        },
+        {
+            "source": "infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json",
+            "destination": "config/custom-parameters/managementGroups.parameters.all.json"
+        },
+        {
+            "source": "infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json",
+            "destination": "config/custom-parameters/mgDiagSettingsAll.parameters.all.json"
+        },
+        {
+            "source": "infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json",
+            "destination": "config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json"
+        },
+        {
+            "source": "infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+            "destination": "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
+        },
+        {
+            "source": "infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+            "destination": "config/custom-parameters/resourceGroupLoggingAndSentinel.parameters.all.json"
+        },
+        {
+            "source": "infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroupMany.servicePrincipal.parameters.all.json",
+            "destination": "config/custom-parameters/roleAssignmentManagementGroupMany.servicePrincipal.parameters.all.json"
+        },
+        {
+            "source": "infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json",
+            "destination": "config/custom-parameters/subPlacementAll.parameters.all.json"
+        },
+        {
+            "source": "infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json",
+            "destination": "config/custom-parameters/vwanConnectivity.parameters.all.json"
+        },
+        {
+            "source": "accelerator/README.md",
+            "destination": "README.md"
+        },
+        {
+            "source": "accelerator/pipeline-scripts/Deploy-ALZConnectivityResourceGroup.ps1",
+            "destination": "pipeline-scripts/Deploy-ALZConnectivityResourceGroup.ps1"
+        },
+        {
+            "source": "accelerator/pipeline-scripts/Deploy-ALZCustomPolicyDefinitions.ps1",
+            "destination": "pipeline-scripts/Deploy-ALZCustomPolicyDefinitions.ps1"
+        },
+        {
+            "source": "accelerator/pipeline-scripts/Deploy-ALZCustomRoleDefinitions.ps1",
+            "destination": "pipeline-scripts/Deploy-ALZCustomRoleDefinitions.ps1"
+        },
+        {
+            "source": "accelerator/pipeline-scripts/Deploy-ALZHub-HubAndSpoke.ps1",
+            "destination": "pipeline-scripts/Deploy-ALZHub-HubAndSpoke.ps1"
+        },
+        {
+            "source": "accelerator/pipeline-scripts/Deploy-ALZHub-VWAN.ps1",
+            "destination": "pipeline-scripts/Deploy-ALZHub-VWAN.ps1"
+        },
+        {
+            "source": "accelerator/pipeline-scripts/Deploy-ALZLoggingAndSentinel.ps1",
+            "destination": "pipeline-scripts/Deploy-ALZLoggingAndSentinel.ps1"
+        },
+        {
+            "source": "accelerator/pipeline-scripts/Deploy-ALZLoggingAndSentinelResourceGroup.ps1",
+            "destination": "pipeline-scripts/Deploy-ALZLoggingAndSentinelResourceGroup.ps1"
+        },
+        {
+            "source": "accelerator/pipeline-scripts/Deploy-ALZMGDiagnosticSettings.ps1",
+            "destination": "pipeline-scripts/Deploy-ALZMGDiagnosticSettings.ps1"
+        },
+        {
+            "source": "accelerator/pipeline-scripts/Deploy-ALZManagementGroups.ps1",
+            "destination": "pipeline-scripts/Deploy-ALZManagementGroups.ps1"
+        },
+        {
+            "source": "accelerator/pipeline-scripts/Deploy-ALZPolicyAssignments.ps1",
+            "destination": "pipeline-scripts/Deploy-ALZPolicyAssignments.ps1"
+        },
+        {
+            "source": "accelerator/pipeline-scripts/Deploy-ALZRoleAssignments.ps1",
+            "destination": "pipeline-scripts/Deploy-ALZRoleAssignments.ps1"
+        },
+        {
+            "source": "accelerator/pipeline-scripts/Deploy-ALZSubscriptionPlacement.ps1",
+            "destination": "pipeline-scripts/Deploy-ALZSubscriptionPlacement.ps1"
+        }
+    ],
+    "cicd": {
+        "azuredevops": [
+            {
+                "source": "accelerator/.azuredevops/pipelines/alz-bicep-1-core.yml",
+                "destination": ".azuredevops/pipelines/alz-bicep-1-core.yml"
+            },
+            {
+                "source": "accelerator/.azuredevops/pipelines/alz-bicep-2-policyassignments.yml",
+                "destination": ".azuredevops/pipelines/alz-bicep-2-policyassignments.yml"
+            },
+            {
+                "source": "accelerator/.azuredevops/pipelines/alz-bicep-3-subplacement.yml",
+                "destination": ".azuredevops/pipelines/alz-bicep-3-subplacement.yml"
+            },
+            {
+                "source": "accelerator/.azuredevops/pipelines/alz-bicep-4a-hubspoke.yml",
+                "destination": ".azuredevops/pipelines/alz-bicep-4a-hubspoke.yml"
+            },
+            {
+                "source": "accelerator/.azuredevops/pipelines/alz-bicep-4b-vwan.yml",
+                "destination": ".azuredevops/pipelines/alz-bicep-4b-vwan.yml"
+            },
+            {
+                "source": "accelerator/.azuredevops/pipelines/alz-bicep-pr1-build.yml",
+                "destination": ".azuredevops/pipelines/alz-bicep-pr1-build.yml"
+            },
+            {
+                "source": "accelerator/.azuredevops/pipelines/alz-bicep-pr2-lint.yml",
+                "destination": ".azuredevops/pipelines/alz-bicep-pr2-lint.yml"
+            }
+        ],
+        "github": [
+            {
+                "source": "accelerator/.github/workflows/alz-bicep-1-core.yml",
+                "destination": ".github/workflows/alz-bicep-1-core.yml"
+            },
+            {
+                "source": "accelerator/.github/workflows/alz-bicep-2-policyassignments.yml",
+                "destination": ".github/workflows/alz-bicep-2-policyassignments.yml"
+            },
+            {
+                "source": "accelerator/.github/workflows/alz-bicep-3-subplacement.yml",
+                "destination": ".github/workflows/alz-bicep-3-subplacement.yml"
+            },
+            {
+                "source": "accelerator/.github/workflows/alz-bicep-4a-hubspoke.yml",
+                "destination": ".github/workflows/alz-bicep-4a-hubspoke.yml"
+            },
+            {
+                "source": "accelerator/.github/workflows/alz-bicep-4b-vwan.yml",
+                "destination": ".github/workflows/alz-bicep-4b-vwan.yml"
+            },
+            {
+                "source": "accelerator/.github/workflows/alz-bicep-pr1-build.yml",
+                "destination": ".github/workflows/alz-bicep-pr1-build.yml"
+            },
+            {
+                "source": "accelerator/.github/workflows/alz-bicep-pr2-lint.yml",
+                "destination": ".github/workflows/alz-bicep-pr2-lint.yml"
+            }
+        ]
+    },
+    "parameters": {
+        "Prefix": {
+            "Type": "UserInput",
+            "Description": "The prefix that will be added to all resources created by this deployment. (e.g. 'alz')",
+            "Targets": [
+                {
+                    "Name": "parTopLevelManagementGroupPrefix.value",
+                    "Destination": "Parameters"
+                },
+                {
+                    "Name": "parCompanyPrefix.value",
+                    "Destination": "Parameters"
+                },
+                {
+                    "Name": "parTargetManagementGroupId.value",
+                    "Destination": "Parameters"
+                },
+                {
+                    "Name": "parAssignableScopeManagementGroupId.value",
+                    "Destination": "Parameters"
+                },
+                {
+                    "name": "TOP_LEVEL_MG_PREFIX",
+                    "destination": "Environment"
+                }
+            ],
+            "Value": "",
+            "DefaultValue": "alz",
+            "Valid": "^[a-zA-Z0-9]{2,10}(-[a-zA-Z0-9]{2,10})?$"
+        },
+        "Location": {
+            "Type": "UserInput",
+            "Description": "Deployment location. (e.g. 'uksouth')",
+            "Value": "",
+            "Targets": [
+                {
+                    "Name": "parLocation.value",
+                    "Destination": "Parameters"
+                },
+                {
+                    "Name": "parAutomationAccountLocation.value",
+                    "Destination": "Parameters"
+                },
+                {
+                    "Name": "parPolicyAssignmentParameters.value.ascExportResourceGroupLocation.value",
+                    "Destination": "Parameters"
+                },
+                {
+                    "Name": "parVirtualWanHubs.value.[0].parHubLocation",
+                    "Destination": "Parameters"
+                },
+                {
+                    "Name": "LOCATION",
+                    "Destination": "Environment"
+                }
+            ],
+            "AllowedValues": {
+                "Display": false,
+                "Values": [
+                    "australiacentral",
+                    "australiacentral2",
+                    "australiaeast",
+                    "australiasoutheast",
+                    "brazilsouth",
+                    "brazilsoutheast",
+                    "canadacentral",
+                    "canadaeast",
+                    "centralindia",
+                    "centralus",
+                    "centraluseuap",
+                    "eastasia",
+                    "eastus",
+                    "eastus2",
+                    "eastus2euap",
+                    "eastusstg",
+                    "francecentral",
+                    "francesouth",
+                    "germanynorth",
+                    "germanywestcentral",
+                    "japaneast",
+                    "japanwest",
+                    "jioindiacentral",
+                    "jioindiawest",
+                    "koreacentral",
+                    "koreasouth",
+                    "northcentralus",
+                    "northeurope",
+                    "norwayeast",
+                    "norwaywest",
+                    "qatarcentral",
+                    "southafricanorth",
+                    "southafricawest",
+                    "southcentralus",
+                    "southeastasia",
+                    "southindia",
+                    "swedencentral",
+                    "switzerlandnorth",
+                    "switzerlandwest",
+                    "uaecentral",
+                    "uaenorth",
+                    "uksouth",
+                    "ukwest",
+                    "westcentralus",
+                    "westeurope",
+                    "westindia",
+                    "westus",
+                    "westus2",
+                    "westus3"
+                ]
+            }
+        },
+        "Environment": {
+            "Type": "UserInput",
+            "Description": "The Type of environment that will be created. (e.g. 'live', 'canary')",
+            "Targets": [
+                {
+                    "Name": "parEnvironment.value",
+                    "Destination": "Parameters"
+                },
+                {
+                    "Name": "parTags.value.Environment",
+                    "Destination": "Parameters"
+                }
+            ],
+            "Value": "",
+            "DefaultValue": "live",
+            "Valid": "^[a-zA-Z0-9]{2,10}$"
+        },
+        "IdentitySubscriptionId": {
+            "Type": "UserInput",
+            "Description": "The identifier of the Identity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
+            "Valid": "^( {){0,1}[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(}){0,1}$",
+            "Targets": [
+                {
+                    "Name": "IDENTITY_SUBSCRIPTION_ID",
+                    "Destination": "Environment"
+                }
+            ],
+            "Value": ""
+        },
+        "ConnectivitySubscriptionId": {
+            "Type": "UserInput",
+            "Description": "The identifier of the Connectivity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
+            "Valid": "^( {){0,1}[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(}){0,1}$",
+            "Targets": [
+                {
+                    "Name": "CONNECTIVITY_SUBSCRIPTION_ID",
+                    "Destination": "Environment"
+                }
+            ],
+            "Value": ""
+        },
+        "ManagementSubscriptionId": {
+            "Type": "UserInput",
+            "Description": "The identifier of the Management Subscription. (e.g 00000000-0000-0000-0000-000000000000)",
+            "Valid": "^( {){0,1}[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(}){0,1}$",
+            "Targets": [
+                {
+                    "Name": "MANAGEMENT_SUBSCRIPTION_ID",
+                    "Destination": "Environment"
+                }
+            ],
+            "Value": ""
+        },
+        "SecurityContact": {
+            "Type": "UserInput",
+            "Description": "The email address of the contact for security issues. (e.g. security@contactme.com)",
+            "Valid": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "Targets": [
+                {
+                    "Name": "parMsDefenderForCloudEmailSecurityContact.value",
+                    "Destination": "Parameters"
+                }
+            ],
+            "Value": ""
+        },
+        "LogAnalyticsWorkspaceLocation": {
+            "Type": "Computed",
+            "Value": "{%Location%}",
+            "Process": "($args[0] -eq \"eastus\") ? \"eastus2\" : ($args[0] -eq \"eastus2\") ? \"eastus\" : $args[0]",
+            "Targets": [
+                {
+                    "Name": "parLogAnalyticsWorkspaceLocation.value",
+                    "Destination": "Parameters"
+                },
+                {
+                    "Name": "parLogAnalyticsWorkSpaceAndAutomationAccountLocation.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "LogAnalyticsResourceId": {
+            "Type": "Computed",
+            "Value": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/microsoft.operationalinsights/workspaces/alz-log-analytics",
+            "Targets": [
+                {
+                    "Name": "parLogAnalyticsWorkspaceResourceId.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "DdosPretectionPlanId": {
+            "Type": "Computed",
+            "Value": "/subscriptions/{%ConnectivitySubscriptionId%}/resourceGroups/rg-{%Prefix%}-connectivity/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan",
+            "Targets": [
+                {
+                    "Name": "parDdosProtectionPlanId.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "PrivateDnsResourceGroupId": {
+            "Type": "Computed",
+            "Value": "/subscriptions/{%ConnectivitySubscriptionId%}/resourceGroups/rg-{%Prefix%}-connectivity",
+            "Targets": [
+                {
+                    "Name": "parPrivateDnsResourceGroupId.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "ManagementSubscriptionGroup": {
+            "Type": "Computed",
+            "Value": [
+                "{%ManagementSubscriptionId%}"
+            ],
+            "Targets": [
+                {
+                    "Name": "parPlatformManagementMgSubs.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "ConnectivitySubscriptionGroup": {
+            "Type": "Computed",
+            "Value": [
+                "{%ConnectivitySubscriptionId%}"
+            ],
+            "Targets": [
+                {
+                    "Name": "parPlatformConnectivityMgSubs.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "IdentitySubscriptionGroup": {
+            "Type": "Computed",
+            "Value": [
+                "{%IdentitySubscriptionId%}"
+            ],
+            "Targets": [
+                {
+                    "Name": "parPlatformIdentityMgSubs.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "HubNetworkName": {
+            "Type": "Computed",
+            "Value": "alz-hub-{%Location%}",
+            "Targets": [
+                {
+                    "Name": "parHubNetworkName.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "VirtualIdToLink": {
+            "Type": "Computed",
+            "Value": "",
+            "Targets": [
+                {
+                    "Name": "parVirtualNetworkIdToLink.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "VirtualWanName": {
+            "Type": "Computed",
+            "Value": "alz-vwan-{%Location%}",
+            "Targets": [
+                {
+                    "Name": "parVirtualWanName.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "AzFirewallName": {
+            "Type": "Computed",
+            "Value": "alz-azfw-{%Location%}",
+            "Targets": [
+                {
+                    "Name": "parAzFirewallName.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "FirewallPoliciesName": {
+            "Type": "Computed",
+            "Value": "alz-azfwpolicy-{%Location%}",
+            "Targets": [
+                {
+                    "Name": "parAzFirewallPoliciesName.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "AK8sPrivateLink": {
+            "Type": "Computed",
+            "Value": "privatelink.{%Location%}.azmk8s.io",
+            "Targets": [
+                {
+                    "Name": "parPrivateDnsZones.value.[0]",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "BatchPrivateLink": {
+            "Type": "Computed",
+            "Value": "privatelink.{%Location%}.batch.azure.com",
+            "Targets": [
+                {
+                    "Name": "parPrivateDnsZones.value.[1]",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "KustoPrivateLink": {
+            "Type": "Computed",
+            "Value": "privatelink.{%Location%}.kusto.windows.net",
+            "Targets": [
+                {
+                    "Name": "parPrivateDnsZones.value.[2]",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "BackupPrivateLink": {
+            "Type": "Computed",
+            "Value": "privatelink.{%Location%}.backup.windowsazure.com",
+            "Targets": [
+                {
+                    "Name": "parPrivateDnsZones.value.[3]",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "UpstreamReleaseVersion": {
+            "Type": "Computed",
+            "Value": "v0.16.5",
+            "Targets": [
+                {
+                    "Name": "UPSTREAM_RELEASE_VERSION",
+                    "Destination": "Environment"
+                }
+            ]
+        },
+        "ConnectivityResourceGroupName": {
+            "Type": "Computed",
+            "Value": "rg-{%Prefix%}-connectivity",
+            "Targets": [
+                {
+                    "Name": "CONNECTIVITY_RESOURCE_GROUP",
+                    "Destination": "Environment"
+                },
+                {
+                    "File": "resourceGroupConnectivity.parameters.all.json",
+                    "Name": "parResourceGroupName.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        },
+        "LoggingResourceGroupName": {
+            "Type": "Computed",
+            "Value": "rg-{%Prefix%}-logging",
+            "Targets": [
+                {
+                    "Name": "LOGGING_RESOURCE_GROUP",
+                    "Destination": "Environment"
+                },
+                {
+                    "File": "resourceGroupLoggingAndSentinel.parameters.all.json",
+                    "Name": "parResourceGroupName.value",
+                    "Destination": "Parameters"
+                }
+            ]
+        }
+    }
+}
