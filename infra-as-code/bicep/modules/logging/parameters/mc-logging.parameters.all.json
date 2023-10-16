@@ -45,6 +45,9 @@
         "Environment": "Live"
       }
     },
+    "parLogAnalyticsLinkedServiceAutomationAccountName": {
+      "value": "Automation"
+    },
     "parTelemetryOptOut": {
       "value": false
     }

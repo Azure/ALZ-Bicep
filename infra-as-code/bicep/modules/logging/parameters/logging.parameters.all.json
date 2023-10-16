@@ -51,6 +51,9 @@
     "parUseSentinelClassicPricingTiers": {
       "value": false
     },
+    "parLogAnalyticsLinkedServiceAutomationAccountName": {
+      "value": "Automation"
+    },
     "parTelemetryOptOut": {
       "value": false
     }
