@@ -192,7 +192,7 @@
     "parVpnGatewayConfig": {
       "value": {
         "name": "alz-Vpn-Gateway",
-        "gatewayType": "VPN",
+        "gatewayType": "Vpn",
         "sku": "VpnGw1",
         "vpnType": "RouteBased",
         "generation": "Generation1",
