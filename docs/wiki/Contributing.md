@@ -259,6 +259,6 @@ Each resource must use the latest available, working, API version. If the latest
 
 ### Release Process Diagram
 
-When adding new parameters to a module, changing existing parameter names, or creating a new module, there are some additional steps that must be considered to ensure the [Accelerator](https://github.com/Azure/ALZ-Bicep/wiki/Accelerator) and the associated [ALZ-PowerShell-Module](https://github.com/Azure/Alz-powershell-module) remain in-sync. The following diagram outlines the steps for release process and provides additional context for changes that may be required:
+When adding new parameters to a module, changing existing parameter names, or creating a new module, there are some additional steps that must be considered to ensure the [Accelerator](https://github.com/Azure/ALZ-Bicep/wiki/Accelerator) works with the associated [ALZ-PowerShell-Module](https://github.com/Azure/Alz-powershell-module). The accelerator publishes the [ALZ-Powershell.config.json](https://github.com/Azure/ALZ-Bicep/blob/main/accelerator/.config/ALZ-Powershell.config.json) file which contains the configuration required for accelerator deployment. The following diagram outlines the steps for release process and provides additional context for changes that may be required:
 
 ![Release Process](media/alz-bicep-release-process.png)
