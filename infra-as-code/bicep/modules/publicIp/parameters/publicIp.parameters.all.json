@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parLocation": {
+      "value": "eastus"
+    },
+    "parPublicIpName": {
+      "value": "alz"
+    },
+    "parPublicIpSku": {
+      "value": {
+        "name": "Standard",
+        "tier": "Regional"
+      }
+    },
+    "parPublicIpProperties": {
+      "value": {
+        "publicIpAddressVersion": "IPv4",
+        "publicIpAllocationMethod": "Dynamic",
+        "deleteOption": "Delete",
+        "idleTimeoutInMinutes": 4
+      }
+    },
+    "parAvailabilityZones": {
+      "value": []
+    },
+    "parTags": {
+      "value": {
+        "Environment": "Live"
+      }
+    },
+    "parTelemetryOptOut": {
+      "value": false
+    }
+  }
+}

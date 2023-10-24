@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "parPolicyAssignmentName": {
+            "value": "Deny-PublicIP"
+        },
+        "parPolicyAssignmentDisplayName": {
+            "value": "Deny the creation of public IP"
+        },
+        "parPolicyAssignmentDescription": {
+            "value": "This policy denies creation of Public IPs under the assigned scope."
+        },
+        "parPolicyAssignmentDefinitionId": {
+            "value": "/providers/Microsoft.Management/managementGroups/alz/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP"
+        },
+        "parPolicyAssignmentParameters": {
+            "value": {}
+        },
+        "parPolicyAssignmentParameterOverrides": {
+            "value": {}
+        },
+        "parPolicyAssignmentNonComplianceMessages": {
+            "value": []
+        },
+        "parPolicyAssignmentNotScopes": {
+            "value": []
+        },
+        "parPolicyAssignmentEnforcementMode": {
+            "value": "Default"
+        },
+        "parPolicyAssignmentIdentityType": {
+            "value": "None"
+        },
+        "parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs": {
+            "value": []
+        },
+        "parPolicyAssignmentIdentityRoleAssignmentsSubs": {
+            "value": []
+        },
+        "parPolicyAssignmentIdentityRoleAssignmentsResourceGroups": {
+          "value": []
+        },
+        "parPolicyAssignmentIdentityRoleDefinitionIds": {
+            "value": []
+        },
+        "parTelemetryOptOut": {
+            "value": false
+        }
+    }
+}
