@@ -27,4 +27,4 @@ jobs:
           VALIDATE_POWERSHELL: true
           VALIDATE_YAML: true
           VALIDATE_EDITORCONFIG: true
-          FILTER_REGEX_EXCLUDE: ".*generateddocs/.*.bicep.md"
+          FILTER_REGEX_EXCLUDE: ".*upstream-releases/*|.*generateddocs/.*.bicep.md"

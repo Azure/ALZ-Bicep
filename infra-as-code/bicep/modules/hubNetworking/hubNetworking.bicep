@@ -571,7 +571,7 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in va
   name: 'deploy-Gateway-Public-IP-${i}'
   params: {
     parLocation: parLocation
-    parAvailabilityZones: gateway.gatewayType == 'ExpressRoute' ? parAzErGatewayAvailabilityZones : gateway.gatewayType == 'Vpn' ? parAzVpnGatewayAvailabilityZones : []
+    parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute' ? parAzErGatewayAvailabilityZones : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZones : []
     parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}'
     parPublicIpProperties: {
       publicIpAddressVersion: 'IPv4'
@@ -597,13 +597,13 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for
     enableDnsForwarding: gateway.enableDnsForwarding
     bgpSettings: (gateway.enableBgp) ? gateway.bgpSettings : null
     gatewayType: gateway.gatewayType
-    vpnGatewayGeneration: (gateway.gatewayType == 'VPN') ? gateway.generation : 'None'
+    vpnGatewayGeneration: (toLower(gateway.gatewayType) == 'vpn') ? gateway.generation : 'None'
     vpnType: gateway.vpnType
     sku: {
       name: gateway.sku
       tier: gateway.sku
     }
-    vpnClientConfiguration: (gateway.gatewayType == 'VPN') ? {
+    vpnClientConfiguration: (toLower(gateway.gatewayType) == 'vpn') ? {
       vpnClientAddressPool: contains(gateway.vpnClientConfiguration, 'vpnClientAddressPool') ? gateway.vpnClientConfiguration.vpnClientAddressPool : ''
       vpnClientProtocols: contains(gateway.vpnClientConfiguration, 'vpnClientProtocols') ? gateway.vpnClientConfiguration.vpnClientProtocols : ''
       vpnAuthenticationTypes: contains(gateway.vpnClientConfiguration, 'vpnAuthenticationTypes') ? gateway.vpnClientConfiguration.vpnAuthenticationTypes : ''

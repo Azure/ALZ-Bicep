@@ -1,7 +1,7 @@
-targetScope = 'tenant'
+targetScope = 'managementGroup'
 
-metadata name = 'ALZ Bicep - Management Groups Module'
-metadata description = 'ALZ Bicep Module to set up Management Group structure'
+metadata name = 'ALZ Bicep - Management Groups Module with Scope Escape'
+metadata description = 'ALZ Bicep Module to set up Management Group structure, using Scope Escaping feature of ARM to allow deployment not requiring tenant root scope access.'
 
 @sys.description('Prefix used for the management group hierarchy. This management group will be created as part of the deployment.')
 @minLength(2)
@@ -103,6 +103,7 @@ var varCuaid = '9b7965a0-d77c-41d6-85ef-ec3dfea4845b'
 
 // Level 1
 resource resTopLevelMg 'Microsoft.Management/managementGroups@2023-04-01' = {
+  scope: tenant()
   name: '${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}'
   properties: {
     displayName: parTopLevelManagementGroupDisplayName
@@ -116,6 +117,7 @@ resource resTopLevelMg 'Microsoft.Management/managementGroups@2023-04-01' = {
 
 // Level 2
 resource resPlatformMg 'Microsoft.Management/managementGroups@2023-04-01' = {
+  scope: tenant()
   name: varPlatformMg.name
   properties: {
     displayName: varPlatformMg.displayName
@@ -128,6 +130,7 @@ resource resPlatformMg 'Microsoft.Management/managementGroups@2023-04-01' = {
 }
 
 resource resLandingZonesMg 'Microsoft.Management/managementGroups@2023-04-01' = {
+  scope: tenant()
   name: varLandingZoneMg.name
   properties: {
     displayName: varLandingZoneMg.displayName
@@ -140,6 +143,7 @@ resource resLandingZonesMg 'Microsoft.Management/managementGroups@2023-04-01' = 
 }
 
 resource resSandboxMg 'Microsoft.Management/managementGroups@2023-04-01' = {
+  scope: tenant()
   name: varSandboxMg.name
   properties: {
     displayName: varSandboxMg.displayName
@@ -152,6 +156,7 @@ resource resSandboxMg 'Microsoft.Management/managementGroups@2023-04-01' = {
 }
 
 resource resDecommissionedMg 'Microsoft.Management/managementGroups@2023-04-01' = {
+  scope: tenant()
   name: varDecommissionedMg.name
   properties: {
     displayName: varDecommissionedMg.displayName
@@ -165,6 +170,7 @@ resource resDecommissionedMg 'Microsoft.Management/managementGroups@2023-04-01' 
 
 // Level 3 - Child Management Groups under Landing Zones MG
 resource resLandingZonesChildMgs 'Microsoft.Management/managementGroups@2023-04-01' = [for mg in items(varLandingZoneMgChildrenUnioned): if (!empty(varLandingZoneMgChildrenUnioned)) {
+  scope: tenant()
   name: '${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}${parTopLevelManagementGroupSuffix}'
   properties: {
     displayName: mg.value.displayName
@@ -178,6 +184,7 @@ resource resLandingZonesChildMgs 'Microsoft.Management/managementGroups@2023-04-
 
 //Level 3 - Child Management Groups under Platform MG
 resource resPlatformChildMgs 'Microsoft.Management/managementGroups@2023-04-01' = [for mg in items(varPlatformMgChildrenUnioned): if (!empty(varPlatformMgChildrenUnioned)) {
+  scope: tenant()
   name: '${parTopLevelManagementGroupPrefix}-platform-${mg.key}${parTopLevelManagementGroupSuffix}'
   properties: {
     displayName: mg.value.displayName
@@ -190,7 +197,7 @@ resource resPlatformChildMgs 'Microsoft.Management/managementGroups@2023-04-01' 
 }]
 
 // Optional Deployment for Customer Usage Attribution
-module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdTenant.bicep' = if (!parTelemetryOptOut) {
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdManagementGroup.bicep' = if (!parTelemetryOptOut) {
   #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
   name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
   params: {}
@@ -203,7 +210,7 @@ output outPlatformManagementGroupId string = resPlatformMg.id
 output outPlatformChildrenManagementGroupIds array = [for mg in items(varPlatformMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-platform-${mg.key}${parTopLevelManagementGroupSuffix}']
 
 output outLandingZonesManagementGroupId string = resLandingZonesMg.id
-output outLandingZoneChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}${parTopLevelManagementGroupSuffix}']
+output outLandingZoneChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}${parTopLevelManagementGroupSuffix}' ]
 
 output outSandboxManagementGroupId string = resSandboxMg.id
 

@@ -1,6 +1,6 @@
 # Module:  Subscription Alias
 
-> **IMPORTANT:** We recommend moving to using the [Bicep Subscription Vending Module](https://aka.ms/sub-vending/bicep) instead of this module!
+> ⚠️⚠️ **IMPORTANT:** We recommend moving to using the [Bicep Subscription Vending Module](https://aka.ms/sub-vending/bicep) instead of this module! ⚠️⚠️
 
 The Subscription Alias module deploys an Azure Subscription into an existing billing scope that can be from an EA, MCA or MPA as documented in [Create Azure subscriptions programmatically](https://learn.microsoft.com/azure/cost-management-billing/manage/programmatically-create-subscription).
 
@@ -10,7 +10,8 @@ The Subscription will be created and placed under the Tenant Root Group, unless 
 
 ## Parameters
 
-- [Parameters for Azure Commercial Cloud](generateddocs/subscriptionAlias.bicep.md)
+- [Parameters for `subscriptionAlias.bicep` Azure Commercial Cloud](generateddocs/subscriptionAlias.bicep.md)
+- [Parameters for `subscriptionAliasScopeEscape.bicep` Azure Commercial Cloud](generateddocs/subscriptionAliasScopeEscape.bicep.md)
 
 ## Outputs
 
@@ -29,7 +30,8 @@ In this example, the Subscription is created upon an EA Account through a tenant
 
 > For the below examples we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
-### Azure CLI
+### Azure CLI - `subscriptionAlias.bicep`
+
 ```bash
 
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
@@ -41,7 +43,23 @@ TEMPLATEFILE="infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep
 az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
-### PowerShell
+### Azure CLI - `subscriptionAliasScopeEscape.bicep`
+
+Use this module if you do not want to grant Tenant Root Management Group Deployment permissions.
+
+```bash
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-SubscriptionAlias-${dateYMD}"
+LOCATION="eastus"
+PARAMETERS="@infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json"
+TEMPLATEFILE="infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAliasScopeEscape.bicep"
+MGID="alz"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS --management-group-id $MGID
+```
+
+### PowerShell - `subscriptionAlias.bicep`
 
 ```powershell
 
@@ -53,6 +71,23 @@ $inputObject = @{
 }
 
 New-AzTenantDeployment @inputObject
+```
+
+### PowerShell - `subscriptionAliasScopeEscape.bicep`
+
+Use this module if you do not want to grant Tenant Root Management Group Deployment permissions.
+
+```powershell
+
+$inputObject = @{
+  DeploymentName        = 'alz-SubscriptionAlias-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  TemplateParameterFile = 'infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json'
+  Location              = 'EastUS'
+  TemplateFile          = "infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAliasScopeEscape.bicep"
+  ManagementGroupId     = 'alz'
+}
+
+New-AzManagementGroupDeployment @inputObject
 ```
 
 ### Output Screenshot
