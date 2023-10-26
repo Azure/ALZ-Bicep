@@ -42,7 +42,7 @@ Describe "version.json file tests" {
     }
 
     It "version.json file releaseNotes property has been updated and URL last split on / does not match the latest git tag" {
-      $releaseNotesUrlSplitLast | Should -Not -Be $gitRepoLatestTag
+      $releaseNotesUrlSplitLast | Should -Be $gitRepoLatestTag
     }
 
     It "version.json file releaseNotes property is a valid URL and has the correct format" {

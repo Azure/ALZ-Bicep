@@ -512,7 +512,7 @@
         },
         "UpstreamReleaseVersion": {
             "Type": "Computed",
-            "Value": "v0.16.5",
+            "Value": "v0.16.6",
             "Targets": [
                 {
                     "Name": "UPSTREAM_RELEASE_VERSION",
