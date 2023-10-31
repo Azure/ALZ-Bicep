@@ -90,6 +90,31 @@ parPlatformMgChildren: {
 }
 ```
 
+##### JSON Parameter File Input Example
+
+```json
+"parLandingZoneMgChildren": {
+    "value": {
+        "pci": {
+          "displayName": "PCI"
+        },
+        "another-example": {
+          "displayName": "Another Example"
+        }
+    }
+},
+"parPlatformMgChildren": {
+    "value": {
+        "security": {
+          "displayName": "Security"
+        },
+        "yet-another-example": {
+          "displayName": "Yet Another Example"
+        }
+    }
+}
+```
+
 ## Outputs
 
 The module will generate the following outputs:
