@@ -23,7 +23,7 @@ The inputs for this module are defined in the respective parameter file (BICEPPA
 # For Azure global regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep \
-  --parameters @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.bicepparam \
+  --parameters infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.bicepparam \
   --location eastus \
   --management-group-id alz
 ```
@@ -34,7 +34,7 @@ OR
 # For Azure China regions
 az deployment mg create \
   --template-file infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep \
-  --parameters @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.bicepparam \
+  --parameters infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.bicepparam \
   --location chinaeast2 \
   --management-group-id alz
 ```
@@ -61,29 +61,7 @@ az deployment mg create \
   --management-group-id alz
 ```
 
-### PowerShell - BICEPPARAMS
-
-```powershell
-# For Azure global regions
-New-AzManagementGroupDeployment `
-  -TemplateFile "infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep" `
-  -TemplateParameterFile "infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.bicepparam" `
-  -Location "eastus" `
-  -ManagementGroupId "alz"
-```
-
-OR
-
-```powershell
-# For Azure China regions
-New-AzManagementGroupDeployment `
-  -TemplateFile "infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep" `
-  -TemplateParameterFile "infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.bicepparam" `
-  -Location "chinaeast2" `
-  -ManagementGroupId "alz"
-```
-
-### PowerShell - JSON
+### PowerShell
 
 ```powershell
 # For Azure global regions

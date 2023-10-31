@@ -23,7 +23,7 @@ The inputs for this module are defined in the relevant parameter file (BICEPPARA
 # For Azure global regions
 az deployment rg create \
   --template-file infra-as-code/bicep/modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep \
-  --parameters @infra-as-code/bicep/modules/privateDnsZoneLinks/parameters/privateDnsZoneLinks.parameters.all.bicepparam \
+  --parameters infra-as-code/bicep/modules/privateDnsZoneLinks/parameters/privateDnsZoneLinks.parameters.all.bicepparam \
   --location eastus
 ```
 
@@ -33,7 +33,7 @@ OR
 # For Azure China regions
 az deployment rg create \
   --template-file infra-as-code/bicep/modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep \
-  --parameters @infra-as-code/bicep/modules/privateDnsZoneLinks/parameters/privateDnsZoneLinks.parameters.all.bicepparam \
+  --parameters infra-as-code/bicep/modules/privateDnsZoneLinks/parameters/privateDnsZoneLinks.parameters.all.bicepparam \
   --location chinaeast2
   ```
 
@@ -57,27 +57,7 @@ az deployment rg create \
   --location chinaeast2
   ```
 
-### PowerShell - BICEPPARAMS
-
-```powershell
-# For Azure global regions
-New-AzResourceGroupDeployment `
-  -TemplateFile "infra-as-code/bicep/modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep" `
-  -TemplateParameterFile "infra-as-code/bicep/modules/privateDnsZoneLinks/parameters/privateDnsZoneLinks.parameters.all.bicepparam" `
-  -Location "eastus"
-```
-
-OR
-
-```powershell
-# For Azure China regions
-New-AzResourceGroupDeployment `
-  -TemplateFile "infra-as-code/bicep/modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep" `
-  -TemplateParameterFile "infra-as-code/bicep/modules/privateDnsZoneLinks/parameters/privateDnsZoneLinks.parameters.all.bicepparam" `
-  -Location "chinaeast2"
-```
-
-### PowerShell - JSON
+### PowerShell
 
 ```powershell
 # For Azure global regions

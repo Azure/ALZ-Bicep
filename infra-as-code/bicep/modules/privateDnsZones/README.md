@@ -88,7 +88,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-PrivateDnsZonesDeployment-${dateYMD}"
 RESOURCEGROUP="rg-$TopLevelMGPrefix-private-dns-001"
 TEMPLATEFILE="infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.bicepparam"
 
 az group create --location eastus \
    --name $RESOURCEGROUP
@@ -109,7 +109,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-PrivateDnsZonesDeployment-${dateYMD}"
 RESOURCEGROUP="rg-$TopLevelMGPrefix-private-dns-001"
 TEMPLATEFILE="infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.bicepparam"
 
 az group create --location chinaeast2 \
    --name $RESOURCEGROUP
@@ -163,58 +163,7 @@ az group create --location chinaeast2 \
 az deployment group create --name ${NAME:0:63} --resource-group $RESOURCEGROUP --parameters $PARAMETERS --template-file $TEMPLATEFILE
 ```
 
-### PowerShell - BICEPPARAMS
-
-```powershell
-# For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription
-$ConnectivitySubscriptionId = "7a348906-189d-4e8d-9d72-ffb597a3e1d4"
-
-Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
-
-# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
-$TopLevelMGPrefix = "alz"
-
-$inputObject = @{
-  DeploymentName        = 'alz-PrivateDnsZonesDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = "rg-$TopLevelMGPrefix-private-dns-001"
-  TemplateFile          = "infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.bicepparam"
-}
-
-New-AzResourceGroup `
-  -Name $inputObject.ResourceGroupName `
-  -Location 'eastus'
-
-New-AzResourceGroupDeployment @inputObject
-```
-OR
-
-```powershell
-# For Azure China regions
-# Set Platform connectivity subscription ID as the the current subscription
-$ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
-
-Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
-
-# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
-$TopLevelMGPrefix = "alz"
-
-$inputObject = @{
-  DeploymentName        = 'alz-PrivateDnsZonesDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = "rg-$TopLevelMGPrefix-private-dns-001"
-  TemplateFile          = "infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.bicepparam"
-}
-
-New-AzResourceGroup `
-  -Name $inputObject.ResourceGroupName `
-  -Location 'chinaeast2'
-
-New-AzResourceGroupDeployment @inputObject
-```
-
-### PowerShell - JSON
+### PowerShell
 
 ```powershell
 # For Azure global regions

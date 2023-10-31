@@ -34,7 +34,7 @@ NAME="alz-alzPolicyAssignmentDefaults-${dateYMD}"
 LOCATION="eastus"
 MGID="alz"
 TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.bicepparam"
 
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -47,7 +47,7 @@ NAME="alz-alzPolicyAssignmentDefaults-${dateYMD}"
 LOCATION="chinaeast2"
 MGID="alz"
 TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.bicepparam"
 
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -80,37 +80,7 @@ PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/alzDefaults/paramete
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
-### PowerShell - BICEPPARAMS
-
-```powershell
-# For Azure global regions
-
-$inputObject = @{
-  DeploymentName        = 'alz-alzPolicyAssignmentDefaultsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  Location              = 'eastus'
-  ManagementGroupId     = 'alz'
-  TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.bicepparam'
-}
-
-New-AzManagementGroupDeployment @inputObject
-```
-OR
-```powershell
-# For Azure China regions
-
-$inputObject = @{
-  DeploymentName        = 'alzPolicyAssignmentDefaultsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  Location              = 'chinaeast2'
-  ManagementGroupId     = 'alz'
-  TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/mc-alzDefaultPolicyAssignments.parameters.all.bicepparam'
-}
-
-New-AzManagementGroupDeployment @inputObject
-```
-
-### PowerShell - JSON
+### PowerShell
 
 ```powershell
 # For Azure global regions

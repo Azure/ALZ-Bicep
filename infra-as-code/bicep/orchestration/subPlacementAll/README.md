@@ -109,7 +109,7 @@ NAME="alz-SubPlacementAll-${dateYMD}"
 LOCATION="eastus"
 MGID="alz"
 TEMPLATEFILE="infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
-PARAMETERS="@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.bicepparam"
 
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -124,7 +124,7 @@ NAME="alz-SubPlacementAll-${dateYMD}"
 LOCATION="chinaeast2"
 MGID="alz"
 TEMPLATEFILE="infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
-PARAMETERS="@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.bicepparam"
 
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -158,39 +158,7 @@ PARAMETERS="@infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPla
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
-### PowerShell - BICEPPARAMS
-
-```powershell
-# For Azure global regions
-
-$inputObject = @{
-  DeploymentName        = 'alz-SubPlacementAll-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  Location              = 'EastUS'
-  ManagementGroupId     = 'alz'
-  TemplateFile          = "infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.bicepparam'
-}
-
-New-AzManagementGroupDeployment @inputObject
-```
-
-OR
-
-```powershell
-# For Azure China regions
-
-$inputObject = @{
-  DeploymentName        = 'alz-SubPlacementAll-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  Location              = 'chinaeast2'
-  ManagementGroupId     = 'alz'
-  TemplateFile          = "infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.bicepparam'
-}
-
-New-AzManagementGroupDeployment @inputObject
-```
-
-### PowerShell - JSON
+### PowerShell
 
 ```powershell
 # For Azure global regions

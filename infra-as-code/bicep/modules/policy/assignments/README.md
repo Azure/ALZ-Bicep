@@ -32,7 +32,7 @@ In this example, the `Deny-PublicIP` custom policy definition will be deployed/a
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-alz-PolicyDenyAssignmentsDeployment-${dateYMD}"
 
-PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.bicepparam"
 LOCATION="eastus"
 MGID="alz-landingzones"
 TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
@@ -46,7 +46,7 @@ OR
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-alz-PolicyDenyAssignmentsDeployment-${dateYMD}"
 
-PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.bicepparam"
 LOCATION="chinaeast2"
 MGID="alz-landingzones"
 TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
@@ -84,35 +84,7 @@ TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/policyAssignmentMan
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
-#### PowerShell - Deny - BICEPPARAMS
-
-```powershell
-# For Azure global regions
-
-$inputObject = @{
-  DeploymentName        = 'alz-PolicyDenyAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ManagementGroupId     = 'alz-landingzones'
-  Location              = 'eastus'
-  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.bicepparam'
-  TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
-}
-New-AzManagementGroupDeployment @inputObject
-```
-OR
-```powershell
-# For Azure China regions
-
-$inputObject = @{
-  DeploymentName        = 'alz-PolicyDenyAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ManagementGroupId     = 'alz-landingzones'
-  Location              = 'chinaeast2'
-  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.bicepparam'
-  TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
-}
-New-AzManagementGroupDeployment @inputObject
-```
-
-#### PowerShell - Deny - JSON
+#### PowerShell - Deny
 
 ```powershell
 # For Azure global regions

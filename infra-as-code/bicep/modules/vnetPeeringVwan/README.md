@@ -45,7 +45,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-vnetPeeringVwanDeployment-${dateYMD}"
 LOCATION="eastus"
 TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.bicepparam"
 
 az deployment sub create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -60,7 +60,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-vnetPeeringVwanDeployment-${dateYMD}"
 LOCATION="chinaeast2"
 TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.bicepparam"
 
 az deployment sub create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -97,44 +97,7 @@ PARAMETERS="@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringV
 az deployment sub create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
-### PowerShell - BICEPPARAMS
-
-```powershell
-# For Azure global regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription
-$ConnectivitySubscriptionId = "[your Landing Zone subscription ID]"
-
-Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
-
-$inputObject = @{
-  DeploymentName        = 'alz-VnetPeeringWanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  Location              = 'eastus'
-  TemplateFile          = "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.bicepparam'
-}
-
-New-AzDeployment @inputObject
-
-```
-OR
-```powershell
-# For Azure China regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription
-$ConnectivitySubscriptionId = "[your Landing Zone subscription ID]"
-
-Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
-
-$inputObject = @{
-  DeploymentName        = 'alz-VnetPeeringWanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  Location              = 'chinaeast2'
-  TemplateFile          = "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.bicepparam'
-}
-
-New-AzDeployment @inputObject
-```
-
-### PowerShell - JSON
+### PowerShell
 
 ```powershell
 # For Azure global regions

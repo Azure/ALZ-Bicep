@@ -61,7 +61,7 @@ LOCATION="eastus"
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-CustomRoleDefsDeployment-${dateYMD}"
 TEMPLATEFILE="infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.bicepparam"
 
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -78,7 +78,7 @@ LOCATION="chinaeast2"
 dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-CustomRoleDefsDeployment-${dateYMD}"
 TEMPLATEFILE="infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.bicepparam"
 
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
@@ -120,41 +120,7 @@ az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-gr
 ```
 
 
-### PowerShell - BICEPPARAMS
-
-```powershell
-# For Azure global regions
-
-$inputObject = @{
-  DeploymentName        = 'alz-CustomRoleDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  Location              = 'eastus'
-  ManagementGroupId     = 'alz'
-  TemplateFile          = "infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.bicepparam'
-}
-
-New-AzManagementGroupDeployment @inputObject
-```
-OR
-```powershell
-# For Azure China regions
-
-$inputObject = @{
-  DeploymentName        = 'alz-CustomRoleDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  Location              = 'chinaeast2'
-  ManagementGroupId     = 'alz'
-  TemplateFile          = "infra-as-code/bicep/modules/customRoleDefinitions/mc-customRoleDefinitions.bicep"
-  TemplateParameterFile = 'infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.bicepparam'
-}
-
-New-AzManagementGroupDeployment @inputObject
-```
-
-#### Example Deployment Output
-
-![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output")
-
-### PowerShell - JSON
+### PowerShell
 
 ```powershell
 # For Azure global regions

@@ -54,7 +54,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-vnetPeeringDeploy-${dateYMD}"
 GROUP="rg-$TopLevelMGPrefix-vnet-peering-001"
 TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.bicepparam"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
@@ -77,7 +77,7 @@ dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
 NAME="alz-vnetPeeringDeploy-${dateYMD}"
 GROUP="rg-$TopLevelMGPrefix-vnet-peering-001"
 TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.bicepparam"
+PARAMETERS="infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.bicepparam"
 
 # Create Resource Group - optional when using an existing resource group
 az group create \
@@ -135,61 +135,7 @@ az group create \
 az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
-### PowerShell - BICEPPARAMS
-
-```powershell
-# For Azure global regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription
-$LandingZoneSubscriptionId = "[your Landing Zone subscription ID]"
-
-Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
-
-# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
-$TopLevelMGPrefix = "alz"
-
-# Parameters necessary for deployment
-$inputObject = @{
-  DeploymentName        = 'alz-vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = "rg-$TopLevelMGPrefix-vnet-peering-001"
-  TemplateFile          = "infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.bicepparam"
-}
-
-# Create Resource Group - optional when using an existing resource group
-New-AzResourceGroup `
-  -Name $inputObject.ResourceGroupName `
-  -Location eastus
-
-New-AzResourceGroupDeployment @inputObject
-```
-OR
-```powershell
-# For Azure China regions
-# Set your Corp Connected Landing Zone subscription ID as the the current subscription
-$LandingZoneSubscriptionId = "[your Landing Zone subscription ID]"
-
-Select-AzSubscription -SubscriptionId $LandingZoneSubscriptionId
-
-# Create Resource Group - optional when using an existing resource group
-New-AzResourceGroup `
-  -Name $inputObject.ResourceGroupName `
-  -Location chinaeast2
-
-# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
-$TopLevelMGPrefix = "alz"
-
-# Parameters necessary for deployment
-$inputObject = @{
-  DeploymentName        = 'alz-vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = "rg-$TopLevelMGPrefix-vnet-peering-001"
-  TemplateFile          = "ALZ-Bicep/infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.bicepparam"
-}
-
-New-AzResourceGroupDeployment @inputObject
-```
-
-### PowerShell - JSON
+### PowerShell
 
 ```powershell
 # For Azure global regions
