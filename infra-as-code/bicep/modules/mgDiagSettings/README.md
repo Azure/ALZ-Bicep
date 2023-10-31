@@ -17,7 +17,7 @@ The inputs for this module are defined in `parameters/mgDiagSettings.parameters.
 
 > For the  examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
-### Azure CLI
+### Azure CLI - BICEPPARAMS
 
 ```bash
 # For Azure global regions
@@ -39,7 +39,29 @@ az deployment mg create \
   --management-group-id alz
 ```
 
-### PowerShell
+### Azure CLI - JSON
+
+```bash
+# For Azure global regions
+az deployment mg create \
+  --template-file infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep \
+  --parameters @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json \
+  --location eastus \
+  --management-group-id alz
+```
+
+OR
+
+```bash
+# For Azure China regions
+az deployment mg create \
+  --template-file infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep \
+  --parameters @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json \
+  --location chinaeast2 \
+  --management-group-id alz
+```
+
+### PowerShell - BICEPPARAMS
 
 ```powershell
 # For Azure global regions
@@ -57,6 +79,28 @@ OR
 New-AzManagementGroupDeployment `
   -TemplateFile "infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep" `
   -TemplateParameterFile "infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.bicepparam" `
+  -Location "chinaeast2" `
+  -ManagementGroupId "alz"
+```
+
+### PowerShell - JSON
+
+```powershell
+# For Azure global regions
+New-AzManagementGroupDeployment `
+  -TemplateFile "infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep" `
+  -TemplateParameterFile "infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json" `
+  -Location "eastus" `
+  -ManagementGroupId "alz"
+```
+
+OR
+
+```powershell
+# For Azure China regions
+New-AzManagementGroupDeployment `
+  -TemplateFile "infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep" `
+  -TemplateParameterFile "infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json" `
   -Location "chinaeast2" `
   -ManagementGroupId "alz"
 ```
