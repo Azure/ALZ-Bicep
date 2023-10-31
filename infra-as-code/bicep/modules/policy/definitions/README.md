@@ -29,15 +29,17 @@ There are two different sets of deployment; one for deploying to Azure global re
  | -------------- | ---------------------------------- | ------------------------------------------------- |
  | Global regions | customPolicyDefinitions.bicep    | parameters/customPolicyDefinitions.parameters.all.bicepparam |
  | China regions  | mc-customPolicyDefinitions.bicep | parameters/customPolicyDefinitions.parameters.all.bicepparam |
+ | Global regions | customPolicyDefinitions.bicep    | parameters/customPolicyDefinitions.parameters.all.json |
+ | China regions  | mc-customPolicyDefinitions.bicep | parameters/customPolicyDefinitions.parameters.all.json |
 
 In this example, the custom policy definitions and policy set definitions will be deployed to the `alz` management group (the intermediate root management group).
 
-The input parameter file `parameters/customPolicyDefinitions.parameters.all.bicepparam` defines the target management group to which the custom policy definitions will be deployed to. In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation. There is no change in the input parameter file for different Azure clouds because there is no change to the intermediate root management group.
+The input parameter files (BICEPPARAM/JSON) defines the target management group to which the custom policy definitions will be deployed to. In this case, it will be the same management group (i.e. `alz`) as the one specified for the deployment operation. There is no change in the input parameter file for different Azure clouds because there is no change to the intermediate root management group.
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 > If the deployment provisioning state has failed due to policy definitions could not be found, this is often due to a known replication delay. Please re-run the deployment step below, and the deployment should succeed.
 
-### Azure CLI
+### Azure CLI - BICEPPARAMS
 
 ```bash
 # For Azure global regions
@@ -65,7 +67,35 @@ PARAMETERS="@infra-as-code/bicep/modules/policy/definitions/parameters/customPol
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
-### PowerShell
+### Azure CLI - JSON
+
+```bash
+# For Azure global regions
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-PolicyDefsDefaults-${dateYMD}"
+LOCATION="eastus"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
+```
+OR
+```bash
+# For Azure China regions
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-PolicyDefsDefaults-${dateYMD}"
+LOCATION="chinaeast2"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/modules/policy/definitions/mc-customPolicyDefinitions.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
+```
+
+### PowerShell - BICEPPARAMS
 
 ```powershell
 # For Azure global regions
@@ -90,6 +120,35 @@ $inputObject = @{
   ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/modules/policy/definitions/mc-customPolicyDefinitions.bicep"
   TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.bicepparam'
+}
+New-AzManagementGroupDeployment @inputObject
+```
+
+### PowerShell - JSON
+
+```powershell
+# For Azure global regions
+
+$inputObject = @{
+  DeploymentName        = 'alz-PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'eastus'
+  ManagementGroupId     = 'alz'
+  TemplateFile          = "infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json'
+}
+
+New-AzManagementGroupDeployment @inputObject
+```
+OR
+```powershell
+# For Azure China regions
+
+$inputObject = @{
+  DeploymentName        = 'alz-PolicyDefsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'chinaeast2'
+  ManagementGroupId     = 'alz'
+  TemplateFile          = "infra-as-code/bicep/modules/policy/definitions/mc-customPolicyDefinitions.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json'
 }
 New-AzManagementGroupDeployment @inputObject
 ```

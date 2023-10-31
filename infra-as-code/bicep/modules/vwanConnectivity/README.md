@@ -20,7 +20,7 @@ Module deploys the following resources which can be configured by parameters:
 > **NOTE:** Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
 
 <!-- markdownlint-disable -->
-> NOTE: When deploying using the `parameters/vwanConnectivity.parameters.all.bicepparam` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region. Failure to do so will cause these services to be unreachable over private endpoints.
+> NOTE: When deploying using the relevant parameter file you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region. Failure to do so will cause these services to be unreachable over private endpoints.
 > For example, if deploying to East US the following zone entries:
 > - `privatelink.xxxxxx.azmk8s.io`
 > - `privatelink.xxxxxx.backup.windowsazure.com`
@@ -54,10 +54,13 @@ In this example, the resources required for Virtual WAN connectivity will be dep
  | -------------- | ---------------------- | ------------------------------------------------- |
  | Global regions | vwanConnectivity.bicep | parameters/vwanConnectivity.parameters.all.bicepparam    |
  | China regions  | vwanConnectivity.bicep | parameters/mc-vwanConnectivity.parameters.all.bicepparam |
+ | Global regions | vwanConnectivity.bicep | parameters/vwanConnectivity.parameters.all.json    |
+ | China regions  | vwanConnectivity.bicep | parameters/mc-vwanConnectivity.parameters.all.json |
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
-### Azure CLI
+### Azure CLI - BICEPPARAMS
+
 ```bash
 # For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription
@@ -104,7 +107,55 @@ az group create \
 az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
-### PowerShell
+### Azure CLI - JSON
+
+```bash
+# For Azure global regions
+# Set Platform connectivity subscription ID as the the current subscription
+ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
+az account set --subscription $ConnectivitySubscriptionId
+
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-vwanConnectivityDeploy-${dateYMD}"
+GROUP="rg-$TopLevelMGPrefix-vwan-001"
+TEMPLATEFILE="infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json"
+
+# Create Resource Group - optional when using an existing resource group
+az group create \
+  --name $GROUP \
+  --location eastus
+
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
+```
+OR
+```bash
+# For Azure China regions
+# Set Platform connectivity subscription ID as the the current subscription
+ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
+az account set --subscription $ConnectivitySubscriptionId
+
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+TopLevelMGPrefix="alz"
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-vwanConnectivityDeploy-${dateYMD}"
+GROUP="rg-$TopLevelMGPrefix-vwan-001"
+TEMPLATEFILE="infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json"
+
+# Create Resource Group - optional when using an existing resource group
+az group create \
+  --name $GROUP \
+  --location chinaeast2
+
+az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
+```
+
+### PowerShell - BICEPPARAMS
 
 ```powershell
 # For Azure global regions
@@ -131,7 +182,9 @@ New-AzResourceGroup `
 
 New-AzResourceGroupDeployment @inputObject
 ```
+
 OR
+
 ```powershell
 # For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription
@@ -155,7 +208,63 @@ New-AzResourceGroup `
   -Location 'chinaeast2'
 
 New-AzResourceGroupDeployment @inputObject
-  ```
+```
+
+### PowerShell - JSON
+
+```powershell
+# For Azure global regions
+# Set Platform connectivity subscription ID as the the current subscription
+$ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
+
+Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'alz-vwanConnectivityDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-vwan-001"
+  TemplateFile          = "infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json"
+}
+
+
+New-AzResourceGroup `
+  -Name $inputObject.ResourceGroupName `
+  -Location 'EastUs'
+
+New-AzResourceGroupDeployment @inputObject
+```
+
+OR
+
+```powershell
+# For Azure China regions
+# Set Platform connectivity subscription ID as the the current subscription
+$ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
+
+Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+
+# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+$TopLevelMGPrefix = "alz"
+
+# Parameters necessary for deployment
+$inputObject = @{
+  DeploymentName        = 'alz-vwanConnectivityDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  ResourceGroupName     = "rg-$TopLevelMGPrefix-vwan-001"
+  TemplateFile          = "infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
+  TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json"
+}
+
+New-AzResourceGroup `
+  -Name $inputObject.ResourceGroupName `
+  -Location 'chinaeast2'
+
+New-AzResourceGroupDeployment @inputObject
+```
+
 ## Example Output in Azure global regions
 
 ![Example Deployment Output](media/exampleDeploymentOutputConnectivity.png "Example Deployment Output in Azure global regions")

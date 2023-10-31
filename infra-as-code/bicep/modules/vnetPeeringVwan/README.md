@@ -29,10 +29,11 @@ In this example, the remote spoke Vnet will be peered with the Vwan Virtual Hub 
  | Azure Cloud    | Bicep template      | Input parameters file                    |
  | -------------- | ------------------- | ---------------------------------------- |
  | All  regions | vnetPeeringVwan.bicep | parameters/vnetPeeringVwan.parameters.all.bicepparam    |
+ | All  regions | vnetPeeringVwan.bicep | parameters/vnetPeeringVwan.parameters.all.json    |
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
-### Azure CLI
+### Azure CLI - BICEPPARAMS
 
 ```bash
 # For Azure global regions
@@ -64,7 +65,39 @@ PARAMETERS="@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringV
 az deployment sub create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
-### PowerShell
+### Azure CLI - JSON
+
+```bash
+# For Azure global regions
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription
+ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
+az account set --subscription $ConnectivitySubscriptionId
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-vnetPeeringVwanDeployment-${dateYMD}"
+LOCATION="eastus"
+TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json"
+
+az deployment sub create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
+```
+OR
+```bash
+# For Azure China regions
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription
+ConnectivitySubscriptionId="[your Landing Zone subscription ID]"
+az account set --subscription $ConnectivitySubscriptionId
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-vnetPeeringVwanDeployment-${dateYMD}"
+LOCATION="chinaeast2"
+TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json"
+
+az deployment sub create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
+```
+
+### PowerShell - BICEPPARAMS
 
 ```powershell
 # For Azure global regions
@@ -100,6 +133,44 @@ $inputObject = @{
 
 New-AzDeployment @inputObject
 ```
+
+### PowerShell - JSON
+
+```powershell
+# For Azure global regions
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription
+$ConnectivitySubscriptionId = "[your Landing Zone subscription ID]"
+
+Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+
+$inputObject = @{
+  DeploymentName        = 'alz-VnetPeeringWanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'eastus'
+  TemplateFile          = "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json'
+}
+
+New-AzDeployment @inputObject
+
+```
+OR
+```powershell
+# For Azure China regions
+# Set your Corp Connected Landing Zone subscription ID as the the current subscription
+$ConnectivitySubscriptionId = "[your Landing Zone subscription ID]"
+
+Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+
+$inputObject = @{
+  DeploymentName        = 'alz-VnetPeeringWanDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'chinaeast2'
+  TemplateFile          = "infra-as-code/bicep/modules/vnetPeeringVwan/vnetPeeringVwan.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/vnetPeeringVwan/parameters/vnetPeeringVwan.parameters.all.json'
+}
+
+New-AzDeployment @inputObject
+```
+
 ## Example Output in Azure global regions
 
 ![Example Deployment Output](media/exampleDeploymentOutput.png "Example Deployment Output in Azure global regions")

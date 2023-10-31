@@ -13,11 +13,11 @@ This module is used by the Hub Peered Spoke orchestration module to create virtu
 
 ## Deployment
 
-The inputs for this module are defined in `parameters/privateDnsZoneLinks.parameters.all.bicepparam`.
+The inputs for this module are defined in the relevant parameter file (BICEPPARAM/JSON).
 
 > For the  examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
-### Azure CLI
+### Azure CLI - BICEPPARAMS
 
 ```bash
 # For Azure global regions
@@ -37,7 +37,27 @@ az deployment rg create \
   --location chinaeast2
   ```
 
-### PowerShell
+  ### Azure CLI - JSON
+
+```bash
+# For Azure global regions
+az deployment rg create \
+  --template-file infra-as-code/bicep/modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep \
+  --parameters @infra-as-code/bicep/modules/privateDnsZoneLinks/parameters/privateDnsZoneLinks.parameters.all.json \
+  --location eastus
+```
+
+OR
+
+```bash
+# For Azure China regions
+az deployment rg create \
+  --template-file infra-as-code/bicep/modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep \
+  --parameters @infra-as-code/bicep/modules/privateDnsZoneLinks/parameters/privateDnsZoneLinks.parameters.all.json \
+  --location chinaeast2
+  ```
+
+### PowerShell - BICEPPARAMS
 
 ```powershell
 # For Azure global regions
@@ -54,6 +74,26 @@ OR
 New-AzResourceGroupDeployment `
   -TemplateFile "infra-as-code/bicep/modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep" `
   -TemplateParameterFile "infra-as-code/bicep/modules/privateDnsZoneLinks/parameters/privateDnsZoneLinks.parameters.all.bicepparam" `
+  -Location "chinaeast2"
+```
+
+### PowerShell - JSON
+
+```powershell
+# For Azure global regions
+New-AzResourceGroupDeployment `
+  -TemplateFile "infra-as-code/bicep/modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep" `
+  -TemplateParameterFile "infra-as-code/bicep/modules/privateDnsZoneLinks/parameters/privateDnsZoneLinks.parameters.all.json" `
+  -Location "eastus"
+```
+
+OR
+
+```powershell
+# For Azure China regions
+New-AzResourceGroupDeployment `
+  -TemplateFile "infra-as-code/bicep/modules/privateDnsZoneLinks/privateDnsZoneLinks.bicep" `
+  -TemplateParameterFile "infra-as-code/bicep/modules/privateDnsZoneLinks/parameters/privateDnsZoneLinks.parameters.all.json" `
   -Location "chinaeast2"
 ```
 

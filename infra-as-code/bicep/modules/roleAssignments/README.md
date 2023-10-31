@@ -96,11 +96,11 @@ Connect-AzureAD
 
 ## Deployment
 
-In this example, the built-in Reader role will be assigned to a Service Principal account at the `alz-platform` management group scope.  The inputs for this module are defined in `parameters/roleAssignmentManagementGroup.*.parameters.all.bicepparam`.
+In this example, the built-in Reader role will be assigned to a Service Principal account at the `alz-platform` management group scope.  The inputs for this module are defined in the relevant parameter file (BICEPPARAM/JSON).
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
-### Azure CLI
+### Azure CLI - BICEPPARAMS
 
 ```bash
 # For Azure global regions
@@ -128,7 +128,35 @@ PARAMETERS="@infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignme
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
-### PowerShell
+### Azure CLI - JSON
+
+```bash
+# For Azure global regions
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-RoleAssignmentsDeployment-${dateYMD}"
+LOCATION="eastus"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
+```
+OR
+```bash
+# For Azure China regions
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-RoleAssignmentsDeployment-${dateYMD}"
+LOCATION="chinaeast2"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
+```
+
+### PowerShell - BICEPPARAMS
 
 ```powershell
 # For Azure global regions
@@ -153,6 +181,36 @@ $inputObject = @{
   ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
   TemplateParameterFile = 'infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.bicepparam'
+}
+
+New-AzManagementGroupDeployment @inputObject
+```
+
+### PowerShell - JSON
+
+```powershell
+# For Azure global regions
+
+$inputObject = @{
+  DeploymentName        = 'alz-RoleAssignmentsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'eastus'
+  ManagementGroupId     = 'alz'
+  TemplateFile          = "infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json'
+}
+
+New-AzManagementGroupDeployment @inputObject
+```
+OR
+```powershell
+# For Azure China regions
+
+$inputObject = @{
+  DeploymentName        = 'alz-RoleAssignmentsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'chinaeast2'
+  ManagementGroupId     = 'alz'
+  TemplateFile          = "infra-as-code/bicep/modules/roleAssignments/roleAssignmentManagementGroup.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/roleAssignments/parameters/roleAssignmentManagementGroup.servicePrincipal.parameters.all.json'
 }
 
 New-AzManagementGroupDeployment @inputObject

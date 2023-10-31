@@ -13,7 +13,7 @@ This module enables the supported Diagnostic Settings categories on a Management
 
 ## Deployment
 
-The inputs for this module are defined in `parameters/mgDiagSettings.parameters.all.bicepparam`. The Diagnostic Settings resource will be named toLa but can be changed in the module if desired.
+The inputs for this module are defined in the respective parameter file (BICEPPARAM/JSON). The Diagnostic Settings resource will be named toLa but can be changed in the module if desired.
 
 > For the  examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 

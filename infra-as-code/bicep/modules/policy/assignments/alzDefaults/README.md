@@ -24,7 +24,8 @@ The module does not generate any outputs.
 > However, if you later do decide to deploy an DDoS Network Protection Plan, you will need to remember to come back and update the parameter `parDdosProtectionPlanId` with the resource ID of the DDoS Network Protection Plan to ensure the policy is applied to the relevant Management Groups. You can then use a policy [remediation task](https://docs.microsoft.com/azure/governance/policy/how-to/remediate-resources) to bring all non-compliant VNETs back into compliance, once a [compliance scan](https://docs.microsoft.com/azure/governance/policy/how-to/get-compliance-data#evaluation-triggers) has taken place.
 <!-- markdownlint-restore -->
 
-### Azure CLI
+### Azure CLI - BICEPPARAMS
+
 ```bash
 # For Azure global regions
 
@@ -51,7 +52,35 @@ PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/alzDefaults/paramete
 az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
 
-### PowerShell
+### Azure CLI - JSON
+
+```bash
+# For Azure global regions
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-alzPolicyAssignmentDefaults-${dateYMD}"
+LOCATION="eastus"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
+```
+OR
+```bash
+# For Azure China regions
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-alzPolicyAssignmentDefaults-${dateYMD}"
+LOCATION="chinaeast2"
+MGID="alz"
+TEMPLATEFILE="infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json"
+
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS
+```
+
+### PowerShell - BICEPPARAMS
 
 ```powershell
 # For Azure global regions
@@ -76,6 +105,36 @@ $inputObject = @{
   ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep"
   TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/mc-alzDefaultPolicyAssignments.parameters.all.bicepparam'
+}
+
+New-AzManagementGroupDeployment @inputObject
+```
+
+### PowerShell - JSON
+
+```powershell
+# For Azure global regions
+
+$inputObject = @{
+  DeploymentName        = 'alz-alzPolicyAssignmentDefaultsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'eastus'
+  ManagementGroupId     = 'alz'
+  TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json'
+}
+
+New-AzManagementGroupDeployment @inputObject
+```
+OR
+```powershell
+# For Azure China regions
+
+$inputObject = @{
+  DeploymentName        = 'alzPolicyAssignmentDefaultsDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'chinaeast2'
+  ManagementGroupId     = 'alz'
+  TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/mc-alzDefaultPolicyAssignments.parameters.all.json'
 }
 
 New-AzManagementGroupDeployment @inputObject
