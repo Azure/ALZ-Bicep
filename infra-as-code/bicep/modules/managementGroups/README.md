@@ -142,7 +142,7 @@ In this example, the management groups are created at the `Tenant Root Group` th
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
-### Azure CLI - `managementGroups.bicep`
+### Azure CLI - `managementGroups.bicep` - BICEPPARAMS
 
 ```bash
 # For Azure global regions
@@ -164,6 +164,32 @@ NAME="alz-MGDeployment-${dateYMD}"
 LOCATION="chinaeast2"
 TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
 PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.bicepparam"
+
+az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
+```
+
+### Azure CLI - `managementGroups.bicep` - JSON
+
+```bash
+# For Azure global regions
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-MGDeployment-${dateYMD}"
+LOCATION="eastus"
+TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
+
+az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
+```
+OR
+```bash
+# For Azure China regions
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-MGDeployment-${dateYMD}"
+LOCATION="chinaeast2"
+TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
+PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
 
 az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
