@@ -37,7 +37,7 @@ az deployment rg create \
   --location chinaeast2
   ```
 
-  ### Azure CLI - JSON
+### Azure CLI - JSON
 
 ```bash
 # For Azure global regions
