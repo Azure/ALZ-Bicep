@@ -148,9 +148,9 @@ In order to setup the Accelerator framework with the production ready Azure DevO
 
     Various prompts will be displayed which will be used to replace parameter values as well as to create an environment variables file (.env) that will be used by the Azure DevOps pipelines.
 
-1. Depending upon your preferred [network topology deployment](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow#network-topology-deployment),  remove the associated workflow file for each deployment model
-    - Traditional VNet Hub and Spoke = .azuredevops\workflows\alz-bicep-4a-hubspoke.yml
-    - Virtual WAN = .azuredevops\workflows\alz-bicep-4b-vwan.yml
+1. Depending upon your preferred [network topology deployment](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow#network-topology-deployment),  remove the associated pipeline file for each deployment model
+    - Traditional VNet Hub and Spoke = .azuredevops\pipelines\alz-bicep-4a-hubspoke.yml
+    - Virtual WAN = .azuredevops\pipelines\alz-bicep-4b-vwan.yml
 
     > **Note:**
     > These workflow files and associated deployment scripts will be programatically removed in the future.
