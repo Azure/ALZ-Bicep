@@ -7,6 +7,7 @@ Custom Role Definitions for ALZ Bicep
 Parameter name | Required | Description
 -------------- | -------- | -----------
 parAssignableScopeManagementGroupId | No       | The management group scope to which the role can be assigned. This management group ID will be used for the assignableScopes property in the role definition.
+parAdditionalRoles | No       | Additional role to create
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parAssignableScopeManagementGroupId
@@ -16,6 +17,14 @@ parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment t
 The management group scope to which the role can be assigned. This management group ID will be used for the assignableScopes property in the role definition.
 
 - Default value: `alz`
+
+### parAdditionalRoles
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Additional role to create
+
+- Default value: ` `
 
 ### parTelemetryOptOut
 
@@ -48,6 +57,30 @@ outRolesSecurityOperationsRoleId | string |
     "parameters": {
         "parAssignableScopeManagementGroupId": {
             "value": "alz"
+        },
+        "parAdditionalRoles": {
+            "value": [
+                {
+                    "name": "[alz] IP address writer",
+                    "actions": [
+                        "Microsoft.Network/publicIPAddresses/write"
+                    ]
+                },
+                {
+                    "name": "[alz] JIT Contributor",
+                    "description": "Configure or edit a JIT policy for VMs",
+                    "actions": [
+                        "Microsoft.Security/locations/jitNetworkAccessPolicies/write",
+                        "Microsoft.Compute/virtualMachines/write",
+                        "Microsoft.Security/locations/jitNetworkAccessPolicies/read",
+                        "Microsoft.Security/locations/jitNetworkAccessPolicies/initiate/action",
+                        "Microsoft.Security/policies/read",
+                        "Microsoft.Security/pricings/read",
+                        "Microsoft.Compute/virtualMachines/read",
+                        "Microsoft.Network/*/read"
+                    ]
+                }
+            ]
         },
         "parTelemetryOptOut": {
             "value": false
