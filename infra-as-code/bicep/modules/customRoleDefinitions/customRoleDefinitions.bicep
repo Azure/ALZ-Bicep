@@ -115,3 +115,8 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdMan
   name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
   params: {}
 }
+
+output outRolesSubscriptionOwnerRoleId string = modRolesSubscriptionOwnerRole.outputs.outRoleDefinitionId
+output outRolesApplicationOwnerRoleId string = modRolesApplicationOwnerRole.outputs.outRoleDefinitionId
+output outRolesNetworkManagementRoleId string = modRolesNetworkManagementRole.outputs.outRoleDefinitionId
+output outRolesSecurityOperationsRoleId string = modRolesSecurityOperationsRole.outputs.outRoleDefinitionId
