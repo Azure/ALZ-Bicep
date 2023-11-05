@@ -143,7 +143,7 @@ metadata description = 'ALZ Bicep Module used as an example'
 type typExampleNonNegativeInteger = int
 
 // PARAMETERS
-@sys.description('Example description for parameter.') // Avoid describing default values 
+@sys.description('Example description for parameter.') // Avoid describing default values
 param parExampleResourceGroupNamePrefix string = 'TEST'
 
 
