@@ -47,7 +47,7 @@ param parLocation string = resourceGroup().location
 @sys.description('Prefix value which will be prepended to all resource names.')
 param parCompanyPrefix string = 'alz'
 
-@sys.description('Azure Firewall Tier associated with the Firewall to deploy. If not set, the default value is Standard.')
+@sys.description('Azure Firewall Tier associated with the Firewall to deploy.')
 @allowed([
   'Basic'
   'Standard'
@@ -55,7 +55,7 @@ param parCompanyPrefix string = 'alz'
 ])
 param parAzFirewallTier string = 'Standard'
 
-@sys.description('The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.')
+@sys.description('The Azure Firewall Threat Intelligence Mode.')
 @allowed([
   'Alert'
   'Deny'
