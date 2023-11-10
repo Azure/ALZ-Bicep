@@ -17,7 +17,7 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @maxLength(10)
 param parTopLevelManagementGroupSuffix string = ''
 
-@sys.description('Subscription Id to the Virtual Network Hub object. Default: Empty String')
+@sys.description('Subscription Id to the Virtual Network Spoke object. Default: Empty String')
 param parPeeredVnetSubscriptionId string = ''
 
 @sys.description('Array of Tags to be applied to all resources in module. Default: Empty Object')
