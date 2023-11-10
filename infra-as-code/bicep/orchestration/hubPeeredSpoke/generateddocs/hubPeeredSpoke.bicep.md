@@ -9,7 +9,7 @@ Parameter name | Required | Description
 parLocation    | No       | The region to deploy all resources into.
 parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
-parPeeredVnetSubscriptionId | No       | Subscription Id to the Virtual Network Hub object. Default: Empty String
+parPeeredVnetSubscriptionId | No       | Subscription Id to the Virtual Network Spoke object. Default: Empty String
 parTags        | No       | Array of Tags to be applied to all resources in module. Default: Empty Object
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 parPeeredVnetSubscriptionMgPlacement | No       | The Management Group Id to place the subscription in. Default: Empty String
@@ -55,7 +55,7 @@ Optional suffix for the management group hierarchy. This suffix will be appended
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Subscription Id to the Virtual Network Hub object. Default: Empty String
+Subscription Id to the Virtual Network Spoke object. Default: Empty String
 
 ### parTags
 
