@@ -1,9 +1,9 @@
 name: ALZ-Bicep-4A-HubSpoke
 
 trigger:
-# YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
-# If you use Azure Repos Git, you can configure a branch policy for build validation to trigger your build pipeline for validation.
-# https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies#build-validation
+  # YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
+  # If you use Azure Repos Git, you can configure a branch policy for build validation to trigger your build pipeline for validation.
+  # https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies#build-validation
   branches:
     include:
       - "main"
@@ -11,6 +11,7 @@ trigger:
     include:
       - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
       - "config/custom-parameters/hubNetworking.parameters.all.json"
+      - "config/custom-parameters/hubPeeredSpoke.*.parameters.all.json"
 pr:
   branches:
     include:
@@ -19,6 +20,7 @@ pr:
     include:
       - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
       - "config/custom-parameters/hubNetworking.parameters.all.json"
+      - "config/custom-parameters/hubPeeredSpoke.*.parameters.all.json"
 
 variables:
   ENV_FILE: ".env"
@@ -70,3 +72,13 @@ jobs:
           ScriptType: "InlineScript"
           Inline: |
             .\pipeline-scripts\Deploy-ALZHub-HubAndSpoke.ps1
+
+      - task: AzurePowerShell@5
+        displayName: "Spoke (Hub-and-Spoke) Deployment"
+        inputs:
+          azureSubscription: ${{ variables.SERVICE_CONNECTION_NAME }}
+          azurePowerShellVersion: "LatestVersion"
+          pwsh: true
+          ScriptType: "InlineScript"
+          Inline: |
+            .\pipeline-scripts\Deploy-ALZSpoke-HubAndSpoke.ps1

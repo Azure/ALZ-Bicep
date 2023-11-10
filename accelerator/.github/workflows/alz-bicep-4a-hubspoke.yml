@@ -7,12 +7,14 @@ on:
     paths:
       - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
       - "config/custom-parameters/hubNetworking.parameters.all.json"
+      - "config/custom-parameters/hubPeeredSpoke.*.parameters.all.json"
   pull_request:
     branches:
       - "main"
     paths:
       - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
       - "config/custom-parameters/hubNetworking.parameters.all.json"
+      - "config/custom-parameters/hubPeeredSpoke.*.parameters.all.json"
   workflow_dispatch:
 
 permissions:
@@ -64,4 +66,11 @@ jobs:
         with:
           inlineScript: |
             .\pipeline-scripts\Deploy-ALZHub-HubAndSpoke.ps1
+          azPSVersion: "latest"
+
+      - name: "Spoke (Hub-and-Spoke) Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZSpoke-HubAndSpoke.ps1
           azPSVersion: "latest"
