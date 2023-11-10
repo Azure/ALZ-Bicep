@@ -38,6 +38,10 @@ param (
   $assignmentsTxtFileName = "_policyAssignmentsBicepInput.txt"
 )
 
+# This script relies on a custom set of classes and functions
+# defined within the [ALZ-PowerShell-Module](https://github.com/Azure/Alz-powershell-module).
+Install-Module -Name ALZ -Scope CurrentUser -ErrorAction Stop
+
 # Line Endings function to be used in three functions below
 function Update-FileLineEndingType {
   [CmdletBinding(SupportsShouldProcess)]
