@@ -182,7 +182,7 @@ TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroupsScope
 PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
 MGID="alz"
 
-az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS --management-group-id $MGID
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS --management-group-id $MGID
 ```
 OR
 ```bash
@@ -195,7 +195,7 @@ TEMPLATEFILE="infra-as-code/bicep/modules/managementGroups/managementGroupsScope
 PARAMETERS="@infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json"
 MGID="alz"
 
-az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS --management-group-id $MGID
+az deployment mg create --name ${NAME:0:63} --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS --management-group-id $MGID
 ```
 
 ### PowerShell - `managementGroups.bicep`
