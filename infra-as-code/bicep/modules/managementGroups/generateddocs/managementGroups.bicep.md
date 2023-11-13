@@ -6,7 +6,7 @@ ALZ Bicep Module to set up Management Group structure
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy. This management group will be created as part of the deployment.
+parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy. This management group will be created as part of the deployment.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 parTopLevelManagementGroupDisplayName | No       | Display name for top level management group. This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter.
 parTopLevelManagementGroupParentId | No       | Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group.
@@ -21,7 +21,7 @@ parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment t
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix for the management group hierarchy. This management group will be created as part of the deployment.
+Prefix used for the management group hierarchy. This management group will be created as part of the deployment.
 
 - Default value: `alz`
 

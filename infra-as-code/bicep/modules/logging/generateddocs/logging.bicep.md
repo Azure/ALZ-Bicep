@@ -9,14 +9,18 @@ Parameter name | Required | Description
 parLogAnalyticsWorkspaceName | No       | Log Analytics Workspace name.
 parLogAnalyticsWorkspaceLocation | No       | Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
 parLogAnalyticsWorkspaceSkuName | No       | Log Analytics Workspace sku name.
+parLogAnalyticsWorkspaceCapacityReservationLevel | No       | Log Analytics Workspace Capacity Reservation Level. Only used if parLogAnalyticsWorkspaceSkuName is set to CapacityReservation.
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
 parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace.
+parLogAnalyticsWorkspaceLinkAutomationAccount | No       | Log Analytics Workspace should be linked with the automation account.
 parAutomationAccountName | No       | Automation account name.
 parAutomationAccountLocation | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
 parAutomationAccountUseManagedIdentity | No       | Automation Account - use managed identity.
+parAutomationAccountPublicNetworkAccess | No       | Automation Account - Public network access.
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parAutomationAccountTags | No       | Tags you would like to be applied to Automation Account.
 parLogAnalyticsWorkspaceTags | No       | Tags you would like to be applied to Log Analytics Workspace.
+parUseSentinelClassicPricingTiers | No       | Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
 ### parLogAnalyticsWorkspaceName
@@ -45,6 +49,16 @@ Log Analytics Workspace sku name.
 
 - Allowed values: `CapacityReservation`, `Free`, `LACluster`, `PerGB2018`, `PerNode`, `Premium`, `Standalone`, `Standard`
 
+### parLogAnalyticsWorkspaceCapacityReservationLevel
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Log Analytics Workspace Capacity Reservation Level. Only used if parLogAnalyticsWorkspaceSkuName is set to CapacityReservation.
+
+- Default value: `100`
+
+- Allowed values: `100`, `200`, `300`, `400`, `500`, `1000`, `2000`, `5000`
+
 ### parLogAnalyticsWorkspaceLogRetentionInDays
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -62,6 +76,14 @@ Solutions that will be added to the Log Analytics Workspace.
 - Default value: `AgentHealthAssessment AntiMalware ChangeTracking Security SecurityInsights SQLAdvancedThreatProtection SQLVulnerabilityAssessment SQLAssessment Updates VMInsights`
 
 - Allowed values: `AgentHealthAssessment`, `AntiMalware`, `ChangeTracking`, `Security`, `SecurityInsights`, `ServiceMap`, `SQLAdvancedThreatProtection`, `SQLVulnerabilityAssessment`, `SQLAssessment`, `Updates`, `VMInsights`
+
+### parLogAnalyticsWorkspaceLinkAutomationAccount
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Log Analytics Workspace should be linked with the automation account.
+
+- Default value: `True`
 
 ### parAutomationAccountName
 
@@ -87,6 +109,14 @@ Automation Account - use managed identity.
 
 - Default value: `True`
 
+### parAutomationAccountPublicNetworkAccess
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Automation Account - Public network access.
+
+- Default value: `True`
+
 ### parTags
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -108,6 +138,14 @@ Tags you would like to be applied to Automation Account.
 Tags you would like to be applied to Log Analytics Workspace.
 
 - Default value: `[parameters('parTags')]`
+
+### parUseSentinelClassicPricingTiers
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.
+
+- Default value: `False`
 
 ### parTelemetryOptOut
 
@@ -149,6 +187,9 @@ outAutomationAccountId | string |
         "parLogAnalyticsWorkspaceSkuName": {
             "value": "PerGB2018"
         },
+        "parLogAnalyticsWorkspaceCapacityReservationLevel": {
+            "value": 100
+        },
         "parLogAnalyticsWorkspaceLogRetentionInDays": {
             "value": 365
         },
@@ -166,6 +207,9 @@ outAutomationAccountId | string |
                 "VMInsights"
             ]
         },
+        "parLogAnalyticsWorkspaceLinkAutomationAccount": {
+            "value": true
+        },
         "parAutomationAccountName": {
             "value": "alz-automation-account"
         },
@@ -173,6 +217,9 @@ outAutomationAccountId | string |
             "value": "[resourceGroup().location]"
         },
         "parAutomationAccountUseManagedIdentity": {
+            "value": true
+        },
+        "parAutomationAccountPublicNetworkAccess": {
             "value": true
         },
         "parTags": {
@@ -183,6 +230,9 @@ outAutomationAccountId | string |
         },
         "parLogAnalyticsWorkspaceTags": {
             "value": "[parameters('parTags')]"
+        },
+        "parUseSentinelClassicPricingTiers": {
+            "value": false
         },
         "parTelemetryOptOut": {
             "value": false

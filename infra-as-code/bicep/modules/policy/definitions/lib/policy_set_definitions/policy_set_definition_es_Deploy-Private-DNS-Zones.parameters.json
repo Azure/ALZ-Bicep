@@ -150,6 +150,32 @@
       }
     }
   },
+  "DINE-Private-DNS-Azure-Databrics-Browser-AuthN": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureDatabricksPrivateDnsZoneId')]"
+      },
+      "groupId": {
+        "value": "browser_authentication"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Databrics-UI-Api": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureDatabricksPrivateDnsZoneId')]"
+      },
+      "groupId": {
+        "value": "databricks_ui_api"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
   "DINE-Private-DNS-Azure-DataFactory": {
     "parameters": {
       "privateDnsZoneId": {
@@ -223,7 +249,7 @@
   "DINE-Private-DNS-Azure-File-Sync": {
     "parameters": {
       "privateDnsZoneId": {
-        "value": "[[parameters('azureFileprivateDnsZoneId')]"
+        "value": "[[parameters('azureFilePrivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"

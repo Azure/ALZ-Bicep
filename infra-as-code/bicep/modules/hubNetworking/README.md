@@ -35,6 +35,31 @@ Module deploys the following resources:
 >
 > See child module, [`privateDnsZones.bicep` docs](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/privateDnsZones#dns-zones) for more info on how this works
 
+To configure P2S VPN connections edit the vpnClientConfiguration value in the `parVpnGatewayConfig` parameter.
+
+AAD Authentication Example:
+
+```bicep
+"vpnClientConfiguration": {
+  "vpnClientAddressPool": {
+    "addressPrefixes": [
+      "172.16.0.0/24"
+    ]
+  },
+  "vpnClientProtocols": [
+    "OpenVPN"
+  ],
+  "vpnAuthenticationTypes": [
+    "AAD"
+  ],
+  "aadTenant": "https://login.microsoftonline.com/{AzureAD TenantID}",
+  "aadAudience": "41b23e61-6c1e-4545-b367-cd054e0ed4b4",
+  "aadIssuer": "https://sts.windows.net/{AzureAD TenantID}/"
+}
+```
+
+Replace the values for `aadTenant`, `aadAudience`, and `aadIssuer` as documented [here](https://learn.microsoft.com/en-us/azure/vpn-gateway/openvpn-azure-ad-tenant#enable-authentication)
+
 ## Outputs
 
 The module will generate the following outputs:
@@ -44,7 +69,8 @@ The module will generate the following outputs:
 | outAzFirewallPrivateIp    | string | 192.168.100.1                                                                                                                                                                                            |
 | outAzFirewallName         | string | MyAzureFirewall                                                                                                                                                                                          |
 | outDdosPlanResourceId     | string | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan                                                      |
-| outPrivateDnsZones        | array  | `["name": "privatelink.azurecr.io", "id": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/net-lz-spk-eastus-rg/providers/Microsoft.Network/privateDnsZones/privatelink.azurecr.io"]` |
+| outPrivateDnsZones        | array  | `[{"name":"privatelink.azurecr.io","id":"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/net-lz-spk-eastus-rg/providers/Microsoft.Network/privateDnsZones/privatelink.azurecr.io"},{"name":"privatelink.azurewebsites.net","id":"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/net-lz-spk-eastus-rg/providers/Microsoft.Network/privateDnsZones/privatelink.azurewebsites.net"}]` |
+| outPrivateDnsZonesNames  | array  | `["privatelink.azurecr.io", "privatelink.azurewebsites.net"]` |
 | outHubVirtualNetworkName  | array  | MyHubVirtualNetworkName |
 | outHubVirtualNetworkId    | array  | /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/my-hub-vnet   |
 

@@ -24,7 +24,7 @@ param parTags object = {}
 @sys.description('The ID of the existing management group where the subscription will be placed. Also known as its parent management group. (Optional)')
 param parManagementGroupId string = ''
 
-@sys.description('The object ID of a responsible user, AAD group or service principal. (Optional)')
+@sys.description('The object ID of a responsible user, Microsoft Entra group or service principal. (Optional)')
 param parSubscriptionOwnerId string = ''
 
 @allowed([
@@ -42,8 +42,8 @@ resource resSubscription 'Microsoft.Subscription/aliases@2021-10-01' = {
   properties: {
     additionalProperties: {
       tags: parTags
-      managementGroupId: empty(parManagementGroupId) ? json('null') : managementGroup(parManagementGroupId)
-      subscriptionOwnerId: empty(parSubscriptionOwnerId) ? json('null') : parSubscriptionOwnerId
+      managementGroupId: empty(parManagementGroupId) ? null : contains(toLower(parManagementGroupId), toLower('/providers/Microsoft.Management/managementGroups/')) ? parManagementGroupId : '/providers/Microsoft.Management/managementGroups/${parManagementGroupId}'
+      subscriptionOwnerId: empty(parSubscriptionOwnerId) ? null : parSubscriptionOwnerId
       subscriptionTenantId: parTenantId
     }
     displayName: parSubscriptionName

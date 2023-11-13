@@ -3,7 +3,7 @@ targetScope = 'tenant'
 metadata name = 'ALZ Bicep - Management Groups Module'
 metadata description = 'ALZ Bicep Module to set up Management Group structure'
 
-@sys.description('Prefix for the management group hierarchy. This management group will be created as part of the deployment.')
+@sys.description('Prefix used for the management group hierarchy. This management group will be created as part of the deployment.')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
@@ -102,20 +102,20 @@ var varDecommissionedMg = {
 var varCuaid = '9b7965a0-d77c-41d6-85ef-ec3dfea4845b'
 
 // Level 1
-resource resTopLevelMg 'Microsoft.Management/managementGroups@2021-04-01' = {
+resource resTopLevelMg 'Microsoft.Management/managementGroups@2023-04-01' = {
   name: '${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}'
   properties: {
     displayName: parTopLevelManagementGroupDisplayName
     details: {
       parent: {
-        id: empty(parTopLevelManagementGroupParentId) ? '/providers/Microsoft.Management/managementGroups/${tenant().tenantId}' : parTopLevelManagementGroupParentId
+        id: empty(parTopLevelManagementGroupParentId) ? '/providers/Microsoft.Management/managementGroups/${tenant().tenantId}' : contains(toLower(parTopLevelManagementGroupParentId), toLower('/providers/Microsoft.Management/managementGroups/')) ? parTopLevelManagementGroupParentId : '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupParentId}'
       }
     }
   }
 }
 
 // Level 2
-resource resPlatformMg 'Microsoft.Management/managementGroups@2021-04-01' = {
+resource resPlatformMg 'Microsoft.Management/managementGroups@2023-04-01' = {
   name: varPlatformMg.name
   properties: {
     displayName: varPlatformMg.displayName
@@ -127,7 +127,7 @@ resource resPlatformMg 'Microsoft.Management/managementGroups@2021-04-01' = {
   }
 }
 
-resource resLandingZonesMg 'Microsoft.Management/managementGroups@2021-04-01' = {
+resource resLandingZonesMg 'Microsoft.Management/managementGroups@2023-04-01' = {
   name: varLandingZoneMg.name
   properties: {
     displayName: varLandingZoneMg.displayName
@@ -139,7 +139,7 @@ resource resLandingZonesMg 'Microsoft.Management/managementGroups@2021-04-01' = 
   }
 }
 
-resource resSandboxMg 'Microsoft.Management/managementGroups@2021-04-01' = {
+resource resSandboxMg 'Microsoft.Management/managementGroups@2023-04-01' = {
   name: varSandboxMg.name
   properties: {
     displayName: varSandboxMg.displayName
@@ -151,7 +151,7 @@ resource resSandboxMg 'Microsoft.Management/managementGroups@2021-04-01' = {
   }
 }
 
-resource resDecommissionedMg 'Microsoft.Management/managementGroups@2021-04-01' = {
+resource resDecommissionedMg 'Microsoft.Management/managementGroups@2023-04-01' = {
   name: varDecommissionedMg.name
   properties: {
     displayName: varDecommissionedMg.displayName
@@ -164,7 +164,7 @@ resource resDecommissionedMg 'Microsoft.Management/managementGroups@2021-04-01' 
 }
 
 // Level 3 - Child Management Groups under Landing Zones MG
-resource resLandingZonesChildMgs 'Microsoft.Management/managementGroups@2021-04-01' = [for mg in items(varLandingZoneMgChildrenUnioned): if (!empty(varLandingZoneMgChildrenUnioned)) {
+resource resLandingZonesChildMgs 'Microsoft.Management/managementGroups@2023-04-01' = [for mg in items(varLandingZoneMgChildrenUnioned): if (!empty(varLandingZoneMgChildrenUnioned)) {
   name: '${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}${parTopLevelManagementGroupSuffix}'
   properties: {
     displayName: mg.value.displayName
@@ -177,7 +177,7 @@ resource resLandingZonesChildMgs 'Microsoft.Management/managementGroups@2021-04-
 }]
 
 //Level 3 - Child Management Groups under Platform MG
-resource resPlatformChildMgs 'Microsoft.Management/managementGroups@2021-04-01' = [for mg in items(varPlatformMgChildrenUnioned): if (!empty(varPlatformMgChildrenUnioned)) {
+resource resPlatformChildMgs 'Microsoft.Management/managementGroups@2023-04-01' = [for mg in items(varPlatformMgChildrenUnioned): if (!empty(varPlatformMgChildrenUnioned)) {
   name: '${parTopLevelManagementGroupPrefix}-platform-${mg.key}${parTopLevelManagementGroupSuffix}'
   properties: {
     displayName: mg.value.displayName
@@ -203,7 +203,7 @@ output outPlatformManagementGroupId string = resPlatformMg.id
 output outPlatformChildrenManagementGroupIds array = [for mg in items(varPlatformMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-platform-${mg.key}${parTopLevelManagementGroupSuffix}']
 
 output outLandingZonesManagementGroupId string = resLandingZonesMg.id
-output outLandingZoneChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}${parTopLevelManagementGroupSuffix}' ]
+output outLandingZoneChildrenManagementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}${parTopLevelManagementGroupSuffix}']
 
 output outSandboxManagementGroupId string = resSandboxMg.id
 

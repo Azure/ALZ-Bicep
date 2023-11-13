@@ -22,6 +22,7 @@
         "privatelink.azurecr.io",
         "privatelink.azure-devices.net",
         "privatelink.azure-devices-provisioning.net",
+        "privatelink.azuredatabricks.net",
         "privatelink.azurehdinsight.net",
         "privatelink.azurehealthcareapis.com",
         "privatelink.azurestaticapps.net",
@@ -76,6 +77,9 @@
         "privatelink.webpubsub.azure.com"
       ]
     },
+    "parPrivateDnsZoneAutoMergeAzureBackupZone": {
+      "value": true
+    },
     "parTags": {
       "value": {
         "Environment": "Live"
@@ -83,6 +87,9 @@
     },
     "parVirtualNetworkIdToLink": {
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/xxxxxxxxxxx/providers/Microsoft.Network/virtualNetworks/xxxxxxxxxxx"
+    },
+    "parVirtualNetworkIdToLinkFailover": {
+      "value": ""
     },
     "parTelemetryOptOut": {
       "value": false

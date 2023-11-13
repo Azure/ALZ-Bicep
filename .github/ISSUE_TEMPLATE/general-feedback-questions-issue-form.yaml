@@ -1,0 +1,24 @@
+name: General Feedback
+description: Tell us what you think!
+title: "[PLACEHOLDER] - Place a descriptive title here"
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We always appreciate the community involvement! Let us know your feedback.
+  - type: textarea
+    id: describe-feedback
+    attributes:
+      label: Let us know the feedback or general question
+      value: "Feedback - Question"
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/Azure/ALZ-Bicep/blob/main/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

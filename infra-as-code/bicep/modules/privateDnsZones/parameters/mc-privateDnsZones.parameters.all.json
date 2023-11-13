@@ -38,6 +38,14 @@
         "privatelink.redis.cache.chinacloudapi.cn"
       ]
     },
+    "parPrivateDnsZoneAutoMergeAzureBackupZone": {
+      "value": true
+    },
+    "parTags": {
+      "value": {
+        "Environment": "Live"
+      }
+    },
     "parVirtualNetworkIdToLink": {
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/xxxxxxxxxxx/providers/Microsoft.Network/virtualNetworks/xxxxxxxxxxx"
     },

@@ -13,8 +13,6 @@ param (
   [string]
   $rootPath = "./infra-as-code/bicep/modules/policy",
   [string]
-  $alzToolsPath = "$PWD/../Enterprise-Scale/src/Alz.Tools",
-  [string]
   $definitionsRoot = "definitions",
   [string]
   $lineEnding = "unix",
@@ -40,10 +38,6 @@ param (
   $assignmentsTxtFileName = "_policyAssignmentsBicepInput.txt"
 )
 
-# This script relies on a custom set of classes and functions
-# defined within the Alz.Tools PowerShell module.
-Import-Module $alzToolsPath -ErrorAction Stop
-
 # Line Endings function to be used in three functions below
 function Update-FileLineEndingType {
   [CmdletBinding(SupportsShouldProcess)]
@@ -52,7 +46,7 @@ function Update-FileLineEndingType {
     $filePath
   )
 
-  (Get-Content $filePath | Edit-LineEndings -LineEnding $LineEnding) | Out-File $filePath
+  (Get-Content $filePath | Edit-LineEnding -LineEnding $LineEnding) | Out-File $filePath
 }
 
 #region Policy Definitions

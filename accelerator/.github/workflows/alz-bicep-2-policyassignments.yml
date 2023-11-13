@@ -1,0 +1,66 @@
+name: ALZ-Bicep-2-PolicyAssignments
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json"
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - "config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+env:
+  ENV_FILE: ".env"
+  IS_PULL_REQUEST: "${{ github.event_name == 'pull_request' }}"
+
+jobs:
+  ALZ_Bicep_2_PolicyAssignments:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: "Remove Quotation Marks from Environment File"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            Write-Host $ENV_FILE
+            (Get-Content -Path $env:ENV_FILE -Encoding UTF8) | ForEach-Object {$_ -replace '"',''} | Out-File -FilePath $env:ENV_FILE -Encoding UTF8
+          azPSVersion: "latest"
+
+      - name: Import Environment Variables from File
+        run: cat ${{ env.ENV_FILE }} >> $GITHUB_ENV
+
+      - name: OIDC Login to Tenant
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.MANAGEMENT_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
+
+      # Example: Modify Deploy-ALZRoleAssignments.ps1 with applicable pararameter file and uncomment lines below to enable Role Assignments Deployment.
+      # - name: "Role Assignments Deployment"
+      #   uses: azure/powershell@v1
+      #   with:
+      #     inlineScript: |
+      #       .\pipeline-scripts\Deploy-ALZRoleAssignments.ps1
+      #     azPSVersion: "latest"
+
+      - name: "Built-in and Custom Policy Assignments Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZPolicyAssignments.ps1
+          azPSVersion: "latest"

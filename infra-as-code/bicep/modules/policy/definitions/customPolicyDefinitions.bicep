@@ -34,6 +34,10 @@ var varCustomPolicyDefinitionsArray = [
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-Redis-sslEnforcement.json')
   }
   {
+    name: 'Audit-AzureHybridBenefit'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-AzureHybridBenefit.json')
+  }
+  {
     name: 'Audit-Disks-UnusedResourcesCostOptimization'
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-Disks-UnusedResourcesCostOptimization.json')
   }
@@ -84,6 +88,22 @@ var varCustomPolicyDefinitionsArray = [
   {
     name: 'Deny-Databricks-VirtualNetwork'
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Databricks-VirtualNetwork.json')
+  }
+  {
+    name: 'Deny-FileServices-InsecureAuth'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureAuth.json')
+  }
+  {
+    name: 'Deny-FileServices-InsecureKerberos'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureKerberos.json')
+  }
+  {
+    name: 'Deny-FileServices-InsecureSmbChannel'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureSmbChannel.json')
+  }
+  {
+    name: 'Deny-FileServices-InsecureSmbVersions'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureSmbVersions.json')
   }
   {
     name: 'Deny-MachineLearning-Aks'
@@ -162,12 +182,28 @@ var varCustomPolicyDefinitionsArray = [
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-minTLS.json')
   }
   {
+    name: 'Deny-Storage-SFTP'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-SFTP.json')
+  }
+  {
+    name: 'Deny-StorageAccount-CustomDomain'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-StorageAccount-CustomDomain.json')
+  }
+  {
     name: 'Deny-Subnet-Without-Nsg'
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Subnet-Without-Nsg.json')
   }
   {
+    name: 'Deny-Subnet-Without-Penp'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Subnet-Without-Penp.json')
+  }
+  {
     name: 'Deny-Subnet-Without-Udr'
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Subnet-Without-Udr.json')
+  }
+  {
+    name: 'Deny-UDR-With-Specific-NextHop'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-UDR-With-Specific-NextHop.json')
   }
   {
     name: 'Deny-VNET-Peer-Cross-Sub'
@@ -180,6 +216,14 @@ var varCustomPolicyDefinitionsArray = [
   {
     name: 'Deny-VNet-Peering'
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-VNet-Peering.json')
+  }
+  {
+    name: 'DenyAction-ActivityLogs'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-ActivityLogs.json')
+  }
+  {
+    name: 'DenyAction-DiagnosticLogs'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-DiagnosticLogs.json')
   }
   {
     name: 'Deploy-ASC-SecurityContacts'
@@ -446,6 +490,10 @@ var varCustomPolicyDefinitionsArray = [
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-Tde.json')
   }
   {
+    name: 'Deploy-Sql-vulnerabilityAssessments_20230706'
+    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-vulnerabilityAssessments_20230706.json')
+  }
+  {
     name: 'Deploy-Sql-vulnerabilityAssessments'
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-vulnerabilityAssessments.json')
   }
@@ -469,7 +517,6 @@ var varCustomPolicyDefinitionsArray = [
     name: 'Deploy-Windows-DomainJoin'
     libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Windows-DomainJoin.json')
   }
-
 ]
 
 // This variable contains a number of objects that load in the custom Azure Policy Set/Initiative Defintions that are provided as part of the ESLZ/ALZ reference implementation - this is automatically created in the file 'infra-as-code\bicep\modules\policy\lib\policy_set_definitions\_policySetDefinitionsBicepInput.txt' via a GitHub action, that runs on a daily schedule, and is then manually copied into this variable.
@@ -478,6 +525,12 @@ var varCustomPolicySetDefinitionsArray = [
     name: 'Audit-UnusedResourcesCostOptimization'
     libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Audit-UnusedResourcesCostOptimization.json')
     libSetChildDefinitions: [
+      {
+        definitionReferenceId: 'AuditAzureHybridBenefitUnusedResourcesCostOptimization'
+        definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-AzureHybridBenefit'
+        definitionParameters: varPolicySetDefinitionEsAuditUnusedResourcesCostOptimizationParameters.AuditAzureHybridBenefitUnusedResourcesCostOptimization.parameters
+        definitionGroups: []
+      }
       {
         definitionReferenceId: 'AuditDisksUnusedResourcesCostOptimization'
         definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-Disks-UnusedResourcesCostOptimization'
@@ -582,13 +635,13 @@ var varCustomPolicySetDefinitionsArray = [
       }
       {
         definitionReferenceId: 'MariaDbDenyPublicIP'
-        definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-MariaDB'
+        definitionId: '/providers/Microsoft.Authorization/policyDefinitions/fdccbe47-f3e3-4213-ad5d-ea459b2fa077'
         definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.MariaDbDenyPublicIP.parameters
         definitionGroups: []
       }
       {
         definitionReferenceId: 'MlDenyPublicIP'
-        definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-MachineLearning-PublicNetworkAccess'
+        definitionId: '/providers/Microsoft.Authorization/policyDefinitions/438c38d2-3772-465a-a9cc-7a6666a275ce'
         definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.MlDenyPublicIP.parameters
         definitionGroups: []
       }
@@ -620,6 +673,24 @@ var varCustomPolicySetDefinitionsArray = [
         definitionReferenceId: 'StorageDenyPaasPublicIP'
         definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b2982f36-99f2-4db5-8eff-283140c09693'
         definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters.StorageDenyPaasPublicIP.parameters
+        definitionGroups: []
+      }
+    ]
+  }
+  {
+    name: 'DenyAction-DeleteProtection'
+    libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_DenyAction-DeleteProtection.json')
+    libSetChildDefinitions: [
+      {
+        definitionReferenceId: 'DenyActionDelete-ActivityLogSettings'
+        definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/DenyAction-ActivityLogs'
+        definitionParameters: varPolicySetDefinitionEsDenyActionDeleteProtectionParameters['DenyActionDelete-ActivityLogSettings'].parameters
+        definitionGroups: []
+      }
+      {
+        definitionReferenceId: 'DenyActionDelete-DiagnosticSettings'
+        definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/DenyAction-DiagnosticLogs'
+        definitionParameters: varPolicySetDefinitionEsDenyActionDeleteProtectionParameters['DenyActionDelete-DiagnosticSettings'].parameters
         definitionGroups: []
       }
     ]
@@ -1139,9 +1210,9 @@ var varCustomPolicySetDefinitionsArray = [
         definitionGroups: []
       }
       {
-        definitionReferenceId: 'defenderForStorageAccounts'
-        definitionId: '/providers/Microsoft.Authorization/policyDefinitions/74c30959-af11-47b3-9ed2-a26e03f427a3'
-        definitionParameters: varPolicySetDefinitionEsDeployMDFCConfigParameters.defenderForStorageAccounts.parameters
+        definitionReferenceId: 'defenderForStorageAccountsV2'
+        definitionId: '/providers/Microsoft.Authorization/policyDefinitions/cfdc5972-75b3-4418-8ae1-7f5c36839390'
+        definitionParameters: varPolicySetDefinitionEsDeployMDFCConfigParameters.defenderForStorageAccountsV2.parameters
         definitionGroups: []
       }
       {
@@ -1244,6 +1315,18 @@ var varCustomPolicySetDefinitionsArray = [
         definitionReferenceId: 'DINE-Private-DNS-Azure-Cosmos-Table'
         definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a63cc0bd-cda4-4178-b705-37dc439d3e0f'
         definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Cosmos-Table'].parameters
+        definitionGroups: []
+      }
+      {
+        definitionReferenceId: 'DINE-Private-DNS-Azure-Databrics-Browser-AuthN'
+        definitionId: '/providers/Microsoft.Authorization/policyDefinitions/0eddd7f3-3d9b-4927-a07a-806e8ac9486c'
+        definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Databrics-Browser-AuthN'].parameters
+        definitionGroups: []
+      }
+      {
+        definitionReferenceId: 'DINE-Private-DNS-Azure-Databrics-UI-Api'
+        definitionId: '/providers/Microsoft.Authorization/policyDefinitions/0eddd7f3-3d9b-4927-a07a-806e8ac9486c'
+        definitionParameters: varPolicySetDefinitionEsDeployPrivateDNSZonesParameters['DINE-Private-DNS-Azure-Databrics-UI-Api'].parameters
         definitionGroups: []
       }
       {
@@ -1843,6 +1926,8 @@ var varCustomPolicySetDefinitionsArray = [
 var varPolicySetDefinitionEsAuditUnusedResourcesCostOptimizationParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Audit-UnusedResourcesCostOptimization.parameters.json')
 
 var varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Deny-PublicPaaSEndpoints.parameters.json')
+
+var varPolicySetDefinitionEsDenyActionDeleteProtectionParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_DenyAction-DeleteProtection.parameters.json')
 
 var varPolicySetDefinitionEsDeployDiagnosticsLogAnalyticsParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Deploy-Diagnostics-LogAnalytics.parameters.json')
 

@@ -31,18 +31,18 @@ All templates require an input for `parAssigneeObjectId` and this value is depen
 az identity show --resource-group <RESOURCE_GROUP> --name <IDENTITY_NAME> --query 'principalId'
 
 # Identify Object Id for Service Principal (App Registration)
-# Require read permission to query Azure Active Directory
+# Require read permission to query Microsoft Entra
 # Example: az ad sp show --id c705dc53-7c95-42bc-b1d5-75e172571370 --query id
 az ad sp show --id <APP_REGISTRATION_APPLICATION_ID> --query id
 
 # Identify Object Id for Service Principal (App Registration)
-# Require read permission to query Azure Active Directory
+# Require read permission to query Microsoft Entra
 # Beware of duplicates, since app registation names are not unique.
 # Example: az ad sp list --filter "displayName eq '<APP_REGISTRATION_NAME>'" --query '[].{name:appDisplayName, objectId:id}'
 az ad sp list --filter "displayName eq '<APP_REGISTRATION_NAME>'" --query '[].{name:appDisplayName, objectId:id}'
 
 # Identify Object Id for Security Group
-# Require read permission to query Azure Active Directory
+# Require read permission to query Microsoft Entra
 # Example: az ad group show --group SG_ALZ_SECURITY --query id
 az ad group show --group <SECURITY_GROUP_NAME> --query id
 ```
@@ -55,12 +55,12 @@ az ad group show --group <SECURITY_GROUP_NAME> --query id
 (Get-AzADServicePrincipal -DisplayName '<IDENTITY_NAME>').Id
 
 # Identify Object Id for Service Principal (App Registration)
-# Require read permission to query Azure Active Directory
+# Require read permission to query Microsoft Entra
 # Example:  (Get-AzADServicePrincipal -DisplayName 'Azure Landing Zone SPN').Id
 (Get-AzADServicePrincipal -DisplayName '<APP_REGISTRATION_DISPLAY_NAME>').Id
 
 # Identify Object Id for Security Group
-# Require read permission to query Azure Active Directory
+# Require read permission to query Microsoft Entra
 # Example: Get-AzureADGroup -SearchString 'SG_ALZ_SECURITY'
 Connect-AzureAD
 (Get-AzureADGroup -SearchString '<SECURITY_GROUP_NAME>').ObjectId

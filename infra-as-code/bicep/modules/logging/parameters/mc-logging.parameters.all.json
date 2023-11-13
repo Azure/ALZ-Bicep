@@ -28,6 +28,9 @@
         "VMInsights"
       ]
     },
+    "parLogAnalyticsWorkspaceLinkAutomationAccount": {
+      "value": true
+    },
     "parAutomationAccountName": {
       "value": "alz-automation-account"
     },
@@ -35,6 +38,9 @@
       "value": "chinaeast2"
     },
     "parAutomationAccountUseManagedIdentity": {
+      "value": true
+    },
+    "parAutomationAccountPublicNetworkAccess": {
       "value": true
     },
     "parTags": {

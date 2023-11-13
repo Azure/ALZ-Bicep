@@ -20,6 +20,19 @@ param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 @sys.description('Log Analytics Workspace sku name.')
 param parLogAnalyticsWorkspaceSkuName string = 'PerGB2018'
 
+@allowed([
+  100
+  200
+  300
+  400
+  500
+  1000
+  2000
+  5000
+])
+@sys.description('Log Analytics Workspace Capacity Reservation Level. Only used if parLogAnalyticsWorkspaceSkuName is set to CapacityReservation.')
+param parLogAnalyticsWorkspaceCapacityReservationLevel int = 100
+
 @minValue(30)
 @maxValue(730)
 @sys.description('Number of days of log retention for Log Analytics Workspace.')
@@ -52,6 +65,9 @@ param parLogAnalyticsWorkspaceSolutions array = [
   'VMInsights'
 ]
 
+@sys.description('Log Analytics Workspace should be linked with the automation account.')
+param parLogAnalyticsWorkspaceLinkAutomationAccount bool = true
+
 @sys.description('Automation account name.')
 param parAutomationAccountName string = 'alz-automation-account'
 
@@ -60,6 +76,9 @@ param parAutomationAccountLocation string = resourceGroup().location
 
 @sys.description('Automation Account - use managed identity.')
 param parAutomationAccountUseManagedIdentity bool = true
+
+@sys.description('Automation Account - Public network access.')
+param parAutomationAccountPublicNetworkAccess bool = true
 
 @sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
@@ -70,13 +89,16 @@ param parAutomationAccountTags object = parTags
 @sys.description('Tags you would like to be applied to Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceTags object = parTags
 
+@sys.description('Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.')
+param parUseSentinelClassicPricingTiers bool = false
+
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
 // Customer Usage Attribution Id
 var varCuaid = 'f8087c67-cc41-46b2-994d-66e4b661860d'
 
-resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' = {
+resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2022-08-08' = {
   name: parAutomationAccountName
   location: parAutomationAccountLocation
   tags: parAutomationAccountTags
@@ -84,22 +106,24 @@ resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2021-06-2
     type: 'SystemAssigned'
   } : null
   properties: {
-    sku: {
-      name: 'Basic'
-    }
     encryption: {
       keySource: 'Microsoft.Automation'
+    }
+    publicNetworkAccess: parAutomationAccountPublicNetworkAccess
+    sku: {
+      name: 'Basic'
     }
   }
 }
 
-resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
+resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: parLogAnalyticsWorkspaceName
   location: parLogAnalyticsWorkspaceLocation
   tags: parLogAnalyticsWorkspaceTags
   properties: {
     sku: {
       name: parLogAnalyticsWorkspaceSkuName
+      capacityReservationLevel: parLogAnalyticsWorkspaceSkuName == 'CapacityReservation' ? parLogAnalyticsWorkspaceCapacityReservationLevel : null
     }
     retentionInDays: parLogAnalyticsWorkspaceLogRetentionInDays
   }
@@ -109,7 +133,12 @@ resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solut
   name: '${solution}(${resLogAnalyticsWorkspace.name})'
   location: parLogAnalyticsWorkspaceLocation
   tags: parTags
-  properties: {
+  properties: solution == 'SecurityInsights' ? {
+    workspaceResourceId: resLogAnalyticsWorkspace.id
+    sku: parUseSentinelClassicPricingTiers ? null : {
+      name: 'Unified'
+    }
+  } : {
     workspaceResourceId: resLogAnalyticsWorkspace.id
   }
   plan: {
@@ -120,8 +149,9 @@ resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solut
   }
 }]
 
-resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2020-08-01' = {
-  name: '${resLogAnalyticsWorkspace.name}/Automation'
+resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2020-08-01' = if (parLogAnalyticsWorkspaceLinkAutomationAccount) {
+  parent: resLogAnalyticsWorkspace
+  name: 'Automation'
   properties: {
     resourceId: resAutomationAccount.id
   }

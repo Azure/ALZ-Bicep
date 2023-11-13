@@ -25,7 +25,7 @@ We have created a short 3-part series of video on the Azure Enablement Show that
 
 ## Prerequisites
 
-1. Azure Active Directory Tenant.
+1. Microsoft Entra Tenant.
 2. Minimum 1 subscription.  Subscription(s) are required when configuring `Log Analytics Workspace` & `Hub Networking` services.  Each can be deployed in the same subscription or separate subscriptions based on deployment requirements.
 3. Deployment Identity with `Owner` permission to the `/` root management group.  Owner permission is required to allow the Service Principal Account to create role-based access control assignments.  See [configuration instructions below](#deployment-identity).
 
@@ -82,13 +82,13 @@ The current available orchestration modules are listed below:
 
 ## Deployment Identity
 
-When first working with Management Groups, the Azure AD Global Administrator must assign the User Access Administrator role to themselves at the `/` scope first before being able to further delegate. See [Elevate access to manage all Azure subscriptions and management groups](https://learn.microsoft.com/azure/role-based-access-control/elevate-access-global-admin) documentation for further information.
+When first working with Management Groups, the Microsoft Entra Global Administrator must assign the User Access Administrator role to themselves at the `/` scope first before being able to further delegate. See [Elevate access to manage all Azure subscriptions and management groups](https://learn.microsoft.com/azure/role-based-access-control/elevate-access-global-admin) documentation for further information.
 
 In addition, the identity that wants to create a Tenant scope deployment must have the *Owner* role assigned to the `/` root management group. Whether this is your user account (even if a Global Administrator) or a Service Principal. See [Required access for Tenant deployments on Azure Docs](https://learn.microsoft.com/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-powershell#required-access).
 
 ### Service Principal Account
 
-A service principal account is required to automate through Azure DevOps or GitHub Workflows. This can be created through the [Portal](https://learn.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal), [Azure PowerShell](https://learn.microsoft.com/azure/active-directory/develop/howto-authenticate-service-principal-powershell) or [Azure CLI](https://learn.microsoft.com/cli/azure/create-an-azure-service-principal-azure-cli).
+A service principal account is required to automate through Azure DevOps or GitHub Workflows. This can be created through the [Portal](https://learn.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal), [Azure PowerShell](https://learn.microsoft.com/azure/active-directory/develop/howto-authenticate-service-principal-powershell) or [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/azure-cli-sp-tutorial-1).
 
 - **Service Principal Name**:  any name (i.e. `spn-azure-platform-ops`)
 - **RBAC Assignment**

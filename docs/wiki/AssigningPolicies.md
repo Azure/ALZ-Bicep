@@ -10,6 +10,19 @@
 
 It is expected that most customers will want or need to make additional Azure Policy Assignments of either built-in or custom Policy Definitions to help them meet their requirements. This is where this wiki article will help explain how this is possible and advise of the various ways this can also be done.
 
+## Pre-Reqs
+
+Install the [ALZ PowerShell Module](https://github.com/Azure/ALZ-PowerShell-Module#installation) on your local development machine or within the Azure Cloud Shell using the following command:
+
+> **Warning:**
+> In order to use this module, [PowerShell 7.1 or higher](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.3) needs to be installed
+
+```powershell
+Install-Module -Name ALZ
+```
+
+> Version `0.2.8` or higher must be installed of the `ALZ` module, you can check this with `Get-Module -Name ALZ`
+
 ## What are the options?
 
 There are a few options for you to make additional Policy Assignments using Bicep and more specifically `ALZ-Bicep`.
