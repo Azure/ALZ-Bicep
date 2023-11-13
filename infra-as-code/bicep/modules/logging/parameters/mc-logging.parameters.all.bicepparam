@@ -29,6 +29,8 @@ param parAutomationAccountLocation = 'chinaeast2'
 
 param parAutomationAccountUseManagedIdentity = true
 
+param parAutomationAccountPublicNetworkAccess = true
+
 param parTags = {
   Environment: 'Live'
 }
