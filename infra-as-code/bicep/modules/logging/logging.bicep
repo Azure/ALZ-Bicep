@@ -77,6 +77,9 @@ param parAutomationAccountLocation string = resourceGroup().location
 @sys.description('Automation Account - use managed identity.')
 param parAutomationAccountUseManagedIdentity bool = true
 
+@sys.description('Automation Account - Public network access.')
+param parAutomationAccountPublicNetworkAccess bool = true
+
 @sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
 
@@ -106,11 +109,12 @@ resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2022-08-0
     type: 'SystemAssigned'
   } : null
   properties: {
-    sku: {
-      name: 'Basic'
-    }
     encryption: {
       keySource: 'Microsoft.Automation'
+    }
+    publicNetworkAccess: parAutomationAccountPublicNetworkAccess
+    sku: {
+      name: 'Basic'
     }
   }
 }
