@@ -16,6 +16,7 @@ parLogAnalyticsWorkspaceLinkAutomationAccount | No       | Log Analytics Workspa
 parAutomationAccountName | No       | Automation account name.
 parAutomationAccountLocation | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
 parAutomationAccountUseManagedIdentity | No       | Automation Account - use managed identity.
+parAutomationAccountPublicNetworkAccess | No       | Automation Account - Public network access.
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parAutomationAccountTags | No       | Tags you would like to be applied to Automation Account.
 parLogAnalyticsWorkspaceTags | No       | Tags you would like to be applied to Log Analytics Workspace.
@@ -105,6 +106,14 @@ Automation Account region name. - Ensure the regions selected is a supported map
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Automation Account - use managed identity.
+
+- Default value: `True`
+
+### parAutomationAccountPublicNetworkAccess
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Automation Account - Public network access.
 
 - Default value: `True`
 
@@ -208,6 +217,9 @@ outAutomationAccountId | string |
             "value": "[resourceGroup().location]"
         },
         "parAutomationAccountUseManagedIdentity": {
+            "value": true
+        },
+        "parAutomationAccountPublicNetworkAccess": {
             "value": true
         },
         "parTags": {
