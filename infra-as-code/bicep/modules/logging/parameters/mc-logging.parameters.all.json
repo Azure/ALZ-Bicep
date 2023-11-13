@@ -40,6 +40,9 @@
     "parAutomationAccountUseManagedIdentity": {
       "value": true
     },
+    "parAutomationAccountPublicNetworkAccess": {
+      "value": true
+    },
     "parTags": {
       "value": {
         "Environment": "Live"
