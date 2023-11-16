@@ -512,7 +512,7 @@
         },
         "UpstreamReleaseVersion": {
             "Type": "Computed",
-            "Value": "v0.16.6",
+            "Value": "{REPLACED_BY_ALZ_POWERSHELL_MODULE}",
             "Targets": [
                 {
                     "Name": "UPSTREAM_RELEASE_VERSION",
