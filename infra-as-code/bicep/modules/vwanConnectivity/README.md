@@ -17,6 +17,7 @@ Module deploys the following resources which can be configured by parameters:
 
 - [Parameters for Azure Commercial Cloud](generateddocs/vwanConnectivity.bicep.md)
 
+> **NOTE:** Within the `parVirtualWanHubs` parameter, the following keys (parVpnGatewayCustomName, parExpressRouteGatewayCustomName, parAzFirewallCustomName, and parVirtualWanHubCustomName) can be added to create custom names for the associated resources.
 > **NOTE:** Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
 
 <!-- markdownlint-disable -->

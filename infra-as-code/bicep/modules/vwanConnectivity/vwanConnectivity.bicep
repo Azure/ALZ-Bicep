@@ -29,16 +29,16 @@ type virtualWanOptionsType = ({
   parVirtualHubRoutingIntentDestinations: ('Internet' | 'PrivateTraffic')[]
 
   @sys.description('This parameter is used to specify a custom name for the VPN Gateway.')
-  parVpnGatewayName: string?
+  parVpnGatewayCustomName: string?
 
   @sys.description('This parameter is used to specify a custom name for the ExpressRoute Gateway.')
-  parExpressRouteGatewayName: string?
+  parExpressRouteGatewayCustomName: string?
 
   @sys.description('This parameter is used to specify a custom name for the Azure Firewall.')
-  parAzFirewallName: string?
+  parAzFirewallCustomName: string?
 
   @sys.description('This parameter is used to specify a custom name for the Virtual WAN Hub.')
-  parVirtualWanHubName: string?
+  parVirtualWanHubCustomName: string?
 })[]
 
 @sys.description('Region in which the resource group was created.')
@@ -88,7 +88,6 @@ param parVirtualWanHubName string = '${parCompanyPrefix}-vhub'
 - `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASN`, `VpnGateway`, `ExpressRoute`.
 - `parVirtualRouterAutoScaleConfiguration` - The Virtual WAN Hub capacity. The value should be between 2 to 50.
 - `parVirtualHubRoutingIntentDestinations` - The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.
-- `parUseCustomNamingScheme` - Switch to enable/disable custom naming scheme. When enabled a custom name can be given for Azure Firewall, ExpressRoute Gateway, VPN Gateway and Virtual Hubs.
 
 ''')
 param parVirtualWanHubs virtualWanOptionsType = [ {
@@ -251,7 +250,7 @@ resource resVwan 'Microsoft.Network/virtualWans@2023-04-01' = {
 }
 
 resource resVhub 'Microsoft.Network/virtualHubs@2023-04-01' = [for hub in parVirtualWanHubs: if (parVirtualHubEnabled && !empty(hub.parVirtualHubAddressPrefix)) {
-  name: hub.?parVirtualWanHubName ?? '${parVirtualWanHubName}-${hub.parHubLocation}'
+  name: hub.?parVirtualWanHubCustomName ?? '${parVirtualWanHubName}-${hub.parHubLocation}'
   location: hub.parHubLocation
   tags: parTags
   properties: {
@@ -290,7 +289,7 @@ resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2023-04
 
 resource resVhubRoutingIntent 'Microsoft.Network/virtualHubs/routingIntent@2023-04-01' = [for (hub, i) in parVirtualWanHubs: if (parVirtualHubEnabled && hub.parAzFirewallEnabled && !empty(hub.parVirtualHubRoutingIntentDestinations)) {
   parent: resVhub[i]
-  name: !empty(hub.?parVirtualWanHubName) ? '${hub.parVirtualWanHubName}-Routing-Intent' : '${parVirtualWanHubName}-${hub.parHubLocation}-Routing-Intent'
+  name: !empty(hub.?parVirtualWanHubCustomName) ? '${hub.parVirtualWanHubCustomName}-Routing-Intent' : '${parVirtualWanHubName}-${hub.parHubLocation}-Routing-Intent'
   properties: {
     routingPolicies: [for destination in hub.parVirtualHubRoutingIntentDestinations: {
       name: destination == 'Internet' ? 'PublicTraffic' : destination == 'PrivateTraffic' ? 'PrivateTraffic' : 'N/A'
@@ -304,7 +303,7 @@ resource resVhubRoutingIntent 'Microsoft.Network/virtualHubs/routingIntent@2023-
 
 resource resVpnGateway 'Microsoft.Network/vpnGateways@2023-02-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parVpnGatewayEnabled)) {
   dependsOn: resVhub
-  name: hub.?parVpnGatewayName ?? '${parVpnGatewayName}-${hub.parHubLocation}'
+  name: hub.?parVpnGatewayCustomName ?? '${parVpnGatewayName}-${hub.parHubLocation}'
   location: hub.parHubLocation
   tags: parTags
   properties: {
@@ -322,7 +321,7 @@ resource resVpnGateway 'Microsoft.Network/vpnGateways@2023-02-01' = [for (hub, i
 
 resource resErGateway 'Microsoft.Network/expressRouteGateways@2023-02-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parExpressRouteGatewayEnabled)) {
   dependsOn: resVhub
-  name: hub.?parExpressRouteGatewayName ?? '${parExpressRouteGatewayName}-${hub.parHubLocation}'
+  name: hub.?parExpressRouteGatewayCustomName ?? '${parExpressRouteGatewayName}-${hub.parHubLocation}'
   location: hub.parHubLocation
   tags: parTags
   properties: {
@@ -359,7 +358,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
 }
 
 resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parAzFirewallEnabled)) {
-  name: hub.?parAzFirewallName ?? '${parAzFirewallName}-${hub.parHubLocation}'
+  name: hub.?parAzFirewallCustomName ?? '${parAzFirewallName}-${hub.parHubLocation}'
   location: hub.parHubLocation
   tags: parTags
   zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : null)
