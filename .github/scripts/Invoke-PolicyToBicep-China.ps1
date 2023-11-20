@@ -13,8 +13,6 @@ param (
   [string]
   $rootPath = "./infra-as-code/bicep/modules/policy",
   [string]
-  $alzToolsPath = "$PWD/../Enterprise-Scale/src/Alz.Tools",
-  [string]
   $definitionsRoot = "definitions",
   [string]
   $lineEnding = "unix",
@@ -43,8 +41,15 @@ param (
 )
 
 # This script relies on a custom set of classes and functions
-# defined within the Alz.Tools PowerShell module.
-Import-Module $alzToolsPath -ErrorAction Stop
+# defined within the [ALZ-PowerShell-Module](https://github.com/Azure/Alz-powershell-module).
+if (-not (Get-Module -ListAvailable -Name ALZ)) {
+  # Module doesn't exist, so install it
+  Write-Information "====> ALZ module isn't already installed. Installing..." -InformationAction Continue
+  Install-Module -Name ALZ -Force -Scope CurrentUser -ErrorAction Stop
+  Write-Information "====> ALZ module now installed." -InformationAction Continue
+} else {
+  Write-Information "====> ALZ module is already installed." -InformationAction Continue
+}
 
 # Line Endings function to be used in three functions below
 function Update-FileLineEndingType {
