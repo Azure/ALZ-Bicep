@@ -42,7 +42,9 @@ param (
 # defined within the [ALZ-PowerShell-Module](https://github.com/Azure/Alz-powershell-module).
 if (-not (Get-Module -ListAvailable -Name ALZ)) {
   # Module doesn't exist, so install it
-  Install-Module -Name ALZ -Scope CurrentUser -ErrorAction Stop
+  Write-Information "====> ALZ module isn't already installed. Installing..." -InformationAction Continue
+  Install-Module -Name ALZ -Force -Scope CurrentUser -ErrorAction Stop
+  Write-Information "====> ALZ module now installed." -InformationAction Continue
 } else {
   Write-Information "====> ALZ module is already installed." -InformationAction Continue
 }
