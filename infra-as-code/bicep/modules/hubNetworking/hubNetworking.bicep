@@ -1,6 +1,23 @@
 metadata name = 'ALZ Bicep - Hub Networking Module'
 metadata description = 'ALZ Bicep Module used to set up Hub Networking'
 
+type subnetOptionsType = ({
+  @description('Name of subnet.')
+  name: string
+
+  @description('IP-address range for subnet.')
+  ipAddressRange: string
+
+  @description('Id of Network Security Group to associate with subnet.')
+  networkSecurityGroupId: string?
+
+  @description('Id of Route Table to associate with subnet.')
+  routeTableId: string?
+
+  @description('Name of the delegation to create for the subnet.')
+  delegation: string?
+})[]
+
 @sys.description('The Azure Region to deploy the resources into.')
 param parLocation string = resourceGroup().location
 
@@ -14,7 +31,7 @@ param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
 @sys.description('The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks.')
-param parSubnets array = [
+param parSubnets subnetOptionsType = [
   {
     name: 'AzureBastionSubnet'
     ipAddressRange: '10.10.15.0/24'

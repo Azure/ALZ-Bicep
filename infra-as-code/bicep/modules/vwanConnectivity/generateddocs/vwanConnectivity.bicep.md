@@ -9,15 +9,15 @@ Parameter name | Required | Description
 parLocation    | No       | Region in which the resource group was created.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
 parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
-parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.
+parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode.
 parVirtualHubEnabled | No       | Switch to enable/disable Virtual Hub deployment.
 parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
-parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall
+parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall.
 parVirtualWanName | No       | Prefix Used for Virtual WAN.
 parVirtualWanHubName | No       | Prefix Used for Virtual WAN Hub.
 parVirtualWanHubs | No       | Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects in the array to meet the number of Virtual WAN Hubs required.  - `parVpnGatewayEnabled` - Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub. - `parExpressRouteGatewayEnabled` - Switch to enable/disable ExpressRoute Gateway deployment on the respective Virtual WAN Hub. - `parAzFirewallEnabled` - Switch to enable/disable Azure Firewall deployment on the respective Virtual WAN Hub. - `parVirtualHubAddressPrefix` - The IP address range in CIDR notation for the vWAN virtual Hub to use. - `parHubLocation` - The Virtual WAN Hub location. - `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASN`, `VpnGateway`, `ExpressRoute`. - `parVirtualRouterAutoScaleConfiguration` - The Virtual WAN Hub capacity. The value should be between 2 to 50. - `parVirtualHubRoutingIntentDestinations` - The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.  
-parVpnGatewayName | No       | Prefix Used for VPN Gateway.
-parExpressRouteGatewayName | No       | Prefix Used for ExpressRoute Gateway.
+parVpnGatewayName | No       | VPN Gateway Name.
+parExpressRouteGatewayName | No       | ExpressRoute Gateway Name.
 parAzFirewallName | No       | Azure Firewall Name.
 parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
@@ -64,7 +64,7 @@ Azure Firewall Tier associated with the Firewall to deploy.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.
+The Azure Firewall Threat Intelligence Mode.
 
 - Default value: `Alert`
 
@@ -90,7 +90,7 @@ Switch to enable/disable Azure Firewall DNS Proxy.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Array of custom DNS servers used by Azure Firewall
+Array of custom DNS servers used by Azure Firewall.
 
 ### parVirtualWanName
 
@@ -129,7 +129,7 @@ Array Used for multiple Virtual WAN Hubs deployment. Each object in the array re
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix Used for VPN Gateway.
+VPN Gateway Name.
 
 - Default value: `[format('{0}-vpngw', parameters('parCompanyPrefix'))]`
 
@@ -137,7 +137,7 @@ Prefix Used for VPN Gateway.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Prefix Used for ExpressRoute Gateway.
+ExpressRoute Gateway Name.
 
 - Default value: `[format('{0}-ergw', parameters('parCompanyPrefix'))]`
 
