@@ -57,6 +57,9 @@ param parPublicIpPrefix string = ''
 @sys.description('Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix')
 param parPublicIpSuffix string = '-PublicIP'
 
+@sys.description('Optional List of Custom Public IPs, which are assigned to firewall\'s ipConfigurations.')
+param parCustomPublicIpIds array = []
+
 @sys.description('Switch to enable/disable Azure Bastion deployment.')
 param parAzBastionEnabled bool = true
 
@@ -330,6 +333,8 @@ var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
 // ZTN Telemetry
 var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
 var varZtnP1Trigger = (parDdosEnabled && parAzFirewallEnabled && (parAzFirewallTier == 'Premium')) ? true : false
+
+var varUseCustomPublicIps = length(parCustomPublicIpIds) > 0
 
 //DDos Protection plan will only be enabled if parDdosEnabled is true.
 resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01' = if (parDdosEnabled) {
@@ -709,7 +714,26 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (pa
   tags: parTags
   zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : [])
   properties: parAzFirewallTier == 'Basic' ? {
-    ipConfigurations: [
+    ipConfigurations: varUseCustomPublicIps
+     ? map(parCustomPublicIpIds, ip =>
+       {
+        name: 'ipconfig${uniqueString(ip)}'
+        properties: ip == parCustomPublicIpIds[0]
+         ? {
+          subnet: {
+            id: resAzureFirewallSubnetRef.id
+          }
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+         : {
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+      })
+     : [
       {
         name: 'ipconfig1'
         properties: {
