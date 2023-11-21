@@ -7,6 +7,7 @@ Module used to set up Diagnostic Settings for Management Groups
 Parameter name | Required | Description
 -------------- | -------- | -----------
 parLogAnalyticsWorkspaceResourceId | Yes      | Log Analytics Workspace Resource ID.
+parDiagnosticSettingsName | No       | Diagnostic Settings Name.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
 ### parLogAnalyticsWorkspaceResourceId
@@ -14,6 +15,14 @@ parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment t
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
 Log Analytics Workspace Resource ID.
+
+### parDiagnosticSettingsName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Diagnostic Settings Name.
+
+- Default value: `toLa`
 
 ### parTelemetryOptOut
 
@@ -37,6 +46,9 @@ Set Parameter to true to Opt-out of deployment telemetry
     "parameters": {
         "parLogAnalyticsWorkspaceResourceId": {
             "value": ""
+        },
+        "parDiagnosticSettingsName": {
+            "value": "toLa"
         },
         "parTelemetryOptOut": {
             "value": false

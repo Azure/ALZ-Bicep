@@ -21,6 +21,9 @@ param parPlatformMgChildren array = []
 @sys.description('Log Analytics Workspace Resource ID.')
 param parLogAnalyticsWorkspaceResourceId string
 
+@sys.description('Diagnostic Settings Name.')
+param parDiagnosticSettingsName string = 'toLa'
+
 @sys.description('Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
 param parLandingZoneMgAlzDefaultsEnable bool = true
 
@@ -84,6 +87,7 @@ module modMgDiagSet '../../modules/mgDiagSettings/mgDiagSettings.bicep' = [for m
   name: 'mg-diag-set-${mgId.value}'
   params: {
     parLogAnalyticsWorkspaceResourceId: parLogAnalyticsWorkspaceResourceId
+    parDiagnosticSettingsName: parDiagnosticSettingsName
     parTelemetryOptOut: parTelemetryOptOut
   }
 }]
@@ -94,6 +98,7 @@ module modMgLandingZonesDiagSet '../../modules/mgDiagSettings/mgDiagSettings.bic
   name: 'mg-diag-set-${childMg.value}'
   params: {
     parLogAnalyticsWorkspaceResourceId: parLogAnalyticsWorkspaceResourceId
+    parDiagnosticSettingsName: parDiagnosticSettingsName
     parTelemetryOptOut: parTelemetryOptOut
   }
 }]
@@ -104,6 +109,7 @@ module modMgPlatformDiagSet '../../modules/mgDiagSettings/mgDiagSettings.bicep' 
   name: 'mg-diag-set-${childMg.value}'
   params: {
     parLogAnalyticsWorkspaceResourceId: parLogAnalyticsWorkspaceResourceId
+    parDiagnosticSettingsName: parDiagnosticSettingsName
     parTelemetryOptOut: parTelemetryOptOut
   }
 }]
@@ -114,6 +120,7 @@ module modMgChildrenDiagSet '../../modules/mgDiagSettings/mgDiagSettings.bicep' 
   name: 'mg-diag-set-${childMg.mgId}'
   params: {
     parLogAnalyticsWorkspaceResourceId: parLogAnalyticsWorkspaceResourceId
+    parDiagnosticSettingsName: parDiagnosticSettingsName
     parTelemetryOptOut: parTelemetryOptOut
   }
 }]
@@ -124,6 +131,7 @@ module modPlatformMgChildrenDiagSet '../../modules/mgDiagSettings/mgDiagSettings
   name: 'mg-diag-set-${childMg.mgId}'
   params: {
     parLogAnalyticsWorkspaceResourceId: parLogAnalyticsWorkspaceResourceId
+    parDiagnosticSettingsName: parDiagnosticSettingsName
     parTelemetryOptOut: parTelemetryOptOut
   }
 }]

@@ -29,8 +29,8 @@ module minimum_vwan_conn '../vwanConnectivity.bicep' = {
         parAzFirewallEnabled: true
         parVirtualHubAddressPrefix: '10.100.0.0/23'
         parHubLocation: 'centralus'
-        parhubRoutingPreference: 'ExpressRoute' //allowed values are 'ASN','VpnGateway','ExpressRoute'
-        parvirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
+        parHubRoutingPreference: 'ExpressRoute' //allowed values are 'ASN','VpnGateway','ExpressRoute'
+        parVirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
         parVirtualHubRoutingIntentDestinations: []
       } ]
     parAzFirewallDnsProxyEnabled: true
