@@ -225,7 +225,7 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
     Get-ALZGithubRelease -i "bicep" -o "C:\Repos\ALZ\accelerator"
     ```
 
-    Here is an example of using the cmdlet to pull down the latest version v0.17.0:
+    Here is an example of using the cmdlet to pull down version v0.17.0:
 
     ```powershell
     Get-ALZGithubRelease -i "bicep" -v "v0.17.0" -o "C:\Repos\ALZ\accelerator"
