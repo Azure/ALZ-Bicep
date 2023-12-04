@@ -2,8 +2,6 @@
 ## ALZ Bicep Accelerator
 <!-- markdownlint-restore -->
 
-> **Note:**
-> This is an MVP release of the ALZ Bicep Accelerator. We are actively working on adding additional features and functionality to the Accelerator. Please check back often for updates.
 
 This document provides prescriptive guidance around implementing, automating, and maintaining your ALZ Bicep module with the ALZ Bicep Accelerator.
 
@@ -13,7 +11,7 @@ The ALZ Bicep Accelerator framework was developed to provide end-users with the 
 
 - Allows for rapid onboarding and deployment of ALZ Bicep using full-fledged CI/CD pipelines with user provided input
   > **Note**
-  > Currently we offer support for [GitHub Action Workflows](#getting-started-if-youre-using-github-actions) and [Azure DevOps Pipelines](#getting-started-if-youre-using-azure-devops-pipelines), but there are plans to add support for GitLab pipelines in the future
+  > Currently we offer support for [GitHub Action Workflows](#getting-started-if-youre-using-github-actions) and [Azure DevOps Pipelines](#getting-started-if-youre-using-azure-devops-pipelines)
 - Provides framework to not only stay in-sync with new [ALZ Bicep releases](https://github.com/Azure/ALZ-Bicep/releases), but also incorporates guidance around modifiying existing ALZ Bicep modules and/or associating custom modules to the framework
 - Offers branching strategy guidance and pull request pipelines for linting the repository as well as validating any existing custom and/or modified Bicep modules
 
@@ -219,16 +217,16 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
 
 1. Using the ALZ PowerShell Module, there is a cmdlet called `Get-ALZBicepRelease`. This will download a specified release version from the remote ALZ-Bicep repository and pull down to the local directory where your Accelerator framework was initially deployed.
 
-    Here is an example of using the cmdlet to pull down version v0.16.6:
+    Here is an example of using the cmdlet to pull down version v0.17.0:
 
     ```powershell
-    Get-ALZGithubRelease -githubRepoUrl "https://github.com/Azure/ALZ-Bicep" -release "v0.16.6" -directoryForReleases "C:\Repos\ALZ\accelerator\upstream-releases\"
+    Get-ALZGithubRelease -githubRepoUrl "https://github.com/Azure/ALZ-Bicep" -release "v0.17.0" -directoryForReleases "C:\Repos\ALZ\accelerator\upstream-releases\"
     ```
 
-1. Once the ALZ Bicep release has been downloaded, you will need to update `upstream-releases-version` within the environment variables file (.env) with the version number of the release that you just downloaded. For example, if you downloaded v0.16.5, you would update the file with the following:
+1. Once the ALZ Bicep release has been downloaded, you will need to update `upstream-releases-version` within the environment variables file (.env) with the version number of the release that you just downloaded. For example, if you downloaded v0.16.6, you would update the file with the following:
 
     ```text
-    UPSTREAM_RELEASE_VERSION="v0.16.6"
+    UPSTREAM_RELEASE_VERSION="v0.17.0"
     ```
 
 1. You can now deploy the updated modules.
