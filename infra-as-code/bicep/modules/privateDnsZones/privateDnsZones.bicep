@@ -107,8 +107,12 @@ var varAzBackupGeoCodes = {
   eastus2: 'eus2'
   francecentral: 'frc'
   francesouth: 'frs'
+  germanycentral: 'gec'
   germanynorth: 'gn'
+  germanynortheast: 'gne'
   germanywestcentral: 'gwc'
+  israelcentral: 'ilc'
+  italynorth: 'itn'
   centralindia: 'inc'
   southindia: 'ins'
   westindia: 'inw'
@@ -122,6 +126,7 @@ var varAzBackupGeoCodes = {
   northeurope: 'ne'
   norwayeast: 'nwe'
   norwaywest: 'nww'
+  polandcentral: 'plc'
   qatarcentral: 'qac'
   southafricanorth: 'san'
   southafricawest: 'saw'
@@ -156,8 +161,6 @@ var varAzBackupGeoCodes = {
   chinaeast: 'sha'
   chinaeast2: 'sha2'
   chinaeast3: 'sha3'
-  germanycentral: 'gec'
-  germanynortheast: 'gne'
 }
 
 // If region entered in parLocation and matches a lookup to varAzBackupGeoCodes then insert Azure Backup Private DNS Zone with appropriate geo code inserted alongside zones in parPrivateDnsZones. If not just return parPrivateDnsZones
