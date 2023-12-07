@@ -55,7 +55,7 @@
       "value": "-PublicIP"
     },
     "parAzBastionEnabled": {
-      "value": true
+      "value": false
     },
     "parAzBastionName": {
       "value": "alz-bastion"
@@ -70,13 +70,13 @@
       "value": "nsg-AzureBastionSubnet"
     },
     "parDdosEnabled": {
-      "value": true
+      "value": false
     },
     "parDdosPlanName": {
       "value": "alz-ddos-plan"
     },
     "parAzFirewallEnabled": {
-      "value": true
+      "value": false
     },
     "parAzFirewallName": {
       "value": "alz-azfw-eastus"
@@ -189,6 +189,9 @@
     "parPrivateDnsZoneAutoMergeAzureBackupZone": {
       "value": true
     },
+    "parVpnGatewayEnabled": {
+      "value": true
+    },
     "parVpnGatewayConfig": {
       "value": {
         "name": "alz-Vpn-Gateway",
@@ -208,6 +211,9 @@
         },
         "vpnClientConfiguration": {}
       }
+    },
+    "parExpressRouteGatewayEnabled": {
+      "value": false
     },
     "parExpressRouteGatewayConfig": {
       "value": {

@@ -150,6 +150,9 @@
     "parPrivateDnsZoneAutoMergeAzureBackupZone": {
       "value": true
     },
+    "parVpnGatewayEnabled": {
+      "value": true
+    },
     "parVpnGatewayConfig": {
       "value": {
         "name": "alz-Vpn-Gateway",
@@ -169,6 +172,9 @@
         },
         "vpnClientConfiguration": {}
       }
+    },
+    "parExpressRouteGatewayEnabled": {
+      "value": true
     },
     "parExpressRouteGatewayConfig": {
       "value": {
