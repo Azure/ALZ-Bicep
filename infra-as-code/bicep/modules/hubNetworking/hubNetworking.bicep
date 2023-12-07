@@ -584,7 +584,7 @@ resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-
   name: 'GatewaySubnet'
 }
 
-module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if (((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr'))) {
+module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: 'deploy-Gateway-Public-IP-${i}'
   params: {
     parLocation: parLocation
@@ -603,7 +603,7 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in va
 }]
 
 //Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
-resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for (gateway, i) in varGwConfig: if (((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr'))) {
+resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: gateway.name
   location: parLocation
   tags: parTags
