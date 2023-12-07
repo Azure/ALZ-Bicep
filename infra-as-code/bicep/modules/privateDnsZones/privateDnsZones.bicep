@@ -185,6 +185,7 @@ resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetwork
     }
   }
   dependsOn: resPrivateDnsZones
+  tags: parTags
 }]
 
 resource resVirtualNetworkLinkFailover 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLinkFailover)) {
@@ -197,6 +198,7 @@ resource resVirtualNetworkLinkFailover 'Microsoft.Network/privateDnsZones/virtua
     }
   }
   dependsOn: resPrivateDnsZones
+  tags: parTags
 }]
 
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
