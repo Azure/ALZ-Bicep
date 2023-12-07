@@ -267,7 +267,7 @@ param parVpnGatewayConfig object = {
   vpnClientConfiguration: {}
 }
 
-@sys.description('Switch to enable/disable VPN virtual network gateway deployment.')
+@sys.description('Switch to enable/disable ExpressRoute virtual network gateway deployment.')
 param parExpressRouteGatewayEnabled bool = true
 
 @sys.description('Configuration for ExpressRoute virtual network gateway to be deployed.')

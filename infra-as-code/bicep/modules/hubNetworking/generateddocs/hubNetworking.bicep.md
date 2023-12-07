@@ -41,7 +41,7 @@ parPrivateDnsZoneAutoMergeAzureBackupZone | No       | Set Parameter to false to
 parVirtualNetworkIdToLinkFailover | No       | Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 parVpnGatewayEnabled | No       | Switch to enable/disable VPN virtual network gateway deployment.
 parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway to be deployed.
-parExpressRouteGatewayEnabled | No       | Switch to enable/disable VPN virtual network gateway deployment.
+parExpressRouteGatewayEnabled | No       | Switch to enable/disable ExpressRoute virtual network gateway deployment.
 parExpressRouteGatewayConfig | No       | Configuration for ExpressRoute virtual network gateway to be deployed.
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
@@ -326,14 +326,6 @@ Switch to enable/disable VPN virtual network gateway deployment.
 Configuration for VPN virtual network gateway to be deployed.
 
 - Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; vpnClientConfiguration=}`
-
-### parExpressRouteGatewayEnabled
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Switch to enable/disable VPN virtual network gateway deployment.
-
-- Default value: `True`
 
 ### parExpressRouteGatewayConfig
 
