@@ -637,7 +637,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for
         name: 'vnetGatewayConfig'
         properties: {
           publicIPAddress: {
-            id: (((gateway.name != 'noconfigVpn' || (gateway.name != 'noconfigEr')) ? modGatewayPublicIp[i].outputs.outPublicIpId : 'na')
+            id: (((gateway.name != 'noconfigVpn') || (gateway.name != 'noconfigEr')) ? modGatewayPublicIp[i].outputs.outPublicIpId : 'na')
           }
           subnet: {
             id: resGatewaySubnetRef.id
