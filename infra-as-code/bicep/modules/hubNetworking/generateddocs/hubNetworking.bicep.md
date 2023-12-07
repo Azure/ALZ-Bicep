@@ -311,25 +311,35 @@ Set Parameter to false to skip the addition of a Private DNS Zone for Azure Back
 
 Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 
+### parVpnGatewayEnabled
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable VPN virtual network gateway deployment.
+
+- Default value: `True`
+
 ### parVpnGatewayConfig
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
-"parVpnGatewayConfig": {
-  "value": {}
-}
+Configuration for VPN virtual network gateway to be deployed.
 
 - Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; vpnClientConfiguration=}`
+
+### parExpressRouteGatewayEnabled
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable VPN virtual network gateway deployment.
+
+- Default value: `True`
 
 ### parExpressRouteGatewayConfig
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
-"parExpressRouteGatewayConfig": {
-  "value": {}
-}
+Configuration for ExpressRoute virtual network gateway to be deployed.
 
 - Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=}`
 
@@ -571,6 +581,9 @@ outHubVirtualNetworkId | string |
         "parVirtualNetworkIdToLinkFailover": {
             "value": ""
         },
+        "parVpnGatewayEnabled": {
+            "value": true
+        },
         "parVpnGatewayConfig": {
             "value": {
                 "name": "[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]",
@@ -590,6 +603,9 @@ outHubVirtualNetworkId | string |
                 },
                 "vpnClientConfiguration": {}
             }
+        },
+        "parExpressRouteGatewayEnabled": {
+            "value": true
         },
         "parExpressRouteGatewayConfig": {
             "value": {
