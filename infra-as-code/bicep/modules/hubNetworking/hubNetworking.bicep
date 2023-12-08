@@ -27,6 +27,13 @@ param parCompanyPrefix string = 'alz'
 @sys.description('Name for Hub Network.')
 param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 
+@sys.description('Global Resource Lock Configuration used for all resources deployed in this module.')
+param parGlobalResourceLock object = {
+  enableLock: false
+  level: 'CanNotDelete'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+}
+
 @sys.description('The IP address range for Hub Network.')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
@@ -61,6 +68,13 @@ param parSubnets subnetOptionsType = [
 @sys.description('Array of DNS Server IP addresses for VNet.')
 param parDnsServerIps array = []
 
+@sys.description('Resource Lock Configuration for Virtual Network.')
+param parVirtualNetworkLock object = {
+  enableLock: false
+  level: 'CanNotDelete'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+}
+
 @sys.description('Public IP Address SKU.')
 @allowed([
   'Basic'
@@ -73,6 +87,13 @@ param parPublicIpPrefix string = ''
 
 @sys.description('Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix')
 param parPublicIpSuffix string = '-PublicIP'
+
+@sys.description('Resource Lock Configuration for Public IP.')
+param parPublicIPLock object = {
+  enableLock: false
+  level: 'CanNotDelete'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+}
 
 @sys.description('Switch to enable/disable Azure Bastion deployment.')
 param parAzBastionEnabled bool = true
@@ -93,11 +114,25 @@ param parAzBastionTunneling bool = false
 @sys.description('Name for Azure Bastion Subnet NSG.')
 param parAzBastionNsgName string = 'nsg-AzureBastionSubnet'
 
+@sys.description('Resource Lock Configuration for Bastion.')
+param parBastionLock object = {
+  enableLock: false
+  level: 'CanNotDelete'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+}
+
 @sys.description('Switch to enable/disable DDoS Network Protection deployment.')
 param parDdosEnabled bool = true
 
 @sys.description('DDoS Plan Name.')
 param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
+
+@sys.description('Resource Lock Configuration for DDoS Plan.')
+param parDDoSLock object = {
+  enableLock: false
+  level: 'CanNotDelete'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+}
 
 @sys.description('Switch to enable/disable Azure Firewall deployment.')
 param parAzFirewallEnabled bool = true
@@ -154,11 +189,25 @@ param parAzFirewallDnsProxyEnabled bool = true
 @sys.description('Array of custom DNS servers used by Azure Firewall')
 param parAzFirewallDnsServers array = []
 
+@sys.description('Resource Lock Configuration for Azure Firewall.')
+param parAzureFirewallLock object = {
+  enableLock: false
+  level: 'CanNotDelete'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+}
+
 @sys.description('Name of Route table to create for the default route of Hub.')
 param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 
 @sys.description('Switch to enable/disable BGP Propagation on route table.')
 param parDisableBgpRoutePropagation bool = false
+
+@sys.description('Resource Lock Configuration for Hub Route Table.')
+param parHubRouteTableLock object = {
+  enableLock: false
+  level: 'CanNotDelete'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+}
 
 @sys.description('Switch to enable/disable Private DNS Zones deployment.')
 param parPrivateDnsZonesEnabled bool = true
@@ -243,6 +292,13 @@ param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
 @sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links')
 param parVirtualNetworkIdToLinkFailover string = ''
 
+@sys.description('Resource Lock Configuration for Private DNS Zone(s).')
+param parPrivateDNSZonesLock object = {
+  enableLock: false
+  level: 'CanNotDelete'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+}
+
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
 @sys.description('''Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
 "parVpnGatewayConfig": {
@@ -267,6 +323,13 @@ param parVpnGatewayConfig object = {
   vpnClientConfiguration: {}
 }
 
+@sys.description('Resource Lock Configuration for VPN Virtual Network Gateway.')
+param parVPNGatewayLock object = {
+  enableLock: false
+  level: 'CanNotDelete'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+}
+
 @sys.description('''Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
 "parExpressRouteGatewayConfig": {
   "value": {}
@@ -287,6 +350,13 @@ param parExpressRouteGatewayConfig object = {
     bgpPeeringAddress: ''
     peerWeight: '5'
   }
+}
+
+@sys.description('Resource Lock Configuration for ExpressRoute Virtual Network Gateway.')
+param parExpressRouteGatewayLock object = {
+  enableLock: false
+  level: 'CanNotDelete'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
 
 @sys.description('Tags you would like to be applied to all resources in this module.')
