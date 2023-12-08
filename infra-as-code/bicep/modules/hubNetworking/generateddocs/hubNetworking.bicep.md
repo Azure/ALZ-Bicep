@@ -327,6 +327,14 @@ Configuration for VPN virtual network gateway to be deployed.
 
 - Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; vpnClientConfiguration=}`
 
+### parExpressRouteGatewayEnabled
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable ExpressRoute virtual network gateway deployment.
+
+- Default value: `True`
+
 ### parExpressRouteGatewayConfig
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
