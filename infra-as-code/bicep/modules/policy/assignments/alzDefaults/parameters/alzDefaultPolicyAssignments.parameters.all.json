@@ -8,6 +8,9 @@
     "parTopLevelManagementGroupSuffix": {
       "value": ""
     },
+    "parDdosEnabled": {
+      "value": true
+    },
     "parPlatformMgAlzDefaultsEnable": {
       "value": true
     },
