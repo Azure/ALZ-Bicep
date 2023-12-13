@@ -87,6 +87,9 @@ param parVirtualNetworkIdToLink string = ''
 @sys.description('Resource ID of VNet for Failover Private DNS Zone VNet Links.')
 param parVirtualNetworkIdToLinkFailover string = ''
 
+@sys.description('Resource Lock Configuration Object')
+param parResourceLockConfig object = {}
+
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
@@ -173,6 +176,15 @@ resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [fo
   name: privateDnsZone
   location: 'global'
   tags: parTags
+}]
+
+resource lock 'Microsoft.Authorization/locks@2020-05-01' = [for (privateDnsZone, index) in varPrivateDnsZonesMerge: if (parResourceLockConfig.enableLock) {
+  scope: resPrivateDnsZones[index]
+  name: '${privateDnsZone}-lock'
+  properties: {
+    level: parResourceLockConfig.level
+    notes: parResourceLockConfig.notes
+  }
 }]
 
 resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLink)) {

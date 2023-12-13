@@ -21,6 +21,9 @@ param parPublicIpProperties object
 @sys.description('Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty.')
 param parAvailabilityZones array = []
 
+@sys.description('Resource Lock Configuration Object')
+param parResourceLockConfig object = {}
+
 @sys.description('Tags to be applied to resource when deployed.')
 param parTags object = {}
 
@@ -39,6 +42,15 @@ resource resPublicIp 'Microsoft.Network/publicIPAddresses@2023-02-01' ={
   properties: parPublicIpProperties
 }
 
+resource lock 'Microsoft.Authorization/locks@2020-05-01' = if (parResourceLockConfig.enableLock) {
+  scope: resPublicIp
+  name: '${resPublicIp.name}-lock'
+  properties: {
+    level: parResourceLockConfig.level
+    notes: parResourceLockConfig.notes
+  }
+}
+
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
   #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
@@ -47,3 +59,4 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdRes
 }
 
 output outPublicIpId string = resPublicIp.id
+output outPublicIpName string = resPublicIp.name

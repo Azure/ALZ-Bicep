@@ -241,6 +241,69 @@
         "22",
         "3389"
       ]
+    },
+    "parGlobalResourceLock": {
+      "value": {
+        "enableLock": false,
+        "level": "CanNotDelete",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parVirtualNetworkLock": {
+      "value": {
+        "enableLock": false,
+        "level": "CanNotDelete",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parPublicIPLock": {
+      "value": {
+        "enableLock": false,
+        "level": "CanNotDelete",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parBastionLock": {
+      "value": {
+        "enableLock": false,
+        "level": "CanNotDelete",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parDDoSLock": {
+      "value": {
+        "enableLock": false,
+        "level": "CanNotDelete",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parAzureFirewallLock": {
+      "value": {
+        "enableLock": false,
+        "level": "CanNotDelete",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parHubRouteTableLock": {
+      "value": {
+        "enableLock": false,
+        "level": "CanNotDelete",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parPrivateDNSZonesLock": {
+      "value": {
+        "enableLock": false,
+        "level": "CanNotDelete",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parVirtualNetworkGatewayLock": {
+      "value": {
+        "enableLock": false,
+        "level": "CanNotDelete",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
     }
   }
 }

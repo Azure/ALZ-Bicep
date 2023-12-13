@@ -88,13 +88,6 @@ param parPublicIpPrefix string = ''
 @sys.description('Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix')
 param parPublicIpSuffix string = '-PublicIP'
 
-@sys.description('Resource Lock Configuration for Public IP.')
-param parPublicIPLock object = {
-  enableLock: false
-  level: 'CanNotDelete'
-  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
-}
-
 @sys.description('Switch to enable/disable Azure Bastion deployment.')
 param parAzBastionEnabled bool = true
 
@@ -323,13 +316,6 @@ param parVpnGatewayConfig object = {
   vpnClientConfiguration: {}
 }
 
-@sys.description('Resource Lock Configuration for VPN Virtual Network Gateway.')
-param parVPNGatewayLock object = {
-  enableLock: false
-  level: 'CanNotDelete'
-  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
-}
-
 @sys.description('''Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
 "parExpressRouteGatewayConfig": {
   "value": {}
@@ -353,7 +339,7 @@ param parExpressRouteGatewayConfig object = {
 }
 
 @sys.description('Resource Lock Configuration for ExpressRoute Virtual Network Gateway.')
-param parExpressRouteGatewayLock object = {
+param parVirtualNetworkGatewayLock object = {
   enableLock: false
   level: 'CanNotDelete'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -424,6 +410,15 @@ resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01
   location: parLocation
   tags: parTags
 }
+// Create resource lock if parDdosEnabled is true and parGlobalResourceLock.enableLock is true or if parDDoSLock.enableLock is true
+module modDDoSProtectionPlanLock '../resourcelocks/ddosPlanLock.bicep' = if (parDdosEnabled && (parDDoSLock.enableLock || parGlobalResourceLock.enableLock)) {
+  name: 'deploy-DDoS-Protection-Plan-Lock'
+  params: {
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parDDoSLock
+    parResourceName: resDdosProtectionPlan.name
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
 
 resource resHubVnet 'Microsoft.Network/virtualNetworks@2023-02-01' = {
   dependsOn: [
@@ -449,6 +444,16 @@ resource resHubVnet 'Microsoft.Network/virtualNetworks@2023-02-01' = {
   }
 }
 
+// Create Virtual Network resource lock if parGlobalResourceLock.enableLock is true or if parVirtualNetworkLock.enableLock is true
+module modVirtualNetworkLock '../resourcelocks/virtualNetworkLock.bicep' = if (parVirtualNetworkLock.enableLock || parGlobalResourceLock.enableLock) {
+  name: 'deploy-Virtual-Network-Lock'
+  params: {
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parVirtualNetworkLock
+    parResourceName: resHubVnet.name
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
 module modBastionPublicIp '../publicIp/publicIp.bicep' = if (parAzBastionEnabled) {
   name: 'deploy-Bastion-Public-IP'
   params: {
@@ -461,6 +466,7 @@ module modBastionPublicIp '../publicIp/publicIp.bicep' = if (parAzBastionEnabled
       publicIpAddressVersion: 'IPv4'
       publicIpAllocationMethod: 'Static'
     }
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parBastionLock
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -620,6 +626,16 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = if
   }
 }
 
+// Create Bastion NSG resource lock if parAzBastionEnabled is true and parGlobalResourceLock.enableLock is true or if parBastionLock.enableLock is true
+module modBastionNsgLock '../resourcelocks/networkSecurityGroupLock.bicep' = if (parAzBastionEnabled && (parBastionLock.enableLock || parGlobalResourceLock.enableLock)) {
+  name: 'deploy-Bastion-NSG-Lock'
+  params: {
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parBastionLock
+    parResourceName: resBastionNsg.name
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
 // AzureBastionSubnet is required to deploy Bastion service. This subnet must exist in the parsubnets array if you enable Bastion Service.
 // There is a minimum subnet requirement of /27 prefix.
 // If you are deploying standard this needs to be larger. https://docs.microsoft.com/en-us/azure/bastion/configuration-settings#subnet
@@ -649,6 +665,16 @@ resource resBastion 'Microsoft.Network/bastionHosts@2023-02-01' = if (parAzBasti
   }
 }
 
+// Create Bastion resource lock if parAzBastionEnabled is true and parGlobalResourceLock.enableLock is true or if parBastionLock.enableLock is true
+module modBastionLock '../resourcelocks/bastionLock.bicep' = if (parAzBastionEnabled && (parBastionLock.enableLock || parGlobalResourceLock.enableLock)) {
+  name: 'deploy-Bastion-Lock'
+  params: {
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parBastionLock
+    parResourceName: resBastion.name
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
 resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = {
   parent: resHubVnet
   name: 'GatewaySubnet'
@@ -667,6 +693,7 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in va
     parPublicIpSku: {
       name: parPublicIpSku
     }
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parVirtualNetworkGatewayLock
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -718,6 +745,16 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for
   }
 }]
 
+// Create a Virtual Network Gateway resource lock if gateway.name is not equal to noconfigVpn or noconfigEr and parGlobalResourceLock.enableLock is true or if parVirtualNetworkGatewayLock.enableLock is true
+module modVirtualNetworkGatewayLock '../resourcelocks/virtualNetworkGatewayLock.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && (parVirtualNetworkGatewayLock.enableLock || parGlobalResourceLock.enableLock)) {
+  name: 'deploy-Virtual-Network-Gateway-Lock-${i}'
+  params: {
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parVirtualNetworkGatewayLock
+    parResourceName: resGateway[i].name
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}]
+
 resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = {
   parent: resHubVnet
   name: 'AzureFirewallSubnet'
@@ -741,6 +778,7 @@ module modAzureFirewallPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewall
     parPublicIpSku: {
       name: parPublicIpSku
     }
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parAzureFirewallLock
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -759,6 +797,7 @@ module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFire
     parPublicIpSku: {
       name: 'Standard'
     }
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parAzureFirewallLock
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -782,6 +821,16 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
       tier: parAzFirewallTier
     }
     threatIntelMode: parAzFirewallIntelMode
+  }
+}
+
+// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.enableLock is true or if parAzureFirewallLock.enableLock is true
+module modAzureFirewallPolicyLock '../resourcelocks/firewallPolicyLock.bicep' = if (parAzFirewallEnabled && (parAzureFirewallLock.enableLock || parGlobalResourceLock.enableLock)) {
+  name: 'deploy-Firewall-Policy-Lock'
+  params: {
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parAzureFirewallLock
+    parResourceName: resFirewallPolicies.name
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
@@ -851,6 +900,16 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (pa
   }
 }
 
+// Create Azure Firewall resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.enableLock is true or if parAzureFirewallLock.enableLock is true
+module modAzureFirewallLock '../resourcelocks/azureFirewallLock.bicep' = if (parAzFirewallEnabled && (parAzureFirewallLock.enableLock || parGlobalResourceLock.enableLock)) {
+  name: 'deploy-Firewall-Lock'
+  params: {
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parAzureFirewallLock
+    parResourceName: resAzureFirewall.name
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 resource resHubRouteTable 'Microsoft.Network/routeTables@2023-02-01' = if (parAzFirewallEnabled) {
   name: parHubRouteTableName
@@ -871,6 +930,16 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2023-02-01' = if (parAz
   }
 }
 
+// Create a Route Table if parAzFirewallEnabled is true and parGlobalResourceLock.enableLock is true or if parHubRouteTableLock.enableLock is true
+module modHubRouteTableLock '../resourcelocks/routeTableLock.bicep' = if (parAzFirewallEnabled && (parHubRouteTableLock.enableLock || parGlobalResourceLock.enableLock)) {
+  name: 'deploy-Hub-Route-Table-Lock'
+  params: {
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parHubRouteTableLock
+    parResourceName: resHubRouteTable.name
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
 module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
@@ -881,6 +950,7 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
     parVirtualNetworkIdToLinkFailover: parVirtualNetworkIdToLinkFailover
     parPrivateDnsZones: parPrivateDnsZones
     parPrivateDnsZoneAutoMergeAzureBackupZone: parPrivateDnsZoneAutoMergeAzureBackupZone
+    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parPrivateDNSZonesLock
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
