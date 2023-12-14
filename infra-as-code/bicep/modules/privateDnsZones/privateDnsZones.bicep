@@ -1,6 +1,17 @@
 metadata name = 'ALZ Bicep - Private DNS Zones'
 metadata description = 'Module used to set up Private DNS Zones in accordance to Azure Landing Zones'
 
+type lockType = {
+  @description('Optional. Specify the name of lock.')
+  name: string?
+
+  @description('Optional. The lock settings of the service.')
+  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+
+  @description('Optional. Notes about this lock.')
+  notes: string?
+}
+
 @sys.description('The Azure Region to deploy the resources into.')
 param parLocation string = resourceGroup().location
 
@@ -88,7 +99,7 @@ param parVirtualNetworkIdToLink string = ''
 param parVirtualNetworkIdToLinkFailover string = ''
 
 @sys.description('Resource Lock Configuration Object')
-param parResourceLockConfig object = {}
+param parResourceLockConfig lockType
 
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
@@ -178,12 +189,12 @@ resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [fo
   tags: parTags
 }]
 
-resource lock 'Microsoft.Authorization/locks@2020-05-01' = [for (privateDnsZone, index) in varPrivateDnsZonesMerge: if (parResourceLockConfig.enableLock) {
+resource lock 'Microsoft.Authorization/locks@2020-05-01' = [for (privateDnsZone, index) in varPrivateDnsZonesMerge: if (parResourceLockConfig.kind != 'None') {
   scope: resPrivateDnsZones[index]
-  name: '${privateDnsZone}-lock'
+  name: parResourceLockConfig.?name ?? '${privateDnsZone}-lock'
   properties: {
-    level: parResourceLockConfig.level
-    notes: parResourceLockConfig.notes
+    level: parResourceLockConfig.kind
+    notes: parResourceLockConfig.?notes ?? ''
   }
 }]
 

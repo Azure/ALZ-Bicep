@@ -1,6 +1,17 @@
 metadata name = 'ALZ Bicep - Public IP creation module'
 metadata description = 'Module used to set up Public IP for Azure Landing Zones'
 
+type lockType = {
+  @description('Optional. Specify the name of lock.')
+  name: string?
+
+  @description('Optional. The lock settings of the service.')
+  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+
+  @description('Optional. Notes about this lock.')
+  notes: string?
+}
+
 @sys.description('Azure Region to deploy Public IP Address to.')
 param parLocation string = resourceGroup().location
 
@@ -22,7 +33,7 @@ param parPublicIpProperties object
 param parAvailabilityZones array = []
 
 @sys.description('Resource Lock Configuration Object')
-param parResourceLockConfig object = {}
+param parResourceLockConfig lockType
 
 @sys.description('Tags to be applied to resource when deployed.')
 param parTags object = {}
@@ -42,12 +53,12 @@ resource resPublicIp 'Microsoft.Network/publicIPAddresses@2023-02-01' ={
   properties: parPublicIpProperties
 }
 
-resource lock 'Microsoft.Authorization/locks@2020-05-01' = if (parResourceLockConfig.enableLock) {
+resource lock 'Microsoft.Authorization/locks@2020-05-01' = if (parResourceLockConfig.kind != 'None') {
   scope: resPublicIp
-  name: '${resPublicIp.name}-lock'
+  name: parResourceLockConfig.?name ?? '${resPublicIp.name}-lock'
   properties: {
-    level: parResourceLockConfig.level
-    notes: parResourceLockConfig.notes
+    level: parResourceLockConfig.kind
+    notes: parResourceLockConfig.?notes ?? ''
   }
 }
 

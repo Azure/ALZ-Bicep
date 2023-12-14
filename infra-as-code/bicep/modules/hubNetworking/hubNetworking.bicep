@@ -18,6 +18,17 @@ type subnetOptionsType = ({
   delegation: string?
 })[]
 
+type lockType = {
+  @description('Optional. Specify the name of lock.')
+  name: string?
+
+  @description('Optional. The lock settings of the service.')
+  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+
+  @description('Optional. Notes about this lock.')
+  notes: string?
+}
+
 @sys.description('The Azure Region to deploy the resources into.')
 param parLocation string = resourceGroup().location
 
@@ -28,9 +39,8 @@ param parCompanyPrefix string = 'alz'
 param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 
 @sys.description('Global Resource Lock Configuration used for all resources deployed in this module.')
-param parGlobalResourceLock object = {
-  enableLock: false
-  level: 'CanNotDelete'
+param parGlobalResourceLock lockType = {
+  kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
 
@@ -69,9 +79,8 @@ param parSubnets subnetOptionsType = [
 param parDnsServerIps array = []
 
 @sys.description('Resource Lock Configuration for Virtual Network.')
-param parVirtualNetworkLock object = {
-  enableLock: false
-  level: 'CanNotDelete'
+param parVirtualNetworkLock lockType = {
+  kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
 
@@ -108,9 +117,8 @@ param parAzBastionTunneling bool = false
 param parAzBastionNsgName string = 'nsg-AzureBastionSubnet'
 
 @sys.description('Resource Lock Configuration for Bastion.')
-param parBastionLock object = {
-  enableLock: false
-  level: 'CanNotDelete'
+param parBastionLock lockType = {
+  kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
 
@@ -121,9 +129,8 @@ param parDdosEnabled bool = true
 param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
 
 @sys.description('Resource Lock Configuration for DDoS Plan.')
-param parDDoSLock object = {
-  enableLock: false
-  level: 'CanNotDelete'
+param parDDoSLock lockType = {
+  kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
 
@@ -183,9 +190,8 @@ param parAzFirewallDnsProxyEnabled bool = true
 param parAzFirewallDnsServers array = []
 
 @sys.description('Resource Lock Configuration for Azure Firewall.')
-param parAzureFirewallLock object = {
-  enableLock: false
-  level: 'CanNotDelete'
+param parAzureFirewallLock lockType = {
+  kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
 
@@ -196,9 +202,8 @@ param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 param parDisableBgpRoutePropagation bool = false
 
 @sys.description('Resource Lock Configuration for Hub Route Table.')
-param parHubRouteTableLock object = {
-  enableLock: false
-  level: 'CanNotDelete'
+param parHubRouteTableLock lockType = {
+  kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
 
@@ -286,9 +291,8 @@ param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
 param parVirtualNetworkIdToLinkFailover string = ''
 
 @sys.description('Resource Lock Configuration for Private DNS Zone(s).')
-param parPrivateDNSZonesLock object = {
-  enableLock: false
-  level: 'CanNotDelete'
+param parPrivateDNSZonesLock lockType = {
+  kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
 
@@ -339,9 +343,8 @@ param parExpressRouteGatewayConfig object = {
 }
 
 @sys.description('Resource Lock Configuration for ExpressRoute Virtual Network Gateway.')
-param parVirtualNetworkGatewayLock object = {
-  enableLock: false
-  level: 'CanNotDelete'
+param parVirtualNetworkGatewayLock lockType = {
+  kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
 
@@ -410,13 +413,14 @@ resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01
   location: parLocation
   tags: parTags
 }
-// Create resource lock if parDdosEnabled is true and parGlobalResourceLock.enableLock is true or if parDDoSLock.enableLock is true
-module modDDoSProtectionPlanLock '../resourcelocks/ddosPlanLock.bicep' = if (parDdosEnabled && (parDDoSLock.enableLock || parGlobalResourceLock.enableLock)) {
-  name: 'deploy-DDoS-Protection-Plan-Lock'
-  params: {
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parDDoSLock
-    parResourceName: resDdosProtectionPlan.name
-    parTelemetryOptOut: parTelemetryOptOut
+
+// Create resource lock if parDdosEnabled is true and parGlobalResourceLock.kind != 'None' or if parDDoSLock.kind != 'None'
+resource resDDoSProtectionPlanLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDdosEnabled && (parDDoSLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resDdosProtectionPlan
+  name: parDDoSLock.?name ?? '${resDdosProtectionPlan.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDDoSLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDDoSLock.?notes
   }
 }
 
@@ -444,13 +448,13 @@ resource resHubVnet 'Microsoft.Network/virtualNetworks@2023-02-01' = {
   }
 }
 
-// Create Virtual Network resource lock if parGlobalResourceLock.enableLock is true or if parVirtualNetworkLock.enableLock is true
-module modVirtualNetworkLock '../resourcelocks/virtualNetworkLock.bicep' = if (parVirtualNetworkLock.enableLock || parGlobalResourceLock.enableLock) {
-  name: 'deploy-Virtual-Network-Lock'
-  params: {
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parVirtualNetworkLock
-    parResourceName: resHubVnet.name
-    parTelemetryOptOut: parTelemetryOptOut
+// Create a virtual network resource lock if parGlobalResourceLock.kind != 'None' or if parVirtualNetworkLock.kind != 'None'
+resource resVirtualNetworkLock 'Microsoft.Authorization/locks@2020-05-01' = if (parVirtualNetworkLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resHubVnet
+  name: parVirtualNetworkLock.?name ?? '${resHubVnet.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parVirtualNetworkLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parVirtualNetworkLock.?notes
   }
 }
 
@@ -466,7 +470,7 @@ module modBastionPublicIp '../publicIp/publicIp.bicep' = if (parAzBastionEnabled
       publicIpAddressVersion: 'IPv4'
       publicIpAllocationMethod: 'Static'
     }
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parBastionLock
+    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parBastionLock
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -626,13 +630,13 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = if
   }
 }
 
-// Create Bastion NSG resource lock if parAzBastionEnabled is true and parGlobalResourceLock.enableLock is true or if parBastionLock.enableLock is true
-module modBastionNsgLock '../resourcelocks/networkSecurityGroupLock.bicep' = if (parAzBastionEnabled && (parBastionLock.enableLock || parGlobalResourceLock.enableLock)) {
-  name: 'deploy-Bastion-NSG-Lock'
-  params: {
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parBastionLock
-    parResourceName: resBastionNsg.name
-    parTelemetryOptOut: parTelemetryOptOut
+// Create bastion nsg resource lock if parAzBastionEnbled is true and parGlobalResourceLock.kind != 'None' or if parBastionLock.kind != 'None'
+resource resBastionNsgLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzBastionEnabled && (parBastionLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resBastionNsg
+  name: parBastionLock.?name ?? '${resBastionNsg.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parBastionLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parBastionLock.?notes
   }
 }
 
@@ -665,13 +669,13 @@ resource resBastion 'Microsoft.Network/bastionHosts@2023-02-01' = if (parAzBasti
   }
 }
 
-// Create Bastion resource lock if parAzBastionEnabled is true and parGlobalResourceLock.enableLock is true or if parBastionLock.enableLock is true
-module modBastionLock '../resourcelocks/bastionLock.bicep' = if (parAzBastionEnabled && (parBastionLock.enableLock || parGlobalResourceLock.enableLock)) {
-  name: 'deploy-Bastion-Lock'
-  params: {
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parBastionLock
-    parResourceName: resBastion.name
-    parTelemetryOptOut: parTelemetryOptOut
+// Create Bastion resource lock if parAzBastionEnabled is true and parGlobalResourceLock.kind != 'None' or if parBastionLock.kind != 'None'
+resource resBastionLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzBastionEnabled && (parBastionLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resBastion
+  name: parBastionLock.?name ?? '${resBastion.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parBastionLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parBastionLock.?notes
   }
 }
 
@@ -693,7 +697,7 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in va
     parPublicIpSku: {
       name: parPublicIpSku
     }
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parVirtualNetworkGatewayLock
+    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parVirtualNetworkGatewayLock
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -745,13 +749,13 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for
   }
 }]
 
-// Create a Virtual Network Gateway resource lock if gateway.name is not equal to noconfigVpn or noconfigEr and parGlobalResourceLock.enableLock is true or if parVirtualNetworkGatewayLock.enableLock is true
-module modVirtualNetworkGatewayLock '../resourcelocks/virtualNetworkGatewayLock.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && (parVirtualNetworkGatewayLock.enableLock || parGlobalResourceLock.enableLock)) {
-  name: 'deploy-Virtual-Network-Gateway-Lock-${i}'
-  params: {
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parVirtualNetworkGatewayLock
-    parResourceName: resGateway[i].name
-    parTelemetryOptOut: parTelemetryOptOut
+// Create a Virtual Network Gateway resource lock if gateway.name is not equal to noconfigVpn or noconfigEr and parGlobalResourceLock.kind != 'None' or if parVirtualNetworkGatewayLock.kind != 'None'
+resource resVirtualNetworkGatewayLock 'Microsoft.Authorization/locks@2020-05-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && (parVirtualNetworkGatewayLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resGateway[i]
+  name: parVirtualNetworkGatewayLock.?name ?? '${resGateway[i].name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parVirtualNetworkGatewayLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parVirtualNetworkGatewayLock.?notes
   }
 }]
 
@@ -778,7 +782,7 @@ module modAzureFirewallPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewall
     parPublicIpSku: {
       name: parPublicIpSku
     }
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parAzureFirewallLock
+    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parAzureFirewallLock
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -797,7 +801,7 @@ module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFire
     parPublicIpSku: {
       name: 'Standard'
     }
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parAzureFirewallLock
+    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parAzureFirewallLock
     parTags: parTags
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -824,13 +828,13 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
   }
 }
 
-// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.enableLock is true or if parAzureFirewallLock.enableLock is true
-module modAzureFirewallPolicyLock '../resourcelocks/firewallPolicyLock.bicep' = if (parAzFirewallEnabled && (parAzureFirewallLock.enableLock || parGlobalResourceLock.enableLock)) {
-  name: 'deploy-Firewall-Policy-Lock'
-  params: {
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parAzureFirewallLock
-    parResourceName: resFirewallPolicies.name
-    parTelemetryOptOut: parTelemetryOptOut
+// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
+resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallEnabled && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resFirewallPolicies
+  name: parAzureFirewallLock.?name ?? '${resFirewallPolicies.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallLock.?notes
   }
 }
 
@@ -900,13 +904,13 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (pa
   }
 }
 
-// Create Azure Firewall resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.enableLock is true or if parAzureFirewallLock.enableLock is true
-module modAzureFirewallLock '../resourcelocks/azureFirewallLock.bicep' = if (parAzFirewallEnabled && (parAzureFirewallLock.enableLock || parGlobalResourceLock.enableLock)) {
-  name: 'deploy-Firewall-Lock'
-  params: {
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parAzureFirewallLock
-    parResourceName: resAzureFirewall.name
-    parTelemetryOptOut: parTelemetryOptOut
+// Create Azure Firewall resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
+resource resAzureFirewallLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallEnabled && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resAzureFirewall
+  name: parAzureFirewallLock.?name ?? '${resAzureFirewall.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallLock.?notes
   }
 }
 
@@ -930,13 +934,13 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2023-02-01' = if (parAz
   }
 }
 
-// Create a Route Table if parAzFirewallEnabled is true and parGlobalResourceLock.enableLock is true or if parHubRouteTableLock.enableLock is true
-module modHubRouteTableLock '../resourcelocks/routeTableLock.bicep' = if (parAzFirewallEnabled && (parHubRouteTableLock.enableLock || parGlobalResourceLock.enableLock)) {
-  name: 'deploy-Hub-Route-Table-Lock'
-  params: {
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parHubRouteTableLock
-    parResourceName: resHubRouteTable.name
-    parTelemetryOptOut: parTelemetryOptOut
+// Create a Route Table if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parHubRouteTableLock.kind != 'None'
+resource resHubRouteTableLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallEnabled && (parHubRouteTableLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resHubRouteTable
+  name: parHubRouteTableLock.?name ?? '${resHubRouteTable.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parHubRouteTableLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parHubRouteTableLock.?notes
   }
 }
 
@@ -950,7 +954,7 @@ module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPr
     parVirtualNetworkIdToLinkFailover: parVirtualNetworkIdToLinkFailover
     parPrivateDnsZones: parPrivateDnsZones
     parPrivateDnsZoneAutoMergeAzureBackupZone: parPrivateDnsZoneAutoMergeAzureBackupZone
-    parResourceLockConfig: (parGlobalResourceLock.enableLock) ? parGlobalResourceLock : parPrivateDNSZonesLock
+    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parPrivateDNSZonesLock
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
