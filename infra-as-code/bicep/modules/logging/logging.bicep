@@ -1,6 +1,23 @@
 metadata name = 'ALZ Bicep - Logging Module'
 metadata description = 'ALZ Bicep Module used to set up Logging'
 
+type lockType = {
+  @description('Optional. Specify the name of lock.')
+  name: string?
+
+  @description('Optional. The lock settings of the service.')
+  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+
+  @description('Optional. Notes about this lock.')
+  notes: string?
+}
+
+@sys.description('Global Resource Lock Configuration used for all resources deployed in this module.')
+param parGlobalResourceLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Logging Module.'
+}
+
 @sys.description('Log Analytics Workspace name.')
 param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 
@@ -38,6 +55,12 @@ param parLogAnalyticsWorkspaceCapacityReservationLevel int = 100
 @sys.description('Number of days of log retention for Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
 
+@sys.description('Resource Lock Configuration for Log Analytics Workspace.')
+param parLogAnalyticsWorkspaceLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Logging Module.'
+}
+
 @allowed([
   'AgentHealthAssessment'
   'AntiMalware'
@@ -65,6 +88,12 @@ param parLogAnalyticsWorkspaceSolutions array = [
   'VMInsights'
 ]
 
+@sys.description('Resource Lock Configuration for Log Analytics Workspace Solutions.')
+param parLogAnalyticsWorkspaceSolutionsLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Logging Module.'
+}
+
 @sys.description('Log Analytics Workspace should be linked with the automation account.')
 param parLogAnalyticsWorkspaceLinkAutomationAccount bool = true
 
@@ -79,6 +108,12 @@ param parAutomationAccountUseManagedIdentity bool = true
 
 @sys.description('Automation Account - Public network access.')
 param parAutomationAccountPublicNetworkAccess bool = true
+
+@sys.description('Resource Lock Configuration for Automation Account.')
+param parAutomationAccountLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Logging Module.'
+}
 
 @sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
@@ -119,6 +154,16 @@ resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2022-08-0
   }
 }
 
+// Create a resource lock for the automation account if parGlobalResourceLock.kind != 'None' or if parAutomationAccountLock.kind != 'None'
+resource resAutomationAccountLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAutomationAccountLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resAutomationAccount
+  name: parAutomationAccountLock.?name ?? '${resAutomationAccount.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAutomationAccountLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAutomationAccountLock.?notes
+  }
+}
+
 resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: parLogAnalyticsWorkspaceName
   location: parLogAnalyticsWorkspaceLocation
@@ -129,6 +174,16 @@ resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022
       capacityReservationLevel: parLogAnalyticsWorkspaceSkuName == 'CapacityReservation' ? parLogAnalyticsWorkspaceCapacityReservationLevel : null
     }
     retentionInDays: parLogAnalyticsWorkspaceLogRetentionInDays
+  }
+}
+
+// Create a resource lock for the log analytics workspace if parGlobalResourceLock.kind != 'None' or if parLogAnalyticsWorkspaceLock.kind != 'None'
+resource resLogAnalyticsWorkspaceLock 'Microsoft.Authorization/locks@2020-05-01' = if (parLogAnalyticsWorkspaceLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resLogAnalyticsWorkspace
+  name: parLogAnalyticsWorkspaceLock.?name ?? '${resLogAnalyticsWorkspace.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parLogAnalyticsWorkspaceLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parLogAnalyticsWorkspaceLock.?notes
   }
 }
 
@@ -149,6 +204,16 @@ resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solut
     product: 'OMSGallery/${solution}'
     publisher: 'Microsoft'
     promotionCode: ''
+  }
+}]
+
+// Create a resource lock for each log analytics workspace solutions in parLogAnalyticsWorkspaceSolutions if parGlobalResourceLock.kind != 'None' or if parLogAnalyticsWorkspaceSolutionsLock.kind != 'None'
+resource resLogAnalyticsWorkspaceSolutionsLock 'Microsoft.Authorization/locks@2020-05-01' = [for (solution, index) in parLogAnalyticsWorkspaceSolutions: if (parLogAnalyticsWorkspaceSolutionsLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resLogAnalyticsWorkspaceSolutions[index]
+  name: parLogAnalyticsWorkspaceSolutionsLock.?name ?? '${resLogAnalyticsWorkspaceSolutions[index].name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parLogAnalyticsWorkspaceSolutionsLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parLogAnalyticsWorkspaceSolutionsLock.?notes
   }
 }]
 
