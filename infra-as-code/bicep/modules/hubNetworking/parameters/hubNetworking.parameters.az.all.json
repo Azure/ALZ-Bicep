@@ -256,7 +256,7 @@
     },
     "parGlobalResourceLock": {
       "value": {
-        "kind": "CanNotDelete",
+        "kind": "None",
         "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
       }
     },

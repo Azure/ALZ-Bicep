@@ -211,6 +211,15 @@ resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetwork
   tags: parTags
 }]
 
+resource lockLink 'Microsoft.Authorization/locks@2020-05-01' = [for (privateDnsZone, index) in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLink) && parResourceLockConfig.kind != 'None') {
+  scope: resVirtualNetworkLink[index]
+  name: parResourceLockConfig.?name ?? 'link-${uniqueString(parVirtualNetworkIdToLink)}-${privateDnsZone}-lock'
+  properties: {
+    level: parResourceLockConfig.kind
+    notes: parResourceLockConfig.?notes ?? ''
+  }
+}]
+
 resource resVirtualNetworkLinkFailover 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = [for privateDnsZoneName in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLinkFailover)) {
   name: '${privateDnsZoneName}/${take('fallbacklink-${uniqueString(parVirtualNetworkIdToLinkFailover)}', 80)}'
   location: 'global'
@@ -222,6 +231,15 @@ resource resVirtualNetworkLinkFailover 'Microsoft.Network/privateDnsZones/virtua
   }
   dependsOn: resPrivateDnsZones
   tags: parTags
+}]
+
+resource lockFailoverLink 'Microsoft.Authorization/locks@2020-05-01' = [for (privateDnsZone, index) in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLinkFailover) && parResourceLockConfig.kind != 'None') {
+  scope: resVirtualNetworkLinkFailover[index]
+  name: parResourceLockConfig.?name ?? 'failbacklink-${uniqueString(parVirtualNetworkIdToLink)}-${privateDnsZone}-lock'
+  properties: {
+    level: parResourceLockConfig.kind
+    notes: parResourceLockConfig.?notes ?? ''
+  }
 }]
 
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
