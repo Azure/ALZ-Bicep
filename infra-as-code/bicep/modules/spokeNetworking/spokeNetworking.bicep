@@ -36,7 +36,7 @@ param parSpokeNetworkName string = 'vnet-spoke'
 @sys.description('Resource Lock Configuration for Spoke Network.')
 param parSpokeNetworkLock lockType = {
   kind: 'None'
-  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+  notes: 'This lock was created by the ALZ Bicep Spoke Networking Module.'
 }
 
 @sys.description('Array of DNS Server IP addresses for VNet.')
@@ -51,7 +51,7 @@ param parSpokeToHubRouteTableName string = 'rtb-spoke-to-hub'
 @sys.description('Resource Lock Configuration for Spoke Network Route Table.')
 param parSpokeRouteTableLock lockType = {
   kind: 'None'
-  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+  notes: 'This lock was created by the ALZ Bicep Spoke Networking Module.'
 }
 
 @sys.description('Tags you would like to be applied to all resources in this module.')
