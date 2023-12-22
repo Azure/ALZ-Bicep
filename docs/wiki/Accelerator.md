@@ -229,7 +229,7 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
     Get-ALZGithubRelease -i "bicep" -v "v0.17.0" -o "C:\Repos\ALZ\accelerator"
     ```
     Verify that the cmdlet has updated the environment variables file (.env):
-    ```
+    ```bash
     UPSTREAM_RELEASE_VERSION="v0.17.0"
     ```
 1. You can now deploy the updated modules.
