@@ -236,8 +236,8 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
     > **Note:**
     > The current pipelines trigger What-If deployment in PRs for changes in the Bicep parameter files. If you also want to include the What-If deployment process in the module upgrade process, consider the following options:
     > - Adding the environment variables file (.env) as an additional trigger in the module pipelines
-    > - Introducing inputs/parameters in the module pipelines so you can manually trigger What-If deployments in a controlled manner. 
-    
+    > - Introducing inputs/parameters in the module pipelines so you can manually trigger What-If deployments in a controlled manner.
+
 ### Incorporating Modified ALZ Modules
 
 We recommend that you do not modify the ALZ Bicep modules directly within the upstream-releases directory. Instead, we recommend that you copy the module file (e.g., logging.bicep, hubNetworking.bicep, etc.) that you would like to modify to the config\custom-modules directory. This will allow you to easily upgrade the ALZ Bicep version without having to worry about losing your customizations.
