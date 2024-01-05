@@ -52,7 +52,7 @@ az ad group show --group <SECURITY_GROUP_NAME> --query id
 ```powershell
 # Identify Object Id for User Assigned / System Assigned Managed Identity
 # Example: (Get-AzADServicePrincipal -DisplayName 'alz-managed-identity').Id
-(Get-AzADServicePrincipal -DisplayName '<IDENTITY_NAME>').Id
+(Get-AzADUser -DisplayName '<IDENTITY_NAME>').Id
 
 # Identify Object Id for Service Principal (App Registration)
 # Require read permission to query Microsoft Entra
