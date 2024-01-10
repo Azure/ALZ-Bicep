@@ -334,7 +334,7 @@ var varSubnetProperties = [for subnet in varSubnetMap: {
 
 var varVpnGwConfig = ((parVpnGatewayEnabled) &&(!empty(parVpnGatewayConfig)) ? parVpnGatewayConfig : json('{"name": "noconfigVpn"}'))
 
-var varErGwConfig = ((parExpressRouteGatewayEnabled) ? parExpressRouteGatewayConfig : json('{"name": "noconfigEr"}'))
+var varErGwConfig = ((parExpressRouteGatewayEnabled) && !empty(parExpressRouteGatewayConfig) ? parExpressRouteGatewayConfig : json('{"name": "noconfigEr"}'))
 
 var varGwConfig = [
   varVpnGwConfig
