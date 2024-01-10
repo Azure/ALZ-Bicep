@@ -243,11 +243,11 @@ param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
 @sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links')
 param parVirtualNetworkIdToLinkFailover string = ''
 
+@sys.description('Switch to enable/disable VPN virtual network gateway deployment.')
+param parVpnGatewayEnabled bool = true
+
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
-@sys.description('''Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
-"parVpnGatewayConfig": {
-  "value": {}
-}''')
+@sys.description('Configuration for VPN virtual network gateway to be deployed.')
 param parVpnGatewayConfig object = {
   name: '${parCompanyPrefix}-Vpn-Gateway'
   gatewayType: 'Vpn'
@@ -267,10 +267,10 @@ param parVpnGatewayConfig object = {
   vpnClientConfiguration: {}
 }
 
-@sys.description('''Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
-"parExpressRouteGatewayConfig": {
-  "value": {}
-}''')
+@sys.description('Switch to enable/disable ExpressRoute virtual network gateway deployment.')
+param parExpressRouteGatewayEnabled bool = true
+
+@sys.description('Configuration for ExpressRoute virtual network gateway to be deployed.')
 param parExpressRouteGatewayConfig object = {
   name: '${parCompanyPrefix}-ExpressRoute-Gateway'
   gatewayType: 'ExpressRoute'
@@ -332,9 +332,9 @@ var varSubnetProperties = [for subnet in varSubnetMap: {
   }
 }]
 
-var varVpnGwConfig = ((!empty(parVpnGatewayConfig)) ? parVpnGatewayConfig : json('{"name": "noconfigVpn"}'))
+var varVpnGwConfig = ((parVpnGatewayEnabled) &&(!empty(parVpnGatewayConfig)) ? parVpnGatewayConfig : json('{"name": "noconfigVpn"}'))
 
-var varErGwConfig = ((!empty(parExpressRouteGatewayConfig)) ? parExpressRouteGatewayConfig : json('{"name": "noconfigEr"}'))
+var varErGwConfig = ((parExpressRouteGatewayEnabled) && !empty(parExpressRouteGatewayConfig) ? parExpressRouteGatewayConfig : json('{"name": "noconfigEr"}'))
 
 var varGwConfig = [
   varVpnGwConfig
