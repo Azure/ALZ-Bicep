@@ -252,7 +252,7 @@ We recommend that you do not modify the ALZ Bicep modules directly within the up
 
     `// This module has been modified from the upstream-releases version <UpstreamReleaseVersion>`
 
-1. Update the pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1 file and change the TemplateFile variable to point to the modified module file location as shown below:
+1. Update the pipeline-scripts\Deploy-ALZLoggingAndSentinel.ps1 file and change the TemplateFile variable to point to the modified module file location as shown below:
 
     ```powershell
     [Parameter()]
