@@ -18,7 +18,10 @@ param parSpokeVirtualNetworkResourceId string = ''
 param parPrivateDnsZoneResourceId string = ''
 
 @sys.description('Resource Lock Configuration Object')
-param parResourceLockConfig lockType
+param parResourceLockConfig lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Private DNS Zone Links Module.'
+}
 
 var varSpokeVirtualNetworkName = split(parSpokeVirtualNetworkResourceId, '/')[8]
 

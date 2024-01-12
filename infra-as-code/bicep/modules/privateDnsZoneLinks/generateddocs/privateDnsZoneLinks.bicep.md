@@ -6,6 +6,7 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parSpokeVirtualNetworkResourceId | No       | The Spoke Virtual Network Resource ID.
 parPrivateDnsZoneResourceId | No       | The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
+parResourceLockConfig | No       | Resource Lock Configuration Object
 
 ### parSpokeVirtualNetworkResourceId
 
@@ -18,6 +19,14 @@ The Spoke Virtual Network Resource ID.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
+
+### parResourceLockConfig
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration Object
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Private DNS Zone Links Module.}`
 
 ## Snippets
 
@@ -36,6 +45,12 @@ The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
         },
         "parPrivateDnsZoneResourceId": {
             "value": ""
+        },
+        "parResourceLockConfig": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Private DNS Zone Links Module."
+            }
         }
     }
 }

@@ -33,7 +33,10 @@ param parPublicIpProperties object
 param parAvailabilityZones array = []
 
 @sys.description('Resource Lock Configuration Object')
-param parResourceLockConfig lockType
+param parResourceLockConfig lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Public IP Module.'
+}
 
 @sys.description('Tags to be applied to resource when deployed.')
 param parTags object = {}

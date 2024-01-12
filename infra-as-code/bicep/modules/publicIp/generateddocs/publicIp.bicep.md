@@ -11,6 +11,7 @@ parPublicIpName | Yes      | Name of Public IP to create in Azure.
 parPublicIpSku | Yes      | Public IP Address SKU.
 parPublicIpProperties | Yes      | Properties of Public IP to be deployed.
 parAvailabilityZones | No       | Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty.
+parResourceLockConfig | No       | Resource Lock Configuration Object
 parTags        | No       | Tags to be applied to resource when deployed.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
@@ -48,6 +49,14 @@ Availability Zones to deploy the Public IP across. Region must support Availabil
 
 - Allowed values: `1`, `2`, `3`
 
+### parResourceLockConfig
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration Object
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Public IP Module.}`
+
 ### parTags
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -67,6 +76,7 @@ Set Parameter to true to Opt-out of deployment telemetry.
 Name | Type | Description
 ---- | ---- | -----------
 outPublicIpId | string |
+outPublicIpName | string |
 
 ## Snippets
 
@@ -94,6 +104,12 @@ outPublicIpId | string |
         },
         "parAvailabilityZones": {
             "value": []
+        },
+        "parResourceLockConfig": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Public IP Module."
+            }
         },
         "parTags": {
             "value": {}

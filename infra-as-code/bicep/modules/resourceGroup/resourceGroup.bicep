@@ -21,7 +21,10 @@ param parLocation string
 param parResourceGroupName string
 
 @sys.description('Resource Lock Configuration Object')
-param parResourceLockConfig lockType
+param parResourceLockConfig lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Resource Group Module.'
+}
 
 @sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}

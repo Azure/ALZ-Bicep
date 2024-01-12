@@ -99,7 +99,10 @@ param parVirtualNetworkIdToLink string = ''
 param parVirtualNetworkIdToLinkFailover string = ''
 
 @sys.description('Resource Lock Configuration Object')
-param parResourceLockConfig lockType
+param parResourceLockConfig lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Private DNS Zones Module.'
+}
 
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false

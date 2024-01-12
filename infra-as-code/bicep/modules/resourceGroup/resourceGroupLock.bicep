@@ -13,7 +13,10 @@ type lockType = {
 }
 
 @sys.description('Resource Lock Configuration Object')
-param parResourceLockConfig lockType
+param parResourceLockConfig lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Resource Group Module.'
+}
 
 @sys.description('Resource Group Name')
 param parResourceGroupName string

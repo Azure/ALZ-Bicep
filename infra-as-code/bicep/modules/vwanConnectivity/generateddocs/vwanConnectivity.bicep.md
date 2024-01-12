@@ -8,29 +8,37 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parLocation    | No       | Region in which the resource group was created.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
+parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.
 parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
 parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode.
 parVirtualHubEnabled | No       | Switch to enable/disable Virtual Hub deployment.
 parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
 parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall.
 parVirtualWanName | No       | Prefix Used for Virtual WAN.
+parVirtualWanLock | No       | Resource Lock Configuration for Virtual WAN.
 parVirtualWanHubName | No       | Prefix Used for Virtual WAN Hub.
 parVirtualWanHubs | No       | Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects in the array to meet the number of Virtual WAN Hubs required.  - `parVpnGatewayEnabled` - Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub. - `parExpressRouteGatewayEnabled` - Switch to enable/disable ExpressRoute Gateway deployment on the respective Virtual WAN Hub. - `parAzFirewallEnabled` - Switch to enable/disable Azure Firewall deployment on the respective Virtual WAN Hub. - `parVirtualHubAddressPrefix` - The IP address range in CIDR notation for the vWAN virtual Hub to use. - `parHubLocation` - The Virtual WAN Hub location. - `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASN`, `VpnGateway`, `ExpressRoute`. - `parVirtualRouterAutoScaleConfiguration` - The Virtual WAN Hub capacity. The value should be between 2 to 50. - `parVirtualHubRoutingIntentDestinations` - The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.  
+parVpnGatewayLock | No       | Resource Lock Configuration for Virtual WAN Hub VPN Gateway.
+parExpressRouteGatewayLock | No       | Resource Lock Configuration for Virtual WAN Hub ExpressRoute Gateway.
+parVirtualWanHubsLock | No       | Resource Lock Configuration for Virtual WAN Hub.
 parVpnGatewayName | No       | VPN Gateway Name.
 parExpressRouteGatewayName | No       | ExpressRoute Gateway Name.
 parAzFirewallName | No       | Azure Firewall Name.
 parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
+parAzureFirewallLock | No       | Resource Lock Configuration for Azure Firewall.
 parVpnGatewayScaleUnit | No       | The scale unit for this VPN Gateway.
 parExpressRouteGatewayScaleUnit | No       | The scale unit for this ExpressRoute Gateway.
 parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment.
 parDdosPlanName | No       | DDoS Plan Name.
+parDDoSLock    | No       | Resource Lock Configuration for DDoS Plan.
 parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment.
 parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones.
 parPrivateDnsZones | No       | Array of DNS Zones to provision in Hub Virtual Network.
 parPrivateDnsZoneAutoMergeAzureBackupZone | No       | Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.
 parVirtualNetworkIdToLink | No       | Resource ID of VNet for Private DNS Zone VNet Links
 parVirtualNetworkIdToLinkFailover | No       | Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
+parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS Zone(s).
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
@@ -49,6 +57,14 @@ Region in which the resource group was created.
 Prefix value which will be prepended to all resource names.
 
 - Default value: `alz`
+
+### parGlobalResourceLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Global Resource Lock Configuration used for all resources deployed in this module.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
 
 ### parAzFirewallTier
 
@@ -100,6 +116,14 @@ Prefix Used for Virtual WAN.
 
 - Default value: `[format('{0}-vwan-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
+### parVirtualWanLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Virtual WAN.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
+
 ### parVirtualWanHubName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -124,6 +148,30 @@ Array Used for multiple Virtual WAN Hubs deployment. Each object in the array re
 - `parVirtualHubRoutingIntentDestinations` - The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.
 
 
+
+### parVpnGatewayLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Virtual WAN Hub VPN Gateway.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
+
+### parExpressRouteGatewayLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Virtual WAN Hub ExpressRoute Gateway.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
+
+### parVirtualWanHubsLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Virtual WAN Hub.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
 
 ### parVpnGatewayName
 
@@ -165,6 +213,14 @@ Azure Firewall Policies Name.
 
 - Default value: `[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
+### parAzureFirewallLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Azure Firewall.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
+
 ### parVpnGatewayScaleUnit
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -196,6 +252,14 @@ Switch to enable/disable DDoS Network Protection deployment.
 DDoS Plan Name.
 
 - Default value: `[format('{0}-ddos-plan', parameters('parCompanyPrefix'))]`
+
+### parDDoSLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for DDoS Plan.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
 
 ### parPrivateDnsZonesEnabled
 
@@ -240,6 +304,14 @@ Resource ID of VNet for Private DNS Zone VNet Links
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
+
+### parPrivateDNSZonesLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Private DNS Zone(s).
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
 
 ### parTags
 
@@ -286,6 +358,12 @@ outAzFwPrivateIps | array |
         "parCompanyPrefix": {
             "value": "alz"
         },
+        "parGlobalResourceLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+            }
+        },
         "parAzFirewallTier": {
             "value": "Standard"
         },
@@ -304,6 +382,12 @@ outAzFwPrivateIps | array |
         "parVirtualWanName": {
             "value": "[format('{0}-vwan-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
         },
+        "parVirtualWanLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+            }
+        },
         "parVirtualWanHubName": {
             "value": "[format('{0}-vhub', parameters('parCompanyPrefix'))]"
         },
@@ -321,6 +405,24 @@ outAzFwPrivateIps | array |
                 }
             ]
         },
+        "parVpnGatewayLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+            }
+        },
+        "parExpressRouteGatewayLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+            }
+        },
+        "parVirtualWanHubsLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+            }
+        },
         "parVpnGatewayName": {
             "value": "[format('{0}-vpngw', parameters('parCompanyPrefix'))]"
         },
@@ -336,6 +438,12 @@ outAzFwPrivateIps | array |
         "parAzFirewallPoliciesName": {
             "value": "[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
         },
+        "parAzureFirewallLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+            }
+        },
         "parVpnGatewayScaleUnit": {
             "value": 1
         },
@@ -347,6 +455,12 @@ outAzFwPrivateIps | array |
         },
         "parDdosPlanName": {
             "value": "[format('{0}-ddos-plan', parameters('parCompanyPrefix'))]"
+        },
+        "parDDoSLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+            }
         },
         "parPrivateDnsZonesEnabled": {
             "value": true
@@ -433,6 +547,12 @@ outAzFwPrivateIps | array |
         },
         "parVirtualNetworkIdToLinkFailover": {
             "value": ""
+        },
+        "parPrivateDNSZonesLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+            }
         },
         "parTags": {
             "value": {}

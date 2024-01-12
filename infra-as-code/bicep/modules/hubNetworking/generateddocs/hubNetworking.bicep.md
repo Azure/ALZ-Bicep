@@ -9,9 +9,11 @@ Parameter name | Required | Description
 parLocation    | No       | The Azure Region to deploy the resources into.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
 parHubNetworkName | No       | Name for Hub Network.
+parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.
 parHubNetworkAddressPrefix | No       | The IP address range for Hub Network.
 parSubnets     | No       | The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks.
 parDnsServerIps | No       | Array of DNS Server IP addresses for VNet.
+parVirtualNetworkLock | No       | Resource Lock Configuration for Virtual Network.
 parPublicIpSku | No       | Public IP Address SKU.
 parPublicIpPrefix | No       | Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
 parPublicIpSuffix | No       | Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix
@@ -20,8 +22,10 @@ parAzBastionName | No       | Name Associated with Bastion Service.
 parAzBastionSku | No       | Azure Bastion SKU.
 parAzBastionTunneling | No       | Switch to enable/disable Bastion native client support. This is only supported when the Standard SKU is used for Bastion as documented here: https://learn.microsoft.com/azure/bastion/native-client
 parAzBastionNsgName | No       | Name for Azure Bastion Subnet NSG.
+parBastionLock | No       | Resource Lock Configuration for Bastion.
 parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment.
 parDdosPlanName | No       | DDoS Plan Name.
+parDDoSLock    | No       | Resource Lock Configuration for DDoS Plan.
 parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment.
 parAzFirewallName | No       | Azure Firewall Name.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
@@ -32,15 +36,19 @@ parAzErGatewayAvailabilityZones | No       | Availability Zones to deploy the VP
 parAzVpnGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
 parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
 parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall
+parAzureFirewallLock | No       | Resource Lock Configuration for Azure Firewall.
 parHubRouteTableName | No       | Name of Route table to create for the default route of Hub.
 parDisableBgpRoutePropagation | No       | Switch to enable/disable BGP Propagation on route table.
+parHubRouteTableLock | No       | Resource Lock Configuration for Hub Route Table.
 parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment.
 parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones.
 parPrivateDnsZones | No       | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones
 parPrivateDnsZoneAutoMergeAzureBackupZone | No       | Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.
 parVirtualNetworkIdToLinkFailover | No       | Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
+parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS Zone(s).
 parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parVpnGatewayConfig": {   "value": {} }
 parExpressRouteGatewayConfig | No       | Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parExpressRouteGatewayConfig": {   "value": {} }
+parVirtualNetworkGatewayLock | No       | Resource Lock Configuration for ExpressRoute Virtual Network Gateway.
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 parBastionOutboundSshRdpPorts | No       | Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.
@@ -69,6 +77,14 @@ Name for Hub Network.
 
 - Default value: `[format('{0}-hub-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
+### parGlobalResourceLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Global Resource Lock Configuration used for all resources deployed in this module.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Networking Module.}`
+
 ### parHubNetworkAddressPrefix
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -90,6 +106,14 @@ The name, IP address range, network security group, route table and delegation s
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Array of DNS Server IP addresses for VNet.
+
+### parVirtualNetworkLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Virtual Network.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Networking Module.}`
 
 ### parPublicIpSku
 
@@ -157,6 +181,14 @@ Name for Azure Bastion Subnet NSG.
 
 - Default value: `nsg-AzureBastionSubnet`
 
+### parBastionLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Bastion.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Networking Module.}`
+
 ### parDdosEnabled
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -172,6 +204,14 @@ Switch to enable/disable DDoS Network Protection deployment.
 DDoS Plan Name.
 
 - Default value: `[format('{0}-ddos-plan', parameters('parCompanyPrefix'))]`
+
+### parDDoSLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for DDoS Plan.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Networking Module.}`
 
 ### parAzFirewallEnabled
 
@@ -255,6 +295,14 @@ Switch to enable/disable Azure Firewall DNS Proxy.
 
 Array of custom DNS servers used by Azure Firewall
 
+### parAzureFirewallLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Azure Firewall.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Networking Module.}`
+
 ### parHubRouteTableName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -270,6 +318,14 @@ Name of Route table to create for the default route of Hub.
 Switch to enable/disable BGP Propagation on route table.
 
 - Default value: `False`
+
+### parHubRouteTableLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Hub Route Table.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Networking Module.}`
 
 ### parPrivateDnsZonesEnabled
 
@@ -309,6 +365,14 @@ Set Parameter to false to skip the addition of a Private DNS Zone for Azure Back
 
 Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 
+### parPrivateDNSZonesLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Private DNS Zone(s).
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Networking Module.}`
+
 ### parVpnGatewayConfig
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -330,6 +394,14 @@ Configuration for ExpressRoute virtual network gateway to be deployed. If a Expr
 }
 
 - Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=}`
+
+### parVirtualNetworkGatewayLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for ExpressRoute Virtual Network Gateway.
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Networking Module.}`
 
 ### parTags
 
@@ -386,6 +458,12 @@ outHubVirtualNetworkId | string |
         "parHubNetworkName": {
             "value": "[format('{0}-hub-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
         },
+        "parGlobalResourceLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+            }
+        },
         "parHubNetworkAddressPrefix": {
             "value": "10.10.0.0/16"
         },
@@ -420,6 +498,12 @@ outHubVirtualNetworkId | string |
         "parDnsServerIps": {
             "value": []
         },
+        "parVirtualNetworkLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+            }
+        },
         "parPublicIpSku": {
             "value": "Standard"
         },
@@ -444,11 +528,23 @@ outHubVirtualNetworkId | string |
         "parAzBastionNsgName": {
             "value": "nsg-AzureBastionSubnet"
         },
+        "parBastionLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+            }
+        },
         "parDdosEnabled": {
             "value": true
         },
         "parDdosPlanName": {
             "value": "[format('{0}-ddos-plan', parameters('parCompanyPrefix'))]"
+        },
+        "parDDoSLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+            }
         },
         "parAzFirewallEnabled": {
             "value": true
@@ -480,11 +576,23 @@ outHubVirtualNetworkId | string |
         "parAzFirewallDnsServers": {
             "value": []
         },
+        "parAzureFirewallLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+            }
+        },
         "parHubRouteTableName": {
             "value": "[format('{0}-hub-routetable', parameters('parCompanyPrefix'))]"
         },
         "parDisableBgpRoutePropagation": {
             "value": false
+        },
+        "parHubRouteTableLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+            }
         },
         "parPrivateDnsZonesEnabled": {
             "value": true
@@ -569,6 +677,12 @@ outHubVirtualNetworkId | string |
         "parVirtualNetworkIdToLinkFailover": {
             "value": ""
         },
+        "parPrivateDNSZonesLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+            }
+        },
         "parVpnGatewayConfig": {
             "value": {
                 "name": "[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]",
@@ -606,6 +720,12 @@ outHubVirtualNetworkId | string |
                     "bgpPeeringAddress": "",
                     "peerWeight": "5"
                 }
+            }
+        },
+        "parVirtualNetworkGatewayLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
             }
         },
         "parTags": {
