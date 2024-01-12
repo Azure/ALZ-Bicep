@@ -46,13 +46,11 @@ parPrivateDnsZones | No       | Array of DNS Zones to provision in Hub Virtual N
 parPrivateDnsZoneAutoMergeAzureBackupZone | No       | Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.
 parVirtualNetworkIdToLinkFailover | No       | Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS Zone(s).
-parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parVpnGatewayConfig": {   "value": {} }
-parExpressRouteGatewayConfig | No       | Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parExpressRouteGatewayConfig": {   "value": {} }
-parVirtualNetworkGatewayLock | No       | Resource Lock Configuration for ExpressRoute Virtual Network Gateway.
 parVpnGatewayEnabled | No       | Switch to enable/disable VPN virtual network gateway deployment.
 parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway to be deployed.
 parExpressRouteGatewayEnabled | No       | Switch to enable/disable ExpressRoute virtual network gateway deployment.
 parExpressRouteGatewayConfig | No       | Configuration for ExpressRoute virtual network gateway to be deployed.
+parVirtualNetworkGatewayLock | No       | Resource Lock Configuration for ExpressRoute Virtual Network Gateway.
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 parBastionOutboundSshRdpPorts | No       | Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.
@@ -385,7 +383,6 @@ Switch to enable/disable VPN virtual network gateway deployment.
 
 - Default value: `True`
 
-
 ### parVpnGatewayConfig
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -692,16 +689,14 @@ outHubVirtualNetworkId | string |
         "parVirtualNetworkIdToLinkFailover": {
             "value": ""
         },
-
         "parPrivateDNSZonesLock": {
             "value": {
                 "kind": "None",
                 "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
             }
-
+        },
         "parVpnGatewayEnabled": {
             "value": true
-
         },
         "parVpnGatewayConfig": {
             "value": {
