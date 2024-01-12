@@ -49,6 +49,10 @@ parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS 
 parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parVpnGatewayConfig": {   "value": {} }
 parExpressRouteGatewayConfig | No       | Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e. "parExpressRouteGatewayConfig": {   "value": {} }
 parVirtualNetworkGatewayLock | No       | Resource Lock Configuration for ExpressRoute Virtual Network Gateway.
+parVpnGatewayEnabled | No       | Switch to enable/disable VPN virtual network gateway deployment.
+parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway to be deployed.
+parExpressRouteGatewayEnabled | No       | Switch to enable/disable ExpressRoute virtual network gateway deployment.
+parExpressRouteGatewayConfig | No       | Configuration for ExpressRoute virtual network gateway to be deployed.
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 parBastionOutboundSshRdpPorts | No       | Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.
@@ -373,25 +377,36 @@ Resource Lock Configuration for Private DNS Zone(s).
 
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Networking Module.}`
 
+### parVpnGatewayEnabled
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable VPN virtual network gateway deployment.
+
+- Default value: `True`
+
+
 ### parVpnGatewayConfig
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Configuration for VPN virtual network gateway to be deployed. If a VPN virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
-"parVpnGatewayConfig": {
-  "value": {}
-}
+Configuration for VPN virtual network gateway to be deployed.
 
 - Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; vpnClientConfiguration=}`
+
+### parExpressRouteGatewayEnabled
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable ExpressRoute virtual network gateway deployment.
+
+- Default value: `True`
 
 ### parExpressRouteGatewayConfig
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Configuration for ExpressRoute virtual network gateway to be deployed. If a ExpressRoute virtual network gateway is not desired an empty object should be used as the input parameter in the parameter file, i.e.
-"parExpressRouteGatewayConfig": {
-  "value": {}
-}
+Configuration for ExpressRoute virtual network gateway to be deployed.
 
 - Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=}`
 
@@ -677,11 +692,16 @@ outHubVirtualNetworkId | string |
         "parVirtualNetworkIdToLinkFailover": {
             "value": ""
         },
+
         "parPrivateDNSZonesLock": {
             "value": {
                 "kind": "None",
                 "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
             }
+
+        "parVpnGatewayEnabled": {
+            "value": true
+
         },
         "parVpnGatewayConfig": {
             "value": {
@@ -702,6 +722,9 @@ outHubVirtualNetworkId | string |
                 },
                 "vpnClientConfiguration": {}
             }
+        },
+        "parExpressRouteGatewayEnabled": {
+            "value": true
         },
         "parExpressRouteGatewayConfig": {
             "value": {

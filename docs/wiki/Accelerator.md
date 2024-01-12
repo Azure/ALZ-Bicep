@@ -228,8 +228,15 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
     ```powershell
     Get-ALZGithubRelease -i "bicep" -v "v0.17.0" -o "C:\Repos\ALZ\accelerator"
     ```
-
+    Verify that the cmdlet has updated the environment variables file (.env):
+    ```bash
+    UPSTREAM_RELEASE_VERSION="v0.17.0"
+    ```
 1. You can now deploy the updated modules.
+    > **Note:**
+    > The current pipelines trigger What-If deployment in PRs for changes in the Bicep parameter files. If you also want to include the What-If deployment process in the module upgrade process, consider the following options:
+    > - Adding the environment variables file (.env) as an additional trigger in the module pipelines
+    > - Introducing inputs/parameters in the module pipelines so you can manually trigger What-If deployments in a controlled manner.
 
 ### Incorporating Modified ALZ Modules
 
