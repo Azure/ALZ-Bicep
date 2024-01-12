@@ -782,7 +782,26 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (pa
       id: resFirewallPolicies.id
     }
   } : {
-    ipConfigurations: [
+    ipConfigurations: varUseCustomPublicIps
+     ? map(parCustomPublicIpIds, ip =>
+       {
+        name: 'ipconfig${uniqueString(ip)}'
+        properties: ip == parCustomPublicIpIds[0]
+         ? {
+          subnet: {
+            id: resAzureFirewallSubnetRef.id
+          }
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+         : {
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+      })
+     : [
       {
         name: 'ipconfig1'
         properties: {
