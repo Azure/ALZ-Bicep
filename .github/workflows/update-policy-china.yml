@@ -87,7 +87,7 @@ jobs:
         run: |
           CHECK_GIT_STATUS=($(git status -s))
           git status -s
-          echo "::set-output name=changes::${#CHECK_GIT_STATUS[@]}"
+          echo "changes=${#CHECK_GIT_STATUS[@]}" >> $GITHUB_OUTPUT
         working-directory: ${{ github.repository }}
 
       - name: Add files, commit and push
