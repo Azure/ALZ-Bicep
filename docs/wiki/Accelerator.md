@@ -244,21 +244,21 @@ Some organizations may want to start with a Landing Zone with the least cost pos
 
 Here you can find the detailed changes for a minimal hub-and-spoke deployment. For vWAN, use the file config/custom-parameters/vwanConnectivity.parameters.all.json instead, and look for the equivalent parameters.
 
-* Remove the DDos Plan: edit config/custom-parameters/hubNetworking.parameters.all.json and set _parDdosEnabled_ to **false**. 
+* Remove the DDos Plan: edit config/custom-parameters/hubNetworking.parameters.all.json and set **parDdosEnabled** to **false**.
     ```yaml
     "parDdosEnabled": {
       "value": false
     },
-    ``` 
-    Then **you must disable the automatic Policy assignment** by adding the following in config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json (this may no longer be necessary in a future release, see bug #596): 
+    ```
+    Then **you must disable the automatic Policy assignment** by adding the following in config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json (this may no longer be necessary in a future release, see bug #596):
     ```yaml
     "parExcludedPolicyAssignments": {
       "value": [
         "Enable-DDoS-VNET"
       ]
     },
-    ``` 
-* Remove Bastion or Firewall:  edit config/custom-parameters/hubNetworking.parameters.all.json and set _parAzBastionEnabled_ and/or _parAzFirewallEnabled_ to **false**. You can also keep it enabled and switch to the **Bastion Basic/Developer SKU and Firewall Basic Tier** for a cost-efficient yet functional starting point. 
+    ```
+* Remove Bastion or Firewall:  edit config/custom-parameters/hubNetworking.parameters.all.json and set **parAzBastionEnabled** and/or **parAzFirewallEnabled** to **false**. You can also keep it enabled and switch to the **Bastion Basic/Developer SKU and Firewall Basic Tier** for a cost-efficient yet functional starting point.
     ```yaml
     "parAzBastionEnabled": {
       "value": false
@@ -266,8 +266,8 @@ Here you can find the detailed changes for a minimal hub-and-spoke deployment. F
     "parAzFirewallEnabled": {
       "value": false
     },
-    ``` 
-* Remove VPN or ExpressRoute gateways: edit config/custom-parameters/hubNetworking.parameters.all.json and set parVpnGatewayConfig and/or parExpressRouteGatewayConfig to an empty object. For vWAN, look for the _parVpnGatewayEnabled_ and _parExpressRouteGatewayEnabled_ parameters instead.
+    ```
+* Remove VPN or ExpressRoute gateways: edit config/custom-parameters/hubNetworking.parameters.all.json and set parVpnGatewayConfig and/or parExpressRouteGatewayConfig to an empty object. For vWAN, look for the **parVpnGatewayEnabled** and **parExpressRouteGatewayEnabled** parameters instead.
     ```yaml
     "parVpnGatewayConfig": {
       "value": {}
@@ -275,7 +275,7 @@ Here you can find the detailed changes for a minimal hub-and-spoke deployment. F
     "parExpressRouteGatewayConfig": {
       "value": {}
     },
-    ``` 
+    ```
 
 ### Incorporating Modified ALZ Modules
 
