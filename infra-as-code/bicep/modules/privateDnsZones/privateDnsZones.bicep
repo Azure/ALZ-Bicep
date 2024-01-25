@@ -214,7 +214,7 @@ resource resVirtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetwork
   tags: parTags
 }]
 
-resource lockLink 'Microsoft.Authorization/locks@2020-05-01' = [for (privateDnsZone, index) in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLink) && !empty(parResourceLockConfig ?? {}) && parResourceLockConfig.kind != 'None') {
+resource resVirtualNetworkLinkLock 'Microsoft.Authorization/locks@2020-05-01' = [for (privateDnsZone, index) in varPrivateDnsZonesMerge: if (!empty(parVirtualNetworkIdToLink) && !empty(parResourceLockConfig ?? {}) && parResourceLockConfig.kind != 'None') {
   scope: resVirtualNetworkLink[index]
   name: parResourceLockConfig.?name ?? 'link-${uniqueString(parVirtualNetworkIdToLink)}-${privateDnsZone}-lock'
   properties: {
