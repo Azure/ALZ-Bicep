@@ -56,7 +56,7 @@ resource resPublicIp 'Microsoft.Network/publicIPAddresses@2023-02-01' ={
   properties: parPublicIpProperties
 }
 
-resource lock 'Microsoft.Authorization/locks@2020-05-01' = if (!empty(parResourceLockConfig ?? {}) && parResourceLockConfig.kind != 'None') {
+resource resPublicIpLock 'Microsoft.Authorization/locks@2020-05-01' = if (!empty(parResourceLockConfig ?? {}) && parResourceLockConfig.kind != 'None') {
   scope: resPublicIp
   name: parResourceLockConfig.?name ?? '${resPublicIp.name}-lock'
   properties: {
