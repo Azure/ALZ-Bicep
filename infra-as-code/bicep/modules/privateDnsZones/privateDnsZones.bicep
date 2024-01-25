@@ -192,7 +192,7 @@ resource resPrivateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = [fo
   tags: parTags
 }]
 
-resource lock 'Microsoft.Authorization/locks@2020-05-01' = [for (privateDnsZone, index) in varPrivateDnsZonesMerge: if (parResourceLockConfig.kind != 'None') {
+resource resPrivateDnsZonesLock 'Microsoft.Authorization/locks@2020-05-01' = [for (privateDnsZone, index) in varPrivateDnsZonesMerge: if (parResourceLockConfig.kind != 'None') {
   scope: resPrivateDnsZones[index]
   name: parResourceLockConfig.?name ?? '${privateDnsZone}-lock'
   properties: {
