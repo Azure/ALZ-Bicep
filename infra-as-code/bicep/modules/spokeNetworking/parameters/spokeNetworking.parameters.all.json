@@ -21,7 +21,7 @@
       "value": []
     },
     "parNextHopIpAddress": {
-      "value": "192.168.2.4"
+      "value": ""
     },
     "parSpokeToHubRouteTableName": {
       "value": "rtb-spoke-to-hub"
