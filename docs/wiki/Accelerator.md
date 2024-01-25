@@ -267,7 +267,7 @@ Here you can find the detailed changes for a minimal hub-and-spoke deployment. F
       "value": false
     },
     ```
-* Remove VPN or ExpressRoute gateways: edit config/custom-parameters/hubNetworking.parameters.all.json and set parVpnGatewayEnabled and/or parExpressRouteGatewayEnabled to false. Optionally the parameter parVpnGatewayConfig and/or parExpressRouteGatewayConfig could be set to an empty object or removed. For vWAN, look for the **parVpnGatewayEnabled** and **parExpressRouteGatewayEnabled** parameters instead.
+* Remove VPN or ExpressRoute gateways: edit config/custom-parameters/hubNetworking.parameters.all.json and set **parVpnGatewayEnabled** and/or **parExpressRouteGatewayEnabled** to **false**. Optionally the parameter **parVpnGatewayConfig** and/or **parExpressRouteGatewayConfig** could be set to an empty object or removed. For vWAN, look for the **parVpnGatewayEnabled** and **parExpressRouteGatewayEnabled** parameters instead.
     ```yaml
     "parVpnGatewayEnabled": {
       "value": false
@@ -304,7 +304,7 @@ We recommend that you do not modify the ALZ Bicep modules directly within the up
     [String]$TemplateFile = "config\custom-modules\logging.bicep",
     ```
 
-1. In order to trigger new deployments when subsequent changes are made, add the new module file path to the path-based filter workflow trigger in the ALZ-Bicep-1 workflow file as shown below:
+1. In order to trigger new deployments when subsequent changes are made, add the new module file path to the path-based filter workflow trigger in the ALZ-Bicep-1-Core workflow file as shown below:
 
     ```yaml
     on:
