@@ -25,7 +25,7 @@ parAzBastionNsgName | No       | Name for Azure Bastion Subnet NSG.
 parBastionLock | No       | Resource Lock Configuration for Bastion.
 parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment.
 parDdosPlanName | No       | DDoS Plan Name.
-parDDoSLock    | No       | Resource Lock Configuration for DDoS Plan.
+parDdosLock    | No       | Resource Lock Configuration for DDoS Plan.
 parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment.
 parAzFirewallName | No       | Azure Firewall Name.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
@@ -207,7 +207,7 @@ DDoS Plan Name.
 
 - Default value: `[format('{0}-ddos-plan', parameters('parCompanyPrefix'))]`
 
-### parDDoSLock
+### parDdosLock
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
@@ -552,7 +552,7 @@ outHubVirtualNetworkId | string |
         "parDdosPlanName": {
             "value": "[format('{0}-ddos-plan', parameters('parCompanyPrefix'))]"
         },
-        "parDDoSLock": {
+        "parDdosLock": {
             "value": {
                 "kind": "None",
                 "notes": "This lock was created by the ALZ Bicep Hub Networking Module."

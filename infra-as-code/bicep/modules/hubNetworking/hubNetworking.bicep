@@ -129,7 +129,7 @@ param parDdosEnabled bool = true
 param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
 
 @sys.description('Resource Lock Configuration for DDoS Plan.')
-param parDDoSLock lockType = {
+param parDdosLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
@@ -414,13 +414,13 @@ resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01
   tags: parTags
 }
 
-// Create resource lock if parDdosEnabled is true and parGlobalResourceLock.kind != 'None' or if parDDoSLock.kind != 'None'
-resource resDDoSProtectionPlanLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDdosEnabled && (parDDoSLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+// Create resource lock if parDdosEnabled is true and parGlobalResourceLock.kind != 'None' or if parDdosLock.kind != 'None'
+resource resDDoSProtectionPlanLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDdosEnabled && (parDdosLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
   scope: resDdosProtectionPlan
-  name: parDDoSLock.?name ?? '${resDdosProtectionPlan.name}-lock'
+  name: parDdosLock.?name ?? '${resDdosProtectionPlan.name}-lock'
   properties: {
-    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDDoSLock.kind
-    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDDoSLock.?notes
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDdosLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDdosLock.?notes
   }
 }
 

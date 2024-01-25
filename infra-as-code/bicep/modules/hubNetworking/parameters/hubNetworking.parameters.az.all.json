@@ -278,7 +278,7 @@
         "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
       }
     },
-    "parDDoSLock": {
+    "parDdosLock": {
       "value": {
         "kind": "None",
         "notes": "This lock was created by the ALZ Bicep Hub Networking Module."

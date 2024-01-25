@@ -180,7 +180,7 @@
         "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
       }
     },
-    "parDDoSLock": {
+    "parDdosLock": {
       "value": {
         "kind": "None",
         "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
