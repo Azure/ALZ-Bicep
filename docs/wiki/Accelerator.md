@@ -267,10 +267,16 @@ Here you can find the detailed changes for a minimal hub-and-spoke deployment. F
       "value": false
     },
     ```
-* Remove VPN or ExpressRoute gateways: edit config/custom-parameters/hubNetworking.parameters.all.json and set parVpnGatewayConfig and/or parExpressRouteGatewayConfig to an empty object. For vWAN, look for the **parVpnGatewayEnabled** and **parExpressRouteGatewayEnabled** parameters instead.
+* Remove VPN or ExpressRoute gateways: edit config/custom-parameters/hubNetworking.parameters.all.json and set parVpnGatewayEnabled and/or parExpressRouteGatewayEnabled to false. Optionally the parameter parVpnGatewayConfig and/or parExpressRouteGatewayConfig could be set to an empty object or removed. For vWAN, look for the **parVpnGatewayEnabled** and **parExpressRouteGatewayEnabled** parameters instead.
     ```yaml
+    "parVpnGatewayEnabled": {
+      "value": false
+    },
     "parVpnGatewayConfig": {
       "value": {}
+    },
+    "parExpressRouteGatewayEnabled": {
+      "value": false
     },
     "parExpressRouteGatewayConfig": {
       "value": {}
