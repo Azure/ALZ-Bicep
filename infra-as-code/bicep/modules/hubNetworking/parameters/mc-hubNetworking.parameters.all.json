@@ -221,12 +221,6 @@
         "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
       }
     },
-    "parPublicIPLock": {
-      "value": {
-        "kind": "None",
-        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
-      }
-    },
     "parBastionLock": {
       "value": {
         "kind": "None",
