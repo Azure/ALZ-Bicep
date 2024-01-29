@@ -80,7 +80,7 @@ var varDeploymentNameWrappers = {
 }
 
 var varModuleDeploymentNames = {
-  modPolicyAssignmentIntRootEnforceSovereigntyGlobalBaseline: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceSovereigntyGlobalBaseline-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentIntRootEnforceSovereigntyGlobal: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceSovereigntyGlobal-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIntRootDeployMdfcConfig: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployMDFCConfig-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIntRootDeployAzActivityLog: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployAzActivityLog-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIntRootDeployAscMonitoring: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployASCMonitoring-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -118,11 +118,11 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentLzsDeploySqlTde: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deploySQLTde-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsEnforceGrKeyVault: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceGrKeyVault-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsAuditAppGwWaf: take('${varDeploymentNameWrappers.basePrefix}-polAssi-auditAppGwWaf-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConfBaseline: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceSovereigntyConfBaseline-confidential-online-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceSovereigntyConf-confidential-online-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsCorpDenyPublicEndpoints: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPublicEndpoints-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsConfidentialCorpDenyPublicEndpoints: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPublicEndpoints-confidential-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsCorpDeployPrivateDnsZones: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployPrivateDNS-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConfBaseline: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceSovereigntyConfBaseline-confidential-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceSovereigntyConf-confidential-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsConfidentialCorpDeployPrivateDnsZones: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployPrivateDNS-confidential-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsCorpDenyPipOnNic: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPipOnNic-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsConfidentialCorpDenyPipOnNic: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPipOnNic-confidential-corp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -455,9 +455,9 @@ module modCustomerUsageAttributionZtnP1 '../../../../CRML/customerUsageAttributi
 
 // Modules - Policy Assignments - Intermediate Root Management Group
 // Module - Policy Assignment - Enforce-Sovereign-Global
-module modPolicyAssignmentIntRootEnforceSovereigntyGlobalBaseline '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereignGlobal.libDefinition.name) && parLandingZoneMgConfidentialEnable) {
+module modPolicyAssignmentIntRootEnforceSovereigntyGlobal '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereignGlobal.libDefinition.name) && parLandingZoneMgConfidentialEnable) {
   scope: managementGroup(varManagementGroupIds.intRoot)
-  name: varModuleDeploymentNames.modPolicyAssignmentIntRootEnforceSovereigntyGlobalBaseline
+  name: varModuleDeploymentNames.modPolicyAssignmentIntRootEnforceSovereigntyGlobal
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSovereignGlobal.definitionId
     parPolicyAssignmentName: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.name
@@ -1194,40 +1194,6 @@ module modPolicyAssignmentLzsAuditAppGwWaf '../../../policy/assignments/policyAs
   }
 }
 
-// Modules - Policy Assignments - Confidential Online Management Group
-// Module - Policy Assignment - Deny-Sovereign-Conf
-module modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConfBaseline '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = [for mgScope in varCorpManagementGroupIdsFiltered: if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereignConf.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
-  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialCorp)
-  name: contains(mgScope, 'confidential') ? varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConfBaseline : varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConfBaseline
-  params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSovereignConf.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentEnforceSovereignConf.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignConf.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.enforcementMode
-    parTelemetryOptOut: parTelemetryOptOut
-  }
-}]
-
-// Modules - Policy Assignments - Confidential Corp Management Group
-// Module - Policy Assignment - Deny-Sovereign-Conf
-module modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConfBaseline '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = [for mgScope in varCorpManagementGroupIdsFiltered: if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereignConf.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
-  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialCorp)
-  name: contains(mgScope, 'confidential') ? varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConfBaseline : varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConfBaseline
-  params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSovereignConf.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentEnforceSovereignConf.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignConf.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.enforcementMode
-    parTelemetryOptOut: parTelemetryOptOut
-  }
-}]
-
 // Modules - Policy Assignments - Corp Management Group
 // Module - Policy Assignment - Deny-Public-Endpoints
 module modPolicyAssignmentLzsDenyPublicEndpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = [for mgScope in varCorpManagementGroupIdsFiltered: if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicEndpoints.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
@@ -1477,6 +1443,40 @@ module modPolicyAssignmentLzsCorpAuditPeDnsZones '../../../policy/assignments/po
     parTelemetryOptOut: parTelemetryOptOut
   }
 }]
+
+// Modules - Policy Assignments - Confidential Online Management Group
+// Module - Policy Assignment - Enforce-Sovereign-Conf
+module modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereignConf.libDefinition.name) && parLandingZoneMgConfidentialEnable) {
+  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialOnline)
+  name: varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSovereignConf.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceSovereignConf.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignConf.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Modules - Policy Assignments - Confidential Corp Management Group
+// Module - Policy Assignment - Enforce-Sovereign-Conf
+module modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereignConf.libDefinition.name) && parLandingZoneMgConfidentialEnable) {
+  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialCorp)
+  name: varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSovereignConf.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceSovereignConf.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignConf.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
 
 // Modules - Policy Assignments - Decommissioned Management Group
 // Module - Policy Assignment - Enforce-ALZ-Decomm
