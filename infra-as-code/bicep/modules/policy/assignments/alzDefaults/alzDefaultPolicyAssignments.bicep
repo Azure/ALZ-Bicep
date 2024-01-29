@@ -1213,7 +1213,7 @@ module modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConfBaseline '.
 
 // Modules - Policy Assignments - Confidential Corp Management Group
 // Module - Policy Assignment - Deny-Sovereign-Conf
-module modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConfBaseline '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = [for mgScope in varCorpManagementGroupIdsFiltered: if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenySovereigntyBaselineConfidentialPolicies.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
+module modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConfBaseline '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = [for mgScope in varCorpManagementGroupIdsFiltered: if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereignConf.libDefinition.name) && parLandingZoneChildrenMgAlzDefaultsEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesConfidentialCorp)
   name: contains(mgScope, 'confidential') ? varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConfBaseline : varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConfBaseline
   params: {
