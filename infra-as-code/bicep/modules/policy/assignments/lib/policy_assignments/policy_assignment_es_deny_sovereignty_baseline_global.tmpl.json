@@ -69,7 +69,7 @@
         ]
       }
     },
-    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/03de05a4-c324-4ccd-882f-a814ea8ab9ea",
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions//providers/Microsoft.Authorization/policySetDefinitions/c1cbff38-87c0-4b9f-9f70-035c7a3b5523",
     "scope": null,
     "enforcementMode": "Default"
   },

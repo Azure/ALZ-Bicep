@@ -109,7 +109,7 @@ var varPolicyAssignmentDenySovereigntyBaselineConfidentialPolicies = {
 }
 
 var varPolicyAssignmentDenySovereigntyBaselineGlobalPolicies = {
-	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/03de05a4-c324-4ccd-882f-a814ea8ab9ea'
+	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/c1cbff38-87c0-4b9f-9f70-035c7a3b5523'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_sovereignty_baseline_global.tmpl.json')
 }
 
