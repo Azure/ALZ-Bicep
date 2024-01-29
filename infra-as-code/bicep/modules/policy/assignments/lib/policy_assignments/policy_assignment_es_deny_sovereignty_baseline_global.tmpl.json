@@ -1,5 +1,5 @@
 {
-  "name": "Deny-Sovereignty-Baseline-Global-Policies",
+  "name": "Deny-Sovereign-Global",
   "type": "Microsoft.Authorization/policyAssignments",
   "apiVersion": "2019-09-01",
   "properties": {

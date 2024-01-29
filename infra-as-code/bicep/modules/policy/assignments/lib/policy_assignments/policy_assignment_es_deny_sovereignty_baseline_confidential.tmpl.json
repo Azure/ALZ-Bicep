@@ -1,5 +1,5 @@
 {
-  "name": "Deny-Sovereignty-Baseline-Confidential-Policies",
+  "name": "Deny-Sovereign-Conf",
   "type": "Microsoft.Authorization/policyAssignments",
   "apiVersion": "2019-09-01",
   "properties": {
