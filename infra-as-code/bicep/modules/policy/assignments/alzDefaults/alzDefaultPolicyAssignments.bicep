@@ -207,7 +207,7 @@ var varPolicyAssignmentEnforceSovereignConf = {
 }
 
 var varPolicyAssignmentEnforceSovereignGlobal = {
-  definitionId: '/providers/Microsoft.Authorization/policySetDefinitions//providers/Microsoft.Authorization/policySetDefinitions/c1cbff38-87c0-4b9f-9f70-035c7a3b5523'
+  definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/c1cbff38-87c0-4b9f-9f70-035c7a3b5523'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_sovereignty_baseline_global.tmpl.json')
 }
 
