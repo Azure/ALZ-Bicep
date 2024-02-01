@@ -130,6 +130,9 @@
       }
     }
   },
+  "migrateToMdeTvm": {
+    "parameters": {}
+  },
   "securityEmailContact": {
     "parameters": {
       "emailSecurityContact": {

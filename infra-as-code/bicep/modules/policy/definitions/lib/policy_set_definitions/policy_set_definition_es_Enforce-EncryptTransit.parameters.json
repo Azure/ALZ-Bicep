@@ -30,6 +30,13 @@
       }
     }
   },
+  "ContainerAppsHttpsOnlyEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('ContainerAppsHttpsOnlyEffect')]"
+      }
+    }
+  },
   "FunctionLatestTlsEffect": {
     "parameters": {
       "effect": {

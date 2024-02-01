@@ -1,0 +1,78 @@
+{
+  "azureUpdateManagerVmArcCheckUpdateLinux": {
+    "parameters": {
+      "assessmentMode": {
+        "value": "[[parameters('assessmentMode')]"
+      },
+      "osType": {
+        "value": "Linux"
+      },
+      "locations": {
+        "value": "[[parameters('locations')]"
+      },
+      "tagValues": {
+        "value": "[[parameters('tagValues')]"
+      },
+      "tagOperator": {
+        "value": "[[parameters('tagOperator')]"
+      }
+    }
+  },
+  "azureUpdateManagerVmArcCheckUpdateWindows": {
+    "parameters": {
+      "assessmentMode": {
+        "value": "[[parameters('assessmentMode')]"
+      },
+      "osType": {
+        "value": "Windows"
+      },
+      "locations": {
+        "value": "[[parameters('locations')]"
+      },
+      "tagValues": {
+        "value": "[[parameters('tagValues')]"
+      },
+      "tagOperator": {
+        "value": "[[parameters('tagOperator')]"
+      }
+    }
+  },
+  "azureUpdateManagerVmCheckUpdateLinux": {
+    "parameters": {
+      "assessmentMode": {
+        "value": "[[parameters('assessmentMode')]"
+      },
+      "osType": {
+        "value": "Linux"
+      },
+      "locations": {
+        "value": "[[parameters('locations')]"
+      },
+      "tagValues": {
+        "value": "[[parameters('tagValues')]"
+      },
+      "tagOperator": {
+        "value": "[[parameters('tagOperator')]"
+      }
+    }
+  },
+  "azureUpdateManagerVmCheckUpdateWindows": {
+    "parameters": {
+      "assessmentMode": {
+        "value": "[[parameters('assessmentMode')]"
+      },
+      "osType": {
+        "value": "Windows"
+      },
+      "locations": {
+        "value": "[[parameters('locations')]"
+      },
+      "tagValues": {
+        "value": "[[parameters('tagValues')]"
+      },
+      "tagOperator": {
+        "value": "[[parameters('tagOperator')]"
+      }
+    }
+  }
+}
