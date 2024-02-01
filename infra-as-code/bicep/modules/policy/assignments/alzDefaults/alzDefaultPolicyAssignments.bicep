@@ -5,7 +5,7 @@ type policyAssignmentSovereigntyGlobalOptionsType = ({
   @sys.description('Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.')
   parTopLevelSovereigntyGlobalPoliciesEnable: bool
 
-  @sys.description('The list of locations that your organization can use to restrict deploying resources to. Leave empty to allow all locations.')
+  @sys.description('The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.')
   parListOfAllowedLocations: string[]
 })
 
@@ -13,7 +13,7 @@ type policyAssignmentSovereigntyConfidentialOptionsType = ({
   @sys.description('The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.')
   parAllowedResourceTypes: string[]
 
-  @sys.description('The list of locations that your organization can use to restrict deploying resources to. Leave empty to allow all locations.')
+  @sys.description('The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.')
   parListOfAllowedLocations: string[]
 
   @sys.description('The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.')
@@ -32,7 +32,7 @@ param parTopLevelManagementGroupSuffix string = ''
 @sys.description('''Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'
 
 - `parTopLevelSovereignGlobalPoliciesEnable - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.
-- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to, leave empty to allow all locations.
+- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
 
 ''')
 param parTopLevelPolicyAssignmentSovereigntyGlobal policyAssignmentSovereigntyGlobalOptionsType = {
@@ -43,7 +43,7 @@ param parTopLevelPolicyAssignmentSovereigntyGlobal policyAssignmentSovereigntyGl
 @sys.description('''Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'
 
 - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.
-- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to, leave empty to allow all locations.
+- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
 - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.
 
 ''')
@@ -509,7 +509,8 @@ module modPolicyAssignmentIntRootEnforceSovereigntyGlobal '../../../policy/assig
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereigntyGlobal.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       listOfAllowedLocations: {
-        value: parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations
+        #disable-next-line no-loc-expr-outside-params //Policies resources are not deployed to a region, like other resources, but the metadata is stored in a region hence requiring this to keep input parameters reduced. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
+        value: empty(parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations) ? array(deployment().location) : parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereigntyGlobal.libDefinition.identity.type
@@ -1508,7 +1509,8 @@ module modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf '../../../
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters.allowedResourceTypes.value
       }
       listOfAllowedLocations: {
-        value: parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations
+        #disable-next-line no-loc-expr-outside-params //Policies resources are not deployed to a region, like other resources, but the metadata is stored in a region hence requiring this to keep input parameters reduced. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
+        value: empty(parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations) ? array(deployment().location) : parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations
       }
       allowedVirtualMachineSKUs: {
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
@@ -1536,7 +1538,8 @@ module modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf '../../../po
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters.allowedResourceTypes.value
       }
       listOfAllowedLocations: {
-        value: parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations
+        #disable-next-line no-loc-expr-outside-params //Policies resources are not deployed to a region, like other resources, but the metadata is stored in a region hence requiring this to keep input parameters reduced. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
+        value: empty(parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations) ? array(deployment().location) : parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations
       }
       allowedVirtualMachineSKUs: {
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
