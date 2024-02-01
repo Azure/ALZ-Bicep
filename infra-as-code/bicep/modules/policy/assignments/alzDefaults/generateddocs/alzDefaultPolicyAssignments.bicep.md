@@ -8,9 +8,9 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
-parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group. - `parTopLevelSovereigntyGlobalPoliciesEnable` - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.' - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. Leave empty to allow all locations.
+parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'  - `parTopLevelSovereignGlobalPoliciesEnable - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to, leave empty to allow all locations.  
+parPolicyAssignmentSovereigntyConfidential | No       | Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'  - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to, leave empty to allow all locations. - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.  
 parPlatformMgAlzDefaultsEnable | No       | Management, Identity and Connectivity Management Groups beneath Platform Management Group have been deployed. If set to false, platform policies are assigned to the Platform Management Group; otherwise policies are assigned to the child management groups.
-parPolicyAssignmentSovereigntyConfidential | No       | Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups. - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to, leave empty to allow all locations. - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.
 parLandingZoneChildrenMgAlzDefaultsEnable | No       | Corp & Online Management Groups beneath Landing Zones Management Groups have been deployed. If set to false, policies will not try to be assigned to corp or online Management Groups.
 parLandingZoneMgConfidentialEnable | No       | Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group have been deployed. If set to false, policies will not try to be assigned to Confidential Corp & Confidential Online Management Groups
 parLogAnalyticsWorkSpaceAndAutomationAccountLocation | No       | The region where the Log Analytics Workspace & Automation Account are deployed.
@@ -40,6 +40,33 @@ Prefix used for the management group hierarchy.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
+
+### parTopLevelPolicyAssignmentSovereigntyGlobal
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'
+
+- `parTopLevelSovereignGlobalPoliciesEnable - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.
+- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to, leave empty to allow all locations.
+
+
+
+- Default value: `@{parTopLevelSovereigntyGlobalPoliciesEnable=False; parListOfAllowedLocations=System.Object[]}`
+
+### parPolicyAssignmentSovereigntyConfidential
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'
+
+- `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.
+- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to, leave empty to allow all locations.
+- `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.
+
+
+
+- Default value: `@{parAllowedResourceTypes=System.Object[]; parListOfAllowedLocations=System.Object[]; parAllowedVirtualMachineSKUs=System.Object[]}`
 
 ### parPlatformMgAlzDefaultsEnable
 
@@ -172,6 +199,19 @@ Set Parameter to true to Opt-out of deployment telemetry
         },
         "parTopLevelManagementGroupSuffix": {
             "value": ""
+        },
+        "parTopLevelPolicyAssignmentSovereigntyGlobal": {
+            "value": {
+                "parTopLevelSovereigntyGlobalPoliciesEnable": false,
+                "parListOfAllowedLocations": []
+            }
+        },
+        "parPolicyAssignmentSovereigntyConfidential": {
+            "value": {
+                "parAllowedResourceTypes": [],
+                "parListOfAllowedLocations": [],
+                "parAllowedVirtualMachineSKUs": []
+            }
         },
         "parPlatformMgAlzDefaultsEnable": {
             "value": true
