@@ -1511,7 +1511,7 @@ module modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf '../../../
       }
       listOfAllowedLocations: {
         #disable-next-line no-loc-expr-outside-params
-        value: empty(parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations) ? array(deployment().location) : parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations
+        value: !(empty(parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations)) ? parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations : array(deployment().location)
       }
       allowedVirtualMachineSKUs: {
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
