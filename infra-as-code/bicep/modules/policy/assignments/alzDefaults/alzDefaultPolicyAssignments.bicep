@@ -510,7 +510,7 @@ module modPolicyAssignmentIntRootEnforceSovereigntyGlobal '../../../policy/assig
     parPolicyAssignmentParameterOverrides: {
       listOfAllowedLocations: {
         #disable-next-line no-loc-expr-outside-params
-        value: empty(parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations) ? array(deployment().location) : parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations
+        value: !(empty(parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations)) ? parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations : array(deployment().location)
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereigntyGlobal.libDefinition.identity.type
@@ -1511,7 +1511,7 @@ module modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf '../../../
       }
       listOfAllowedLocations: {
         #disable-next-line no-loc-expr-outside-params
-        value: empty(parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations) ? array(deployment().location) : parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations
+        value: !(empty(parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations)) ? parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations : array(deployment().location)
       }
       allowedVirtualMachineSKUs: {
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
@@ -1540,7 +1540,7 @@ module modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf '../../../po
       }
       listOfAllowedLocations: {
         #disable-next-line no-loc-expr-outside-params
-        value: empty(parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations) ? array(deployment().location) : parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations
+        value: !(empty(parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations)) ? parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations : array(deployment().location)
       }
       allowedVirtualMachineSKUs: {
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
