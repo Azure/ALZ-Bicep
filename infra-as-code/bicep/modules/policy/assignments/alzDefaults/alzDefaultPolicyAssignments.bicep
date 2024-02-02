@@ -1,15 +1,15 @@
 metadata name = 'ALZ Bicep - ALZ Default Policy Assignments'
 metadata description = 'This module will assign the ALZ Default Policy Assignments to the ALZ Management Group hierarchy'
 
-type policyAssignmentSovereigntyGlobalOptionsType = ({
+type policyAssignmentSovereigntyGlobalOptionsType = {
   @sys.description('Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.')
   parTopLevelSovereigntyGlobalPoliciesEnable: bool
 
   @sys.description('The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.')
   parListOfAllowedLocations: string[]
-})
+}
 
-type policyAssignmentSovereigntyConfidentialOptionsType = ({
+type policyAssignmentSovereigntyConfidentialOptionsType = {
   @sys.description('The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.')
   parAllowedResourceTypes: string[]
 
@@ -18,7 +18,7 @@ type policyAssignmentSovereigntyConfidentialOptionsType = ({
 
   @sys.description('The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.')
   parAllowedVirtualMachineSKUs: string[]
-})
+}
 
 @sys.description('Prefix used for the management group hierarchy.')
 @minLength(2)
