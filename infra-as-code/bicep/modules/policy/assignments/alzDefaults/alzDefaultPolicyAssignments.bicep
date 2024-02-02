@@ -1510,7 +1510,7 @@ module modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf '../../../
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters.allowedResourceTypes.value
       }
       listOfAllowedLocations: {
-        #disable-next-line no-loc-expr-outside-params //Policies resources are not deployed to a region, like other resources, but the metadata is stored in a region hence requiring this to keep input parameters reduced. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
+        #disable-next-line no-loc-expr-outside-params
         value: empty(parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations) ? array(deployment().location) : parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations
       }
       allowedVirtualMachineSKUs: {
