@@ -510,7 +510,7 @@ module modPolicyAssignmentIntRootEnforceSovereigntyGlobal '../../../policy/assig
     parPolicyAssignmentParameterOverrides: {
       listOfAllowedLocations: {
         #disable-next-line no-loc-expr-outside-params
-        value: empty(parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations) ? array(deployment().location) : parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations
+        value: !(empty(parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations)) ? parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations : array(deployment().location)
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereigntyGlobal.libDefinition.identity.type
