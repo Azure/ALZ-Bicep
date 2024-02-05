@@ -8,6 +8,12 @@
     "parTopLevelManagementGroupSuffix": {
       "value": ""
     },
+    "parTopLevelPolicyAssignmentSovereigntyGlobal": {
+      "value": {
+        "parTopLevelSovereigntyGlobalPoliciesEnable": false,
+        "parListOfAllowedLocations": []
+      }
+    },
     "parPlatformMgAlzDefaultsEnable": {
       "value": true
     },
@@ -16,6 +22,13 @@
     },
     "parLandingZoneMgConfidentialEnable": {
       "value": false
+    },
+    "parPolicyAssignmentSovereigntyConfidential": {
+      "value": {
+        "parAllowedResourceTypes": [],
+        "parListOfAllowedLocations": [],
+        "parAllowedVirtualMachineSKUs": []
+      }
     },
     "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
       "value": "eastus"
