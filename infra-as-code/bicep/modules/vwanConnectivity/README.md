@@ -28,14 +28,14 @@ Module deploys the following resources which can be configured by parameters:
 <!-- markdownlint-disable -->
 > - When deploying using the `parameters/vwanConnectivity.parameters.all.json` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region. Failure to do so will cause these services to be unreachable over private endpoints.
 > For example, if deploying to East US the following zone entries:
->     - `privatelink.xxxxxx.azmk8s.io`
->     - `privatelink.xxxxxx.backup.windowsazure.com`
->     - `privatelink.xxxxxx.batch.azure.com`
+>    - `privatelink.xxxxxx.azmk8s.io`
+>    - `privatelink.xxxxxx.backup.windowsazure.com`
+>    - `privatelink.xxxxxx.batch.azure.com`
 >
 > Will become:
->     - `privatelink.eastus.azmk8s.io`
->     - `privatelink.eastus.backup.windowsazure.com`
->     - `privatelink.eastus.batch.azure.com`
+>    - `privatelink.eastus.azmk8s.io`
+>    - `privatelink.eastus.backup.windowsazure.com`
+>    - `privatelink.eastus.batch.azure.com`
 <!-- markdownlint-restore -->
 
 ## Outputs
