@@ -32,7 +32,7 @@ Module deploys the following resources which can be configured by parameters:
 >    - `privatelink.xxxxxx.backup.windowsazure.com`
 >    - `privatelink.xxxxxx.batch.azure.com`
 >
-> Will become:
+>     Will become:
 >    - `privatelink.eastus.azmk8s.io`
 >    - `privatelink.eastus.backup.windowsazure.com`
 >    - `privatelink.eastus.batch.azure.com`
