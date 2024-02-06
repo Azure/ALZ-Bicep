@@ -59,6 +59,7 @@ In this module, you have the option to deploy the Azure Firewall, Virtual Networ
 - Follow the [guidance](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/hubNetworking#deployment) in the *hubNetworking.bicep* module to deploy the module using *parameters/hubNetworking.parameters.az.all.json* parameters file.
 
 ### Azure CLI
+
 ```bash
 # For Azure global regions
 
@@ -133,6 +134,7 @@ In this module, you have the option to deploy the Azure Firewall into a zonal co
 - Follow the [guidance](https://github.com/sebassem/ALZ-Bicep/tree/alz-resiliency-guidance/infra-as-code/bicep/modules/vwanConnectivity#deployment) in the *vwanConnectivity.bicep* module to deploy the module using *parameters/vwanConnectivity.parameters.az.all.json* parameters file.
 
 ### Azure CLI
+
 ```bash
 # For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription
