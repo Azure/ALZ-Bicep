@@ -133,6 +133,7 @@ In this module, you have the option to deploy the Azure Firewall into a zonal co
 
 - Follow the [guidance](https://github.com/sebassem/ALZ-Bicep/tree/alz-resiliency-guidance/infra-as-code/bicep/modules/vwanConnectivity#deployment) in the *vwanConnectivity.bicep* module to deploy the module using *parameters/vwanConnectivity.parameters.az.all.json* parameters file.
 
+<!-- markdownlint-disable -->
 ### Azure CLI
 
 ```bash
@@ -185,3 +186,4 @@ New-AzResourceGroup `
 
 New-AzResourceGroupDeployment @inputObject
 ```
+<!-- markdownlint-restore -->
