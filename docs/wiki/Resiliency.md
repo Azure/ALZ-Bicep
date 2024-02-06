@@ -4,7 +4,7 @@
 
 ## Overview
 
-[Azure availability](https://learn.microsoft.com/azure/reliability/availability-zones-overview) zones are essential for resiliency as they offer distinct physical locations within an Azure region, each with independent power, cooling, and networking. By distributing applications across availability zones, businesses can ensure high availability and fault tolerance, minimizing downtime and mitigating the impact of potential failures. This architecture enhances resilience by safeguarding against data center-level outages and providing redundancy for critical workloads, ultimately enabling uninterrupted service delivery and maintaining business continuity.
+[Azure availability zones](https://learn.microsoft.com/azure/reliability/availability-zones-overview) are essential for resiliency as they offer distinct physical locations within an Azure region, each with independent power, cooling, and networking. By distributing applications across availability zones, businesses can ensure high availability and fault tolerance, minimizing downtime and mitigating the impact of potential failures. This architecture enhances resilience by safeguarding against data center-level outages and providing redundancy for critical workloads, ultimately enabling uninterrupted service delivery and maintaining business continuity.
 
 In the `ALZ-Bicep` project we provide the ability to deploy [resources that support zonal configuration](https://learn.microsoft.com/azure/reliability/availability-zones-service-support) in supported regions into [availability zones](https://learn.microsoft.com/azure/well-architected/reliability/regions-availability-zones) to allow for a more resilient deployment of the landing zone platform resources.
 
@@ -15,9 +15,9 @@ In the `ALZ-Bicep` project we provide the ability to deploy [resources that supp
 - Public IP Address (Microsoft.Network/publicIPAddresses)
 - Virtual Network Gateway (Microsoft.Network/virtualNetworkGateways)
 
-## How to deploy those services in a zonal configuration ?
+## How to deploy supported platform services in a zonal configuration ?
 
-All of the services that support zonal configuration are located in either the *hubNetworking* and *vwanConnectivity* modules. A sample parameters file for each module is provided to provide the required availability zones for those resources to be deployed in a zonal configuration.
+All of the services that support zonal configuration are located in either the *hubNetworking* or the *vwanConnectivity* module. A sample parameters file for each module is provided to provide the required availability zones for those resources to be deployed in a zonal configuration.
 
 ### hubNetworking.bicep
 
@@ -25,9 +25,9 @@ In this module, you have the option to deploy the Azure Firewall, Virtual Networ
 
 - You will need to edit the *parameters/hubNetworking.parameters.az.all.json* file to provide the zones supported by the region you are deploying to for the following parameters:
 
-- **parAzFirewallAvailabilityZones**
-- **parAzErGatewayAvailabilityZones**
-- **parAzVpnGatewayAvailabilityZones**
+  - **parAzFirewallAvailabilityZones**
+  - **parAzErGatewayAvailabilityZones**
+  - **parAzVpnGatewayAvailabilityZones**
 
 > **NOTE:**
 > The zonal configuration of Public IP addresses is automatically configured if the associated resource is deployed into an zonal configuration.
@@ -118,7 +118,7 @@ In this module, you have the option to deploy the Azure Firewall into a zonal co
 
 - You will need to edit the *parameters/vwanConnectivity.parameters.az.all.json* file to provide the zones supported by the region you are deploying to for the following parameters:
 
-- **parAzFirewallAvailabilityZones**
+  - **parAzFirewallAvailabilityZones**
 
 ```json
 "parAzFirewallAvailabilityZones": {
