@@ -92,7 +92,7 @@
   "defenderForSqlMdsqlDcr": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('effect')]"
+        "value": "Disabled"
       },
       "userWorkspaceResourceId": {
         "value": "[[parameters('userWorkspaceResourceId')]"
