@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -59,7 +59,7 @@ jobs:
           parameters: infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json
           deploymentName: create_policy_defs-${{ env.runNumber }}
           failOnStdErr: false
-        
+
       - name: Deploy Custom Role Definitions
         id: create_rbac_roles
         uses: azure/arm-deploy@v1
