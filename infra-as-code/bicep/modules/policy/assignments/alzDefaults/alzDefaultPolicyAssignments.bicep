@@ -244,12 +244,12 @@ var varPolicyAssignmentDenyPublicIP = {
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json')
 }
 
-var varPolicyAssignmentEnforceSovereigntyConf = {
+var varPolicyAssignmentEnforceSovereignConf = {
   definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/03de05a4-c324-4ccd-882f-a814ea8ab9ea'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_sovereignty_baseline_conf.tmpl.json')
 }
 
-var varPolicyAssignmentEnforceSovereigntyGlobal = {
+var varPolicyAssignmentEnforceSovereignGlobal = {
   definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/c1cbff38-87c0-4b9f-9f70-035c7a3b5523'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_sovereignty_baseline_global.tmpl.json')
 }
@@ -498,23 +498,23 @@ module modCustomerUsageAttributionZtnP1 '../../../../CRML/customerUsageAttributi
 
 // Modules - Policy Assignments - Intermediate Root Management Group
 // Module - Policy Assignment - Enforce-Sovereign-Global
-module modPolicyAssignmentIntRootEnforceSovereigntyGlobal '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereigntyGlobal.libDefinition.name) && parTopLevelPolicyAssignmentSovereigntyGlobal.parTopLevelSovereigntyGlobalPoliciesEnable) {
+module modPolicyAssignmentIntRootEnforceSovereigntyGlobal '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereignGlobal.libDefinition.name) && parTopLevelPolicyAssignmentSovereigntyGlobal.parTopLevelSovereigntyGlobalPoliciesEnable) {
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootEnforceSovereigntyGlobal
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSovereigntyGlobal.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentEnforceSovereigntyGlobal.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereigntyGlobal.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereigntyGlobal.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereigntyGlobal.libDefinition.properties.parameters
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSovereignGlobal.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       listOfAllowedLocations: {
         #disable-next-line no-loc-expr-outside-params
         value: !(empty(parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations)) ? parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations : array(deployment().location)
       }
     }
-    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereigntyGlobal.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereigntyGlobal.libDefinition.properties.enforcementMode
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereignGlobal.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1496,58 +1496,58 @@ module modPolicyAssignmentLzsCorpAuditPeDnsZones '../../../policy/assignments/po
 
 // Modules - Policy Assignments - Confidential Online Management Group
 // Module - Policy Assignment - Enforce-Sovereign-Conf
-module modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereigntyConf.libDefinition.name) && parLandingZoneMgConfidentialEnable) {
+module modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereignConf.libDefinition.name) && parLandingZoneMgConfidentialEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesConfidentialOnline)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSovereigntyConf.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentEnforceSovereigntyConf.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSovereignConf.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceSovereignConf.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       allowedResourceTypes: {
-        value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters.allowedResourceTypes.value
+        value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters.allowedResourceTypes.value
       }
       listOfAllowedLocations: {
         #disable-next-line no-loc-expr-outside-params
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations)) ? parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations : array(deployment().location)
       }
       allowedVirtualMachineSKUs: {
-        value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
+        value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
       }
     }
-    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereigntyConf.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.enforcementMode
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignConf.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
 // Modules - Policy Assignments - Confidential Corp Management Group
 // Module - Policy Assignment - Enforce-Sovereign-Conf
-module modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereigntyConf.libDefinition.name) && parLandingZoneMgConfidentialEnable) {
+module modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereignConf.libDefinition.name) && parLandingZoneMgConfidentialEnable) {
   scope: managementGroup(varManagementGroupIds.landingZonesConfidentialCorp)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSovereigntyConf.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentEnforceSovereigntyConf.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSovereignConf.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceSovereignConf.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       allowedResourceTypes: {
-        value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters.allowedResourceTypes.value
+        value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedResourceTypes : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters.allowedResourceTypes.value
       }
       listOfAllowedLocations: {
         #disable-next-line no-loc-expr-outside-params
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations)) ? parPolicyAssignmentSovereigntyConfidential.parListOfAllowedLocations : array(deployment().location)
       }
       allowedVirtualMachineSKUs: {
-        value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
+        value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
       }
     }
-    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereigntyConf.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereigntyConf.libDefinition.properties.enforcementMode
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignConf.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
