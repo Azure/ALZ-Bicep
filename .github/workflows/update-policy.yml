@@ -21,9 +21,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-
     steps:
-
       - name: Local repository checkout
         uses: actions/checkout@v4
         with:
@@ -110,8 +108,6 @@ jobs:
           git commit -m '${{ env.pr_title }}'
           git push origin ${{ env.branch_name }}
         working-directory: ${{ github.repository }}
-        env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
 
       - name: Create pull request
         if: steps.git_status.outputs.changes > 0
