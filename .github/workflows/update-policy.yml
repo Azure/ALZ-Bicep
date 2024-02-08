@@ -18,6 +18,10 @@ jobs:
     name: Update Policy Library
     if: github.repository == 'Azure/ALZ-Bicep'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
     steps:
 
       - name: Local repository checkout

@@ -10,6 +10,7 @@
 * [How Does ALZ-Bicep Implement Azure Policies?](https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive)
   * [Adding Custom Azure Policy Definitions](https://github.com/Azure/ALZ-Bicep/wiki/AddingPolicyDefs)
   * [Assigning Azure Policies](https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies)
+* [How Does ALZ-Bicep Implement resilient deployments across availability zones?](https://github.com/Azure/ALZ-Bicep/wiki/Resiliency)
 * [Contributing](https://github.com/Azure/ALZ-Bicep/wiki/Contributing)
 * [Telemetry Tracking Using Customer Usage Attribution (PID)](https://github.com/Azure/ALZ-Bicep/wiki/CustomerUsage)
 * [Azure Container Registry Deployment - Private Bicep Registry](https://github.com/Azure/ALZ-Bicep/wiki/ACRDeployment)
