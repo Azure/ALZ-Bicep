@@ -21,7 +21,7 @@ Detailed information about how to use, deploy and extend artifacts found in this
 - [How Does ALZ-Bicep Implement Azure Policies?][wiki_policy_deep_dive]
   - [Adding Custom Azure Policy Definitions][wiki_policy_defs]
   - [Assigning Azure Policies][wiki_policy_assignments]
-- [How Does ALZ-Bicep Implement Resilient Deployments Across Availability Zones?](wiki_resiliency)
+- [How Does ALZ-Bicep Implement Resilient Deployments Across Availability Zones?][wiki_resiliency]
 - [Contributing][wiki_contributing]
 - [Telemetry Tracking Using Customer Usage Attribution (PID)][wiki_cuaid]
 - [Azure Container Registry Deployment - Private Bicep Registry][wiki_acrdeploy]

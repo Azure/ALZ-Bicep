@@ -22,7 +22,7 @@ Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` 
 * [How Does ALZ-Bicep Implement Azure Policies?][wiki_policy_deep_dive]
   * [Adding Custom Azure Policy Definitions][wiki_policy_defs]
   * [Assigning Azure Policies][wiki_policy_assignments]
-* [How Does ALZ-Bicep Implement resilient deployments across availability zones?](wiki_resiliency)
+* [How Does ALZ-Bicep Implement resilient deployments across availability zones?][wiki_resiliency]
 * [Contributing][wiki_contributing]
 * [Telemetry Tracking Using Customer Usage Attribution (PID)][wiki_cuaid]
 * [Azure Container Registry Deployment - Private Bicep Registry][wiki_acrdeploy]
