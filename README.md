@@ -21,6 +21,7 @@ Detailed information about how to use, deploy and extend artifacts found in this
 - [How Does ALZ-Bicep Implement Azure Policies?][wiki_policy_deep_dive]
   - [Adding Custom Azure Policy Definitions][wiki_policy_defs]
   - [Assigning Azure Policies][wiki_policy_assignments]
+- [How Does ALZ-Bicep Implement Resilient Deployments Across Availability Zones?][wiki_resiliency]
 - [Contributing][wiki_contributing]
 - [Telemetry Tracking Using Customer Usage Attribution (PID)][wiki_cuaid]
 - [Azure Container Registry Deployment - Private Bicep Registry][wiki_acrdeploy]
@@ -110,6 +111,7 @@ For support on the artifacts contained in this repository, please refer to [this
 [wiki_policy_deep_dive]:                        https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive "Wiki - Policy Deep Dive"
 [wiki_policy_defs]:                        https://github.com/Azure/ALZ-Bicep/wiki/AddingPolicyDefs "Wiki - Policy Definitions"
 [wiki_policy_assignments]:                        https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies "Wiki - Policy Assignments"
+[wiki_resiliency]:                            https://github.com/Azure/ALZ-Bicep/wiki/Resiliency "Wiki - Resiliency"
 [wiki_contributing]:                          https://github.com/Azure/ALZ-Bicep/wiki/Contributing "Wiki - Contributing"
 [wiki_cuaid]:                          https://github.com/Azure/ALZ-Bicep/wiki/CustomerUsage "Wiki - Telemetry Usage ID"
 [wiki_acrdeploy]:                          https://github.com/Azure/ALZ-Bicep/wiki/ACRDeployment "Wiki - Private Bicep Registry"
