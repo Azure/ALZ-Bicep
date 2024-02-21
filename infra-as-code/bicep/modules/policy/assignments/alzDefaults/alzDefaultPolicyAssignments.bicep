@@ -101,7 +101,7 @@ param parExcludedPolicyAssignments array = []
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
-@description('Effect type for all policy definitions')
+@sys.description('Effect type for all policy definitions')
 param parPolicyEffect string = 'Deny'
 
 var varLogAnalyticsWorkspaceName = split(parLogAnalyticsWorkspaceResourceId, '/')[8]
