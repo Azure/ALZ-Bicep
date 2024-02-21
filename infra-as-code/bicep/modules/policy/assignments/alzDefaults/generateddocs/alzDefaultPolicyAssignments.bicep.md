@@ -26,7 +26,7 @@ parVmBackupExclusionTagName | No       | Name of the tag to use for excluding VM
 parVmBackupExclusionTagValue | No       | Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.
 parExcludedPolicyAssignments | No       | Adding assignment definition names to this array will exclude the specific policies from assignment. Find the correct values to this array in the following documentation: https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies#what-if-i-want-to-exclude-specific-policy-assignments-from-alz-default-policy-assignments
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
-parPolicyEffect | Deny       | Set Parameter for effect type for all policy definitions
+parPolicyEffect | Deny       | Effect type for all policy definitions
 
 ### parTopLevelManagementGroupPrefix
 
