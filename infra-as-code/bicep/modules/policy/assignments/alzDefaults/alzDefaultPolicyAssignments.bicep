@@ -101,6 +101,9 @@ param parExcludedPolicyAssignments array = []
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
+@description('Effect type for all policy definitions')
+param parPolicyEffect string = 'Deny'
+
 var varLogAnalyticsWorkspaceName = split(parLogAnalyticsWorkspaceResourceId, '/')[8]
 
 var varLogAnalyticsWorkspaceResourceGroupName = split(parLogAnalyticsWorkspaceResourceId, '/')[4]
@@ -524,9 +527,12 @@ module modPolicyAssignmentIntRootEnforceSovereigntyGlobal '../../../policy/assig
         #disable-next-line no-loc-expr-outside-params
         value: !(empty(parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations)) ? parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations : array(deployment().location)
       }
+      effect: {
+        value: parPolicyEffect
+      }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereignGlobal.libDefinition.properties.enforcementMode
+    parPolicyAssignmentEnforcementMode: parTopLevelPolicyAssignmentSovereigntyGlobal.parTopLevelSovereigntyGlobalPoliciesEnable ? 'Default' : varPolicyAssignmentEnforceSovereignGlobal.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1560,9 +1566,12 @@ module modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf '../../../
       allowedVirtualMachineSKUs: {
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
       }
+      effect: {
+        value: parPolicyEffect
+      }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignConf.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.enforcementMode
+    parPolicyAssignmentEnforcementMode: parLandingZoneMgConfidentialEnable ? 'Default' : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1589,9 +1598,12 @@ module modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf '../../../po
       allowedVirtualMachineSKUs: {
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
       }
+      effect: {
+        value: parPolicyEffect
+      }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignConf.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.enforcementMode
+    parPolicyAssignmentEnforcementMode: parLandingZoneMgConfidentialEnable ? 'Default' : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
