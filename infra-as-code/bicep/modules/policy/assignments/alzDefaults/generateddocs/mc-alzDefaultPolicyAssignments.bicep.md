@@ -16,7 +16,6 @@ parMsDefenderForCloudEmailSecurityContact | No       | An e-mail address that yo
 parDdosProtectionPlanId | No       | ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.
 parDisableAlzDefaultPolicies | No       | Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
-parPolicyEffect | Deny       | Effect type for all policy definitions
 
 ### parTopLevelManagementGroupPrefix
 
