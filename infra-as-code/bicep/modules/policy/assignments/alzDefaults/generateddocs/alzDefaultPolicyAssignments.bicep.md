@@ -183,11 +183,11 @@ Set Parameter to true to Opt-out of deployment telemetry
 
 - Default value: `False`
 
-### parPolicyEffect
+### parSovereigntyPolicyEffect
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Effect type for all policy definitions
+Effect type for sovereign policy definitions
 
 - Default value: `Deny`
 
@@ -270,7 +270,7 @@ Effect type for all policy definitions
         "parTelemetryOptOut": {
             "value": false
         }
-        "parPolicyEffect": {
+        "parSovereigntyPolicyEffect": {
             "value": "Deny"
         }
     }
