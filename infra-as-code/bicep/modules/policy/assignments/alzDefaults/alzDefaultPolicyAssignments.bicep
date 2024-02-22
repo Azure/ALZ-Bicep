@@ -101,8 +101,8 @@ param parExcludedPolicyAssignments array = []
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
-@sys.description('Effect type for all policy definitions')
-param parPolicyEffect string = 'Deny'
+@sys.description('Effect type for sovereign policy definitions')
+param parSovereigntyPolicyEffect string = 'Deny'
 
 var varLogAnalyticsWorkspaceName = split(parLogAnalyticsWorkspaceResourceId, '/')[8]
 
@@ -528,7 +528,7 @@ module modPolicyAssignmentIntRootEnforceSovereigntyGlobal '../../../policy/assig
         value: !(empty(parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations)) ? parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations : array(deployment().location)
       }
       effect: {
-        value: parPolicyEffect
+        value: parSovereigntyPolicyEffect
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.identity.type
@@ -1567,7 +1567,7 @@ module modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf '../../../
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
       }
       effect: {
-        value: parPolicyEffect
+        value: parSovereigntyPolicyEffect
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignConf.libDefinition.identity.type
@@ -1599,7 +1599,7 @@ module modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf '../../../po
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
       }
       effect: {
-        value: parPolicyEffect
+        value: parSovereigntyPolicyEffect
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignConf.libDefinition.identity.type
