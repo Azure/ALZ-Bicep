@@ -269,7 +269,7 @@ Effect type for sovereign policy definitions
         },
         "parTelemetryOptOut": {
             "value": false
-        }
+        },
         "parSovereigntyPolicyEffect": {
             "value": "Deny"
         }
