@@ -443,6 +443,26 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-FirewallPolicy.json')
 }
 {
+	name: 'Deploy-MDFC-Arc-SQL-DCR-Association'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-Arc-SQL-DCR-Association.json')
+}
+{
+	name: 'Deploy-MDFC-Arc-Sql-DefenderSQL-DCR'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-Arc-Sql-DefenderSQL-DCR.json')
+}
+{
+	name: 'Deploy-MDFC-SQL-AMA'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-SQL-AMA.json')
+}
+{
+	name: 'Deploy-MDFC-SQL-DefenderSQL-DCR'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-SQL-DefenderSQL-DCR.json')
+}
+{
+	name: 'Deploy-MDFC-SQL-DefenderSQL'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-SQL-DefenderSQL.json')
+}
+{
 	name: 'Deploy-MySQL-sslEnforcement'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MySQL-sslEnforcement.json')
 }
@@ -489,6 +509,10 @@
 {
 	name: 'Deploy-Storage-sslEnforcement'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Storage-sslEnforcement.json')
+}
+{
+	name: 'Deploy-UserAssignedManagedIdentity-VMInsights'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-UserAssignedManagedIdentity-VMInsights.json')
 }
 {
 	name: 'Deploy-Vm-autoShutdown'
