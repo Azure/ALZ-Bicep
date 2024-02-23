@@ -12,7 +12,7 @@ parTopLevelManagementGroupSuffix | No       | Optional suffix for the management
 parPeeredVnetSubscriptionId | No       | Subscription Id to the Virtual Network Hub object. Default: Empty String
 parTags        | No       | Array of Tags to be applied to all resources in module. Default: Empty Object
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
-parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.
+parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parPeeredVnetSubscriptionMgPlacement | No       | The Management Group Id to place the subscription in. Default: Empty String
 parResourceGroupNameForSpokeNetworking | No       | Name of Resource Group to be created to contain spoke networking resources like the virtual network.
 parResourceGroupLock | No       | Resource Group Lock Configuration.
@@ -24,9 +24,9 @@ parDnsServerIps | No       | Array of DNS Server IP addresses for VNet. Default:
 parNextHopIpAddress | No       | IP Address where network traffic should route to. Default: Empty string
 parDisableBgpRoutePropagation | No       | Switch which allows BGP Route Propogation to be disabled on the route table.
 parSpokeToHubRouteTableName | No       | Name of Route table to create for the default route of Hub.
-parSpokeNetworkLock | No       | Resource Lock Configuration for Spoke Network.
-parSpokeRouteTableLock | No       | Resource Lock Configuration for Spoke Network Route Table.
-parPrivateDnsZoneVirtualNetworkLinkLock | No       | Resource Lock Configuration for Private DNS Virtual Network Network Links.
+parSpokeNetworkLock | No       | Resource Lock Configuration for Spoke Network.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parSpokeRouteTableLock | No       | Resource Lock Configuration for Spoke Network Route Table.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parPrivateDnsZoneVirtualNetworkLinkLock | No       | Resource Lock Configuration for Private DNS Virtual Network Network Links.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parHubVirtualNetworkId | Yes      | Virtual Network ID of Hub Virtual Network, or Azure Virtuel WAN hub ID.
 parAllowSpokeForwardedTraffic | No       | Switch to enable/disable forwarded Traffic from outside spoke network.
 parAllowHubVpnGatewayTransit | No       | Switch to enable/disable VPN Gateway for the hub network peering.
@@ -81,6 +81,11 @@ Set Parameter to true to Opt-out of deployment telemetry.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Global Resource Lock Configuration used for all resources deployed in this module.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
 
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Peered Spoke Orchestration Networking Module.}`
 
@@ -168,6 +173,11 @@ Name of Route table to create for the default route of Hub.
 
 Resource Lock Configuration for Spoke Network.
 
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Peered Spoke Orchestration Networking Module.}`
 
 ### parSpokeRouteTableLock
@@ -176,6 +186,11 @@ Resource Lock Configuration for Spoke Network.
 
 Resource Lock Configuration for Spoke Network Route Table.
 
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Peered Spoke Orchestration Networking Module.}`
 
 ### parPrivateDnsZoneVirtualNetworkLinkLock
@@ -183,6 +198,11 @@ Resource Lock Configuration for Spoke Network Route Table.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Resource Lock Configuration for Private DNS Virtual Network Network Links.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
 
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Peered Spoke Orchestration Networking Module.}`
 

@@ -1326,7 +1326,7 @@ var varPolicySetDefinitionEsMcEnforceEncryptTransitParameters = loadJsonContent(
 // Customer Usage Attribution Id
 var varCuaid = '2b136786-9881-412e-84ba-f4c2822e1ac9'
 
-resource resPolicyDefinitions 'Microsoft.Authorization/policyDefinitions@2021-06-01' = [for policy in varCustomPolicyDefinitionsArray: {
+resource resPolicyDefinitions 'Microsoft.Authorization/policyDefinitions@2023-04-01' = [for policy in varCustomPolicyDefinitionsArray: {
   name: policy.libDefinition.name
   properties: {
     description: policy.libDefinition.properties.description
@@ -1339,7 +1339,7 @@ resource resPolicyDefinitions 'Microsoft.Authorization/policyDefinitions@2021-06
   }
 }]
 
-resource resPolicySetDefinitions 'Microsoft.Authorization/policySetDefinitions@2021-06-01' = [for policySet in varCustomPolicySetDefinitionsArray: {
+resource resPolicySetDefinitions 'Microsoft.Authorization/policySetDefinitions@2023-04-01' = [for policySet in varCustomPolicySetDefinitionsArray: {
   dependsOn: [
     resPolicyDefinitions // Must wait for policy definitons to be deployed before starting the creation of Policy Set/Initiative Defininitions
   ]

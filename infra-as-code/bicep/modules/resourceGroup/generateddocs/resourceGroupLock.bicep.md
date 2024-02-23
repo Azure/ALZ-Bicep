@@ -6,14 +6,19 @@ Module used to lock Resource Groups for Azure Landing Zones
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parResourceLockConfig | No       | Resource Lock Configuration Object
+parResourceLockConfig | No       | Resource Lock Configuration for Resource Groups.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parResourceGroupName | Yes      | Resource Group Name
 
 ### parResourceLockConfig
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Resource Lock Configuration Object
+Resource Lock Configuration for Resource Groups.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
 
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Resource Group Module.}`
 
