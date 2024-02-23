@@ -32,7 +32,12 @@ param parPublicIpProperties object
 @sys.description('Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty.')
 param parAvailabilityZones array = []
 
-@sys.description('Resource Lock Configuration for Public IPs.')
+@sys.description('''Resource Lock Configuration for Public IPs.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parResourceLockConfig lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Public IP Module.'

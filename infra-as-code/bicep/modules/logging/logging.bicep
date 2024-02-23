@@ -6,13 +6,18 @@ type lockType = {
   name: string?
 
   @description('Optional. The lock settings of the service.')
-  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+  kind: ('CanNotDelete' | 'ReadOnly' | 'None')
 
   @description('Optional. Notes about this lock.')
   notes: string?
 }
 
-@sys.description('Global Resource Lock Configuration used for all resources deployed in this module.')
+@sys.description('''Global Resource Lock Configuration used for all resources deployed in this module.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parGlobalResourceLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Logging Module.'
@@ -55,7 +60,12 @@ param parLogAnalyticsWorkspaceCapacityReservationLevel int = 100
 @sys.description('Number of days of log retention for Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceLogRetentionInDays int = 365
 
-@sys.description('Resource Lock Configuration for Log Analytics Workspace.')
+@sys.description('''Resource Lock Configuration for Log Analytics Workspace.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parLogAnalyticsWorkspaceLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Logging Module.'
@@ -88,7 +98,12 @@ param parLogAnalyticsWorkspaceSolutions array = [
   'VMInsights'
 ]
 
-@sys.description('Resource Lock Configuration for Log Analytics Workspace Solutions.')
+@sys.description('''Resource Lock Configuration for Log Analytics Workspace Solutions.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parLogAnalyticsWorkspaceSolutionsLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Logging Module.'
@@ -109,7 +124,12 @@ param parAutomationAccountUseManagedIdentity bool = true
 @sys.description('Automation Account - Public network access.')
 param parAutomationAccountPublicNetworkAccess bool = true
 
-@sys.description('Resource Lock Configuration for Automation Account.')
+@sys.description('''Resource Lock Configuration for Automation Account.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parAutomationAccountLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Logging Module.'

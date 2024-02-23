@@ -12,7 +12,12 @@ type lockType = {
   notes: string?
 }
 
-@sys.description('Resource Lock Configuration for Resource Groups.')
+@sys.description('''Resource Lock Configuration for Resource Groups.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parResourceLockConfig lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Resource Group Module.'

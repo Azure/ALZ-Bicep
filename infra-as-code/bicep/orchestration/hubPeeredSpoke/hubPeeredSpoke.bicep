@@ -8,7 +8,7 @@ type lockType = {
   name: string?
 
   @description('Optional. The lock settings of the service.')
-  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+  kind: ('CanNotDelete' | 'ReadOnly' | 'None')
 
   @description('Optional. Notes about this lock.')
   notes: string?
@@ -37,7 +37,12 @@ param parTags object = {}
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
-@sys.description('Global Resource Lock Configuration used for all resources deployed in this module.')
+@sys.description('''Global Resource Lock Configuration used for all resources deployed in this module.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parGlobalResourceLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Peered Spoke Orchestration Networking Module.'
@@ -82,20 +87,35 @@ param parDisableBgpRoutePropagation bool = false
 @sys.description('Name of Route table to create for the default route of Hub.')
 param parSpokeToHubRouteTableName string = 'rtb-spoke-to-hub'
 
-@sys.description('Resource Lock Configuration for Spoke Network.')
+@sys.description('''Resource Lock Configuration for Spoke Network.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parSpokeNetworkLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Peered Spoke Orchestration Networking Module.'
 }
 
-@sys.description('Resource Lock Configuration for Spoke Network Route Table.')
+@sys.description('''Resource Lock Configuration for Spoke Network Route Table.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parSpokeRouteTableLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Peered Spoke Orchestration Networking Module.'
 }
 
 // Private DNS Link Module Parameters
-@sys.description('Resource Lock Configuration for Private DNS Virtual Network Network Links.')
+@sys.description('''Resource Lock Configuration for Private DNS Virtual Network Network Links.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parPrivateDnsZoneVirtualNetworkLinkLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Peered Spoke Orchestration Networking Module.'
