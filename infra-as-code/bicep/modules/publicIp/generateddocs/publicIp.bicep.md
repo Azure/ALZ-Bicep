@@ -4,16 +4,16 @@ Module used to set up Public IP for Azure Landing Zones
 
 ## Parameters
 
-| Parameter name        | Required | Description                                                                                                                                                            |
-| --------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| parLocation           | No       | Azure Region to deploy Public IP Address to.                                                                                                                           |
-| parPublicIpName       | Yes      | Name of Public IP to create in Azure.                                                                                                                                  |
-| parPublicIpSku        | Yes      | Public IP Address SKU.                                                                                                                                                 |
-| parPublicIpProperties | Yes      | Properties of Public IP to be deployed.                                                                                                                                |
-| parAvailabilityZones  | No       | Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty.                                     |
-| parResourceLockConfig | No       | Resource Lock Configuration for Public IPs. - `kind`: The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes`: Notes about this lock. |
-| parTags               | No       | Tags to be applied to resource when deployed.                                                                                                                          |
-| parTelemetryOptOut    | No       | Set Parameter to true to Opt-out of deployment telemetry.                                                                                                              |
+Parameter name | Required | Description
+-------------- | -------- | -----------
+parLocation    | No       | Azure Region to deploy Public IP Address to.
+parPublicIpName | Yes      | Name of Public IP to create in Azure.
+parPublicIpSku | Yes      | Public IP Address SKU.
+parPublicIpProperties | Yes      | Properties of Public IP to be deployed.
+parAvailabilityZones | No       | Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty.
+parResourceLockConfig | No       | Resource Lock Configuration for Public IPs.
+parTags        | No       | Tags to be applied to resource when deployed.
+parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parLocation
 
@@ -53,7 +53,7 @@ Availability Zones to deploy the Public IP across. Region must support Availabil
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Resource Lock Configuration Object
+Resource Lock Configuration for Public IPs.
 
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Public IP Module.}`
 
@@ -73,10 +73,10 @@ Set Parameter to true to Opt-out of deployment telemetry.
 
 ## Outputs
 
-| Name            | Type   | Description |
-| --------------- | ------ | ----------- |
-| outPublicIpId   | string |
-| outPublicIpName | string |
+Name | Type | Description
+---- | ---- | -----------
+outPublicIpId | string |
+outPublicIpName | string |
 
 ## Snippets
 
@@ -84,39 +84,39 @@ Set Parameter to true to Opt-out of deployment telemetry.
 
 ```json
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
-  "contentVersion": "1.0.0.0",
-  "metadata": {
-    "template": "infra-as-code/bicep/modules/publicIp/publicIp.json"
-  },
-  "parameters": {
-    "parLocation": {
-      "value": "[resourceGroup().location]"
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "metadata": {
+        "template": "infra-as-code/bicep/modules/publicIp/publicIp.json"
     },
-    "parPublicIpName": {
-      "value": ""
-    },
-    "parPublicIpSku": {
-      "value": {}
-    },
-    "parPublicIpProperties": {
-      "value": {}
-    },
-    "parAvailabilityZones": {
-      "value": []
-    },
-    "parResourceLockConfig": {
-      "value": {
-        "kind": "None",
-        "notes": "This lock was created by the ALZ Bicep Public IP Module."
-      }
-    },
-    "parTags": {
-      "value": {}
-    },
-    "parTelemetryOptOut": {
-      "value": false
+    "parameters": {
+        "parLocation": {
+            "value": "[resourceGroup().location]"
+        },
+        "parPublicIpName": {
+            "value": ""
+        },
+        "parPublicIpSku": {
+            "value": {}
+        },
+        "parPublicIpProperties": {
+            "value": {}
+        },
+        "parAvailabilityZones": {
+            "value": []
+        },
+        "parResourceLockConfig": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Public IP Module."
+            }
+        },
+        "parTags": {
+            "value": {}
+        },
+        "parTelemetryOptOut": {
+            "value": false
+        }
     }
-  }
 }
 ```
