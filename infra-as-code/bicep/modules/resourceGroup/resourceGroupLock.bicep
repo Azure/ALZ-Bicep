@@ -6,13 +6,13 @@ type lockType = {
   name: string?
 
   @description('Optional. The lock settings of the service.')
-  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+  kind: ('CanNotDelete' | 'ReadOnly' | 'None')
 
   @description('Optional. Notes about this lock.')
   notes: string?
 }
 
-@sys.description('Resource Lock Configuration Object')
+@sys.description('Resource Lock Configuration for Resource Groups.')
 param parResourceLockConfig lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Resource Group Module.'

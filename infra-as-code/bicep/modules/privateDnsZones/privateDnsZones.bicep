@@ -6,7 +6,7 @@ type lockType = {
   name: string?
 
   @description('Optional. The lock settings of the service.')
-  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+  kind: ('CanNotDelete' | 'ReadOnly' | 'None')
 
   @description('Optional. Notes about this lock.')
   notes: string?
@@ -98,7 +98,7 @@ param parVirtualNetworkIdToLink string = ''
 @sys.description('Resource ID of VNet for Failover Private DNS Zone VNet Links.')
 param parVirtualNetworkIdToLinkFailover string = ''
 
-@sys.description('Resource Lock Configuration Object')
+@sys.description('Resource Lock Configuration for Private DNS Zones.')
 param parResourceLockConfig lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Private DNS Zones Module.'

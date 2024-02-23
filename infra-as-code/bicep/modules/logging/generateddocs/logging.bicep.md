@@ -4,29 +4,29 @@ ALZ Bicep Module used to set up Logging
 
 ## Parameters
 
-Parameter name | Required | Description
--------------- | -------- | -----------
-parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.
-parLogAnalyticsWorkspaceName | No       | Log Analytics Workspace name.
-parLogAnalyticsWorkspaceLocation | No       | Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
-parLogAnalyticsWorkspaceSkuName | No       | Log Analytics Workspace sku name.
-parLogAnalyticsWorkspaceCapacityReservationLevel | No       | Log Analytics Workspace Capacity Reservation Level. Only used if parLogAnalyticsWorkspaceSkuName is set to CapacityReservation.
-parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
-parLogAnalyticsWorkspaceLock | No       | Resource Lock Configuration for Log Analytics Workspace.
-parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace.
-parLogAnalyticsWorkspaceSolutionsLock | No       | Resource Lock Configuration for Log Analytics Workspace Solutions.
-parLogAnalyticsWorkspaceLinkAutomationAccount | No       | Log Analytics Workspace should be linked with the automation account.
-parAutomationAccountName | No       | Automation account name.
-parAutomationAccountLocation | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
-parAutomationAccountUseManagedIdentity | No       | Automation Account - use managed identity.
-parAutomationAccountPublicNetworkAccess | No       | Automation Account - Public network access.
-parAutomationAccountLock | No       | Resource Lock Configuration for Automation Account.
-parTags        | No       | Tags you would like to be applied to all resources in this module.
-parAutomationAccountTags | No       | Tags you would like to be applied to Automation Account.
-parLogAnalyticsWorkspaceTags | No       | Tags you would like to be applied to Log Analytics Workspace.
-parUseSentinelClassicPricingTiers | No       | Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.
-parLogAnalyticsLinkedServiceAutomationAccountName | No       | Log Analytics LinkedService name for Automation Account.
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
+| Parameter name                                    | Required | Description                                                                                                                                                                                           |
+| ------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| parGlobalResourceLock                             | No       | Global Resource Lock Configuration used for all resources deployed in this module. - `kind`: The type of lock which can CanNotDelete, ReadOnly, or None. - `notes`: Notes about this lock.            |
+| parLogAnalyticsWorkspaceName                      | No       | Log Analytics Workspace name.                                                                                                                                                                         |
+| parLogAnalyticsWorkspaceLocation                  | No       | Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.                                            |
+| parLogAnalyticsWorkspaceSkuName                   | No       | Log Analytics Workspace sku name.                                                                                                                                                                     |
+| parLogAnalyticsWorkspaceCapacityReservationLevel  | No       | Log Analytics Workspace Capacity Reservation Level. Only used if parLogAnalyticsWorkspaceSkuName is set to CapacityReservation.                                                                       |
+| parLogAnalyticsWorkspaceLogRetentionInDays        | No       | Number of days of log retention for Log Analytics Workspace.                                                                                                                                          |
+| parLogAnalyticsWorkspaceLock                      | No       | Resource Lock Configuration for Log Analytics Workspace. - `kind`: The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes`: Notes about this lock.                   |
+| parLogAnalyticsWorkspaceSolutions                 | No       | Solutions that will be added to the Log Analytics Workspace.                                                                                                                                          |
+| parLogAnalyticsWorkspaceSolutionsLock             | No       | Resource Lock Configuration for Log Analytics Workspace Solutions. - `kind`: The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes`: Notes about this lock.         |
+| parLogAnalyticsWorkspaceLinkAutomationAccount     | No       | Log Analytics Workspace should be linked with the automation account.                                                                                                                                 |
+| parAutomationAccountName                          | No       | Automation account name.                                                                                                                                                                              |
+| parAutomationAccountLocation                      | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.                                      |
+| parAutomationAccountUseManagedIdentity            | No       | Automation Account - use managed identity.                                                                                                                                                            |
+| parAutomationAccountPublicNetworkAccess           | No       | Automation Account - Public network access.                                                                                                                                                           |
+| parAutomationAccountLock                          | No       | Resource Lock Configuration for Automation Account. - `kind`: The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes`: Notes about this lock.                        |
+| parTags                                           | No       | Tags you would like to be applied to all resources in this module.                                                                                                                                    |
+| parAutomationAccountTags                          | No       | Tags you would like to be applied to Automation Account.                                                                                                                                              |
+| parLogAnalyticsWorkspaceTags                      | No       | Tags you would like to be applied to Log Analytics Workspace.                                                                                                                                         |
+| parUseSentinelClassicPricingTiers                 | No       | Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier. |
+| parLogAnalyticsLinkedServiceAutomationAccountName | No       | Log Analytics LinkedService name for Automation Account.                                                                                                                                              |
+| parTelemetryOptOut                                | No       | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                                              |
 
 ### parGlobalResourceLock
 
@@ -202,14 +202,14 @@ Set Parameter to true to Opt-out of deployment telemetry
 
 ## Outputs
 
-Name | Type | Description
----- | ---- | -----------
-outLogAnalyticsWorkspaceName | string |
-outLogAnalyticsWorkspaceId | string |
-outLogAnalyticsCustomerId | string |
-outLogAnalyticsSolutions | array |
-outAutomationAccountName | string |
-outAutomationAccountId | string |
+| Name                         | Type   | Description |
+| ---------------------------- | ------ | ----------- |
+| outLogAnalyticsWorkspaceName | string |
+| outLogAnalyticsWorkspaceId   | string |
+| outLogAnalyticsCustomerId    | string |
+| outLogAnalyticsSolutions     | array  |
+| outAutomationAccountName     | string |
+| outAutomationAccountId       | string |
 
 ## Snippets
 
@@ -217,98 +217,98 @@ outAutomationAccountId | string |
 
 ```json
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
-    "contentVersion": "1.0.0.0",
-    "metadata": {
-        "template": "infra-as-code/bicep/modules/logging/logging.json"
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "template": "infra-as-code/bicep/modules/logging/logging.json"
+  },
+  "parameters": {
+    "parGlobalResourceLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
     },
-    "parameters": {
-        "parGlobalResourceLock": {
-            "value": {
-                "kind": "None",
-                "notes": "This lock was created by the ALZ Bicep Logging Module."
-            }
-        },
-        "parLogAnalyticsWorkspaceName": {
-            "value": "alz-log-analytics"
-        },
-        "parLogAnalyticsWorkspaceLocation": {
-            "value": "[resourceGroup().location]"
-        },
-        "parLogAnalyticsWorkspaceSkuName": {
-            "value": "PerGB2018"
-        },
-        "parLogAnalyticsWorkspaceCapacityReservationLevel": {
-            "value": 100
-        },
-        "parLogAnalyticsWorkspaceLogRetentionInDays": {
-            "value": 365
-        },
-        "parLogAnalyticsWorkspaceLock": {
-            "value": {
-                "kind": "None",
-                "notes": "This lock was created by the ALZ Bicep Logging Module."
-            }
-        },
-        "parLogAnalyticsWorkspaceSolutions": {
-            "value": [
-                "AgentHealthAssessment",
-                "AntiMalware",
-                "ChangeTracking",
-                "Security",
-                "SecurityInsights",
-                "SQLAdvancedThreatProtection",
-                "SQLVulnerabilityAssessment",
-                "SQLAssessment",
-                "Updates",
-                "VMInsights"
-            ]
-        },
-        "parLogAnalyticsWorkspaceSolutionsLock": {
-            "value": {
-                "kind": "None",
-                "notes": "This lock was created by the ALZ Bicep Logging Module."
-            }
-        },
-        "parLogAnalyticsWorkspaceLinkAutomationAccount": {
-            "value": true
-        },
-        "parAutomationAccountName": {
-            "value": "alz-automation-account"
-        },
-        "parAutomationAccountLocation": {
-            "value": "[resourceGroup().location]"
-        },
-        "parAutomationAccountUseManagedIdentity": {
-            "value": true
-        },
-        "parAutomationAccountPublicNetworkAccess": {
-            "value": true
-        },
-        "parAutomationAccountLock": {
-            "value": {
-                "kind": "None",
-                "notes": "This lock was created by the ALZ Bicep Logging Module."
-            }
-        },
-        "parTags": {
-            "value": {}
-        },
-        "parAutomationAccountTags": {
-            "value": "[parameters('parTags')]"
-        },
-        "parLogAnalyticsWorkspaceTags": {
-            "value": "[parameters('parTags')]"
-        },
-        "parUseSentinelClassicPricingTiers": {
-            "value": false
-        },
-        "parLogAnalyticsLinkedServiceAutomationAccountName": {
-            "value": "Automation"
-        },
-        "parTelemetryOptOut": {
-            "value": false
-        }
+    "parLogAnalyticsWorkspaceName": {
+      "value": "alz-log-analytics"
+    },
+    "parLogAnalyticsWorkspaceLocation": {
+      "value": "[resourceGroup().location]"
+    },
+    "parLogAnalyticsWorkspaceSkuName": {
+      "value": "PerGB2018"
+    },
+    "parLogAnalyticsWorkspaceCapacityReservationLevel": {
+      "value": 100
+    },
+    "parLogAnalyticsWorkspaceLogRetentionInDays": {
+      "value": 365
+    },
+    "parLogAnalyticsWorkspaceLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parLogAnalyticsWorkspaceSolutions": {
+      "value": [
+        "AgentHealthAssessment",
+        "AntiMalware",
+        "ChangeTracking",
+        "Security",
+        "SecurityInsights",
+        "SQLAdvancedThreatProtection",
+        "SQLVulnerabilityAssessment",
+        "SQLAssessment",
+        "Updates",
+        "VMInsights"
+      ]
+    },
+    "parLogAnalyticsWorkspaceSolutionsLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parLogAnalyticsWorkspaceLinkAutomationAccount": {
+      "value": true
+    },
+    "parAutomationAccountName": {
+      "value": "alz-automation-account"
+    },
+    "parAutomationAccountLocation": {
+      "value": "[resourceGroup().location]"
+    },
+    "parAutomationAccountUseManagedIdentity": {
+      "value": true
+    },
+    "parAutomationAccountPublicNetworkAccess": {
+      "value": true
+    },
+    "parAutomationAccountLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parTags": {
+      "value": {}
+    },
+    "parAutomationAccountTags": {
+      "value": "[parameters('parTags')]"
+    },
+    "parLogAnalyticsWorkspaceTags": {
+      "value": "[parameters('parTags')]"
+    },
+    "parUseSentinelClassicPricingTiers": {
+      "value": false
+    },
+    "parLogAnalyticsLinkedServiceAutomationAccountName": {
+      "value": "Automation"
+    },
+    "parTelemetryOptOut": {
+      "value": false
     }
+  }
 }
 ```
