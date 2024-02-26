@@ -6,21 +6,21 @@ ALZ Bicep Module used to set up Logging
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.
+parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceName | No       | Log Analytics Workspace name.
 parLogAnalyticsWorkspaceLocation | No       | Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
 parLogAnalyticsWorkspaceSkuName | No       | Log Analytics Workspace sku name.
 parLogAnalyticsWorkspaceCapacityReservationLevel | No       | Log Analytics Workspace Capacity Reservation Level. Only used if parLogAnalyticsWorkspaceSkuName is set to CapacityReservation.
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
-parLogAnalyticsWorkspaceLock | No       | Resource Lock Configuration for Log Analytics Workspace.
+parLogAnalyticsWorkspaceLock | No       | Resource Lock Configuration for Log Analytics Workspace.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace.
-parLogAnalyticsWorkspaceSolutionsLock | No       | Resource Lock Configuration for Log Analytics Workspace Solutions.
+parLogAnalyticsWorkspaceSolutionsLock | No       | Resource Lock Configuration for Log Analytics Workspace Solutions.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceLinkAutomationAccount | No       | Log Analytics Workspace should be linked with the automation account.
 parAutomationAccountName | No       | Automation account name.
 parAutomationAccountLocation | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
 parAutomationAccountUseManagedIdentity | No       | Automation Account - use managed identity.
 parAutomationAccountPublicNetworkAccess | No       | Automation Account - Public network access.
-parAutomationAccountLock | No       | Resource Lock Configuration for Automation Account.
+parAutomationAccountLock | No       | Resource Lock Configuration for Automation Account.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parAutomationAccountTags | No       | Tags you would like to be applied to Automation Account.
 parLogAnalyticsWorkspaceTags | No       | Tags you would like to be applied to Log Analytics Workspace.
@@ -33,6 +33,11 @@ parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment t
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Global Resource Lock Configuration used for all resources deployed in this module.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
 
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
 
@@ -86,6 +91,11 @@ Number of days of log retention for Log Analytics Workspace.
 
 Resource Lock Configuration for Log Analytics Workspace.
 
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
 
 ### parLogAnalyticsWorkspaceSolutions
@@ -103,6 +113,11 @@ Solutions that will be added to the Log Analytics Workspace.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Resource Lock Configuration for Log Analytics Workspace Solutions.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
 
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
 
@@ -151,6 +166,11 @@ Automation Account - Public network access.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Resource Lock Configuration for Automation Account.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
 
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
 

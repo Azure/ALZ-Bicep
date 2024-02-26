@@ -23,7 +23,7 @@ type lockType = {
   name: string?
 
   @description('Optional. The lock settings of the service.')
-  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+  kind: ('CanNotDelete' | 'ReadOnly' | 'None')
 
   @description('Optional. Notes about this lock.')
   notes: string?
@@ -38,7 +38,12 @@ param parCompanyPrefix string = 'alz'
 @sys.description('Name for Hub Network.')
 param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 
-@sys.description('Global Resource Lock Configuration used for all resources deployed in this module.')
+@sys.description('''Global Resource Lock Configuration used for all resources deployed in this module.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parGlobalResourceLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -78,7 +83,12 @@ param parSubnets subnetOptionsType = [
 @sys.description('Array of DNS Server IP addresses for VNet.')
 param parDnsServerIps array = []
 
-@sys.description('Resource Lock Configuration for Virtual Network.')
+@sys.description('''Resource Lock Configuration for Virtual Network.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parVirtualNetworkLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -116,7 +126,12 @@ param parAzBastionTunneling bool = false
 @sys.description('Name for Azure Bastion Subnet NSG.')
 param parAzBastionNsgName string = 'nsg-AzureBastionSubnet'
 
-@sys.description('Resource Lock Configuration for Bastion.')
+@sys.description('''Resource Lock Configuration for Bastion.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parBastionLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -128,7 +143,12 @@ param parDdosEnabled bool = true
 @sys.description('DDoS Plan Name.')
 param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
 
-@sys.description('Resource Lock Configuration for DDoS Plan.')
+@sys.description('''Resource Lock Configuration for DDoS Plan.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parDdosLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -189,7 +209,12 @@ param parAzFirewallDnsProxyEnabled bool = true
 @sys.description('Array of custom DNS servers used by Azure Firewall')
 param parAzFirewallDnsServers array = []
 
-@sys.description('Resource Lock Configuration for Azure Firewall.')
+@sys.description(''' Resource Lock Configuration for Azure Firewall.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parAzureFirewallLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -201,7 +226,12 @@ param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 @sys.description('Switch to enable/disable BGP Propagation on route table.')
 param parDisableBgpRoutePropagation bool = false
 
-@sys.description('Resource Lock Configuration for Hub Route Table.')
+@sys.description('''Resource Lock Configuration for Hub Route Table.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parHubRouteTableLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -290,7 +320,12 @@ param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
 @sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links')
 param parVirtualNetworkIdToLinkFailover string = ''
 
-@sys.description('Resource Lock Configuration for Private DNS Zone(s).')
+@sys.description('''Resource Lock Configuration for Private DNS Zone(s).
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parPrivateDNSZonesLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -342,7 +377,12 @@ param parExpressRouteGatewayConfig object = {
   }
 }
 
-@sys.description('Resource Lock Configuration for ExpressRoute Virtual Network Gateway.')
+@sys.description('''Resource Lock Configuration for ExpressRoute Virtual Network Gateway.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parVirtualNetworkGatewayLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -391,7 +431,7 @@ var varSubnetProperties = [for subnet in varSubnetMap: {
   }
 }]
 
-var varVpnGwConfig = ((parVpnGatewayEnabled) &&(!empty(parVpnGatewayConfig)) ? parVpnGatewayConfig : json('{"name": "noconfigVpn"}'))
+var varVpnGwConfig = ((parVpnGatewayEnabled) && (!empty(parVpnGatewayConfig)) ? parVpnGatewayConfig : json('{"name": "noconfigVpn"}'))
 
 var varErGwConfig = ((parExpressRouteGatewayEnabled) && !empty(parExpressRouteGatewayConfig) ? parExpressRouteGatewayConfig : json('{"name": "noconfigEr"}'))
 

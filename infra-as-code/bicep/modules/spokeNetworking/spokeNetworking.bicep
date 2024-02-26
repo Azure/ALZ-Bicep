@@ -6,7 +6,7 @@ type lockType = {
   name: string?
 
   @description('Optional. The lock settings of the service.')
-  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+  kind: ('CanNotDelete' | 'ReadOnly' | 'None')
 
   @description('Optional. Notes about this lock.')
   notes: string?
@@ -21,7 +21,12 @@ param parDisableBgpRoutePropagation bool = false
 @sys.description('Id of the DdosProtectionPlan which will be applied to the Virtual Network.')
 param parDdosProtectionPlanId string = ''
 
-@sys.description('Global Resource Lock Configuration used for all resources deployed in this module.')
+@sys.description('''Global Resource Lock Configuration used for all resources deployed in this module.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parGlobalResourceLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -33,7 +38,12 @@ param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 @sys.description('The Name of the Spoke Virtual Network.')
 param parSpokeNetworkName string = 'vnet-spoke'
 
-@sys.description('Resource Lock Configuration for Spoke Network.')
+@sys.description('''Resource Lock Configuration for Spoke Network
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parSpokeNetworkLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Spoke Networking Module.'
@@ -48,7 +58,12 @@ param parNextHopIpAddress string = ''
 @sys.description('Name of Route table to create for the default route of Hub.')
 param parSpokeToHubRouteTableName string = 'rtb-spoke-to-hub'
 
-@sys.description('Resource Lock Configuration for Spoke Network Route Table.')
+@sys.description('''Resource Lock Configuration for Spoke Network Route Table.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parSpokeRouteTableLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Spoke Networking Module.'
