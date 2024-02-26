@@ -200,6 +200,7 @@ Set Parameter to true to Opt-out of deployment telemetry
 
 Effect type for sovereign global policy definitions
 
+- Default value: `Deny`
 - Allowed values: `Audit`, `Deny`, `Disabled`, `AuditIfNotExists`
 
 ### parSovereigntyConfidentialPolicyEffect
@@ -208,6 +209,7 @@ Effect type for sovereign global policy definitions
 
 Effect type for sovereign confidential policy definitions
 
+- Default value: `Deny`
 - Allowed values: `Audit`, `Deny`, `Disabled`, `AuditIfNotExists`
 
 ### parSovereigntyPolicyEffect
@@ -216,6 +218,7 @@ Effect type for sovereign confidential policy definitions
 
 Effect type for sovereign policy definitions
 
+- Default value: `Deny`
 - Allowed values: `Audit`, `Deny`, `Disabled`, `AuditIfNotExists`
 
 ## Snippets
