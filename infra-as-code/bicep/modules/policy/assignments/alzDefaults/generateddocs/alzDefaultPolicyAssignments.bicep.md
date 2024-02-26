@@ -22,10 +22,13 @@ parDdosProtectionPlanId | No       | ID of the DdosProtectionPlan which will be 
 parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group.
 parPrivateDnsZonesNamesToAuditInCorp | No       | Provide an array/list of Private DNS Zones that you wish to audit if deployed into Subscriptions in the Corp Management Group. NOTE: The policy default values include all the static Private Link Private DNS Zones, e.g. all the DNS Zones that dont have a region or region shortcode in them. If you wish for these to be audited also you must provide a complete array/list to this parameter for ALL Private DNS Zones you wish to audit, including the static Private Link ones, as this parameter performs an overwrite operation. You can get all the Private DNS Zone Names form the `outPrivateDnsZonesNames` output in the Hub Networking or Private DNS Zone modules.
 parDisableAlzDefaultPolicies | No       | Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
+parDisableSlzDefaultPolicies | No       | Set Enforcement Mode of all default sovereign Policies assignments to Do Not Enforce.
 parVmBackupExclusionTagName | No       | Name of the tag to use for excluding VMs from the scope of this policy. This should be used along with the Exclusion Tag Value parameter.
 parVmBackupExclusionTagValue | No       | Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.
 parExcludedPolicyAssignments | No       | Adding assignment definition names to this array will exclude the specific policies from assignment. Find the correct values to this array in the following documentation: https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies#what-if-i-want-to-exclude-specific-policy-assignments-from-alz-default-policy-assignments
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
+parTopLevelSovereigntyGlobalPolicyEffect | No       | Effect type for sovereign global policy definitions
+parSovereigntyConfidentialPolicyEffect | No       | Effect type for sovereign confidential policy definitions
 parSovereigntyPolicyEffect | No       | Effect type for sovereign policy definitions
 
 ### parTopLevelManagementGroupPrefix
@@ -157,6 +160,14 @@ Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
 
 - Default value: `False`
 
+### parDisableSlzDefaultPolicies
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Set Enforcement Mode of all default sovereign Policies assignments to Do Not Enforce.
+
+- Default value: `False`
+
 ### parVmBackupExclusionTagName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -182,6 +193,22 @@ Adding assignment definition names to this array will exclude the specific polic
 Set Parameter to true to Opt-out of deployment telemetry
 
 - Default value: `False`
+
+### parTopLevelSovereigntyGlobalPolicyEffec
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Effect type for sovereign global policy definitions
+
+- Default value: `Deny`
+
+### parSovereigntyConfidentialPolicyEffect
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Effect type for sovereign confidential policy definitions
+
+- Default value: `Deny`
 
 ### parSovereigntyPolicyEffect
 
@@ -258,6 +285,9 @@ Effect type for sovereign policy definitions
         "parDisableAlzDefaultPolicies": {
             "value": false
         },
+        "parDisableSlzDefaultPolicies": {
+            "value": false
+        },
         "parVmBackupExclusionTagName": {
             "value": ""
         },
@@ -269,6 +299,12 @@ Effect type for sovereign policy definitions
         },
         "parTelemetryOptOut": {
             "value": false
+        },
+        "parTopLevelSovereigntyGlobalPolicyEffect": {
+            "value": "Deny"
+        },
+        "parSovereigntyConfidentialPolicyEffect": {
+            "value": "Deny"
         },
         "parSovereigntyPolicyEffect": {
             "value": "Deny"
