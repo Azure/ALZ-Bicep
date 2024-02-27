@@ -11,7 +11,8 @@
     "parTopLevelPolicyAssignmentSovereigntyGlobal": {
       "value": {
         "parTopLevelSovereigntyGlobalPoliciesEnable": false,
-        "parListOfAllowedLocations": []
+        "parListOfAllowedLocations": [],
+        "parPolicyEffect": "Deny"
       }
     },
     "parPlatformMgAlzDefaultsEnable": {
@@ -27,7 +28,8 @@
       "value": {
         "parAllowedResourceTypes": [],
         "parListOfAllowedLocations": [],
-        "parAllowedVirtualMachineSKUs": []
+        "parAllowedVirtualMachineSKUs": [],
+        "parPolicyEffect": "Deny"
       }
     },
     "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
