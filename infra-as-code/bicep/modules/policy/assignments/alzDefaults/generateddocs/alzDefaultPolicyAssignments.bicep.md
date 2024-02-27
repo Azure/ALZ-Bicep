@@ -8,8 +8,8 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
-parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'  - `parTopLevelSovereignGlobalPoliciesEnable - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.  
-parPolicyAssignmentSovereigntyConfidential | No       | Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'  - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed. - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.  
+parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'  - `parTopLevelSovereignGlobalPoliciesEnable - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed. - `parPolicyEffect` - The effect type for the Sovereignty Baseline - Global Policies Assignment. 
+parPolicyAssignmentSovereigntyConfidential | No       | Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'  - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed. - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs. - `parPolicyEffect` - The effect type for the Sovereignty Baseline - Confidential Policies Assignment.
 parPlatformMgAlzDefaultsEnable | No       | Management, Identity and Connectivity Management Groups beneath Platform Management Group have been deployed. If set to false, platform policies are assigned to the Platform Management Group; otherwise policies are assigned to the child management groups.
 parLandingZoneChildrenMgAlzDefaultsEnable | No       | Corp & Online Management Groups beneath Landing Zones Management Groups have been deployed. If set to false, policies will not try to be assigned to corp or online Management Groups.
 parLandingZoneMgConfidentialEnable | No       | Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group have been deployed. If set to false, policies will not try to be assigned to Confidential Corp & Confidential Online Management Groups
@@ -27,7 +27,6 @@ parVmBackupExclusionTagName | No       | Name of the tag to use for excluding VM
 parVmBackupExclusionTagValue | No       | Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.
 parExcludedPolicyAssignments | No       | Adding assignment definition names to this array will exclude the specific policies from assignment. Find the correct values to this array in the following documentation: https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies#what-if-i-want-to-exclude-specific-policy-assignments-from-alz-default-policy-assignments
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
-parSovereigntyPolicyEffect | No       | Effect type for sovereign policy definitions
 
 ### parTopLevelManagementGroupPrefix
 
@@ -51,10 +50,11 @@ Object used to assign Sovereignty Baseline - Global Policies to the intermediate
 
 - `parTopLevelSovereignGlobalPoliciesEnable - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.
 - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
+- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Global Policies Assignment.
 
 
 
-- Default value: `@{parTopLevelSovereigntyGlobalPoliciesEnable=False; parListOfAllowedLocations=System.Object[]}`
+- Default value: `@{parTopLevelSovereigntyGlobalPoliciesEnable=False; parListOfAllowedLocations=System.Object[]; parPolicyEffect=Deny}`
 
 ### parPolicyAssignmentSovereigntyConfidential
 
@@ -65,10 +65,11 @@ Object used to assign Sovereignty Baseline - Confidential Policies to the confid
 - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.
 - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
 - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.
+- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Confidential Policies Assignment.
 
 
 
-- Default value: `@{parAllowedResourceTypes=System.Object[]; parListOfAllowedLocations=System.Object[]; parAllowedVirtualMachineSKUs=System.Object[]}`
+- Default value: `@{parAllowedResourceTypes=System.Object[]; parListOfAllowedLocations=System.Object[]; parAllowedVirtualMachineSKUs=System.Object[]; parPolicyEffect=Deny}`
 
 ### parPlatformMgAlzDefaultsEnable
 
@@ -192,16 +193,6 @@ Set Parameter to true to Opt-out of deployment telemetry
 
 - Default value: `False`
 
-### parSovereigntyPolicyEffect
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Effect type for sovereign policy definitions
-
-- Default value: `Deny`
-
-- Allowed values: `Audit`, `Deny`, `Disabled`, `AuditIfNotExists`
-
 ## Snippets
 
 ### Parameter file
@@ -285,9 +276,6 @@ Effect type for sovereign policy definitions
         },
         "parTelemetryOptOut": {
             "value": false
-        },
-        "parSovereigntyPolicyEffect": {
-            "value": "Deny"
         }
     }
 }
