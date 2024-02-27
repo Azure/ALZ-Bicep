@@ -27,8 +27,6 @@ parVmBackupExclusionTagName | No       | Name of the tag to use for excluding VM
 parVmBackupExclusionTagValue | No       | Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.
 parExcludedPolicyAssignments | No       | Adding assignment definition names to this array will exclude the specific policies from assignment. Find the correct values to this array in the following documentation: https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies#what-if-i-want-to-exclude-specific-policy-assignments-from-alz-default-policy-assignments
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
-parTopLevelSovereigntyGlobalPolicyEffect | No       | Effect type for sovereign global policy definitions
-parSovereigntyConfidentialPolicyEffect | No       | Effect type for sovereign confidential policy definitions
 parSovereigntyPolicyEffect | No       | Effect type for sovereign policy definitions
 
 ### parTopLevelManagementGroupPrefix
@@ -194,26 +192,6 @@ Set Parameter to true to Opt-out of deployment telemetry
 
 - Default value: `False`
 
-### parTopLevelSovereigntyGlobalPolicyEffect
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Effect type for sovereign global policy definitions
-
-- Default value: `Deny`
-
-- Allowed values: `Audit`, `Deny`, `Disabled`, `AuditIfNotExists`
-
-### parSovereigntyConfidentialPolicyEffect
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Effect type for sovereign confidential policy definitions
-
-- Default value: `Deny`
-
-- Allowed values: `Audit`, `Deny`, `Disabled`, `AuditIfNotExists`
-
 ### parSovereigntyPolicyEffect
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -245,14 +223,16 @@ Effect type for sovereign policy definitions
         "parTopLevelPolicyAssignmentSovereigntyGlobal": {
             "value": {
                 "parTopLevelSovereigntyGlobalPoliciesEnable": false,
-                "parListOfAllowedLocations": []
+                "parListOfAllowedLocations": [],
+                "parPolicyEffect": "Deny"
             }
         },
         "parPolicyAssignmentSovereigntyConfidential": {
             "value": {
                 "parAllowedResourceTypes": [],
                 "parListOfAllowedLocations": [],
-                "parAllowedVirtualMachineSKUs": []
+                "parAllowedVirtualMachineSKUs": [],
+                "parPolicyEffect": "Deny"
             }
         },
         "parPlatformMgAlzDefaultsEnable": {
@@ -305,12 +285,6 @@ Effect type for sovereign policy definitions
         },
         "parTelemetryOptOut": {
             "value": false
-        },
-        "parTopLevelSovereigntyGlobalPolicyEffect": {
-            "value": "Deny"
-        },
-        "parSovereigntyConfidentialPolicyEffect": {
-            "value": "Deny"
         },
         "parSovereigntyPolicyEffect": {
             "value": "Deny"
