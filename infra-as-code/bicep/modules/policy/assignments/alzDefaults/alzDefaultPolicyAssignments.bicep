@@ -37,7 +37,7 @@ param parTopLevelManagementGroupSuffix string = ''
 
 @sys.description('''Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'
 
-- `parTopLevelSovereignGlobalPoliciesEnable - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.
+- `parTopLevelSovereignGlobalPoliciesEnable` - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.
 - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
 - `parPolicyEffect` - The effect type for the Sovereignty Baseline - Global Policies Assignment.
 
