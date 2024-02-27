@@ -4,32 +4,27 @@ This module will assign the ALZ Default Policy Assignments to the ALZ Management
 
 ## Parameters
 
-Parameter name | Required | Description
--------------- | -------- | -----------
-parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy.
-parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
-parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'  - `parTopLevelSovereignGlobalPoliciesEnable - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.  
-parPolicyAssignmentSovereigntyConfidential | No       | Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'  - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed. - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.  
-parPlatformMgAlzDefaultsEnable | No       | Management, Identity and Connectivity Management Groups beneath Platform Management Group have been deployed. If set to false, platform policies are assigned to the Platform Management Group; otherwise policies are assigned to the child management groups.
-parLandingZoneChildrenMgAlzDefaultsEnable | No       | Corp & Online Management Groups beneath Landing Zones Management Groups have been deployed. If set to false, policies will not try to be assigned to corp or online Management Groups.
-parLandingZoneMgConfidentialEnable | No       | Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group have been deployed. If set to false, policies will not try to be assigned to Confidential Corp & Confidential Online Management Groups
-parLogAnalyticsWorkSpaceAndAutomationAccountLocation | No       | The region where the Log Analytics Workspace & Automation Account are deployed.
-parLogAnalyticsWorkspaceResourceId | No       | Log Analytics Workspace Resource ID.
-parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
-parAutomationAccountName | No       | Automation account name.
-parMsDefenderForCloudEmailSecurityContact | No       | An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.
-parDdosProtectionPlanId | No       | ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.
-parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group.
-parPrivateDnsZonesNamesToAuditInCorp | No       | Provide an array/list of Private DNS Zones that you wish to audit if deployed into Subscriptions in the Corp Management Group. NOTE: The policy default values include all the static Private Link Private DNS Zones, e.g. all the DNS Zones that dont have a region or region shortcode in them. If you wish for these to be audited also you must provide a complete array/list to this parameter for ALL Private DNS Zones you wish to audit, including the static Private Link ones, as this parameter performs an overwrite operation. You can get all the Private DNS Zone Names form the `outPrivateDnsZonesNames` output in the Hub Networking or Private DNS Zone modules.
-parDisableAlzDefaultPolicies | No       | Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
-parDisableSlzDefaultPolicies | No       | Set Enforcement Mode of all default sovereign Policies assignments to Do Not Enforce.
-parVmBackupExclusionTagName | No       | Name of the tag to use for excluding VMs from the scope of this policy. This should be used along with the Exclusion Tag Value parameter.
-parVmBackupExclusionTagValue | No       | Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.
-parExcludedPolicyAssignments | No       | Adding assignment definition names to this array will exclude the specific policies from assignment. Find the correct values to this array in the following documentation: https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies#what-if-i-want-to-exclude-specific-policy-assignments-from-alz-default-policy-assignments
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
-parTopLevelSovereigntyGlobalPolicyEffect | No       | Effect type for sovereign global policy definitions
-parSovereigntyConfidentialPolicyEffect | No       | Effect type for sovereign confidential policy definitions
-parSovereigntyPolicyEffect | No       | Effect type for sovereign policy definitions
+| Parameter name                                       | Required | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ---------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| parTopLevelManagementGroupPrefix                     | No       | Prefix used for the management group hierarchy.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| parTopLevelManagementGroupSuffix                     | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| parTopLevelPolicyAssignmentSovereigntyGlobal         | No       | Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.' - `parTopLevelSovereignGlobalPoliciesEnable - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group. -`parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.                                                                                                                                                                                                 |
+| parPlatformMgAlzDefaultsEnable                       | No       | Management, Identity and Connectivity Management Groups beneath Platform Management Group have been deployed. If set to false, platform policies are assigned to the Platform Management Group; otherwise policies are assigned to the child management groups.                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| parLandingZoneChildrenMgAlzDefaultsEnable            | No       | Corp & Online Management Groups beneath Landing Zones Management Groups have been deployed. If set to false, policies will not try to be assigned to corp or online Management Groups.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| parLandingZoneMgConfidentialEnable                   | No       | Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group have been deployed. If set to false, policies will not try to be assigned to Confidential Corp & Confidential Online Management Groups                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| parLogAnalyticsWorkSpaceAndAutomationAccountLocation | No       | The region where the Log Analytics Workspace & Automation Account are deployed.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| parLogAnalyticsWorkspaceResourceId                   | No       | Log Analytics Workspace Resource ID.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| parLogAnalyticsWorkspaceLogRetentionInDays           | No       | Number of days of log retention for Log Analytics Workspace.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| parAutomationAccountName                             | No       | Automation account name.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| parMsDefenderForCloudEmailSecurityContact            | No       | An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| parDdosProtectionPlanId                              | No       | ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| parPrivateDnsResourceGroupId                         | No       | Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| parPrivateDnsZonesNamesToAuditInCorp                 | No       | Provide an array/list of Private DNS Zones that you wish to audit if deployed into Subscriptions in the Corp Management Group. NOTE: The policy default values include all the static Private Link Private DNS Zones, e.g. all the DNS Zones that dont have a region or region shortcode in them. If you wish for these to be audited also you must provide a complete array/list to this parameter for ALL Private DNS Zones you wish to audit, including the static Private Link ones, as this parameter performs an overwrite operation. You can get all the Private DNS Zone Names form the `outPrivateDnsZonesNames` output in the Hub Networking or Private DNS Zone modules. |
+| parDisableAlzDefaultPolicies                         | No       | Set Enforcement Mode of all default Policies assignments to Do Not Enforce.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| parVmBackupExclusionTagName                          | No       | Name of the tag to use for excluding VMs from the scope of this policy. This should be used along with the Exclusion Tag Value parameter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| parVmBackupExclusionTagValue                         | No       | Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| parExcludedPolicyAssignments                         | No       | Adding assignment definition names to this array will exclude the specific policies from assignment. Find the correct values to this array in the following documentation: https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies#what-if-i-want-to-exclude-specific-policy-assignments-from-alz-default-policy-assignments                                                                                                                                                                                                                                                                                                                                                      |
+| parTelemetryOptOut                                   | No       | Set Parameter to true to Opt-out of deployment telemetry                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
 ### parTopLevelManagementGroupPrefix
 
@@ -54,8 +49,6 @@ Object used to assign Sovereignty Baseline - Global Policies to the intermediate
 - `parTopLevelSovereignGlobalPoliciesEnable - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.
 - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
 
-
-
 - Default value: `@{parTopLevelSovereigntyGlobalPoliciesEnable=False; parListOfAllowedLocations=System.Object[]}`
 
 ### parPolicyAssignmentSovereigntyConfidential
@@ -67,8 +60,6 @@ Object used to assign Sovereignty Baseline - Confidential Policies to the confid
 - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.
 - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
 - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.
-
-
 
 - Default value: `@{parAllowedResourceTypes=System.Object[]; parListOfAllowedLocations=System.Object[]; parAllowedVirtualMachineSKUs=System.Object[]}`
 
@@ -230,91 +221,91 @@ Effect type for sovereign policy definitions
 
 ```json
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
-    "contentVersion": "1.0.0.0",
-    "metadata": {
-        "template": "infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.json"
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "template": "infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.json"
+  },
+  "parameters": {
+    "parTopLevelManagementGroupPrefix": {
+      "value": "alz"
     },
-    "parameters": {
-        "parTopLevelManagementGroupPrefix": {
-            "value": "alz"
-        },
-        "parTopLevelManagementGroupSuffix": {
-            "value": ""
-        },
-        "parTopLevelPolicyAssignmentSovereigntyGlobal": {
-            "value": {
-                "parTopLevelSovereigntyGlobalPoliciesEnable": false,
-                "parListOfAllowedLocations": []
-            }
-        },
-        "parPolicyAssignmentSovereigntyConfidential": {
-            "value": {
-                "parAllowedResourceTypes": [],
-                "parListOfAllowedLocations": [],
-                "parAllowedVirtualMachineSKUs": []
-            }
-        },
-        "parPlatformMgAlzDefaultsEnable": {
-            "value": true
-        },
-        "parLandingZoneChildrenMgAlzDefaultsEnable": {
-            "value": true
-        },
-        "parLandingZoneMgConfidentialEnable": {
-            "value": false
-        },
-        "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
-            "value": "eastus"
-        },
-        "parLogAnalyticsWorkspaceResourceId": {
-            "value": ""
-        },
-        "parLogAnalyticsWorkspaceLogRetentionInDays": {
-            "value": "365"
-        },
-        "parAutomationAccountName": {
-            "value": "alz-automation-account"
-        },
-        "parMsDefenderForCloudEmailSecurityContact": {
-            "value": "security_contact@replace_me.com"
-        },
-        "parDdosProtectionPlanId": {
-            "value": ""
-        },
-        "parPrivateDnsResourceGroupId": {
-            "value": ""
-        },
-        "parPrivateDnsZonesNamesToAuditInCorp": {
-            "value": []
-        },
-        "parDisableAlzDefaultPolicies": {
-            "value": false
-        },
-        "parDisableSlzDefaultPolicies": {
-            "value": false
-        },
-        "parVmBackupExclusionTagName": {
-            "value": ""
-        },
-        "parVmBackupExclusionTagValue": {
-            "value": []
-        },
-        "parExcludedPolicyAssignments": {
-            "value": []
-        },
-        "parTelemetryOptOut": {
-            "value": false
-        },
-        "parTopLevelSovereigntyGlobalPolicyEffect": {
-            "value": "Deny"
-        },
-        "parSovereigntyConfidentialPolicyEffect": {
-            "value": "Deny"
-        },
-        "parSovereigntyPolicyEffect": {
-            "value": "Deny"
-        }
+    "parTopLevelManagementGroupSuffix": {
+      "value": ""
+    },
+    "parTopLevelPolicyAssignmentSovereigntyGlobal": {
+      "value": {
+        "parTopLevelSovereigntyGlobalPoliciesEnable": false,
+        "parListOfAllowedLocations": []
+      }
+    },
+    "parPolicyAssignmentSovereigntyConfidential": {
+      "value": {
+        "parAllowedResourceTypes": [],
+        "parListOfAllowedLocations": [],
+        "parAllowedVirtualMachineSKUs": []
+      }
+    },
+    "parPlatformMgAlzDefaultsEnable": {
+      "value": true
+    },
+    "parLandingZoneChildrenMgAlzDefaultsEnable": {
+      "value": true
+    },
+    "parLandingZoneMgConfidentialEnable": {
+      "value": false
+    },
+    "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
+      "value": "eastus"
+    },
+    "parLogAnalyticsWorkspaceResourceId": {
+      "value": ""
+    },
+    "parLogAnalyticsWorkspaceLogRetentionInDays": {
+      "value": "365"
+    },
+    "parAutomationAccountName": {
+      "value": "alz-automation-account"
+    },
+    "parMsDefenderForCloudEmailSecurityContact": {
+      "value": "security_contact@replace_me.com"
+    },
+    "parDdosProtectionPlanId": {
+      "value": ""
+    },
+    "parPrivateDnsResourceGroupId": {
+      "value": ""
+    },
+    "parPrivateDnsZonesNamesToAuditInCorp": {
+      "value": []
+    },
+    "parDisableAlzDefaultPolicies": {
+      "value": false
+    },
+    "parDisableSlzDefaultPolicies": {
+      "value": false
+    },
+    "parVmBackupExclusionTagName": {
+      "value": ""
+    },
+    "parVmBackupExclusionTagValue": {
+      "value": []
+    },
+    "parExcludedPolicyAssignments": {
+      "value": []
+    },
+    "parTelemetryOptOut": {
+      "value": false
+    },
+    "parTopLevelSovereigntyGlobalPolicyEffect": {
+      "value": "Deny"
+    },
+    "parSovereigntyConfidentialPolicyEffect": {
+      "value": "Deny"
+    },
+    "parSovereigntyPolicyEffect": {
+      "value": "Deny"
     }
+  }
 }
 ```
