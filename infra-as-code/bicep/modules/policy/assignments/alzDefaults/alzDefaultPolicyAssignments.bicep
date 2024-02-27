@@ -9,7 +9,7 @@ type policyAssignmentSovereigntyGlobalOptionsType = {
   parListOfAllowedLocations: string[]
 
   @sys.description('The effect type for the Sovereignty Baseline - Global Policies Assignment.')
-  parTopLevelSovereigntyGlobalPolicyEffect: ('Audit' | 'Deny' | 'Disabled' | 'AuditIfNotExists')
+  parPolicyEffect: ('Audit' | 'Deny' | 'Disabled' | 'AuditIfNotExists')
 }
 
 type policyAssignmentSovereigntyConfidentialOptionsType = {
@@ -23,7 +23,7 @@ type policyAssignmentSovereigntyConfidentialOptionsType = {
   parAllowedVirtualMachineSKUs: string[]
 
   @sys.description('The effect type for the Sovereignty Baseline - Confidential Policies Assignment.')
-  parSovereigntyConfidentialPolicyEffect: ('Audit' | 'Deny' | 'Disabled' | 'AuditIfNotExists')
+  parPolicyEffect: ('Audit' | 'Deny' | 'Disabled' | 'AuditIfNotExists')
 }
 
 @sys.description('Prefix used for the management group hierarchy.')
@@ -39,13 +39,13 @@ param parTopLevelManagementGroupSuffix string = ''
 
 - `parTopLevelSovereignGlobalPoliciesEnable - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.
 - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
-- `parTopLevelSovereigntyGlobalPolicyEffect` - The effect type for the Sovereignty Baseline - Global Policies Assignment.
+- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Global Policies Assignment.
 
 ''')
 param parTopLevelPolicyAssignmentSovereigntyGlobal policyAssignmentSovereigntyGlobalOptionsType = {
   parTopLevelSovereigntyGlobalPoliciesEnable: false
   parListOfAllowedLocations: []
-  parTopLevelSovereigntyGlobalPolicyEffect: 'Deny'
+  parPolicyEffect: 'Deny'
 }
 
 @sys.description('''Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'
@@ -53,14 +53,14 @@ param parTopLevelPolicyAssignmentSovereigntyGlobal policyAssignmentSovereigntyGl
 - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.
 - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
 - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.
-- `parSovereigntyConfidentialPolicyEffect` - The effect type for the Sovereignty Baseline - Confidential Policies Assignment.
+- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Confidential Policies Assignment.
 
 ''')
 param parPolicyAssignmentSovereigntyConfidential policyAssignmentSovereigntyConfidentialOptionsType = {
   parAllowedResourceTypes: []
   parListOfAllowedLocations: []
   parAllowedVirtualMachineSKUs: []
-  parSovereigntyConfidentialPolicyEffect: 'Deny'
+  parPolicyEffect: 'Deny'
 }
 
 @sys.description('Management, Identity and Connectivity Management Groups beneath Platform Management Group have been deployed. If set to false, platform policies are assigned to the Platform Management Group; otherwise policies are assigned to the child management groups.')
@@ -535,7 +535,7 @@ module modPolicyAssignmentIntRootEnforceSovereigntyGlobal '../../../policy/assig
         value: !(empty(parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations)) ? parTopLevelPolicyAssignmentSovereigntyGlobal.parListOfAllowedLocations : array(deployment().location)
       }
       effect: {
-        value: parTopLevelPolicyAssignmentSovereigntyGlobal.parTopLevelSovereigntyGlobalPolicyEffect
+        value: parTopLevelPolicyAssignmentSovereigntyGlobal.parPolicyEffect
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.identity.type
@@ -1574,7 +1574,7 @@ module modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf '../../../
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
       }
       effect: {
-        value: parPolicyAssignmentSovereigntyConfidential.parSovereigntyConfidentialPolicyEffect
+        value: parPolicyAssignmentSovereigntyConfidential.parPolicyEffect
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignConf.libDefinition.identity.type
@@ -1606,7 +1606,7 @@ module modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf '../../../po
         value: !(empty(parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs)) ? parPolicyAssignmentSovereigntyConfidential.parAllowedVirtualMachineSKUs : varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters.allowedVirtualMachineSKUs.value
       }
       effect: {
-        value: parPolicyAssignmentSovereigntyConfidential.parSovereigntyConfidentialPolicyEffect
+        value: parPolicyAssignmentSovereigntyConfidential.parPolicyEffect
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSovereignConf.libDefinition.identity.type
