@@ -52,14 +52,6 @@ jobs:
           subscription-id: ${{ env.CONNECTIVITY_SUBSCRIPTION_ID }}
           enable-AzPSSession: true
 
-      - name: "Check availability zones support and configure default parameters"
-        uses: azure/powershell@v1
-        continue-on-error: true
-        with:
-          inlineScript: |
-            .\pipeline-scripts\Check-AlzAvailabilityZonesSupport.ps1 -ConnectivityOption HubSpoke
-          azPSVersion: "latest"
-
       - name: "Connectivity Resource Group Deployment"
         uses: azure/powershell@v1
         with:
