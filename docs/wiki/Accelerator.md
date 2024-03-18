@@ -207,6 +207,11 @@ As part of the framework, we include two PR workflows. The pipelines will perfor
 | ALZ-Bicep-PR1-Build | Pull request against main branch and changes to any Bicep file or Bicep config file.             | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile.
 | ALZ-Bicep-PR2-Lint | Pull request against main branch. | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.
 
+> **Note**
+> YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
+> If you use Azure Repos Git, you can configure a branch policy for build validation to trigger your build pipeline for validation.
+> For more information, please refer to [Azure DevOps: Branch policies and settings - Build validation | Microsoft Learn](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation)
+
 ### Upgrading ALZ-Bicep Versions
 
 The ALZ-Bicep repository regularly releases new [versions](https://github.com/Azure/ALZ-Bicep/releases). With each new release, the ALZ Bicep modules are updated to include new features and bug fixes. Therefore, we recommend that you upgrade to the latest version of ALZ Bicep as soon as possible.
