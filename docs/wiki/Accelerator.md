@@ -222,24 +222,24 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
 
 1. Using the ALZ PowerShell Module, you can update to the latest or a specified version. You must specifiy the same IaC, Bootstrap and Output directory that you used when you initially deployed the ALZ Bicep Accelerator.
 
-    Here is an example of using the cmdlet to pull down the latest version:
+    Here is an example of using the cmdlet to upgrade to the latest version:
 
     ```powershell
     Deploy-Accelerator -i "bicep" -b "alz_github" -o "C:\Repos\ALZ\accelerator"
     ```
 
-    Here is an example of using the to upgrade to version v0.17.0:
+    Here is an example of using the to upgrade to version v0.17.2:
 
     ```powershell
-    Deploy-Accelerator -i "bicep" -b "alz_github" -v "v0.17.0" -o "C:\Repos\ALZ\accelerator"
+    Deploy-Accelerator -i "bicep" -b "alz_github" -v "v0.17.2" -o "C:\Repos\ALZ\accelerator"
     ```
 
-    You will be prompted that an upgrade is available and the upgrade will be run for you.
+    You will be prompted for inputs again and the upgrade will be run for you.
 
     Verify that the cmdlet has updated the environment variables file (.env):
 
     ```bash
-    UPSTREAM_RELEASE_VERSION="v0.17.0"
+    UPSTREAM_RELEASE_VERSION="v0.17.2"
     ```
 
 1. You can now deploy the updated modules.
