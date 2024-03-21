@@ -17,6 +17,7 @@ parVirtualNetworkLock | No       | Resource Lock Configuration for Virtual Netwo
 parPublicIpSku | No       | Public IP Address SKU.
 parPublicIpPrefix | No       | Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
 parPublicIpSuffix | No       | Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix
+parCustomPublicIpIds | No       | Optional List of Custom Public IPs, which are assigned to firewall's ipConfigurations.
 parAzBastionEnabled | No       | Switch to enable/disable Azure Bastion deployment.
 parAzBastionName | No       | Name Associated with Bastion Service.
 parAzBastionSku | No       | Azure Bastion SKU.
@@ -150,6 +151,12 @@ Optional Prefix for Public IPs. Include a succedent dash if required. Example: p
 Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix
 
 - Default value: `-PublicIP`
+
+### parCustomPublicIpIds
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional List of Custom Public IPs, which are assigned to firewall's ipConfigurations.
 
 ### parAzBastionEnabled
 
@@ -564,6 +571,9 @@ outHubVirtualNetworkId | string |
         },
         "parPublicIpSuffix": {
             "value": "-PublicIP"
+        },
+        "parCustomPublicIpIds": {
+            "value": []
         },
         "parAzBastionEnabled": {
             "value": true
