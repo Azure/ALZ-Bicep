@@ -1,0 +1,23 @@
+{
+  "AuditDisksUnusedResourcesCostOptimization": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectDisks')]"
+      }
+    }
+  },
+  "AuditPublicIpAddressesUnusedResourcesCostOptimization": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectPublicIpAddresses')]"
+      }
+    }
+  },
+  "AuditServerFarmsUnusedResourcesCostOptimization": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectServerFarms')]"
+      }
+    }
+  }
+}

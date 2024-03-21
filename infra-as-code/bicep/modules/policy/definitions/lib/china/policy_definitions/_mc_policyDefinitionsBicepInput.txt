@@ -19,6 +19,22 @@
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Append-Redis-sslEnforcement.json')
 }
 {
+	name: 'Audit-Disks-UnusedResourcesCostOptimization'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Audit-Disks-UnusedResourcesCostOptimization.json')
+}
+{
+	name: 'Audit-PrivateLinkDnsZones'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Audit-PrivateLinkDnsZones.json')
+}
+{
+	name: 'Audit-PublicIpAddresses-UnusedResourcesCostOptimization'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Audit-PublicIpAddresses-UnusedResourcesCostOptimization.json')
+}
+{
+	name: 'Audit-ServerFarms-UnusedResourcesCostOptimization'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Audit-ServerFarms-UnusedResourcesCostOptimization.json')
+}
+{
 	name: 'Deny-AFSPaasPublicIP'
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-AFSPaasPublicIP.json')
 }
@@ -41,6 +57,10 @@
 {
 	name: 'Deny-KeyVaultPaasPublicIP'
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-KeyVaultPaasPublicIP.json')
+}
+{
+	name: 'Deny-MgmtPorts-From-Internet'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deny-MgmtPorts-From-Internet.json')
 }
 {
 	name: 'Deny-MySql-http'
@@ -223,6 +243,10 @@
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-LoadBalancer.json')
 }
 {
+	name: 'Deploy-Diagnostics-LogAnalytics'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-LogAnalytics.json')
+}
+{
 	name: 'Deploy-Diagnostics-LogicAppsISE'
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-LogicAppsISE.json')
 }
@@ -301,6 +325,10 @@
 {
 	name: 'Deploy-Diagnostics-VNetGW'
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-VNetGW.json')
+}
+{
+	name: 'Deploy-Diagnostics-VWanS2SVPNGW'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Diagnostics-VWanS2SVPNGW.json')
 }
 {
 	name: 'Deploy-Diagnostics-WebServerFarm'
@@ -389,6 +417,10 @@
 {
 	name: 'Deploy-Storage-sslEnforcement'
 	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Storage-sslEnforcement.json')
+}
+{
+	name: 'Deploy-Vm-autoShutdown'
+	libDefinition: loadJsonContent('lib/china/policy_definitions/policy_definition_es_mc_Deploy-Vm-autoShutdown.json')
 }
 {
 	name: 'Deploy-VNET-HubSpoke'

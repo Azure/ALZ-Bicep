@@ -8,13 +8,11 @@
     "displayName": "Deploy Microsoft Defender for Cloud configuration",
     "description": "Deploy Microsoft Defender for Cloud configuration",
     "metadata": {
-      "version": "3.1.0",
+      "version": "5.0.0",
       "category": "Security Center",
       "source": "https://github.com/Azure/Enterprise-Scale/",
       "alzCloudEnvironments": [
-        "AzureCloud",
-        "AzureChinaCloud",
-        "AzureUSGovernment"
+        "AzureCloud"
       ]
     },
     "parameters": {
@@ -23,6 +21,19 @@
         "metadata": {
           "displayName": "Security contacts email address",
           "description": "Provide email address for Microsoft Defender for Cloud contact details"
+        }
+      },
+      "minimalSeverity": {
+        "type": "string",
+        "allowedValues": [
+          "High",
+          "Medium",
+          "Low"
+        ],
+        "defaultValue": "High",
+        "metadata": {
+          "displayName": "Minimal severity",
+          "description": "Defines the minimal alert severity which will be sent as email notifications"
         }
       },
       "logAnalytics": {
@@ -49,6 +60,11 @@
       },
       "enableAscForCosmosDbs": {
         "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -56,6 +72,11 @@
       },
       "enableAscForSql": {
         "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -63,6 +84,11 @@
       },
       "enableAscForSqlOnVm": {
         "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -70,6 +96,11 @@
       },
       "enableAscForDns": {
         "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -77,6 +108,11 @@
       },
       "enableAscForArm": {
         "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -84,6 +120,11 @@
       },
       "enableAscForOssDb": {
         "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -91,6 +132,11 @@
       },
       "enableAscForAppServices": {
         "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -98,6 +144,11 @@
       },
       "enableAscForKeyVault": {
         "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -105,6 +156,11 @@
       },
       "enableAscForStorage": {
         "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -112,6 +168,11 @@
       },
       "enableAscForContainers": {
         "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -119,6 +180,59 @@
       },
       "enableAscForServers": {
         "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        }
+      },
+      "enableAscForServersVulnerabilityAssessments": {
+        "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        }
+      },
+      "vulnerabilityAssessmentProvider": {
+        "type": "String",
+        "allowedValues": [
+          "default",
+          "mdeTvm"
+        ],
+        "defaultValue": "default",
+        "metadata": {
+          "displayName": "Vulnerability assessment provider type",
+          "description": "Select the vulnerability assessment solution to provision to machines."
+        }
+      },
+      "enableAscForApis": {
+        "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        }
+      },
+      "enableAscForCspm": {
+        "type": "String",
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -142,6 +256,19 @@
         "parameters": {
           "effect": {
             "value": "[[parameters('enableAscForServers')]"
+          }
+        },
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "defenderForVMVulnerabilityAssessment",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/13ce0167-8ca6-4048-8e6b-f996402e3c1b",
+        "parameters": {
+          "effect": {
+            "value": "[[parameters('enableAscForServersVulnerabilityAssessments')]"
+          },
+          "vaType": {
+            "value": "[[parameters('vulnerabilityAssessmentProvider')]"
           }
         },
         "groupNames": []
@@ -179,6 +306,29 @@
       {
         "policyDefinitionReferenceId": "defenderforContainers",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/c9ddb292-b203-4738-aead-18e2716e858f",
+        "parameters": {
+          "effect": {
+            "value": "[[parameters('enableAscForContainers')]"
+          }
+        },
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "defenderforKubernetes",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/64def556-fbad-4622-930e-72d1d5589bf5",
+        "parameters": {
+          "effect": {
+            "value": "[[parameters('enableAscForContainers')]"
+          },
+          "logAnalyticsWorkspaceResourceId": {
+            "value": "[[parameters('logAnalytics')]"
+          }
+        },
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "azurePolicyForKubernetes",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/a8eff44f-8c92-45c3-a3fb-9880802d67a7",
         "parameters": {
           "effect": {
             "value": "[[parameters('enableAscForContainers')]"
@@ -237,11 +387,34 @@
         "groupNames": []
       },
       {
+        "policyDefinitionReferenceId": "defenderForApis",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/e54d2be9-5f2e-4d65-98e4-4f0e670b23d6",
+        "parameters": {
+          "effect": {
+            "value": "[[parameters('enableAscForApis')]"
+          }
+        },
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "defenderForCspm",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/689f7782-ef2c-4270-a6d0-7664869076bd",
+        "parameters": {
+          "effect": {
+            "value": "[[parameters('enableAscForCspm')]"
+          }
+        },
+        "groupNames": []
+      },
+      {
         "policyDefinitionReferenceId": "securityEmailContact",
         "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-SecurityContacts",
         "parameters": {
           "emailSecurityContact": {
             "value": "[[parameters('emailSecurityContact')]"
+          },
+          "minimalSeverity": {
+            "value": "[[parameters('minimalSeverity')]"
           }
         },
         "groupNames": []
