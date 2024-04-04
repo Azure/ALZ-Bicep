@@ -68,7 +68,7 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
 1. Create your ALZ Bicep Accelerator framework with the following ALZ PowerShell Module cmdlet:
 
     ```powershell
-    New-ALZEnvironment -o <output_directory> -IaC "bicep" -cicd "github
+    Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_github
     ```
 
     > **Note:**
@@ -138,7 +138,7 @@ In order to setup the Accelerator framework with the production ready Azure DevO
 1. Create your ALZ Bicep Accelerator framework with the following ALZ PowerShell Module cmdlet:
 
     ```powershell
-    New-ALZEnvironment -o <output_directory> -IaC "bicep" -cicd "azuredevops"
+    Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_azuredevops"
     ```
 
     > **Note:**
@@ -207,6 +207,11 @@ As part of the framework, we include two PR workflows. The pipelines will perfor
 | ALZ-Bicep-PR1-Build | Pull request against main branch and changes to any Bicep file or Bicep config file.             | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile.
 | ALZ-Bicep-PR2-Lint | Pull request against main branch. | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.
 
+> **Note**
+> YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
+> If you use Azure Repos Git, you can configure a branch policy for build validation to trigger your build pipeline for validation.
+> For more information, please refer to [Azure DevOps: Branch policies and settings - Build validation | Microsoft Learn](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation)
+
 ### Upgrading ALZ-Bicep Versions
 
 The ALZ-Bicep repository regularly releases new [versions](https://github.com/Azure/ALZ-Bicep/releases). With each new release, the ALZ Bicep modules are updated to include new features and bug fixes. Therefore, we recommend that you upgrade to the latest version of ALZ Bicep as soon as possible.
@@ -215,23 +220,28 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
 
 1. Prior to upgrading, read the release notes for the version you are upgrading to. The release notes will provide you with information on any breaking changes that may impact your deployment. This is especially important if you have created any custom modules or have [modified any of the ALZ Bicep modules](#incorporating-modified-alz-modules) that may have dependencies on the modules that are being upgraded.
 
-1. Using the ALZ PowerShell Module, there is a cmdlet called `Get-ALZBicepRelease`. This will download a specified release version from the remote ALZ-Bicep repository and pull down to the local directory where your Accelerator framework was initially deployed.
+1. Using the ALZ PowerShell Module, you can update to the latest or a specified version. You must specifiy the same IaC, Bootstrap and Output directory that you used when you initially deployed the ALZ Bicep Accelerator.
 
-    Here is an example of using the cmdlet to pull down the latest version:
-
-    ```powershell
-    Get-ALZGithubRelease -i "bicep" -o "C:\Repos\ALZ\accelerator"
-    ```
-
-    Here is an example of using the cmdlet to pull down version v0.17.0:
+    Here is an example of using the cmdlet to upgrade to the latest version:
 
     ```powershell
-    Get-ALZGithubRelease -i "bicep" -v "v0.17.0" -o "C:\Repos\ALZ\accelerator"
+    Deploy-Accelerator -i "bicep" -b "alz_github" -o "C:\Repos\ALZ\accelerator"
     ```
+
+    Here is an example of using the to upgrade to version v0.17.2:
+
+    ```powershell
+    Deploy-Accelerator -i "bicep" -b "alz_github" -v "v0.17.2" -o "C:\Repos\ALZ\accelerator"
+    ```
+
+    You will be prompted for inputs again and the upgrade will be run for you.
+
     Verify that the cmdlet has updated the environment variables file (.env):
+
     ```bash
-    UPSTREAM_RELEASE_VERSION="v0.17.0"
+    UPSTREAM_RELEASE_VERSION="v0.17.2"
     ```
+
 1. You can now deploy the updated modules.
     > **Note:**
     > The current pipelines trigger What-If deployment in PRs for changes in the Bicep parameter files. If you also want to include the What-If deployment process in the module upgrade process, consider the following options:

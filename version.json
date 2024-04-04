@@ -1,6 +1,6 @@
 {
-  "version": "0.17.1",
-  "gitTag": "v0.17.1",
-  "releaseNotes": "https://github.com/Azure/ALZ-Bicep/releases/tag/v0.17.1",
-  "releaseDateTimeUTC": "20240208T145935000Z"
+  "version": "0.17.2",
+  "gitTag": "v0.17.2",
+  "releaseNotes": "https://github.com/Azure/ALZ-Bicep/releases/tag/v0.17.2",
+  "releaseDateTimeUTC": "20240227T145935000Z"
 }
