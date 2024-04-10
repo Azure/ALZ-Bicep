@@ -13,25 +13,26 @@ This page lists the known issues and limitations currently present in ALZ-Bicep.
 
   ```yaml
   - task: AzurePowerShell@5
-        displayName: "Logging and Sentinel Deployment"
+        displayName: "Logging and Sentinel Resource Group Deployment"
         inputs:
           azureSubscription: ${{ variables.SERVICE_CONNECTION_NAME }}
-          azurePowerShellVersion: "11.3.0"
+          azurePowerShellVersion: OtherVersion
+          preferredAzurePowerShellVersion: 11.5.0
           pwsh: true
           ScriptType: "InlineScript"
           Inline: |
-            .\pipeline-scripts\Deploy-ALZLoggingAndSentinel.ps1
+            .\pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1
   ```
 
   GitHub Actions Workaround:
 
   ```yaml
-  - name: "Logging and Sentinel Deployment"
+  - name: "Logging and Sentinel Resource Group Deployment"
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\Deploy-ALZLoggingAndSentinel.ps1
-          azPSVersion: "11.3.0"
+            .\pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1
+          azPSVersion: "11.5.0"
   ```
 
 - **Status:** As our team doesn't directly own the impacted module or have control over the agents/runners, we aim to enhance flexibility to assist with such issues in the future. To achieve this, we plan to introduce a variable in the .env file, enabling version control without the need for individual additions.
