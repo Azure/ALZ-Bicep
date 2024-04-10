@@ -34,7 +34,7 @@ This page lists the known issues and limitations currently present in ALZ-Bicep.
           azPSVersion: "11.3.0"
   ```
 
-- **Status:** As our team doesn't directly own the impacted module or have control over the agents/runners, we aim to enhance flexibility and potentially mitigate such issues in the future. To achieve this, we plan to introduce a variable in the .env file, enabling version control without the need for individual additions.
+- **Status:** As our team doesn't directly own the impacted module or have control over the agents/runners, we aim to enhance flexibility to assist with such issues in the future. To achieve this, we plan to introduce a variable in the .env file, enabling version control without the need for individual additions.
 
 ## How to Report an Issue
 
