@@ -27,11 +27,11 @@ This page lists the known issues and limitations currently present in ALZ-Bicep.
   GitHub Actions Workaround:
 
   ```yaml
-  - name: "Logging and Sentinel Deployment"
+  - name: "Logging and Sentinel Resource Group Deployment"
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\Deploy-ALZLoggingAndSentinel.ps1
+            .\pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1
           azPSVersion: "11.5.0"
   ```
 
