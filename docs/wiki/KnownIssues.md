@@ -4,7 +4,7 @@
 
 This page lists the known issues and limitations currently present in ALZ-Bicep. Please review these before using the repository to understand any potential challenges or constraints.
 
-## Issue 1: What-If Check Fails within Azure DevOps Pipeline/GitHub Actions Workflow with the error: `Additional content found in JSON reference object. A JSON reference object should only have a $ref property. Path 'parResourceLockConfig.defaultValue'`.
+## Issue 1: What-If Check Fails within Azure DevOps Pipeline/GitHub Actions Workflow with the error: `Additional content found in JSON reference object. A JSON reference object should only have a $ref property. Path 'parResourceLockConfig.defaultValue'`
 
 - **Description:** There is a bug with the Azure PowerShell Module version 11.3.1 where the default JSON serializer used to read Bicep output treats `$ref` properties as a JSON reference, whereas the desired behavior is to preserve it in the serialized JSON. We do specify within our workflows/pipelines to use the latest version of Az module within each relevant task/action. However, the "latest" version correlates to the latest version installed on the particular agent/runner, which is 11.3.1 at this time.
 - **Impact:** All What-If checks/operations fail within Azure DevOps Pipeline/GitHub Actions Workflows
