@@ -107,7 +107,7 @@ param parPublicIpPrefix string = ''
 @sys.description('Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix')
 param parPublicIpSuffix string = '-PublicIP'
 
-@sys.description('Optional List of Custom Public IPs, which are assigned to firewall's ipConfigurations.')
+@sys.description('Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.')
 param parAzFirewallCustomPublicIps array = []
 
 @sys.description('Switch to enable/disable Azure Bastion deployment.')
@@ -967,7 +967,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' =
     zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : [])
     properties: parAzFirewallTier == 'Basic'
       ? {
-          ipConfigurations: varUseCustomPublicIps
+          ipConfigurations: varAzFirewallUseCustomPublicIps
             ? map(
                 parAzFirewallCustomPublicIps,
                 ip => {
@@ -1021,7 +1021,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' =
           }
         }
       : {
-          ipConfigurations: varUseCustomPublicIps
+          ipConfigurations: varAzFirewallUseCustomPublicIps
             ? map(
                 parAzFirewallCustomPublicIps,
                 ip => {
