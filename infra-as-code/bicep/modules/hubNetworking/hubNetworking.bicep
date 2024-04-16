@@ -450,7 +450,7 @@ var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
 var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
 var varZtnP1Trigger = (parDdosEnabled && parAzFirewallEnabled && (parAzFirewallTier == 'Premium')) ? true : false
 
-var varUseCustomPublicIps = length(parCustomPublicIpIds) > 0
+var varAzFirewallUseCustomPublicIps = length(parCustomPublicIpIds) > 0
 
 //DDos Protection plan will only be enabled if parDdosEnabled is true.
 resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01' = if (parDdosEnabled) {
