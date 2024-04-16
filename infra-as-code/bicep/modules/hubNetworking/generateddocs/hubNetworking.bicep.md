@@ -572,7 +572,7 @@ outHubVirtualNetworkId | string |
         "parPublicIpSuffix": {
             "value": "-PublicIP"
         },
-        "parCustomPublicIpIds": {
+        "parAzFirewallCustomPublicIps": {
             "value": []
         },
         "parAzBastionEnabled": {
