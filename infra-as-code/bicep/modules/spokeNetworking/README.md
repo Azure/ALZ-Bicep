@@ -24,7 +24,7 @@ Module deploys the following resources:
 >
 > To customize spoke networking to include subnet declarations, we recommend the use of the following ordered methods:
 >
-> 1. [CARML](https://aka.ms/carml) - Utilize this mature Bicep repo for resource deployments
+> 1. [AVM](https://aka.ms/avm) - Utilize Azure Verified Modules to deploy the subnets
 > 2. [Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) this repo and customize the modules accordingly
 > 3. Write your own custom module
 
