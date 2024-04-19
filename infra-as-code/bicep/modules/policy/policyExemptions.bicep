@@ -6,14 +6,8 @@
 */
 targetScope = 'managementGroup'
 
-@description('Policy Assignment Name')
-param parPolicyAssignmentName string
-
-@description('Policy Assignment Scope Name')
-param parPolicyAssignmentScopeName string
-
 @description('SLZ Policy Set Assignment id')
-param parPolicyAssignmentId string = '/providers/microsoft.management/managementgroups/${parPolicyAssignmentScopeName}/providers/microsoft.authorization/policyassignments/${parPolicyAssignmentName}'
+param parPolicyAssignmentId string
 
 @allowed([
   'Waiver'

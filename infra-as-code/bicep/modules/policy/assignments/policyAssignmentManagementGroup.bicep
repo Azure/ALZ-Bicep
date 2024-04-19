@@ -143,3 +143,5 @@ module modCustomerUsageAttribution '../../../CRML/customerUsageAttribution/cuaId
   name: 'pid-${varCuaid}-${uniqueString(deployment().location, parPolicyAssignmentName)}'
   params: {}
 }
+
+output outPolicyAssignmentId string = resPolicyAssignment.id

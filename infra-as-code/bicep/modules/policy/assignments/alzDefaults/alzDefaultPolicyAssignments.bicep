@@ -505,13 +505,6 @@ var varPrivateDnsZonesFinalResourceIds = {
   azureCognitiveSearchPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.search.windows.net'
 }
 
-var varPolicyAssignmentScopeName = '${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}'
-var varPolicyExemptionConfidentialOnlineManagementGroup = '${parTopLevelManagementGroupPrefix}-landingzones-confidential-online${parTopLevelManagementGroupSuffix}'
-var varPolicyExemptionConfidentialCorpManagementGroup = '${parTopLevelManagementGroupPrefix}-landingzones-confidential-corp${parTopLevelManagementGroupSuffix}'
-
-var varSlzGlobalLibDef = loadJsonContent('../lib/policy_assignments/policy_assignment_es_enforce_sovereignty_baseline_global.tmpl.json')
-var varSlzGlobalAssignmentName = toLower(varSlzGlobalLibDef.name)
-
 // **Scope**
 targetScope = 'managementGroup'
 
@@ -1664,13 +1657,12 @@ module modPolicyAssignmentSandboxEnforceAlz '../../../policy/assignments/policyA
 }
 
 // The following module is used to deploy the policy exemptions
-module modPolicyExemptionsConfidentialOnline 'policyExemptions.bicep' = {
-  scope: managementGroup(varPolicyExemptionConfidentialOnlineManagementGroup)
+module modPolicyExemptionsConfidentialOnline '../../policyExemptions.bicep' = {
+  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialCorp)
   name: take('${parTopLevelManagementGroupPrefix}-deploy-policy-exemptions${parTopLevelManagementGroupSuffix}', 64)
   params: {
-    parPolicyAssignmentScopeName: varPolicyAssignmentScopeName
+    parPolicyAssignmentId: modPolicyAssignmentIntRootEnforceSovereigntyGlobal.outputs.outPolicyAssignmentId
     parPolicyDefinitionReferenceIds: ['AllowedLocationsForResourceGroups', 'AllowedLocations']
-    parPolicyAssignmentName: varSlzGlobalAssignmentName
     parExemptionName: 'Confidential-Online-Location-Exemption'
     parExemptionDisplayName: 'Confidential Online Location Exemption'
     parDescription: 'Exempt the confidential online management group from the SLZ Global Policies location policies. The confidential management groups have their own location restrictions and this may result in a conflict if both sets are included.'
@@ -1679,13 +1671,12 @@ module modPolicyExemptionsConfidentialOnline 'policyExemptions.bicep' = {
 }
 
 // The following module is used to deploy the policy exemptions
-module modPolicyExemptionsConfidentialCorp 'policyExemptions.bicep' = {
-  scope: managementGroup(varPolicyExemptionConfidentialCorpManagementGroup)
+module modPolicyExemptionsConfidentialCorp '../../policyExemptions.bicep' = {
+  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialOnline)
   name: take('${parTopLevelManagementGroupPrefix}-deploy-policy-exemptions${parTopLevelManagementGroupSuffix}', 64)
   params: {
-    parPolicyAssignmentScopeName: varPolicyAssignmentScopeName
+    parPolicyAssignmentId: modPolicyAssignmentIntRootEnforceSovereigntyGlobal.outputs.outPolicyAssignmentId
     parPolicyDefinitionReferenceIds: ['AllowedLocationsForResourceGroups', 'AllowedLocations']
-    parPolicyAssignmentName: varSlzGlobalAssignmentName
     parExemptionName: 'Confidential-Corp-Location-Exemption'
     parExemptionDisplayName: 'Confidential Corp Location Exemption'
     parDescription: 'Exempt the confidential corp management group from the SLZ Global Policies location policies. The confidential management groups have their own location restrictions and this may result in a conflict if both sets are included.'
