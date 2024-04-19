@@ -1,10 +1,7 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-/*
-  SUMMARY : Creates a Policy Exemption for a Policy Assignment in a Management Group
-  AUTHOR/S: Cloud for Sovereignty
-*/
 targetScope = 'managementGroup'
+
+metadata name = 'ALZ Bicep - Management Group Policy Exemptions'
+metadata description = 'Module used to create a policy exemption for a policy assignment in a management group'
 
 @description('SLZ Policy Set Assignment id')
 param parPolicyAssignmentId string
