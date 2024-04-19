@@ -184,6 +184,10 @@ param parAzFirewallIntelMode string = 'Alert'
   '2'
   '3'
 ])
+
+@sys.description('Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.')
+param parAzFirewallCustomPublicIps array = []
+
 @sys.description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
 param parAzFirewallAvailabilityZones array = []
 
@@ -446,6 +450,8 @@ var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
 // ZTN Telemetry
 var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
 var varZtnP1Trigger = (parDdosEnabled && parAzFirewallEnabled && (parAzFirewallTier == 'Premium')) ? true : false
+
+var varAzFirewallUseCustomPublicIps = length(parAzFirewallCustomPublicIps) > 0
 
 //DDos Protection plan will only be enabled if parDdosEnabled is true.
 resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01' = if (parDdosEnabled) {
@@ -889,7 +895,26 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (pa
   tags: parTags
   zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : [])
   properties: parAzFirewallTier == 'Basic' ? {
-    ipConfigurations: [
+    ipConfigurations: varAzFirewallUseCustomPublicIps
+     ? map(parAzFirewallCustomPublicIps, ip =>
+       {
+        name: 'ipconfig${uniqueString(ip)}'
+        properties: ip == parAzFirewallCustomPublicIps[0]
+         ? {
+          subnet: {
+            id: resAzureFirewallSubnetRef.id
+          }
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+         : {
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+      })
+     : [
       {
         name: 'ipconfig1'
         properties: {
@@ -921,7 +946,26 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (pa
       id: resFirewallPolicies.id
     }
   } : {
-    ipConfigurations: [
+    ipConfigurations: varAzFirewallUseCustomPublicIps
+     ? map(parAzFirewallCustomPublicIps, ip =>
+       {
+        name: 'ipconfig${uniqueString(ip)}'
+        properties: ip == parAzFirewallCustomPublicIps[0]
+         ? {
+          subnet: {
+            id: resAzureFirewallSubnetRef.id
+          }
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+         : {
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+      })
+     : [
       {
         name: 'ipconfig1'
         properties: {
