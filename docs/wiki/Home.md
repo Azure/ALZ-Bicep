@@ -21,6 +21,7 @@ Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` 
   - [Zero Trust Networking Guide: Hub and Spoke][wiki_zt_networking]
 - [Consumer Guide][wiki_consumer_guide]
   - [Accelerator][accelerator]
+  - [Incorporate Azure Monitor Baseline Alerts][wiki_amba]
   - [Known Issues][wiki_known_issues]
   - [Frequently Asked Questions][wiki_faq]
 - [How Does ALZ-Bicep Implement Azure Policies?][wiki_policy_deep_dive]
@@ -69,7 +70,6 @@ Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to her
 [wiki_deployment_flow_hs]: https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowHS "Wiki - Deployment Flow - Hub and Spoke"
 [wiki_deployment_flow_vwan]: https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowVWAN "Wiki - Deployment Flow - Virtual WAN"
 [wiki_consumer_guide]: https://github.com/Azure/ALZ-Bicep/wiki/ConsumerGuide "Wiki - Consumer Guide"
-[wiki_accelerator]: https://github.com/Azure/ALZ-Bicep/wiki/Accelerator "Wiki - Consumer Guide - Accelerator"
 [wiki_known_issues]: https://github.com/Azure/ALZ-Bicep/wiki/KnownIssues "Wiki - Known Issues"
 [wiki_faq]: https://github.com/Azure/ALZ-Bicep/wiki/FAQ "Wiki - FAQs"
 [wiki_policy_deep_dive]: https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive "Wiki - Policy Deep Dive"
@@ -83,9 +83,6 @@ Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to her
 [wiki_pipelines_gh]: https://github.com/Azure/ALZ-Bicep/wiki/PipelinesGitHub "Wiki - Sample Pipelines - GitHub Actions"
 [wiki_pipelines_ado]: https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO "Wiki - Sample Pipelines - Azure DevOps"
 [code_tours]: https://github.com/Azure/ALZ-Bicep/wiki/CodeTour "Wiki - Code tours"
-[aes_part_1]: https://aka.ms/azenable/94 "Part 1 - Introduction to Azure Landing Zones Bicep"
-[aes_part_2]: https://aka.ms/azenable/95 "Part 2 - Enabling platform services"
-[aes_part_3]: https://aka.ms/azenable/96 "Part 3 - Enabling landing zones"
 [aac_article]: https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep "Azure Architecture Center - Azure landing zones - Bicep modules design considerations"
 [accelerator]: https://github.com/Azure/ALZ-Bicep/wiki/Accelerator "Accelerator"
 [wiki_zt_networking]: https://github.com/Azure/ALZ-Bicep/wiki/DeploymentGuideHSZT "Zero Trust Networking Guide: Hub and Spoke"
