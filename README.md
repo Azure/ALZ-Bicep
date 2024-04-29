@@ -17,7 +17,9 @@ Detailed information about how to use, deploy and extend artifacts found in this
   - [Network Topology: Hub and Spoke][wiki_deployment_flow_hs]
   - [Network Topology: Virtual WAN][wiki_deployment_flow_vwan]
 - [Consumer Guide][wiki_consumer_guide]
-  - [Accelerator][accelerator]
+  - [Accelerator][wiki_accelerator]
+  - [Azure Montior Baseline Alerts][wiki_amba]
+  - [Frequently Asked Questions][wiki_faq]
 - [How Does ALZ-Bicep Implement Azure Policies?][wiki_policy_deep_dive]
   - [Adding Custom Azure Policy Definitions][wiki_policy_defs]
   - [Assigning Azure Policies][wiki_policy_assignments]
@@ -25,7 +27,6 @@ Detailed information about how to use, deploy and extend artifacts found in this
 - [Contributing][wiki_contributing]
 - [Telemetry Tracking Using Customer Usage Attribution (PID)][wiki_cuaid]
 - [Azure Container Registry Deployment - Private Bicep Registry][wiki_acrdeploy]
-- [Frequently Asked Questions][wiki_faq]
 - [Sample Pipelines][wiki_pipelines]
   - [GitHub Actions][wiki_pipelines_gh]
   - [Azure DevOps][wiki_pipelines_ado]
@@ -113,7 +114,8 @@ For support on the artifacts contained in this repository, please refer to [this
 [wiki_policy_assignments]:                        https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies "Wiki - Policy Assignments"
 [wiki_resiliency]:                            https://github.com/Azure/ALZ-Bicep/wiki/Resiliency "Wiki - Resiliency"
 [wiki_contributing]:                          https://github.com/Azure/ALZ-Bicep/wiki/Contributing "Wiki - Contributing"
-[wiki_amba]                                   <https://github.com/Azure/ALZ-Bicep/wiki/Accelerator> "Wiki - AMBA"
+[wiki_accelerator]:                          <<https://github.com/Azure/ALZ-Bicep/wiki/Accelerator> "Wiki - Accelerator"
+[wiki_amba]:                            <https://github.com/Azure/ALZ-Bicep/wiki/Accelerator> "Wiki - AMBA"
 [wiki_faq]:                          <https://github.com/Azure/ALZ-Bicep/wiki/FAQ> "Wiki - FAQs"
 [wiki_cuaid]:                          <https://github.com/Azure/ALZ-Bicep/wiki/CustomerUsage> "Wiki - Telemetry Usage ID"
 [wiki_acrdeploy]:                          <https://github.com/Azure/ALZ-Bicep/wiki/ACRDeployment> "Wiki - Private Bicep Registry"
