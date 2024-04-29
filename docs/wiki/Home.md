@@ -20,8 +20,8 @@ Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` 
   - [Network Topology: Virtual WAN][wiki_deployment_flow_vwan]
   - [Zero Trust Networking Guide: Hub and Spoke][wiki_zt_networking]
 - [Consumer Guide][wiki_consumer_guide]
-  - [Accelerator][accelerator]
-  - [Incorporate Azure Monitor Baseline Alerts][wiki_amba]
+  - [Accelerator][wiki_accelerator]
+  - [Azure Monitor Baseline Alerts][wiki_amba]
   - [Known Issues][wiki_known_issues]
   - [Frequently Asked Questions][wiki_faq]
 - [How Does ALZ-Bicep Implement Azure Policies?][wiki_policy_deep_dive]
@@ -70,6 +70,8 @@ Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to her
 [wiki_deployment_flow_hs]: https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowHS "Wiki - Deployment Flow - Hub and Spoke"
 [wiki_deployment_flow_vwan]: https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowVWAN "Wiki - Deployment Flow - Virtual WAN"
 [wiki_consumer_guide]: https://github.com/Azure/ALZ-Bicep/wiki/ConsumerGuide "Wiki - Consumer Guide"
+[wiki_amba]: https://github.com/Azure/ALZ-Bicep/wiki/AzureMonitorBaselineAlerts "Wiki - Azure Monitor Baseline Alerts"
+[wiki_accelerator]: https://github.com/Azure/ALZ-Bicep/wiki/Accelerator "Wiki - Accelerator"
 [wiki_known_issues]: https://github.com/Azure/ALZ-Bicep/wiki/KnownIssues "Wiki - Known Issues"
 [wiki_faq]: https://github.com/Azure/ALZ-Bicep/wiki/FAQ "Wiki - FAQs"
 [wiki_policy_deep_dive]: https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive "Wiki - Policy Deep Dive"
@@ -84,5 +86,4 @@ Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to her
 [wiki_pipelines_ado]: https://github.com/Azure/ALZ-Bicep/wiki/PipelinesADO "Wiki - Sample Pipelines - Azure DevOps"
 [code_tours]: https://github.com/Azure/ALZ-Bicep/wiki/CodeTour "Wiki - Code tours"
 [aac_article]: https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep "Azure Architecture Center - Azure landing zones - Bicep modules design considerations"
-[accelerator]: https://github.com/Azure/ALZ-Bicep/wiki/Accelerator "Accelerator"
 [wiki_zt_networking]: https://github.com/Azure/ALZ-Bicep/wiki/DeploymentGuideHSZT "Zero Trust Networking Guide: Hub and Spoke"
