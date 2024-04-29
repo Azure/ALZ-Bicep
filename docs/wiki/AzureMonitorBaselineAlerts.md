@@ -2,19 +2,18 @@
 ## Azure Monitor Baseline Alerts
 <!-- markdownlint-restore -->
 
-Currently, [Azure Monitor Baseline Alerts (AMBA)](https://azure.github.io/azure-monitor-baseline-alerts/) is not integrated into the ALZ-Bicep repository. However, this is something we are working on and will be available in the near future.
+At present, [Azure Monitor Baseline Alerts (AMBA)](https://azure.github.io/azure-monitor-baseline-alerts/) is not integrated into the ALZ-Bicep repository. However, this integration is underway and will soon be available.
 
-If you would like to not wait for this integration, you can deploy AMBA as a standalone deployment. This may be the best option as well as the most familiar scenario if you originally deployed the ALZ-Bicep framework using the PowerShell or Azure CLI scripts provided within the module READMEs.
-This can be done by following the guidance provided in the [AMBA documentation](https://azure.github.io/azure-monitor-baseline-alerts/patterns/alz/deploy/Introduction-to-deploying-the-ALZ-Pattern/).
+If you prefer not to wait for this integration, you can deploy AMBA as a standalone deployment. This might be the optimal choice and also aligns with familiar scenarios, especially if you initially deployed the ALZ-Bicep framework using the PowerShell or Azure CLI scripts provided within the module READMEs. Follow the guidance provided in the [AMBA documentation](https://azure.github.io/azure-monitor-baseline-alerts/patterns/alz/deploy/Introduction-to-deploying-the-ALZ-Pattern/) for deployment.
 
-On the otherhand, if you would like to integrate the Azure Monitor Baseline Alerts into your existing [Accelerator](https://github.com/Azure/ALZ-Bicep/wiki/Accelerator) deployment, you can follow the guidance provided in the following sections.
+Alternatively, if you wish to integrate Azure Monitor Baseline Alerts into your existing [Accelerator](https://github.com/Azure/ALZ-Bicep/wiki/Accelerator) deployment, follow the guidance provided in the following sections.
 
 > [!WARNING]
-> The following guidance provides a simplified version of the integration and will differ to what will be offered in the final integration. This is to provide an immediate solution.
+> The following guidance offers a simplified version of the integration and may differ from the final integration. This is provided for immediate solution.
 
-## Pre-Reqs
+## Pre-Requisites
 
-Please ensure you have deployed the initial Accelerator and meet the all pre-requisites as outlined in the the [AMBA prerequisites section](https://azure.github.io/azure-monitor-baseline-alerts/patterns/alz/deploy/Introduction-to-deploying-the-ALZ-Pattern/#prerequisites) for ALZ.
+Please ensure you have deployed the initial Accelerator and meet all prerequisites outlined in the [AMBA prerequisites section](https://azure.github.io/azure-monitor-baseline-alerts/patterns/alz/deploy/Introduction-to-deploying-the-ALZ-Pattern/#prerequisites) for ALZ.
 
 ## Integration Steps
 
@@ -72,7 +71,9 @@ $inputObject = @{
 New-AzManagementGroupDeployment @inputObject
 ```
 
-1. Next, navigate to either `.azuredevOps\pipelines` or `.github\workflows` and open the `alz-bicep-1-core.yml` file. Depending upon which CI/CD platform you are using, you will need to modify the `alz-bicep-1-core.yml` file to include the following step after the Management Group deployment:
+1. Next, navigate to either `.azuredevOps\pipelines` or `.github\workflows` and open the `alz-bicep-1-core.yml` file.
+
+1. Depending upon which CI/CD platform you are using, you will need to modify the `alz-bicep-1-core.yml` file to include the following step after the Management Group deployment:
 
   GitHub Action to Add (alz-bicep-1-core.yml)
 
@@ -99,7 +100,7 @@ New-AzManagementGroupDeployment @inputObject
             .\pipeline-scripts\Deploy-AMBA.ps1
   ```
 
-1. Within the same files, modify the path based triggers to include the `config/custom-modules/amba/***` directory and the `config/custom-parameters/amba.parameters.all.json` file. This will ensure that any changes to the AMBA resources will trigger a new build.
+1. Within the same `alz-bicep-1-core.yml` file, modify the path based triggers to include the `config/custom-modules/amba/***` directory and the `config/custom-parameters/amba.parameters.all.json` file. This will ensure that any changes to the AMBA resources will trigger a new build.
 
 > [!NOTE]
 > For Azure Pipelines, if you are using Azure Repos as your repository, you will need to edit the branch policy of the `main` branch to include the path based filters.
