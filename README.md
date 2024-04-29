@@ -114,7 +114,7 @@ For support on the artifacts contained in this repository, please refer to [this
 [wiki_policy_assignments]:                        https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies "Wiki - Policy Assignments"
 [wiki_resiliency]:                            https://github.com/Azure/ALZ-Bicep/wiki/Resiliency "Wiki - Resiliency"
 [wiki_contributing]:                          https://github.com/Azure/ALZ-Bicep/wiki/Contributing "Wiki - Contributing"
-[wiki_accelerator]:                          <<https://github.com/Azure/ALZ-Bicep/wiki/Accelerator> "Wiki - Accelerator"
+[wiki_accelerator]:                          <https://github.com/Azure/ALZ-Bicep/wiki/Accelerator> "Wiki - Accelerator"
 [wiki_amba]:                            <https://github.com/Azure/ALZ-Bicep/wiki/Accelerator> "Wiki - AMBA"
 [wiki_faq]:                          <https://github.com/Azure/ALZ-Bicep/wiki/FAQ> "Wiki - FAQs"
 [wiki_cuaid]:                          <https://github.com/Azure/ALZ-Bicep/wiki/CustomerUsage> "Wiki - Telemetry Usage ID"
