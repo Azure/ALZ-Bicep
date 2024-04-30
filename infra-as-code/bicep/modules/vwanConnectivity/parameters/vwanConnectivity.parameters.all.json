@@ -29,7 +29,7 @@
     "parVirtualWanHubName": {
       "value": "alz-vhub"
     },
-    "parVirtualWanHubRouteName": {
+    "parVirtualWanHubDefaultRouteName": {
       "value": "default-to-azfw"
     },
     "parVpnGatewayName": {

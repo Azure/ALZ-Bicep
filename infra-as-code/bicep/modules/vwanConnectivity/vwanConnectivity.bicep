@@ -112,7 +112,7 @@ param parVirtualWanLock lockType = {
 param parVirtualWanHubName string = '${parCompanyPrefix}-vhub'
 
 @sys.description('The name of the route table that manages routing between the Virtual WAN Hub and the Azure Firewall.')
-parVirtualWanHubRouteName: 'default-to-azfw'
+param parVirtualWanHubDefaultRouteName string = 'default-to-azfw'
 
 @sys.description('''Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects in the array to meet the number of Virtual WAN Hubs required.
 
@@ -397,7 +397,7 @@ resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2023-04
     ]
     routes: [
       {
-        name: parVirtualWanHubRouteName
+        name: parVirtualWanHubDefaultRouteName
         destinations: [
           '0.0.0.0/0'
         ]
