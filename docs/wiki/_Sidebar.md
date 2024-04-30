@@ -7,6 +7,7 @@
   - [Zero Trust Networking Guide: Hub and Spoke](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentGuideHSZT)
 - [Consumer Guide](https://github.com/Azure/ALZ-Bicep/wiki/ConsumerGuide)
   - [Accelerator](https://github.com/Azure/ALZ-Bicep/wiki/Accelerator)
+  - [Incorporate Azure Monitor Baseline Alerts](https://github.com/Azure/ALZ-Bicep/wiki/AzureMonitorBaselineAlerts)
   - [Known Issues](https://github.com/Azure/ALZ-Bicep/wiki/KnownIssues)
   - [Frequently Asked Questions](https://github.com/Azure/ALZ-Bicep/wiki/FAQ)
 - [How Does ALZ-Bicep Implement Azure Policies?](https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive)
