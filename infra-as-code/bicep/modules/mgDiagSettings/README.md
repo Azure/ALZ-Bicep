@@ -21,49 +21,67 @@ The inputs for this module are defined in `parameters/mgDiagSettings.parameters.
 
 ```bash
 # For Azure global regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep \
-  --parameters @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json \
-  --location eastus \
-  --management-group-id alz
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-mgDiagSettings-${dateYMD}"
+LOCATION="eastus"
+TEMPLATEFILE="infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep"
+PARAMETERS="infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json"
+# Set the top level Management Group ID in accordance to your environment. This example assumes default 'alz'.
+MGID="alz"
+
+az deployment mg create --name $NAME --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS --management-group-id $MGID
 ```
 
 OR
 
 ```bash
 # For Azure China regions
-az deployment mg create \
-  --template-file infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep \
-  --parameters @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json \
-  --location chinaeast2 \
-  --management-group-id alz
+
+dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+NAME="alz-mgDiagSettings-${dateYMD}"
+LOCATION="chinaeast2"
+TEMPLATEFILE="infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep"
+PARAMETERS="infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json"
+# Set the top level Management Group ID in accordance to your environment. This example assumes default 'alz'.
+MGID="alz"
+
+az deployment mg create --name $NAME --location $LOCATION --template-file $TEMPLATEFILE --parameters $PARAMETERS --management-group-id $MGID
 ```
 
 ### PowerShell
 
 ```powershell
 # For Azure global regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep `
-  -TemplateParameterFile @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json `
-  -Location eastus `
-  -ManagementGroupId alz
+
+$inputObject = @{
+  DeploymentName        = 'alz-mgDiagSettings-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'eastus'
+  TemplateFile          = "infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json'
+  ManagementGroupId     = 'alz'
+}
+New-AzManagementGroupDeployment @inputObject
 ```
 
 OR
 
 ```powershell
 # For Azure China regions
-New-AzManagementGroupDeployment `
-  -TemplateFile infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep `
-  -TemplateParameterFile @infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json `
-  -Location chinaeast2 `
-  -ManagementGroupId alz
+
+$inputObject = @{
+  DeploymentName        = 'alz-mgDiagSettings-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location              = 'chinaeast2'
+  TemplateFile          = "infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep"
+  TemplateParameterFile = 'infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json'
+  ManagementGroupId     = 'alz'
+}
+New-AzManagementGroupDeployment @inputObject
 ```
 
 ## Validation
 
-To validate if Diagnostic Settings was correctly enabled for any specific management group, a REST API GET call can be used. Documentation and easy way to try this can be found in this link [(Management Group Diagnostic Settings - Get)](https://learn.microsoft.com/rest/api/monitor/management-group-diagnostic-settings/get?tabs=HTTP&tryIt=true&source=docs#code-try-0). There is currently not a direct way to validate this in the Azure Portal, Azure CLI or PowerShell.
+To validate if Diagnostic Settings were correctly enabled for any specific management group, a REST API GET call can be used. Documentation and easy way to try this can be found in this link [(Management Group Diagnostic Settings - Get)](https://learn.microsoft.com/rest/api/monitor/management-group-diagnostic-settings/get?tabs=HTTP&tryIt=true&source=docs#code-try-0). There is currently not a direct way to validate this in the Azure Portal or with Azure PowerShell or the Azure CLI.
 
 ## Bicep Visualizer
 
