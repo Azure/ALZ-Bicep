@@ -2,7 +2,6 @@
 ## ALZ Bicep Accelerator
 <!-- markdownlint-restore -->
 
-
 This document provides prescriptive guidance around implementing, automating, and maintaining your ALZ Bicep module with the ALZ Bicep Accelerator.
 
 ### What is the ALZ Bicep Accelerator?
@@ -10,7 +9,7 @@ This document provides prescriptive guidance around implementing, automating, an
 The ALZ Bicep Accelerator framework was developed to provide end-users with the following abilities:
 
 - Allows for rapid onboarding and deployment of ALZ Bicep using full-fledged CI/CD pipelines with user provided input
-  > **Note**
+  > [!NOTE]
   > Currently we offer support for [GitHub Action Workflows](#getting-started-if-youre-using-github-actions) and [Azure DevOps Pipelines](#getting-started-if-youre-using-azure-devops-pipelines)
 - Provides framework to not only stay in-sync with new [ALZ Bicep releases](https://github.com/Azure/ALZ-Bicep/releases), but also incorporates guidance around modifiying existing ALZ Bicep modules and/or associating custom modules to the framework
 - Offers branching strategy guidance and pull request pipelines for linting the repository as well as validating any existing custom and/or modified Bicep modules
@@ -29,7 +28,7 @@ We attempted to make the pipelines as flexible as possible while also reducing o
 - Environment variables file (.env) which is used to store variables that are accessed within the PowerShell scripts
 - What-If Deploment conditions which are triggered automatically if a pull request is created against the main branch. This allows for a user to validate the deployment and potential changes before merging the pull request into the main branch.
 - Deployment conditions which are triggered automatically if a push is made to the main branch. This allows for a user to validate the deployment and potential changes before merging the pull request into the main branch.
-  > **Note:**
+  > [!NOTE]
   > Currently, the output of the GitHub Action workflows or the Azure DevOps Pipelines need to viewed within the respective portal. We are working on adding support for sending the output to the Pull Request comments section in the future.
 
 All of the GitHub Actions follow a similar high level workflow as follows:
@@ -71,7 +70,7 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
     Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_github
     ```
 
-    > **Note:**
+    > [!NOTE]
     > If the directory structure specified for the output location does not exist, the module will create the directory structure programatically.
 
     Various prompts will be displayed which will be used to replace parameter values as well as to create an environment variables file (.env) that will be used by the GitHub Action workflows.
@@ -80,12 +79,12 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
     - Traditional VNet Hub and Spoke = .github\workflows\alz-bicep-4a-hubspoke.yml
     - Virtual WAN = .github\workflows\alz-bicep-4b-vwan.yml
 
-    > **Note:**
+    > [!NOTE]
     > These workflow files and associated deployment scripts will be programatically removed in the future.
 
 1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration. All files pertaining to the default ALZ Bicep modules are located within the upstream-releases directory. The parameter files are located within the config/custom-parameters directory. For a minimalistic deployment, some example parameters are provided [here](#guidance-for-a-minimalistic-deployment)
 
-    > **Note:** To further understand the purpose of each parameter, please review the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow). For design considerations, please review our page in the [Azure Architecture Center](https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
+    > [!NOTE] To further understand the purpose of each parameter, please review the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow). For design considerations, please review our page in the [Azure Architecture Center](https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
 
 1. Run the following Git commands to get your remote branch in-sync with the local branch
 
@@ -104,7 +103,7 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
         1. Add one federated credential with the entity type set to 'Branch' and with a value for "Based on Selection" set to 'main'
         1. Add a secondary federated credential with the entity type set to 'Pull Request'
     1. [Create GitHub secrets](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#create-github-secrets)
-        > **Note:**
+        > [!NOTE]
         > The workflows reference secret names AZURE_TENANT_ID and AZURE_CLIENT_ID. If you choose to use different names, you will need to update the workflows accordingly.
     1. [Grant permissions for the service principal to be able to deploy the resources](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation)
 
@@ -141,7 +140,7 @@ In order to setup the Accelerator framework with the production ready Azure DevO
     Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_azuredevops"
     ```
 
-    > **Note:**
+    > [!NOTE]
     > If the directory structure specified for the output location does not exist, the module will create the directory structure programatically.
 
     Various prompts will be displayed which will be used to replace parameter values as well as to create an environment variables file (.env) that will be used by the Azure DevOps pipelines.
@@ -150,12 +149,12 @@ In order to setup the Accelerator framework with the production ready Azure DevO
     - Traditional VNet Hub and Spoke = .azuredevops\pipelines\alz-bicep-4a-hubspoke.yml
     - Virtual WAN = .azuredevops\pipelines\alz-bicep-4b-vwan.yml
 
-    > **Note:**
+    > [!NOTE]
     > These workflow files and associated deployment scripts will be programatically removed in the future.
 
 1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration. All files pertaining to the default ALZ Bicep modules are located within the upstream-releases directory. The parameter files are located within the config/custom-parameters directory. For a minimalistic deployment, some example parameters are provided [here](#guidance-for-a-minimalistic-deployment)
 
-    > **Note:** To further understand the purpose of each parameter, please review the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow). For design considerations, please review our page in the [Azure Architecture Center](https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
+    > [!NOTE] To further understand the purpose of each parameter, please review the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow). For design considerations, please review our page in the [Azure Architecture Center](https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
 
 1. [Grant permissions for the service principal to be able to deploy the resources](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation)
 
@@ -189,7 +188,7 @@ In order to setup the Accelerator framework with the production ready Azure DevO
     - Require conversation resolution before merging
     - Do not allow bypassing the above settings
     - Setup automated and required build valdiation reuquirements for all of the pipelines. This will ensure that all changes to the main branch are validated before merging as well as to provide a What-If analysis for the changes made to your ALZ environment. Finally, ensure you match the path filters for each build validation to what is specified in the pipeline files.
-      > **Note:**
+      > [!NOTE]
       > This last step is required if you are using GitHub and Bitbucket as your repository and integrating with Azure DevOps Pipelines.
 
 ### Incoporating a Branching Strategy
@@ -207,7 +206,7 @@ As part of the framework, we include two PR workflows. The pipelines will perfor
 | ALZ-Bicep-PR1-Build | Pull request against main branch and changes to any Bicep file or Bicep config file.             | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile.
 | ALZ-Bicep-PR2-Lint | Pull request against main branch. | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.
 
-> **Note**
+> [!IMPORTANT]
 > YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
 > If you use Azure Repos Git, you can configure a branch policy for build validation to trigger your build pipeline for validation.
 > For more information, please refer to [Azure DevOps: Branch policies and settings - Build validation | Microsoft Learn](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation)
@@ -243,7 +242,7 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
     ```
 
 1. You can now deploy the updated modules.
-    > **Note:**
+    > [!TIP]
     > The current pipelines trigger What-If deployment in PRs for changes in the Bicep parameter files. If you also want to include the What-If deployment process in the module upgrade process, consider the following options:
     > - Adding the environment variables file (.env) as an additional trigger in the module pipelines
     > - Introducing inputs/parameters in the module pipelines so you can manually trigger What-If deployments in a controlled manner.
@@ -254,13 +253,16 @@ Some organizations may want to start with a Landing Zone with the least cost pos
 
 Here you can find the detailed changes for a minimal hub-and-spoke deployment. For vWAN, use the file config/custom-parameters/vwanConnectivity.parameters.all.json instead, and look for the equivalent parameters.
 
-* Remove the DDos Plan: edit config/custom-parameters/hubNetworking.parameters.all.json and set **parDdosEnabled** to **false**.
+- Remove the DDos Plan: edit config/custom-parameters/hubNetworking.parameters.all.json and set **parDdosEnabled** to **false**.
+
     ```yaml
     "parDdosEnabled": {
       "value": false
     },
     ```
+
     Then **you must disable the automatic Policy assignment** by adding the following in config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json (this may no longer be necessary in a future release, see bug #596):
+
     ```yaml
     "parExcludedPolicyAssignments": {
       "value": [
@@ -268,7 +270,9 @@ Here you can find the detailed changes for a minimal hub-and-spoke deployment. F
       ]
     },
     ```
-* Remove Bastion or Firewall:  edit config/custom-parameters/hubNetworking.parameters.all.json and set **parAzBastionEnabled** and/or **parAzFirewallEnabled** to **false**. You can also keep it enabled and switch to the **Bastion Basic/Developer SKU and Firewall Basic Tier** for a cost-efficient yet functional starting point.
+
+- Remove Bastion or Firewall:  edit config/custom-parameters/hubNetworking.parameters.all.json and set **parAzBastionEnabled** and/or **parAzFirewallEnabled** to **false**. You can also keep it enabled and switch to the **Bastion Basic/Developer SKU and Firewall Basic Tier** for a cost-efficient yet functional starting point.
+
     ```yaml
     "parAzBastionEnabled": {
       "value": false
@@ -277,7 +281,9 @@ Here you can find the detailed changes for a minimal hub-and-spoke deployment. F
       "value": false
     },
     ```
-* Remove VPN or ExpressRoute gateways: edit config/custom-parameters/hubNetworking.parameters.all.json and set **parVpnGatewayEnabled** and/or **parExpressRouteGatewayEnabled** to **false**. Optionally the parameter **parVpnGatewayConfig** and/or **parExpressRouteGatewayConfig** could be set to an empty object or removed. For vWAN, look for the **parVpnGatewayEnabled** and **parExpressRouteGatewayEnabled** parameters instead.
+
+- Remove VPN or ExpressRoute gateways: edit config/custom-parameters/hubNetworking.parameters.all.json and set **parVpnGatewayEnabled** and/or **parExpressRouteGatewayEnabled** to **false**. Optionally the parameter **parVpnGatewayConfig** and/or **parExpressRouteGatewayConfig** could be set to an empty object or removed. For vWAN, look for the **parVpnGatewayEnabled** and **parExpressRouteGatewayEnabled** parameters instead.
+
     ```yaml
     "parVpnGatewayEnabled": {
       "value": false
@@ -324,3 +330,22 @@ We recommend that you do not modify the ALZ Bicep modules directly within the up
     ```
 
 1. You are now ready to commit your changes to the main branch and trigger a new deployment.
+
+### Enhancing Your ALZ Bicep Accelerator Framework
+
+Here are additional scenarios and/or implementations to consider incorporating to enhance your Azure Landing Zone architecture and associated processes for both your platform and application teams:
+
+1. **Azure Monitor Baseline Alerts (AMBA) Integration:**
+   Consider integrating [Azure Monitor Baseline Alerts (AMBA)](https://github.com/Azure/ALZ-Bicep/wiki/AzureMonitorBaselineAlerts) into your framework. AMBA provides a comprehensive set of baseline alerts and thresholds tailored to monitor your Azure environment for security and compliance issues.
+
+1. **Bicep Landing Zone Vending Module:**
+   You might be curious about the absence of spoke networking modules in the Accelerator. This is because we recommend leveraging the [Bicep landing zone vending module](https://github.com/Azure/bicep-lz-vending/wiki) instead of the Spoke Networking module within ALZ-Bicep. The vending module not only establishes a virtual network for spoke connectivity (Hub & Spoke or VWAN) but also provides various capabilities for application landing zones. Subscription vending standardizes the process for requesting, deploying, and governing subscriptions so that application teams can deploy their workloads faster. This includes:
+   - Linking the spoke networks to existing DDoS Network Protection Plans
+   - Specifying Custom DNS Servers for the spoke networks
+   - Subscription creation and management group placement
+   - Role assignments
+   - Tags
+   - Registration of resource providers and their features
+
+> [!NOTE]
+> Explore the different types of landing zones in the Azure Landing Zones documentation: [What is an Azure landing zone? - Platform vs. application landing zones](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/#platform-vs-application-landing-zones)
