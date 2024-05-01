@@ -17,6 +17,7 @@ parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure F
 parVirtualWanName | No       | Prefix Used for Virtual WAN.
 parVirtualWanLock | No       | Resource Lock Configuration for Virtual WAN.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVirtualWanHubName | No       | Prefix Used for Virtual WAN Hub.
+parVirtualWanHubDefaultRouteName | No       | The name of the route table that manages routing between the Virtual WAN Hub and the Azure Firewall.
 parVirtualWanHubs | No       | Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects in the array to meet the number of Virtual WAN Hubs required.  - `parVpnGatewayEnabled` - Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub. - `parExpressRouteGatewayEnabled` - Switch to enable/disable ExpressRoute Gateway deployment on the respective Virtual WAN Hub. - `parAzFirewallEnabled` - Switch to enable/disable Azure Firewall deployment on the respective Virtual WAN Hub. - `parVirtualHubAddressPrefix` - The IP address range in CIDR notation for the vWAN virtual Hub to use. - `parHubLocation` - The Virtual WAN Hub location. - `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASN`, `VpnGateway`, `ExpressRoute`. - `parVirtualRouterAutoScaleConfiguration` - The Virtual WAN Hub capacity. The value should be between 2 to 50. - `parVirtualHubRoutingIntentDestinations` - The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.  
 parVpnGatewayLock | No       | Resource Lock Configuration for Virtual WAN Hub VPN Gateway.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parExpressRouteGatewayLock | No       | Resource Lock Configuration for Virtual WAN Hub ExpressRoute Gateway.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
@@ -141,6 +142,14 @@ Resource Lock Configuration for Virtual WAN.
 Prefix Used for Virtual WAN Hub.
 
 - Default value: `[format('{0}-vhub', parameters('parCompanyPrefix'))]`
+
+### parVirtualWanHubDefaultRouteName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+The name of the route table that manages routing between the Virtual WAN Hub and the Azure Firewall.
+
+- Default value: `default-to-azfw`
 
 ### parVirtualWanHubs
 
@@ -430,6 +439,9 @@ outAzFwPrivateIps | array |
         },
         "parVirtualWanHubName": {
             "value": "[format('{0}-vhub', parameters('parCompanyPrefix'))]"
+        },
+        "parVirtualWanHubDefaultRouteName": {
+            "value": "default-to-azfw"
         },
         "parVirtualWanHubs": {
             "value": [
