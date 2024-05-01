@@ -1658,7 +1658,7 @@ module modPolicyAssignmentSandboxEnforceAlz '../../../policy/assignments/policyA
 
 // The following module is used to deploy the policy exemptions
 module modPolicyExemptionsConfidentialOnline '../../exemptions/policyExemptions.bicep' = {
-  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialCorp)
+  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialOnline)
   name: take('${parTopLevelManagementGroupPrefix}-deploy-policy-exemptions${parTopLevelManagementGroupSuffix}', 64)
   params: {
     parPolicyAssignmentId: modPolicyAssignmentIntRootEnforceSovereigntyGlobal.outputs.outPolicyAssignmentId
@@ -1672,7 +1672,7 @@ module modPolicyExemptionsConfidentialOnline '../../exemptions/policyExemptions.
 
 // The following module is used to deploy the policy exemptions
 module modPolicyExemptionsConfidentialCorp '../../exemptions/policyExemptions.bicep' = {
-  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialOnline)
+  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialCorp)
   name: take('${parTopLevelManagementGroupPrefix}-deploy-policy-exemptions${parTopLevelManagementGroupSuffix}', 64)
   params: {
     parPolicyAssignmentId: modPolicyAssignmentIntRootEnforceSovereigntyGlobal.outputs.outPolicyAssignmentId
