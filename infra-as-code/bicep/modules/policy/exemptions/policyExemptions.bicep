@@ -3,7 +3,7 @@ targetScope = 'managementGroup'
 metadata name = 'ALZ Bicep - Management Group Policy Exemptions'
 metadata description = 'Module used to create a policy exemption for a policy assignment in a management group'
 
-@description('SLZ Policy Set Assignment id')
+@sys.description('The ID of the policy set assignment for which the exemption will be established.')
 param parPolicyAssignmentId string
 
 @allowed([
