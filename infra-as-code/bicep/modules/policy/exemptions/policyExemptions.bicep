@@ -10,7 +10,7 @@ param parPolicyAssignmentId string
   'Waiver'
   'Mitigated'
 ])
-@description('Exemption Category Default - Waiver')
+@sys.description(' The exemption category to be used.')
 param parExemptionCategory string = 'Waiver'
 
 @sys.description('The description which provides context for the policy exemption.')
