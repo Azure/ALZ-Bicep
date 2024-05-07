@@ -20,7 +20,7 @@ param parDescription string
   'Default'
   'DoNotValidate'
 ])
-@description('Assignment Scope')
+@sys.description('Sets the scope to permit an exemption to bypass this validation and be created beyond the assignment scope.')
 param parAssignmentScopeValidation string = 'Default'
 
 @sys.description('List used to specify which policy definition(s) in the initiative the subject resource has an exemption to.')
