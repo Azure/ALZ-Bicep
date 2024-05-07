@@ -13,7 +13,7 @@ param parPolicyAssignmentId string
 @description('Exemption Category Default - Waiver')
 param parExemptionCategory string = 'Waiver'
 
-@description('Description')
+@sys.description('The description which provides context for the policy exemption.')
 param parDescription string
 
 @allowed([
