@@ -1665,7 +1665,7 @@ module modPolicyExemptionsConfidentialOnline '../../exemptions/policyExemptions.
     parPolicyDefinitionReferenceIds: ['AllowedLocationsForResourceGroups', 'AllowedLocations']
     parExemptionName: 'Confidential-Online-Location-Exemption'
     parExemptionDisplayName: 'Confidential Online Location Exemption'
-    parDescription: 'Exempt the confidential online management group from the SLZ Global Policies location policies. The confidential management groups have their own location restrictions and this may result in a conflict if both sets are included.'
+    parDescription: 'Exempt the confidential online management group from the SLZ Global location policies. The confidential management groups have their own location restrictions and this may result in a conflict if both sets are included.'
   }
   dependsOn: [modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf]
 }
