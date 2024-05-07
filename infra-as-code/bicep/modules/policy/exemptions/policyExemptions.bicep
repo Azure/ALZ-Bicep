@@ -29,7 +29,7 @@ param parPolicyDefinitionReferenceIds array
 @description('Exemption Name')
 param parExemptionName string
 
-@description('Exemption Display Name')
+@sys.description('The display name of the exemption.')
 param parExemptionDisplayName string
 
 // Create Policy Exemption
