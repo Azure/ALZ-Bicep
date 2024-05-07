@@ -23,7 +23,7 @@ param parDescription string
 @description('Assignment Scope')
 param parAssignmentScopeValidation string = 'Default'
 
-@description('Reference ids of Policies to be exempted')
+@sys.description('List used to specify which policy definition(s) in the initiative the subject resource has an exemption to.')
 param parPolicyDefinitionReferenceIds array
 
 @description('Exemption Name')
