@@ -9,8 +9,7 @@ This document provides prescriptive guidance around implementing, automating, an
 The ALZ Bicep Accelerator framework was developed to provide end-users with the following abilities:
 
 - Allows for rapid onboarding and deployment of ALZ Bicep using full-fledged CI/CD pipelines with user provided input
-  > [!NOTE]
-  > Currently we offer support for [GitHub Action Workflows](#getting-started-if-youre-using-github-actions) and [Azure DevOps Pipelines](#getting-started-if-youre-using-azure-devops-pipelines)
+  - Currently we offer support for [GitHub Action Workflows](#getting-started-if-youre-using-github-actions) and [Azure DevOps Pipelines](#getting-started-if-youre-using-azure-devops-pipelines)
 - Provides framework to not only stay in-sync with new [ALZ Bicep releases](https://github.com/Azure/ALZ-Bicep/releases), but also incorporates guidance around modifiying existing ALZ Bicep modules and/or associating custom modules to the framework
 - Offers branching strategy guidance and pull request pipelines for linting the repository as well as validating any existing custom and/or modified Bicep modules
 
@@ -28,7 +27,7 @@ We attempted to make the pipelines as flexible as possible while also reducing o
 - Environment variables file (.env) which is used to store variables that are accessed within the PowerShell scripts
 - What-If Deploment conditions which are triggered automatically if a pull request is created against the main branch. This allows for a user to validate the deployment and potential changes before merging the pull request into the main branch.
 - Deployment conditions which are triggered automatically if a push is made to the main branch. This allows for a user to validate the deployment and potential changes before merging the pull request into the main branch.
-  > [!NOTE]
+  > **Note:**
   > Currently, the output of the GitHub Action workflows or the Azure DevOps Pipelines need to viewed within the respective portal. We are working on adding support for sending the output to the Pull Request comments section in the future.
 
 All of the GitHub Actions follow a similar high level workflow as follows:
@@ -70,7 +69,7 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
     Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_github
     ```
 
-    > [!NOTE]
+    > **Note:**
     > If the directory structure specified for the output location does not exist, the module will create the directory structure programatically.
 
     Various prompts will be displayed which will be used to replace parameter values as well as to create an environment variables file (.env) that will be used by the GitHub Action workflows.
@@ -79,12 +78,13 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
     - Traditional VNet Hub and Spoke = .github\workflows\alz-bicep-4a-hubspoke.yml
     - Virtual WAN = .github\workflows\alz-bicep-4b-vwan.yml
 
-    > [!NOTE]
+    > **Note:**
     > These workflow files and associated deployment scripts will be programatically removed in the future.
 
 1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration. All files pertaining to the default ALZ Bicep modules are located within the upstream-releases directory. The parameter files are located within the config/custom-parameters directory. For a minimalistic deployment, some example parameters are provided [here](#guidance-for-a-minimalistic-deployment)
 
-    > [!NOTE] To further understand the purpose of each parameter, please review the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow). For design considerations, please review our page in the [Azure Architecture Center](https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
+    > **Note:**
+    > To further understand the purpose of each parameter, please review the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow). For design considerations, please review our page in the [Azure Architecture Center](https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
 
 1. Run the following Git commands to get your remote branch in-sync with the local branch
 
@@ -103,7 +103,7 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
         1. Add one federated credential with the entity type set to 'Branch' and with a value for "Based on Selection" set to 'main'
         1. Add a secondary federated credential with the entity type set to 'Pull Request'
     1. [Create GitHub secrets](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#create-github-secrets)
-        > [!NOTE]
+        > **Note:**
         > The workflows reference secret names AZURE_TENANT_ID and AZURE_CLIENT_ID. If you choose to use different names, you will need to update the workflows accordingly.
     1. [Grant permissions for the service principal to be able to deploy the resources](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation)
 
@@ -140,7 +140,7 @@ In order to setup the Accelerator framework with the production ready Azure DevO
     Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_azuredevops"
     ```
 
-    > [!NOTE]
+    > **Note:**
     > If the directory structure specified for the output location does not exist, the module will create the directory structure programatically.
 
     Various prompts will be displayed which will be used to replace parameter values as well as to create an environment variables file (.env) that will be used by the Azure DevOps pipelines.
@@ -149,12 +149,12 @@ In order to setup the Accelerator framework with the production ready Azure DevO
     - Traditional VNet Hub and Spoke = .azuredevops\pipelines\alz-bicep-4a-hubspoke.yml
     - Virtual WAN = .azuredevops\pipelines\alz-bicep-4b-vwan.yml
 
-    > [!NOTE]
+    > **Note:**
     > These workflow files and associated deployment scripts will be programatically removed in the future.
 
 1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration. All files pertaining to the default ALZ Bicep modules are located within the upstream-releases directory. The parameter files are located within the config/custom-parameters directory. For a minimalistic deployment, some example parameters are provided [here](#guidance-for-a-minimalistic-deployment)
 
-    > [!NOTE] To further understand the purpose of each parameter, please review the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow). For design considerations, please review our page in the [Azure Architecture Center](https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
+    > **Note:** To further understand the purpose of each parameter, please review the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow). For design considerations, please review our page in the [Azure Architecture Center](https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
 
 1. [Grant permissions for the service principal to be able to deploy the resources](https://github.com/Azure/Enterprise-Scale/wiki/ALZ-Setup-azure#2-grant-access-to-user-andor-service-principal-at-root-scope--to-deploy-enterprise-scale-reference-implementation)
 
@@ -188,7 +188,7 @@ In order to setup the Accelerator framework with the production ready Azure DevO
     - Require conversation resolution before merging
     - Do not allow bypassing the above settings
     - Setup automated and required build valdiation reuquirements for all of the pipelines. This will ensure that all changes to the main branch are validated before merging as well as to provide a What-If analysis for the changes made to your ALZ environment. Finally, ensure you match the path filters for each build validation to what is specified in the pipeline files.
-      > [!NOTE]
+      > **Note:**
       > This last step is required if you are using GitHub and Bitbucket as your repository and integrating with Azure DevOps Pipelines.
 
 ### Incoporating a Branching Strategy
@@ -242,7 +242,7 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
     ```
 
 1. You can now deploy the updated modules.
-    > [!TIP]
+    > **Tip:**
     > The current pipelines trigger What-If deployment in PRs for changes in the Bicep parameter files. If you also want to include the What-If deployment process in the module upgrade process, consider the following options:
     > - Adding the environment variables file (.env) as an additional trigger in the module pipelines
     > - Introducing inputs/parameters in the module pipelines so you can manually trigger What-If deployments in a controlled manner.
