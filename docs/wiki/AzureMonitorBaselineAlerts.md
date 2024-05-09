@@ -8,7 +8,7 @@ If you prefer not to wait for this integration, you can deploy AMBA as a standal
 
 Alternatively, if you wish to integrate Azure Monitor Baseline Alerts into your existing [Accelerator](https://github.com/Azure/ALZ-Bicep/wiki/Accelerator) deployment, follow the guidance provided in the following sections.
 
-> [!WARNING]
+> **Warning:**
 > The following guidance offers a simplified version of the integration and may differ from the final integration. This is provided for immediate solution.
 
 ## Pre-Requisites
@@ -17,12 +17,12 @@ Please ensure you have deployed the initial Accelerator and meet all prerequisit
 
 ## Integration Steps
 
-> [!Note]
+> **Note:**
 > The following guidance assumes that no changes to the policies are needed or have already been applied. If you need to make changes to the policies, please refer to the [AMBA documentation](https://azure.github.io/azure-monitor-baseline-alerts/patterns/alz/deploy/Introduction-to-deploying-the-ALZ-Pattern/#customizing-policy-assignments) for guidance.
 
 1. The first integration step to perform is to clone AMBA to your local machine.
 
-2. Navigate to `patterns\alz` in the cloned AMBA repository and copy the following directories and files:
+1. Navigate to `patterns\alz` in the cloned AMBA repository and copy the following directories and files:
 
     - `policyAssignments`
     - `policyDefinitions`
@@ -30,17 +30,17 @@ Please ensure you have deployed the initial Accelerator and meet all prerequisit
     - `templates`
     - `alzARM.json`
 
-3. Paste the copied directories and files into a new directoy called `amba` within the `config\custom-modules` directory of your ALZ-Bicep Accelerator repository.
+1. Paste the copied directories and files into a new directoy called `amba` within the `config\custom-modules` directory of your ALZ-Bicep Accelerator repository.
 
-4. Navigate back to `patterns\alz` in the cloned AMBA repository and copy the `alzARM.param.json` file.
+1. Navigate back to `patterns\alz` in the cloned AMBA repository and copy the `alzARM.param.json` file.
 
-5. Paste the copied `alzARM.param.json` file into the `config\custom-parameters` directory of your ALZ-Bicep Accelerator repository.
+1. Paste the copied `alzARM.param.json` file into the `config\custom-parameters` directory of your ALZ-Bicep Accelerator repository.
 
-6. Modify the `alzARM.param.json` file to incorporate your landing zone configuration. You can use the [AMBA Parameter Configuration](https://azure.github.io/azure-monitor-baseline-alerts/patterns/alz/deploy/Deploy-with-Azure-PowerShell/#1-parameter-configuration) guidance as a reference point to understand how to configure the parameters.
+1. Modify the `alzARM.param.json` file to incorporate your landing zone configuration. You can use the [AMBA Parameter Configuration](https://azure.github.io/azure-monitor-baseline-alerts/patterns/alz/deploy/Deploy-with-Azure-PowerShell/#1-parameter-configuration) guidance as a reference point to understand how to configure the parameters.
 
-7. Next, go into `pipeline-scripts` and create a new script called `Deploy-AMBA.ps1`, which will be used to deploy the AMBA resources and called within your GitHub Actions Workflow or Azure Pipeline.
+1. Next, go into `pipeline-scripts` and create a new script called `Deploy-AMBA.ps1`, which will be used to deploy the AMBA resources and called within your GitHub Actions Workflow or Azure Pipeline.
 
-8. Add the following code to the `Deploy-AMBA.ps1` script:
+1. Add the following code to the `Deploy-AMBA.ps1` script:
 
     ```powershell
     param (
@@ -74,9 +74,9 @@ Please ensure you have deployed the initial Accelerator and meet all prerequisit
     New-AzManagementGroupDeployment @inputObject
     ```
 
-9. Next, navigate to either `.azuredevOps\pipelines` or `.github\workflows` and open the `alz-bicep-1-core.yml` file.
+1. Next, navigate to either `.azuredevOps\pipelines` or `.github\workflows` and open the `alz-bicep-1-core.yml` file.
 
-10. Depending upon which CI/CD platform you are using, you will need to modify the `alz-bicep-1-core.yml` file to include the following step after the Management Group deployment:
+1. Depending upon which CI/CD platform you are using, you will need to modify the `alz-bicep-1-core.yml` file to include the following step after the Management Group deployment:
 
     GitHub Action to Add (alz-bicep-1-core.yml)
 
@@ -103,12 +103,12 @@ Please ensure you have deployed the initial Accelerator and meet all prerequisit
               .\pipeline-scripts\Deploy-AMBA.ps1
     ```
 
-11. Within the same `alz-bicep-1-core.yml` file, modify the path based triggers to include the `config/custom-modules/amba/***` directory and the `config/custom-parameters/amba.parameters.all.json` file. This will ensure that any changes to the AMBA resources will trigger a new build.
+1. Within the same `alz-bicep-1-core.yml` file, modify the path based triggers to include the `config/custom-modules/amba/***` directory and the `config/custom-parameters/amba.parameters.all.json` file. This will ensure that any changes to the AMBA resources will trigger a new build.
 
-> [!NOTE]
-> For Azure Pipelines, if you are using Azure Repos as your repository, you will need to edit the branch policy of the `main` branch to include the path based filters.
+    > **Note:**
+    > For Azure Pipelines, if you are using Azure Repos as your repository, you will need to edit the branch policy of the `main` branch to include the path based filters.
 
-12. Finally, commit the changes to your upstream repository, which will trigger a new build to deploy the AMBA resources.
+1. Finally, commit the changes to your upstream repository, which will trigger a new build to deploy the AMBA resources.
 
-> [!TIP]
+> **Tip:**
 > If you have any issues with the deployment, please open an issue an issue within [ALZ-Bicep](https://github.com/Azure/ALZ-Bicep/issues)
