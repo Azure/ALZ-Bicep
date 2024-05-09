@@ -24,11 +24,11 @@ Please ensure you have deployed the initial Accelerator and meet all prerequisit
 
 1. Navigate to `patterns\alz` in the cloned AMBA repository and copy the following directories and files:
 
-- `policyAssignments`
-- `policyDefinitions`
-- `policySetDefinitions`
-- `templates`
-- `alzARM.json`
+    - `policyAssignments`
+    - `policyDefinitions`
+    - `policySetDefinitions`
+    - `templates`
+    - `alzARM.json`
 
 1. Paste the copied directories and files into a new directoy called `amba` within the `config\custom-modules` directory of your ALZ-Bicep Accelerator repository.
 
@@ -105,7 +105,7 @@ Please ensure you have deployed the initial Accelerator and meet all prerequisit
 
 1. Within the same `alz-bicep-1-core.yml` file, modify the path based triggers to include the `config/custom-modules/amba/***` directory and the `config/custom-parameters/amba.parameters.all.json` file. This will ensure that any changes to the AMBA resources will trigger a new build.
 
-    > **Note:**
+    > [!NOTE]
     > For Azure Pipelines, if you are using Azure Repos as your repository, you will need to edit the branch policy of the `main` branch to include the path based filters.
 
 1. Finally, commit the changes to your upstream repository, which will trigger a new build to deploy the AMBA resources.
