@@ -115,7 +115,9 @@ New-AzResourceGroup `
 
 New-AzResourceGroupDeployment @inputObject
 ```
+
 OR
+
 ```powershell
 # For Azure China regions
 # Set Platform management subscripion ID as the the current subscription

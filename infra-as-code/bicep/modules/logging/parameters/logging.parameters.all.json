@@ -31,6 +31,9 @@
         "VMInsights"
       ]
     },
+    "parUserAssignedManagedIdentityName": {
+      "value": "alz-umi-identity"
+    },
     "parLogAnalyticsWorkspaceLinkAutomationAccount": {
       "value": true
     },
@@ -61,6 +64,12 @@
       "value": false
     },
     "parGlobalResourceLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parUserAssignedManagedIdentityLock":{
       "value": {
         "kind": "None",
         "notes": "This lock was created by the ALZ Bicep Logging Module."
