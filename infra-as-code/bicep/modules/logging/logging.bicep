@@ -29,6 +29,20 @@ param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 @sys.description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.')
 param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 
+@sys.description('Data Collection Rule name for AMA integration.')
+param parDataCollectionRuleName string = 'ama-vmi-default-perfAndda-dcr'
+
+@sys.description('''Resource Lock Configuration for Log Analytics Workspace.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
+param parDataCollectionRuleLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Logging Module.'
+}
+
 @allowed([
   'CapacityReservation'
   'Free'
@@ -174,7 +188,7 @@ resource resUserAssignedManagedIdentity 'Microsoft.ManagedIdentity/userAssignedI
 // Create a resource lock for the user assigned managed identity if parGlobalResourceLock.kind != 'None' or if parUserAssignedManagedIdentityLock.kind != 'None'
 resource resUserAssignedIdentityLock 'Microsoft.Authorization/locks@2020-05-01' = if (parUserAssignedManagedIdentityLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
   scope: resUserAssignedManagedIdentity
-  name: parUserAssignedManagedIdentityLock.?name ?? '${resAutomationAccount.name}-lock'
+  name: parUserAssignedManagedIdentityLock.?name ?? '${resUserAssignedManagedIdentity.name}-lock'
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parUserAssignedManagedIdentityLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parUserAssignedManagedIdentityLock.?notes
@@ -229,6 +243,74 @@ resource resLogAnalyticsWorkspaceLock 'Microsoft.Authorization/locks@2020-05-01'
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parLogAnalyticsWorkspaceLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parLogAnalyticsWorkspaceLock.?notes
+  }
+}
+
+resource resDataCollectionRule 'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
+  name: parDataCollectionRuleName
+  location: parLogAnalyticsWorkspaceLocation
+  properties: {
+    description: 'Data collection rule for VM Insights'
+    dataSources: {
+      performanceCounters: [
+       {
+         name: 'VMInsightsPerfCounters'
+         streams: [
+          'Microsoft-InsightsMetrics'
+         ]
+         counterSpecifiers: [
+          '\\VMInsights\\DetailedMetrics'
+         ]
+         samplingFrequencyInSeconds: 60
+       }
+      ]
+      extensions: [
+        {
+          streams: [
+            'Microsoft-ServiceMap'
+          ]
+          extensionName: 'DependencyAgent'
+          extensionSettings: {}
+          name: 'DependencyAgentDataSource'
+        }
+      ]
+    }
+    destinations: {
+      logAnalytics: [
+        {
+          workspaceResourceId: resLogAnalyticsWorkspace.id
+          name: 'VMInsightsPerf-Logs-Dest'
+        }
+      ]
+    }
+    dataFlows: [
+      {
+        streams: [
+          'Microsoft-InsightsMetrics'
+        ]
+        destinations: [
+          'VMInsightsPerf-Logs-Dest'
+        ]
+      }
+      {
+        streams: [
+          'Microsoft-ServiceMap'
+        ]
+        destinations: [
+          'VMInsightsPerf-Logs-Dest'
+        ]
+      }
+    ]
+  }
+}
+
+// Create a resource lock for the Data Collection Rule if parGlobalResourceLock.kind != 'None' or if parDataCollectionRuleLock.kind != 'None'
+resource resDataCollectionRuleLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resDataCollectionRule
+  name: parDataCollectionRuleLock.?name ?? '${resDataCollectionRule.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleLock.?notes
   }
 }
 

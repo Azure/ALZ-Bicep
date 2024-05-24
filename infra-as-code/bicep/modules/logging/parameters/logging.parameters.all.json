@@ -31,6 +31,9 @@
         "VMInsights"
       ]
     },
+    "parDataCollectionRuleName": {
+      "value": "ama-vmi-default-perfAndda-dcr"
+    },
     "parUserAssignedManagedIdentityName": {
       "value": "alz-umi-identity"
     },
@@ -88,6 +91,12 @@
       }
     },
     "parLogAnalyticsWorkspaceSolutionsLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parDataCollectionRuleLock": {
       "value": {
         "kind": "None",
         "notes": "This lock was created by the ALZ Bicep Logging Module."
