@@ -100,3 +100,7 @@ Exemption Display Name
     }
 }
 ```
+
+## Bicep Visualizer
+
+![Bicep Visualizer](media/bicepVisualizer.png "Bicep Visualizer")
