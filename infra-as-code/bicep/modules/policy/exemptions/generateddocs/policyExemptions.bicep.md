@@ -18,13 +18,13 @@ parExemptionDisplayName | Yes      | The display name of the exemption.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-SLZ Policy Set Assignment id
+The ID of the policy set assignment for which the exemption will be established.
 
 ### parExemptionCategory
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Exemption Category Default - Waiver
+The exemption category to be used.
 
 - Default value: `Waiver`
 
@@ -34,13 +34,13 @@ Exemption Category Default - Waiver
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Description
+The description which provides context for the policy exemption.
 
 ### parAssignmentScopeValidation
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Assignment Scope
+Sets the scope to permit an exemption to bypass this validation and be created beyond the assignment scope.
 
 - Default value: `Default`
 
@@ -50,19 +50,19 @@ Assignment Scope
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Reference ids of Policies to be exempted
+List used to specify which policy definition(s) in the initiative the subject resource has an exemption to.
 
 ### parExemptionName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Exemption Name
+The resource name of the policy exemption.
 
 ### parExemptionDisplayName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Exemption Display Name
+The display name of the exemption.
 
 ## Snippets
 
