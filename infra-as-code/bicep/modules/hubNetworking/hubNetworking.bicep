@@ -1071,3 +1071,7 @@ output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled ? modPrivateDn
 output outDdosPlanResourceId string = resDdosProtectionPlan.id
 output outHubVirtualNetworkName string = resHubVnet.name
 output outHubVirtualNetworkId string = resHubVnet.id
+output outHubRouteTableId string = parAzFirewallEnabled ? resHubRouteTable.id : ''
+output outHubRouteTableName string = parAzFirewallEnabled ? resHubRouteTable.name : ''
+output outBastionNsgId string = parAzBastionEnabled ? resBastionNsg.id : ''
+output outBastionNsgName string = parAzBastionEnabled ? resBastionNsg.name : ''
