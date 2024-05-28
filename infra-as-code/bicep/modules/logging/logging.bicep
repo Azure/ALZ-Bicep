@@ -30,7 +30,7 @@ param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 
 @sys.description('Data Collection Rule name for AMA integration.')
-param parDataCollectionRuleName string = 'ama-vmi-default-perfAndda-dcr'
+param parDataCollectionRuleVMInsightsName string = 'ama-vmi-default-perfAndda-dcr'
 
 @sys.description('''Resource Lock Configuration for Log Analytics Workspace.
 
@@ -38,7 +38,7 @@ param parDataCollectionRuleName string = 'ama-vmi-default-perfAndda-dcr'
 - `notes` - Notes about this lock.
 
 ''')
-param parDataCollectionRuleLock lockType = {
+param parDataCollectionRuleVMInsightsLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Logging Module.'
 }
@@ -246,8 +246,8 @@ resource resLogAnalyticsWorkspaceLock 'Microsoft.Authorization/locks@2020-05-01'
   }
 }
 
-resource resDataCollectionRule 'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
-  name: parDataCollectionRuleName
+resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
+  name: parDataCollectionRuleVMInsightsName
   location: parLogAnalyticsWorkspaceLocation
   properties: {
     description: 'Data collection rule for VM Insights'
@@ -304,13 +304,13 @@ resource resDataCollectionRule 'Microsoft.Insights/dataCollectionRules@2023-03-1
   }
 }
 
-// Create a resource lock for the Data Collection Rule if parGlobalResourceLock.kind != 'None' or if parDataCollectionRuleLock.kind != 'None'
-resource resDataCollectionRuleLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
-  scope: resDataCollectionRule
-  name: parDataCollectionRuleLock.?name ?? '${resDataCollectionRule.name}-lock'
+// Create a resource lock for the Data Collection Rule if parGlobalResourceLock.kind != 'None' or if parDataCollectionRuleVMInsightsLock.kind != 'None'
+resource resDataCollectionRuleVMInsightsLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleVMInsightsLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resDataCollectionRuleVMInsights
+  name: parDataCollectionRuleVMInsightsLock.?name ?? '${resDataCollectionRuleVMInsights.name}-lock'
   properties: {
-    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleLock.kind
-    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleLock.?notes
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleVMInsightsLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleVMInsightsLock.?notes
   }
 }
 
