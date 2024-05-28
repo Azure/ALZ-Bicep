@@ -504,6 +504,10 @@ outPrivateDnsZonesNames | array |
 outDdosPlanResourceId | string |
 outHubVirtualNetworkName | string |
 outHubVirtualNetworkId | string |
+outHubRouteTableId | string |
+outHubRouteTableName | string |
+outBastionNsgId | string |
+outBastionNsgName | string |
 
 ## Snippets
 
