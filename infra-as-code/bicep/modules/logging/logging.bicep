@@ -29,10 +29,10 @@ param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 @sys.description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.')
 param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 
-@sys.description('Data Collection Rule name for AMA integration.')
+@sys.description('VM Insights Data Collection Rule name for AMA integration.')
 param parDataCollectionRuleVMInsightsName string = 'ama-vmi-default-perfAndda-dcr'
 
-@sys.description('''Resource Lock Configuration for Log Analytics Workspace.
+@sys.description('''Resource Lock Configuration for VM Insights Data Collection Rule.
 
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
 - `notes` - Notes about this lock.
@@ -42,6 +42,21 @@ param parDataCollectionRuleVMInsightsLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Logging Module.'
 }
+
+@sys.description('Change Tracking Data Collection Rule name for AMA integration.')
+param parDataCollectionRuleChangeTrackingName string = 'ama-ct-default-dcr'
+
+@sys.description('''Resource Lock Configuration for Change Tracking Data Collection Rule.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
+param parDataCollectionRuleChangeTrackingLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Logging Module.'
+}
+
 
 @allowed([
   'CapacityReservation'
@@ -311,6 +326,277 @@ resource resDataCollectionRuleVMInsightsLock 'Microsoft.Authorization/locks@2020
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleVMInsightsLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleVMInsightsLock.?notes
+  }
+}
+
+resource resDataCollectionRuleChangeTracking 'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
+  name: parDataCollectionRuleChangeTrackingName
+  location: parLogAnalyticsWorkspaceLocation
+  properties: {
+    description: 'Data collection rule for CT.'
+    dataSources: {
+      extensions: [
+        {
+          streams: [
+            'Microsoft-ConfigurationChange'
+            'Microsoft-ConfigurationChangeV2'
+            'Microsoft-ConfigurationData'
+          ]
+          extensionName: 'ChangeTracking-Windows'
+          extensionSettings: {
+            enableFiles: true
+            enableSoftware: true
+            enableRegistry: true
+            enableServices: true
+            enableInventory: true
+            registrySettings: {
+              registryCollectionFrequency: 3000
+              registryInfo: [
+                {
+                  name: 'Registry_1'
+                  groupTag: 'Recommended'
+                  enabled: false
+                  recurse: true
+                  description: ''
+                  keyName: 'HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Startup'
+                  valueName: ''
+                }
+                {
+                    name: 'Registry_2'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Shutdown'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_3'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Run'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_4'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Active Setup\\Installed Components'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_5'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\Software\\Classes\\Directory\\ShellEx\\ContextMenuHandlers'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_6'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\Software\\Classes\\Directory\\Background\\ShellEx\\ContextMenuHandlers'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_7'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\Software\\Classes\\Directory\\Shellex\\CopyHookHandlers'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_8'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellIconOverlayIdentifiers'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_9'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellIconOverlayIdentifiers'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_10'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Browser Helper Objects'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_11'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Browser Helper Objects'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_12'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Internet Explorer\\Extensions'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_13'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Microsoft\\Internet Explorer\\Extensions'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_14'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_15'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_16'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\KnownDlls'
+                    valueName: ''
+                }
+                {
+                    name: 'Registry_17'
+                    groupTag: 'Recommended'
+                    enabled: false
+                    recurse: true
+                    description: ''
+                    keyName: 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Notify'
+                    valueName: ''
+                }
+              ]
+            }
+            fileSettings: {
+              fileCollectionFrequency: 2700
+            }
+            softwareSettings: {
+              softwareCollectionFrequency: 1800
+            }
+            inventorySettings: {
+              inventoryCollectionFrequency: 36000
+            }
+            serviceSettings: {
+              serviceCollectionFrequency: 1800
+            }
+          }
+          name: 'CTDataSource-Windows'
+        }
+        {
+          streams: [
+            'Microsoft-ConfigurationChange'
+            'Microsoft-ConfigurationChangeV2'
+            'Microsoft-ConfigurationData'
+          ]
+          extensionName: 'ChangeTracking-Linux'
+          extensionSettings: {
+            enableFiles: true
+            enableSoftware: true
+            enableRegistry: false
+            enableServices: true
+            enableInventory: true
+            fileSettings: {
+              fileCollectionFrequency: 900
+              fileInfo: [
+                {
+                  name: 'ChangeTrackingLinuxPath_default'
+                  enabled: true
+                  destinationPath: '/etc/.*.conf'
+                  useSudo: true
+                  recurse: true
+                  maxContentsReturnable: 5000000
+                  pathType: 'File'
+                  type: 'File'
+                  links: 'Follow'
+                  maxOutputSize: 500000
+                  groupTag: 'Recommended'
+                }
+              ]
+            }
+            softwareSettings: {
+              softwareCollectionFrequency: 300
+            }
+            inventorySettings: {
+              inventoryCollectionFrequency: 36000
+            }
+            serviceSettings: {
+              serviceCollectionFrequency: 300
+            }
+          }
+          name: 'CTDataSource-Linux'
+        }
+      ]
+    }
+    destinations: {
+      logAnalytics: [
+        {
+          workspaceResourceId: resLogAnalyticsWorkspace.id
+          name: 'Microsoft-CT-Dest'
+        }
+      ]
+    }
+    dataFlows: [
+      {
+        streams: [
+          'Microsoft-ConfigurationChange'
+          'Microsoft-ConfigurationChangeV2'
+          'Microsoft-ConfigurationData'
+        ]
+        destinations: [
+          'Microsoft-CT-Dest'
+        ]
+      }
+    ]
+  }
+}
+
+// Create a resource lock for the Data Collection Rule if parGlobalResourceLock.kind != 'None' or if parDataCollectionRuleChangeTrackingLock.kind != 'None'
+resource resDataCollectionRuleChangeTrackingLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleChangeTrackingLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resDataCollectionRuleChangeTracking
+  name: parDataCollectionRuleChangeTrackingLock.?name ?? '${resDataCollectionRuleChangeTracking.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleChangeTrackingLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleChangeTrackingLock.?notes
   }
 }
 

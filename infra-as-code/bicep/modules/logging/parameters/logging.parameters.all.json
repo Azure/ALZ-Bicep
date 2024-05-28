@@ -34,6 +34,9 @@
     "parDataCollectionRuleVMInsightsName": {
       "value": "ama-vmi-default-perfAndda-dcr"
     },
+    "parDataCollectionRuleChangeTrackingName": {
+      "value": "ama-ct-default-dcr"
+    },
     "parUserAssignedManagedIdentityName": {
       "value": "alz-umi-identity"
     },
@@ -97,6 +100,12 @@
       }
     },
     "parDataCollectionRuleVMInsightsLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parDataCollectionRuleChangeTrackingLock": {
       "value": {
         "kind": "None",
         "notes": "This lock was created by the ALZ Bicep Logging Module."
