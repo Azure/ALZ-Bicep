@@ -114,30 +114,16 @@ param parLogAnalyticsWorkspaceLock lockType = {
 }
 
 @allowed([
-  'AgentHealthAssessment'
   'AntiMalware'
-  'ChangeTracking'
   'Security'
   'SecurityInsights'
   'ServiceMap'
-  'SQLAdvancedThreatProtection'
-  'SQLVulnerabilityAssessment'
-  'SQLAssessment'
-  'Updates'
-  'VMInsights'
 ])
 @sys.description('Solutions that will be added to the Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceSolutions array = [
-  'AgentHealthAssessment'
   'AntiMalware'
-  'ChangeTracking'
   'Security'
   'SecurityInsights'
-  'SQLAdvancedThreatProtection'
-  'SQLVulnerabilityAssessment'
-  'SQLAssessment'
-  'Updates'
-  'VMInsights'
 ]
 
 @sys.description('''Resource Lock Configuration for Log Analytics Workspace Solutions.
