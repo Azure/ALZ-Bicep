@@ -57,6 +57,19 @@ param parDataCollectionRuleChangeTrackingLock lockType = {
   notes: 'This lock was created by the ALZ Bicep Logging Module.'
 }
 
+@sys.description('MDFC for SQL Data Collection Rule name for AMA integration.')
+param parDataCollectionRuleMDFCSQLName string = 'ama-mdfcsql-default-dcr'
+
+@sys.description('''Resource Lock Configuration for MDFC Defender for SQL Data Collection Rule.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
+param parDataCollectionRuleMDFCSQLLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Logging Module.'
+}
 
 @allowed([
   'CapacityReservation'
@@ -597,6 +610,64 @@ resource resDataCollectionRuleChangeTrackingLock 'Microsoft.Authorization/locks@
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleChangeTrackingLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleChangeTrackingLock.?notes
+  }
+}
+
+resource resDataCollectionRuleMDFCSQL'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
+  name: parDataCollectionRuleMDFCSQLName
+  location: parLogAnalyticsWorkspaceLocation
+  properties: {
+    description: 'Data collection rule for Defender for SQL.'
+    dataSources: {
+      extensions: [
+        {
+          extensionName: 'MicrosoftDefenderForSQL'
+          name: 'MicrosoftDefenderForSQL'
+          streams: [
+            'Microsoft-DefenderForSqlAlerts'
+            'Microsoft-DefenderForSqlLogins'
+            'Microsoft-DefenderForSqlTelemetry'
+            'Microsoft-DefenderForSqlScanEvents'
+            'Microsoft-DefenderForSqlScanResults'
+          ]
+          extensionSettings: {
+            enableCollectionOfSqlQueriesForSecurityResearch: true
+          }
+        }
+      ]
+    }
+    destinations: {
+      logAnalytics: [
+        {
+          workspaceResourceId: resLogAnalyticsWorkspace.id
+          name: 'Microsoft-DefenderForSQL-Dest'
+        }
+      ]
+    }
+    dataFlows: [
+      {
+        streams: [
+          'Microsoft-DefenderForSqlAlerts'
+          'Microsoft-DefenderForSqlLogins'
+          'Microsoft-DefenderForSqlTelemetry'
+          'Microsoft-DefenderForSqlScanEvents'
+          'Microsoft-DefenderForSqlScanResults'
+        ]
+        destinations: [
+          'Microsoft-DefenderForSQL-Dest'
+        ]
+      }
+    ]
+  }
+}
+
+// Create a resource lock for the Data Collection Rule if parGlobalResourceLock.kind != 'None' or if parDataCollectionRuleMDFCSQLLock.kind != 'None'
+resource resDataCollectionRuleMDFCSQLLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleMDFCSQLLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resDataCollectionRuleMDFCSQL
+  name: parDataCollectionRuleMDFCSQLLock.?name ?? '${resDataCollectionRuleMDFCSQL.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleMDFCSQLLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleMDFCSQLLock.?notes
   }
 }
 

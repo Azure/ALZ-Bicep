@@ -37,6 +37,9 @@
     "parDataCollectionRuleChangeTrackingName": {
       "value": "ama-ct-default-dcr"
     },
+    "parDataCollectionRuleMDFCSQLName": {
+      "value": "ama-mdfcsql-default-dcr"
+    },
     "parUserAssignedManagedIdentityName": {
       "value": "alz-umi-identity"
     },
@@ -106,6 +109,12 @@
       }
     },
     "parDataCollectionRuleChangeTrackingLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parDataCollectionRuleMDFCSQLLock": {
       "value": {
         "kind": "None",
         "notes": "This lock was created by the ALZ Bicep Logging Module."

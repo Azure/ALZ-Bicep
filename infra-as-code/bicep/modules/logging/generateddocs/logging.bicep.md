@@ -15,10 +15,12 @@ parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log re
 parLogAnalyticsWorkspaceLock | No       | Resource Lock Configuration for Log Analytics Workspace.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace.
 parLogAnalyticsWorkspaceSolutionsLock | No       | Resource Lock Configuration for Log Analytics Workspace Solutions.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
-parDataCollectionRuleVMInsightsName | No       |  VM Insights Data Collection Rule name for AMA integration.
+parDataCollectionRuleVMInsightsName | No       | VM Insights Data Collection Rule name for AMA integration.
 parDataCollectionRuleVMInsightsLock | No       | Resource Lock Configuration for VM Insights Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
-parDataCollectionRuleChangeTrackingName | No       |  Change Tracking Data Collection Rule name for AMA integration.
+parDataCollectionRuleChangeTrackingName | No       | Change Tracking Data Collection Rule name for AMA integration.
 parDataCollectionRuleChangeTrackingLock | No       | Resource Lock Configuration for Change Tracking Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
+parDataCollectionRuleMDFCSQLName | No       | MDFC for SQL Data Collection Rule name for AMA integration.
+parDataCollectionRuleMDFCSQLLock | No       | Resource Lock Configuration for MDFC Defender for SQL Data Collection Rule  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parUserAssignedManagedIdentityName | No       | Name of the User Assigned Managed Identity required for authenticating Azure Monitoring Agent to Azure.
 parUserAssignedManagedIdentityLock | No       | Resource Lock Configuration for User Assigned Managed Identity.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parLogAnalyticsWorkspaceLinkAutomationAccount | No       | Log Analytics Workspace should be linked with the automation account.
