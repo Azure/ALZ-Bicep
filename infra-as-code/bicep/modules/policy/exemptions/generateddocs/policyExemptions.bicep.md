@@ -7,7 +7,7 @@ Module used to create a policy exemption for a policy assignment in a management
 Parameter name | Required | Description
 -------------- | -------- | -----------
 parPolicyAssignmentId | Yes      | The ID of the policy set assignment for which the exemption will be established.
-parExemptionCategory | No       |  The exemption category to be used.
+parExemptionCategory | No       | The exemption category to be used.
 parDescription | Yes      | The description which provides context for the policy exemption.
 parAssignmentScopeValidation | No       | Sets the scope to permit an exemption to bypass this validation and be created beyond the assignment scope.
 parPolicyDefinitionReferenceIds | Yes      | List used to specify which policy definition(s) in the initiative the subject resource has an exemption to.
