@@ -30,7 +30,7 @@ param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 
 @sys.description('VM Insights Data Collection Rule name for AMA integration.')
-param parDataCollectionRuleVMInsightsName string = 'ama-vmi-default-perfAndda-dcr'
+param parDataCollectionRuleVMInsightsName string = 'alz-ama-vmi-dcr'
 
 @sys.description('''Resource Lock Configuration for VM Insights Data Collection Rule.
 
@@ -44,7 +44,7 @@ param parDataCollectionRuleVMInsightsLock lockType = {
 }
 
 @sys.description('Change Tracking Data Collection Rule name for AMA integration.')
-param parDataCollectionRuleChangeTrackingName string = 'ama-ct-default-dcr'
+param parDataCollectionRuleChangeTrackingName string = 'alz-ama-ct-dcr'
 
 @sys.description('''Resource Lock Configuration for Change Tracking Data Collection Rule.
 
@@ -58,7 +58,7 @@ param parDataCollectionRuleChangeTrackingLock lockType = {
 }
 
 @sys.description('MDFC for SQL Data Collection Rule name for AMA integration.')
-param parDataCollectionRuleMDFCSQLName string = 'ama-mdfcsql-default-dcr'
+param parDataCollectionRuleMDFCSQLName string = 'alz-ama-mdfcsql-dcr'
 
 @sys.description('''Resource Lock Configuration for MDFC Defender for SQL Data Collection Rule.
 

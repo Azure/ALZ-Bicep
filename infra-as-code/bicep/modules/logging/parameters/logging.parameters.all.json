@@ -32,13 +32,13 @@
       ]
     },
     "parDataCollectionRuleVMInsightsName": {
-      "value": "ama-vmi-default-perfAndda-dcr"
+      "value": "alz-ama-vmi-dcr"
     },
     "parDataCollectionRuleChangeTrackingName": {
-      "value": "ama-ct-default-dcr"
+      "value": "alz-ama-ct-dcr"
     },
     "parDataCollectionRuleMDFCSQLName": {
-      "value": "ama-mdfcsql-default-dcr"
+      "value": "alz-ama-mdfcsql-dcr"
     },
     "parUserAssignedManagedIdentityName": {
       "value": "alz-umi-identity"
