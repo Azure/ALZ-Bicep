@@ -136,6 +136,12 @@ Set Parameter to true to Opt-out of deployment telemetry
 
 - Default value: `False`
 
+## Outputs
+
+Name | Type | Description
+---- | ---- | -----------
+outPolicyAssignmentId | string |
+
 ## Snippets
 
 ### Parameter file

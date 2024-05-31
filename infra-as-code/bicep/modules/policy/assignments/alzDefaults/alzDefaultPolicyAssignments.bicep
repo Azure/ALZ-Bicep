@@ -1655,3 +1655,31 @@ module modPolicyAssignmentSandboxEnforceAlz '../../../policy/assignments/policyA
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
+
+// The following module is used to deploy the policy exemptions
+module modPolicyExemptionsConfidentialOnline '../../exemptions/policyExemptions.bicep' = if (parLandingZoneMgConfidentialEnable) {
+  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialOnline)
+  name: take('${parTopLevelManagementGroupPrefix}-deploy-policy-exemptions${parTopLevelManagementGroupSuffix}', 64)
+  params: {
+    parPolicyAssignmentId: modPolicyAssignmentIntRootEnforceSovereigntyGlobal.outputs.outPolicyAssignmentId
+    parPolicyDefinitionReferenceIds: ['AllowedLocationsForResourceGroups', 'AllowedLocations']
+    parExemptionName: 'Confidential-Online-Location-Exemption'
+    parExemptionDisplayName: 'Confidential Online Location Exemption'
+    parDescription: 'Exempt the confidential online management group from the SLZ Global location policies. The confidential management groups have their own location restrictions and this may result in a conflict if both sets are included.'
+  }
+  dependsOn: [modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf]
+}
+
+// The following module is used to deploy the policy exemptions
+module modPolicyExemptionsConfidentialCorp '../../exemptions/policyExemptions.bicep' = if (parLandingZoneMgConfidentialEnable) {
+  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialCorp)
+  name: take('${parTopLevelManagementGroupPrefix}-deploy-policy-exemptions${parTopLevelManagementGroupSuffix}', 64)
+  params: {
+    parPolicyAssignmentId: modPolicyAssignmentIntRootEnforceSovereigntyGlobal.outputs.outPolicyAssignmentId
+    parPolicyDefinitionReferenceIds: ['AllowedLocationsForResourceGroups', 'AllowedLocations']
+    parExemptionName: 'Confidential-Corp-Location-Exemption'
+    parExemptionDisplayName: 'Confidential Corp Location Exemption'
+    parDescription: 'Exempt the confidential corp management group from the SLZ Global Policies location policies. The confidential management groups have their own location restrictions and this may result in a conflict if both sets are included.'
+  }
+  dependsOn: [modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf]
+}

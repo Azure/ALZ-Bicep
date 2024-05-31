@@ -28,6 +28,7 @@ parDdosPlanName | No       | DDoS Plan Name.
 parDdosLock    | No       | Resource Lock Configuration for DDoS Plan.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment.
 parAzFirewallName | No       | Azure Firewall Name.
+parAzFirewallPoliciesEnabled | No       | Switch to enable/disable Azure Firewall Policies deployment.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
 parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
 parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.
@@ -251,6 +252,14 @@ Switch to enable/disable Azure Firewall deployment.
 Azure Firewall Name.
 
 - Default value: `[format('{0}-azfw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
+
+### parAzFirewallPoliciesEnabled
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable Azure Firewall Policies deployment.
+
+- Default value: `True`
 
 ### parAzFirewallPoliciesName
 
@@ -495,6 +504,10 @@ outPrivateDnsZonesNames | array |
 outDdosPlanResourceId | string |
 outHubVirtualNetworkName | string |
 outHubVirtualNetworkId | string |
+outHubRouteTableId | string |
+outHubRouteTableName | string |
+outBastionNsgId | string |
+outBastionNsgName | string |
 
 ## Snippets
 
@@ -610,6 +623,9 @@ outHubVirtualNetworkId | string |
         },
         "parAzFirewallName": {
             "value": "[format('{0}-azfw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
+        },
+        "parAzFirewallPoliciesEnabled": {
+            "value": true
         },
         "parAzFirewallPoliciesName": {
             "value": "[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
