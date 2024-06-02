@@ -28,9 +28,11 @@ parDdosPlanName | No       | DDoS Plan Name.
 parDdosLock    | No       | Resource Lock Configuration for DDoS Plan.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment.
 parAzFirewallName | No       | Azure Firewall Name.
+parAzFirewallPoliciesEnabled | No       | Switch to enable/disable Azure Firewall Policies deployment.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
 parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
 parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.
+parAzFirewallCustomPublicIps | No       | Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.
 parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
 parAzErGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
 parAzVpnGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
@@ -251,6 +253,14 @@ Azure Firewall Name.
 
 - Default value: `[format('{0}-azfw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
 
+### parAzFirewallPoliciesEnabled
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable Azure Firewall Policies deployment.
+
+- Default value: `True`
+
 ### parAzFirewallPoliciesName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -279,13 +289,19 @@ The Azure Firewall Threat Intelligence Mode. If not set, the default value is Al
 
 - Allowed values: `Alert`, `Deny`, `Off`
 
+### parAzFirewallCustomPublicIps
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.
+
+- Allowed values: `1`, `2`, `3`
+
 ### parAzFirewallAvailabilityZones
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
-
-- Allowed values: `1`, `2`, `3`
 
 ### parAzErGatewayAvailabilityZones
 
@@ -488,6 +504,10 @@ outPrivateDnsZonesNames | array |
 outDdosPlanResourceId | string |
 outHubVirtualNetworkName | string |
 outHubVirtualNetworkId | string |
+outHubRouteTableId | string |
+outHubRouteTableName | string |
+outBastionNsgId | string |
+outBastionNsgName | string |
 
 ## Snippets
 
@@ -604,6 +624,9 @@ outHubVirtualNetworkId | string |
         "parAzFirewallName": {
             "value": "[format('{0}-azfw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
         },
+        "parAzFirewallPoliciesEnabled": {
+            "value": true
+        },
         "parAzFirewallPoliciesName": {
             "value": "[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
         },
@@ -612,6 +635,9 @@ outHubVirtualNetworkId | string |
         },
         "parAzFirewallIntelMode": {
             "value": "Alert"
+        },
+        "parAzFirewallCustomPublicIps": {
+            "value": []
         },
         "parAzFirewallAvailabilityZones": {
             "value": []

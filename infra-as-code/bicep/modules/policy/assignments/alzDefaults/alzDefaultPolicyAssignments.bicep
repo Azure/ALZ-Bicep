@@ -152,13 +152,13 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentIntRootAuditUnusedRes: take('${varDeploymentNameWrappers.basePrefix}-polAssi-auditUnusedRes-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIntRootDenyClassicRes: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyClassicRes-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIntRootDenyUnmanagedDisks: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyUnmanagedDisks-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentPlatformEnforceGrKeyVault: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceGrKeyVault-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentConnEnableDdosVnet: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enableDDoSVNET-conn-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIdentDenyPublicIp: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPublicIP-ident-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIdentDenyMgmtPortsFromInternet: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyMgmtFromInet-ident-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIdentDenySubnetWithoutNsg: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denySubnetNoNSG-ident-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIdentDeployVmBackup: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVMBackup-ident-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentMgmtDeployLogAnalytics: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployLAW-mgmt-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolicyAssignmentMgmtEnforceGrKeyVault: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceGrKeyVault-mgmt-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDenyIpForwarding: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyIPForward-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDenyMgmtPortsFromInternet: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyMgmtFromInet-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDenySubnetWithoutNsg: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denySubnetNoNSG-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -848,6 +848,23 @@ module modPolicyAssignmentIntRootDenyClassicRes '../../../policy/assignments/pol
   }
 }
 
+// Modules - Policy Assignments - Platform Management Group
+// Module - Policy Assignment - Enforce-GR-KeyVault
+module modPolicyAssignmentPlatformEnforceGrKeyVault '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRKeyVault.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModuleDeploymentNames.modPolicyAssignmentPlatformEnforceGrKeyVault
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRKeyVault.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRKeyVault.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRKeyVault.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
 // Modules - Policy Assignments - Connectivity Management Group
 // Module - Policy Assignment - Enable-DDoS-VNET
 module modPolicyAssignmentConnEnableDdosVnet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if ((!empty(parDdosProtectionPlanId)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnableDDoSVNET.libDefinition.name))) {
@@ -986,22 +1003,6 @@ module modPolicyAssignmentMgmtDeployLogAnalytics '../../../policy/assignments/po
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.contributor
     ]
-    parTelemetryOptOut: parTelemetryOptOut
-  }
-}
-
-// Module - Policy Assignment - Enforce-GR-KeyVault
-module modPolicyAssignmentMgmtEnforceGrKeyVault '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRKeyVault.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platformManagement)
-  name: varModuleDeploymentNames.modPolicyAssignmentMgmtEnforceGrKeyVault
-  params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRKeyVault.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentEnforceGRKeyVault.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRKeyVault.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1653,4 +1654,32 @@ module modPolicyAssignmentSandboxEnforceAlz '../../../policy/assignments/policyA
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceALZSandbox.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
+}
+
+// The following module is used to deploy the policy exemptions
+module modPolicyExemptionsConfidentialOnline '../../exemptions/policyExemptions.bicep' = if (parLandingZoneMgConfidentialEnable) {
+  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialOnline)
+  name: take('${parTopLevelManagementGroupPrefix}-deploy-policy-exemptions${parTopLevelManagementGroupSuffix}', 64)
+  params: {
+    parPolicyAssignmentId: modPolicyAssignmentIntRootEnforceSovereigntyGlobal.outputs.outPolicyAssignmentId
+    parPolicyDefinitionReferenceIds: ['AllowedLocationsForResourceGroups', 'AllowedLocations']
+    parExemptionName: 'Confidential-Online-Location-Exemption'
+    parExemptionDisplayName: 'Confidential Online Location Exemption'
+    parDescription: 'Exempt the confidential online management group from the SLZ Global location policies. The confidential management groups have their own location restrictions and this may result in a conflict if both sets are included.'
+  }
+  dependsOn: [modPolicyAssignmentLzsConfidentialOnlineEnforceSovereigntyConf]
+}
+
+// The following module is used to deploy the policy exemptions
+module modPolicyExemptionsConfidentialCorp '../../exemptions/policyExemptions.bicep' = if (parLandingZoneMgConfidentialEnable) {
+  scope: managementGroup(varManagementGroupIds.landingZonesConfidentialCorp)
+  name: take('${parTopLevelManagementGroupPrefix}-deploy-policy-exemptions${parTopLevelManagementGroupSuffix}', 64)
+  params: {
+    parPolicyAssignmentId: modPolicyAssignmentIntRootEnforceSovereigntyGlobal.outputs.outPolicyAssignmentId
+    parPolicyDefinitionReferenceIds: ['AllowedLocationsForResourceGroups', 'AllowedLocations']
+    parExemptionName: 'Confidential-Corp-Location-Exemption'
+    parExemptionDisplayName: 'Confidential Corp Location Exemption'
+    parDescription: 'Exempt the confidential corp management group from the SLZ Global Policies location policies. The confidential management groups have their own location restrictions and this may result in a conflict if both sets are included.'
+  }
+  dependsOn: [modPolicyAssignmentLzsConfidentialCorpEnforceSovereigntyConf]
 }

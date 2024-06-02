@@ -160,6 +160,9 @@ param parAzFirewallEnabled bool = true
 @sys.description('Azure Firewall Name.')
 param parAzFirewallName string = '${parCompanyPrefix}-azfw-${parLocation}'
 
+@sys.description('Switch to enable/disable Azure Firewall Policies deployment.')
+param parAzFirewallPoliciesEnabled bool = true
+
 @sys.description('Azure Firewall Policies Name.')
 param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
 
@@ -184,6 +187,10 @@ param parAzFirewallIntelMode string = 'Alert'
   '2'
   '3'
 ])
+
+@sys.description('Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.')
+param parAzFirewallCustomPublicIps array = []
+
 @sys.description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
 param parAzFirewallAvailabilityZones array = []
 
@@ -446,6 +453,8 @@ var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
 // ZTN Telemetry
 var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
 var varZtnP1Trigger = (parDdosEnabled && parAzFirewallEnabled && (parAzFirewallTier == 'Premium')) ? true : false
+
+var varAzFirewallUseCustomPublicIps = length(parAzFirewallCustomPublicIps) > 0
 
 //DDos Protection plan will only be enabled if parDdosEnabled is true.
 resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01' = if (parDdosEnabled) {
@@ -719,7 +728,7 @@ resource resBastionLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzBa
   }
 }
 
-resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = {
+resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parVpnGatewayEnabled || parExpressRouteGatewayEnabled ) {
   parent: resHubVnet
   name: 'GatewaySubnet'
 }
@@ -799,7 +808,7 @@ resource resVirtualNetworkGatewayLock 'Microsoft.Authorization/locks@2020-05-01'
   }
 }]
 
-resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = {
+resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parAzFirewallEnabled) {
   parent: resHubVnet
   name: 'AzureFirewallSubnet'
 }
@@ -847,7 +856,7 @@ module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFire
   }
 }
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = if (parAzFirewallEnabled) {
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = if (parAzFirewallEnabled && parAzFirewallPoliciesEnabled) {
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
@@ -889,7 +898,26 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (pa
   tags: parTags
   zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : [])
   properties: parAzFirewallTier == 'Basic' ? {
-    ipConfigurations: [
+    ipConfigurations: varAzFirewallUseCustomPublicIps
+     ? map(parAzFirewallCustomPublicIps, ip =>
+       {
+        name: 'ipconfig${uniqueString(ip)}'
+        properties: ip == parAzFirewallCustomPublicIps[0]
+         ? {
+          subnet: {
+            id: resAzureFirewallSubnetRef.id
+          }
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+         : {
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+      })
+     : [
       {
         name: 'ipconfig1'
         properties: {
@@ -921,7 +949,26 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (pa
       id: resFirewallPolicies.id
     }
   } : {
-    ipConfigurations: [
+    ipConfigurations: varAzFirewallUseCustomPublicIps
+     ? map(parAzFirewallCustomPublicIps, ip =>
+       {
+        name: 'ipconfig${uniqueString(ip)}'
+        properties: ip == parAzFirewallCustomPublicIps[0]
+         ? {
+          subnet: {
+            id: resAzureFirewallSubnetRef.id
+          }
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+         : {
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+      })
+     : [
       {
         name: 'ipconfig1'
         properties: {
@@ -1024,3 +1071,7 @@ output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled ? modPrivateDn
 output outDdosPlanResourceId string = resDdosProtectionPlan.id
 output outHubVirtualNetworkName string = resHubVnet.name
 output outHubVirtualNetworkId string = resHubVnet.id
+output outHubRouteTableId string = parAzFirewallEnabled ? resHubRouteTable.id : ''
+output outHubRouteTableName string = parAzFirewallEnabled ? resHubRouteTable.name : ''
+output outBastionNsgId string = parAzBastionEnabled ? resBastionNsg.id : ''
+output outBastionNsgName string = parAzBastionEnabled ? resBastionNsg.name : ''

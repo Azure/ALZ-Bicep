@@ -83,6 +83,38 @@ In this example, the Diagnostic Settings are enabled on the management groups th
 
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
+You will also need to ensure you have the Microsoft.Insights resource provider registered in the Management subscription.
+
+You can utilize this script to check if the resource provider is registered, and if not, register it:
+```powershell
+# Registering 'Microsoft.Insights' resource provider on the Management subscription
+Select-AzSubscription -SubscriptionId $ManagementSubscriptionId
+
+$providers = @('Microsoft.insights')
+
+foreach ($provider in $providers ) {
+  $iterationCount = 0
+  $maxIterations = 30
+  $providerStatus = (Get-AzResourceProvider -ListAvailable | Where-Object ProviderNamespace -eq $provider).registrationState
+  if ($providerStatus -ne 'Registered') {
+    Write-Output "`n Registering the '$provider' provider"
+    Register-AzResourceProvider -ProviderNamespace $provider
+    do {
+      $providerStatus = (Get-AzResourceProvider -ListAvailable | Where-Object ProviderNamespace -eq $provider).registrationState
+      $iterationCount++
+      Write-Output "Waiting for the '$provider' provider registration to complete....waiting 10 seconds"
+      Start-Sleep -Seconds 10
+    } until ($providerStatus -eq 'Registered' -and $iterationCount -ne $maxIterations)
+    if ($iterationCount -ne $maxIterations) {
+      Write-Output "`n The '$provider' has been registered successfully"
+    }
+    else {
+      Write-Output "`n The '$provider' has not been registered successfully"
+    }
+  }
+}
+```
+
 ### Azure CLI
 
 ```bash

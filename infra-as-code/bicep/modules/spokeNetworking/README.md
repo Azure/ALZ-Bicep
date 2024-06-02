@@ -1,5 +1,8 @@
 # Module: Spoke Networking
 
+> [!IMPORTANT]
+> We recommend utilizing the [Bicep Landing Zone Vending Module](https://github.com/Azure/bicep-lz-vending) in place of this Spoke Networking Module. Not only does the module handle spoke networking, but it also handles many other aspects of setting up the > foundational components of the application landing zones which are out of scope for this module.
+
 This module defines spoke networking based on the recommendations from the Azure Landing Zone Conceptual Architecture. If enabled spoke will route traffic to Hub Network with NVA.
 
 Module deploys the following resources:
@@ -7,14 +10,7 @@ Module deploys the following resources:
 - Virtual Network (Spoke VNet)
 - Route Table with route to NVA - if Firewall is enabled
 
-> ## Note
->
-> ### Orchestration
->
-> Consider using the `hubPeeredSpoke` orchestration module instead to simplify spoke networking deployment, VNET Peering, UDR configuration and Subscription placement in a single module. [infra-as-code/bicep/orchestration/hubPeeredSpoke](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/orchestration/hubPeeredSpoke)
->
-> ### Subnet Declaration
->
+> [!NOTE]
 > This module only deploys the skeleton of a virtual network. Subnet(s) are not created nor does this module support declaring them. This is a blank vNet with the expectation of handing it over to the app/workload team to create their subnet(s), etc. The ALZ-Bicep core team decided not to add subnet support due to:
 >
 > - Complexity of managing all of the subnet properties, including NSG, UDR, service endpoints, subnet delegations, etc.
@@ -24,7 +20,7 @@ Module deploys the following resources:
 >
 > To customize spoke networking to include subnet declarations, we recommend the use of the following ordered methods:
 >
-> 1. [CARML](https://aka.ms/carml) - Utilize this mature Bicep repo for resource deployments
+> 1. [AVM](https://aka.ms/avm) - Utilize Azure Verified Modules to deploy the subnets
 > 2. [Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) this repo and customize the modules accordingly
 > 3. Write your own custom module
 
