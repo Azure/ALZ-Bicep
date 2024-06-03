@@ -1,0 +1,86 @@
+{
+  "Deny-ContainerRegistry-Anonymous-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerRegistryAnAuth')]"
+      }
+    }
+  },
+  "Deny-ContainerRegistry-Arm-Audience": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerRegistryArmAudience')]"
+      }
+    }
+  },
+  "Deny-ContainerRegistry-Exports": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerRegistryExports')]"
+      }
+    }
+  },
+  "Deny-ContainerRegistry-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerRegistryLocalAuth')]"
+      }
+    }
+  },
+  "Deny-ContainerRegistry-Repo-Token": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerRegistryRepositoryToken')]"
+      }
+    }
+  },
+  "Deny-ContainerRegistry-Sku-PrivateLink": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerRegistrySkuPrivateLink')]"
+      }
+    }
+  },
+  "Deny-ContainerRegistry-Unrestricted-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerRegistryUnrestrictedNetworkAccess')]"
+      }
+    }
+  },
+  "Modify-ContainerRegistry-Anonymous-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerRegistryModifyAnAuth')]"
+      }
+    }
+  },
+  "Modify-ContainerRegistry-Arm-Audience": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerRegistryModifyArmAudience')]"
+      }
+    }
+  },
+  "Modify-ContainerRegistry-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerRegistryModifyLocalAuth')]"
+      }
+    }
+  },
+  "Modify-ContainerRegistry-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerRegistryModifyPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Modify-ContainerRegistry-Repo-Token": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerRegistryModifyRepositoryToken')]"
+      }
+    }
+  }
+}

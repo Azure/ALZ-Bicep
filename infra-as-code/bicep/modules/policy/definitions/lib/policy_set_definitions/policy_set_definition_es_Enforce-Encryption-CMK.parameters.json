@@ -41,6 +41,104 @@
       }
     }
   },
+  "Deny-Aa-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('AutomationAccountCmkEffect')]"
+      }
+    }
+  },
+  "Deny-Adf-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adfCmk')]"
+      }
+    }
+  },
+  "Deny-ADX-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adxCmk')]"
+      }
+    }
+  },
+  "Deny-Backup-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('BackupCmkEffect')]"
+      }
+    }
+  },
+  "Deny-CognitiveSearch-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveSearchCmk')]"
+      }
+    }
+  },
+  "Deny-ContainerInstance-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerInstanceCmk')]"
+      }
+    }
+  },
+  "Deny-EH-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventHubNamespacesCmk')]"
+      }
+    }
+  },
+  "Deny-EH-Premium-CMK": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventHubPremiumCmk')]"
+      }
+    }
+  },
+  "Deny-OsAndDataDisk-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('osAndDataDiskCmk')]"
+      }
+    }
+  },
+  "Deny-Sb-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('serviceBusDenyCmk')]"
+      }
+    }
+  },
+  "Deny-Sql-Managed-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('sqlManagedCmk')]"
+      }
+    }
+  },
+  "Deny-Storage-Encryption-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageAccountsEncryptionCmk')]"
+      }
+    }
+  },
+  "Deny-Storage-Queue-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageQueueCmk')]"
+      }
+    }
+  },
+  "Deny-Storage-Table-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageTableCmk')]"
+      }
+    }
+  },
   "EncryptedVMDisksEffect": {
     "parameters": {
       "effect": {

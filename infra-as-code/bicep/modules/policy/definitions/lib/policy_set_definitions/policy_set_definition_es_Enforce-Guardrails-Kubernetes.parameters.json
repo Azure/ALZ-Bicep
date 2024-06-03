@@ -1,0 +1,114 @@
+{
+  "Deny-Aks-Allowed-Capabilities": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksAllowedCapabilities')]"
+      }
+    }
+  },
+  "Deny-Aks-Cni": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksCni')]"
+      }
+    }
+  },
+  "Deny-Aks-Default-Namespace": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksDefaultNamespace')]"
+      }
+    }
+  },
+  "Deny-Aks-Internal-Lb": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksInternalLb')]"
+      }
+    }
+  },
+  "Deny-Aks-Kms": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksKms')]"
+      }
+    }
+  },
+  "Deny-Aks-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksLocalAuth')]"
+      }
+    }
+  },
+  "Deny-Aks-Naked-Pods": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksNakedPods')]"
+      }
+    }
+  },
+  "Deny-Aks-Priv-Containers": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksPrivContainers')]"
+      }
+    }
+  },
+  "Deny-Aks-Priv-Escalation": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksPrivEscalation')]"
+      }
+    }
+  },
+  "Deny-Aks-Private-Cluster": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksPrivateCluster')]"
+      }
+    }
+  },
+  "Deny-Aks-ReadinessOrLiveness-Probes": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksReadinessOrLivenessProbes')]"
+      }
+    }
+  },
+  "Deny-Aks-Shared-Host-Process-Namespace": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksShareHostProcessAndNamespace')]"
+      }
+    }
+  },
+  "Deny-Aks-Temp-Disk-Encryption": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksTempDisk')]"
+      }
+    }
+  },
+  "Deny-Aks-Windows-Container-Administrator": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksWindowsContainerAdministrator')]"
+      }
+    }
+  },
+  "Dine-Aks-Command-Invoke": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksCommandInvoke')]"
+      }
+    }
+  },
+  "Dine-Aks-Policy": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksPolicy')]"
+      }
+    }
+  }
+}

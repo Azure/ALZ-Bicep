@@ -1,0 +1,68 @@
+{
+  "Deny-Synapse-Data-Traffic": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('synapseDataTraffic')]"
+      }
+    }
+  },
+  "Deny-Synapse-Fw-Rules": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('synapseFwRules')]"
+      }
+    }
+  },
+  "Deny-Synapse-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('synapseLocalAuth')]"
+      }
+    }
+  },
+  "Deny-Synapse-Managed-Vnet": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('synapseManagedVnet')]"
+      }
+    }
+  },
+  "Deny-Synapse-Tenant-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('synapseTenants')]"
+      },
+      "allowedTenantIds": {
+        "value": "[[parameters('synapseAllowedTenantIds')]"
+      }
+    }
+  },
+  "Dine-Synapse-Defender": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('synapseDefender')]"
+      }
+    }
+  },
+  "Modify-Synapse-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('synapseModifyLocalAuth')]"
+      }
+    }
+  },
+  "Modify-Synapse-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('synapseModifyPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Modify-Synapse-Tls-Version": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('synapseModifyTlsVersion')]"
+      }
+    }
+  }
+}

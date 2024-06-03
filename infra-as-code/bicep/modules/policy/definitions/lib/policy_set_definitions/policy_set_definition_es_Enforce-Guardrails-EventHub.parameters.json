@@ -1,0 +1,30 @@
+{
+  "Deny-EH-Auth-Rules": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventHubAuthRules')]"
+      }
+    }
+  },
+  "Deny-EH-Double-Encryption": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventHubNamespacesDoubleEncryption')]"
+      }
+    }
+  },
+  "Deny-EH-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventHubNamespacesLocalAuth')]"
+      }
+    }
+  },
+  "Modify-EH-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventHubNamespacesModifyLocalAuth')]"
+      }
+    }
+  }
+}

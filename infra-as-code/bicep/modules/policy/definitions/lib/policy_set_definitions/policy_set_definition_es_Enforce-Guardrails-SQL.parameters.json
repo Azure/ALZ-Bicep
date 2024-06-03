@@ -1,0 +1,33 @@
+{
+  "Deny-Sql-Aad-Only": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('sqlAadOnly')]"
+      }
+    }
+  },
+  "Deny-Sql-Managed-Aad-Only": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('sqlManagedAadOnly')]"
+      }
+    }
+  },
+  "Dine-Sql-Adv-Data": {
+    "parameters": {}
+  },
+  "Dine-Sql-Managed-Defender": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('sqlManagedDefender')]"
+      }
+    }
+  },
+  "Modify-Sql-PublicNetworkAccess": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('modifySqlPublicNetworkAccess')]"
+      }
+    }
+  }
+}

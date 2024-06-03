@@ -1,0 +1,44 @@
+{
+  "Deny-Cognitive-Services-Cust-Storage": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesCustomerStorage')]"
+      }
+    }
+  },
+  "Deny-Cognitive-Services-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesDisableLocalAuth')]"
+      }
+    }
+  },
+  "Deny-Cognitive-Services-Managed-Identity": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesManagedIdentity')]"
+      }
+    }
+  },
+  "Deny-OpenAi-NetworkAcls": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesNetworkAcls')]"
+      }
+    }
+  },
+  "Deny-OpenAi-OutboundNetworkAccess": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesOutboundNetworkAccess')]"
+      }
+    }
+  },
+  "Modify-Cognitive-Services-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesModifyDisableLocalAuth')]"
+      }
+    }
+  }
+}
