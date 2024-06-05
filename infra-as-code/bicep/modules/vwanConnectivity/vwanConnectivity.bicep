@@ -338,6 +338,11 @@ var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub =
 // Azure Firewalls in Hubs
 var varAzureFirewallInHubs = filter(parVirtualWanHubs, hub => hub.parAzFirewallEnabled == true)
 
+var azureFirewallInHubsIndex = [for index in varAzureFirewallInHubs: {
+  index: indexOf(parVirtualWanHubs, index)
+  parHubLocation: index.parHubLocation
+}]
+
 // Virtual WAN resource
 resource resVwan 'Microsoft.Network/virtualWans@2023-04-01' = {
   name: parVirtualWanName
@@ -608,6 +613,6 @@ output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZone
 output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZonesNames : [])
 
 // Output Azure Firewall Private IP's
-output outAzFwPrivateIps array = [for (hub, i) in varAzureFirewallInHubs: {
-  '${parVirtualWanHubName}-${hub.parHubLocation}': resAzureFirewall[i].properties.hubIPAddresses.privateIPAddress
+output outAzFwPrivateIps array = [for (hub, i) in azureFirewallInHubsIndex: {
+  '${parVirtualWanHubName}-${hub.parHubLocation}': resAzureFirewall[hub.index].properties.hubIPAddresses.privateIPAddress
 }]
