@@ -6,7 +6,7 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parSpokeVirtualNetworkResourceId | No       | The Spoke Virtual Network Resource ID.
 parPrivateDnsZoneResourceId | No       | The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
-parResourceLockConfig | No       | Resource Lock Configuration Object
+parResourceLockConfig | No       | Resource Lock Configuration for Private DNS Zone Links.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 
 ### parSpokeVirtualNetworkResourceId
 
@@ -24,7 +24,12 @@ The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Resource Lock Configuration Object
+Resource Lock Configuration for Private DNS Zone Links.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
 
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Private DNS Zone Links Module.}`
 

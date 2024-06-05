@@ -6,7 +6,7 @@ type lockType = {
   name: string?
 
   @description('Optional. The lock settings of the service.')
-  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+  kind: ('CanNotDelete' | 'ReadOnly' | 'None')
 
   @description('Optional. Notes about this lock.')
   notes: string?
@@ -32,7 +32,12 @@ param parPublicIpProperties object
 @sys.description('Availability Zones to deploy the Public IP across. Region must support Availability Zones to use. If it does not then leave empty.')
 param parAvailabilityZones array = []
 
-@sys.description('Resource Lock Configuration Object')
+@sys.description('''Resource Lock Configuration for Public IPs.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parResourceLockConfig lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Public IP Module.'
@@ -47,7 +52,7 @@ param parTelemetryOptOut bool = false
 // Customer Usage Attribution Id
 var varCuaid = '3f85b84c-6bad-4c42-86bf-11c233241c22'
 
-resource resPublicIp 'Microsoft.Network/publicIPAddresses@2023-02-01' ={
+resource resPublicIp 'Microsoft.Network/publicIPAddresses@2023-02-01' = {
   name: parPublicIpName
   tags: parTags
   location: parLocation

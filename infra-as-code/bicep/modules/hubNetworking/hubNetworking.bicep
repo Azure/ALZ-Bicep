@@ -23,7 +23,7 @@ type lockType = {
   name: string?
 
   @description('Optional. The lock settings of the service.')
-  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+  kind: ('CanNotDelete' | 'ReadOnly' | 'None')
 
   @description('Optional. Notes about this lock.')
   notes: string?
@@ -38,7 +38,12 @@ param parCompanyPrefix string = 'alz'
 @sys.description('Name for Hub Network.')
 param parHubNetworkName string = '${parCompanyPrefix}-hub-${parLocation}'
 
-@sys.description('Global Resource Lock Configuration used for all resources deployed in this module.')
+@sys.description('''Global Resource Lock Configuration used for all resources deployed in this module.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parGlobalResourceLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -78,7 +83,12 @@ param parSubnets subnetOptionsType = [
 @sys.description('Array of DNS Server IP addresses for VNet.')
 param parDnsServerIps array = []
 
-@sys.description('Resource Lock Configuration for Virtual Network.')
+@sys.description('''Resource Lock Configuration for Virtual Network.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parVirtualNetworkLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -116,7 +126,12 @@ param parAzBastionTunneling bool = false
 @sys.description('Name for Azure Bastion Subnet NSG.')
 param parAzBastionNsgName string = 'nsg-AzureBastionSubnet'
 
-@sys.description('Resource Lock Configuration for Bastion.')
+@sys.description('''Resource Lock Configuration for Bastion.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parBastionLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -128,7 +143,12 @@ param parDdosEnabled bool = true
 @sys.description('DDoS Plan Name.')
 param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
 
-@sys.description('Resource Lock Configuration for DDoS Plan.')
+@sys.description('''Resource Lock Configuration for DDoS Plan.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parDdosLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -139,6 +159,9 @@ param parAzFirewallEnabled bool = true
 
 @sys.description('Azure Firewall Name.')
 param parAzFirewallName string = '${parCompanyPrefix}-azfw-${parLocation}'
+
+@sys.description('Switch to enable/disable Azure Firewall Policies deployment.')
+param parAzFirewallPoliciesEnabled bool = true
 
 @sys.description('Azure Firewall Policies Name.')
 param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
@@ -164,6 +187,10 @@ param parAzFirewallIntelMode string = 'Alert'
   '2'
   '3'
 ])
+
+@sys.description('Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.')
+param parAzFirewallCustomPublicIps array = []
+
 @sys.description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
 param parAzFirewallAvailabilityZones array = []
 
@@ -189,7 +216,12 @@ param parAzFirewallDnsProxyEnabled bool = true
 @sys.description('Array of custom DNS servers used by Azure Firewall')
 param parAzFirewallDnsServers array = []
 
-@sys.description('Resource Lock Configuration for Azure Firewall.')
+@sys.description(''' Resource Lock Configuration for Azure Firewall.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parAzureFirewallLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -201,7 +233,12 @@ param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 @sys.description('Switch to enable/disable BGP Propagation on route table.')
 param parDisableBgpRoutePropagation bool = false
 
-@sys.description('Resource Lock Configuration for Hub Route Table.')
+@sys.description('''Resource Lock Configuration for Hub Route Table.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parHubRouteTableLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -290,7 +327,12 @@ param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
 @sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links')
 param parVirtualNetworkIdToLinkFailover string = ''
 
-@sys.description('Resource Lock Configuration for Private DNS Zone(s).')
+@sys.description('''Resource Lock Configuration for Private DNS Zone(s).
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parPrivateDNSZonesLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -342,7 +384,12 @@ param parExpressRouteGatewayConfig object = {
   }
 }
 
-@sys.description('Resource Lock Configuration for ExpressRoute Virtual Network Gateway.')
+@sys.description('''Resource Lock Configuration for ExpressRoute Virtual Network Gateway.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parVirtualNetworkGatewayLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
@@ -391,7 +438,7 @@ var varSubnetProperties = [for subnet in varSubnetMap: {
   }
 }]
 
-var varVpnGwConfig = ((parVpnGatewayEnabled) &&(!empty(parVpnGatewayConfig)) ? parVpnGatewayConfig : json('{"name": "noconfigVpn"}'))
+var varVpnGwConfig = ((parVpnGatewayEnabled) && (!empty(parVpnGatewayConfig)) ? parVpnGatewayConfig : json('{"name": "noconfigVpn"}'))
 
 var varErGwConfig = ((parExpressRouteGatewayEnabled) && !empty(parExpressRouteGatewayConfig) ? parExpressRouteGatewayConfig : json('{"name": "noconfigEr"}'))
 
@@ -406,6 +453,8 @@ var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
 // ZTN Telemetry
 var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
 var varZtnP1Trigger = (parDdosEnabled && parAzFirewallEnabled && (parAzFirewallTier == 'Premium')) ? true : false
+
+var varAzFirewallUseCustomPublicIps = length(parAzFirewallCustomPublicIps) > 0
 
 //DDos Protection plan will only be enabled if parDdosEnabled is true.
 resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01' = if (parDdosEnabled) {
@@ -679,7 +728,7 @@ resource resBastionLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzBa
   }
 }
 
-resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = {
+resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parVpnGatewayEnabled || parExpressRouteGatewayEnabled ) {
   parent: resHubVnet
   name: 'GatewaySubnet'
 }
@@ -759,7 +808,7 @@ resource resVirtualNetworkGatewayLock 'Microsoft.Authorization/locks@2020-05-01'
   }
 }]
 
-resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = {
+resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parAzFirewallEnabled) {
   parent: resHubVnet
   name: 'AzureFirewallSubnet'
 }
@@ -807,7 +856,7 @@ module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFire
   }
 }
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = if (parAzFirewallEnabled) {
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = if (parAzFirewallEnabled && parAzFirewallPoliciesEnabled) {
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
@@ -849,7 +898,26 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (pa
   tags: parTags
   zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : [])
   properties: parAzFirewallTier == 'Basic' ? {
-    ipConfigurations: [
+    ipConfigurations: varAzFirewallUseCustomPublicIps
+     ? map(parAzFirewallCustomPublicIps, ip =>
+       {
+        name: 'ipconfig${uniqueString(ip)}'
+        properties: ip == parAzFirewallCustomPublicIps[0]
+         ? {
+          subnet: {
+            id: resAzureFirewallSubnetRef.id
+          }
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+         : {
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+      })
+     : [
       {
         name: 'ipconfig1'
         properties: {
@@ -881,7 +949,26 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (pa
       id: resFirewallPolicies.id
     }
   } : {
-    ipConfigurations: [
+    ipConfigurations: varAzFirewallUseCustomPublicIps
+     ? map(parAzFirewallCustomPublicIps, ip =>
+       {
+        name: 'ipconfig${uniqueString(ip)}'
+        properties: ip == parAzFirewallCustomPublicIps[0]
+         ? {
+          subnet: {
+            id: resAzureFirewallSubnetRef.id
+          }
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+         : {
+          publicIPAddress: {
+            id: parAzFirewallEnabled ? ip : ''
+          }
+        }
+      })
+     : [
       {
         name: 'ipconfig1'
         properties: {
@@ -984,3 +1071,7 @@ output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled ? modPrivateDn
 output outDdosPlanResourceId string = resDdosProtectionPlan.id
 output outHubVirtualNetworkName string = resHubVnet.name
 output outHubVirtualNetworkId string = resHubVnet.id
+output outHubRouteTableId string = parAzFirewallEnabled ? resHubRouteTable.id : ''
+output outHubRouteTableName string = parAzFirewallEnabled ? resHubRouteTable.name : ''
+output outBastionNsgId string = parAzBastionEnabled ? resBastionNsg.id : ''
+output outBastionNsgName string = parAzBastionEnabled ? resBastionNsg.name : ''

@@ -17,20 +17,25 @@ Module deploys the following resources which can be configured by parameters:
 
 - [Parameters for Azure Commercial Cloud](generateddocs/vwanConnectivity.bicep.md)
 
-> **NOTE:** Within the `parVirtualWanHubs` parameter, the following keys (parVpnGatewayCustomName, parExpressRouteGatewayCustomName, parAzFirewallCustomName, and parVirtualWanHubCustomName) can be added to create custom names for the associated resources.
-> **NOTE:** Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
+> **NOTE:**
+> - Within the `parVirtualWanHubs` parameter, the following keys (parVpnGatewayCustomName, parExpressRouteGatewayCustomName, parAzFirewallCustomName, and parVirtualWanHubCustomName) can be added to create custom names for the associated resources.
+>
+> - Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
+>
+> - The file `parameters/vwanConnectivity.parameters.az.all.json` contains parameter values for SKUs that are compatible with availability zones for relevant resource types. In cases where you are deploying to a region that does not support availability zones, you should opt for the `parameters/vwanConnectivity.parameters.all.json` file.
+>
 
 <!-- markdownlint-disable -->
-> NOTE: When deploying using the `parameters/vwanConnectivity.parameters.all.json` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region. Failure to do so will cause these services to be unreachable over private endpoints.
+> - When deploying using the `parameters/vwanConnectivity.parameters.all.json` you must update the `parPrivateDnsZones` parameter by replacing the `xxxxxx` placeholders with the deployment region. Failure to do so will cause these services to be unreachable over private endpoints.
 > For example, if deploying to East US the following zone entries:
-> - `privatelink.xxxxxx.azmk8s.io`
-> - `privatelink.xxxxxx.backup.windowsazure.com`
-> - `privatelink.xxxxxx.batch.azure.com`
+>    - `privatelink.xxxxxx.azmk8s.io`
+>    - `privatelink.xxxxxx.backup.windowsazure.com`
+>    - `privatelink.xxxxxx.batch.azure.com`
 >
-> Will become:
-> - `privatelink.eastus.azmk8s.io`
-> - `privatelink.eastus.backup.windowsazure.com`
-> - `privatelink.eastus.batch.azure.com`
+>     Will become:
+>    - `privatelink.eastus.azmk8s.io`
+>    - `privatelink.eastus.backup.windowsazure.com`
+>    - `privatelink.eastus.batch.azure.com`
 <!-- markdownlint-restore -->
 
 ## Outputs

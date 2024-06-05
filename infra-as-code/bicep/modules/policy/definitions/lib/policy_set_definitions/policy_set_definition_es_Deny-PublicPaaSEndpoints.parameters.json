@@ -69,6 +69,13 @@
       }
     }
   },
+  "ContainerAppsEnvironmentDenyPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('ContainerAppsEnvironmentDenyEffect')]"
+      }
+    }
+  },
   "CosmosDenyPaasPublicIP": {
     "parameters": {
       "effect": {

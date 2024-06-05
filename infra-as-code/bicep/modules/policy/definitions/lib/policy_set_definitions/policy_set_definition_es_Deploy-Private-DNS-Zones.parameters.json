@@ -150,7 +150,7 @@
       }
     }
   },
-  "DINE-Private-DNS-Azure-Databrics-Browser-AuthN": {
+  "DINE-Private-DNS-Azure-Databricks-Browser-AuthN": {
     "parameters": {
       "privateDnsZoneId": {
         "value": "[[parameters('azureDatabricksPrivateDnsZoneId')]"
@@ -163,7 +163,7 @@
       }
     }
   },
-  "DINE-Private-DNS-Azure-Databrics-UI-Api": {
+  "DINE-Private-DNS-Azure-Databricks-UI-Api": {
     "parameters": {
       "privateDnsZoneId": {
         "value": "[[parameters('azureDatabricksPrivateDnsZoneId')]"
