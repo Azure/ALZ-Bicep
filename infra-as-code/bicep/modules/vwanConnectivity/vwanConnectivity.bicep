@@ -46,7 +46,7 @@ type lockType = {
   name: string?
 
   @description('Optional. The lock settings of the service.')
-  kind:('CanNotDelete' | 'ReadOnly' | 'None')
+  kind: ('CanNotDelete' | 'ReadOnly' | 'None')
 
   @description('Optional. Notes about this lock.')
   notes: string?
@@ -58,7 +58,12 @@ param parLocation string = resourceGroup().location
 @sys.description('Prefix value which will be prepended to all resource names.')
 param parCompanyPrefix string = 'alz'
 
-@sys.description('Global Resource Lock Configuration used for all resources deployed in this module.')
+@sys.description('''Global Resource Lock Configuration used for all resources deployed in this module.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parGlobalResourceLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
@@ -92,7 +97,12 @@ param parAzFirewallDnsServers array = []
 @sys.description('Prefix Used for Virtual WAN.')
 param parVirtualWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
 
-@sys.description('Resource Lock Configuration for Virtual WAN.')
+@sys.description('''Resource Lock Configuration for Virtual WAN.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parVirtualWanLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
@@ -100,6 +110,9 @@ param parVirtualWanLock lockType = {
 
 @sys.description('Prefix Used for Virtual WAN Hub.')
 param parVirtualWanHubName string = '${parCompanyPrefix}-vhub'
+
+@sys.description('The name of the route table that manages routing between the Virtual WAN Hub and the Azure Firewall.')
+param parVirtualWanHubDefaultRouteName string = 'default-to-azfw'
 
 @sys.description('''Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects in the array to meet the number of Virtual WAN Hubs required.
 
@@ -125,19 +138,34 @@ param parVirtualWanHubs virtualWanOptionsType = [ {
   }
 ]
 
-@sys.description('Resource Lock Configuration for Virtual WAN Hub VPN Gateway.')
+@sys.description('''Resource Lock Configuration for Virtual WAN Hub VPN Gateway.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parVpnGatewayLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
 }
 
-@sys.description('Resource Lock Configuration for Virtual WAN Hub ExpressRoute Gateway.')
+@sys.description('''Resource Lock Configuration for Virtual WAN Hub ExpressRoute Gateway.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parExpressRouteGatewayLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
 }
 
-@sys.description('Resource Lock Configuration for Virtual WAN Hub.')
+@sys.description('''Resource Lock Configuration for Virtual WAN Hub.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parVirtualWanHubsLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
@@ -163,7 +191,12 @@ param parAzFirewallAvailabilityZones array = []
 @sys.description('Azure Firewall Policies Name.')
 param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
 
-@sys.description('Resource Lock Configuration for Azure Firewall.')
+@sys.description('''Resource Lock Configuration for Azure Firewall.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parAzureFirewallLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
@@ -181,7 +214,12 @@ param parDdosEnabled bool = true
 @sys.description('DDoS Plan Name.')
 param parDdosPlanName string = '${parCompanyPrefix}-ddos-plan'
 
-@sys.description('Resource Lock Configuration for DDoS Plan.')
+@sys.description('''Resource Lock Configuration for DDoS Plan.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parDdosLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
@@ -273,7 +311,12 @@ param parVirtualNetworkIdToLink string = ''
 @sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links')
 param parVirtualNetworkIdToLinkFailover string = ''
 
-@sys.description('Resource Lock Configuration for Private DNS Zone(s).')
+@sys.description('''Resource Lock Configuration for Private DNS Zone(s).
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
 param parPrivateDNSZonesLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
@@ -294,6 +337,11 @@ var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub =
 
 // Azure Firewalls in Hubs
 var varAzureFirewallInHubs = filter(parVirtualWanHubs, hub => hub.parAzFirewallEnabled == true)
+
+var azureFirewallInHubsIndex = [for index in varAzureFirewallInHubs: {
+  index: indexOf(parVirtualWanHubs, index)
+  parHubLocation: index.parHubLocation
+}]
 
 // Virtual WAN resource
 resource resVwan 'Microsoft.Network/virtualWans@2023-04-01' = {
@@ -354,7 +402,7 @@ resource resVhubRouteTable 'Microsoft.Network/virtualHubs/hubRouteTables@2023-04
     ]
     routes: [
       {
-        name: 'default-to-azfw'
+        name: parVirtualWanHubDefaultRouteName
         destinations: [
           '0.0.0.0/0'
         ]
@@ -427,7 +475,7 @@ resource resErGateway 'Microsoft.Network/expressRouteGateways@2023-02-01' = [for
 
 // Create a Virtual Network Gateway resource lock if gateway.name is not equal to noconfigVpn or noconfigEr and parGlobalResourceLock.kind != 'None' or if parVpnGatewayLock.kind != 'None'
 resource resErGatewayLock 'Microsoft.Authorization/locks@2020-05-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parExpressRouteGatewayEnabled) && (parExpressRouteGatewayLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
-  scope: resVpnGateway[i]
+  scope: resErGateway[i]
   name: parExpressRouteGatewayLock.?name ?? '${resErGateway[i].name}-lock'
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parExpressRouteGatewayLock.kind
@@ -565,6 +613,6 @@ output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZone
 output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZonesNames : [])
 
 // Output Azure Firewall Private IP's
-output outAzFwPrivateIps array = [for (hub, i) in varAzureFirewallInHubs: {
-  '${parVirtualWanHubName}-${hub.parHubLocation}': resAzureFirewall[i].properties.hubIPAddresses.privateIPAddress
+output outAzFwPrivateIps array = [for (hub, i) in azureFirewallInHubsIndex: {
+  '${parVirtualWanHubName}-${hub.parHubLocation}': resAzureFirewall[hub.index].properties.hubIPAddresses.privateIPAddress
 }]
