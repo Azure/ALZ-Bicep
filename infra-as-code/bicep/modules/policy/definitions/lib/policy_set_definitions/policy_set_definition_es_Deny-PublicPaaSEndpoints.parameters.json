@@ -160,10 +160,10 @@
       }
     }
   },
-  "Deny-Graphana-PublicNetworkAccess": {
+  "Deny-Grafana-PublicNetworkAccess": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('graphanaPublicNetworkAccess')]"
+        "value": "[[parameters('grafanaPublicNetworkAccess')]"
       }
     }
   },

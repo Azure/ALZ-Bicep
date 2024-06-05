@@ -190,9 +190,9 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
-				definitionReferenceId: 'Deny-Graphana-PublicNetworkAccess'
+				definitionReferenceId: 'Deny-Grafana-PublicNetworkAccess'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e8775d5a-73b7-4977-a39b-833ef0114628'
-				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters['Deny-Graphana-PublicNetworkAccess'].parameters
+				definitionParameters: varPolicySetDefinitionEsDenyPublicPaaSEndpointsParameters['Deny-Grafana-PublicNetworkAccess'].parameters
 				definitionGroups: []
 			}
 			{
