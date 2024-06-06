@@ -1846,9 +1846,9 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
-				definitionReferenceId: 'Deny-EH-MINTLS'
-				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-EH-MINTLS'
-				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20240509Parameters['Deny-EH-MINTLS'].parameters
+				definitionReferenceId: 'Deny-EH-minTLS'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-EH-minTLS'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20240509Parameters['Deny-EH-minTLS'].parameters
 				definitionGroups: []
 			}
 			{
@@ -3172,9 +3172,9 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
-				definitionReferenceId: 'Deny-Subnet-Without-UDR'
-				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-UDR'
-				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetworkParameters['Deny-Subnet-Without-UDR'].parameters
+				definitionReferenceId: 'Deny-Subnet-Without-Udr'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Udr'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetworkParameters['Deny-Subnet-Without-Udr'].parameters
 				definitionGroups: []
 			}
 			{
@@ -3460,9 +3460,9 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
-				definitionReferenceId: 'Deny-Storage-Sftp'
-				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Storage-Sftp'
-				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsStorageParameters['Deny-Storage-Sftp'].parameters
+				definitionReferenceId: 'Deny-Storage-SFTP'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Storage-SFTP'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsStorageParameters['Deny-Storage-SFTP'].parameters
 				definitionGroups: []
 			}
 			{

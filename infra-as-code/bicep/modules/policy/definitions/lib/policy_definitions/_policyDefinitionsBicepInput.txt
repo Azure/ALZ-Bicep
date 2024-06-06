@@ -291,6 +291,10 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-ActivityLogs.json')
 }
 {
+	name: 'DenyAction-DeleteResources'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-DeleteResources.json')
+}
+{
 	name: 'DenyAction-DiagnosticLogs'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-DiagnosticLogs.json')
 }

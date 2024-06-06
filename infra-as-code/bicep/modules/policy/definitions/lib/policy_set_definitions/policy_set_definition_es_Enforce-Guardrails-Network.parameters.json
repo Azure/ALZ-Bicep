@@ -71,7 +71,7 @@
       }
     }
   },
-  "Deny-Subnet-Without-UDR": {
+  "Deny-Subnet-Without-Udr": {
     "parameters": {
       "effect": {
         "value": "[[parameters('subnetUdr')]"

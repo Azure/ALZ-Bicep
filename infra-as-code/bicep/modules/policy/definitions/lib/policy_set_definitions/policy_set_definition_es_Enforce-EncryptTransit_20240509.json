@@ -882,8 +882,8 @@
         "groupNames": []
       },
       {
-        "policyDefinitionReferenceId": "Deny-EH-MINTLS",
-        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-EH-MINTLS",
+        "policyDefinitionReferenceId": "Deny-EH-minTLS",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-EH-minTLS",
         "parameters": {
           "effect": {
             "value": "[[parameters('eventHubMinTls')]"

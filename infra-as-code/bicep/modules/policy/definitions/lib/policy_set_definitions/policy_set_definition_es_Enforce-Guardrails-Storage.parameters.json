@@ -120,7 +120,7 @@
       }
     }
   },
-  "Deny-Storage-Sftp": {
+  "Deny-Storage-SFTP": {
     "parameters": {
       "effect": {
         "value": "[[parameters('storageSftp')]"
