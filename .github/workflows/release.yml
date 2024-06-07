@@ -1,8 +1,8 @@
 name: Artifacts
 
 on:
-  push:
-    tags: [ "*" ]
+  release:
+    types: [ created ]
   workflow_dispatch:
   pull_request:
     branches:
