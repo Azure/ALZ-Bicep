@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   release:
-    name: Generate Release Artifacts
+    name: Generate Accelerator Release Artifacts
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
