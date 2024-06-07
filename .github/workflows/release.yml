@@ -1,4 +1,4 @@
-name: Release
+name: Artifacts
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   release:
-    name: Generate Release
+    name: Generate Release Artifacts
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
         tar -cvzf ../accelerator.tar.gz .
         zip -r ../accelerator.zip .
 
-    - name: Upload Artifacts
+    - name: Upload Artifacts to Action
       uses: actions/upload-artifact@v4
       with:
         name: accelerator
@@ -35,7 +35,7 @@ jobs:
           accelerator.tar.gz
           accelerator.zip
 
-    - name: Release
+    - name: Add Artifacts to Release
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
