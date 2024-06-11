@@ -257,7 +257,7 @@ Azure Firewall Name.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to redeploy Azure Firewall Policies deployment.
+Set this to true for the initial deployment as one firewall policy is required. Set this to false in subsequent deployments if using custom policies.
 
 - Default value: `True`
 
