@@ -160,7 +160,7 @@ param parAzFirewallEnabled bool = true
 @sys.description('Azure Firewall Name.')
 param parAzFirewallName string = '${parCompanyPrefix}-azfw-${parLocation}'
 
-@sys.description('Switch to redeploy Azure Firewall Policies deployment.')
+@sys.description('Set this to true for the initial deployment as one firewall policy is required. Set this to false in subsequent deployments if using custom policies.)
 param parAzFirewallPoliciesEnabled bool = true
 
 @sys.description('Azure Firewall Policies Name.')
