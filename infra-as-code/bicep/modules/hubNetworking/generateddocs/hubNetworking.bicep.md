@@ -295,13 +295,13 @@ The Azure Firewall Threat Intelligence Mode. If not set, the default value is Al
 
 Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.
 
-- Allowed values: `1`, `2`, `3`
-
 ### parAzFirewallAvailabilityZones
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
+
+- Allowed values: `1`, `2`, `3`
 
 ### parAzErGatewayAvailabilityZones
 
