@@ -160,7 +160,7 @@ param parAzFirewallEnabled bool = true
 @sys.description('Azure Firewall Name.')
 param parAzFirewallName string = '${parCompanyPrefix}-azfw-${parLocation}'
 
-@sys.description('Switch to enable/disable Azure Firewall Policies deployment.')
+@sys.description('Switch to redeploy Azure Firewall Policies deployment.')
 param parAzFirewallPoliciesEnabled bool = true
 
 @sys.description('Azure Firewall Policies Name.')
@@ -182,15 +182,14 @@ param parAzFirewallTier string = 'Standard'
 ])
 param parAzFirewallIntelMode string = 'Alert'
 
+@sys.description('Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.')
+param parAzFirewallCustomPublicIps array = []
+
 @allowed([
   '1'
   '2'
   '3'
 ])
-
-@sys.description('Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.')
-param parAzFirewallCustomPublicIps array = []
-
 @sys.description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
 param parAzFirewallAvailabilityZones array = []
 
