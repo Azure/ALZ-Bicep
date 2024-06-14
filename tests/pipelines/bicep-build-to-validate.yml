@@ -106,7 +106,7 @@ jobs:
         inputs:
           targetType: "inline"
           script: |
-            az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+            az login --service-principal --username $(azclilogin) --tenant $(azclitenant)
 
       - task: Bash@3
         displayName: Az CLI Create Subscription for PR

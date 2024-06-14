@@ -20,9 +20,9 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+      az login --service-principal --username $(azclilogin) --tenant $(azclitenant)
 
-- task: Bash@3    
+- task: Bash@3
   displayName: Deploy Base Azure Function
   name: create_az_function
   inputs:
@@ -30,15 +30,15 @@ steps:
     script: |
       az deployment group create --resource-group cancelsubscription --template-file .github/azFunction/AzFunctionInfrastructure/main.bicep --parameters parAzFunctionName=$(cancelsubfunctionname)
 
-- task: AzureFunctionApp@1 
+- task: AzureFunctionApp@1
   displayName: "Deploy Functions to base"
   inputs:
     azureSubscription: 'azserviceconnection'
-    appType: functionAppLinux 
+    appType: functionAppLinux
     appName: $(cancelsubfunctionname)
     package: $(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip
 
-- task: Bash@3    
+- task: Bash@3
   displayName: Az CLI create Role Assignment to Tenant root group
   name: create_role_assign_tenant
   inputs:
