@@ -28,7 +28,7 @@ parDdosPlanName | No       | DDoS Plan Name.
 parDdosLock    | No       | Resource Lock Configuration for DDoS Plan.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment.
 parAzFirewallName | No       | Azure Firewall Name.
-parAzFirewallPoliciesEnabled | No       | Switch to enable/disable Azure Firewall Policies deployment.
+parAzFirewallPoliciesEnabled | No       | Set this to true for the initial deployment as one firewall policy is required. Set this to false in subsequent deployments if using custom policies.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
 parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
 parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.
@@ -257,7 +257,7 @@ Azure Firewall Name.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable Azure Firewall Policies deployment.
+Set this to true for the initial deployment as one firewall policy is required. Set this to false in subsequent deployments if using custom policies.
 
 - Default value: `True`
 
@@ -295,13 +295,13 @@ The Azure Firewall Threat Intelligence Mode. If not set, the default value is Al
 
 Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.
 
-- Allowed values: `1`, `2`, `3`
-
 ### parAzFirewallAvailabilityZones
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
+
+- Allowed values: `1`, `2`, `3`
 
 ### parAzErGatewayAvailabilityZones
 
