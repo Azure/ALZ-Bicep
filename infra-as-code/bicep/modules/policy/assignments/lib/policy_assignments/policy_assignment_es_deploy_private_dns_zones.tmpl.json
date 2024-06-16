@@ -163,6 +163,9 @@
       "azureMachineLearningWorkspacePrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureMachineLearningWorkspacePrivateDnsZoneId]"
       },
+      "azureMachineLearningWorkspaceSecondPrivateDnsZoneId": {
+        "value": "${varPrivateDnsZonesFinalResourceIds}.azureMachineLearningWorkspaceSecondPrivateDnsZoneId]"
+      },
       "azureServiceBusNamespacePrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureServiceBusNamespacePrivateDnsZoneId]"
       },
