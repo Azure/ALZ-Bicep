@@ -144,6 +144,7 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentIntRootDeployVmMonitoring: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVMMonitoring-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIntRootDeployVmssMonitoring: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVMSSMonitoring-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIntRootDeployMDEnpoints: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployMDEndpoints-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentIntRootDeployMDEnpointsAma: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployMDEndpointsAma-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIntRootEnforceAcsb: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceAcsb-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIntRootDeployMdfcOssDb: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployMdfcOssDb-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentIntRootDeployMdfcSqlAtp: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployMdfcSqlAtp-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -332,6 +333,11 @@ var varPolicyAssignmentDeployMDEndpoints = {
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_mdeendpoints.tmpl.json')
 }
 
+var varPolicyAssignmentDeployMDEndpointsAma = {
+  definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/77b391e3-2d5d-40c3-83bf-65c846b3c6a3'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_md_endpoints_ama.tmpl.json')
+}
+
 var varPolicyAssignmentDeployMDFCConfig = {
   definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config_20240319'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_mdfc_config.tmpl.json')
@@ -430,6 +436,7 @@ var varRbacRoleDefinitionIds = {
   aksPolicyAddon: '18ed5180-3e48-46fd-8541-4ea054d57064'
   sqlDbContributor: '9b7fa17d-e63e-47b0-bb0a-15c516ac86ec'
   backupContributor: '5e467623-bb1f-42f4-a55d-6e525e11384b'
+  rbacSecurityAdmin: 'fb1c8493-542b-48eb-b624-b4c8fea62acd'
 }
 
 // Management Groups Variables - Used For Policy Assignments
@@ -592,7 +599,7 @@ module modPolicyAssignmentIntRootDeployMdfcConfig '../../../policy/assignments/p
 }
 
 // Module - Policy Assignment - Deploy-MDEndpoints
-module modPolicyAssignmentIntRootDeployMDEnpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMDEndpoints.libDefinition.name)) {
+module modPolicyAssignmentIntRootDeployMDEndpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMDEndpoints.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployMDEnpoints
   params: {
@@ -606,6 +613,25 @@ module modPolicyAssignmentIntRootDeployMDEnpoints '../../../policy/assignments/p
       varRbacRoleDefinitionIds.contributor
     ]
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployMDEndpoints.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Deploy-MDEndpointsAMA
+module modPolicyAssignmentIntRootDeployMDEndpointsAMA '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMDEndpointsAma.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.intRoot)
+  name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployMDEnpointsAma
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMDEndpointsAma.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeployMDEndpointsAma.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDEndpointsAma.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployMDEndpointsAma.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployMDEndpointsAma.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployMDEndpointsAma.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.rbacSecurityAdmin
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployMDEndpointsAma.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
