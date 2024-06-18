@@ -124,6 +124,7 @@ param parLogAnalyticsWorkspaceSolutions array = [
   'AntiMalware'
   'Security'
   'SecurityInsights'
+  'ServiceMap'
 ]
 
 @sys.description('''Resource Lock Configuration for Log Analytics Workspace Solutions.

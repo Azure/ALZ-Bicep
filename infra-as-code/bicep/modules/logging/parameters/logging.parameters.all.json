@@ -19,16 +19,10 @@
     },
     "parLogAnalyticsWorkspaceSolutions": {
       "value": [
-        "AgentHealthAssessment",
         "AntiMalware",
-        "ChangeTracking",
         "Security",
         "SecurityInsights",
-        "SQLAdvancedThreatProtection",
-        "SQLVulnerabilityAssessment",
-        "SQLAssessment",
-        "Updates",
-        "VMInsights"
+        "ServiceMap"
       ]
     },
     "parDataCollectionRuleVMInsightsName": {
