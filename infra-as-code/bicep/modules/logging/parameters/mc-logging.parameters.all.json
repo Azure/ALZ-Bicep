@@ -66,12 +66,6 @@
         "notes": "This lock was created by the ALZ Bicep Logging Module."
       }
     },
-    "parUserAssignedManagedIdentityLock":{
-      "value": {
-        "kind": "None",
-        "notes": "This lock was created by the ALZ Bicep Logging Module."
-      }
-    },
     "parAutomationAccountLock": {
       "value": {
         "kind": "None",

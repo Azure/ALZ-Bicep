@@ -144,11 +144,6 @@ param parUserAssignedManagedIdentityName string = 'alz-logging-mi'
 @sys.description('User Assigned Managed Identity location.')
 param parUserAssignedManagedIdentityLocation string = resourceGroup().location
 
-param parUserAssignedManagedIdentityLock lockType = {
-  kind: 'None'
-  notes: 'This lock was created by the ALZ Bicep Logging Module.'
-}
-
 @sys.description('Log Analytics Workspace should be linked with the automation account.')
 param parLogAnalyticsWorkspaceLinkAutomationAccount bool = true
 
@@ -198,16 +193,6 @@ var varCuaid = 'f8087c67-cc41-46b2-994d-66e4b661860d'
 resource resUserAssignedManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
   name: parUserAssignedManagedIdentityName
   location: parUserAssignedManagedIdentityLocation
-}
-
-// Create a resource lock for the user assigned managed identity if parGlobalResourceLock.kind != 'None' or if parUserAssignedManagedIdentityLock.kind != 'None'
-resource resUserAssignedIdentityLock 'Microsoft.Authorization/locks@2020-05-01' = if (parUserAssignedManagedIdentityLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
-  scope: resUserAssignedManagedIdentity
-  name: parUserAssignedManagedIdentityLock.?name ?? '${resUserAssignedManagedIdentity.name}-lock'
-  properties: {
-    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parUserAssignedManagedIdentityLock.kind
-    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parUserAssignedManagedIdentityLock.?notes
-  }
 }
 
 resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2022-08-08' = {

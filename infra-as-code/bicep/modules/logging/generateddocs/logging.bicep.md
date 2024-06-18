@@ -22,7 +22,6 @@ parDataCollectionRuleChangeTrackingLock | No       | Resource Lock Configuration
 parDataCollectionRuleMDFCSQLName | No       | MDFC for SQL Data Collection Rule name for AMA integration.
 parDataCollectionRuleMDFCSQLLock | No       | Resource Lock Configuration for MDFC Defender for SQL Data Collection Rule  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parUserAssignedManagedIdentityName | No       | Name of the User Assigned Managed Identity required for authenticating Azure Monitoring Agent to Azure.
-parUserAssignedManagedIdentityLock | No       | Resource Lock Configuration for User Assigned Managed Identity.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parLogAnalyticsWorkspaceLinkAutomationAccount | No       | Log Analytics Workspace should be linked with the automation account.
 parAutomationAccountName | No       | Automation account name.
 parAutomationAccountLocation | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
