@@ -28,6 +28,18 @@
         "VMInsights"
       ]
     },
+    "parDataCollectionRuleVMInsightsName": {
+      "value": "ama-vmi-default-perfAndda-dcr"
+    },
+    "parDataCollectionRuleChangeTrackingName": {
+      "value": "ama-ct-default-dcr"
+    },
+    "parDataCollectionRuleMDFCSQLName": {
+      "value": "ama-mdfcsql-default-dcr"
+    },
+    "parUserAssignedManagedIdentityName": {
+      "value": "alz-umi-identity"
+    },
     "parLogAnalyticsWorkspaceLinkAutomationAccount": {
       "value": true
     },
@@ -60,6 +72,12 @@
         "notes": "This lock was created by the ALZ Bicep Logging Module."
       }
     },
+    "parUserAssignedManagedIdentityLock":{
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
     "parAutomationAccountLock": {
       "value": {
         "kind": "None",
@@ -73,6 +91,24 @@
       }
     },
     "parLogAnalyticsWorkspaceSolutionsLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parDataCollectionRuleVMInsightsLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parDataCollectionRuleChangeTrackingLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parDataCollectionRuleMDFCSQLLock": {
       "value": {
         "kind": "None",
         "notes": "This lock was created by the ALZ Bicep Logging Module."
