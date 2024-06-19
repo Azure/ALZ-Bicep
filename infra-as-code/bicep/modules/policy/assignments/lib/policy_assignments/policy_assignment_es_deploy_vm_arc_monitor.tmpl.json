@@ -1,5 +1,5 @@
 {
-  "name": "Deploy-vmHybr-Monitor-24",
+  "name": "Deploy-vmHybr-Monitoring",
   "type": "Microsoft.Authorization/policyAssignments",
   "apiVersion": "2019-09-01",
   "properties": {

@@ -1,5 +1,5 @@
 {
-  "name": "Deploy-VMSS-Monitor-24",
+  "name": "Deploy-VMSS-Monitoring",
   "type": "Microsoft.Authorization/policyAssignments",
   "apiVersion": "2019-09-01",
   "properties": {
