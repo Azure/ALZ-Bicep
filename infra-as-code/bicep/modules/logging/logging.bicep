@@ -184,7 +184,7 @@ param parTelemetryOptOut bool = false
 // Customer Usage Attribution Id
 var varCuaid = 'f8087c67-cc41-46b2-994d-66e4b661860d'
 
-resource resUserAssignedManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
+resource resUserAssignedManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: parUserAssignedManagedIdentityName
   location: parUserAssignedManagedIdentityLocation
 }
