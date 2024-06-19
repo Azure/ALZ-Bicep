@@ -579,7 +579,7 @@ resource resDataCollectionRuleChangeTrackingLock 'Microsoft.Authorization/locks@
   }
 }
 
-resource resDataCollectionRuleMDFCSQL'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
+resource resDataCollectionRuleMDFCSQL'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
   name: parDataCollectionRuleMDFCSQLName
   location: parLogAnalyticsWorkspaceLocation
   properties: {
