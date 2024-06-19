@@ -682,6 +682,15 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdRes
   params: {}
 }
 
+output outDataCollectionRuleVMInsightsName string = resDataCollectionRuleVMInsights.name
+output outDataCollectionRuleVMInsightsId string = resDataCollectionRuleVMInsights.id
+
+output outDataCollectionRuleChangeTrackingName string = resDataCollectionRuleChangeTracking.name
+output outDataCollectionRuleChangeTrackingId string = resDataCollectionRuleVMInsights.id
+
+output outDataCollectionRuleMDFCSQLName string = resDataCollectionRuleMDFCSQL.name
+output outDataCollectionRuleMDFCSQLId string = resDataCollectionRuleMDFCSQL.id
+
 output outLogAnalyticsWorkspaceName string = resLogAnalyticsWorkspace.name
 output outLogAnalyticsWorkspaceId string = resLogAnalyticsWorkspace.id
 output outLogAnalyticsCustomerId string = resLogAnalyticsWorkspace.properties.customerId
