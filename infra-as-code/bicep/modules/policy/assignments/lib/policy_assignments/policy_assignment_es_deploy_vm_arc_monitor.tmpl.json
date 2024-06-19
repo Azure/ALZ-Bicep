@@ -8,7 +8,7 @@
     "notScopes": [],
     "parameters": {
       "dcrResourceId": {
-        "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/alz-logging/providers/Microsoft.Insights/dataCollectionRules/${parDataCollectionRuleVMInsightsResourceId}"
+        "value": "${parDataCollectionRuleVMInsightsResourceId}"
       },
       "enableProcessesAndDependencies": {
         "value": true
