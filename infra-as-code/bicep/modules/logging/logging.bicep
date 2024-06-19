@@ -308,7 +308,7 @@ resource resDataCollectionRuleVMInsightsLock 'Microsoft.Authorization/locks@2020
   }
 }
 
-resource resDataCollectionRuleChangeTracking 'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
+resource resDataCollectionRuleChangeTracking 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
   name: parDataCollectionRuleChangeTrackingName
   location: parLogAnalyticsWorkspaceLocation
   properties: {
