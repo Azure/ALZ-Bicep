@@ -1768,7 +1768,7 @@ module modPolicyAssignmentLzsDeployVmssMonitor '../../../policy/assignments/poli
 
 // Module - Policy Assignment - Deploy-MDFC-DefSQL-AMA
 module modPolicyAssignmentLzsmDeployMdfcDefSqlAma '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployMdfcDefSqlAma
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMdfcDefSqlAma.definitionId
