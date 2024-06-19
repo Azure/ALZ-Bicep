@@ -19,10 +19,7 @@
     },
     "parLogAnalyticsWorkspaceSolutions": {
       "value": [
-        "AntiMalware",
-        "Security",
-        "SecurityInsights",
-        "ServiceMap"
+        "SecurityInsights"
       ]
     },
     "parDataCollectionRuleVMInsightsName": {

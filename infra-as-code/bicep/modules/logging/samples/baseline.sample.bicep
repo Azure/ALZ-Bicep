@@ -26,10 +26,7 @@ module baseline_logging '../logging.bicep' = {
     parLogAnalyticsWorkspaceName: 'alz-log-analytics'
     parLogAnalyticsWorkspaceSkuName: 'PerGB2018'
     parLogAnalyticsWorkspaceSolutions: [
-      'AntiMalware'
-      'Security'
       'SecurityInsights'
-      'ServiceMap'
     ]
     parUserAssignedManagedIdentityName: 'alz-umi-identity'
     parAutomationAccountName: 'alz-automation-account'

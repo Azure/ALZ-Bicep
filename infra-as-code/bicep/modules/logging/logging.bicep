@@ -114,17 +114,11 @@ param parLogAnalyticsWorkspaceLock lockType = {
 }
 
 @allowed([
-  'AntiMalware'
-  'Security'
   'SecurityInsights'
-  'ServiceMap'
 ])
 @sys.description('Solutions that will be added to the Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceSolutions array = [
-  'AntiMalware'
-  'Security'
   'SecurityInsights'
-  'ServiceMap'
 ]
 
 @sys.description('''Resource Lock Configuration for Log Analytics Workspace Solutions.
