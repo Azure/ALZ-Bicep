@@ -175,9 +175,9 @@ Resource Lock Configuration for Log Analytics Workspace.
 
 Solutions that will be added to the Log Analytics Workspace.
 
-- Default value: `AntiMalware Security SecurityInsights ServiceMap`
+- Default value: `SecurityInsights`
 
-- Allowed values: `AntiMalware`, `Security`, `SecurityInsights`, `ServiceMap`
+- Allowed values: `SecurityInsights`
 
 ### parLogAnalyticsWorkspaceSolutionsLock
 
@@ -386,10 +386,7 @@ outAutomationAccountId | string |
         },
         "parLogAnalyticsWorkspaceSolutions": {
             "value": [
-                "AntiMalware",
-                "Security",
-                "SecurityInsights",
-                "ServiceMap"
+                "SecurityInsights"
             ]
         },
         "parLogAnalyticsWorkspaceSolutionsLock": {
