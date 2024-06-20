@@ -1,0 +1,37 @@
+{
+  "Deny-ML-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlLocalAuth')]"
+      }
+    }
+  },
+  "Deny-ML-Outdated-Os": {
+    "parameters": {
+      "effects": {
+        "value": "[[parameters('mlOutdatedOS')]"
+      }
+    }
+  },
+  "Deny-ML-User-Assigned-Identity": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlUserAssignedIdentity')]"
+      }
+    }
+  },
+  "Modify-ML-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlModifyLocalAuth')]"
+      }
+    }
+  },
+  "Modify-ML-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlModifyPublicNetworkAccess')]"
+      }
+    }
+  }
+}

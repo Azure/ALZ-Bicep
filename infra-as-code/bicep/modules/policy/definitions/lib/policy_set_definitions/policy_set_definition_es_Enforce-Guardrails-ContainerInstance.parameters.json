@@ -1,0 +1,9 @@
+{
+  "Deny-ContainerInstance-Vnet": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerInstanceVnet')]"
+      }
+    }
+  }
+}

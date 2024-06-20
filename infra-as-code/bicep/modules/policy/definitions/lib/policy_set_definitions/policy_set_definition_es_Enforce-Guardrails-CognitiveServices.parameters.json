@@ -1,0 +1,37 @@
+{
+  "Deny-CognitiveSearch-SKU": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveSearchSku')]"
+      }
+    }
+  },
+  "Deny-CongitiveSearch-LocalAuth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveSearchLocalAuth')]"
+      }
+    }
+  },
+  "Modify-Cognitive-Services-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesModifyPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Modify-CogntiveSearch-LocalAuth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('modifyCognitiveSearchLocalAuth')]"
+      }
+    }
+  },
+  "Modify-CogntiveSearch-PublicEndpoint": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('modifyCognitiveSearchPublicEndpoint')]"
+      }
+    }
+  }
+}

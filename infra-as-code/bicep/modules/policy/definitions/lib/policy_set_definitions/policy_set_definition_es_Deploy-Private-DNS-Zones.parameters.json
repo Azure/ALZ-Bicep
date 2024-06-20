@@ -29,6 +29,22 @@
       }
     }
   },
+  "DINE-Private-DNS-Azure-Arc": {
+    "parameters": {
+      "privateDnsZoneIdForGuestConfiguration": {
+        "value": "[[parameters('azureArcGuestconfigurationPrivateDnsZoneId')]"
+      },
+      "privateDnsZoneIdForHybridResourceProvider": {
+        "value": "[[parameters('azureArcHybridResourceProviderPrivateDnsZoneId')]"
+      },
+      "privateDnsZoneIdForKubernetesConfiguration": {
+        "value": "[[parameters('azureArcKubernetesConfigurationPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
   "DINE-Private-DNS-Azure-Automation-DSCHybrid": {
     "parameters": {
       "privateDnsZoneId": {
@@ -59,6 +75,16 @@
     "parameters": {
       "privateDnsZoneId": {
         "value": "[[parameters('azureBatchPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-BotService": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureBotServicePrivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"
@@ -279,6 +305,26 @@
       }
     }
   },
+  "DINE-Private-DNS-Azure-IoTCentral": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureIotCentralPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-IoTDeviceupdate": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureIotDeviceupdatePrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
   "DINE-Private-DNS-Azure-IoTHubs": {
     "parameters": {
       "privateDnsZoneId": {
@@ -303,6 +349,19 @@
     "parameters": {
       "privateDnsZoneId": {
         "value": "[[parameters('azureMachineLearningWorkspacePrivateDnsZoneId')]"
+      },
+      "secondPrivateDnsZoneId": {
+        "value": "[[parameters('azureMachineLearningWorkspaceSecondPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-ManagedGrafanaWorkspace": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureManagedGrafanaWorkspacePrivateDnsZoneId')]"
       },
       "effect": {
         "value": "[[parameters('effect')]"
@@ -420,6 +479,22 @@
       }
     }
   },
+  "DINE-Private-DNS-Azure-Site-Recovery-Backup": {
+    "parameters": {
+      "privateDnsZone-Backup": {
+        "value": "[[parameters('azureSiteRecoveryBackupPrivateDnsZoneID')]"
+      },
+      "privateDnsZone-Blob": {
+        "value": "[[parameters('azureSiteRecoveryBlobPrivateDnsZoneID')]"
+      },
+      "privateDnsZone-Queue": {
+        "value": "[[parameters('azureSiteRecoveryQueuePrivateDnsZoneID')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
   "DINE-Private-DNS-Azure-Storage-Blob": {
     "parameters": {
       "privateDnsZoneId": {
@@ -510,6 +585,26 @@
       }
     }
   },
+  "DINE-Private-DNS-Azure-Storage-Table": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureStorageTablePrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-Storage-Table-Secondary": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureStorageTableSecondaryPrivateDnsZoneId')]"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
   "DINE-Private-DNS-Azure-Synapse-Dev": {
     "parameters": {
       "privateDnsZoneId": {
@@ -543,6 +638,32 @@
       },
       "targetSubResource": {
         "value": "SqlOnDemand"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-VirtualDesktopHostpool": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureVirtualDesktopHostpoolPrivateDnsZoneId')]"
+      },
+      "privateEndpointGroupId": {
+        "value": "connection"
+      },
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "DINE-Private-DNS-Azure-VirtualDesktopWorkspace": {
+    "parameters": {
+      "privateDnsZoneId": {
+        "value": "[[parameters('azureVirtualDesktopWorkspacePrivateDnsZoneId')]"
+      },
+      "privateEndpointGroupId": {
+        "value": "feed"
       },
       "effect": {
         "value": "[[parameters('effect')]"

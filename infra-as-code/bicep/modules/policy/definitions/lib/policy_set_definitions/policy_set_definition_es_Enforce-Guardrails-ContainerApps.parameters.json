@@ -1,0 +1,16 @@
+{
+  "Deny-ContainerApp-Vnet-Injection": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerAppsVnetInjection')]"
+      }
+    }
+  },
+  "Deny-ContainerApps-Managed-Identity": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerAppsManagedIdentity')]"
+      }
+    }
+  }
+}

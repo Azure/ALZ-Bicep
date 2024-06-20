@@ -48,6 +48,13 @@
       }
     }
   },
+  "AsrVaultDenyPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('AsrVaultDenyEffect')]"
+      }
+    }
+  },
   "AutomationDenyPublicIP": {
     "parameters": {
       "effect": {
@@ -80,6 +87,167 @@
     "parameters": {
       "effect": {
         "value": "[[parameters('CosmosPublicIpDenyEffect')]"
+      }
+    }
+  },
+  "Deny-Adf-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adfPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-ADX-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adxPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-AppSlots-Public": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appSlotsPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-Cognitive-Services-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-Cognitive-Services-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-CognitiveSearch-PublicEndpoint": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveSearchPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-ContainerApps-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerAppsPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-EH-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventHubNamespacesPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-EventGrid-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventGridPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-EventGrid-Topic-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventGridTopicPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-Grafana-PublicNetworkAccess": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('grafanaPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-Hostpool-PublicNetworkAccess": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('avdHostPoolPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-KV-Hms-PublicNetwork": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultManagedHsmDisablePublicNetwork')]"
+      }
+    }
+  },
+  "Deny-LogicApp-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('logicAppPublicNetworkAccessEffect')]"
+      }
+    }
+  },
+  "Deny-ManagedDisk-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('managedDiskPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-MySql-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mySqlPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-PostgreSql-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('postgreSqlPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-Sb-PublicEndpoint": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('serviceBusDisablePublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-Sql-Managed-Public-Endpoint": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('sqlManagedPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-Storage-Public-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageAccountsPublicAccess')]"
+      }
+    }
+  },
+  "Deny-Synapse-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('synapsePublicNetworkAccess')]"
+      }
+    }
+  },
+  "Deny-Workspace-PublicNetworkAccess": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('avdWorkspacePublicNetworkAccess')]"
+      }
+    }
+  },
+  "FunctionAppSlotsDenyPublicIP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('FunctionAppSlotPublicIpDenyEffect')]"
       }
     }
   },

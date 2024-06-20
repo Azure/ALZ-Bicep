@@ -1,7 +1,7 @@
 {
   "name": "Deploy-Private-DNS-Zones",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "This policy initiative is a group of policies that ensures private endpoints to Azure PaaS services are integrated with Azure Private DNS zones.",
     "displayName": "Configure Azure PaaS services to use private DNS zones",
@@ -162,6 +162,9 @@
       },
       "azureMachineLearningWorkspacePrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureMachineLearningWorkspacePrivateDnsZoneId]"
+      },
+      "azureMachineLearningWorkspaceSecondPrivateDnsZoneId": {
+        "value": "${varPrivateDnsZonesFinalResourceIds}.azureMachineLearningWorkspaceSecondPrivateDnsZoneId]"
       },
       "azureServiceBusNamespacePrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureServiceBusNamespacePrivateDnsZoneId]"

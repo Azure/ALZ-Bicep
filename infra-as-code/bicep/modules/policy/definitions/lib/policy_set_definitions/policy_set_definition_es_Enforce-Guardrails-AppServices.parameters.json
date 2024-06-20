@@ -1,0 +1,135 @@
+{
+  "Deny-AppServ-FtpAuth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceDisableLocalAuthFtp')]"
+      }
+    }
+  },
+  "Deny-AppServ-Routing": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceRouting')]"
+      }
+    }
+  },
+  "Deny-AppServ-SkuPl": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceSkuPl')]"
+      }
+    }
+  },
+  "Deny-AppService-Byoc": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceByoc')]"
+      }
+    }
+  },
+  "Deny-AppService-Latest-Version": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceEnvLatestVersion')]"
+      }
+    }
+  },
+  "Deny-AppService-Rfc": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceRfc')]"
+      }
+    }
+  },
+  "Deny-AppService-Slots-Remote-Debugging": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceAppSlotsRemoteDebugging')]"
+      }
+    }
+  },
+  "Deny-AppService-Vnet-Routing": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceAppsVnetRouting')]"
+      }
+    }
+  },
+  "Deny-AppServiceApps-Rfc": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceAppsRfc')]"
+      }
+    }
+  },
+  "Dine-AppService-Apps-Remote-Debugging": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceAppsRemoteDebugging')]"
+      }
+    }
+  },
+  "DINE-AppService-Debugging": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('functionAppDebugging')]"
+      }
+    }
+  },
+  "DINE-AppService-LocalAuth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceDisableLocalAuth')]"
+      }
+    }
+  },
+  "DINE-AppService-ScmAuth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceScmAuth')]"
+      }
+    }
+  },
+  "DINE-FuncApp-Debugging": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('functionAppDebugging')]"
+      }
+    }
+  },
+  "Modify-AppService-App-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceAppModifyPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Modify-AppService-Apps-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceAppsModifyPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Modify-AppService-Https": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appServiceAppHttps')]"
+      }
+    }
+  },
+  "Modify-Function-Apps-Slots-Https": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('functionAppSlotsModifyHttps')]"
+      }
+    }
+  },
+  "Modify-Function-Apps-Slots-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('functionAppSlotsModifyPublicNetworkAccess')]"
+      }
+    }
+  }
+}

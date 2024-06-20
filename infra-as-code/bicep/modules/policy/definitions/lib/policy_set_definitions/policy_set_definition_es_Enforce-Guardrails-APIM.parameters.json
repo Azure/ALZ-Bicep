@@ -1,0 +1,79 @@
+{
+  "Deny-Api-subscription-scope": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('apiSubscriptionScope')]"
+      }
+    }
+  },
+  "Deny-Apim-Authn": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('apimCallApiAuthn')]"
+      }
+    }
+  },
+  "Deny-Apim-Cert-Validation": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('apimApiBackendCertValidation')]"
+      }
+    }
+  },
+  "Deny-Apim-Direct-Endpoint": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('apimDirectApiEndpoint')]"
+      }
+    }
+  },
+  "Deny-Apim-Protocols": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('apimEncryptedProtocols')]"
+      }
+    }
+  },
+  "Deny-Apim-Sku-Vnet": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('apimSkuVnet')]"
+      }
+    }
+  },
+  "Deny-APIM-TLS": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('apimTls')]"
+      }
+    }
+  },
+  "Deny-Apim-Version": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('minimumApiVersion')]"
+      }
+    }
+  },
+  "Deny-Apim-without-Kv": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('apimSecrets')]"
+      }
+    }
+  },
+  "Deny-Apim-without-Vnet": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('apimVnetUsage')]"
+      }
+    }
+  },
+  "Dine-Apim-Public-NetworkAccess": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('apimDisablePublicNetworkAccess')]"
+      }
+    }
+  }
+}

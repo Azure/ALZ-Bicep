@@ -15,6 +15,10 @@ parLandingZoneChildrenMgAlzDefaultsEnable | No       | Corp & Online Management 
 parLandingZoneMgConfidentialEnable | No       | Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group have been deployed. If set to false, policies will not try to be assigned to Confidential Corp & Confidential Online Management Groups
 parLogAnalyticsWorkSpaceAndAutomationAccountLocation | No       | The region where the Log Analytics Workspace & Automation Account are deployed.
 parLogAnalyticsWorkspaceResourceId | No       | Log Analytics Workspace Resource ID.
+parDataCollectionRuleVMInsightsResourceId | No       | Data Collection Rule VM Insights Resource ID.
+parDataCollectionRuleChangeTrackingResourceId | No       | Data Collection Rule Change Tracking Resource ID.
+parDataCollectionRuleMDFCSQLResourceId | No       | Data Collection Rule MDFC SQL Resource ID.
+parUserAssignedManagedIdentityResourceId | No       | User Assigned Managed Identity Resource ID.
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
 parAutomationAccountName | No       | Automation account name.
 parMsDefenderForCloudEmailSecurityContact | No       | An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.
@@ -108,6 +112,30 @@ The region where the Log Analytics Workspace & Automation Account are deployed.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Log Analytics Workspace Resource ID.
+
+### parDataCollectionRuleVMInsightsResourceId
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Data Collection Rule VM Insights Resource ID.
+
+### parDataCollectionRuleChangeTrackingResourceId
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Data Collection Rule Change Tracking Resource ID.
+
+### parDataCollectionRuleMDFCSQLResourceId
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Data Collection Rule MDFC SQL Resource ID.
+
+### parUserAssignedManagedIdentityResourceId
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+User Assigned Managed Identity Resource ID.
 
 ### parLogAnalyticsWorkspaceLogRetentionInDays
 
@@ -239,6 +267,18 @@ Set Parameter to true to Opt-out of deployment telemetry
             "value": "eastus"
         },
         "parLogAnalyticsWorkspaceResourceId": {
+            "value": ""
+        },
+        "parDataCollectionRuleVMInsightsResourceId": {
+            "value": ""
+        },
+        "parDataCollectionRuleChangeTrackingResourceId": {
+            "value": ""
+        },
+        "parDataCollectionRuleMDFCSQLResourceId": {
+            "value": ""
+        },
+        "parUserAssignedManagedIdentityResourceId": {
             "value": ""
         },
         "parLogAnalyticsWorkspaceLogRetentionInDays": {

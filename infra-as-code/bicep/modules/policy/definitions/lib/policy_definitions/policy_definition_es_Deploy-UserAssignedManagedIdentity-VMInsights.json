@@ -6,12 +6,13 @@
   "properties": {
     "policyType": "Custom",
     "mode": "Indexed",
-    "displayName": "Deploy User Assigned Managed Identity for VM Insights",
-    "description": "Create and assign a User Assigned Managed Identity to Virtual Machines for VM Insights",
+    "displayName": "[Deprecated]: Deploy User Assigned Managed Identity for VM Insights",
+    "description": "Policy is deprecated as it's no longer required. User-Assigned Management Identity is now centralized and deployed by Azure Landing Zones to the Management Subscription.",
     "metadata": {
-      "version": "1.0.0",
+      "version": "1.0.0-deprecated",
       "category": "Managed Identity",
       "source": "https://github.com/Azure/Enterprise-Scale/",
+      "deprecated": true,
       "alzCloudEnvironments": [
         "AzureCloud",
         "AzureChinaCloud",

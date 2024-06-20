@@ -1,0 +1,195 @@
+{
+  "Deny-AppGw-Without-Tls": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appGwTlsVersion')]"
+      }
+    }
+  },
+  "Deny-AppGw-Without-Waf": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('appGwWaf')]"
+      }
+    }
+  },
+  "Deny-FW-AllIDPSS": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('afwEnableAllIDPSSignatureRules')]"
+      }
+    }
+  },
+  "Deny-FW-EmpIDPSBypass": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('afwEmptyIDPSBypassList')]"
+      }
+    }
+  },
+  "Deny-FW-TLS-AllApp": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('afwEnbaleTlsForAllAppRules')]"
+      }
+    }
+  },
+  "Deny-FW-TLS-Inspection": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('afwEnableTlsInspection')]"
+      }
+    }
+  },
+  "Deny-Ip-Forwarding": {
+    "parameters": {}
+  },
+  "Deny-Mgmt-From-Internet": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('denyMgmtFromInternet')]"
+      },
+      "ports": {
+        "value": "[[parameters('denyMgmtFromInternetPorts')]"
+      }
+    }
+  },
+  "Deny-Nsg-GW-subnet": {
+    "parameters": {}
+  },
+  "Deny-Subnet-with-Service-Endpoints": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('subnetServiceEndpoint')]"
+      }
+    }
+  },
+  "Deny-Subnet-Without-NSG": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('subnetNsg')]"
+      }
+    }
+  },
+  "Deny-Subnet-Without-Udr": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('subnetUdr')]"
+      }
+    }
+  },
+  "Deny-vNic-Pip": {
+    "parameters": {}
+  },
+  "Deny-VPN-AzureAD": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('vpnAzureAD')]"
+      }
+    }
+  },
+  "Deny-Waf-Afd-Enabled": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('wafAfdEnabled')]"
+      }
+    }
+  },
+  "Deny-Waf-AppGw-mode": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('wafModeAppGw')]"
+      },
+      "modeRequirement": {
+        "value": "[[parameters('wafModeAppGwRequirement')]"
+      }
+    }
+  },
+  "Deny-Waf-Fw-rules": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('wafFwRules')]"
+      }
+    }
+  },
+  "Deny-Waf-IDPS": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('afwEnableIDPS')]"
+      }
+    }
+  },
+  "Deny-Waf-mode": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('wafMode')]"
+      },
+      "modeRequirement": {
+        "value": "[[parameters('wafModeRequirement')]"
+      }
+    }
+  },
+  "Modify-Nsg": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('modifyNsg')]"
+      },
+      "nsgRuleName": {
+        "value": "[[parameters('modifyNsgRuleName')]"
+      },
+      "nsgRulePriority": {
+        "value": "[[parameters('modifyNsgRulePriority')]"
+      },
+      "nsgRuleDirection": {
+        "value": "[[parameters('modifyNsgRuleDirection')]"
+      },
+      "nsgRuleAccess": {
+        "value": "[[parameters('modifyNsgRuleAccess')]"
+      },
+      "nsgRuleProtocol": {
+        "value": "[[parameters('modifyNsgRuleProtocol')]"
+      },
+      "nsgRuleSourceAddressPrefix": {
+        "value": "[[parameters('modifyNsgRuleSourceAddressPrefix')]"
+      },
+      "nsgRuleSourcePortRange": {
+        "value": "[[parameters('modifyNsgRuleSourcePortRange')]"
+      },
+      "nsgRuleDestinationAddressPrefix": {
+        "value": "[[parameters('modifyNsgRuleDestinationAddressPrefix')]"
+      },
+      "nsgRuleDestinationPortRange": {
+        "value": "[[parameters('modifyNsgRuleDestinationPortRange')]"
+      },
+      "nsgRuleDescription": {
+        "value": "[[parameters('modifyNsgRuleDescription')]"
+      }
+    }
+  },
+  "Modify-Udr": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('modifyUdr')]"
+      },
+      "nextHopIpAddress": {
+        "value": "[[parameters('modifyUdrNextHopIpAddress')]"
+      },
+      "nextHopType": {
+        "value": "[[parameters('modifyUdrNextHopType')]"
+      },
+      "addressPrefix": {
+        "value": "[[parameters('modifyUdrAddressPrefix')]"
+      }
+    }
+  },
+  "Modify-vNet-DDoS": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('vnetModifyDdos')]"
+      },
+      "ddosPlan": {
+        "value": "[[parameters('ddosPlanResourceId')]"
+      }
+    }
+  }
+}
