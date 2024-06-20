@@ -173,7 +173,7 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentPlatformDeployVmMonitor: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVmMonitor-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformDeployVmssMonitor: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVmssMonitor-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformDeployMdfcDefSqlAma: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyDeleteUamiAma-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolicyAssignmentPlatformDenyDeleteUamiAma: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deny-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentPlatformDenyDeleteUAMIAMA: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deny-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformEnforceGrKeyVault: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceGrKeyVault-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformEnforceAsr: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployEnforceBackup-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformEnforceAumCheckUpdates: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployEnforceAumCheckUpdates-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -447,11 +447,10 @@ var varPolicyAssignmentDeployMdfcDefSqlAma = {
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_mdfc_sql-ama.tmpl.json')
 }
 
-var varPolicyAssignmentDenyDeleteUamiAma = {
-  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/DenyAction-DeleteResources'
-  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_deleteuamiama.tmlp.json')
+var varPolicyAssignmentDenyActionDeleteUAMIAMA = {
+	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/DenyAction-DeleteResources'
+	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_deleteuamiama.tmlp.json')
 }
-
 
 var varPolicyAssignmentEnableDDoSVNET = {
   definitionId: '/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d'
@@ -1104,17 +1103,17 @@ module modPolicyAssignmentPlatformDeployMdfcDefSqlAma '../../../policy/assignmen
   }
 }
 
-module modPolicyAssignmentPlatformDenyDeleteUamiAma '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyDeleteUamiAma.libDefinition.name)) {
+module modPolicyAssignmentPlatformDenyDeleteUAMIAMA '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.platform)
-  name: varModuleDeploymentNames.modPolicyAssignmentPlatformDenyDeleteUamiAma
+  name: varModuleDeploymentNames.modPolicyAssignmentPlatformDenyDeleteUAMIAMA
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyDeleteUamiAma.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDenyDeleteUamiAma.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyDeleteUamiAma.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDenyDeleteUamiAma.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDenyDeleteUamiAma.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyDeleteUamiAma.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDenyDeleteUamiAma.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyActionDeleteUAMIAMA.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.properties.enforcementMode
     parPolicyAssignmentParameterOverrides: {
       resourceName: {
         value: varUserAssignedManagedIdentityResourceName
