@@ -1,7 +1,7 @@
 {
   "name": "Deploy-MDFC-DefSQL-AMA",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Microsoft Defender for SQL collects events from the agents and uses them to provide security alerts and tailored hardening tasks (recommendations).",
     "displayName": "Enable Defender for SQL on SQL VMs and Arc-enabled SQL Servers",

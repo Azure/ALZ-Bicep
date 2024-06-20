@@ -1,7 +1,7 @@
 {
   "name": "Enforce-ASR",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "This initiative assignment enables recommended ALZ guardrails for Azure Recovery Services.",
     "displayName": "Enforce enhanced recovery and backup policies",

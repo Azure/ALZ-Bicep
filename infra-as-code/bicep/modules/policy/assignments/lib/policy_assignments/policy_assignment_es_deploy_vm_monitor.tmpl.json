@@ -1,7 +1,7 @@
 {
   "name": "Deploy-VM-Monitoring",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Enable Azure Monitor for the virtual machines (VMs) in the specified scope (management group, subscription or resource group). Takes Log Analytics workspace as parameter.",
     "displayName": "Enable Azure Monitor for VMs",

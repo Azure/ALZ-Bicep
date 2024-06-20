@@ -1,7 +1,7 @@
 {
   "name": "Deploy-Diag-Logs",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Resource logs should be enabled to track activities and events that take place on your resources and give you visibility and insights into any changes that occur. This initiative deploys diagnostic setting using the allLogs category group to route logs to an Event Hub for all supported resources.",
     "displayName": "Enable allLogs category group resource logging for supported resources to Log Analytics",

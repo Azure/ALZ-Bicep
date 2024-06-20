@@ -1,7 +1,7 @@
 {
   "name": "Deploy-MDEndpointsAMA",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Configure the multiple Microsoft Defender for Endpoint integration settings with Microsoft Defender for Cloud (WDATP, WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW, WDATP_UNIFIED_SOLUTION etc.). See: https://learn.microsoft.com/azure/defender-for-cloud/integration-defender-for-endpoint for more information.",
     "displayName": "Configure multiple Microsoft Defender for Endpoint integration settings with Microsoft Defender for Cloud",

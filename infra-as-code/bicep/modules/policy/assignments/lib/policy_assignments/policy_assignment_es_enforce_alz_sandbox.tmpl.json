@@ -1,7 +1,7 @@
 {
   "name": "Enforce-ALZ-Sandbox",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "This initiative will help enforce and govern subscriptions that are placed within the Sandobx Management Group. See https://aka.ms/alz/policies for more information.",
     "displayName": "Enforce ALZ Sandbox Guardrails",
@@ -11,11 +11,11 @@
         "value": [
           "microsoft.network/expressroutecircuits",
           "microsoft.network/expressroutegateways",
-          "microsoft.network/expressrouteports",                            
+          "microsoft.network/expressrouteports",
           "microsoft.network/virtualwans",
           "microsoft.network/virtualhubs",
           "microsoft.network/vpngateways",
-          "microsoft.network/p2svpngateways",                            
+          "microsoft.network/p2svpngateways",
           "microsoft.network/vpnsites",
           "microsoft.network/virtualnetworkgateways"
         ]

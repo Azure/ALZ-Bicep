@@ -1,7 +1,7 @@
 {
   "name": "Audit-Location-Match",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Audit resource location matches resource group location",
     "displayName": "Audit that the resource location matches its resource group location",

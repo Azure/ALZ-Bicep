@@ -1,7 +1,7 @@
 {
   "name": "Audit-TrustedLaunch",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Trusted Launch improves security of a Virtual Machine which requires VM SKU, OS Disk & OS Image to support it (Gen 2). To learn more about Trusted Launch, visit https://aka.ms/trustedlaunch.",
     "displayName": "Audit virtual machines for Trusted Launch support",
