@@ -682,6 +682,9 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdRes
   params: {}
 }
 
+output outUserAssignedManagedIdentityId string = resUserAssignedManagedIdentity.id
+output outUserAssignedManagedIdentityPrincipalId string = resUserAssignedManagedIdentity.properties.principalId
+
 output outDataCollectionRuleVMInsightsName string = resDataCollectionRuleVMInsights.name
 output outDataCollectionRuleVMInsightsId string = resDataCollectionRuleVMInsights.id
 
