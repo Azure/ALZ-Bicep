@@ -132,6 +132,8 @@ var varLogAnalyticsWorkspaceResourceGroupName = split(parLogAnalyticsWorkspaceRe
 
 var varLogAnalyticsWorkspaceSubscription = split(parLogAnalyticsWorkspaceResourceId, '/')[2]
 
+var varUserAssignedManagedIdentityResourceName = split(parUserAssignedManagedIdentityResourceId, '/')[8]
+
 // Customer Usage Attribution Id Telemetry
 var varCuaid = '98cef979-5a6b-403b-83c7-10c8f04ac9a2'
 
@@ -170,7 +172,8 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentPlatformDeployVmArcMonitor: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVmArcMonitor-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformDeployVmMonitor: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVmMonitor-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformDeployVmssMonitor: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVmssMonitor-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolicyAssignmentPlatformDeployMdfcDefSqlAma: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployMdfcDefSqlAma-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentPlatformDeployMdfcDefSqlAma: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyDeleteUamiAma-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentPlatformDenyDeleteUamiAma: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deny-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformEnforceGrKeyVault: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceGrKeyVault-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformEnforceAsr: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployEnforceBackup-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformEnforceAumCheckUpdates: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployEnforceAumCheckUpdates-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -443,6 +446,12 @@ var varPolicyAssignmentDeployMdfcDefSqlAma = {
   definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/de01d381-bae9-4670-8870-786f89f49e26'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_mdfc_sql-ama.tmpl.json')
 }
+
+var varPolicyAssignmentDenyDeleteUamiAma = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/DenyAction-DeleteResources'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_deleteuamiama.tmlp.json')
+}
+
 
 var varPolicyAssignmentEnableDDoSVNET = {
   definitionId: '/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d'
@@ -1091,6 +1100,26 @@ module modPolicyAssignmentPlatformDeployMdfcDefSqlAma '../../../policy/assignmen
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
     ]
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+module modPolicyAssignmentPlatformDenyDeleteUamiAma '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyDeleteUamiAma.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModuleDeploymentNames.modPolicyAssignmentPlatformDenyDeleteUamiAma
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyDeleteUamiAma.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDenyDeleteUamiAma.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDenyDeleteUamiAma.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDenyDeleteUamiAma.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDenyDeleteUamiAma.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDenyDeleteUamiAma.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDenyDeleteUamiAma.libDefinition.properties.enforcementMode
+    parPolicyAssignmentParameterOverrides: {
+      resourceName: {
+        value: varUserAssignedManagedIdentityResourceName
+      }
+    }
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
