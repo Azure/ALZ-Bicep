@@ -53,6 +53,11 @@ var varPolicyAssignmentDenyDataBVnet = {
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_databricks_vnet.tmpl.json')
 }
 
+var varPolicyAssignmentDenyActionDeleteUAMIAMA = {
+	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/DenyAction-DeleteResources'
+	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_deleteuamiama.tmlp.json')
+}
+
 var varPolicyAssignmentEnforceAKSHTTPS = {
 	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_http_ingress_aks.tmpl.json')
@@ -233,7 +238,7 @@ var varPolicyAssignmentDeployvmArcChangeTrack = {
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vm_arc_changetrack.tmpl.json')
 }
 
-var varPolicyAssignmentDeployvmHybrMonitor24 = {
+var varPolicyAssignmentDeployvmHybrMonitoring = {
 	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/2b00397d-c309-49c4-aa5a-f0b2c5bc6321'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vm_arc_monitor.tmpl.json')
 }
@@ -248,7 +253,7 @@ var varPolicyAssignmentDeployVMChangeTrack = {
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vm_changetrack.tmpl.json')
 }
 
-var varPolicyAssignmentDeployVMMonitor24 = {
+var varPolicyAssignmentDeployVMMonitoring = {
 	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/924bfe3a-762f-40e7-86dd-5c8b95eb09e6'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vm_monitor.tmpl.json')
 }
@@ -258,7 +263,7 @@ var varPolicyAssignmentDeployVMSSChangeTrack = {
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vmss_changetrack.tmpl.json')
 }
 
-var varPolicyAssignmentDeployVMSSMonitor24 = {
+var varPolicyAssignmentDeployVMSSMonitoring = {
 	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/f5bf694c-cca7-4033-b883-3a23327d5485'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vmss_monitor.tmpl.json')
 }
