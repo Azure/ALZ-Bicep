@@ -686,7 +686,7 @@ output outDataCollectionRuleVMInsightsName string = resDataCollectionRuleVMInsig
 output outDataCollectionRuleVMInsightsId string = resDataCollectionRuleVMInsights.id
 
 output outDataCollectionRuleChangeTrackingName string = resDataCollectionRuleChangeTracking.name
-output outDataCollectionRuleChangeTrackingId string = resDataCollectionRuleVMInsights.id
+output outDataCollectionRuleChangeTrackingId string = resDataCollectionRuleChangeTracking.id
 
 output outDataCollectionRuleMDFCSQLName string = resDataCollectionRuleMDFCSQL.name
 output outDataCollectionRuleMDFCSQLId string = resDataCollectionRuleMDFCSQL.id
