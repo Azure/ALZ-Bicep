@@ -17,8 +17,8 @@ type virtualWanOptionsType = ({
   @sys.description('The Virtual WAN Hub location.')
   parHubLocation: string
 
-  @sys.description('The Virtual WAN Hub routing preference. The allowed values are `ASN`, `VpnGateway`, `ExpressRoute`.')
-  parHubRoutingPreference: ('ExpressRoute' | 'VpnGateway' | 'ASN')
+  @sys.description('The Virtual WAN Hub routing preference. The allowed values are `ASPath`, `VpnGateway`, `ExpressRoute`.')
+  parHubRoutingPreference: ('ExpressRoute' | 'VpnGateway' | 'ASPath')
 
   @sys.description('The Virtual WAN Hub capacity. The value should be between 2 to 50.')
   @minValue(2)
@@ -121,7 +121,7 @@ param parVirtualWanHubDefaultRouteName string = 'default-to-azfw'
 - `parAzFirewallEnabled` - Switch to enable/disable Azure Firewall deployment on the respective Virtual WAN Hub.
 - `parVirtualHubAddressPrefix` - The IP address range in CIDR notation for the vWAN virtual Hub to use.
 - `parHubLocation` - The Virtual WAN Hub location.
-- `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASN`, `VpnGateway`, `ExpressRoute`.
+- `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASPath`, `VpnGateway`, `ExpressRoute`.
 - `parVirtualRouterAutoScaleConfiguration` - The Virtual WAN Hub capacity. The value should be between 2 to 50.
 - `parVirtualHubRoutingIntentDestinations` - The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.
 
