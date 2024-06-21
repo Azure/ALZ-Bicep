@@ -24,7 +24,7 @@ jobs:
           targetType: "inline"
           script: |
             az cloud set --name AzureChinaCloud
-            az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+            az login --service-principal --username $(azclilogin) --tenant $(azclitenant)
 
       - task: Bash@3
         displayName: Az CLI Create Resource Group for PR
