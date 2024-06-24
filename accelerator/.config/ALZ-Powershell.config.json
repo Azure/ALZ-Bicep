@@ -12,6 +12,7 @@
       "templateFilePath": "./infra-as-code/bicep/modules/managementGroups/managementGroupsScopeEscape.bicep",
       "templateParametersFilePath": "./config/custom-parameters/managementGroups.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json",
+      "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup"
     },
     {
@@ -19,7 +20,7 @@
       "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
       "templateParametersFilePath": "./config/custom-parameters/resourceGroupLoggingAndSentinel.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
-      "subscriptionType": "management",
+      "subscriptionId": "MANAGEMENT_SUBSCRIPTION_ID",
       "deploymentType": "subscription"
     },
     {
@@ -27,14 +28,16 @@
       "templateFilePath": "./infra-as-code/bicep/modules/logging/logging.bicep",
       "templateParametersFilePath": "./config/custom-parameters/logging.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json",
-      "subscriptionType": "management",
-      "deploymentType": "subscription"
+      "subscriptionId": "MANAGEMENT_SUBSCRIPTION_ID",
+      "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
+      "deploymentType": "resourceGroup"
     },
     {
       "displayName": "Custom Policy Definitions Deployment",
       "templateFilePath": "./infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep",
       "templateParametersFilePath": "./config/custom-parameters/customPolicyDefinitions.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json",
+      "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup"
     },
     {
@@ -42,6 +45,7 @@
       "templateFilePath": "./infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep",
       "templateParametersFilePath": "./config/custom-parameters/customRoleDefinitions.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json",
+      "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup"
     },
     {
@@ -49,6 +53,7 @@
       "templateFilePath": "./infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep",
       "templateParametersFilePath": "./config/custom-parameters/mgDiagSettingsAll.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json",
+      "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup"
     },
     {
@@ -56,6 +61,7 @@
       "templateFilePath": "./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep",
       "templateParametersFilePath": "./config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json",
+      "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup"
     },
     {
@@ -63,6 +69,7 @@
       "templateFilePath": "./infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep",
       "templateParametersFilePath": "./config/custom-parameters/subPlacementAll.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json",
+      "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup"
     },
     {
@@ -70,7 +77,7 @@
       "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
       "templateParametersFilePath": "./config/custom-parameters/resourceGroupConnectivity.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
-      "subscriptionType": "connectivity",
+      "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
       "deploymentType": "subscription"
     },
     {
@@ -78,8 +85,8 @@
       "templateFilePath": "./infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep",
       "templateParametersFilePath": "./config/custom-parameters/hubNetworking.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json",
-      "subscriptionType": "connectivity",
-      "resourceGroupType": "connectivity",
+      "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+      "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
       "networkType": "hubNetworking",
       "deploymentType": "resourceGroup"
     },
@@ -88,8 +95,8 @@
       "templateFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep",
       "templateParametersFilePath": "./config/custom-parameters/vwanConnectivity.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json",
-      "subscriptionType": "connectivity",
-      "resourceGroupType": "connectivity",
+      "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+      "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
       "networkType": "vwanConnectivity",
       "deploymentType": "resourceGroup"
     }
@@ -485,6 +492,26 @@
       "Value": "",
       "DefaultValue": "live",
       "Valid": "^[a-zA-Z0-9]{2,10}$"
+    },
+    "networkType": {
+      "Type": "UserInput",
+      "Description": "The type of networking to deploy. (e.g. 'hubNetworking', 'vwanConnectivity')",
+      "Value": "",
+      "DefaultValue": "hubNetworking",
+      "Targets": [
+        {
+          "Name": "NETWORK_TYPE",
+          "Destination": "Environment",
+          "Required": true
+        }
+      ],
+      "AllowedValues": {
+        "Display": true,
+        "Values": [
+          "hubNetworking",
+          "vwanConnectivity"
+        ]
+      }
     },
     "IdentitySubscriptionId": {
       "Type": "UserInput",
