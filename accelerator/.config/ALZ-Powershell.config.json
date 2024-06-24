@@ -13,7 +13,8 @@
       "templateParametersFilePath": "./config/custom-parameters/managementGroups.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json",
       "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
-      "deploymentType": "managementGroup"
+      "deploymentType": "managementGroup",
+      "order": 1
     },
     {
       "displayName": "Logging and Sentinel Resource Group Deployment",
@@ -21,7 +22,8 @@
       "templateParametersFilePath": "./config/custom-parameters/resourceGroupLoggingAndSentinel.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
       "subscriptionId": "MANAGEMENT_SUBSCRIPTION_ID",
-      "deploymentType": "subscription"
+      "deploymentType": "subscription",
+      "order": 2
     },
     {
       "displayName": "Logging and Sentinel Deployment",
@@ -30,7 +32,8 @@
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json",
       "subscriptionId": "MANAGEMENT_SUBSCRIPTION_ID",
       "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
-      "deploymentType": "resourceGroup"
+      "deploymentType": "resourceGroup",
+      "order": 3
     },
     {
       "displayName": "Custom Policy Definitions Deployment",
@@ -38,7 +41,8 @@
       "templateParametersFilePath": "./config/custom-parameters/customPolicyDefinitions.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json",
       "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
-      "deploymentType": "managementGroup"
+      "deploymentType": "managementGroup",
+      "order": 4
     },
     {
       "displayName": "Custom Role Definitions Deployment",
@@ -46,7 +50,8 @@
       "templateParametersFilePath": "./config/custom-parameters/customRoleDefinitions.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json",
       "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
-      "deploymentType": "managementGroup"
+      "deploymentType": "managementGroup",
+      "order": 5
     },
     {
       "displayName": "Custom Management Group Diagnostic Settings",
@@ -54,7 +59,8 @@
       "templateParametersFilePath": "./config/custom-parameters/mgDiagSettingsAll.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json",
       "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
-      "deploymentType": "managementGroup"
+      "deploymentType": "managementGroup",
+      "order": 6
     },
     {
       "displayName": "Built-in and Custom Policy Assignments Deployment",
@@ -62,7 +68,8 @@
       "templateParametersFilePath": "./config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json",
       "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
-      "deploymentType": "managementGroup"
+      "deploymentType": "managementGroup",
+      "order": 7
     },
     {
       "displayName": "Deploy Subscription Placement",
@@ -70,7 +77,8 @@
       "templateParametersFilePath": "./config/custom-parameters/subPlacementAll.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json",
       "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
-      "deploymentType": "managementGroup"
+      "deploymentType": "managementGroup",
+      "order": 8
     },
     {
       "displayName": "Connectivity Resource Group Deployment",
@@ -78,7 +86,8 @@
       "templateParametersFilePath": "./config/custom-parameters/resourceGroupConnectivity.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
       "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
-      "deploymentType": "subscription"
+      "deploymentType": "subscription",
+      "order": 9
     },
     {
       "displayName": "Hub (Hub-and-Spoke) Deployment",
@@ -88,7 +97,8 @@
       "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
       "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
       "networkType": "hubNetworking",
-      "deploymentType": "resourceGroup"
+      "deploymentType": "resourceGroup",
+      "order": 10
     },
     {
       "displayName": "Hub (VWAN) Deployment",
@@ -98,7 +108,8 @@
       "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
       "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
       "networkType": "vwanConnectivity",
-      "deploymentType": "resourceGroup"
+      "deploymentType": "resourceGroup",
+      "order": 10
     }
   ],
 
