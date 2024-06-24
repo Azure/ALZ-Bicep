@@ -1,4 +1,100 @@
 {
+  "starter_modules": {
+    "complete": {
+      "location": ".",
+      "short_name": "Complete",
+      "description": "Complete Azure Landing Zones Deployment"
+    }
+  },
+  "deployment_files": [
+    {
+      "displayName": "Management Groups Deployment",
+      "templateFilePath": "./infra-as-code/bicep/modules/managementGroups/managementGroupsScopeEscape.bicep",
+      "templateParametersFilePath": "./config/custom-parameters/managementGroups.parameters.all.json",
+      "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json",
+      "deploymentType": "managementGroup"
+    },
+    {
+      "displayName": "Logging and Sentinel Resource Group Deployment",
+      "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
+      "templateParametersFilePath": "./config/custom-parameters/resourceGroupLoggingAndSentinel.parameters.all.json",
+      "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+      "subscriptionType": "management",
+      "deploymentType": "subscription"
+    },
+    {
+      "displayName": "Logging and Sentinel Deployment",
+      "templateFilePath": "./infra-as-code/bicep/modules/logging/logging.bicep",
+      "templateParametersFilePath": "./config/custom-parameters/logging.parameters.all.json",
+      "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json",
+      "subscriptionType": "management",
+      "deploymentType": "subscription"
+    },
+    {
+      "displayName": "Custom Policy Definitions Deployment",
+      "templateFilePath": "./infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep",
+      "templateParametersFilePath": "./config/custom-parameters/customPolicyDefinitions.parameters.all.json",
+      "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json",
+      "deploymentType": "managementGroup"
+    },
+    {
+      "displayName": "Custom Role Definitions Deployment",
+      "templateFilePath": "./infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep",
+      "templateParametersFilePath": "./config/custom-parameters/customRoleDefinitions.parameters.all.json",
+      "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json",
+      "deploymentType": "managementGroup"
+    },
+    {
+      "displayName": "Custom Management Group Diagnostic Settings",
+      "templateFilePath": "./infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep",
+      "templateParametersFilePath": "./config/custom-parameters/mgDiagSettingsAll.parameters.all.json",
+      "templateParametersSourceFilePath": "./infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json",
+      "deploymentType": "managementGroup"
+    },
+    {
+      "displayName": "Built-in and Custom Policy Assignments Deployment",
+      "templateFilePath": "./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep",
+      "templateParametersFilePath": "./config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json",
+      "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json",
+      "deploymentType": "managementGroup"
+    },
+    {
+      "displayName": "Deploy Subscription Placement",
+      "templateFilePath": "./infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep",
+      "templateParametersFilePath": "./config/custom-parameters/subPlacementAll.parameters.all.json",
+      "templateParametersSourceFilePath": "./infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json",
+      "deploymentType": "managementGroup"
+    },
+    {
+      "displayName": "Connectivity Resource Group Deployment",
+      "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
+      "templateParametersFilePath": "./config/custom-parameters/resourceGroupConnectivity.parameters.all.json",
+      "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+      "subscriptionType": "connectivity",
+      "deploymentType": "subscription"
+    },
+    {
+      "displayName": "Hub (Hub-and-Spoke) Deployment",
+      "templateFilePath": "./infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep",
+      "templateParametersFilePath": "./config/custom-parameters/hubNetworking.parameters.all.json",
+      "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json",
+      "subscriptionType": "connectivity",
+      "resourceGroupType": "connectivity",
+      "networkType": "hubNetworking",
+      "deploymentType": "resourceGroup"
+    },
+    {
+      "displayName": "Hub (VWAN) Deployment",
+      "templateFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep",
+      "templateParametersFilePath": "./config/custom-parameters/vwanConnectivity.parameters.all.json",
+      "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json",
+      "subscriptionType": "connectivity",
+      "resourceGroupType": "connectivity",
+      "networkType": "vwanConnectivity",
+      "deploymentType": "resourceGroup"
+    }
+  ],
+
   "config_files": [
     {
       "source": "infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json",
@@ -259,6 +355,11 @@
         {
           "name": "TOP_LEVEL_MG_PREFIX",
           "destination": "Environment"
+        },
+        {
+          "name": "MANAGEMENT_GROUP_ID",
+          "destination": "Environment",
+          "required": true
         }
       ],
       "Value": "",
@@ -288,7 +389,8 @@
         },
         {
           "Name": "LOCATION",
-          "Destination": "Environment"
+          "Destination": "Environment",
+          "Required": true
         }
       ],
       "AllowedValues": {
@@ -391,7 +493,8 @@
       "Targets": [
         {
           "Name": "IDENTITY_SUBSCRIPTION_ID",
-          "Destination": "Environment"
+          "Destination": "Environment",
+          "Required": true
         }
       ],
       "Value": ""
@@ -403,7 +506,8 @@
       "Targets": [
         {
           "Name": "CONNECTIVITY_SUBSCRIPTION_ID",
-          "Destination": "Environment"
+          "Destination": "Environment",
+          "Required": true
         }
       ],
       "Value": ""
@@ -415,7 +519,8 @@
       "Targets": [
         {
           "Name": "MANAGEMENT_SUBSCRIPTION_ID",
-          "Destination": "Environment"
+          "Destination": "Environment",
+          "Required": true
         }
       ],
       "Value": ""
@@ -659,7 +764,8 @@
       "Targets": [
         {
           "Name": "CONNECTIVITY_RESOURCE_GROUP",
-          "Destination": "Environment"
+          "Destination": "Environment",
+          "Required": true
         },
         {
           "File": "resourceGroupConnectivity.parameters.all.json",
@@ -674,11 +780,28 @@
       "Targets": [
         {
           "Name": "LOGGING_RESOURCE_GROUP",
-          "Destination": "Environment"
+          "Destination": "Environment",
+          "Required": true
         },
         {
           "File": "resourceGroupLoggingAndSentinel.parameters.all.json",
           "Name": "parResourceGroupName.value",
+          "Destination": "Parameters"
+        }
+      ]
+    },
+    "RootParentManagementGroupId": {
+      "Type": "Computed",
+      "Value": "",
+      "Targets": [
+        {
+          "Name": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
+          "Destination": "Environment",
+          "Required": true
+        },
+        {
+          "File": "managementGroups.parameters.all.json",
+          "Name": "parTopLevelManagementGroupParentId.value",
           "Destination": "Parameters"
         }
       ]
