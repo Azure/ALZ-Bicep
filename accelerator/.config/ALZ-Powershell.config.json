@@ -14,6 +14,7 @@
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json",
       "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup",
+      "firstRunWhatIf": true,
       "order": 1
     },
     {
@@ -23,6 +24,7 @@
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
       "subscriptionId": "MANAGEMENT_SUBSCRIPTION_ID",
       "deploymentType": "subscription",
+      "firstRunWhatIf": true,
       "order": 2
     },
     {
@@ -33,6 +35,7 @@
       "subscriptionId": "MANAGEMENT_SUBSCRIPTION_ID",
       "resourceGroupName": "LOGGING_RESOURCE_GROUP",
       "deploymentType": "resourceGroup",
+      "firstRunWhatIf": false,
       "order": 3
     },
     {
@@ -42,6 +45,7 @@
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json",
       "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup",
+      "firstRunWhatIf": true,
       "order": 4
     },
     {
@@ -51,6 +55,7 @@
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json",
       "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup",
+      "firstRunWhatIf": true,
       "order": 5
     },
     {
@@ -60,6 +65,7 @@
       "templateParametersSourceFilePath": "./infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json",
       "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup",
+      "firstRunWhatIf": false,
       "order": 6
     },
     {
@@ -69,6 +75,7 @@
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json",
       "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup",
+      "firstRunWhatIf": false,
       "order": 7
     },
     {
@@ -78,6 +85,7 @@
       "templateParametersSourceFilePath": "./infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json",
       "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup",
+      "firstRunWhatIf": false,
       "order": 8
     },
     {
@@ -87,6 +95,7 @@
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
       "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
       "deploymentType": "subscription",
+      "firstRunWhatIf": true,
       "order": 9
     },
     {
@@ -98,6 +107,7 @@
       "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
       "networkType": "hubNetworking",
       "deploymentType": "resourceGroup",
+      "firstRunWhatIf": false,
       "order": 10
     },
     {
@@ -109,10 +119,10 @@
       "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
       "networkType": "vwanConnectivity",
       "deploymentType": "resourceGroup",
+      "firstRunWhatIf": false,
       "order": 10
     }
   ],
-
   "config_files": [
     {
       "source": "infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json",
