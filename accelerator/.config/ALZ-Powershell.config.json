@@ -31,7 +31,7 @@
       "templateParametersFilePath": "./config/custom-parameters/logging.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json",
       "subscriptionId": "MANAGEMENT_SUBSCRIPTION_ID",
-      "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
+      "resourceGroupName": "LOGGING_RESOURCE_GROUP",
       "deploymentType": "resourceGroup",
       "order": 3
     },
