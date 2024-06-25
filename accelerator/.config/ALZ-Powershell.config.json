@@ -43,7 +43,7 @@
       "templateFilePath": "./infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep",
       "templateParametersFilePath": "./config/custom-parameters/customPolicyDefinitions.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json",
-      "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
+      "managementGroupId": "MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup",
       "firstRunWhatIf": true,
       "order": 4
@@ -53,7 +53,7 @@
       "templateFilePath": "./infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep",
       "templateParametersFilePath": "./config/custom-parameters/customRoleDefinitions.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json",
-      "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
+      "managementGroupId": "MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup",
       "firstRunWhatIf": true,
       "order": 5
@@ -63,7 +63,7 @@
       "templateFilePath": "./infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep",
       "templateParametersFilePath": "./config/custom-parameters/mgDiagSettingsAll.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json",
-      "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
+      "managementGroupId": "MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup",
       "firstRunWhatIf": false,
       "order": 6
@@ -73,7 +73,7 @@
       "templateFilePath": "./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep",
       "templateParametersFilePath": "./config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json",
-      "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
+      "managementGroupId": "MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup",
       "firstRunWhatIf": false,
       "order": 7
@@ -83,7 +83,7 @@
       "templateFilePath": "./infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep",
       "templateParametersFilePath": "./config/custom-parameters/subPlacementAll.parameters.all.json",
       "templateParametersSourceFilePath": "./infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json",
-      "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
+      "managementGroupId": "MANAGEMENT_GROUP_ID",
       "deploymentType": "managementGroup",
       "firstRunWhatIf": false,
       "order": 8
