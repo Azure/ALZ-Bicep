@@ -43,7 +43,7 @@
           "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json",
           "managementGroupId": "MANAGEMENT_GROUP_ID",
           "deploymentType": "managementGroup",
-          "firstRunWhatIf": true,
+          "firstRunWhatIf": false,
           "order": 4
         },
         {
@@ -53,7 +53,7 @@
           "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json",
           "managementGroupId": "MANAGEMENT_GROUP_ID",
           "deploymentType": "managementGroup",
-          "firstRunWhatIf": true,
+          "firstRunWhatIf": false,
           "order": 5
         },
         {
