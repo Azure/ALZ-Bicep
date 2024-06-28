@@ -1,17 +1,20 @@
 ## This script is derived from the original by Jack Tracey, which you can find here: https://github.com/jtracey93/PublicScripts/blob/master/Azure/PowerShell/Enterprise-scale/Wipe-ESLZAzTenant.ps1
 
-$whatIf = [System.Convert]::ToBoolean("$${{ parameters.whatIfEnabled }}")
-if($whatIf) {
+param (
+    [bool]$whatIfEnabled = $true,
+    [string]$intermediateRootGroupID = $env:MANAGEMENT_GROUP_ID,
+    [string]$tenantRootGroupID = $env:ROOT_PARENT_MANAGEMENT_GROUP_ID
+)
+
+if($whatIfEnabled) {
   Write-Warning "The deploy stage of this run will delete all aspects of your landing zone. This includes all resources in your platform subscriptions. Please ensure you have a backup of any data you wish to keep."
   Write-Warning "DANGER! DO NOT APPROVE THIS RUN UNLESS YOU ARE CERTAIN YOU WANT TO DELETE EVERYTHING."
   exit 0
 }
 
-$tenantRootGroupID = $env:ROOT_PARENT_MANAGEMENT_GROUP_ID
 if ($tenantRootGroupID -eq "") {
     $tenantRootGroupID = (Get-AzContext).Tenant.TenantId
 }
-$intermediateRootGroupID = $env:MANAGEMENT_GROUP_ID
 $resetMdfcTierOnSubs = $true
 
 ## Orphaned Role Assignements Function
