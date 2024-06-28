@@ -4,6 +4,7 @@
       "location": ".",
       "short_name": "Complete",
       "description": "Complete Azure Landing Zones Deployment",
+      "destroy_script_path": "accelerator/scripts/destroy-landing-zone.ps1",
       "deployment_files": [
         {
           "displayName": "Management Groups Deployment",
