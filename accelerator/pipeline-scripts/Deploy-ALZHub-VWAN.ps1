@@ -17,7 +17,7 @@ param (
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'alz-VWANDeploy-{0}' -f ( -join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-VWANDeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ResourceGroupName     = $ConnectivityResourceGroup
   TemplateFile          = $TemplateFile
   TemplateParameterFile = $TemplateParameterFile

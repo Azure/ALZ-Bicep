@@ -20,7 +20,7 @@ param (
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'alz-MGDiagnosticSettings-{0}' -f ( -join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-MGDiagnosticSettings-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = $Location
   ManagementGroupId     = $TopLevelMGPrefix
   TemplateFile          = $TemplateFile
