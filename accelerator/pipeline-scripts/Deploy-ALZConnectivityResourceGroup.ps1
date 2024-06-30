@@ -17,7 +17,7 @@ param (
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'alz-ConnectivityRGDeploy-{0}' -f ( -join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-ConnectivityRGDeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = $Location
   TemplateFile          = $TemplateFile
   TemplateParameterFile = $TemplateParameterFile
