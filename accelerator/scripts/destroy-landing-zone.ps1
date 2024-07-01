@@ -175,12 +175,22 @@ function Remove-Recursively($name) {
     Remove-AzManagementGroup -InputObject $parent | Out-Null
 }
 
-# Remove all the Management Groups in Intermediate Root Management Group's hierarchy tree, including itself
-Remove-Recursively($intermediateRootGroupID)
+# Check if Management Group exists for idempotency
+$managementGroups = Get-AzManagementGroup
+$managementGroup = $managementGroups | Where-Object { $_.Name -eq $intermediateRootGroupID }
 
-# Remove orphaned/identity not found RBAC role assignments from each subscription
-Write-Host "Removing Oprhaned/Identity Not Found Role Assignments for all subscriptions: $($intermediateRootGroupChildSubscriptions.subID)" -ForegroundColor Yellow
-Invoke-RemoveOrphanedRoleAssignment -SubscriptionId $intermediateRootGroupChildSubscriptions.subID
+if($null -eq $managementGroup) {
+    Write-Host "Management Group with ID: '$intermediateRootGroupID' does not exist." -ForegroundColor Yellow
+} else {
+    Write-Host "Management Group with ID: '$intermediateRootGroupID' exists. Proceeding with deletion." -ForegroundColor Yellow
+    
+    # Remove all the Management Groups in Intermediate Root Management Group's hierarchy tree, including itself
+    Remove-Recursively($intermediateRootGroupID)
+
+    # Remove orphaned/identity not found RBAC role assignments from each subscription
+    Write-Host "Removing Oprhaned/Identity Not Found Role Assignments for all subscriptions: $($intermediateRootGroupChildSubscriptions.subID)" -ForegroundColor Yellow
+    Invoke-RemoveOrphanedRoleAssignment -SubscriptionId $intermediateRootGroupChildSubscriptions.subID
+}
 
 # Stop timer
 $StopWatch.Stop()
