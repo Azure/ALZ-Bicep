@@ -5,8 +5,51 @@
       "short_name": "Complete",
       "description": "Complete Azure Landing Zones Deployment",
       "destroy_script_path": "accelerator/scripts/destroy-landing-zone.ps1",
+      "deployment_file_groups" : [
+        {
+          "name": "management_groups",
+          "displayName": "Management Groups",
+          "order": 1
+        },
+        {
+          "name": "logging_and_sentinel",
+          "displayName": "Logging and Sentinel",
+          "order": 2
+        },
+        {
+          "name": "policy_definitions",
+          "displayName": "Policy Definitions",
+          "order": 3
+        },
+        {
+          "name": "role_definitions",
+          "displayName": "Role Definitions",
+          "order": 4
+        },
+        {
+          "name": "policy_assignments",
+          "displayName": "Policy Assignments",
+          "order": 5
+        },
+        {
+          "name": "management_group_diagnostic_settings",
+          "displayName": "Management Group Diagnostic Settings",
+          "order": 6
+        },
+        {
+          "name": "subscription_placement",
+          "displayName": "Subscription Placement",
+          "order": 7
+        },
+        {
+          "name": "connectivity",
+          "displayName": "Connectivity",
+          "order": 8
+        }
+      ],
       "deployment_files": [
         {
+          "name": "management_groups",
           "displayName": "Management Groups Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/managementGroups/managementGroupsScopeEscape.bicep",
           "templateParametersFilePath": "./config/custom-parameters/managementGroups.parameters.all.json",
@@ -14,9 +57,11 @@
           "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
           "deploymentType": "managementGroup",
           "firstRunWhatIf": true,
-          "order": 1
+          "order": 1,
+          "group": "management_groups"
         },
         {
+          "name": "logging_and_sentinel_resource_group",
           "displayName": "Logging and Sentinel Resource Group Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
           "templateParametersFilePath": "./config/custom-parameters/resourceGroupLoggingAndSentinel.parameters.all.json",
@@ -24,9 +69,11 @@
           "subscriptionId": "MANAGEMENT_SUBSCRIPTION_ID",
           "deploymentType": "subscription",
           "firstRunWhatIf": true,
-          "order": 2
+          "order": 2,
+          "group": "logging_and_sentinel"
         },
         {
+          "name": "logging_and_sentinel",
           "displayName": "Logging and Sentinel Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/logging/logging.bicep",
           "templateParametersFilePath": "./config/custom-parameters/logging.parameters.all.json",
@@ -35,9 +82,11 @@
           "resourceGroupName": "LOGGING_RESOURCE_GROUP",
           "deploymentType": "resourceGroup",
           "firstRunWhatIf": false,
-          "order": 3
+          "order": 3,
+          "group": "logging_and_sentinel"
         },
         {
+          "name": "custom_policy_definitions",
           "displayName": "Custom Policy Definitions Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep",
           "templateParametersFilePath": "./config/custom-parameters/customPolicyDefinitions.parameters.all.json",
@@ -45,9 +94,11 @@
           "managementGroupId": "MANAGEMENT_GROUP_ID",
           "deploymentType": "managementGroup",
           "firstRunWhatIf": false,
-          "order": 4
+          "order": 4,
+          "group": "policy_definitions"
         },
         {
+          "name": "custom_role_definitions",
           "displayName": "Custom Role Definitions Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep",
           "templateParametersFilePath": "./config/custom-parameters/customRoleDefinitions.parameters.all.json",
@@ -55,9 +106,11 @@
           "managementGroupId": "MANAGEMENT_GROUP_ID",
           "deploymentType": "managementGroup",
           "firstRunWhatIf": false,
-          "order": 5
+          "order": 5,
+          "group": "role_definitions"
         },
         {
+          "name": "management_group_diagnostic_settings",
           "displayName": "Custom Management Group Diagnostic Settings",
           "templateFilePath": "./infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep",
           "templateParametersFilePath": "./config/custom-parameters/mgDiagSettingsAll.parameters.all.json",
@@ -65,9 +118,11 @@
           "managementGroupId": "MANAGEMENT_GROUP_ID",
           "deploymentType": "managementGroup",
           "firstRunWhatIf": false,
-          "order": 6
+          "order": 6,
+          "group": "management_group_diagnostic_settings"
         },
         {
+          "name": "policy_assignments",
           "displayName": "Built-in and Custom Policy Assignments Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep",
           "templateParametersFilePath": "./config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json",
@@ -75,9 +130,11 @@
           "managementGroupId": "MANAGEMENT_GROUP_ID",
           "deploymentType": "managementGroup",
           "firstRunWhatIf": false,
-          "order": 7
+          "order": 7,
+          "group": "policy_assignments"
         },
         {
+          "name": "subscription_placement",
           "displayName": "Deploy Subscription Placement",
           "templateFilePath": "./infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep",
           "templateParametersFilePath": "./config/custom-parameters/subPlacementAll.parameters.all.json",
@@ -85,9 +142,11 @@
           "managementGroupId": "MANAGEMENT_GROUP_ID",
           "deploymentType": "managementGroup",
           "firstRunWhatIf": false,
-          "order": 8
+          "order": 8,
+          "group": "subscription_placement"
         },
         {
+          "name": "connectivity_resource_group",
           "displayName": "Connectivity Resource Group Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
           "templateParametersFilePath": "./config/custom-parameters/resourceGroupConnectivity.parameters.all.json",
@@ -95,9 +154,11 @@
           "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
           "deploymentType": "subscription",
           "firstRunWhatIf": true,
-          "order": 9
+          "order": 9,
+          "group": "connectivity"
         },
         {
+          "name": "hub_and_spoke",
           "displayName": "Hub (Hub-and-Spoke) Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep",
           "templateParametersFilePath": "./config/custom-parameters/hubNetworking.parameters.all.json",
@@ -107,9 +168,11 @@
           "networkType": "hubNetworking",
           "deploymentType": "resourceGroup",
           "firstRunWhatIf": false,
-          "order": 10
+          "order": 10,
+          "group": "connectivity"
         },
         {
+          "name": "vwan",
           "displayName": "Hub (VWAN) Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep",
           "templateParametersFilePath": "./config/custom-parameters/vwanConnectivity.parameters.all.json",
@@ -119,7 +182,8 @@
           "networkType": "vwanConnectivity",
           "deploymentType": "resourceGroup",
           "firstRunWhatIf": false,
-          "order": 10
+          "order": 10,
+          "group": "connectivity"
         }
       ],
       "inputs": {
