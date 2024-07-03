@@ -207,10 +207,11 @@ New-AzResourceGroupDeployment @inputObject
 
 To extend your infrastructure to additional regions, you can deploy this module multiple times with different parameters files to deploy additional hubs in multiple regions. You can then leverage the [vnetPeering module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/vnetPeering) to peer the hub networks together.
 
-> For the example below we will deploy two hubs across *eastus* and *eastus2* regions and peer them using the vnetPeering module.
+> For the example below, we will deploy two hubs across *eastus* and *eastus2* regions and peer them using the vnetPeering module.
 
-1. Edit the parameters file with the values of the first region.
-2. Deploy the `hubNetworking` module to deploy the first hub in the *eastus* region.
+1. Duplicate the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json) and create a new file for the first hub in the *eastus* region **hubNetworking.parameters.all.eastus.json**.
+2. Edit the new parameters file with the needed configuration.
+3. Deploy the `hubNetworking` module to deploy the first hub in the *eastus* region using the new parameters file.
 
 ### Azure CLI
 ```bash
@@ -272,8 +273,9 @@ New-AzResourceGroup `
 New-AzResourceGroupDeployment @inputObject
 ```
 
-1. Create a new parameters file with the values of the second region.
-2. Deploy the `hubNetworking` module to deploy the second hub in the *eastus2* region.
+4. Duplicate the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json) and create a new file for the additional hub in the *eastus2* region **hubNetworking.parameters.all.eastus2.json**.
+5. Edit the new parameters file with the needed configuration.
+6. Deploy the `hubNetworking` module to deploy the second hub in the *eastus2* region using the new parameters file.
 
 > **NOTE:**
 > If you have set the parameter `parDdosEnabled` to true and deployed a DDoS Network Protection Plan, make sure to set this parameter to false when deploying additional regions to avoid creating multiple plans. You will have to manually enable this plan for the additional hub networks you deploy.
