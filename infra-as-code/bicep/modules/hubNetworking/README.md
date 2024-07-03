@@ -148,7 +148,7 @@ $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
 # Set Platform management subscription ID as the the current subscription
-$ManagementSubscriptionId = "[your platform management subscription ID]"
+$connectivitySubscriptionId = "[your platform management subscription ID]"
 
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
@@ -249,8 +249,8 @@ $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-# Set Platform management subscription ID as the the current subscription
-$ManagementSubscriptionId = "[your platform management subscription ID]"
+# Set Platform Platform subscription ID as the the current subscription
+$connectivitySubscriptionId = "[your platform management subscription ID]"
 
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
@@ -320,8 +320,8 @@ $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-# Set Platform management subscription ID as the the current subscription
-$ManagementSubscriptionId = "[your platform management subscription ID]"
+# Set Platform connectivity subscription ID as the the current subscription
+$connectivitySubscriptionId = "[your platform management subscription ID]"
 
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
@@ -359,7 +359,7 @@ Example output in the eastus2 region
 **NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
 ```bash
 # For Azure global regions
-# Set your connectivity subscription ID as the the current subscription
+# Set Platform connectivity subscription ID as the the current subscription
 connectivitySubscriptionId="[your connectivity subscription ID]"
 az account set --subscription $connectivitySubscriptionId
 
@@ -379,7 +379,7 @@ az deployment group create --name ${NAME:0:63} --resource-group $GROUP --templat
 
 ```powershell
 # For Azure global regions
-# Set your connectivity subscription ID as the the current subscription
+# Set Platform connectivity subscription ID as the the current subscription
 $connectivitySubscriptionId = "[your connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $connectivitySubscriptionId
