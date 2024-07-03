@@ -1,0 +1,30 @@
+{
+  "Deny-Sb-Authz-Rules": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('serviceBusAuthzRules')]"
+      }
+    }
+  },
+  "Deny-Sb-Encryption": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('serviceBusDoubleEncryption')]"
+      }
+    }
+  },
+  "Deny-Sb-LocalAuth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('serviceBusDenyDisabledLocalAuth')]"
+      }
+    }
+  },
+  "Modify-Sb-LocalAuth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('serviceBusModifyDisableLocalAuth')]"
+      }
+    }
+  }
+}

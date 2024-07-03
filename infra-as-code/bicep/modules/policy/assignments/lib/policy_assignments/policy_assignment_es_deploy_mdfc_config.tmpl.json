@@ -1,7 +1,7 @@
 {
-  "name": "Deploy-MDFC-Config",
+  "name": "Deploy-MDFC-Config-H224",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Deploy Microsoft Defender for Cloud configuration and Security Contacts",
     "displayName": "Deploy Microsoft Defender for Cloud configuration",
@@ -25,9 +25,6 @@
       "enableAscForServersVulnerabilityAssessments": {
         "value": "DeployIfNotExists"
       },
-      "vulnerabilityAssessmentProvider": {
-        "value": "mdeTvm"
-      },
       "enableAscForSql": {
         "value": "DeployIfNotExists"
       },
@@ -49,23 +46,17 @@
       "enableAscForArm": {
         "value": "DeployIfNotExists"
       },
-      "enableAscForDns": {
-        "value": "DeployIfNotExists"
-      },
       "enableAscForOssDb": {
         "value": "DeployIfNotExists"
       },
       "enableAscForCosmosDbs": {
         "value": "DeployIfNotExists"
       },
-      "enableAscForApis": {
-        "value": "DeployIfNotExists"
-      },
       "enableAscForCspm": {
         "value": "DeployIfNotExists"
       }
     },
-    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config",
+    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config_20240319",
     "scope": null,
     "enforcementMode": "Default"
   },

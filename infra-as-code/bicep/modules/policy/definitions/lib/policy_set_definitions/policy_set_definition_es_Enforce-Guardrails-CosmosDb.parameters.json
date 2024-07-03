@@ -1,0 +1,40 @@
+{
+  "Append-CosmosDb-Metadata": {
+    "parameters": {}
+  },
+  "Deny-CosmosDb-Fw-Rules": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cosmosDbFwRules')]"
+      }
+    }
+  },
+  "Deny-CosmosDb-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cosmosDbLocalAuth')]"
+      }
+    }
+  },
+  "Dine-CosmosDb-Atp": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cosmosDbAtp')]"
+      }
+    }
+  },
+  "Modify-CosmosDb-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cosmosDbModifyLocalAuth')]"
+      }
+    }
+  },
+  "Modify-CosmosDb-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cosmosDbModifyPublicAccess')]"
+      }
+    }
+  }
+}

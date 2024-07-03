@@ -1,0 +1,58 @@
+{
+  "Deny-EventGrid-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventGridLocalAuth')]"
+      }
+    }
+  },
+  "Deny-EventGrid-Partner-Namespace-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventGridPartnerNamespaceLocalAuth')]"
+      }
+    }
+  },
+  "Deny-EventGrid-Topic-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventGridTopicLocalAuth')]"
+      }
+    }
+  },
+  "Modify-EventGrid-Domain-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventGridDomainModifyLocalAuth')]"
+      }
+    }
+  },
+  "Modify-EventGrid-Domain-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventGridDomainModifyPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Modify-EventGrid-Partner-Namespace-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventGridPartnerNamespaceModifyLocalAuth')]"
+      }
+    }
+  },
+  "Modify-EventGrid-Topic-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventGridTopicModifyLocalAuth')]"
+      }
+    }
+  },
+  "Modify-EventGrid-Topic-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventGridTopicModifyPublicNetworkAccess')]"
+      }
+    }
+  }
+}

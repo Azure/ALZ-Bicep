@@ -1,0 +1,9 @@
+{
+  "Dine-PostgreSql-Adv-Threat-Protection": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('postgreSqlAdvThreatProtection')]"
+      }
+    }
+  }
+}

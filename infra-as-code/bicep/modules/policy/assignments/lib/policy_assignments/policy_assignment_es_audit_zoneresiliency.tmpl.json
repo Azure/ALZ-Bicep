@@ -1,7 +1,7 @@
 {
   "name": "Audit-ZoneResiliency",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Resources should be Zone Resilient.",
     "displayName": "Resources should be Zone Resilient",
