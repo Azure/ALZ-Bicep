@@ -209,7 +209,7 @@ To extend your infrastructure to additional regions, you can deploy this module 
 
 > For the example below, we will deploy two hubs across *eastus* and *eastus2* regions and peer them using the vnetPeering module.
 
-1. Duplicate the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json) and create a new file for the first hub in the *eastus* region **hubNetworking.parameters.all.eastus.json**.
+1. Duplicate the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json) and create a new file for the first hub in the *eastus* region **hubNetworking.parameters.all.eastus.json**. See example [parameters file](https://github.com/sebassem/ALZ-Bicep/blob/alz-multiple-regions/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.eastus.json).
 2. Edit the new parameters file with the needed configuration.
 3. Deploy the `hubNetworking` module to deploy the first hub in the *eastus* region using the new parameters file.
 
@@ -273,7 +273,7 @@ New-AzResourceGroup `
 New-AzResourceGroupDeployment @inputObject
 ```
 
-4. Duplicate the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json) and create a new file for the additional hub in the *eastus2* region **hubNetworking.parameters.all.eastus2.json**.
+4. Duplicate the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json) and create a new file for the additional hub in the *eastus2* region **hubNetworking.parameters.all.eastus2.json**. See example [parameters file](https://github.com/sebassem/ALZ-Bicep/blob/alz-multiple-regions/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.eastus2.json).
 5. Edit the new parameters file with the needed configuration.
 6. Deploy the `hubNetworking` module to deploy the second hub in the *eastus2* region using the new parameters file.
 
