@@ -58,7 +58,7 @@
       "value": true
     },
     "parAzBastionName": {
-      "value": "alz-bastion"
+      "value": "alz-bastion-eastus2"
     },
     "parAzBastionSku": {
       "value": "Standard"
@@ -67,7 +67,7 @@
       "value": false
     },
     "parAzBastionNsgName": {
-      "value": "nsg-AzureBastionSubnet"
+      "value": "nsg-AzureBastionSubnet-eastus2"
     },
     "parDdosEnabled": {
       "value": false
@@ -116,10 +116,10 @@
     },
     "parPrivateDnsZones": {
       "value": [
-        "privatelink.xxxxxx.azmk8s.io", // Replace xxxxxx with target region (i.e. eastus2)
-        "privatelink.xxxxxx.batch.azure.com", // Replace xxxxxx with target region (i.e. eastus2)
-        "privatelink.xxxxxx.kusto.windows.net", // Replace xxxxxx with target region (i.e. eastus2)
-        "privatelink.xxxxxx.backup.windowsazure.com", // Replace xxxxxx with target region geo code (i.e. for eastus2, the geo code is eus)
+        "privatelink.eastus2.azmk8s.io", // Replace xxxxxx with target region (i.e. eastus2)
+        "privatelink.eastus2.batch.azure.com", // Replace xxxxxx with target region (i.e. eastus2)
+        "privatelink.eastus2.kusto.windows.net", // Replace xxxxxx with target region (i.e. eastus2)
+        "privatelink.eastus2.backup.windowsazure.com", // Replace xxxxxx with target region geo code (i.e. for eastus2, the geo code is eus)
         "privatelink.adf.azure.com",
         "privatelink.afs.azure.net",
         "privatelink.agentsvc.azure-automation.net",
@@ -187,14 +187,14 @@
       ]
     },
     "parPrivateDnsZoneAutoMergeAzureBackupZone": {
-      "value": true
+      "value": false
     },
     "parVpnGatewayEnabled": {
       "value": true
     },
     "parVpnGatewayConfig": {
       "value": {
-        "name": "alz-Vpn-Gateway",
+        "name": "alz-Vpn-Gateway-eastus2",
         "gatewayType": "Vpn",
         "sku": "VpnGw1",
         "vpnType": "RouteBased",
@@ -213,11 +213,11 @@
       }
     },
     "parExpressRouteGatewayEnabled": {
-      "value": true
+      "value": false
     },
     "parExpressRouteGatewayConfig": {
       "value": {
-        "name": "alz-ExpressRoute-Gateway",
+        "name": "alz-ExpressRoute-Gateway-eastus2",
         "gatewayType": "ExpressRoute",
         "sku": "Standard",
         "vpnType": "RouteBased",
