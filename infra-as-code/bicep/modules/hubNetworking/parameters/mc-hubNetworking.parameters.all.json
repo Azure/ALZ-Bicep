@@ -106,7 +106,7 @@
       "value": []
     },
     "parHubRouteTableName": {
-      "value": "alz-hub-routetable"
+      "value": "alz-hub-routetable-chinaeast2"
     },
     "parDisableBgpRoutePropagation": {
       "value": false
