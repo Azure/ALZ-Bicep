@@ -205,7 +205,7 @@ New-AzResourceGroupDeployment @inputObject
 
 ## Multi-region deployment
 
-To extend your infrastructure to additional regions, this module can be deployed multiple times with different parameters files to deploy additional hubs in multiple regions. The [vnetPeering module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/vnetPeering) can be leveraged to peer the hub networks together across the different regions.
+To extend your infrastructure to [additional regions](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/considerations/regions), this module can be deployed multiple times with different parameters files to deploy additional hubs in multiple regions. The [vnetPeering module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/vnetPeering) can be leveraged to peer the hub networks together across the different regions.
 
 > For the example below, two hubs will be deployed across *eastus* and *eastus2* regions.
 
