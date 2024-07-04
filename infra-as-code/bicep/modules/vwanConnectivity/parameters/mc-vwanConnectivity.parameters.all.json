@@ -8,23 +8,11 @@
     "parCompanyPrefix": {
       "value": "alz"
     },
-    "parAzFirewallTier": {
-      "value": "Standard"
-    },
-    "parAzFirewallIntelMode": {
-      "value": "Alert"
-    },
     "parVirtualHubEnabled": {
       "value": true
     },
-    "parAzFirewallDnsProxyEnabled": {
-      "value": true
-    },
-    "parAzFirewallDnsServers": {
-      "value": []
-    },
     "parVirtualWanName": {
-      "value": "alz-vwan-chinaeast2"
+      "value": "alz-vwan"
     },
     "parVirtualWanHubName": {
       "value": "alz-vhub"
@@ -45,7 +33,7 @@
       "value": []
     },
     "parAzFirewallPoliciesName": {
-      "value": "alz-azfwpolicy-chinaeast2"
+      "value": "alz-azfwpolicy"
     },
     "parVirtualWanHubs": {
       "value": [
@@ -57,7 +45,12 @@
           "parHubLocation": "chinaeast2",
           "parHubRoutingPreference": "ExpressRoute",
           "parVirtualRouterAutoScaleConfiguration": 2,
-          "parVirtualHubRoutingIntentDestinations": []
+          "parVirtualHubRoutingIntentDestinations": [],
+          "parAzFirewallDnsServers" : [],
+          "parAzFirewallIntelMode" : "Alert",
+          "parAzFirewallDnsProxyEnabled": true,
+          "parAzFirewallTier": "Standard",
+          "parAzFirewallAvailabilityZones": []
         }
       ]
     },
