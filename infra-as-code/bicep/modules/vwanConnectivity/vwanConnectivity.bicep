@@ -189,7 +189,7 @@ param parAzFirewallName string = '${parCompanyPrefix}-fw'
 param parAzFirewallAvailabilityZones array = []
 
 @sys.description('Azure Firewall Policies Name.')
-param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
+param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy'
 
 @sys.description('''Resource Lock Configuration for Azure Firewall.
 
@@ -483,9 +483,9 @@ resource resErGatewayLock 'Microsoft.Authorization/locks@2020-05-01' = [for (hub
   }
 }]
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = if (parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled) {
-  name: parAzFirewallPoliciesName
-  location: parLocation
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = [for (hub, i) in parVirtualWanHubs: if (parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled) {
+  name: '${parAzFirewallPoliciesName}-${hub.parHubLocation}'
+  location: hub.parHubLocation
   tags: parTags
   properties: (parAzFirewallTier == 'Basic') ? {
     sku: {
@@ -502,17 +502,17 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
     }
     threatIntelMode: parAzFirewallIntelMode
   }
-}
+}]
 
 // Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
-resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = if ((parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled) && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
-  scope: resFirewallPolicies
-  name: parAzureFirewallLock.?name ?? '${resFirewallPolicies.name}-lock'
+resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled) && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resFirewallPolicies[i]
+  name: parAzureFirewallLock.?name ?? '${resFirewallPolicies[i].name}-lock'
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallLock.?notes
   }
-}
+}]
 
 resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parAzFirewallEnabled)) {
   name: hub.?parAzFirewallCustomName ?? '${parAzFirewallName}-${hub.parHubLocation}'
@@ -533,7 +533,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = [for (
       id: parVirtualHubEnabled ? resVhub[i].id : ''
     }
     firewallPolicy: {
-      id: (parVirtualHubEnabled && hub.parAzFirewallEnabled) ? resFirewallPolicies.id : ''
+      id: (parVirtualHubEnabled && hub.parAzFirewallEnabled) ? resFirewallPolicies[i].id : ''
     }
   }
 }]

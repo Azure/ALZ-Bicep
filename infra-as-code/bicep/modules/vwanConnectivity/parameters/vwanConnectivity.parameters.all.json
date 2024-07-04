@@ -24,7 +24,7 @@
       "value": []
     },
     "parVirtualWanName": {
-      "value": "alz-vwan-eastus"
+      "value": "alz-vwan"
     },
     "parVirtualWanHubName": {
       "value": "alz-vhub"
@@ -45,7 +45,7 @@
       "value": []
     },
     "parAzFirewallPoliciesName": {
-      "value": "alz-azfwpolicy-eastus"
+      "value": "alz-azfwpolicy"
     },
     "parVirtualWanHubs": {
       "value": [
