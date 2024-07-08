@@ -20,6 +20,7 @@ param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
 param parTopLevelManagementGroupParentId string = ''
 
 resource resTopLevelMg 'Microsoft.Management/managementGroups@2023-04-01' = {
+  scope: tenant()
   name: '${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}'
   properties: {
     displayName: parTopLevelManagementGroupDisplayName

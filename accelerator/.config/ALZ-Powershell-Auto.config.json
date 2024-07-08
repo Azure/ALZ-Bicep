@@ -18,7 +18,8 @@
         ".github/workflows", 
         "pipeline-scripts", 
         "china", 
-        "parameters"
+        "parameters",
+        "README.md"
       ],
       "deployment_file_groups" : [
         {
@@ -626,6 +627,7 @@
       "folders_or_files_to_retain": [
         "accelerator",
         "infra-as-code/bicep/modules/resourceGroup",
+        "infra-as-code/bicep/CRML/customerUsageAttribution",
         "version.json"
       ],
       "subfolders_or_files_to_remove" : [
@@ -636,7 +638,8 @@
         ".github/workflows", 
         "pipeline-scripts", 
         "china", 
-        "parameters"
+        "parameters",
+        "README.md"
       ],
       "deployment_file_groups" : [
         {
@@ -654,9 +657,9 @@
         {
           "name": "management_groups",
           "displayName": "Management Groups Deployment",
-          "templateFilePath": "./accelerator/test_modules/managementGroups/managementGroups.bicep",
-          "templateParametersFilePath": "./config/custom-parameters/managementGroups.parameters.all.json",
-          "templateParametersSourceFilePath": "./accelerator/test_modules/managementGroups/parameters/managementGroups.parameters.all.json",
+          "templateFilePath": "./accelerator/test_modules/managementGroup/managementGroup.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/managementGroup.parameters.all.json",
+          "templateParametersSourceFilePath": "./accelerator/test_modules/managementGroup/parameters/managementGroup.parameters.all.json",
           "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
           "deploymentType": "managementGroup",
           "firstRunWhatIf": true,
@@ -806,7 +809,7 @@
               "Destination": "Environment"
             },
             {
-              "File": "managementGroups.parameters.all.json",
+              "File": "managementGroup.parameters.all.json",
               "Name": "parTopLevelManagementGroupParentId.value",
               "Destination": "Parameters"
             }

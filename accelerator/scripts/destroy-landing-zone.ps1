@@ -3,7 +3,10 @@
 param (
     [bool]$whatIfEnabled = $true,
     [string]$intermediateRootGroupID = $env:MANAGEMENT_GROUP_ID,
-    [string]$tenantRootGroupID = $env:ROOT_PARENT_MANAGEMENT_GROUP_ID
+    [string]$tenantRootGroupID = $env:ROOT_PARENT_MANAGEMENT_GROUP_ID,
+    [string]$connectivitySubscriptionId = $env:CONNECTIVITY_SUBSCRIPTION_ID,
+    [string]$identitySubscriptionId = $env:IDENTITY_SUBSCRIPTION_ID,
+    [string]$managementSubscriptionId = $env:MANAGEMENT_SUBSCRIPTION_ID
 )
 
 if($whatIfEnabled) {
@@ -41,38 +44,76 @@ $intermediateRootGroupChildSubscriptions | ForEach-Object -Parallel {
 # For each Subscription in the Intermediate Root Management Group's hierarchy tree, remove all Resources, Resource Groups and Deployments
 Write-Host "Removing all Azure Resources, Resource Groups and Deployments from Subscriptions in scope" -ForegroundColor Yellow
 
+$subscriptionsToClean = @()
 ForEach ($subscription in $intermediateRootGroupChildSubscriptions) {
-    Write-Host "Set context to Subscription: '$($subscription.subName)'" -ForegroundColor Cyan
-    Set-AzContext -Subscription $subscription.subID | Out-Null
+    $subscriptionsToClean += {
+        name: $subscription.subName
+        id: $subscription.subID
+    }
+}
+
+$subscriptionIds = $subscriptionsToClean | Select-Object -ExpandProperty id
+
+if($subscriptionIds -notcontains $managementSubscriptionId) {
+    $subscriptionsToClean += @{
+        name = "Management"
+        id = $managementSubscriptionId
+    }
+    $subscriptionIds += $managementSubscriptionId
+}
+
+if($subscriptionIds -notcontains $identitySubscriptionId) {
+    $subscriptionsToClean += @{
+        name = "Identity"
+        id = $identitySubscriptionId
+    }
+    $subscriptionIds += $identitySubscriptionId
+}
+
+if($subscriptionIds -notcontains $connectivitySubscriptionId) {
+    $subscriptionsToClean += @{
+        name = "Connectivity"
+        id = $connectivitySubscriptionId
+    }
+    $subscriptionIds += $connectivitySubscriptionId
+}
+
+ForEach ($subscription in $subscriptionsToClean) {
+    Write-Host "Set context to Subscription: '$($subscription.name)'" -ForegroundColor Cyan
+    Set-AzContext -Subscription $subscription.id | Out-Null
 
     # Get all Resource Groups in Subscription
     $resources = Get-AzResourceGroup
 
     $resources | ForEach-Object -Parallel {
-        Write-Host "Deleting " $_.ResourceGroupName "..." -ForegroundColor Red
-        Remove-AzResourceGroup -Name $_.ResourceGroupName -Force | Out-Null
+        if($_.ResourceGroupName -like "*$intermediateRootGroupID*") {
+            Write-Host "Deleting " $_.ResourceGroupName "..." -ForegroundColor Red
+            Remove-AzResourceGroup -Name $_.ResourceGroupName -Force | Out-Null
+        }
     }
     
     # Get Deployments for Subscription
     $subDeployments = Get-AzSubscriptionDeployment
 
-    Write-Host "Removing All Subscription Deployments for: $($subscription.subName)" -ForegroundColor Yellow 
+    Write-Host "Removing All Successful Subscription Deployments for: $($subscription.name)" -ForegroundColor Yellow 
     
     # For each Subscription level deployment, remove it
     $subDeployments | ForEach-Object -Parallel {
-        Write-Host "Removing $($_.DeploymentName) ..." -ForegroundColor Red
-        Remove-AzSubscriptionDeployment -Id $_.Id | Out-Null
+        if($_.ProvisioningState -eq "Succeeded") {
+            Write-Host "Removing $($_.DeploymentName) ..." -ForegroundColor Red
+            Remove-AzSubscriptionDeployment -Id $_.Id | Out-Null
+        }
     }
 
     # Set MDFC tier to Free for each Subscription
     if ($resetMdfcTierOnSubs) {
-        Write-Host "Resetting MDFC tier to Free for Subscription: $($subscription.subName)" -ForegroundColor Yellow
+        Write-Host "Resetting MDFC tier to Free for Subscription: $($subscription.name)" -ForegroundColor Yellow
         
         $currentMdfcForSubUnfiltered = Get-AzSecurityPricing
         $currentMdfcForSub = $currentMdfcForSubUnfiltered | Where-Object { $_.PricingTier -ne "Free" }
 
         ForEach ($mdfcPricingTier in $currentMdfcForSub) {
-            Write-Host "Resetting $($mdfcPricingTier.Name) to Free MDFC Pricing Tier for Subscription: $($subscription.subName)" -ForegroundColor Yellow
+            Write-Host "Resetting $($mdfcPricingTier.Name) to Free MDFC Pricing Tier for Subscription: $($subscription.name)" -ForegroundColor Yellow
             
             Set-AzSecurityPricing -Name $mdfcPricingTier.Name -PricingTier 'Free' | Out-Null
         }
