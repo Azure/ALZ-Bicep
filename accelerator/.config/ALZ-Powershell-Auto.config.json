@@ -162,7 +162,7 @@
           "displayName": "Hub (Hub-and-Spoke) Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep",
           "templateParametersFilePath": "./config/custom-parameters/hubNetworking.parameters.all.json",
-          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.az.all.json",
           "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
           "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
           "networkType": "hubNetworking",
@@ -176,7 +176,7 @@
           "displayName": "Hub (VWAN) Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep",
           "templateParametersFilePath": "./config/custom-parameters/vwanConnectivity.parameters.all.json",
-          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.az.all.json",
           "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
           "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
           "networkType": "vwanConnectivity",
@@ -606,20 +606,166 @@
     "test": {
       "location": ".",
       "short_name": "Test",
-      "description": "Test Deployment used to e2e tests",
+      "description": "Test Azure Landing Zones Deployment for e2e testing",
+      "destroy_script_path": "accelerator/scripts/destroy-landing-zone.ps1",
+      "deployment_file_groups" : [
+        {
+          "name": "management_groups",
+          "displayName": "Management Groups",
+          "order": 1
+        },
+        {
+          "name": "resource_groups",
+          "displayName": "Resource Groups",
+          "order": 2
+        }
+      ],
       "deployment_files": [
         {
+          "name": "management_groups",
           "displayName": "Management Groups Deployment",
-          "templateFilePath": "./infra-as-code/bicep/modules/managementGroups/managementGroupsScopeEscape.bicep",
+          "templateFilePath": "./accelerator/test_modules/managementGroups/managementGroups.bicep",
           "templateParametersFilePath": "./config/custom-parameters/managementGroups.parameters.all.json",
-          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json",
+          "templateParametersSourceFilePath": "./accelerator/test_modules/managementGroups/parameters/managementGroups.parameters.all.json",
           "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
           "deploymentType": "managementGroup",
           "firstRunWhatIf": true,
-          "order": 1
+          "order": 1,
+          "group": "management_groups"
+        },
+        {
+          "name": "management_resource_group",
+          "displayName": "Management Resource Group Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/resourceGroupManagement.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+          "subscriptionId": "MANAGEMENT_SUBSCRIPTION_ID",
+          "deploymentType": "subscription",
+          "firstRunWhatIf": true,
+          "order": 2,
+          "group": "resource_groups"
+        },
+        {
+          "name": "connectivity_resource_group",
+          "displayName": "Connectivity Resource Group Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/resourceGroupConnectivity.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+          "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+          "deploymentType": "subscription",
+          "firstRunWhatIf": true,
+          "order": 3,
+          "group": "resource_groups"
+        },
+        {
+          "name": "identity_resource_group",
+          "displayName": "Identity Resource Group Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/resourceGroupIdentity.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+          "subscriptionId": "IDENTITY_SUBSCRIPTION_ID",
+          "deploymentType": "subscription",
+          "firstRunWhatIf": true,
+          "order": 3,
+          "group": "resource_groups"
         }
       ],
-      "inputs" : {
+      "inputs": {
+        "Prefix": {
+          "source": "input",
+          "type": "string",
+          "description": "The prefix that will be added to all resources created by this deployment. (e.g. 'alz')",
+          "Targets": [
+            {
+              "Name": "parTopLevelManagementGroupPrefix.value",
+              "Destination": "Parameters"
+            },
+            {
+              "name": "MANAGEMENT_GROUP_ID",
+              "destination": "Environment"
+            }
+          ],
+          "default": "alz",
+          "validation": "azure_name"
+        },
+        "Location": {
+          "source": "input",
+          "type": "string",
+          "description": "Deployment location. (e.g. 'uksouth')",
+          "Targets": [
+            {
+              "Name": "parLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "LOCATION",
+              "Destination": "Environment"
+            }
+          ],
+          "validation": "azure_location"
+        },
+        "Environment": {
+          "source": "input",
+          "type": "string",
+          "description": "The Type of environment that will be created. (e.g. 'live', 'canary')",
+          "Targets": [
+            {
+              "Name": "parTags.value.Environment",
+              "Destination": "Parameters"
+            }
+          ],
+          "default": "live",
+          "validation": "azure_name_section"
+        },
+        "networkType": {
+          "source": "input",
+          "type": "string",
+          "description": "The type of networking to deploy. (e.g. 'hubNetworking', 'vwanConnectivity')",
+          "default": "hubNetworking",
+          "Targets": [
+            {
+              "Name": "NETWORK_TYPE",
+              "Destination": "Environment"
+            }
+          ],
+          "validation": "network_type"
+        },
+        "IdentitySubscriptionId": {
+          "source": "input",
+          "type": "string",
+          "description": "The identifier of the Identity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
+          "validation": "azure_subscription_id",
+          "Targets": [
+            {
+              "Name": "IDENTITY_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "ConnectivitySubscriptionId": {
+          "source": "input",
+          "type": "string",
+          "description": "The identifier of the Connectivity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
+          "validation": "azure_subscription_id",
+          "Targets": [
+            {
+              "Name": "CONNECTIVITY_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "ManagementSubscriptionId": {
+          "source": "input",
+          "type": "string",
+          "description": "The identifier of the Management Subscription. (e.g 00000000-0000-0000-0000-000000000000)",
+          "validation": "azure_subscription_id",
+          "Targets": [
+            {
+              "Name": "MANAGEMENT_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
         "RootParentManagementGroupId": {
           "source": "powershell",
           "type": "string",
@@ -632,6 +778,54 @@
             {
               "File": "managementGroups.parameters.all.json",
               "Name": "parTopLevelManagementGroupParentId.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "ConnectivityResourceGroupName": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "rg-{%Prefix%}-connectivity",
+          "Targets": [
+            {
+              "Name": "CONNECTIVITY_RESOURCE_GROUP",
+              "Destination": "Environment"
+            },
+            {
+              "File": "resourceGroupConnectivity.parameters.all.json",
+              "Name": "parResourceGroupName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "ManagementResourceGroupName": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "rg-{%Prefix%}-management",
+          "Targets": [
+            {
+              "Name": "MANAGEMENT_RESOURCE_GROUP",
+              "Destination": "Environment"
+            },
+            {
+              "File": "resourceGroupManagement.parameters.all.json",
+              "Name": "parResourceGroupName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "IdentityResourceGroupName": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "rg-{%Prefix%}-identity",
+          "Targets": [
+            {
+              "Name": "IDENTITY_RESOURCE_GROUP",
+              "Destination": "Environment"
+            },
+            {
+              "File": "resourceGroupIdentity.parameters.all.json",
+              "Name": "parResourceGroupName.value",
               "Destination": "Parameters"
             }
           ]
