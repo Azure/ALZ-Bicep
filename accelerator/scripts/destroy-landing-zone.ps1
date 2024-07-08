@@ -17,78 +17,6 @@ if ($tenantRootGroupID -eq "") {
 }
 $resetMdfcTierOnSubs = $true
 
-## Orphaned Role Assignements Function
-function Invoke-RemoveOrphanedRoleAssignment {
-    [CmdletBinding(SupportsShouldProcess)]
-    param (
-        [Parameter()][String[]]$SubscriptionId
-    )
-
-    $originalCtx = Get-AzContext
-
-    $WhatIfPrefix = ""
-    if ($WhatIfPreference) {
-        $WhatIfPrefix = "What if: "
-    }
-
-    # Get the latest stable API version
-    $roleAssignmentsApiVersions = ((Get-AzResourceProvider -ProviderNamespace Microsoft.Authorization).ResourceTypes | Where-Object ResourceTypeName -eq roleAssignments).ApiVersions
-    $latestRoleAssignmentsApiVersions = $roleAssignmentsApiVersions | Where-Object {$_ -notlike '*-preview'} | Sort-Object -Descending | Select-Object -First 1
-    Write-Information "Using Role Assignments API Version : $($latestRoleAssignmentsApiVersions)" -InformationAction Continue
-
-    foreach ($subId in $SubscriptionId) {
-
-        # Use Rest API to ensure correct permissions are assigned when looking up
-        # whether identity exists, otherwise Get-AzRoleAssignment will always
-        # return `objectType : "unknown"` for all assignments with no errors.
-
-        # Get Role Assignments
-        $getRequestPath = "/subscriptions/$($subId)/providers/Microsoft.Authorization/roleAssignments?api-version=$($latestRoleAssignmentsApiVersions)"
-        $getResponse = Invoke-AzRestMethod -Method "GET" -Path $getRequestPath
-        $roleAssignments = ($getResponse.Content | ConvertFrom-Json).value
-
-        # Check for valid response
-        if ($getResponse.StatusCode -ne "200") {
-            throw $getResponse.Content
-        }
-        try {
-            # If invalid response, $roleAssignments will be null and throw an error
-            $roleAssignments.GetType() | Out-Null
-        }
-        catch {
-            throw $getResponse.Content
-        }
-
-        # Get a list of assigned principalId values and lookup against AAD
-        $principalsRequestUri = "https://graph.microsoft.com/v1.0/directoryObjects/microsoft.graph.getByIds"
-        $principalsRequestBody = @{
-            ids = $roleAssignments.properties.principalId
-        } | ConvertTo-Json -Depth 10
-        $principalsResponse = Invoke-AzRestMethod -Method "POST" -Uri $principalsRequestUri -Payload $principalsRequestBody -WhatIf:$false
-        $principalIds = ($principalsResponse.Content | ConvertFrom-Json).value.id
-
-        # Find all Role Assignments where the principalId is not found in AAD
-        $orphanedRoleAssignments = $roleAssignments | Where-Object {
-            ($_.properties.scope -eq "/subscriptions/$($subId)") -and
-            ($_.properties.principalId -notin $principalIds)
-        }
-
-        # Delete orphaned Role Assignments
-        Write-Information "$($WhatIfPrefix)Deleting [$($orphanedRoleAssignments.Length)] orphaned Role Assignments for Subscription [$($subId)]" -InformationAction Continue
-        $orphanedRoleAssignments | ForEach-Object {
-            if ($PSCmdlet.ShouldProcess("$($_.id)", "Remove-AzRoleAssignment")) {
-                $deleteRequestPath = "$($_.id)?api-version=$($latestRoleAssignmentsApiVersions)"
-                $deleteResponse = Invoke-AzRestMethod -Method "DELETE" -Path $deleteRequestPath
-                # Check for valid response
-                if ($deleteResponse.StatusCode -ne "200") {
-                    throw $deleteResponse.Content
-                }
-            }
-        }
-    }
-    Set-AzContext $originalCtx -WhatIf:$false | Out-Null
-}
-
 #Toggle to stop warnings with regards to DisplayName and DisplayId
 Set-Item Env:\SuppressAzurePowerShellBreakingChangeWarnings "true"
 
@@ -186,10 +114,6 @@ if($null -eq $managementGroup) {
     
     # Remove all the Management Groups in Intermediate Root Management Group's hierarchy tree, including itself
     Remove-Recursively($intermediateRootGroupID)
-
-    # Remove orphaned/identity not found RBAC role assignments from each subscription
-    Write-Host "Removing Oprhaned/Identity Not Found Role Assignments for all subscriptions: $($intermediateRootGroupChildSubscriptions.subID)" -ForegroundColor Yellow
-    Invoke-RemoveOrphanedRoleAssignment -SubscriptionId $intermediateRootGroupChildSubscriptions.subID
 }
 
 # Stop timer
