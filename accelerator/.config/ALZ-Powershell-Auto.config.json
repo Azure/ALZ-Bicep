@@ -5,6 +5,21 @@
       "short_name": "Complete",
       "description": "Complete Azure Landing Zones Deployment",
       "destroy_script_path": "accelerator/scripts/destroy-landing-zone.ps1",
+      "folders_or_files_to_retain": [
+        "accelerator",
+        "infra-as-code",
+        "version.json"
+      ],
+      "subfolders_or_files_to_remove" : [
+        "media", 
+        "samples", 
+        "generateddocs", 
+        ".azuredevops/pipelines", 
+        ".github/workflows", 
+        "pipeline-scripts", 
+        "china", 
+        "parameters"
+      ],
       "deployment_file_groups" : [
         {
           "name": "management_groups",
@@ -608,6 +623,21 @@
       "short_name": "Test",
       "description": "Test Azure Landing Zones Deployment for e2e testing",
       "destroy_script_path": "accelerator/scripts/destroy-landing-zone.ps1",
+      "folders_or_files_to_retain": [
+        "accelerator",
+        "infra-as-code/bicep/modules/resourceGroup",
+        "version.json"
+      ],
+      "subfolders_or_files_to_remove" : [
+        "media", 
+        "samples", 
+        "generateddocs", 
+        ".azuredevops/pipelines", 
+        ".github/workflows", 
+        "pipeline-scripts", 
+        "china", 
+        "parameters"
+      ],
       "deployment_file_groups" : [
         {
           "name": "management_groups",
@@ -666,7 +696,7 @@
           "subscriptionId": "IDENTITY_SUBSCRIPTION_ID",
           "deploymentType": "subscription",
           "firstRunWhatIf": true,
-          "order": 3,
+          "order": 4,
           "group": "resource_groups"
         }
       ],
