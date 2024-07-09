@@ -1,0 +1,16 @@
+{
+  "AuditDisksOsTrustedLaunch": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "AuditTrustedLaunchEnabled": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  }
+}

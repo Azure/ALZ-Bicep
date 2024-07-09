@@ -1,0 +1,117 @@
+{
+  "defenderForSqlAma": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      },
+      "identityResourceGroup": {
+        "value": "[[parameters('identityResourceGroup')]"
+      },
+      "userAssignedIdentityName": {
+        "value": "[[parameters('userAssignedIdentityName')]"
+      }
+    }
+  },
+  "defenderForSqlArcAma": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "defenderForSqlArcDcrAssociation": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      },
+      "workspaceRegion": {
+        "value": "[[parameters('workspaceRegion')]"
+      },
+      "dcrName": {
+        "value": "[[parameters('dcrName')]"
+      },
+      "dcrResourceGroup": {
+        "value": "[[parameters('dcrResourceGroup')]"
+      },
+      "dcrId": {
+        "value": "[[parameters('dcrId')]"
+      }
+    }
+  },
+  "defenderForSqlArcMdsql": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "defenderForSqlArcMdsqlDcr": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      },
+      "userWorkspaceResourceId": {
+        "value": "[[parameters('userWorkspaceResourceId')]"
+      },
+      "workspaceRegion": {
+        "value": "[[parameters('workspaceRegion')]"
+      },
+      "enableCollectionOfSqlQueriesForSecurityResearch": {
+        "value": "[[parameters('enableCollectionOfSqlQueriesForSecurityResearch')]"
+      },
+      "dcrName": {
+        "value": "[[parameters('dcrName')]"
+      },
+      "dcrResourceGroup": {
+        "value": "[[parameters('dcrResourceGroup')]"
+      },
+      "dcrId": {
+        "value": "[[parameters('dcrId')]"
+      }
+    }
+  },
+  "defenderForSqlMdsql": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      },
+      "workspaceRegion": {
+        "value": "[[parameters('workspaceRegion')]"
+      },
+      "dcrResourceGroup": {
+        "value": "[[parameters('dcrResourceGroup')]"
+      },
+      "dcrName": {
+        "value": "[[parameters('dcrName')]"
+      },
+      "dcrId": {
+        "value": "[[parameters('dcrId')]"
+      }
+    }
+  },
+  "defenderForSqlMdsqlDcr": {
+    "parameters": {
+      "effect": {
+        "value": "Disabled"
+      },
+      "userWorkspaceResourceId": {
+        "value": "[[parameters('userWorkspaceResourceId')]"
+      },
+      "workspaceRegion": {
+        "value": "[[parameters('workspaceRegion')]"
+      },
+      "enableCollectionOfSqlQueriesForSecurityResearch": {
+        "value": "[[parameters('enableCollectionOfSqlQueriesForSecurityResearch')]"
+      },
+      "dcrName": {
+        "value": "[[parameters('dcrName')]"
+      },
+      "dcrResourceGroup": {
+        "value": "[[parameters('dcrResourceGroup')]"
+      },
+      "dcrId": {
+        "value": "[[parameters('dcrId')]"
+      }
+    }
+  }
+}

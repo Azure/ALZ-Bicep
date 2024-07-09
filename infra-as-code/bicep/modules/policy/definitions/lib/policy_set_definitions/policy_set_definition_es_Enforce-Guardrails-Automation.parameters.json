@@ -1,0 +1,44 @@
+{
+  "Deny-Aa-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aaLocalAuth')]"
+      }
+    }
+  },
+  "Deny-Aa-Managed-Identity": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aaManagedIdentity')]"
+      }
+    }
+  },
+  "Deny-Aa-Variables-Encrypt": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aaVariablesEncryption')]"
+      }
+    }
+  },
+  "Deny-Windows-Vm-HotPatch": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('autoHotPatch')]"
+      }
+    }
+  },
+  "Modify-Aa-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aaModifyLocalAUth')]"
+      }
+    }
+  },
+  "Modify-Aa-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aaModifyPublicNetworkAccess')]"
+      }
+    }
+  }
+}

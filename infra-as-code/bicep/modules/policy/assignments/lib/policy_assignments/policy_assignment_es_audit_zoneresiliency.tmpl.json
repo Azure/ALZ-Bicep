@@ -1,0 +1,25 @@
+{
+  "name": "Audit-ZoneResiliency",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2024-04-01",
+  "properties": {
+    "description": "Resources should be Zone Resilient.",
+    "displayName": "Resources should be Zone Resilient",
+    "notScopes": [],
+    "parameters": {
+      "effect": {
+        "value": "Audit"
+      },
+      "allow": {
+        "value": "Both"
+      }
+    },
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/130fb88f-0fc9-4678-bfe1-31022d71c7d5",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "None"
+  }
+}

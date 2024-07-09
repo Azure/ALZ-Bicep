@@ -1,7 +1,7 @@
 {
   "name": "Audit-PeDnsZones",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Audits the deployment of Private Link Private DNS Zone resources in the Corp landing zone.",
     "displayName": "Audit Private Link Private DNS Zone resources",

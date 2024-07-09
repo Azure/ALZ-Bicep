@@ -1,7 +1,7 @@
 {
   "name": "Deploy-AzActivity-Log",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Ensures that Activity Log Diagnostics settings are set to push logs into Log Analytics workspace.",
     "displayName": "Deploy Diagnostic Settings for Activity Log to Log Analytics workspace",

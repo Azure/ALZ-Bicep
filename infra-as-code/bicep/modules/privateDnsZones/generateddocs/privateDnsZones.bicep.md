@@ -12,6 +12,7 @@ parPrivateDnsZoneAutoMergeAzureBackupZone | No       | Set Parameter to false to
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parVirtualNetworkIdToLink | No       | Resource ID of VNet for Private DNS Zone VNet Links.
 parVirtualNetworkIdToLinkFailover | No       | Resource ID of VNet for Failover Private DNS Zone VNet Links.
+parResourceLockConfig | No       | Resource Lock Configuration for Private DNS Zones.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
 ### parLocation
@@ -55,6 +56,19 @@ Resource ID of VNet for Private DNS Zone VNet Links.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Resource ID of VNet for Failover Private DNS Zone VNet Links.
+
+### parResourceLockConfig
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Private DNS Zones.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Private DNS Zones Module.}`
 
 ### parTelemetryOptOut
 
@@ -168,6 +182,12 @@ outPrivateDnsZonesNames | array |
         },
         "parVirtualNetworkIdToLinkFailover": {
             "value": ""
+        },
+        "parResourceLockConfig": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Private DNS Zones Module."
+            }
         },
         "parTelemetryOptOut": {
             "value": false

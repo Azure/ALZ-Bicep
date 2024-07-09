@@ -1,0 +1,25 @@
+{
+  "name": "Deploy-vmArc-ChangeTrack",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2024-04-01",
+  "properties": {
+    "description": "Enable ChangeTracking and Inventory for Arc-enabled virtual machines. Takes Data Collection Rule ID as parameter and asks for an option to input applicable locations.",
+    "displayName": "Enable ChangeTracking and Inventory for Arc-enabled virtual machines",
+    "notScopes": [],
+    "parameters": {
+      "dcrResourceId": {
+        "value": "${parDataCollectionRuleChangeTrackingResourceId}"
+      },
+      "effect": {
+        "value": "DeployIfNotExists"
+      }
+    },
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/53448c70-089b-4f52-8f38-89196d7f2de1",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

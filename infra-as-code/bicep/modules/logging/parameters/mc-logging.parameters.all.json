@@ -16,17 +16,20 @@
     },
     "parLogAnalyticsWorkspaceSolutions": {
       "value": [
-        "AgentHealthAssessment",
-        "AntiMalware",
-        "ChangeTracking",
-        "Security",
-        "SecurityInsights",
-        "SQLAdvancedThreatProtection",
-        "SQLVulnerabilityAssessment",
-        "SQLAssessment",
-        "Updates",
-        "VMInsights"
+        "SecurityInsights"
       ]
+    },
+    "parDataCollectionRuleVMInsightsName": {
+      "value": "ama-vmi-default-perfAndda-dcr"
+    },
+    "parDataCollectionRuleChangeTrackingName": {
+      "value": "ama-ct-default-dcr"
+    },
+    "parDataCollectionRuleMDFCSQLName": {
+      "value": "ama-mdfcsql-default-dcr"
+    },
+    "parUserAssignedManagedIdentityName": {
+      "value": "alz-umi-identity"
     },
     "parLogAnalyticsWorkspaceLinkAutomationAccount": {
       "value": true
@@ -53,6 +56,48 @@
     },
     "parTelemetryOptOut": {
       "value": false
+    },
+    "parGlobalResourceLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parAutomationAccountLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parLogAnalyticsWorkspaceLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parLogAnalyticsWorkspaceSolutionsLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parDataCollectionRuleVMInsightsLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parDataCollectionRuleChangeTrackingLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parDataCollectionRuleMDFCSQLLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
     }
   }
 }

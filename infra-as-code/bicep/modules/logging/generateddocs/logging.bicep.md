@@ -6,23 +6,48 @@ ALZ Bicep Module used to set up Logging
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
+parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceName | No       | Log Analytics Workspace name.
 parLogAnalyticsWorkspaceLocation | No       | Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
+parDataCollectionRuleVMInsightsName | No       | VM Insights Data Collection Rule name for AMA integration.
+parDataCollectionRuleVMInsightsLock | No       | Resource Lock Configuration for VM Insights Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parDataCollectionRuleChangeTrackingName | No       | Change Tracking Data Collection Rule name for AMA integration.
+parDataCollectionRuleChangeTrackingLock | No       | Resource Lock Configuration for Change Tracking Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parDataCollectionRuleMDFCSQLName | No       | MDFC for SQL Data Collection Rule name for AMA integration.
+parDataCollectionRuleMDFCSQLLock | No       | Resource Lock Configuration for MDFC Defender for SQL Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceSkuName | No       | Log Analytics Workspace sku name.
 parLogAnalyticsWorkspaceCapacityReservationLevel | No       | Log Analytics Workspace Capacity Reservation Level. Only used if parLogAnalyticsWorkspaceSkuName is set to CapacityReservation.
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
+parLogAnalyticsWorkspaceLock | No       | Resource Lock Configuration for Log Analytics Workspace.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace.
+parLogAnalyticsWorkspaceSolutionsLock | No       | Resource Lock Configuration for Log Analytics Workspace Solutions.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parUserAssignedManagedIdentityName | No       | Name of the User Assigned Managed Identity required for authenticating Azure Monitoring Agent to Azure.
+parUserAssignedManagedIdentityLocation | No       | User Assigned Managed Identity location.
 parLogAnalyticsWorkspaceLinkAutomationAccount | No       | Log Analytics Workspace should be linked with the automation account.
 parAutomationAccountName | No       | Automation account name.
 parAutomationAccountLocation | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
 parAutomationAccountUseManagedIdentity | No       | Automation Account - use managed identity.
 parAutomationAccountPublicNetworkAccess | No       | Automation Account - Public network access.
+parAutomationAccountLock | No       | Resource Lock Configuration for Automation Account.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parAutomationAccountTags | No       | Tags you would like to be applied to Automation Account.
 parLogAnalyticsWorkspaceTags | No       | Tags you would like to be applied to Log Analytics Workspace.
 parUseSentinelClassicPricingTiers | No       | Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.
 parLogAnalyticsLinkedServiceAutomationAccountName | No       | Log Analytics LinkedService name for Automation Account.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
+
+### parGlobalResourceLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Global Resource Lock Configuration used for all resources deployed in this module.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
 
 ### parLogAnalyticsWorkspaceName
 
@@ -39,6 +64,69 @@ Log Analytics Workspace name.
 Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
 
 - Default value: `[resourceGroup().location]`
+
+### parDataCollectionRuleVMInsightsName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+VM Insights Data Collection Rule name for AMA integration.
+
+- Default value: `alz-ama-vmi-dcr`
+
+### parDataCollectionRuleVMInsightsLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for VM Insights Data Collection Rule.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
+
+### parDataCollectionRuleChangeTrackingName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Change Tracking Data Collection Rule name for AMA integration.
+
+- Default value: `alz-ama-ct-dcr`
+
+### parDataCollectionRuleChangeTrackingLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Change Tracking Data Collection Rule.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
+
+### parDataCollectionRuleMDFCSQLName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+MDFC for SQL Data Collection Rule name for AMA integration.
+
+- Default value: `alz-ama-mdfcsql-dcr`
+
+### parDataCollectionRuleMDFCSQLLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for MDFC Defender for SQL Data Collection Rule.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
 
 ### parLogAnalyticsWorkspaceSkuName
 
@@ -68,15 +156,57 @@ Number of days of log retention for Log Analytics Workspace.
 
 - Default value: `365`
 
+### parLogAnalyticsWorkspaceLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Log Analytics Workspace.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
+
 ### parLogAnalyticsWorkspaceSolutions
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Solutions that will be added to the Log Analytics Workspace.
 
-- Default value: `AgentHealthAssessment AntiMalware ChangeTracking Security SecurityInsights SQLAdvancedThreatProtection SQLVulnerabilityAssessment SQLAssessment Updates VMInsights`
+- Default value: `SecurityInsights`
 
-- Allowed values: `AgentHealthAssessment`, `AntiMalware`, `ChangeTracking`, `Security`, `SecurityInsights`, `ServiceMap`, `SQLAdvancedThreatProtection`, `SQLVulnerabilityAssessment`, `SQLAssessment`, `Updates`, `VMInsights`
+- Allowed values: `SecurityInsights`
+
+### parLogAnalyticsWorkspaceSolutionsLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Log Analytics Workspace Solutions.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
+
+### parUserAssignedManagedIdentityName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Name of the User Assigned Managed Identity required for authenticating Azure Monitoring Agent to Azure.
+
+- Default value: `alz-logging-mi`
+
+### parUserAssignedManagedIdentityLocation
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+User Assigned Managed Identity location.
+
+- Default value: `[resourceGroup().location]`
 
 ### parLogAnalyticsWorkspaceLinkAutomationAccount
 
@@ -117,6 +247,19 @@ Automation Account - use managed identity.
 Automation Account - Public network access.
 
 - Default value: `True`
+
+### parAutomationAccountLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Automation Account.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
 
 ### parTags
 
@@ -168,6 +311,14 @@ Set Parameter to true to Opt-out of deployment telemetry
 
 Name | Type | Description
 ---- | ---- | -----------
+outUserAssignedManagedIdentityId | string |
+outUserAssignedManagedIdentityPrincipalId | string |
+outDataCollectionRuleVMInsightsName | string |
+outDataCollectionRuleVMInsightsId | string |
+outDataCollectionRuleChangeTrackingName | string |
+outDataCollectionRuleChangeTrackingId | string |
+outDataCollectionRuleMDFCSQLName | string |
+outDataCollectionRuleMDFCSQLId | string |
 outLogAnalyticsWorkspaceName | string |
 outLogAnalyticsWorkspaceId | string |
 outLogAnalyticsCustomerId | string |
@@ -187,11 +338,44 @@ outAutomationAccountId | string |
         "template": "infra-as-code/bicep/modules/logging/logging.json"
     },
     "parameters": {
+        "parGlobalResourceLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Logging Module."
+            }
+        },
         "parLogAnalyticsWorkspaceName": {
             "value": "alz-log-analytics"
         },
         "parLogAnalyticsWorkspaceLocation": {
             "value": "[resourceGroup().location]"
+        },
+        "parDataCollectionRuleVMInsightsName": {
+            "value": "alz-ama-vmi-dcr"
+        },
+        "parDataCollectionRuleVMInsightsLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Logging Module."
+            }
+        },
+        "parDataCollectionRuleChangeTrackingName": {
+            "value": "alz-ama-ct-dcr"
+        },
+        "parDataCollectionRuleChangeTrackingLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Logging Module."
+            }
+        },
+        "parDataCollectionRuleMDFCSQLName": {
+            "value": "alz-ama-mdfcsql-dcr"
+        },
+        "parDataCollectionRuleMDFCSQLLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Logging Module."
+            }
         },
         "parLogAnalyticsWorkspaceSkuName": {
             "value": "PerGB2018"
@@ -202,19 +386,28 @@ outAutomationAccountId | string |
         "parLogAnalyticsWorkspaceLogRetentionInDays": {
             "value": 365
         },
+        "parLogAnalyticsWorkspaceLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Logging Module."
+            }
+        },
         "parLogAnalyticsWorkspaceSolutions": {
             "value": [
-                "AgentHealthAssessment",
-                "AntiMalware",
-                "ChangeTracking",
-                "Security",
-                "SecurityInsights",
-                "SQLAdvancedThreatProtection",
-                "SQLVulnerabilityAssessment",
-                "SQLAssessment",
-                "Updates",
-                "VMInsights"
+                "SecurityInsights"
             ]
+        },
+        "parLogAnalyticsWorkspaceSolutionsLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Logging Module."
+            }
+        },
+        "parUserAssignedManagedIdentityName": {
+            "value": "alz-logging-mi"
+        },
+        "parUserAssignedManagedIdentityLocation": {
+            "value": "[resourceGroup().location]"
         },
         "parLogAnalyticsWorkspaceLinkAutomationAccount": {
             "value": true
@@ -230,6 +423,12 @@ outAutomationAccountId | string |
         },
         "parAutomationAccountPublicNetworkAccess": {
             "value": true
+        },
+        "parAutomationAccountLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Logging Module."
+            }
         },
         "parTags": {
             "value": {}

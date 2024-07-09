@@ -1,0 +1,16 @@
+{
+  "Deny-Disk-Double-Encryption": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('diskDoubleEncryption')]"
+      }
+    }
+  },
+  "Deny-VmAndVmss-Encryption-Host": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('vmAndVmssEncryptionHost')]"
+      }
+    }
+  }
+}

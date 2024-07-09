@@ -1,0 +1,16 @@
+{
+  "Modify-KV-Fw": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultModifyFw')]"
+      }
+    }
+  },
+  "Modify-KV-PublicNetworkAccess": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultManagedHsmDisablePublicNetworkModify')]"
+      }
+    }
+  }
+}

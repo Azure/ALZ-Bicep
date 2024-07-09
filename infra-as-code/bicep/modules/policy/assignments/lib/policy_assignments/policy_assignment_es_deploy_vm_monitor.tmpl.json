@@ -1,0 +1,40 @@
+{
+  "name": "Deploy-VM-Monitoring",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2024-04-01",
+  "properties": {
+    "description": "Enable Azure Monitor for the virtual machines (VMs) in the specified scope (management group, subscription or resource group). Takes Log Analytics workspace as parameter.",
+    "displayName": "Enable Azure Monitor for VMs",
+    "notScopes": [],
+    "parameters": {
+      "dcrResourceId": {
+        "value": "${parDataCollectionRuleVMInsightsResourceId}"
+      },
+      "enableProcessesAndDependencies": {
+        "value": true
+      },
+      "scopeToSupportedImages": {
+        "value": false
+      },
+      "bringYourOwnUserAssignedManagedIdentity": {
+        "value": true
+      },
+      "restrictBringYourOwnUserAssignedIdentityToSubscription": {
+        "value": false
+      },
+      "userAssignedIdentityResourceId": {
+        "value": "${parUserAssignedManagedIdentityResourceId}"
+      },
+      "effect": {
+        "value": "DeployIfNotExists"
+      }
+    },
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/924bfe3a-762f-40e7-86dd-5c8b95eb09e6",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

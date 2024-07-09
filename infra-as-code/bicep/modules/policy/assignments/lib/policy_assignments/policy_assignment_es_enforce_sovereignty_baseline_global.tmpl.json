@@ -1,0 +1,80 @@
+{
+  "name": "Enforce-Sovereign-Global",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2024-04-01",
+  "properties": {
+    "description": "The Microsoft Cloud for Sovereignty recommends global policies to help organizations achieve their sovereignty goals by default denying the creation of resources outside of approved regions. More details can be found here: https://aka.ms/SovereigntyBaselinePolicies",
+    "displayName": "[Preview]: Sovereignty Baseline - Global Policies",
+    "notScopes": [],
+    "parameters": {
+      "effect": {
+        "value": "Deny"
+      },
+      "listOfAllowedLocations": {
+        "value": [
+          "australiacentral",
+          "australiacentral2",
+          "australiaeast",
+          "australiasoutheast",
+          "brazilsouth",
+          "brazilsoutheast",
+          "brazilus",
+          "canadacentral",
+          "canadaeast",
+          "centralindia",
+          "centralus",
+          "centraluseuap",
+          "eastasia",
+          "eastus",
+          "eastus2",
+          "eastus2euap",
+          "eastusstg",
+          "francecentral",
+          "francesouth",
+          "germanynorth",
+          "germanywestcentral",
+          "israelcentral",
+          "italynorth",
+          "japaneast",
+          "japanwest",
+          "jioindiacentral",
+          "jioindiawest",
+          "koreacentral",
+          "koreasouth",
+          "northcentralus",
+          "northeurope",
+          "norwayeast",
+          "norwaywest",
+          "polandcentral",
+          "qatarcentral",
+          "southafricanorth",
+          "southafricawest",
+          "southcentralus",
+          "southcentralusstg",
+          "southeastasia",
+          "southindia",
+          "swedencentral",
+          "switzerlandnorth",
+          "switzerlandwest",
+          "uaecentral",
+          "uaenorth",
+          "uksouth",
+          "ukwest",
+          "westcentralus",
+          "westeurope",
+          "westindia",
+          "westus",
+          "westus2",
+          "westus3"
+        ]
+      }
+    },
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/c1cbff38-87c0-4b9f-9f70-035c7a3b5523",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "None"
+  }
+}

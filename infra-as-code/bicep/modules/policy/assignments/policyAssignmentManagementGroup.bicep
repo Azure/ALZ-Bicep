@@ -81,7 +81,7 @@ var varPolicyAssignmentIdentityRoleAssignmentsMgsConverged = parPolicyAssignment
 // Customer Usage Attribution Id
 var varCuaid = '78001e36-9738-429c-a343-45cc84e8a527'
 
-resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01' = {
+resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2024-04-01' = {
   name: parPolicyAssignmentName
   properties: {
     displayName: parPolicyAssignmentDisplayName
@@ -143,3 +143,5 @@ module modCustomerUsageAttribution '../../../CRML/customerUsageAttribution/cuaId
   name: 'pid-${varCuaid}-${uniqueString(deployment().location, parPolicyAssignmentName)}'
   params: {}
 }
+
+output outPolicyAssignmentId string = resPolicyAssignment.id

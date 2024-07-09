@@ -15,6 +15,12 @@
     },
     "parTelemetryOptOut": {
       "value": false
+    },
+    "parResourceLockConfig": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep resourceGroup Module"
+      }
     }
   }
 }
