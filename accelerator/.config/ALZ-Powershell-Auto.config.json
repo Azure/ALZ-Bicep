@@ -226,7 +226,11 @@
             },
             {
               "name": "MANAGEMENT_GROUP_ID",
-              "destination": "Environment"
+              "Destination": "Environment"
+            },
+            {
+              "name": "PREFIX",
+              "Destination": "Environment"
             }
           ],
           "default": "alz",
@@ -715,7 +719,11 @@
             },
             {
               "name": "MANAGEMENT_GROUP_ID",
-              "destination": "Environment"
+              "Destination": "Environment"
+            },
+            {
+              "Name": "PREFIX",
+              "Destination": "Environment"
             }
           ],
           "default": "alz",
