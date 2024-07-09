@@ -83,13 +83,18 @@ ForEach ($subscription in $subscriptionsToClean) {
     Set-AzContext -Subscription $subscription.id | Out-Null
 
     # Get all Resource Groups in Subscription
-    $resources = Get-AzResourceGroup
+    $resourceGroups = Get-AzResourceGroup
 
-    $resources | ForEach-Object -Parallel {
-        if($_.ResourceGroupName -like "*$intermediateRootGroupID*") {
-            Write-Host "Deleting " $_.ResourceGroupName "..." -ForegroundColor Red
-            Remove-AzResourceGroup -Name $_.ResourceGroupName -Force | Out-Null
+    $resourceGroupsToRemove = @()
+    ForEach ($resourceGroup in $resourceGroups) {
+        if ($resourceGroup.ResourceGroupName -like "*$intermediateRootGroupID*") {
+            $resourceGroupsToRemove += $resourceGroup.ResourceGroupName
         }
+    }
+
+    $resourceGroupsToRemove | ForEach-Object -Parallel {
+        Write-Host "Deleting " $_ "..." -ForegroundColor Red
+        Remove-AzResourceGroup -Name $_ -Force | Out-Null
     }
     
     # Get Deployments for Subscription
