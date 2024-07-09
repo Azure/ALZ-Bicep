@@ -173,7 +173,7 @@ $TopLevelMGPrefix = "alz"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = -join ('alz-vwanConnectivityDeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63])
+  DeploymentName        = -join ('alz-vwanConnectivityDeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ResourceGroupName     = "rg-$TopLevelMGPrefix-vwan-001"
   TemplateFile          = "infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
   TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.az.all.json"
