@@ -1,18 +1,31 @@
 <!-- Thank you for submitting a Pull Request. Please fill out the template below.-->
 # Overview/Summary
 
+<!--
 Replace this with a brief description of what this Pull Request fixes, changes, etc.
+-->
+
+## Related Issues/Work Items
+
+<!--
+- To associate a GitHub Issue, use a [key word](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword) preceded with the GitHub issue number.
+- To associate an ADO Work Item (internal Microsoft team member), use the key word `AB#` succeeded with the [ADO Work Item ID](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword).
+-->
 
 ## This PR fixes/adds/changes/removes
 
+<!--
 1. *Replace me*
 2. *Replace me*
 3. *Replace me*
+-->
 
 ### Breaking Changes
 
+<!--
 1. *Replace me*
 2. *Replace me*
+-->
 
 ## Testing Evidence
 
