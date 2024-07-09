@@ -255,15 +255,15 @@ Here you can find the detailed changes for a minimal hub-and-spoke deployment. F
 
 - Remove the DDos Plan: edit config/custom-parameters/hubNetworking.parameters.all.json and set **parDdosEnabled** to **false**.
 
-    ```yaml
+    ```json
     "parDdosEnabled": {
       "value": false
     },
     ```
 
-    Then **you must disable the automatic Policy assignment** by adding the following in config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json (this may no longer be necessary in a future release, see bug #596):
+    Then you can either **disable the automatic Policy assignment** by adding the following in config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json:
 
-    ```yaml
+    ```json
     "parExcludedPolicyAssignments": {
       "value": [
         "Enable-DDoS-VNET"
@@ -271,9 +271,17 @@ Here you can find the detailed changes for a minimal hub-and-spoke deployment. F
     },
     ```
 
+    OR if you want to still deploy the assignment to track the compliance against ALZ recommendations, **set the enforcement mode to DoNotEnforce** in the same parameter file by setting `parDdosEnabled` to `false`:
+
+    ```json
+    "parDdosEnabled": {
+      "value": true
+    },
+    ```
+
 - Remove Bastion or Firewall:  edit config/custom-parameters/hubNetworking.parameters.all.json and set **parAzBastionEnabled** and/or **parAzFirewallEnabled** to **false**. You can also keep it enabled and switch to the **Bastion Basic/Developer SKU and Firewall Basic Tier** for a cost-efficient yet functional starting point.
 
-    ```yaml
+    ```json
     "parAzBastionEnabled": {
       "value": false
     },
@@ -284,7 +292,7 @@ Here you can find the detailed changes for a minimal hub-and-spoke deployment. F
 
 - Remove VPN or ExpressRoute gateways: edit config/custom-parameters/hubNetworking.parameters.all.json and set **parVpnGatewayEnabled** and/or **parExpressRouteGatewayEnabled** to **false**. Optionally the parameter **parVpnGatewayConfig** and/or **parExpressRouteGatewayConfig** could be set to an empty object or removed. For vWAN, look for the **parVpnGatewayEnabled** and **parExpressRouteGatewayEnabled** parameters instead.
 
-    ```yaml
+    ```json
     "parVpnGatewayEnabled": {
       "value": false
     },
