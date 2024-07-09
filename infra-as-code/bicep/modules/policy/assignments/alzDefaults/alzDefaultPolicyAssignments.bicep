@@ -1230,7 +1230,7 @@ module modPolicyAssignmentConnEnableDdosVnet '../../../policy/assignments/policy
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnableDDoSVNET.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: !parDdosEnabled ? 'DoNotEnforce' : varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.enforcementMode
+    parPolicyAssignmentEnforcementMode: !parDdosEnabled || parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.networkContributor
     ]
@@ -1447,7 +1447,7 @@ module modPolicyAssignmentLzsEnableDdosVnet '../../../policy/assignments/policyA
       }
     }
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnableDDoSVNET.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: !parDdosEnabled ? 'DoNotEnforce' : varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.enforcementMode
+    parPolicyAssignmentEnforcementMode: !parDdosEnabled || parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.networkContributor
     ]
