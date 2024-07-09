@@ -132,7 +132,7 @@ New-AzResourceGroup `
   -Location 'eastus'
 
 $inputObject = @{
-  DeploymentName        = 'alz-PrivateDnsZonesDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-PrivateDnsZonesDeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ResourceGroupName     = "rg-$TopLevelMGPrefix-private-dns-001"
   TemplateFile          = "infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
   TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"
@@ -157,7 +157,7 @@ New-AzResourceGroup `
   -Location 'chinaeast2'
 
 $inputObject = @{
-  DeploymentName        = 'alz-PrivateDnsZonesDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-PrivateDnsZonesDeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ResourceGroupName     = "rg-$TopLevelMGPrefix-private-dns-001"
   TemplateFile          = "infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep"
   TemplateParameterFile = "infra-as-code/bicep/modules/privateDnsZones/parameters/privateDnsZones.parameters.all.json"

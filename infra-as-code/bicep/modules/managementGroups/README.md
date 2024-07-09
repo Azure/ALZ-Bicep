@@ -204,7 +204,7 @@ az deployment mg create --name ${NAME:0:63} --location $LOCATION --template-file
 # For Azure global regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-MGDeployment-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = 'EastUS'
   TemplateFile          = "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
   TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
@@ -216,7 +216,7 @@ OR
 # For Azure China regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-MGDeployment-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = 'chinaeast2'
   TemplateFile          = "infra-as-code/bicep/modules/managementGroups/managementGroups.bicep"
   TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
@@ -232,7 +232,7 @@ Use this module if you do not want to grant Tenant Root Management Group Deploym
 # For Azure global regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-MGDeployment-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = 'EastUS'
   TemplateFile          = "infra-as-code/bicep/modules/managementGroups/managementGroupsScopeEscape.bicep"
   TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
@@ -245,7 +245,7 @@ OR
 # For Azure China regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-MGDeployment-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-MGDeployment-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = 'chinaeast2'
   TemplateFile          = "infra-as-code/bicep/modules/managementGroups/managementGroupsScopeEscape.bicep"
   TemplateParameterFile = 'infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json'
