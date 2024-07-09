@@ -16,9 +16,9 @@ configuration:
       - isIssue
       - isOpen
       - hasLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       - hasLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       - noActivitySince:
           days: 3
       actions:
@@ -31,14 +31,14 @@ configuration:
       - isIssue
       - isOpen
       - hasLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       - noActivitySince:
           days: 4
       - isNotLabeledWith:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       actions:
       - addLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       - addReply:
           reply: This issue has been automatically marked as stale because it has been marked as requiring author feedback but has not had any activity for **4 days**. It will be closed if no further activity occurs **within 3 days of this comment**.
     - description:
@@ -49,7 +49,7 @@ configuration:
       - isIssue
       - isOpen
       - hasLabel:
-          label: 'Resolution: Duplicate'
+          label: 'Type: Duplicate :palms_up_together:'
       - noActivitySince:
           days: 1
       actions:
@@ -64,9 +64,9 @@ configuration:
       - isPullRequest
       - isOpen
       - hasLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       - hasLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       - noActivitySince:
           days: 7
       actions:
@@ -79,14 +79,14 @@ configuration:
       - isPullRequest
       - isOpen
       - hasLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       - noActivitySince:
           days: 7
       - isNotLabeledWith:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       actions:
       - addLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       - addReply:
           reply: This pull request has been automatically marked as stale because it has been marked as requiring author feedback but has not had any activity for **7 days**. It will be closed if no further activity occurs **within 7 days of this comment**.
     eventResponderTasks:
@@ -97,13 +97,13 @@ configuration:
       - isActivitySender:
           issueAuthor: True
       - hasLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       - isOpen
       then:
       - addLabel:
           label: 'Needs: Attention :wave:'
       - removeLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       description:
     - if:
       - payloadType: Issues
@@ -111,24 +111,24 @@ configuration:
           isAction:
             action: Closed
       - hasLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       then:
       - removeLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       description:
     - if:
       - payloadType: Issue_Comment
       - hasLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       then:
       - removeLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       description:
     - if:
       - payloadType: Pull_Request
       then:
       - inPrLabel:
-          label: 'Status: In PR'
+          label: 'Status: In PR :point_right:'
       description:
     - if:
       - payloadType: Pull_Request_Review
@@ -138,7 +138,7 @@ configuration:
           reviewState: Changes_requested
       then:
       - addLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       description:
     - if:
       - payloadType: Pull_Request
@@ -148,30 +148,30 @@ configuration:
           isAction:
             action: Closed
       - hasLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       then:
       - removeLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       description:
     - if:
       - payloadType: Issue_Comment
       - isActivitySender:
           issueAuthor: True
       - hasLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       then:
       - removeLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       description:
     - if:
       - payloadType: Pull_Request_Review
       - isActivitySender:
           issueAuthor: True
       - hasLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       then:
       - removeLabel:
-          label: 'Needs: Author Feedback'
+          label: 'Needs: Author Feedback :ear:'
       description:
     - if:
       - payloadType: Pull_Request
@@ -179,26 +179,26 @@ configuration:
           isAction:
             action: Closed
       - hasLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       then:
       - removeLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       description:
     - if:
       - payloadType: Issue_Comment
       - hasLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       then:
       - removeLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       description:
     - if:
       - payloadType: Pull_Request_Review
       - hasLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       then:
       - removeLabel:
-          label: 'Status: No Recent Activity'
+          label: 'Status: No Recent Activity :zzz:'
       description:
     - if:
       - payloadType: Issue_Comment
@@ -241,7 +241,7 @@ configuration:
     - if:
       - payloadType: Pull_Request
       - labelAdded:
-          label: 'Needs: upstream policy changes :up:'
+          label: 'Needs: Upstream Policy Changes :arrows_clockwise:'
       then:
       - addReply:
           reply: >-
