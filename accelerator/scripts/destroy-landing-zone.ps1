@@ -31,19 +31,19 @@ $StopWatch.Start()
 # Get all Subscriptions that are in the Intermediate Root Management Group's hierarchy tree
 $intermediateRootGroupChildSubscriptions = Search-AzGraph -Query "resourcecontainers | where type =~ 'microsoft.resources/subscriptions' | mv-expand mgmtGroups=properties.managementGroupAncestorsChain | where mgmtGroups.name =~ '$intermediateRootGroupID' | project subName=name, subID=subscriptionId, subState=properties.state, aadTenantID=tenantId, mgID=mgmtGroups.name, mgDisplayName=mgmtGroups.displayName"
 
-Write-Host "Moving all subscriptions under root management group" -ForegroundColor Yellow
+Write-Output "Moving all subscriptions under root management group"
 
 # For each Subscription in Intermediate Root Management Group's hierarchy tree, move it to the Tenant Root Management Group
 $intermediateRootGroupChildSubscriptions | ForEach-Object -Parallel {
     # The name 'Tenant Root Group' doesn't work. Instead, use the GUID of your Tenant Root Group
     if ($_.subState -ne "Disabled") {
-        Write-Host "Moving Subscription: '$($_.subName)' under Tenant Root Management Group: '$($using:tenantRootGroupID)'" -ForegroundColor Cyan
+        Write-Output "Moving Subscription: '$($_.subName)' under Tenant Root Management Group: '$($using:tenantRootGroupID)'"
         New-AzManagementGroupSubscription -GroupId $using:tenantRootGroupID -SubscriptionId $_.subID | Out-Null
     }
 }
 
 # For each Subscription in the Intermediate Root Management Group's hierarchy tree, remove all Resources, Resource Groups and Deployments
-Write-Host "Removing all Azure Resources, Resource Groups and Deployments from Subscriptions in scope" -ForegroundColor Yellow
+Write-Output "Removing all Azure Resources, Resource Groups and Deployments from Subscriptions in scope"
 
 $subscriptionsToClean = @()
 ForEach ($subscription in $intermediateRootGroupChildSubscriptions) {
@@ -80,7 +80,7 @@ if($subscriptionIds -notcontains $connectivitySubscriptionId) {
 }
 
 ForEach ($subscription in $subscriptionsToClean) {
-    Write-Host "Set context to Subscription: '$($subscription.name)'" -ForegroundColor Cyan
+    Write-Output "Set context to Subscription: '$($subscription.name)'"
     Set-AzContext -Subscription $subscription.id | Out-Null
 
     # Get all Resource Groups in Subscription
@@ -94,15 +94,15 @@ ForEach ($subscription in $subscriptionsToClean) {
     }
 
     $resourceGroupsToRemove | ForEach-Object -Parallel {
-        Write-Host "Deleting " $_ "..." -ForegroundColor Red
+        Write-Output "Deleting $_..."
         Remove-AzResourceGroup -Name $_ -Force | Out-Null
     }
-    
+
     # Get Deployments for Subscription
     $subDeployments = Get-AzSubscriptionDeployment
 
-    Write-Host "Removing All Successful Subscription Deployments for: $($subscription.name)" -ForegroundColor Yellow 
-    
+    Write-Output "Removing All Successful Subscription Deployments for: $($subscription.name)"
+
     $deploymentsToRemove = @()
     ForEach ($deployment in $subDeployments) {
         if ($deployment.DeploymentName -like "$prefix*" -and $deployment.ProvisioningState -eq "Succeeded") {
@@ -112,47 +112,54 @@ ForEach ($subscription in $subscriptionsToClean) {
 
     # For each Subscription level deployment, remove it
     $deploymentsToRemove | ForEach-Object -Parallel {
-        Write-Host "Removing $($_.DeploymentName) ..." -ForegroundColor Red
+        Write-Output "Removing $($_.DeploymentName) ..."
         Remove-AzSubscriptionDeployment -Id $_.Id | Out-Null
     }
 
     # Set MDFC tier to Free for each Subscription
     if ($resetMdfcTierOnSubs) {
-        Write-Host "Resetting MDFC tier to Free for Subscription: $($subscription.name)" -ForegroundColor Yellow
-        
+        Write-Output "Resetting MDFC tier to Free for Subscription: $($subscription.name)"
+
         $currentMdfcForSubUnfiltered = Get-AzSecurityPricing
         $currentMdfcForSub = $currentMdfcForSubUnfiltered | Where-Object { $_.PricingTier -ne "Free" }
 
         ForEach ($mdfcPricingTier in $currentMdfcForSub) {
-            Write-Host "Resetting $($mdfcPricingTier.Name) to Free MDFC Pricing Tier for Subscription: $($subscription.name)" -ForegroundColor Yellow
-            
+            Write-Output "Resetting $($mdfcPricingTier.Name) to Free MDFC Pricing Tier for Subscription: $($subscription.name)"
+
             Set-AzSecurityPricing -Name $mdfcPricingTier.Name -PricingTier 'Free' | Out-Null
         }
     }
 }
 
 # This function only deletes Management Groups in the Intermediate Root Management Group's hierarchy tree and will NOT delete other Intermediate Root level Management Groups and their children e.g. in the case of "canary"
-function Remove-Recursively($name) {
-    # Enters the parent Level
-    Write-Host "Entering the scope with $name" -ForegroundColor Green
-    $parent = Get-AzManagementGroup -GroupId $name -Expand -Recurse
 
-    # Checks if there is any parent level
-    if ($null -ne $parent.Children) {
-        Write-Host "Found the following Children :" -ForegroundColor Yellow
-        Write-host ($parent.Children | Select-Object Name).Name -ForegroundColor White
+function Remove-Recursively {
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    param (
+        [string]$name
+    )
+    if($PSCmdlet.ShouldProcess($name, "Remove-AzManagementGroup")) {
+        # Enters the parent Level
+        Write-Output "Entering the scope with $name"
+        $parent = Get-AzManagementGroup -GroupId $name -Expand -Recurse
 
-        foreach ($children in $parent.Children) {
-            # Tries to recur to each child item
-            Remove-Recursively($children.Name)
+        # Checks if there is any parent level
+        if ($null -ne $parent.Children) {
+            Write-Output "Found the following Children :"
+            Write-Output ($parent.Children | Select-Object Name).Name
+
+            foreach ($children in $parent.Children) {
+                # Tries to recur to each child item
+                Remove-Recursively($children.Name)
+            }
         }
-    }
 
-    # If no children are found at each scope
-    Write-Host "No children found in scope $name" -ForegroundColor Yellow
-    Write-Host "Removing the scope $name" -ForegroundColor Red
-    
-    Remove-AzManagementGroup -InputObject $parent | Out-Null
+        # If no children are found at each scope
+        Write-Output "No children found in scope $name"
+        Write-Output "Removing the scope $name"
+
+        Remove-AzManagementGroup -InputObject $parent | Out-Null
+    }
 }
 
 # Check if Management Group exists for idempotency
@@ -160,10 +167,10 @@ $managementGroups = Get-AzManagementGroup
 $managementGroup = $managementGroups | Where-Object { $_.Name -eq $intermediateRootGroupID }
 
 if($null -eq $managementGroup) {
-    Write-Host "Management Group with ID: '$intermediateRootGroupID' does not exist." -ForegroundColor Yellow
+    Write-Output "Management Group with ID: '$intermediateRootGroupID' does not exist."
 } else {
-    Write-Host "Management Group with ID: '$intermediateRootGroupID' exists. Proceeding with deletion." -ForegroundColor Yellow
-    
+    Write-Output "Management Group with ID: '$intermediateRootGroupID' exists. Proceeding with deletion."
+
     # Remove all the Management Groups in Intermediate Root Management Group's hierarchy tree, including itself
     Remove-Recursively($intermediateRootGroupID)
 }
@@ -172,5 +179,5 @@ if($null -eq $managementGroup) {
 $StopWatch.Stop()
 
 # Display timer output as table
-Write-Host "Time taken to complete task:" -ForegroundColor Yellow
+Write-Output "Time taken to complete task:"
 $StopWatch.Elapsed | Format-Table

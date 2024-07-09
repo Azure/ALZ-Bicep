@@ -11,13 +11,13 @@
         "version.json"
       ],
       "subfolders_or_files_to_remove" : [
-        "media", 
-        "samples", 
-        "generateddocs", 
-        ".azuredevops/pipelines", 
-        ".github/workflows", 
-        "pipeline-scripts", 
-        "china", 
+        "media",
+        "samples",
+        "generateddocs",
+        ".azuredevops/pipelines",
+        ".github/workflows",
+        "pipeline-scripts",
+        "china",
         "parameters",
         "README.md"
       ],
@@ -635,13 +635,13 @@
         "version.json"
       ],
       "subfolders_or_files_to_remove" : [
-        "media", 
-        "samples", 
-        "generateddocs", 
-        ".azuredevops/pipelines", 
-        ".github/workflows", 
-        "pipeline-scripts", 
-        "china", 
+        "media",
+        "samples",
+        "generateddocs",
+        ".azuredevops/pipelines",
+        ".github/workflows",
+        "pipeline-scripts",
+        "china",
         "parameters",
         "README.md"
       ],
