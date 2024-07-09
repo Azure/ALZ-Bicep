@@ -2,6 +2,7 @@
 
 param (
     [bool]$whatIfEnabled = $true,
+    [string]$prefix = $env:PREFIX,
     [string]$intermediateRootGroupID = $env:MANAGEMENT_GROUP_ID,
     [string]$tenantRootGroupID = $env:ROOT_PARENT_MANAGEMENT_GROUP_ID,
     [string]$connectivitySubscriptionId = $env:CONNECTIVITY_SUBSCRIPTION_ID,
@@ -87,7 +88,7 @@ ForEach ($subscription in $subscriptionsToClean) {
 
     $resourceGroupsToRemove = @()
     ForEach ($resourceGroup in $resourceGroups) {
-        if ($resourceGroup.ResourceGroupName -like "rg-$intermediateRootGroupID-*") {
+        if ($resourceGroup.ResourceGroupName -like "rg-$prefix*") {
             $resourceGroupsToRemove += $resourceGroup.ResourceGroupName
         }
     }
@@ -104,7 +105,7 @@ ForEach ($subscription in $subscriptionsToClean) {
     
     $deploymentsToRemove = @()
     ForEach ($deployment in $subDeployments) {
-        if ($deployment.DeploymentName -like "$intermediateRootGroupID-*" -and $deployment.ProvisioningState -eq "Succeeded") {
+        if ($deployment.DeploymentName -like "$prefix*" -and $deployment.ProvisioningState -eq "Succeeded") {
             $deploymentsToRemove += $deployment
         }
     }
