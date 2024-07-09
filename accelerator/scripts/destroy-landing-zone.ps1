@@ -102,12 +102,17 @@ ForEach ($subscription in $subscriptionsToClean) {
 
     Write-Host "Removing All Successful Subscription Deployments for: $($subscription.name)" -ForegroundColor Yellow 
     
-    # For each Subscription level deployment, remove it
-    $subDeployments | ForEach-Object -Parallel {
-        if($_.ProvisioningState -eq "Succeeded") {
-            Write-Host "Removing $($_.DeploymentName) ..." -ForegroundColor Red
-            Remove-AzSubscriptionDeployment -Id $_.Id | Out-Null
+    $deploymentsToRemove = @()
+    ForEach ($deployment in $subDeployments) {
+        if ($deployment.DeploymentName -like "$intermediateRootGroupID-*" -and $deployment.ProvisioningState -eq "Succeeded") {
+            $deploymentsToRemove += $deployment
         }
+    }
+
+    # For each Subscription level deployment, remove it
+    $deploymentsToRemove | ForEach-Object -Parallel {
+        Write-Host "Removing $($_.DeploymentName) ..." -ForegroundColor Red
+        Remove-AzSubscriptionDeployment -Id $_.Id | Out-Null
     }
 
     # Set MDFC tier to Free for each Subscription
