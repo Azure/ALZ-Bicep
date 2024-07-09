@@ -87,7 +87,7 @@ ForEach ($subscription in $subscriptionsToClean) {
 
     $resourceGroupsToRemove = @()
     ForEach ($resourceGroup in $resourceGroups) {
-        if ($resourceGroup.ResourceGroupName -like "*$intermediateRootGroupID*") {
+        if ($resourceGroup.ResourceGroupName -like "rg-$intermediateRootGroupID-*") {
             $resourceGroupsToRemove += $resourceGroup.ResourceGroupName
         }
     }
