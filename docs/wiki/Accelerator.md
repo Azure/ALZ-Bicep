@@ -1,10 +1,16 @@
 <!-- markdownlint-disable -->
-## ALZ Bicep Accelerator
+## ALZ Bicep Accelerator (Classic)
 <!-- markdownlint-restore -->
 
-This document provides prescriptive guidance around implementing, automating, and maintaining your ALZ Bicep module with the ALZ Bicep Accelerator.
+**IMPORTANT**: The Azure Landing Zones Accelerators documentation has been moved to [aka.ms/alz/accelerator/docs](https://aka.ms/alz/accelerator/docs). Head over there now to get started.
 
-### What is the ALZ Bicep Accelerator?
+The Azure Landing Zones Accelerators been updated to automate the bootstrapping of Version Control System and Azure resources. Please only use the following instructions if you need to use the classic version of the ALZ Bicep Accelerator.
+
+>NOTE: The classic version of the ALZ Bicep Accelerator will be maintained for a limited time. We recommend that you migrate to the new version as soon as possible.
+
+### What is the ALZ Bicep Accelerator (Classic)?
+
+>NOTE: These instructions now include the `-bicepLegacyMode $true` parameter, which needs be set explicily to use the classic version.
 
 The ALZ Bicep Accelerator framework was developed to provide end-users with the following abilities:
 
@@ -67,7 +73,7 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
 1. Create your ALZ Bicep Accelerator framework with the following ALZ PowerShell Module cmdlet:
 
     ```powershell
-    Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_github
+    Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_github" -bicepLegacyMode $true
     ```
 
     > **Note:**
@@ -137,7 +143,7 @@ In order to setup the Accelerator framework with the production ready Azure DevO
 1. Create your ALZ Bicep Accelerator framework with the following ALZ PowerShell Module cmdlet:
 
     ```powershell
-    Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_azuredevops"
+    Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_azuredevops" -bicepLegacyMode $true
     ```
 
     > **Note:**
@@ -224,13 +230,13 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
     Here is an example of using the cmdlet to upgrade to the latest version:
 
     ```powershell
-    Deploy-Accelerator -i "bicep" -b "alz_github" -o "C:\Repos\ALZ\accelerator"
+    Deploy-Accelerator -i "bicep" -b "alz_github" -o "C:\Repos\ALZ\accelerator" -bicepLegacyMode $true
     ```
 
     Here is an example of using the to upgrade to version v0.17.2:
 
     ```powershell
-    Deploy-Accelerator -i "bicep" -b "alz_github" -v "v0.17.2" -o "C:\Repos\ALZ\accelerator"
+    Deploy-Accelerator -i "bicep" -b "alz_github" -v "v0.17.2" -o "C:\Repos\ALZ\accelerator" -bicepLegacyMode $true
     ```
 
     You will be prompted for inputs again and the upgrade will be run for you.
