@@ -18,6 +18,9 @@
         ".github/workflows",
         "pipeline-scripts",
         "china",
+        "china/policy_definitions",
+        "china/policy_set_definitions",
+        "china/policy_assignments",
         "parameters",
         "README.md"
       ],
