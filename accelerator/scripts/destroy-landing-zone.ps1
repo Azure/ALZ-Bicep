@@ -16,6 +16,13 @@ if($whatIfEnabled) {
   exit 0
 }
 
+$managementGroups = Get-AzManagementGroup
+$managementGroup = $managementGroups | Where-Object { $_.Name -eq $intermediateRootGroupID }
+if($null -eq $managementGroup) {
+    Write-Warning "The $intermediateRootGroupID does not exist, so there is nothing to delete."
+    exit 0
+}
+
 if ($tenantRootGroupID -eq "") {
     $tenantRootGroupID = (Get-AzContext).Tenant.TenantId
 }
