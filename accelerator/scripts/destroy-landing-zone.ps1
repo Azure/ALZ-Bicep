@@ -47,9 +47,9 @@ Write-Output "Removing all Azure Resources, Resource Groups and Deployments from
 
 $subscriptionsToClean = @()
 ForEach ($subscription in $intermediateRootGroupChildSubscriptions) {
-    $subscriptionsToClean += {
-        name: $subscription.subName
-        id: $subscription.subID
+    $subscriptionsToClean += @{
+        name = $subscription.subName
+        id   = $subscription.subID
     }
 }
 
@@ -58,7 +58,7 @@ $subscriptionIds = $subscriptionsToClean | Select-Object -ExpandProperty id
 if($subscriptionIds -notcontains $managementSubscriptionId) {
     $subscriptionsToClean += @{
         name = "Management"
-        id = $managementSubscriptionId
+        id   = $managementSubscriptionId
     }
     $subscriptionIds += $managementSubscriptionId
 }
@@ -66,7 +66,7 @@ if($subscriptionIds -notcontains $managementSubscriptionId) {
 if($subscriptionIds -notcontains $identitySubscriptionId) {
     $subscriptionsToClean += @{
         name = "Identity"
-        id = $identitySubscriptionId
+        id   = $identitySubscriptionId
     }
     $subscriptionIds += $identitySubscriptionId
 }
@@ -74,7 +74,7 @@ if($subscriptionIds -notcontains $identitySubscriptionId) {
 if($subscriptionIds -notcontains $connectivitySubscriptionId) {
     $subscriptionsToClean += @{
         name = "Connectivity"
-        id = $connectivitySubscriptionId
+        id   = $connectivitySubscriptionId
     }
     $subscriptionIds += $connectivitySubscriptionId
 }
