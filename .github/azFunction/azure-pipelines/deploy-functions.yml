@@ -14,6 +14,8 @@ steps:
     includeRootFolder: false
     archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
 
+- task: login
+
 - task: Bash@3
   displayName: Login to Azure
   name: git_azlogin

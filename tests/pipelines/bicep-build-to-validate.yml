@@ -100,13 +100,15 @@ jobs:
             echo "gitSpokeOUTPUT=$git_spoke" >> $GITHUB_ENV
             echo "##vso[task.setvariable variable=gitSpokeOUTPUT]$git_spoke"
 
-      - task: Bash@3
+      - task: AzureCLI@2
         displayName: Login to Azure
-        name: git_azlogin
         inputs:
-          targetType: "inline"
-          script: |
-            az login --service-principal --username $(azclilogin) --tenant $(azclitenant)
+          azureSubscription: azserviceconnection
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: |
+            az --version
+            az account show
 
       - task: Bash@3
         displayName: Az CLI Create Subscription for PR
