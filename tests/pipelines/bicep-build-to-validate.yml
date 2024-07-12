@@ -101,14 +101,24 @@ jobs:
             echo "##vso[task.setvariable variable=gitSpokeOUTPUT]$git_spoke"
 
       - task: AzureCLI@2
-        displayName: Login to Azure
+        displayName: 'Azure CLI'
         inputs:
           azureSubscription: azserviceconnection
-          scriptType: pscore
+          addSpnToEnvironment: true
+          scriptType: bash
           scriptLocation: inlineScript
           inlineScript: |
-            az --version
-            az account show
+            echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$servicePrincipalId"
+            echo "##vso[task.setvariable variable=ARM_ID_TOEKN]$idToken"
+            echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
+
+      - task: Bash@3
+        displayName: Login to Azure
+        name: git_azlogin
+        inputs:
+          targetType: "inline"
+          script: |
+            az login --service-principal -u $(ARM_CLIENT_ID) --tenant $(ARM_TENANT_ID) --allow-no-subscriptions --federated-token $(ARM_ID_TOEKN)
 
       - task: Bash@3
         displayName: Az CLI Create Subscription for PR
