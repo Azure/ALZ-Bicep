@@ -7,8 +7,7 @@
       "destroy_script_path": "accelerator/scripts/destroy-landing-zone.ps1",
       "folders_or_files_to_retain": [
         "accelerator",
-        "infra-as-code",
-        "version.json"
+        "infra-as-code"
       ],
       "subfolders_or_files_to_remove" : [
         "media",
@@ -22,7 +21,15 @@
         "china/policy_set_definitions",
         "china/policy_assignments",
         "parameters",
-        "README.md"
+        "README.md",
+        "ALZ-Powershell.config.json",
+        "test_modules/managementGroup"
+      ],
+      "on_demand_folders" : [
+        {
+          "target": "infra-as-code",
+          "source": "infra-as-code"
+        }
       ],
       "deployment_file_groups" : [
         {
@@ -206,6 +213,16 @@
         }
       ],
       "inputs": {
+        "ReleaseVersion": {
+          "source": "powershell",
+          "type": "string",
+          "Targets": [
+            {
+              "Name": "RELEASE_VERSION",
+              "Destination": "Environment"
+            }
+          ]
+        },
         "Prefix": {
           "source": "input",
           "type": "string",
@@ -634,8 +651,7 @@
       "folders_or_files_to_retain": [
         "accelerator",
         "infra-as-code/bicep/modules/resourceGroup",
-        "infra-as-code/bicep/CRML/customerUsageAttribution",
-        "version.json"
+        "infra-as-code/bicep/CRML/customerUsageAttribution"
       ],
       "subfolders_or_files_to_remove" : [
         "media",
@@ -646,7 +662,14 @@
         "pipeline-scripts",
         "china",
         "parameters",
-        "README.md"
+        "README.md",
+        "ALZ-Powershell.config.json"
+      ],
+      "on_demand_folders" : [
+        {
+          "target": "infra-as-code",
+          "source": "infra-as-code"
+        }
       ],
       "deployment_file_groups" : [
         {
@@ -711,6 +734,16 @@
         }
       ],
       "inputs": {
+        "ReleaseVersion": {
+          "source": "powershell",
+          "type": "string",
+          "Targets": [
+            {
+              "Name": "RELEASE_VERSION",
+              "Destination": "Environment"
+            }
+          ]
+        },
         "Prefix": {
           "source": "input",
           "type": "string",
