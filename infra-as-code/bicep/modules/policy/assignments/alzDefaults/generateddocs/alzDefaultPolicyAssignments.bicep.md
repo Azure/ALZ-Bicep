@@ -22,7 +22,8 @@ parUserAssignedManagedIdentityResourceId | No       | User Assigned Managed Iden
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
 parAutomationAccountName | No       | Automation account name.
 parMsDefenderForCloudEmailSecurityContact | No       | An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.
-parDdosProtectionPlanId | No       | ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.
+parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment. True will enforce policy Enable-DDoS-VNET at connectivity or landing zone Management Groups. False will not enforce policy Enable-DDoS-VNET.
+parDdosProtectionPlanId | No       | ID of the DdosProtectionPlan which will be applied to the Virtual Networks.
 parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group.
 parPrivateDnsZonesNamesToAuditInCorp | No       | Provide an array/list of Private DNS Zones that you wish to audit if deployed into Subscriptions in the Corp Management Group. NOTE: The policy default values include all the static Private Link Private DNS Zones, e.g. all the DNS Zones that dont have a region or region shortcode in them. If you wish for these to be audited also you must provide a complete array/list to this parameter for ALL Private DNS Zones you wish to audit, including the static Private Link ones, as this parameter performs an overwrite operation. You can get all the Private DNS Zone Names form the `outPrivateDnsZonesNames` output in the Hub Networking or Private DNS Zone modules.
 parDisableAlzDefaultPolicies | No       | Set Enforcement Mode of all default Policies assignments to Do Not Enforce.
@@ -161,11 +162,19 @@ An e-mail address that you want Microsoft Defender for Cloud alerts to be sent t
 
 - Default value: `security_contact@replace_me.com`
 
+### parDdosEnabled
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable DDoS Network Protection deployment. True will enforce policy Enable-DDoS-VNET at connectivity or landing zone Management Groups. False will not enforce policy Enable-DDoS-VNET.
+
+- Default value: `True`
+
 ### parDdosProtectionPlanId
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.
+ID of the DdosProtectionPlan which will be applied to the Virtual Networks.
 
 ### parPrivateDnsResourceGroupId
 
@@ -289,6 +298,9 @@ Set Parameter to true to Opt-out of deployment telemetry
         },
         "parMsDefenderForCloudEmailSecurityContact": {
             "value": "security_contact@replace_me.com"
+        },
+        "parDdosEnabled": {
+            "value": true
         },
         "parDdosProtectionPlanId": {
             "value": ""

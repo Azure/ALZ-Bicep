@@ -60,7 +60,7 @@ az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-gr
 # For Azure global regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-PolicyDenyAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-PolicyDenyAssignments-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ManagementGroupId     = 'alz-landingzones'
   Location              = 'eastus'
   TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json'
@@ -73,7 +73,7 @@ OR
 # For Azure China regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-PolicyDenyAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-PolicyDenyAssignments-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ManagementGroupId     = 'alz-landingzones'
   Location              = 'chinaeast2'
   TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json'
@@ -127,7 +127,7 @@ az deployment mg create --name $NAME --location $LOCATION --management-group-id 
 # For Azure global regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-PolicyDineAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-PolicyDenyAssignments-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = 'eastus'
   ManagementGroupId     = 'alz-landingzones'
   TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
@@ -141,7 +141,7 @@ OR
 # For Azure China regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-PolicyDineAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-PolicyDenyAssignments-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = 'chinaeast2'
   ManagementGroupId     = 'alz-landingzones'
   TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
