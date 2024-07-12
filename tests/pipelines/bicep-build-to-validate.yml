@@ -109,7 +109,7 @@ jobs:
           scriptLocation: inlineScript
           inlineScript: |
             echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$servicePrincipalId"
-            echo "##vso[task.setvariable variable=ARM_ID_TOEKN]$idToken"
+            echo "##vso[task.setvariable variable=ARM_ID_TOKEN]$idToken"
             echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
 
       - task: Bash@3
@@ -118,7 +118,7 @@ jobs:
         inputs:
           targetType: "inline"
           script: |
-            az login --service-principal -u $(ARM_CLIENT_ID) --tenant $(ARM_TENANT_ID) --allow-no-subscriptions --federated-token $(ARM_ID_TOEKN)
+            az login --service-principal -u $(ARM_CLIENT_ID) --tenant $(ARM_TENANT_ID) --allow-no-subscriptions --federated-token $(ARM_ID_TOKEN)
 
       - task: Bash@3
         displayName: Az CLI Create Subscription for PR
