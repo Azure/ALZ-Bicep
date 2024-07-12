@@ -1,0 +1,132 @@
+{
+  "ascExport": {
+    "parameters": {
+      "resourceGroupName": {
+        "value": "[[parameters('ascExportResourceGroupName')]"
+      },
+      "resourceGroupLocation": {
+        "value": "[[parameters('ascExportResourceGroupLocation')]"
+      },
+      "workspaceResourceId": {
+        "value": "[[parameters('logAnalytics')]"
+      }
+    }
+  },
+  "azurePolicyForKubernetes": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForContainers')]"
+      }
+    }
+  },
+  "defenderForAppServices": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForAppServices')]"
+      }
+    }
+  },
+  "defenderForArm": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForArm')]"
+      }
+    }
+  },
+  "defenderforContainers": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForContainers')]"
+      }
+    }
+  },
+  "defenderForCosmosDbs": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForCosmosDbs')]"
+      }
+    }
+  },
+  "defenderForCspm": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForCspm')]"
+      }
+    }
+  },
+  "defenderForKeyVaults": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForKeyVault')]"
+      }
+    }
+  },
+  "defenderforKubernetes": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForContainers')]"
+      },
+      "logAnalyticsWorkspaceResourceId": {
+        "value": "[[parameters('logAnalytics')]"
+      }
+    }
+  },
+  "defenderForOssDb": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForOssDb')]"
+      }
+    }
+  },
+  "defenderForSqlPaas": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForSql')]"
+      }
+    }
+  },
+  "defenderForSqlServerVirtualMachines": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForSqlOnVm')]"
+      }
+    }
+  },
+  "defenderForStorageAccountsV2": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForStorage')]"
+      }
+    }
+  },
+  "defenderForVM": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForServers')]"
+      }
+    }
+  },
+  "defenderForVMVulnerabilityAssessment": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableAscForServersVulnerabilityAssessments')]"
+      },
+      "vaType": {
+        "value": "[[parameters('vulnerabilityAssessmentProvider')]"
+      }
+    }
+  },
+  "migrateToMdeTvm": {
+    "parameters": {}
+  },
+  "securityEmailContact": {
+    "parameters": {
+      "emailSecurityContact": {
+        "value": "[[parameters('emailSecurityContact')]"
+      },
+      "minimalSeverity": {
+        "value": "[[parameters('minimalSeverity')]"
+      }
+    }
+  }
+}

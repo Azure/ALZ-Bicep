@@ -4,18 +4,11 @@ Deploys Azure Log Analytics Workspace, Automation Account (linked together) & mu
 
 Automation Account will be linked to Log Analytics Workspace to provide integration for Update Management, Change Tracking and Inventory, and Start/Stop VMs during off-hours for your servers and virtual machines.  Only one mapping can exist between Log Analytics Workspace and Automation Account.
 
+We provision several data collection rules (VM Insights, Change Tracking, and Defender for SQL) as well as a user-assigned managed identity (UAMI). These resources are utilized in tandem with various policies as part of deploying the Azure Monitor Agent (AMA).
+
 The module will deploy the following Log Analytics Workspace solutions by default.  Solutions can be customized as required:
 
-- AgentHealthAssessment
-- AntiMalware
-- ChangeTracking
-- Security
 - SecurityInsights (Azure Sentinel)
-- SQLAdvancedThreatProtection
-- SQLVulnerabilityAssessment
-- SQLAssessment
-- Updates
-- VMInsights
 
  > Only certain regions are supported to link Log Analytics Workspace & Automation Account together (linked workspaces). Reference:  [Supported regions for linked Log Analytics workspace](https://learn.microsoft.com/azure/automation/how-to/region-mappings)
 
@@ -100,7 +93,7 @@ $TopLevelMGPrefix = "alz"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'alz-LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-LoggingDeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ResourceGroupName     = "rg-$TopLevelMGPrefix-logging-001"
   TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
   TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"
@@ -115,7 +108,9 @@ New-AzResourceGroup `
 
 New-AzResourceGroupDeployment @inputObject
 ```
+
 OR
+
 ```powershell
 # For Azure China regions
 # Set Platform management subscripion ID as the the current subscription
@@ -126,7 +121,7 @@ $TopLevelMGPrefix = "alz"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'alz-LoggingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-LoggingDeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ResourceGroupName     = "rg-$TopLevelMGPrefix-logging-001"
   TemplateFile          = "infra-as-code/bicep/modules/logging/logging.bicep"
   TemplateParameterFile = "infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json"

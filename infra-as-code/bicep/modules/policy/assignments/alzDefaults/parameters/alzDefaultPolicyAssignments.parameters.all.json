@@ -8,6 +8,9 @@
     "parTopLevelManagementGroupSuffix": {
       "value": ""
     },
+    "parDdosEnabled": {
+      "value": true
+    },
     "parTopLevelPolicyAssignmentSovereigntyGlobal": {
       "value": {
         "parTopLevelSovereigntyGlobalPoliciesEnable": false,
@@ -40,6 +43,18 @@
     },
     "parLogAnalyticsWorkspaceLogRetentionInDays": {
       "value": "365"
+    },
+    "parDataCollectionRuleVMInsightsResourceId": {
+      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-vmi-dcr"
+    },
+    "parDataCollectionRuleChangeTrackingResourceId": {
+      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-ct-dcr"
+    },
+    "parDataCollectionRuleMDFCSQLResourceId": {
+      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.Insights/dataCollectionRules/ama-mdfcsql-default-dcr"
+    },
+    "parUserAssignedManagedIdentityResourceId": {
+      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/alz-logging/providers/Microsoft.ManagedIdentity/userAssignedIdentities/alz-umi-identity"
     },
     "parAutomationAccountName": {
       "value": "alz-automation-account"

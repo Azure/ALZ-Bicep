@@ -1,0 +1,30 @@
+{
+  "Deny-ADX-Double-Encryption": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adxDoubleEncryption')]"
+      }
+    }
+  },
+  "Deny-ADX-Encryption": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adxEncryption')]"
+      }
+    }
+  },
+  "Deny-ADX-Sku-without-PL-Support": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adxSku')]"
+      }
+    }
+  },
+  "Modify-ADX-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adxModifyPublicNetworkAccess')]"
+      }
+    }
+  }
+}

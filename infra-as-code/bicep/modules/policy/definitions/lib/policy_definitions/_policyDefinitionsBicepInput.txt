@@ -47,8 +47,20 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AA-child-resources.json')
 }
 {
+	name: 'Deny-APIM-TLS'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-APIM-TLS.json')
+}
+{
+	name: 'Deny-AppGw-Without-Tls'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppGw-Without-Tls.json')
+}
+{
 	name: 'Deny-AppGW-Without-WAF'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppGW-Without-WAF.json')
+}
+{
+	name: 'Deny-AppService-without-BYOC'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppService-without-BYOC.json')
 }
 {
 	name: 'Deny-AppServiceApiApp-http'
@@ -63,6 +75,22 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppServiceWebApp-http.json')
 }
 {
+	name: 'Deny-AzFw-Without-Policy'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AzFw-Without-Policy.json')
+}
+{
+	name: 'Deny-CognitiveServices-NetworkAcls'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-CognitiveServices-NetworkAcls.json')
+}
+{
+	name: 'Deny-CognitiveServices-Resource-Kinds'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-CognitiveServices-Resource-Kinds.json')
+}
+{
+	name: 'Deny-CognitiveServices-RestrictOutboundNetworkAccess'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-CognitiveServices-RestrictOutboundNetworkAccess.json')
+}
+{
 	name: 'Deny-Databricks-NoPublicIp'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Databricks-NoPublicIp.json')
 }
@@ -73,6 +101,14 @@
 {
 	name: 'Deny-Databricks-VirtualNetwork'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Databricks-VirtualNetwork.json')
+}
+{
+	name: 'Deny-EH-minTLS'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-EH-minTLS.json')
+}
+{
+	name: 'Deny-EH-Premium-CMK'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-EH-Premium-CMK.json')
 }
 {
 	name: 'Deny-FileServices-InsecureAuth'
@@ -89,6 +125,14 @@
 {
 	name: 'Deny-FileServices-InsecureSmbVersions'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureSmbVersions.json')
+}
+{
+	name: 'Deny-LogicApp-Public-Network'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-LogicApp-Public-Network.json')
+}
+{
+	name: 'Deny-LogicApps-Without-Https'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-LogicApps-Without-Https.json')
 }
 {
 	name: 'Deny-MachineLearning-Aks'
@@ -155,6 +199,10 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Redis-http.json')
 }
 {
+	name: 'Deny-Service-Endpoints'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Service-Endpoints.json')
+}
+{
 	name: 'Deny-Sql-minTLS'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Sql-minTLS.json')
 }
@@ -163,8 +211,44 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-SqlMi-minTLS.json')
 }
 {
+	name: 'Deny-Storage-ContainerDeleteRetentionPolicy'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-ContainerDeleteRetentionPolicy.json')
+}
+{
+	name: 'Deny-Storage-CopyScope'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-CopyScope.json')
+}
+{
+	name: 'Deny-Storage-CorsRules'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-CorsRules.json')
+}
+{
+	name: 'Deny-Storage-LocalUser'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-LocalUser.json')
+}
+{
 	name: 'Deny-Storage-minTLS'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-minTLS.json')
+}
+{
+	name: 'Deny-Storage-NetworkAclsBypass'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-NetworkAclsBypass.json')
+}
+{
+	name: 'Deny-Storage-NetworkAclsVirtualNetworkRules'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-NetworkAclsVirtualNetworkRules.json')
+}
+{
+	name: 'Deny-Storage-ResourceAccessRulesResourceId'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-ResourceAccessRulesResourceId.json')
+}
+{
+	name: 'Deny-Storage-ResourceAccessRulesTenantId'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-ResourceAccessRulesTenantId.json')
+}
+{
+	name: 'Deny-Storage-ServicesEncryption'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-ServicesEncryption.json')
 }
 {
 	name: 'Deny-Storage-SFTP'
@@ -205,6 +289,10 @@
 {
 	name: 'DenyAction-ActivityLogs'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-ActivityLogs.json')
+}
+{
+	name: 'DenyAction-DeleteResources'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-DeleteResources.json')
 }
 {
 	name: 'DenyAction-DiagnosticLogs'
@@ -443,6 +531,10 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-FirewallPolicy.json')
 }
 {
+	name: 'Deploy-LogicApp-TLS'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-LogicApp-TLS.json')
+}
+{
 	name: 'Deploy-MDFC-Arc-SQL-DCR-Association'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-Arc-SQL-DCR-Association.json')
 }
@@ -477,6 +569,10 @@
 {
 	name: 'Deploy-PostgreSQL-sslEnforcement'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-PostgreSQL-sslEnforcement.json')
+}
+{
+	name: 'Deploy-Private-DNS-Generic'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Private-DNS-Generic.json')
 }
 {
 	name: 'Deploy-Sql-AuditingSettings'
@@ -525,4 +621,12 @@
 {
 	name: 'Deploy-Windows-DomainJoin'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Windows-DomainJoin.json')
+}
+{
+	name: 'Modify-NSG'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Modify-NSG.json')
+}
+{
+	name: 'Modify-UDR'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Modify-UDR.json')
 }

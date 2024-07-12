@@ -1,0 +1,165 @@
+{
+  "Deny-Storage-Account-Encryption": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageAccountsDoubleEncryption')]"
+      }
+    }
+  },
+  "Deny-Storage-Account-Keys-Expire": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageKeysExpiration')]"
+      }
+    }
+  },
+  "Deny-Storage-Classic": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageClassicToArm')]"
+      }
+    }
+  },
+  "Deny-Storage-ContainerDeleteRetentionPolicy": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageContainerDeleteRetentionPolicy')]"
+      },
+      "minContainerDeleteRetentionInDays": {
+        "value": "[[parameters('storageMinContainerDeleteRetentionInDays')]"
+      }
+    }
+  },
+  "Deny-Storage-CopyScope": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageAccountsCopyScope')]"
+      },
+      "allowedCopyScope": {
+        "value": "[[parameters('storageAccountsAllowedCopyScope')]"
+      }
+    }
+  },
+  "Deny-Storage-CorsRules": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageCorsRules')]"
+      }
+    }
+  },
+  "Deny-Storage-Cross-Tenant": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageAccountsCrossTenant')]"
+      }
+    }
+  },
+  "Deny-Storage-Infra-Encryption": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageAccountsInfraEncryption')]"
+      }
+    }
+  },
+  "Deny-Storage-LocalUser": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageLocalUser')]"
+      }
+    }
+  },
+  "Deny-Storage-NetworkAclsBypass": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageNetworkAclsBypass')]"
+      },
+      "allowedBypassOptions": {
+        "value": "[[parameters('storageAllowedNetworkAclsBypass')]"
+      }
+    }
+  },
+  "Deny-Storage-NetworkAclsVirtualNetworkRules": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageNetworkAclsVirtualNetworkRules')]"
+      }
+    }
+  },
+  "Deny-Storage-NetworkRules": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageAccountNetworkRules')]"
+      }
+    }
+  },
+  "Deny-Storage-ResourceAccessRulesResourceId": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageResourceAccessRulesResourceId')]"
+      }
+    }
+  },
+  "Deny-Storage-ResourceAccessRulesTenantId": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageResourceAccessRulesTenantId')]"
+      }
+    }
+  },
+  "Deny-Storage-Restrict-NetworkRules": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageAccountRestrictNetworkRules')]"
+      }
+    }
+  },
+  "Deny-Storage-ServicesEncryption": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageServicesEncryption')]"
+      }
+    }
+  },
+  "Deny-Storage-SFTP": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageSftp')]"
+      }
+    }
+  },
+  "Deny-Storage-Shared-Key": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageAccountSharedKey')]"
+      }
+    }
+  },
+  "Dine-Storage-Threat-Protection": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageThreatProtection')]"
+      }
+    }
+  },
+  "Modify-Blob-Storage-Account-PublicEndpoint": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('modifyStorageAccountPublicEndpoint')]"
+      }
+    }
+  },
+  "Modify-Storage-Account-PublicEndpoint": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageAccountsModifyDisablePublicNetworkAccess')]"
+      }
+    }
+  },
+  "Modify-Storage-FileSync-PublicEndpoint": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('modifyStorageFileSyncPublicEndpoint')]"
+      }
+    }
+  }
+}

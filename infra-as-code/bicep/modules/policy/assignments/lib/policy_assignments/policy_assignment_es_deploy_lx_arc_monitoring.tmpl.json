@@ -1,7 +1,7 @@
 {
   "name": "Deploy-LX-Arc-Monitoring",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Deploy-Linux-Arc-Monitoring.",
     "displayName": "Deploy-Linux-Arc-Monitoring",

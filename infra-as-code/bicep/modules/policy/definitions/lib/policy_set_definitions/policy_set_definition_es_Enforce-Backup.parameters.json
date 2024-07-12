@@ -1,0 +1,56 @@
+{
+  "BackupBVault-Immutability": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      },
+      "CheckLockedImmutabiltyOnly": {
+        "value": "[[parameters('checkLockedImmutabilityOnly')]"
+      }
+    }
+  },
+  "BackupBVault-MUA": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "BackupBVault-SoftDelete": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      },
+      "checkAlwaysOnSoftDeleteOnly": {
+        "value": "[[parameters('checkAlwaysOnSoftDeleteOnly')]"
+      }
+    }
+  },
+  "BackupRVault-Immutability": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      },
+      "checkLockedImmutabilityOnly": {
+        "value": "[[parameters('checkLockedImmutabilityOnly')]"
+      }
+    }
+  },
+  "BackupRVault-MUA": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      }
+    }
+  },
+  "BackupRVault-SoftDelete": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effect')]"
+      },
+      "checkAlwaysOnSoftDeleteOnly": {
+        "value": "[[parameters('checkAlwaysOnSoftDeleteOnly')]"
+      }
+    }
+  }
+}

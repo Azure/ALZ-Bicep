@@ -1,0 +1,34 @@
+{
+  "name": "Deploy-VM-ChangeTrack",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2024-04-01",
+  "properties": {
+    "description": "Enable ChangeTracking and Inventory for virtual machines. Takes Data Collection Rule ID as parameter and asks for an option to input applicable locations and user-assigned identity for Azure Monitor Agent.",
+    "displayName": "Enable ChangeTracking and Inventory for virtual machines",
+    "notScopes": [],
+    "parameters": {
+      "dcrResourceId": {
+        "value": "${parDataCollectionRuleChangeTrackingResourceId}"
+      },
+      "bringYourOwnUserAssignedManagedIdentity": {
+        "value": true
+      },
+      "restrictBringYourOwnUserAssignedIdentityToSubscription": {
+        "value": false
+      },
+      "userAssignedIdentityResourceId": {
+        "value": "${parUserAssignedManagedIdentityResourceId}"
+      },
+      "effect": {
+        "value": "DeployIfNotExists"
+      }
+    },
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/92a36f05-ebc9-4bba-9128-b47ad2ea3354",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

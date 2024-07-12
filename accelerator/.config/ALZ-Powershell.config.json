@@ -457,6 +457,46 @@
         }
       ]
     },
+    "DataCollectionRuleVMInsightsResourceId": {
+      "Type": "Computed",
+      "Value": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-vmi-dcr",
+      "Targets": [
+        {
+          "Name": "parDataCollectionRuleVMInsightsResourceId.value",
+          "Destination": "Parameters"
+        }
+      ]
+    },
+    "DataCollectionRuleChangeTrackingResourceId": {
+      "Type": "Computed",
+      "Value": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-ct-dcr",
+      "Targets": [
+        {
+          "Name": "parDataCollectionRuleChangeTrackingResourceId.value",
+          "Destination": "Parameters"
+        }
+      ]
+    },
+    "DataCollectionRuleMDFCSQLResourceId": {
+      "Type": "Computed",
+      "Value": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/ama-mdfcsql-default-dcr",
+      "Targets": [
+        {
+          "Name": "parDataCollectionRuleMDFCSQLResourceId.value",
+          "Destination": "Parameters"
+        }
+      ]
+    },
+    "UserAssignedManagedIdentityResourceId": {
+      "Type": "Computed",
+      "Value": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.ManagedIdentity/userAssignedIdentities/alz-umi-identity",
+      "Targets": [
+        {
+          "Name": "parUserAssignedManagedIdentityResourceId.value",
+          "Destination": "Parameters"
+        }
+      ]
+    },
     "DdosPretectionPlanId": {
       "Type": "Computed",
       "Value": "/subscriptions/{%ConnectivitySubscriptionId%}/resourceGroups/rg-{%Prefix%}-connectivity/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan",

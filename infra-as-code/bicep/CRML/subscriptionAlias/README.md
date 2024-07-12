@@ -64,7 +64,7 @@ az deployment mg create --name ${NAME:0:63} --location $LOCATION --template-file
 ```powershell
 
 $inputObject = @{
-  DeploymentName        = 'alz-SubscriptionAlias-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-SubscriptionAlias-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   TemplateParameterFile = 'infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json'
   Location              = 'EastUS'
   TemplateFile          = "infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAlias.bicep"
@@ -80,7 +80,7 @@ Use this module if you do not want to grant Tenant Root Management Group Deploym
 ```powershell
 
 $inputObject = @{
-  DeploymentName        = 'alz-SubscriptionAlias-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-SubscriptionAlias-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   TemplateParameterFile = 'infra-as-code/bicep/CRML/subscriptionAlias/parameters/subscriptionAlias.parameters.all.json'
   Location              = 'EastUS'
   TemplateFile          = "infra-as-code/bicep/CRML/subscriptionAlias/subscriptionAliasScopeEscape.bicep"

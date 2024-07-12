@@ -1,0 +1,34 @@
+{
+  "name": "Deploy-MDFC-DefSQL-AMA",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2024-04-01",
+  "properties": {
+    "description": "Microsoft Defender for SQL collects events from the agents and uses them to provide security alerts and tailored hardening tasks (recommendations).",
+    "displayName": "Enable Defender for SQL on SQL VMs and Arc-enabled SQL Servers",
+    "notScopes": [],
+    "parameters": {
+      "userWorkspaceResourceId": {
+        "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/alz-logging/providers/Microsoft.OperationalInsights/workspaces/${parTopLevelManagementGroupPrefix}-la"
+      },
+      "dcrResourceId": {
+        "value": "${parDataCollectionRuleMDFCSQLResourceId}"
+      },
+      "bringYourOwnUserAssignedManagedIdentity": {
+        "value": true
+      },
+      "bringYourOwnDcr": {
+        "value": true
+      },
+      "userAssignedIdentityResourceId": {
+        "value": "${parDataCollectionRuleMDFCSQLResourceId}"
+      }
+    },
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/de01d381-bae9-4670-8870-786f89f49e26",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}
