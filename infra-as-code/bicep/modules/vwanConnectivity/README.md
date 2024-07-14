@@ -179,7 +179,7 @@ New-AzResourceGroupDeployment @inputObject
 
 ## Multi-region deployment
 
-To extend your infrastructure to [additional regions](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/considerations/regions), this module can be used to deploy additional virtual hubs in multiple regions. This is achieved by adding multiple entries for the `parVirtualWanHubs` parameter for each region where a virtual hub should be deployed.
+To extend your infrastructure to [additional regions](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/considerations/regions), this module can be used to deploy additional virtual hubs in multiple regions. This is achieved by adding multiple entries for the `parVirtualWanHubs` parameter for each region a virtual hub should be deployed.
 
 Example:
 
