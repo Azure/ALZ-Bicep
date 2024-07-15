@@ -4,7 +4,7 @@
 
 **IMPORTANT**: The Azure Landing Zones Accelerators documentation has been moved to [aka.ms/alz/accelerator/docs](https://aka.ms/alz/accelerator/docs). Head over there now to get started.
 
-The Azure Landing Zones Accelerators been updated to automate the bootstrapping of Version Control System and Azure resources. Please only use the following instructions if you need to use the classic version of the ALZ Bicep Accelerator.
+The Azure Landing Zones Accelerators have been updated to automate the bootstrapping of your Version Control System and Azure resources. Please only use the following instructions if you need to use the classic version of the ALZ Bicep Accelerator.
 
 >NOTE: The classic version of the ALZ Bicep Accelerator will be maintained for a limited time. We recommend that you migrate to the new version as soon as possible.
 
