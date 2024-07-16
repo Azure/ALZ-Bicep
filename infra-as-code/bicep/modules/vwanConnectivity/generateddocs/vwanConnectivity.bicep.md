@@ -9,11 +9,7 @@ Parameter name | Required | Description
 parLocation    | No       | Region in which the resource group was created.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
 parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
-parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
-parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode.
 parVirtualHubEnabled | No       | Switch to enable/disable Virtual Hub deployment.
-parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
-parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall.
 parVirtualWanName | No       | Prefix Used for Virtual WAN.
 parVirtualWanLock | No       | Resource Lock Configuration for Virtual WAN.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVirtualWanHubName | No       | Prefix Used for Virtual WAN Hub.
@@ -25,7 +21,6 @@ parVirtualWanHubsLock | No       | Resource Lock Configuration for Virtual WAN H
 parVpnGatewayName | No       | VPN Gateway Name.
 parExpressRouteGatewayName | No       | ExpressRoute Gateway Name.
 parAzFirewallName | No       | Azure Firewall Name.
-parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
 parAzureFirewallLock | No       | Resource Lock Configuration for Azure Firewall.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVpnGatewayScaleUnit | No       | The scale unit for this VPN Gateway.
@@ -72,26 +67,6 @@ Global Resource Lock Configuration used for all resources deployed in this modul
 
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
 
-### parAzFirewallTier
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Azure Firewall Tier associated with the Firewall to deploy.
-
-- Default value: `Standard`
-
-- Allowed values: `Basic`, `Standard`, `Premium`
-
-### parAzFirewallIntelMode
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-The Azure Firewall Threat Intelligence Mode.
-
-- Default value: `Alert`
-
-- Allowed values: `Alert`, `Deny`, `Off`
-
 ### parVirtualHubEnabled
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -99,20 +74,6 @@ The Azure Firewall Threat Intelligence Mode.
 Switch to enable/disable Virtual Hub deployment.
 
 - Default value: `True`
-
-### parAzFirewallDnsProxyEnabled
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Switch to enable/disable Azure Firewall DNS Proxy.
-
-- Default value: `True`
-
-### parAzFirewallDnsServers
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Array of custom DNS servers used by Azure Firewall.
 
 ### parVirtualWanName
 
@@ -231,21 +192,13 @@ Azure Firewall Name.
 
 - Default value: `[format('{0}-fw', parameters('parCompanyPrefix'))]`
 
-### parAzFirewallAvailabilityZones
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
-
-- Allowed values: `1`, `2`, `3`
-
 ### parAzFirewallPoliciesName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Azure Firewall Policies Name.
 
-- Default value: `[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
+- Default value: `[format('{0}-azfwpolicy', parameters('parCompanyPrefix'))]`
 
 ### parAzureFirewallLock
 
@@ -413,20 +366,8 @@ outAzFwPrivateIps | array |
                 "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
             }
         },
-        "parAzFirewallTier": {
-            "value": "Standard"
-        },
-        "parAzFirewallIntelMode": {
-            "value": "Alert"
-        },
         "parVirtualHubEnabled": {
             "value": true
-        },
-        "parAzFirewallDnsProxyEnabled": {
-            "value": true
-        },
-        "parAzFirewallDnsServers": {
-            "value": []
         },
         "parVirtualWanName": {
             "value": "[format('{0}-vwan-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
@@ -453,7 +394,12 @@ outAzFwPrivateIps | array |
                     "parHubLocation": "[parameters('parLocation')]",
                     "parHubRoutingPreference": "ExpressRoute",
                     "parVirtualRouterAutoScaleConfiguration": 2,
-                    "parVirtualHubRoutingIntentDestinations": []
+                    "parVirtualHubRoutingIntentDestinations": [],
+                    "parAzFirewallDnsProxyEnabled": true,
+                    "parAzFirewallDnsServers": [],
+                    "parAzFirewallIntelMode": "Alert",
+                    "parAzFirewallTier": "Standard",
+                    "parAzFirewallAvailabilityZones": []
                 }
             ]
         },
@@ -484,11 +430,8 @@ outAzFwPrivateIps | array |
         "parAzFirewallName": {
             "value": "[format('{0}-fw', parameters('parCompanyPrefix'))]"
         },
-        "parAzFirewallAvailabilityZones": {
-            "value": []
-        },
         "parAzFirewallPoliciesName": {
-            "value": "[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
+            "value": "[format('{0}-azfwpolicy', parameters('parCompanyPrefix'))]"
         },
         "parAzureFirewallLock": {
             "value": {

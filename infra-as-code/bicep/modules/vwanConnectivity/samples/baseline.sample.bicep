@@ -20,8 +20,6 @@ module minimum_vwan_conn '../vwanConnectivity.bicep' = {
   name: 'minimum_vwan_conn'
   params: {
     parLocation: parLocation
-    parAzFirewallTier: 'Standard'
-    parAzFirewallIntelMode: 'Alert'
     parVirtualHubEnabled: true
     parVirtualWanHubs: [ {
         parVpnGatewayEnabled: true
@@ -32,18 +30,21 @@ module minimum_vwan_conn '../vwanConnectivity.bicep' = {
         parHubRoutingPreference: 'ExpressRoute' //allowed values are 'ASPath','VpnGateway','ExpressRoute'
         parVirtualRouterAutoScaleConfiguration: 2 //minimum capacity should be between 2 to 50
         parVirtualHubRoutingIntentDestinations: []
+        parAzFirewallDnsProxyEnabled: true
+        parAzFirewallDnsServers: []
+        parAzFirewallIntelMode: 'Alert'
+        parAzFirewallTier: 'Standard'
+        parAzFirewallAvailabilityZones: [
+          '1'
+          '2'
+          '3'
+      ]
       } ]
-    parAzFirewallDnsProxyEnabled: true
     parVirtualWanName: '${parCompanyPrefix}-vwan-${parLocation}'
     parVirtualWanHubName: '${parCompanyPrefix}-vhub'
     parVpnGatewayName: '${parCompanyPrefix}-vpngw'
     parExpressRouteGatewayName: '${parCompanyPrefix}-ergw'
     parAzFirewallName: '${parCompanyPrefix}-fw'
-    parAzFirewallAvailabilityZones: [
-      '1'
-      '2'
-      '3'
-    ]
     parVirtualNetworkIdToLink: '/subscriptions/xxxxxxxxx-b761-4132-9ed1-2c90d07c4885/resourceGroups/rg-vnet/providers/Microsoft.Network/virtualNetworks/vnet'
 
     parAzFirewallPoliciesName: '${parCompanyPrefix}-azfwpolicy-${parLocation}'
