@@ -55,7 +55,7 @@ az deployment mg create --name $NAME --location $LOCATION --template-file $TEMPL
 # For Azure global regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-mgDiagSettings-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-mgDiagSettings-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = 'eastus'
   TemplateFile          = "infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep"
   TemplateParameterFile = 'infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json'
@@ -70,7 +70,7 @@ OR
 # For Azure China regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-mgDiagSettings-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-mgDiagSettings-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = 'chinaeast2'
   TemplateFile          = "infra-as-code/bicep/modules/mgDiagSettings/mgDiagSettings.bicep"
   TemplateParameterFile = 'infra-as-code/bicep/modules/mgDiagSettings/parameters/mgDiagSettings.parameters.all.json'

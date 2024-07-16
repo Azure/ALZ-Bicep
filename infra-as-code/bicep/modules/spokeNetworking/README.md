@@ -109,7 +109,7 @@ $TopLevelMGPrefix = "alz"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'alz-SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-SpokeNetworkingDeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ResourceGroupName     = "rg-$TopLevelMGPrefix-spoke-networking-001"
   TemplateParameterFile = "infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json"
   TemplateFile          = "infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
@@ -134,7 +134,7 @@ $TopLevelMGPrefix = "alz"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'alz-SpokeNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-SpokeNetworkingDeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ResourceGroupName     = "rg-$TopLevelMGPrefix-spoke-networking-001"
   TemplateParameterFile = "infra-as-code/bicep/modules/spokeNetworking/parameters/spokeNetworking.parameters.all.json"
   TemplateFile          = "infra-as-code/bicep/modules/spokeNetworking/spokeNetworking.bicep"
