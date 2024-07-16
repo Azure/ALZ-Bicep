@@ -147,9 +147,6 @@ $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
 Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-# Set Platform management subscription ID as the the current subscription
-$connectivitySubscriptionId = "[your platform management subscription ID]"
-
 # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
 $TopLevelMGPrefix = "alz"
 
