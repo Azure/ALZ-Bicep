@@ -190,7 +190,7 @@ parVirtualWanHubs: [
         parExpressRouteGatewayEnabled: true
         parAzFirewallEnabled: true
         parVirtualHubAddressPrefix: '10.100.0.0/23'
-        parHubLocation: 'centralus'
+        parHubLocation: 'eastus2'
         parHubRoutingPreference: 'ExpressRoute'
         parVirtualRouterAutoScaleConfiguration: 2
         parVirtualHubRoutingIntentDestinations: []
@@ -209,7 +209,7 @@ parVirtualWanHubs: [
         parExpressRouteGatewayEnabled: true
         parAzFirewallEnabled: true
         parVirtualHubAddressPrefix: '10.90.0.0/23'
-        parHubLocation: 'eastus'
+        parHubLocation: 'centralus'
         parHubRoutingPreference: 'ExpressRoute'
         parVirtualRouterAutoScaleConfiguration: 2
         parVirtualHubRoutingIntentDestinations: []

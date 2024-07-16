@@ -119,7 +119,7 @@
         "privatelink.eastus2.azmk8s.io", // Replace xxxxxx with target region (i.e. eastus2)
         "privatelink.eastus2.batch.azure.com", // Replace xxxxxx with target region (i.e. eastus2)
         "privatelink.eastus2.kusto.windows.net", // Replace xxxxxx with target region (i.e. eastus2)
-        "privatelink.eastus2.backup.windowsazure.com", // Replace xxxxxx with target region geo code (i.e. for eastus2, the geo code is eus)
+        "privatelink.eus2.backup.windowsazure.com", // Replace xxxxxx with target region geo code (i.e. for eastus2, the geo code is eus)
         "privatelink.adf.azure.com",
         "privatelink.afs.azure.net",
         "privatelink.agentsvc.azure-automation.net",

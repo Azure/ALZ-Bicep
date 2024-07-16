@@ -3,13 +3,13 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "parLocation": {
-      "value": "eastus"
+      "value": "centralus"
     },
     "parCompanyPrefix": {
       "value": "alz"
     },
     "parHubNetworkName": {
-      "value": "alz-hub-eastus"
+      "value": "alz-hub-centralus"
     },
     "parHubNetworkAddressPrefix": {
       "value": "10.20.0.0/16"
@@ -58,7 +58,7 @@
       "value": true
     },
     "parAzBastionName": {
-      "value": "alz-bastion-eastus"
+      "value": "alz-bastion-centralus"
     },
     "parAzBastionSku": {
       "value": "Standard"
@@ -67,7 +67,7 @@
       "value": false
     },
     "parAzBastionNsgName": {
-      "value": "nsg-AzureBastionSubnet-eastus"
+      "value": "nsg-AzureBastionSubnet-centralus"
     },
     "parDdosEnabled": {
       "value": true
@@ -79,10 +79,10 @@
       "value": true
     },
     "parAzFirewallName": {
-      "value": "alz-azfw-eastus"
+      "value": "alz-azfw-centralus"
     },
     "parAzFirewallPoliciesName": {
-      "value": "alz-azfwpolicy-eastus"
+      "value": "alz-azfwpolicy-centralus"
     },
     "parAzFirewallTier": {
       "value": "Standard"
@@ -106,7 +106,7 @@
       "value": []
     },
     "parHubRouteTableName": {
-      "value": "alz-hub-routetable-eastus"
+      "value": "alz-hub-routetable-centralus"
     },
     "parDisableBgpRoutePropagation": {
       "value": false
@@ -116,10 +116,10 @@
     },
     "parPrivateDnsZones": {
       "value": [
-        "privatelink.eastus.azmk8s.io", // Replace xxxxxx with target region (i.e. eastus)
-        "privatelink.eastus.batch.azure.com", // Replace xxxxxx with target region (i.e. eastus)
-        "privatelink.eastus.kusto.windows.net", // Replace xxxxxx with target region (i.e. eastus)
-        "privatelink.eastus.backup.windowsazure.com", // Replace xxxxxx with target region geo code (i.e. for eastus, the geo code is eus)
+        "privatelink.centralus.azmk8s.io", // Replace xxxxxx with target region (i.e. centralus)
+        "privatelink.centralus.batch.azure.com", // Replace xxxxxx with target region (i.e. centralus)
+        "privatelink.centralus.kusto.windows.net", // Replace xxxxxx with target region (i.e. centralus)
+        "privatelink.cus.backup.windowsazure.com", // Replace xxxxxx with target region geo code (i.e. for centralus, the geo code is cus)
         "privatelink.adf.azure.com",
         "privatelink.afs.azure.net",
         "privatelink.agentsvc.azure-automation.net",
@@ -194,7 +194,7 @@
     },
     "parVpnGatewayConfig": {
       "value": {
-        "name": "alz-Vpn-Gateway-eastus",
+        "name": "alz-Vpn-Gateway-centralus",
         "gatewayType": "Vpn",
         "sku": "VpnGw1",
         "vpnType": "RouteBased",
@@ -217,7 +217,7 @@
     },
     "parExpressRouteGatewayConfig": {
       "value": {
-        "name": "alz-ExpressRoute-Gateway-eastus",
+        "name": "alz-ExpressRoute-Gateway-centralus",
         "gatewayType": "ExpressRoute",
         "sku": "Standard",
         "vpnType": "RouteBased",
