@@ -287,7 +287,7 @@ To extend your infrastructure to [additional regions](https://learn.microsoft.co
     > **NOTE:**
     > If you have set the parameter `parDdosEnabled` to true and deployed a DDoS Network Protection Plan, make sure to set this parameter to false when deploying additional regions to avoid creating multiple plans. You will have to manually enable this plan for the additional hub networks you deploy.
 
-    **Azure CLI (Example: East US 2 Region)**
+    **Azure CLI (Example: West US Region)**
 
     ```bash
     # For Azure global regions
@@ -315,7 +315,7 @@ To extend your infrastructure to [additional regions](https://learn.microsoft.co
     az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
     ```
 
-    **PowerShell (Example: East US 2 Region)**
+    **PowerShell (Example: West US Region)**
 
     ```powershell
     # For Azure global regions
@@ -356,7 +356,7 @@ To extend your infrastructure to [additional regions](https://learn.microsoft.co
     > **NOTE:**
     > Module will need to be called twice to create the completed peering. Each time with a peering direction.
 
-    **Azure CLI (Example: East US Region to East US 2 Region)**
+    **Azure CLI (Example: East US Region to West US Region)**
 
     ```bash
     **NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
@@ -378,7 +378,7 @@ To extend your infrastructure to [additional regions](https://learn.microsoft.co
     az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
     ```
 
-    **PowerShell (Example: East US Region to East US 2 Region)**
+    **PowerShell (Example: East US Region to West US Region)**
 
     ```powershell
     # For Azure global regions
