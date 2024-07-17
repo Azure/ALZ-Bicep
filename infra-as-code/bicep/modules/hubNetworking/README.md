@@ -347,7 +347,7 @@ To extend your infrastructure to [additional regions](https://learn.microsoft.co
 
     Example output in the westus region
 
-      ![Example Deployment Output in westus region](media/exampleDeploymentOutputeastus2.png "Example Deployment Output in westus region")
+      ![Example Deployment Output in westus region](media/exampleDeploymentOutputEastus2.png "Example Deployment Output in westus region")
 
 1. To peer the newly created hubs, the [vnetPeering module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/vnetPeering) will be used.
 
