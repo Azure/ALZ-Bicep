@@ -135,7 +135,7 @@ az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-gr
 # For Azure global regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-SubPlacementAll-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-SubPlacementAll-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = 'EastUS'
   ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"
@@ -151,7 +151,7 @@ OR
 # For Azure China regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-SubPlacementAll-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-SubPlacementAll-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = 'chinaeast2'
   ManagementGroupId     = 'alz'
   TemplateFile          = "infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep"

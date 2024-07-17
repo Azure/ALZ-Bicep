@@ -637,6 +637,13 @@ resource resDataCollectionRuleMDFCSQLLock 'Microsoft.Authorization/locks@2020-05
   }
 }
 
+// Onboard the Log Analytics Workspace to Sentinel if SecurityInsights is in parLogAnalyticsWorkspaceSolutions
+resource resSentinelOnboarding 'Microsoft.SecurityInsights/onboardingStates@2024-03-01' = if (contains(parLogAnalyticsWorkspaceSolutions, 'SecurityInsights')) {
+  name: 'default'
+  scope: resLogAnalyticsWorkspace
+  properties: {}
+}
+
 resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solutions@2015-11-01-preview' = [for solution in parLogAnalyticsWorkspaceSolutions: {
   name: '${solution}(${resLogAnalyticsWorkspace.name})'
   location: parLogAnalyticsWorkspaceLocation

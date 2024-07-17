@@ -62,7 +62,7 @@ Please ensure you have deployed the initial Accelerator and meet all prerequisit
 
     # Parameters necessary for deployment
     $inputObject = @{
-      DeploymentName        = 'alz-AMBADeploy-{0}' -f ( -join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+      DeploymentName        = -join ('alz-AMBADeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
       Location              = $Location
       ManagementGroupId     = $TopLevelMGPrefix
       TemplateURI           = $TemplateURI
