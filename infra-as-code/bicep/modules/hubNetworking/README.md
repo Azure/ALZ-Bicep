@@ -204,195 +204,201 @@ New-AzResourceGroupDeployment @inputObject
 
 To extend your infrastructure to [additional regions](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/considerations/regions), this module can be deployed multiple times with different parameters files to deploy additional hubs in multiple regions. The [vnetPeering module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/vnetPeering) can be leveraged to peer the hub networks together across the different regions.
 
-> For the example below, two hubs will be deployed across *eastus* and *eastus2* regions.
+> For the example below, two hubs will be deployed across *eastus* and *westus* regions.
 
-1. Duplicate the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json) and create a new file for the first hub in the *eastus* region **hubNetworking.parameters.all.eastus.json**. See example [parameters file](https://github.com/sebassem/ALZ-Bicep/blob/alz-multiple-regions/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.eastus.json).
-2. Edit the new parameters file with the needed configuration for the *eastus* region.
-3. Deploy the `hubNetworking` module to deploy the first hub in the *eastus* region using the new parameters file.
+1. Duplicate the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.az.all.json) and create a new file for the first hub in the *eastus* region **hubNetworking.parameters.az.all.eastus.json**.
 
-### Azure CLI
-```bash
-# For Azure global regions
+    > **NOTE:**
+    > Some regions do not support availability zones, so the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json) without availability zones should be used. East US supports availability zones which is why the `hubNetworking.parameters.az.all.eastus.json` file is used in this example.
 
-# Set Platform connectivity subscription ID as the the current subscription
-ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
+1. Edit the new parameters file with the needed configuration for the *eastus* region.
+1. Deploy the `hubNetworking` module to deploy the first hub in the *eastus* region using the new parameters file.
 
-az account set --subscription $ConnectivitySubscriptionId
+    **Azure CLI (Example: East US Region)**
 
-# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
-TopLevelMGPrefix="alz"
+    ```bash
+    # For Azure global regions
 
-# Set the region where the hub will be deployed
-location="eastus"
+    # Set Platform connectivity subscription ID as the the current subscription
+    ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 
-dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
-NAME="alz-HubNetworkingDeploy-${dateYMD}"
-GROUP="rg-$TopLevelMGPrefix-hub-networking-$location"
-TEMPLATEFILE="infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.$location.json"
+    az account set --subscription $ConnectivitySubscriptionId
 
-az group create --location $location \
-   --name $GROUP
+    # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+    TopLevelMGPrefix="alz"
 
-az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
-```
+    # Set the region where the hub will be deployed
+    location="eastus"
 
-### PowerShell
+    dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+    NAME="alz-HubNetworkingDeploy-${dateYMD}"
+    GROUP="rg-$TopLevelMGPrefix-hub-networking-$location"
+    TEMPLATEFILE="infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+    PARAMETERS="@infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.$location.json"
 
-```powershell
-# For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription
-$ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
+    az group create --location $location \
+      --name $GROUP
 
-Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+    az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
+    ```
 
-# Set Platform Platform subscription ID as the the current subscription
-$connectivitySubscriptionId = "[your platform management subscription ID]"
+    **PowerShell (Example: East US Region)**
 
-# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
-$TopLevelMGPrefix = "alz"
+    ```powershell
+    # For Azure global regions
+    # Set Platform connectivity subscription ID as the the current subscription
+    $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
-# Set the region where the hub will be deployed
-$location = "eastus"
+    Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-# Parameters necessary for deployment
-$inputObject = @{
-  DeploymentName        = 'alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = "rg-$TopLevelMGPrefix-hub-networking-$location "
-  TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.$location.json"
-}
+    # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+    $TopLevelMGPrefix = "alz"
 
-New-AzResourceGroup `
-  -Name $inputObject.ResourceGroupName `
-  -Location $location
+    # Set the region where the hub will be deployed
+    $location = "eastus"
 
-New-AzResourceGroupDeployment @inputObject
-```
+    # Parameters necessary for deployment
+    $inputObject = @{
+      DeploymentName        = 'alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+      ResourceGroupName     = "rg-$TopLevelMGPrefix-hub-networking-$location "
+      TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+      TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.$location.json"
+    }
 
-Example output in the eastus region
+    New-AzResourceGroup `
+      -Name $inputObject.ResourceGroupName `
+      -Location $location
 
-  ![Example Deployment Output in eastus region](media/exampleDeploymentOutputEastus.png "Example Deployment Output in eastus region")
+    New-AzResourceGroupDeployment @inputObject
+    ```
 
-4. Duplicate the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json) and create a new file for the additional hub in the *eastus2* region **hubNetworking.parameters.all.eastus2.json**. See example [parameters file](https://github.com/sebassem/ALZ-Bicep/blob/alz-multiple-regions/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.eastus2.json).
-5. Edit the new parameters file with the needed configuration for the *eastus2* region.
-6. Deploy the `hubNetworking` module to deploy the second hub in the *eastus2* region using the new parameters file.
+    Example output in the eastus region:
 
-> **NOTE:**
-> If you have set the parameter `parDdosEnabled` to true and deployed a DDoS Network Protection Plan, make sure to set this parameter to false when deploying additional regions to avoid creating multiple plans. You will have to manually enable this plan for the additional hub networks you deploy.
+      ![Example Deployment Output in eastus region](media/exampleDeploymentOutputEastus.png "Example Deployment Output in eastus region")
 
-### Azure CLI
-```bash
-# For Azure global regions
+1. Duplicate the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json) and create a new file for the additional hub in the *westus* region **hubNetworking.parameters.az.all.westus.json**.
 
-# Set Platform connectivity subscription ID as the the current subscription
-ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
+    > **NOTE:**
+    > West US does not currently support availability zones, so the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.json) without availability zones is used in this example.
 
-az account set --subscription $ConnectivitySubscriptionId
+1. Edit the new parameters file with the needed configuration for the *westus* region.
+1. Deploy the `hubNetworking` module to deploy the second hub in the *westus* region using the new parameters file.
 
-# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
-TopLevelMGPrefix="alz"
+    > **NOTE:**
+    > If you have set the parameter `parDdosEnabled` to true and deployed a DDoS Network Protection Plan, make sure to set this parameter to false when deploying additional regions to avoid creating multiple plans. You will have to manually enable this plan for the additional hub networks you deploy.
 
-# Set the region where the hub will be deployed
-location="eastus2"
+    **Azure CLI (Example: East US 2 Region)**
 
-dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
-NAME="alz-HubNetworkingDeploy-${dateYMD}"
-GROUP="rg-$TopLevelMGPrefix-hub-networking-$location"
-TEMPLATEFILE="infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.$location.json"
+    ```bash
+    # For Azure global regions
 
-az group create --location $location \
-   --name $GROUP
+    # Set Platform connectivity subscription ID as the the current subscription
+    ConnectivitySubscriptionId="[your platform connectivity subscription ID]"
 
-az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
-```
+    az account set --subscription $ConnectivitySubscriptionId
 
-### PowerShell
+    # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+    TopLevelMGPrefix="alz"
 
-```powershell
-# For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription
-$ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
+    # Set the region where the hub will be deployed
+    location="westus"
 
-Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
+    dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+    NAME="alz-HubNetworkingDeploy-${dateYMD}"
+    GROUP="rg-$TopLevelMGPrefix-hub-networking-$location"
+    TEMPLATEFILE="infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+    PARAMETERS="@infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.$location.json"
 
-# Set Platform connectivity subscription ID as the the current subscription
-$connectivitySubscriptionId = "[your platform management subscription ID]"
+    az group create --location $location \
+      --name $GROUP
 
-# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
-$TopLevelMGPrefix = "alz"
+    az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
+    ```
 
-# Set the region where the hub will be deployed
-$location = "eastus2"
+    **PowerShell (Example: East US 2 Region)**
 
-# Parameters necessary for deployment
-$inputObject = @{
-  DeploymentName        = 'alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = "rg-$TopLevelMGPrefix-hub-networking-$location "
-  TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.$location.json"
-}
+    ```powershell
+    # For Azure global regions
+    # Set Platform connectivity subscription ID as the the current subscription
+    $ConnectivitySubscriptionId = "[your platform connectivity subscription ID]"
 
-New-AzResourceGroup `
-  -Name $inputObject.ResourceGroupName `
-  -Location $location
+    Select-AzSubscription -SubscriptionId $ConnectivitySubscriptionId
 
-New-AzResourceGroupDeployment @inputObject
-```
+    # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+    $TopLevelMGPrefix = "alz"
 
-Example output in the eastus2 region
+    # Set the region where the hub will be deployed
+    $location = "westus"
 
-  ![Example Deployment Output in eastus2 region](media/exampleDeploymentOutputEastus2.png "Example Deployment Output in eastus2 region")
+    # Parameters necessary for deployment
+    $inputObject = @{
+      DeploymentName        = 'alz-HubNetworkingDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+      ResourceGroupName     = "rg-$TopLevelMGPrefix-hub-networking-$location "
+      TemplateFile          = "infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep"
+      TemplateParameterFile = "infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.all.$location.json"
+    }
 
-7. To peer the newly created hubs, the [vnetPeering module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/vnetPeering) will be used.
+    New-AzResourceGroup `
+      -Name $inputObject.ResourceGroupName `
+      -Location $location
 
-8. Edit the [parameters file](https://github.com/sebassem/ALZ-Bicep/blob/alz-multiple-regions/infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json) of the *vnetPeering* module to specify the source and destination virtual networks.
+    New-AzResourceGroupDeployment @inputObject
+    ```
 
-> NOTE
-> Module will need to be called twice to create the completed peering. Each time with a peering direction.
+    Example output in the westus region
 
-### Azure CLI
-**NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
-```bash
-# For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription
-connectivitySubscriptionId="[your connectivity subscription ID]"
-az account set --subscription $connectivitySubscriptionId
+      ![Example Deployment Output in westus region](media/exampleDeploymentOutputeastus2.png "Example Deployment Output in westus region")
 
-# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
-TopLevelMGPrefix="alz"
+1. To peer the newly created hubs, the [vnetPeering module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/vnetPeering) will be used.
 
-dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
-NAME="alz-vnetPeeringDeploy-${dateYMD}"
-GROUP="rg-alz-hub-networking-eastus" # Specify the name of the resource group of the first hub network.
-TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
-PARAMETERS="@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json"
+1. Edit the [parameters file](https://github.com/sebassem/ALZ-Bicep/blob/alz-multiple-regions/infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json) of the *vnetPeering* module to specify the source and destination virtual networks.
 
-az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
-```
+    > **NOTE:**
+    > Module will need to be called twice to create the completed peering. Each time with a peering direction.
 
-### PowerShell
+    **Azure CLI (Example: East US Region to East US 2 Region)**
 
-```powershell
-# For Azure global regions
-# Set Platform connectivity subscription ID as the the current subscription
-$connectivitySubscriptionId = "[your connectivity subscription ID]"
+    ```bash
+    **NOTE: As there is some PowerShell code within the CLI, there is a requirement to execute the deployments in a cross-platform terminal which has PowerShell installed.**
+    ```bash
+    # For Azure global regions
+    # Set Platform connectivity subscription ID as the the current subscription
+    connectivitySubscriptionId="[your connectivity subscription ID]"
+    az account set --subscription $connectivitySubscriptionId
 
-Select-AzSubscription -SubscriptionId $connectivitySubscriptionId
+    # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+    TopLevelMGPrefix="alz"
 
-# Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
-$TopLevelMGPrefix = "alz"
+    dateYMD=$(date +%Y%m%dT%H%M%S%NZ)
+    NAME="alz-vnetPeeringDeploy-${dateYMD}"
+    GROUP="rg-alz-hub-networking-eastus" # Specify the name of the resource group of the first hub network.
+    TEMPLATEFILE="infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
+    PARAMETERS="@infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json"
 
-# Parameters necessary for deployment
-$inputObject = @{
-  DeploymentName        = 'alz-vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  ResourceGroupName     = "rg-alz-hub-networking-eastus2" # Specify the name of the resource group of the first hub network.
-  TemplateFile          = "infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
-  TemplateParameterFile = "infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json"
-}
+    az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
+    ```
 
-New-AzResourceGroupDeployment @inputObject
-```
+    **PowerShell (Example: East US Region to East US 2 Region)**
 
-9. Re-deploy the module again after editing the parameters file to peer the other direction.
+    ```powershell
+    # For Azure global regions
+    # Set Platform connectivity subscription ID as the the current subscription
+    $connectivitySubscriptionId = "[your connectivity subscription ID]"
+
+    Select-AzSubscription -SubscriptionId $connectivitySubscriptionId
+
+    # Set the top level MG Prefix in accordance to your environment. This example assumes default 'alz'.
+    $TopLevelMGPrefix = "alz"
+
+    # Parameters necessary for deployment
+    $inputObject = @{
+      DeploymentName        = 'alz-vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+      ResourceGroupName     = "rg-alz-hub-networking-westus" # Specify the name of the resource group of the first hub network.
+      TemplateFile          = "infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
+      TemplateParameterFile = "infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json"
+    }
+
+    New-AzResourceGroupDeployment @inputObject
+    ```
+
+1. Re-deploy the module again after editing the parameters file to peer the other direction.
