@@ -347,7 +347,7 @@ To extend your infrastructure to [additional regions](https://learn.microsoft.co
 
     Example output in the westus region
 
-      ![Example Deployment Output in westus region](media/exampleDeploymentOutputEastus2.png "Example Deployment Output in westus region")
+      ![Example Deployment Output in westus region](media/exampleDeploymentOutputwestus.png "Example Deployment Output in westus region")
 
 1. To peer the newly created hubs, the [vnetPeering module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/vnetPeering) will be used.
 
@@ -393,7 +393,7 @@ To extend your infrastructure to [additional regions](https://learn.microsoft.co
     # Parameters necessary for deployment
     $inputObject = @{
       DeploymentName        = 'alz-vnetPeeringDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-      ResourceGroupName     = "rg-alz-hub-networking-westus" # Specify the name of the resource group of the first hub network.
+      ResourceGroupName     = "rg-alz-hub-networking-eastus" # Specify the name of the resource group of the first hub network.
       TemplateFile          = "infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep"
       TemplateParameterFile = "infra-as-code/bicep/modules/vnetPeering/parameters/vnetPeering.parameters.all.json"
     }
