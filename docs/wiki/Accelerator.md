@@ -2,15 +2,18 @@
 ## ALZ Bicep Accelerator (Classic)
 <!-- markdownlint-restore -->
 
-**IMPORTANT**: The Azure Landing Zones Accelerators documentation has been moved to [aka.ms/alz/accelerator/docs](https://aka.ms/alz/accelerator/docs). Head over there now to get started.
+> [!IMPORTANT]
+> The ALZ Bicep Accelerator has been updated to automate the bootstrapping of your Version Control System and Azure resources. The ALZ Bicep Accelerator's documentation has been moved to [aka.ms/alz/accelerator/docs](https://aka.ms/alz/accelerator/docs). Head over there now to get started!
+> Use the instructions below only if you need to use the classic version of the ALZ Bicep Accelerator.
 
-The Azure Landing Zones Accelerators have been updated to automate the bootstrapping of your Version Control System and Azure resources. Please only use the following instructions if you need to use the classic version of the ALZ Bicep Accelerator.
+> [!NOTE]
+> The classic version of the ALZ Bicep Accelerator will be maintained for a limited time. We recommend migrating to the new version as soon as possible.
 
->NOTE: The classic version of the ALZ Bicep Accelerator will be maintained for a limited time. We recommend that you migrate to the new version as soon as possible.
 
 ### What is the ALZ Bicep Accelerator (Classic)?
 
->NOTE: These instructions now include the `-bicepLegacyMode $true` parameter, which needs be set explicily to use the classic version.
+> [!NOTE]
+> These instructions now include the `-bicepLegacyMode $true` parameter, which needs be set explicily to use the classic version.
 
 The ALZ Bicep Accelerator framework was developed to provide end-users with the following abilities:
 
