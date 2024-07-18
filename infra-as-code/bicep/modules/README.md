@@ -12,7 +12,6 @@ To get started with ALZ Bicep, please refer to the [Deployment Flow wiki page][w
 2. High-level deployment flow.
 3. Links to more detailed instructions on individual modules.
 
-
  [//]: # (************************)
  [//]: # (INSERT LINK LABELS BELOW)
  [//]: # (************************)

@@ -227,7 +227,7 @@ The ALZ-Bicep repository regularly releases new [versions](https://github.com/Az
 
 With the ALZ Accelerator framework, we have designed the pipelines and directory structure to make it easy to upgrade to the latest ALZ Bicep version. The following steps will guide you through the upgrade process.
 
-1. Prior to upgrading, read the release note:s for the version you are upgrading to. The release note:s will provide you with information on any breaking changes that may impact your deployment. This is especially important if you have created any custom modules or have [modified any of the ALZ Bicep modules](#incorporating-modified-alz-modules) that may have dependencies on the modules that are being upgraded.
+1. Prior to upgrading, read the release notes for the version you are upgrading to. The release notes will provide you with information on any breaking changes that may impact your deployment. This is especially important if you have created any custom modules or have [modified any of the ALZ Bicep modules](#incorporating-modified-alz-modules) that may have dependencies on the modules that are being upgraded.
 
 1. Using the ALZ PowerShell Module, you can update to the latest or a specified version. You must specifiy the same IaC, Bootstrap and Output directory that you used when you initially deployed the ALZ Bicep Accelerator.
 
