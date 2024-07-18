@@ -274,7 +274,7 @@
               "Destination": "Parameters"
             },
             {
-              "Name": "parVirtualWanHubs.value.[0].parHubLocation",
+              "Name": "parVirtualWanHubs.value[0].parHubLocation",
               "Destination": "Parameters"
             },
             {
@@ -555,7 +555,7 @@
           "Value": "privatelink.{%Location%}.azmk8s.io",
           "Targets": [
             {
-              "Name": "parPrivateDnsZones.value.[0]",
+              "Name": "parPrivateDnsZones.value[0]",
               "Destination": "Parameters"
             }
           ]
@@ -566,7 +566,7 @@
           "Value": "privatelink.{%Location%}.batch.azure.com",
           "Targets": [
             {
-              "Name": "parPrivateDnsZones.value.[1]",
+              "Name": "parPrivateDnsZones.value[1]",
               "Destination": "Parameters"
             }
           ]
@@ -577,7 +577,7 @@
           "Value": "privatelink.{%Location%}.kusto.windows.net",
           "Targets": [
             {
-              "Name": "parPrivateDnsZones.value.[2]",
+              "Name": "parPrivateDnsZones.value[2]",
               "Destination": "Parameters"
             }
           ]
@@ -588,7 +588,7 @@
           "Value": "privatelink.{%Location%}.backup.windowsazure.com",
           "Targets": [
             {
-              "Name": "parPrivateDnsZones.value.[3]",
+              "Name": "parPrivateDnsZones.value[3]",
               "Destination": "Parameters"
             }
           ]
@@ -637,6 +637,37 @@
             {
               "File": "managementGroups.parameters.all.json",
               "Name": "parTopLevelManagementGroupParentId.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "AvailabilityZones": {
+          "source": "powershell",
+          "type": "list(string)",
+          "Value": "",
+          "Targets": [
+            {
+              "Name": "AVAILABILITY_ZONES",
+              "Destination": "Environment"
+            },
+            {
+              "File": "vwanConnectivity.parameters.all.json",
+              "Name": "parVirtualWanHubs.value[0].parAzFirewallAvailabilityZones",
+              "Destination": "Parameters"
+            },
+            {
+              "File": "hubNetworking.parameters.all.json",
+              "Name": "parAzErGatewayAvailabilityZones.value",
+              "Destination": "Parameters"
+            },
+            {
+              "File": "hubNetworking.parameters.all.json",
+              "Name": "parAzVpnGatewayAvailabilityZones.value",
+              "Destination": "Parameters"
+            },
+            {
+              "File": "hubNetworking.parameters.all.json",
+              "Name": "parAzFirewallAvailabilityZones.value",
               "Destination": "Parameters"
             }
           ]
@@ -904,6 +935,17 @@
               "File": "resourceGroupIdentity.parameters.all.json",
               "Name": "parResourceGroupName.value",
               "Destination": "Parameters"
+            }
+          ]
+        },
+        "AvailabilityZones": {
+          "source": "powershell",
+          "type": "list(string)",
+          "Value": "",
+          "Targets": [
+            {
+              "Name": "AVAILABILITY_ZONES",
+              "Destination": "Environment"
             }
           ]
         }
