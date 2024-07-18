@@ -6,9 +6,10 @@
 > The ALZ Bicep Accelerator has been updated to automate the bootstrapping of your Version Control System and Azure resources. The ALZ Bicep Accelerator's documentation has been moved to [aka.ms/alz/accelerator/docs](https://aka.ms/alz/accelerator/docs). Head over there now to get started!
 > Use the instructions below only if you need to use the classic version of the ALZ Bicep Accelerator.
 
-> [!NOTE]
-> The classic version of the ALZ Bicep Accelerator will be maintained for a limited time. We recommend migrating to the new version as soon as possible.
+### Deprecation Notice
 
+> [!WARNING]
+> The classic version of the ALZ Bicep Accelerator will be maintained for a limited time. We recommend migrating to the new version as soon as possible.
 
 ### What is the ALZ Bicep Accelerator (Classic)?
 
