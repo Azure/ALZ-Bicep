@@ -58,7 +58,7 @@ module baseline_private_dns '../privateDnsZones.bicep' = {
       'privatelink.gremlin.cosmos.azure.com'
       'privatelink.guestconfiguration.azure.com'
       'privatelink.his.arc.azure.com'
-      'privatelink.kubernetesconfiguration.azure.com'
+      'privatelink.dp.kubernetesconfiguration.azure.com'
       'privatelink.managedhsm.azure.net'
       'privatelink.mariadb.database.azure.com'
       'privatelink.media.azure.net'
