@@ -11,7 +11,7 @@ parRoleDefinitionId | Yes      | Role Definition Id (i.e. GUID, Reader Role Defi
 parAssigneePrincipalType | Yes      | Principal type of the assignee. Allowed values are 'Group' (Security Group) or 'ServicePrincipal' (Service Principal or System/User Assigned Managed Identity)
 parAssigneeObjectId | Yes      | Object ID of groups, service principals or managed identities. For managed identities use the principal id. For service principals, use the object ID and not the app ID
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
-parRoleAssignmentCondition | No       | The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions support having a condition defined. Example of built-in roles that support conditions: - Owner - User Access Administrator - Role Based Access Control Administrator  To generate conditions code: - Create a role assignemnt with a condition from the portal for the privileged role that will be assigned. - Select the code view from the advanced editor and copy the condition's code. - Remove all newlines from the code - Escape any single quote using a backslash (only in Bicep, no need in JSON parameters file)  Example condition code: param parRoleAssignmentCondition string = '((!(ActionMatches{\'Microsoft.Authorization/roleAssignments/write\'}) OR (@Request[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {8e3af657-a8ff-443c-a75c-2fe8c4bcb635,b24988ac-6180-42a0-ab88-20f7382dd24c} AND @Request[Microsoft.Authorization/roleAssignments:PrincipalType] ForAnyOfAnyValues:StringEqualsIgnoreCase {\'Group\',\'ServicePrincipal\'})) AND ((!(ActionMatches{\'Microsoft.Authorization/roleAssignments/delete\'})) OR (@Resource[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {8e3af657-a8ff-443c-a75c-2fe8c4bcb635,b24988ac-6180-42a0-ab88-20f7382dd24c} AND @Resource[Microsoft.Authorization/roleAssignments:PrincipalType] ForAnyOfAnyValues:StringEqualsIgnoreCase {'Group','ServicePrincipal'})))' 
+parRoleAssignmentCondition | No       | The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions support having a condition defined. Example of built-in roles that support conditions: (Owner, User Access Administrator, Role Based Access Control Administrator). To generate conditions code: - Create a role assignemnt with a condition from the portal for the privileged role that will be assigned. - Select the code view from the advanced editor and copy the condition's code. - Remove all newlines from the code - Escape any single quote using a backslash (only in Bicep, no need in JSON parameters file) 
 parRoleAssignmentConditionVersion | No       | Role assignment condition version. Currently the only accepted value is '2.0'
 
 ### parRoleAssignmentNameGuid
@@ -54,20 +54,11 @@ Set Parameter to true to Opt-out of deployment telemetry.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions support having a condition defined.
-Example of built-in roles that support conditions:
-- Owner
-- User Access Administrator
-- Role Based Access Control Administrator
-
-To generate conditions code:
+The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions support having a condition defined. Example of built-in roles that support conditions: (Owner, User Access Administrator, Role Based Access Control Administrator). To generate conditions code:
 - Create a role assignemnt with a condition from the portal for the privileged role that will be assigned.
 - Select the code view from the advanced editor and copy the condition's code.
 - Remove all newlines from the code
 - Escape any single quote using a backslash (only in Bicep, no need in JSON parameters file)
-
-Example condition code:
-param parRoleAssignmentCondition string = '((!(ActionMatches{\'Microsoft.Authorization/roleAssignments/write\'}) OR (@Request[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {8e3af657-a8ff-443c-a75c-2fe8c4bcb635,b24988ac-6180-42a0-ab88-20f7382dd24c} AND @Request[Microsoft.Authorization/roleAssignments:PrincipalType] ForAnyOfAnyValues:StringEqualsIgnoreCase {\'Group\',\'ServicePrincipal\'})) AND ((!(ActionMatches{\'Microsoft.Authorization/roleAssignments/delete\'})) OR (@Resource[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {8e3af657-a8ff-443c-a75c-2fe8c4bcb635,b24988ac-6180-42a0-ab88-20f7382dd24c} AND @Resource[Microsoft.Authorization/roleAssignments:PrincipalType] ForAnyOfAnyValues:StringEqualsIgnoreCase {'Group','ServicePrincipal'})))'
 
 
 ### parRoleAssignmentConditionVersion
