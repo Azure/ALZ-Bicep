@@ -22,20 +22,11 @@ param parAssigneeObjectId string
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
-@sys.description('''The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions support having a condition defined.
-Example of built-in roles that support conditions:
-- Owner
-- User Access Administrator
-- Role Based Access Control Administrator
-
-To generate conditions code:
+@sys.description('''The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions support having a condition defined. Example of built-in roles that support conditions: (Owner, User Access Administrator, Role Based Access Control Administrator). To generate conditions code:
 - Create a role assignemnt with a condition from the portal for the privileged role that will be assigned.
 - Select the code view from the advanced editor and copy the condition's code.
 - Remove all newlines from the code
 - Escape any single quote using a backslash (only in Bicep, no need in JSON parameters file)
-
-Example condition code:
-param parRoleAssignmentCondition string = '((!(ActionMatches{\'Microsoft.Authorization/roleAssignments/write\'}) OR (@Request[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {8e3af657-a8ff-443c-a75c-2fe8c4bcb635,b24988ac-6180-42a0-ab88-20f7382dd24c} AND @Request[Microsoft.Authorization/roleAssignments:PrincipalType] ForAnyOfAnyValues:StringEqualsIgnoreCase {\'Group\',\'ServicePrincipal\'})) AND ((!(ActionMatches{\'Microsoft.Authorization/roleAssignments/delete\'})) OR (@Resource[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {8e3af657-a8ff-443c-a75c-2fe8c4bcb635,b24988ac-6180-42a0-ab88-20f7382dd24c} AND @Resource[Microsoft.Authorization/roleAssignments:PrincipalType] ForAnyOfAnyValues:StringEqualsIgnoreCase {'Group','ServicePrincipal'})))'
 ''')
 param parRoleAssignmentCondition string = ''
 
