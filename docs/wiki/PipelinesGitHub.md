@@ -38,7 +38,7 @@ jobs:
           fetch-depth: 0
 
       - name: Azure Login
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
 
