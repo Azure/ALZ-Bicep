@@ -183,3 +183,38 @@ New-AzManagementGroupDeployment @inputObject
 ### Many Resource Group Role Assignments
 
 ![Bicep Visualizer - Many Resource Group Role Assignments](media/bicepVisualizerSubMany.png "Bicep Visualizer - Many Resource Group Role Assignments")
+
+## Role assignment delegation
+
+For each module, you can add a role assignment condition to securely delegate role assignments to others. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions can have a condition defined. Example: (Owner, User Access Administrator and Role Based Access Control Administrator). To generate the condition code:
+
+- Create a role assignemnt with a condition from the portal for the privileged role that will be assigned.
+- Select the code view from the advanced editor and copy the condition's code.
+- Remove all newlines from the condition code.
+- Escape any single quote using a backslash (only in Bicep, no need in JSON parameters file).
+
+Example:
+
+```json
+"parRoleAssignmentNameGuid": {
+    "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+},
+"parRoleDefinitionId": {
+    "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+},
+"parAssigneePrincipalType": {
+    "value": "ServicePrincipal"
+},
+"parAssigneeObjectId": {
+    "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+},
+"parRoleAssignmentCondition": {
+    "value": "((!(ActionMatches{'Microsoft.Authorization/roleAssignments/write'}) OR (@Request[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx,xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx} AND @Request[Microsoft.Authorization/roleAssignments:PrincipalType] ForAnyOfAnyValues:StringEqualsIgnoreCase {'Group','ServicePrincipal'})) AND ((!(ActionMatches{'Microsoft.Authorization/roleAssignments/delete'})) OR (@Resource[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx,xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx} AND @Resource[Microsoft.Authorization/roleAssignments:PrincipalType] ForAnyOfAnyValues:StringEqualsIgnoreCase {'Group','ServicePrincipal'})))"
+},
+"parRoleAssignmentConditionVersion": {
+    "value": "2.0"
+},
+"parTelemetryOptOut": {
+    "value": false
+}
+```

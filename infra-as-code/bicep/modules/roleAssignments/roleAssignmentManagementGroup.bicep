@@ -22,6 +22,12 @@ param parAssigneeObjectId string
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
+@sys.description('The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions can have a condition defined. Example: Owner, User Access Administrator and RBAC Administrator.')
+param parRoleAssignmentCondition string = ''
+
+@sys.description('Role assignment condition version. Currently the only accepted value is \'2.0\'')
+param parRoleAssignmentConditionVersion string = '2.0'
+
 // Customer Usage Attribution Id
 var varCuaid = '59c2ac61-cd36-413b-b999-86a3e0d958fb'
 
@@ -31,6 +37,8 @@ resource resRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' 
     roleDefinitionId: tenantResourceId('Microsoft.Authorization/roleDefinitions', parRoleDefinitionId)
     principalId: parAssigneeObjectId
     principalType: parAssigneePrincipalType
+    condition: !empty(parRoleAssignmentCondition) ? parRoleAssignmentCondition : null
+    conditionVersion: !empty(parRoleAssignmentCondition) ? parRoleAssignmentConditionVersion : null
   }
 }
 
