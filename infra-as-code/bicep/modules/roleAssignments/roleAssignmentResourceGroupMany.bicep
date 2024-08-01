@@ -22,12 +22,7 @@ param parAssigneeObjectId string
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
-@sys.description('''The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions support having a condition defined. Example of built-in roles that support conditions: (Owner, User Access Administrator, Role Based Access Control Administrator). To generate conditions code:
-- Create a role assignemnt with a condition from the portal for the privileged role that will be assigned.
-- Select the code view from the advanced editor and copy the condition's code.
-- Remove all newlines from the code
-- Escape any single quote using a backslash (only in Bicep, no need in JSON parameters file)
-''')
+@sys.description('The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions can have a condition defined. Example: Owner, User Access Administrator and Role Based Access Control Administrator).')
 param parRoleAssignmentCondition string = ''
 
 @sys.description('Role assignment condition version. Currently the only accepted value is \'2.0\'')
