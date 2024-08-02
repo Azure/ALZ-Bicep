@@ -31,13 +31,13 @@
   },
   "DINE-Private-DNS-Azure-Arc": {
     "parameters": {
-      "privateDnsZoneIdForGuestConfiguration": {
+      "privateDnsZoneIDForGuestConfiguration": {
         "value": "[[parameters('azureArcGuestconfigurationPrivateDnsZoneId')]"
       },
-      "privateDnsZoneIdForHybridResourceProvider": {
+      "privateDnsZoneIDForHybridResourceProvider": {
         "value": "[[parameters('azureArcHybridResourceProviderPrivateDnsZoneId')]"
       },
-      "privateDnsZoneIdForKubernetesConfiguration": {
+      "privateDnsZoneIDForKubernetesConfiguration": {
         "value": "[[parameters('azureArcKubernetesConfigurationPrivateDnsZoneId')]"
       },
       "effect": {
