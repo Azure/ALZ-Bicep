@@ -22,6 +22,12 @@ param parAssigneeObjectId string
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
+@sys.description('The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions can have a condition defined. Example: Owner, User Access Administrator and RBAC Administrator.')
+param parRoleAssignmentCondition string = ''
+
+@sys.description('Role assignment condition version. Currently the only accepted value is \'2.0\'')
+param parRoleAssignmentConditionVersion string = '2.0'
+
 module modRoleAssignment 'roleAssignmentSubscription.bicep' = [for subscriptionId in parSubscriptionIds: {
   name: 'rbac-assign-${uniqueString(subscriptionId, parAssigneeObjectId, parRoleDefinitionId)}'
   scope: subscription(subscriptionId)
@@ -31,5 +37,7 @@ module modRoleAssignment 'roleAssignmentSubscription.bicep' = [for subscriptionI
     parAssigneePrincipalType: parAssigneePrincipalType
     parRoleDefinitionId: parRoleDefinitionId
     parTelemetryOptOut: parTelemetryOptOut
+    parRoleAssignmentCondition: !empty(parRoleAssignmentCondition) ? parRoleAssignmentCondition : null
+    parRoleAssignmentConditionVersion: !empty(parRoleAssignmentCondition) ? parRoleAssignmentConditionVersion : null
   }
 }]
