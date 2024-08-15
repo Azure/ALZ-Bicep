@@ -189,7 +189,7 @@ resource resUserAssignedManagedIdentity 'Microsoft.ManagedIdentity/userAssignedI
   location: parUserAssignedManagedIdentityLocation
 }
 
-resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2022-08-08' = {
+resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2023-11-01' = {
   name: parAutomationAccountName
   location: parAutomationAccountLocation
   tags: parAutomationAccountTags
@@ -240,7 +240,7 @@ resource resLogAnalyticsWorkspaceLock 'Microsoft.Authorization/locks@2020-05-01'
   }
 }
 
-resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
+resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
   name: parDataCollectionRuleVMInsightsName
   location: parLogAnalyticsWorkspaceLocation
   properties: {
@@ -308,7 +308,7 @@ resource resDataCollectionRuleVMInsightsLock 'Microsoft.Authorization/locks@2020
   }
 }
 
-resource resDataCollectionRuleChangeTracking 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
+resource resDataCollectionRuleChangeTracking 'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
   name: parDataCollectionRuleChangeTrackingName
   location: parLogAnalyticsWorkspaceLocation
   properties: {
@@ -579,7 +579,7 @@ resource resDataCollectionRuleChangeTrackingLock 'Microsoft.Authorization/locks@
   }
 }
 
-resource resDataCollectionRuleMDFCSQL'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
+resource resDataCollectionRuleMDFCSQL'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
   name: parDataCollectionRuleMDFCSQLName
   location: parLogAnalyticsWorkspaceLocation
   properties: {
