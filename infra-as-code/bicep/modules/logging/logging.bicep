@@ -189,7 +189,7 @@ resource resUserAssignedManagedIdentity 'Microsoft.ManagedIdentity/userAssignedI
   location: parUserAssignedManagedIdentityLocation
 }
 
-resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2022-08-08' = {
+resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2023-11-01' = {
   name: parAutomationAccountName
   location: parAutomationAccountLocation
   tags: parAutomationAccountTags
