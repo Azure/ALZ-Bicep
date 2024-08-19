@@ -13,6 +13,12 @@
         "decompiler-cleanup": {
           "level": "error"
         },
+        "explicit-values-for-loc-params": {
+          "level": "off"
+        },
+        "max-asserts": {
+          "level": "warning"
+        },
         "max-outputs": {
           "level": "error"
         },
@@ -23,6 +29,15 @@
           "level": "error"
         },
         "max-variables": {
+          "level": "error"
+        },
+        "nested-deployment-template-scoping": {
+          "level": "error"
+        },
+        "no-conflicting-metadata" : {
+          "level": "warning"
+        },
+        "no-deployments-resources" : {
           "level": "error"
         },
         "no-hardcoded-env-urls": {
@@ -80,10 +95,19 @@
           "level": "warning",
           "maxAllowedAgeInDays": 730
         },
+        "use-recent-module-versions": {
+          "level": "warning"
+        },
         "use-resource-id-functions": {
           "level": "error"
         },
         "use-resource-symbol-reference": {
+          "level": "error"
+        },
+        "use-safe-access": {
+          "level": "warning"
+        },
+        "use-secure-value-for-secure-inputs": {
           "level": "error"
         },
         "use-stable-resource-identifiers": {
