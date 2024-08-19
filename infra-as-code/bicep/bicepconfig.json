@@ -38,7 +38,7 @@
           "level": "warning"
         },
         "no-deployments-resources" : {
-          "level": "warning"
+          "level": "error"
         },
         "no-hardcoded-env-urls": {
           "level": "error"
