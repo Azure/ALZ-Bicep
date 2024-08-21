@@ -45,7 +45,7 @@ This page lists the known issues and limitations currently present in ALZ-Bicep.
   - Deploy the module in smaller chunks.
   - Split the policy assignments into separate modules and deploy them individually.
   - If `parTelemetryOptOut` is set to `true`, comment out or remove the parameter and its associated resource declaration from the `.bicep` file.
-- **Status:** We have reduced the ARM template size by condensing parameter and variable descriptions. Refactoring the module will only be considered if necessary, particularly if additional policy assignments significantly impact deployments. We are currently transitioning to [Azure Verified Modules](https://github.com/Azure/ALZ-Bicep/issues/791) and will evaluate additional policy assignments based on their impact on future deployments during this transition to an AVM-based deployment model.
+- **Status:** We have reduced the ARM template size by condensing parameter descriptions . Refactoring the module will only be considered if necessary, particularly if additional policy assignments from a policy refresh impact deployments. We are also taking into consideration that we are currently working on transition to [Azure Verified Modules](https://github.com/Azure/ALZ-Bicep/issues/791), which will account for this issue in the long-term.
 
 ## How to Report an Issue
 
