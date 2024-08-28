@@ -173,7 +173,7 @@ param parAutomationAccountTags object = parTags
 param parLogAnalyticsWorkspaceTags object = parTags
 
 @sys.description('Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.')
-param parUseSentinelClassicPricingTiers bool = false
+//param parUseSentinelClassicPricingTiers bool = false
 
 @sys.description('Log Analytics LinkedService name for Automation Account.')
 param parLogAnalyticsLinkedServiceAutomationAccountName string = 'Automation'
@@ -240,7 +240,7 @@ resource resLogAnalyticsWorkspaceLock 'Microsoft.Authorization/locks@2020-05-01'
   }
 }
 
-resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
+resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
   name: parDataCollectionRuleVMInsightsName
   location: parLogAnalyticsWorkspaceLocation
   properties: {
@@ -308,7 +308,7 @@ resource resDataCollectionRuleVMInsightsLock 'Microsoft.Authorization/locks@2020
   }
 }
 
-resource resDataCollectionRuleChangeTracking 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
+resource resDataCollectionRuleChangeTracking 'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
   name: parDataCollectionRuleChangeTrackingName
   location: parLogAnalyticsWorkspaceLocation
   properties: {
@@ -579,7 +579,7 @@ resource resDataCollectionRuleChangeTrackingLock 'Microsoft.Authorization/locks@
   }
 }
 
-resource resDataCollectionRuleMDFCSQL'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
+resource resDataCollectionRuleMDFCSQL'Microsoft.Insights/dataCollectionRules@2023-03-11' = {
   name: parDataCollectionRuleMDFCSQLName
   location: parLogAnalyticsWorkspaceLocation
   properties: {
@@ -650,9 +650,6 @@ resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solut
   tags: parTags
   properties: solution == 'SecurityInsights' ? {
     workspaceResourceId: resLogAnalyticsWorkspace.id
-    sku: parUseSentinelClassicPricingTiers ? null : {
-      name: 'Unified'
-    }
   } : {
     workspaceResourceId: resLogAnalyticsWorkspace.id
   }
