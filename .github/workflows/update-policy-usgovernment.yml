@@ -1,0 +1,134 @@
+---
+name: Update Policy Library for Azure USGovernment regions
+
+on:
+  schedule:
+    - cron: '0 8 * * 1-5'
+  workflow_dispatch: {}
+
+env:
+  remote_repository: "Azure/Enterprise-Scale"
+  branch_name: "patch-policy-library-usgovernment"
+  az_accounts_minimum_version: "2.2.3"
+  pr_title: "Update Policy Library for Azure USGovernment (automated)"
+  pr_body: "This is an automated 'pull_request' containing updates to the library templates stored in '/infra-as-code/bicep/modules/policy/definitions/lib/usgovernment' & '/infra-as-code/bicep/modules/policy/assignments/lib'.\nPlease review the 'files changed' tab to review changes."
+
+jobs:
+  update-templates:
+    name: Update Policy Library
+    if: github.repository == 'Azure/ALZ-Bicep'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Local repository checkout
+        uses: actions/checkout@v4
+        with:
+          path: ${{ github.repository }}
+          fetch-depth: 0
+
+      - name: Remote repository checkout
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.remote_repository }}
+          path: ${{ env.remote_repository }}
+          ref: main
+
+      - uses: tibdex/github-app-token@v2
+        id: generate-token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Configure local git
+        run: |
+          git config user.name github-actions
+          git config user.email action@github.com
+        working-directory: ${{ github.repository }}
+
+      - name: Create and checkout branch
+        run: |
+          BRANCH_URL="repos/${{ github.repository }}/branches"
+          JQ_FILTER=".[] | select(.name == \"${{ env.branch_name }}\").name"
+          CHECK_BRANCH_ORIGIN=$(gh api $BRANCH_URL | jq -r "$JQ_FILTER")
+          if [ -z "$CHECK_BRANCH_ORIGIN" ]
+          then
+            echo "Checkout local branch (create new, no origin)..."
+            git checkout -b ${{ env.branch_name }}
+          else
+            echo "Checkout local branch (create new, track from origin)..."
+            git checkout -b ${{ env.branch_name }} --track origin/${{ env.branch_name }}
+          fi
+        working-directory: ${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+
+      - name: Update Policy Library
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            Write-Information "==> Running script..." -InformationAction Continue
+            ${{ github.repository }}/.github/scripts/Invoke-LibraryUpdate-usgovernment.ps1 `
+              -AlzToolsPath "${{ github.workspace }}/${{ env.remote_repository }}/src/Alz.Tools/" `
+              -TargetPath ${{ github.workspace }}/${{ github.repository }} `
+              -SourcePath ${{ github.workspace }}/${{ env.remote_repository }} `
+              -Reset
+          azPSVersion: "latest"
+
+      - name: Install ALZ PowerShell Module
+        shell: pwsh
+        run: |
+          Install-Module -Name 'ALZ' -Force
+
+      - name: Update Policy Definition Bicep Input Files
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            cd ${{ github.workspace }}/${{ github.repository }}
+            Write-Information "==> Running script..." -InformationAction Continue
+            .github/scripts/Invoke-PolicyToBicep-USGovernment.ps1
+          azPSVersion: "latest"
+
+      - name: Check for changes
+        id: git_status
+        run: |
+          CHECK_GIT_STATUS=($(git status -s))
+          git status -s
+          echo "changes=${#CHECK_GIT_STATUS[@]}" >> $GITHUB_OUTPUT
+        working-directory: ${{ github.repository }}
+
+      - name: Add files, commit and push
+        if: steps.git_status.outputs.changes > 0
+        run: |
+          echo "Pushing changes to origin..."
+          git add infra-as-code/bicep/modules/policy/definitions/lib/usgovernment
+          git add infra-as-code/bicep/modules/policy/assignments/lib/usgovernment
+          git config --global core.autocrlf input
+          git commit -m '${{ env.pr_title }}'
+          git push origin ${{ env.branch_name }}
+        working-directory: ${{ github.repository }}
+
+      - name: Create pull request
+        if: steps.git_status.outputs.changes > 0
+        run: |
+          HEAD_LABEL="${{ github.repository_owner }}:${{ env.branch_name }}"
+          BASE_LABEL="${{ github.repository_owner }}:$(echo '${{ github.ref }}' | sed 's:refs/heads/::')"
+          PULL_REQUEST_URL="repos/${{ github.repository }}/pulls"
+          JQ_FILTER=".[] | select(.head.label == \"$HEAD_LABEL\") | select(.base.label == \"$BASE_LABEL\") | .url"
+          CHECK_PULL_REQUEST_URL=$(gh api $PULL_REQUEST_URL | jq -r "$JQ_FILTER")
+          if [ -z "$CHECK_PULL_REQUEST_URL" ]
+          then
+            CHECK_PULL_REQUEST_URL=$(gh pr create \
+            --title "${{ env.pr_title }}" \
+            --body "${{ env.pr_body }}" \
+            --base "${{ github.ref }}" \
+            --head "${{ env.branch_name }}" \
+            --draft)
+            echo "Created new PR: $CHECK_PULL_REQUEST_URL"
+          else
+            echo "Existing PR found: $CHECK_PULL_REQUEST_URL"
+          fi
+        working-directory: ${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
