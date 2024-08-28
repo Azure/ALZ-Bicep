@@ -54,9 +54,6 @@
         "Environment": "Live"
       }
     },
-    "parUseSentinelClassicPricingTiers": {
-      "value": false
-    },
     "parLogAnalyticsLinkedServiceAutomationAccountName": {
       "value": "Automation"
     },
