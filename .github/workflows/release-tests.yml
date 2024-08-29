@@ -21,7 +21,7 @@ jobs:
       - name: Pester Tests
         id: pester
         if: startsWith(github.head_ref, 'release')
-        uses: azure/powershell@v1
+        uses: azure/powershell@v2
         with:
           inlineScript: |
             Import-Module Pester -Force
