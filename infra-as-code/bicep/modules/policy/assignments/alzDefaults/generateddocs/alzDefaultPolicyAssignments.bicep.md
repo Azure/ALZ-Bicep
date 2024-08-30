@@ -8,8 +8,8 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for management group names/IDs. Include a dash if needed.
-parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Settings for assigning Sovereignty Baseline - Global Policies to the intermediate root management group.
-parPolicyAssignmentSovereigntyConfidential | No       | Settings for assigning Sovereignty Baseline - Confidential Policies to confidential landing zone management groups.
+parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'  - `parTopLevelSovereignGlobalPoliciesEnable` - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed. - `parPolicyEffect` - The effect type for the Sovereignty Baseline - Global Policies Assignment.  
+parPolicyAssignmentSovereigntyConfidential | No       | Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'  - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed. - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs. - `parPolicyEffect` - The effect type for the Sovereignty Baseline - Confidential Policies Assignment.  
 parPlatformMgAlzDefaultsEnable | No       | Toggle to apply platform policies to the Platform group or child groups.
 parLandingZoneChildrenMgAlzDefaultsEnable | No       | Toggle to assign policies to Corp & Online Management Groups under Landing Zones.
 parLandingZoneMgConfidentialEnable | No       | Toggle to assign policies to Confidential Corp and Online groups under Landing Zones.
@@ -51,7 +51,13 @@ Optional suffix for management group names/IDs. Include a dash if needed.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Settings for assigning Sovereignty Baseline - Global Policies to the intermediate root management group.
+Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'
+
+- `parTopLevelSovereignGlobalPoliciesEnable` - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.
+- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
+- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Global Policies Assignment.
+
+
 
 - Default value: `@{parTopLevelSovereigntyGlobalPoliciesEnable=False; parListOfAllowedLocations=System.Object[]; parPolicyEffect=Deny}`
 
@@ -59,7 +65,14 @@ Settings for assigning Sovereignty Baseline - Global Policies to the intermediat
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Settings for assigning Sovereignty Baseline - Confidential Policies to confidential landing zone management groups.
+Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'
+
+- `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.
+- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
+- `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.
+- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Confidential Policies Assignment.
+
+
 
 - Default value: `@{parAllowedResourceTypes=System.Object[]; parListOfAllowedLocations=System.Object[]; parAllowedVirtualMachineSKUs=System.Object[]; parPolicyEffect=Deny}`
 
