@@ -35,14 +35,27 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @maxLength(10)
 param parTopLevelManagementGroupSuffix string = ''
 
-@sys.description('Settings for assigning Sovereignty Baseline - Global Policies to the intermediate root management group.')
+@sys.description('''Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'
+
+- `parTopLevelSovereignGlobalPoliciesEnable` - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.
+- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
+- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Global Policies Assignment.
+
+''')
 param parTopLevelPolicyAssignmentSovereigntyGlobal policyAssignmentSovereigntyGlobalOptionsType = {
   parTopLevelSovereigntyGlobalPoliciesEnable: false
   parListOfAllowedLocations: []
   parPolicyEffect: 'Deny'
 }
 
-@sys.description('Settings for assigning Sovereignty Baseline - Confidential Policies to confidential landing zone management groups.')
+@sys.description('''Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'
+
+- `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.
+- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
+- `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.
+- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Confidential Policies Assignment.
+
+''')
 param parPolicyAssignmentSovereigntyConfidential policyAssignmentSovereigntyConfidentialOptionsType = {
   parAllowedResourceTypes: []
   parListOfAllowedLocations: []
