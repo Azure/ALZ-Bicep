@@ -406,9 +406,9 @@ param parBastionOutboundSshRdpPorts array = [ '22', '3389' ]
 var varSubnetMap = map(range(0, length(parSubnets)), i => {
     name: parSubnets[i].name
     ipAddressRange: parSubnets[i].ipAddressRange
-    networkSecurityGroupId: contains(parSubnets[i], 'networkSecurityGroupId') ? parSubnets[i].networkSecurityGroupId : ''
-    routeTableId: contains(parSubnets[i], 'routeTableId') ? parSubnets[i].routeTableId : ''
-    delegation: contains(parSubnets[i], 'delegation') ? parSubnets[i].delegation : ''
+    networkSecurityGroupId: parSubnets[i].?networkSecurityGroupId ?? ''
+    routeTableId: parSubnets[i].?routeTableId ?? ''
+    delegation: parSubnets[i].?delegation ?? ''
   })
 
 var varSubnetProperties = [for subnet in varSubnetMap: {
@@ -770,15 +770,15 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for
       tier: gateway.sku
     }
     vpnClientConfiguration: (toLower(gateway.gatewayType) == 'vpn') ? {
-      vpnClientAddressPool: contains(gateway.vpnClientConfiguration, 'vpnClientAddressPool') ? gateway.vpnClientConfiguration.vpnClientAddressPool : ''
-      vpnClientProtocols: contains(gateway.vpnClientConfiguration, 'vpnClientProtocols') ? gateway.vpnClientConfiguration.vpnClientProtocols : ''
-      vpnAuthenticationTypes: contains(gateway.vpnClientConfiguration, 'vpnAuthenticationTypes') ? gateway.vpnClientConfiguration.vpnAuthenticationTypes : ''
-      aadTenant: contains(gateway.vpnClientConfiguration, 'aadTenant') ? gateway.vpnClientConfiguration.aadTenant : ''
-      aadAudience: contains(gateway.vpnClientConfiguration, 'aadAudience') ? gateway.vpnClientConfiguration.aadAudience : ''
-      aadIssuer: contains(gateway.vpnClientConfiguration, 'aadIssuer') ? gateway.vpnClientConfiguration.aadIssuer : ''
-      vpnClientRootCertificates: contains(gateway.vpnClientConfiguration, 'vpnClientRootCertificates') ? gateway.vpnClientConfiguration.vpnClientRootCertificates : ''
-      radiusServerAddress: contains(gateway.vpnClientConfiguration, 'radiusServerAddress') ? gateway.vpnClientConfiguration.radiusServerAddress : ''
-      radiusServerSecret: contains(gateway.vpnClientConfiguration, 'radiusServerSecret') ? gateway.vpnClientConfiguration.radiusServerSecret : ''
+      vpnClientAddressPool: gateway.vpnClientConfiguration.?vpnClientAddressPool ?? ''
+      vpnClientProtocols: gateway.vpnClientConfiguration.?vpnClientProtocols ?? ''
+      vpnAuthenticationTypes: gateway.vpnClientConfiguration.?vpnAuthenticationTypes ?? ''
+      aadTenant: gateway.vpnClientConfiguration.?aadTenant ?? ''
+      aadAudience: gateway.vpnClientConfiguration.?aadAudience ?? ''
+      aadIssuer: gateway.vpnClientConfiguration.?aadIssuer ?? ''
+      vpnClientRootCertificates: gateway.vpnClientConfiguration.?vpnClientRootCertificates ?? ''
+      radiusServerAddress: gateway.vpnClientConfiguration.?radiusServerAddress ?? ''
+      radiusServerSecret: gateway.vpnClientConfiguration.?radiusServerSecret ?? ''
     } : null
     ipConfigurations: [
       {
