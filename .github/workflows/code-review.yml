@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Run github/super-linter
-        uses: github/super-linter@v6
+        uses: github/super-linter@v7
         env:
           # Lint all code - disabled in as part of #262
           VALIDATE_ALL_CODEBASE: false

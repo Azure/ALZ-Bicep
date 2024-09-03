@@ -1,31 +1,31 @@
 targetScope = 'subscription'
 
 metadata name = 'ALZ Bicep - Role Assignment to a Subscription'
-metadata description = 'Module used to assign a Role Assignment to a Subscription'
+metadata description = 'Module to assign a role to a Subscription'
 
-@sys.description('A GUID representing the role assignment name.')
+@sys.description('GUID for the role assignment name.')
 param parRoleAssignmentNameGuid string = guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId)
 
-@sys.description('Role Definition Id (i.e. GUID, Reader Role Definition ID: acdd72a7-3385-48ef-bd42-f606fba81ae7)')
+@sys.description('Role Definition Id (e.g., Reader Role Definition ID: acdd72a7-3385-48ef-bd42-f606fba81ae7)')
 param parRoleDefinitionId string
 
-@sys.description('Principal type of the assignee. Allowed values are \'Group\' (Security Group) or \'ServicePrincipal\' (Service Principal or System/User Assigned Managed Identity)')
+@sys.description('Principal type: \'Group\' (Security Group) or \'ServicePrincipal\' (Service Principal/Managed Identity).')
 @allowed([
   'Group'
   'ServicePrincipal'
 ])
 param parAssigneePrincipalType string
 
-@sys.description('Object ID of groups, service principals or managed identities. For managed identities use the principal id. For service principals, use the object ID and not the app ID')
+@sys.description('Object ID of groups, service principals, or managed identities (use principal ID for managed identities).')
 param parAssigneeObjectId string
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry.')
+@sys.description('Set to true to opt out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
-@sys.description('The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions can have a condition defined. Example: Owner, User Access Administrator and RBAC Administrator.')
+@sys.description('Role assignment condition (e.g., Owner, User Access Administrator). Only roles with `write` or `delete` permissions can have a condition.')
 param parRoleAssignmentCondition string = ''
 
-@sys.description('Role assignment condition version. Currently the only accepted value is \'2.0\'')
+@sys.description('Role assignment condition version. Only value accepted is \'2.0\'.')
 param parRoleAssignmentConditionVersion string = '2.0'
 
 // Customer Usage Attribution Id

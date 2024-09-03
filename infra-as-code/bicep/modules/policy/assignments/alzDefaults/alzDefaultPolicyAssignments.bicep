@@ -1,37 +1,37 @@
-metadata name = 'ALZ Bicep - ALZ Default Policy Assignments'
-metadata description = 'This module will assign the ALZ Default Policy Assignments to the ALZ Management Group hierarchy'
+metadata name = 'ALZ Bicep - Default Policy Assignments'
+metadata description = 'Assigns ALZ Default Policies to the Management Group hierarchy'
 
 type policyAssignmentSovereigntyGlobalOptionsType = {
-  @sys.description('Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.')
+  @sys.description('Toggle to enable/disable deployment of Sovereignty Baseline - Global Policies at the intermediate root management group.')
   parTopLevelSovereigntyGlobalPoliciesEnable: bool
 
-  @sys.description('The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.')
+  @sys.description('List of allowed locations for resource deployment. If empty, only the deployment location is allowed.')
   parListOfAllowedLocations: string[]
 
-  @sys.description('The effect type for the Sovereignty Baseline - Global Policies Assignment.')
+  @sys.description('Effect type for Sovereignty Baseline - Global Policies.')
   parPolicyEffect: ('Audit' | 'Deny' | 'Disabled' | 'AuditIfNotExists')
 }
 
 type policyAssignmentSovereigntyConfidentialOptionsType = {
-  @sys.description('The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.')
+  @sys.description('List of approved Azure resource types (e.g., Confidential Computing SKUs or those not processing customer data). Leave empty to allow all relevant types.')
   parAllowedResourceTypes: string[]
 
-  @sys.description('The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.')
+  @sys.description('List of allowed locations for resource deployment. If empty, only the deployment location is allowed.')
   parListOfAllowedLocations: string[]
 
-  @sys.description('The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.')
+  @sys.description('List of approved VM SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.')
   parAllowedVirtualMachineSKUs: string[]
 
-  @sys.description('The effect type for the Sovereignty Baseline - Confidential Policies Assignment.')
+  @sys.description('Effect type for Sovereignty Baseline - Confidential Policies.')
   parPolicyEffect: ('Audit' | 'Deny' | 'Disabled' | 'AuditIfNotExists')
 }
 
-@sys.description('Prefix used for the management group hierarchy.')
+@sys.description('Prefix for the management group hierarchy.')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@sys.description('Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix')
+@sys.description('Optional suffix for management group names/IDs. Include a dash if needed.')
 @maxLength(10)
 param parTopLevelManagementGroupSuffix string = ''
 
@@ -63,70 +63,70 @@ param parPolicyAssignmentSovereigntyConfidential policyAssignmentSovereigntyConf
   parPolicyEffect: 'Deny'
 }
 
-@sys.description('Management, Identity and Connectivity Management Groups beneath Platform Management Group have been deployed. If set to false, platform policies are assigned to the Platform Management Group; otherwise policies are assigned to the child management groups.')
+@sys.description('Toggle to apply platform policies to the Platform group or child groups.')
 param parPlatformMgAlzDefaultsEnable bool = true
 
-@sys.description('Corp & Online Management Groups beneath Landing Zones Management Groups have been deployed. If set to false, policies will not try to be assigned to corp or online Management Groups.')
+@sys.description('Toggle to assign policies to Corp & Online Management Groups under Landing Zones.')
 param parLandingZoneChildrenMgAlzDefaultsEnable bool = true
 
-@sys.description('Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group have been deployed. If set to false, policies will not try to be assigned to Confidential Corp & Confidential Online Management Groups')
+@sys.description('Toggle to assign policies to Confidential Corp and Online groups under Landing Zones.')
 param parLandingZoneMgConfidentialEnable bool = false
 
-@sys.description('The region where the Log Analytics Workspace & Automation Account are deployed.')
+@sys.description('Location of Log Analytics Workspace & Automation Account.')
 param parLogAnalyticsWorkSpaceAndAutomationAccountLocation string = 'eastus'
 
-@sys.description('Log Analytics Workspace Resource ID.')
+@sys.description('Resource ID of Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceResourceId string = ''
 
-@sys.description('Data Collection Rule VM Insights Resource ID.')
+@sys.description('Resource ID for VM Insights Data Collection Rule.')
 param parDataCollectionRuleVMInsightsResourceId string = ''
 
-@sys.description('Data Collection Rule Change Tracking Resource ID.')
+@sys.description('Resource ID for Change Tracking Data Collection Rule.')
 param parDataCollectionRuleChangeTrackingResourceId string = ''
 
-@sys.description('Data Collection Rule MDFC SQL Resource ID.')
+@sys.description('Resource ID for MDFC SQL Data Collection Rule.')
 param parDataCollectionRuleMDFCSQLResourceId string = ''
 
-@sys.description('User Assigned Managed Identity Resource ID.')
+@sys.description('Resource ID for User Assigned Managed Identity.')
 param parUserAssignedManagedIdentityResourceId string = ''
 
-@sys.description('Number of days of log retention for Log Analytics Workspace.')
+@sys.description('Number of days to retain logs in Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceLogRetentionInDays string = '365'
 
-@sys.description('Automation account name.')
+@sys.description('Name of the Automation Account.')
 param parAutomationAccountName string = 'alz-automation-account'
 
-@sys.description('An e-mail address that you want Microsoft Defender for Cloud alerts to be sent to.')
+@sys.description('Email address for Microsoft Defender for Cloud alerts.')
 param parMsDefenderForCloudEmailSecurityContact string = 'security_contact@replace_me.com'
 
-@sys.description('Switch to enable/disable DDoS Network Protection deployment. True will enforce policy Enable-DDoS-VNET at connectivity or landing zone Management Groups. False will not enforce policy Enable-DDoS-VNET.')
+@sys.description('Toggle to enable/disable DDoS Network Protection deployment. True enforces the Enable-DDoS-VNET policy at connectivity or landing zone groups; false does not.')
 param parDdosEnabled bool = true
 
-@sys.description('ID of the DdosProtectionPlan which will be applied to the Virtual Networks.')
+@sys.description('Resource ID of the DDoS Protection Plan applied to Virtual Networks.')
 param parDdosProtectionPlanId string = ''
 
-@sys.description('Resource ID of the Resource Group that conatin the Private DNS Zones. If left empty, the policy Deploy-Private-DNS-Zones will not be assigned to the corp Management Group.')
+@sys.description('Resource ID of the Resource Group containing Private DNS Zones. Leave empty to skip assigning the Deploy-Private-DNS-Zones policy to the Corp Management Group.')
 param parPrivateDnsResourceGroupId string = ''
 
-@sys.description('Provide an array/list of Private DNS Zones that you wish to audit if deployed into Subscriptions in the Corp Management Group. NOTE: The policy default values include all the static Private Link Private DNS Zones, e.g. all the DNS Zones that dont have a region or region shortcode in them. If you wish for these to be audited also you must provide a complete array/list to this parameter for ALL Private DNS Zones you wish to audit, including the static Private Link ones, as this parameter performs an overwrite operation. You can get all the Private DNS Zone Names form the `outPrivateDnsZonesNames` output in the Hub Networking or Private DNS Zone modules.')
+@sys.description('List of Private DNS Zones to audit if deployed in Subscriptions under the Corp Management Group. Include all zones, as this parameter overwrites default values. Retrieve names from the outPrivateDnsZonesNames output in the Hub Networking or Private DNS Zone modules.')
 param parPrivateDnsZonesNamesToAuditInCorp array = []
 
-@sys.description('Set Enforcement Mode of all default Policies assignments to Do Not Enforce.')
+@sys.description('Set to true to disable enforcement of all default ALZ policies.')
 param parDisableAlzDefaultPolicies bool = false
 
-@sys.description('Set Enforcement Mode of all default sovereign Policies assignments to Do Not Enforce.')
+@sys.description('Set to true to disable enforcement of all default sovereign policies.')
 param parDisableSlzDefaultPolicies bool = false
 
-@sys.description('Name of the tag to use for excluding VMs from the scope of this policy. This should be used along with the Exclusion Tag Value parameter.')
+@sys.description('Tag name for excluding VMs from this policy’s scope. Use with the Exclusion Tag Value parameter.')
 param parVmBackupExclusionTagName string = ''
 
-@sys.description('Value of the tag to use for excluding VMs from the scope of this policy (in case of multiple values, use a comma-separated list). This should be used along with the Exclusion Tag Name parameter.')
+@sys.description('Tag value for excluding VMs from this policy’s scope (use a comma-separated list for multiple values). Use with the Exclusion Tag Name parameter.')
 param parVmBackupExclusionTagValue array = []
 
-@sys.description('Adding assignment definition names to this array will exclude the specific policies from assignment. Find the correct values to this array in the following documentation: https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies#what-if-i-want-to-exclude-specific-policy-assignments-from-alz-default-policy-assignments')
+@sys.description('Add assignment definition names to exclude specific policies. Find values in the Assigning Policies documentation.')
 param parExcludedPolicyAssignments array = []
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry')
+@sys.description('Set to true to opt out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 var varLogAnalyticsWorkspaceName = split(parLogAnalyticsWorkspaceResourceId, '/')[8]
