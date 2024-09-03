@@ -193,6 +193,9 @@ For each module, you can add a role assignment condition to securely delegate ro
 - Remove all newlines from the condition code.
 - Escape any single quote using a backslash (only in Bicep, no need in JSON parameters file).
 
+> **NOTE:**
+> Make sure to review the [limitations](https://learn.microsoft.com/azure/role-based-access-control/delegate-role-assignments-overview?tabs=template#known-issues) related to delegating role assignment management with conditions.
+
 Example:
 
 ```json

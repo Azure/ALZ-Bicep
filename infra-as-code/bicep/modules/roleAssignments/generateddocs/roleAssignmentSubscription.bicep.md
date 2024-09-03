@@ -1,24 +1,24 @@
 # ALZ Bicep - Role Assignment to a Subscription
 
-Module used to assign a Role Assignment to a Subscription
+Module to assign a role to a Subscription
 
 ## Parameters
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parRoleAssignmentNameGuid | No       | A GUID representing the role assignment name.
-parRoleDefinitionId | Yes      | Role Definition Id (i.e. GUID, Reader Role Definition ID: acdd72a7-3385-48ef-bd42-f606fba81ae7)
-parAssigneePrincipalType | Yes      | Principal type of the assignee. Allowed values are 'Group' (Security Group) or 'ServicePrincipal' (Service Principal or System/User Assigned Managed Identity)
-parAssigneeObjectId | Yes      | Object ID of groups, service principals or managed identities. For managed identities use the principal id. For service principals, use the object ID and not the app ID
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
-parRoleAssignmentCondition | No       | The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions can have a condition defined. Example: Owner, User Access Administrator and RBAC Administrator.
-parRoleAssignmentConditionVersion | No       | Role assignment condition version. Currently the only accepted value is '2.0'
+parRoleAssignmentNameGuid | No       | GUID for the role assignment name.
+parRoleDefinitionId | Yes      | Role Definition Id (e.g., Reader Role Definition ID: acdd72a7-3385-48ef-bd42-f606fba81ae7)
+parAssigneePrincipalType | Yes      | Principal type: 'Group' (Security Group) or 'ServicePrincipal' (Service Principal/Managed Identity).
+parAssigneeObjectId | Yes      | Object ID of groups, service principals, or managed identities (use principal ID for managed identities).
+parTelemetryOptOut | No       | Set to true to opt out of deployment telemetry.
+parRoleAssignmentCondition | No       | Role assignment condition (e.g., Owner, User Access Administrator). Only roles with `write` or `delete` permissions can have a condition.
+parRoleAssignmentConditionVersion | No       | Role assignment condition version. Only value accepted is '2.0'.
 
 ### parRoleAssignmentNameGuid
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-A GUID representing the role assignment name.
+GUID for the role assignment name.
 
 - Default value: `[guid(subscription().subscriptionId, parameters('parRoleDefinitionId'), parameters('parAssigneeObjectId'))]`
 
@@ -26,13 +26,13 @@ A GUID representing the role assignment name.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Role Definition Id (i.e. GUID, Reader Role Definition ID: acdd72a7-3385-48ef-bd42-f606fba81ae7)
+Role Definition Id (e.g., Reader Role Definition ID: acdd72a7-3385-48ef-bd42-f606fba81ae7)
 
 ### parAssigneePrincipalType
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Principal type of the assignee. Allowed values are 'Group' (Security Group) or 'ServicePrincipal' (Service Principal or System/User Assigned Managed Identity)
+Principal type: 'Group' (Security Group) or 'ServicePrincipal' (Service Principal/Managed Identity).
 
 - Allowed values: `Group`, `ServicePrincipal`
 
@@ -40,13 +40,13 @@ Principal type of the assignee. Allowed values are 'Group' (Security Group) or '
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Object ID of groups, service principals or managed identities. For managed identities use the principal id. For service principals, use the object ID and not the app ID
+Object ID of groups, service principals, or managed identities (use principal ID for managed identities).
 
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set Parameter to true to Opt-out of deployment telemetry.
+Set to true to opt out of deployment telemetry.
 
 - Default value: `False`
 
@@ -54,13 +54,13 @@ Set Parameter to true to Opt-out of deployment telemetry.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The role assignment condition. Only built-in and custom RBAC roles with `Microsoft.Authorization/roleAssignments/write` and/or `Microsoft.Authorization/roleAssignments/delete` permissions can have a condition defined. Example: Owner, User Access Administrator and RBAC Administrator.
+Role assignment condition (e.g., Owner, User Access Administrator). Only roles with `write` or `delete` permissions can have a condition.
 
 ### parRoleAssignmentConditionVersion
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Role assignment condition version. Currently the only accepted value is '2.0'
+Role assignment condition version. Only value accepted is '2.0'.
 
 - Default value: `2.0`
 
