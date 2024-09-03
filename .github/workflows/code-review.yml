@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Run github/super-linter
-        uses: github/super-linter@v4
+        uses: github/super-linter@v7
         env:
           # Lint all code - disabled in as part of #262
           VALIDATE_ALL_CODEBASE: false
@@ -48,7 +48,7 @@ jobs:
           fetch-depth: 0
 
       - name: Check links in markdown files
-        uses: gaurav-nelson/github-action-markdown-link-check@1.0.13
+        uses: gaurav-nelson/github-action-markdown-link-check@1.0.15
         with:
           config-file: ".github/actions-config/mlc_config.json"
           use-verbose-mode: "yes"
