@@ -8,7 +8,7 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
-parIntRootMgSubs | No       | An array of Subscription IDs to place in the Intermediate Root Management Group. Default: Empty Array
+parIntRootMgSubs | No       | An array of Subscription IDs to place in the Intermediate root MG. Default: Empty Array
 parPlatformMgSubs | No       | An array of Subscription IDs to place in the Platform Management Group. Default: Empty Array
 parPlatformManagementMgSubs | No       | An array of Subscription IDs to place in the (Platform) Management Management Group. Default: Empty Array
 parPlatformConnectivityMgSubs | No       | An array of Subscription IDs to place in the (Platform) Connectivity Management Group. Default: Empty Array
@@ -42,7 +42,7 @@ Optional suffix for the management group hierarchy. This suffix will be appended
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-An array of Subscription IDs to place in the Intermediate Root Management Group. Default: Empty Array
+An array of Subscription IDs to place in the Intermediate root MG. Default: Empty Array
 
 ### parPlatformMgSubs
 

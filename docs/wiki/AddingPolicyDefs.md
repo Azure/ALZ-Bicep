@@ -6,7 +6,7 @@
 
 The [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions) in `ALZ-Bicep` deploys all of the custom Azure Policy Definitions and Initiatives (also know as Definition Sets) that are part of Azure Landing Zones (Enterprise-Scale) as described in more detail in the wiki article [How Does ALZ-Bicep Implement Azure Policies?](https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive)
 
-However, it is expected that most customers will want or need to add their own custom Azure Policy Definitions and Initiatives and deploy them to their Intermediate Root Management Group (e.g. `Contoso`) to then assign them at scopes beneath this Management Group to help them meet their requirements.
+However, it is expected that most customers will want or need to add their own custom Azure Policy Definitions and Initiatives and deploy them to their Intermediate root MG (e.g. `Contoso`) to then assign them at scopes beneath this Management Group to help them meet their requirements.
 
 This is where this wiki article will help explain how this is possible and advise of the various ways this can also be done.
 
@@ -55,7 +55,7 @@ To extend the [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bi
       - Policy Definition = `_policyDefinitionsBicepInput.txt` placed into variable named `varCustomPolicyDefinitionsArray` (place copied contents inside of array `[]`)
       - Policy Initiative (Set) & Parameter Variables = Copy the entire contents of `_policySetDefinitionsBicepInput.txt` and replace variable named `varCustomPolicySetDefinitionsArray` and parameter variables below it with copied contents
 5. Redeploy the updated [Custom Policy Definitions module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions) via your configured method (locally via Azure CLI or PowerShell or via Azure DevOps pipeline or GitHub action)
-6. New Policy Definitions now deployed to intermediate root Management Group (e.g. `Contoso`)
+6. New Policy Definitions now deployed to intermediate root MG (e.g. `Contoso`)
 
 > For step 4 you could also manually copy and add the object for your new Policy Definitions into the array variables of `varCustomPolicyDefinitionsArray` or `varCustomPolicySetDefinitionsArray` following the defined schema already inside the array of objects.
 

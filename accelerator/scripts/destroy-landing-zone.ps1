@@ -35,21 +35,21 @@ Set-Item Env:\SuppressAzurePowerShellBreakingChangeWarnings "true"
 $StopWatch = New-Object -TypeName System.Diagnostics.Stopwatch
 $StopWatch.Start()
 
-# Get all Subscriptions that are in the Intermediate Root Management Group's hierarchy tree
+# Get all Subscriptions that are in the Intermediate root MG's hierarchy tree
 $intermediateRootGroupChildSubscriptions = Search-AzGraph -Query "resourcecontainers | where type =~ 'microsoft.resources/subscriptions' | mv-expand mgmtGroups=properties.managementGroupAncestorsChain | where mgmtGroups.name =~ '$intermediateRootGroupID' | project subName=name, subID=subscriptionId, subState=properties.state, aadTenantID=tenantId, mgID=mgmtGroups.name, mgDisplayName=mgmtGroups.displayName"
 
-Write-Output "Moving all subscriptions under root management group"
+Write-Output "Moving all subscriptions under root MG"
 
-# For each Subscription in Intermediate Root Management Group's hierarchy tree, move it to the Tenant Root Management Group
+# For each Subscription in Intermediate root MG's hierarchy tree, move it to the Tenant root MG
 $intermediateRootGroupChildSubscriptions | ForEach-Object -Parallel {
     # The name 'Tenant Root Group' doesn't work. Instead, use the GUID of your Tenant Root Group
     if ($_.subState -ne "Disabled") {
-        Write-Output "Moving Subscription: '$($_.subName)' under Tenant Root Management Group: '$($using:tenantRootGroupID)'"
+        Write-Output "Moving Subscription: '$($_.subName)' under Tenant root MG: '$($using:tenantRootGroupID)'"
         New-AzManagementGroupSubscription -GroupId $using:tenantRootGroupID -SubscriptionId $_.subID | Out-Null
     }
 }
 
-# For each Subscription in the Intermediate Root Management Group's hierarchy tree, remove all Resources, Resource Groups and Deployments
+# For each Subscription in the Intermediate root MG's hierarchy tree, remove all Resources, Resource Groups and Deployments
 Write-Output "Removing all Azure Resources, Resource Groups and Deployments from Subscriptions in scope"
 
 $subscriptionsToClean = @()
@@ -138,7 +138,7 @@ ForEach ($subscription in $subscriptionsToClean) {
     }
 }
 
-# This function only deletes Management Groups in the Intermediate Root Management Group's hierarchy tree and will NOT delete other Intermediate Root level Management Groups and their children e.g. in the case of "canary"
+# This function only deletes Management Groups in the Intermediate root MG's hierarchy tree and will NOT delete other Intermediate Root level Management Groups and their children e.g. in the case of "canary"
 
 function Remove-Recursively {
     [CmdletBinding(SupportsShouldProcess = $true)]
@@ -178,7 +178,7 @@ if($null -eq $managementGroup) {
 } else {
     Write-Output "Management Group with ID: '$intermediateRootGroupID' exists. Proceeding with deletion."
 
-    # Remove all the Management Groups in Intermediate Root Management Group's hierarchy tree, including itself
+    # Remove all the Management Groups in Intermediate root MG's hierarchy tree, including itself
     Remove-Recursively($intermediateRootGroupID)
 }
 

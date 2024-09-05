@@ -16,7 +16,7 @@ param parTopLevelManagementGroupSuffix string = ''
 @minLength(2)
 param parTopLevelManagementGroupDisplayName string = 'Azure Landing Zones'
 
-@sys.description('Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group.')
+@sys.description('Optional parent for Management Group hierarchy, used as intermediate root MG parent, if specified. If empty, default, will deploy beneath Tenant root MG.')
 param parTopLevelManagementGroupParentId string = ''
 
 resource resTopLevelMg 'Microsoft.Management/managementGroups@2023-04-01' = {
