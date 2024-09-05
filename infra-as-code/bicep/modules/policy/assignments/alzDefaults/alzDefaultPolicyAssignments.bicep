@@ -13,16 +13,16 @@ type policyAssignmentSovereigntyGlobalOptionsType = {
 }
 
 type policyAssignmentSovereigntyConfidentialOptionsType = {
-  @sys.description('List of approved Azure resource types (e.g., Confidential Computing SKUs or those not processing customer data). Leave empty to allow all relevant types.')
+  @sys.description('List of approved Azure resource types')
   parAllowedResourceTypes: string[]
 
-  @sys.description('List of allowed locations for resource deployment. If empty, only the deployment location is allowed.')
+  @sys.description('List of allowed locations for resource deployment.')
   parListOfAllowedLocations: string[]
 
-  @sys.description('List of approved VM SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.')
+  @sys.description('List of approved VM SKUs backed by Azure Confidential Computing.')
   parAllowedVirtualMachineSKUs: string[]
 
-  @sys.description('The effect type for the SovrBL - Confidential Pol Ass.')
+  @sys.description('The effect types')
   parPolicyEffect: ('Audit' | 'Deny' | 'Disabled' | 'AuditIfNotExists')
 }
 
@@ -37,9 +37,9 @@ param parTopLevelManagementGroupSuffix string = ''
 
 @sys.description('''Object used to assign SovrBL - Global Policies to the intermediate root MG.'
 
-- `parTopLevelSovereignGlobalPoliciesEnable` - Switch to enable/disable deployment of the SovrBL - Global Pol Ass to the intermediate root MG.
-- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
-- `parPolicyEffect` - The effect type for the SovrBL - Global Pol Ass.
+- `parTopLevelSovereignGlobalPoliciesEnable` - enable/disable deployment of the SovrBL.
+- `parListOfAllowedLocations` - The list of allowed locations.
+- `parPolicyEffect` - The effect type.
 
 ''')
 param parTopLevelPolicyAssignmentSovereigntyGlobal policyAssignmentSovereigntyGlobalOptionsType = {
@@ -50,10 +50,10 @@ param parTopLevelPolicyAssignmentSovereigntyGlobal policyAssignmentSovereigntyGl
 
 @sys.description('''Object used to assign SovrBL - Confidential Policies to the confidential landing zone management groups.'
 
-- `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.
-- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
-- `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.
-- `parPolicyEffect` - The effect type for the SovrBL - Confidential Pol Ass.
+- `parAllowedResourceTypes` - The list of Azure resource types approved for usage.
+- `parListOfAllowedLocations` - The list of allowed locations.
+- `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage.
+- `parPolicyEffect` - The effect type.
 
 ''')
 param parPolicyAssignmentSovereigntyConfidential policyAssignmentSovereigntyConfidentialOptionsType = {
@@ -99,16 +99,16 @@ param parAutomationAccountName string = 'alz-automation-account'
 @sys.description('Email address for Microsoft Defender for Cloud alerts.')
 param parMsDefenderForCloudEmailSecurityContact string = 'security_contact@replace_me.com'
 
-@sys.description('Toggle to enable/disable DDoS Network Protection deployment. True enforces the Enable-DDoS-VNET policy at connectivity or landing zone groups; false does not.')
+@sys.description('enable/disable DDoS Network Protection deployment')
 param parDdosEnabled bool = true
 
-@sys.description('Resource ID of the DDoS Protection Plan applied to Virtual Networks.')
+@sys.description('Resource ID of the DDoS Protection Plan')
 param parDdosProtectionPlanId string = ''
 
-@sys.description('Resource ID of the Resource Group containing Private DNS Zones. Leave empty to skip assigning the Deploy-Private-DNS-Zones policy to the Corp Management Group.')
+@sys.description('Resource ID of the Resource Group containing Private DNS Zones.')
 param parPrivateDnsResourceGroupId string = ''
 
-@sys.description('List of Private DNS Zones to audit if deployed in Subscriptions under the Corp Management Group. Include all zones, as this parameter overwrites default values. Retrieve names from the outPrivateDnsZonesNames output in the Hub Networking or Private DNS Zone modules.')
+@sys.description('List of Private DNS Zones to audit if deployed in Subscriptions under the Corp Management Group.')
 param parPrivateDnsZonesNamesToAuditInCorp array = []
 
 @sys.description('Set Enforcement Mode of all default Pol Asss to Do Not Enforce.')
@@ -117,13 +117,13 @@ param parDisableAlzDefaultPolicies bool = false
 @sys.description('Set Enforcement Mode of all default sovereign Pol Asss to Do Not Enforce.')
 param parDisableSlzDefaultPolicies bool = false
 
-@sys.description('Tag name for excluding VMs from this policy’s scope. Use with the Exclusion Tag Value parameter.')
+@sys.description('Tag name for excluding VMs from this policy’s scope.')
 param parVmBackupExclusionTagName string = ''
 
-@sys.description('Tag value for excluding VMs from this policy’s scope (use a comma-separated list for multiple values). Use with the Exclusion Tag Name parameter.')
+@sys.description('Tag value for excluding VMs from this policy’s scope')
 param parVmBackupExclusionTagValue array = []
 
-@sys.description('Add assignment definition names to exclude specific policies. Find values in the Assigning Policies documentation.')
+@sys.description('Add assignment definition names to exclude specific policies.')
 param parExcludedPolicyAssignments array = []
 
 @sys.description('Set to true to opt out of deployment telemetry.')
