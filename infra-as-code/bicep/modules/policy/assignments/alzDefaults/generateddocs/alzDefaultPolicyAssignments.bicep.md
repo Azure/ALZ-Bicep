@@ -8,8 +8,8 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parTopLevelManagementGroupPrefix | No       | Prefix for the management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for management group names/IDs. Include a dash if needed.
-parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'  - `parTopLevelSovereignGlobalPoliciesEnable` - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed. - `parPolicyEffect` - The effect type for the Sovereignty Baseline - Global Policies Assignment.  
-parPolicyAssignmentSovereigntyConfidential | No       | Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'  - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed. - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs. - `parPolicyEffect` - The effect type for the Sovereignty Baseline - Confidential Policies Assignment.  
+parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Object used to assign SovrBL - Global Policies to the intermediate root MG.'  - `parTopLevelSovereignGlobalPoliciesEnable` - Switch to enable/disable deployment of the SovrBL - Global Pol Ass to the intermediate root MG. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed. - `parPolicyEffect` - The effect type for the SovrBL - Global Pol Ass.  
+parPolicyAssignmentSovereigntyConfidential | No       | Object used to assign SovrBL - Confidential Policies to the confidential landing zone management groups.'  - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types. - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed. - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs. - `parPolicyEffect` - The effect type for the SovrBL - Confidential Pol Ass.  
 parPlatformMgAlzDefaultsEnable | No       | Toggle to apply platform policies to the Platform group or child groups.
 parLandingZoneChildrenMgAlzDefaultsEnable | No       | Toggle to assign policies to Corp & Online Management Groups under Landing Zones.
 parLandingZoneMgConfidentialEnable | No       | Toggle to assign policies to Confidential Corp and Online groups under Landing Zones.
@@ -26,8 +26,8 @@ parDdosEnabled | No       | Toggle to enable/disable DDoS Network Protection dep
 parDdosProtectionPlanId | No       | Resource ID of the DDoS Protection Plan applied to Virtual Networks.
 parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group containing Private DNS Zones. Leave empty to skip assigning the Deploy-Private-DNS-Zones policy to the Corp Management Group.
 parPrivateDnsZonesNamesToAuditInCorp | No       | List of Private DNS Zones to audit if deployed in Subscriptions under the Corp Management Group. Include all zones, as this parameter overwrites default values. Retrieve names from the outPrivateDnsZonesNames output in the Hub Networking or Private DNS Zone modules.
-parDisableAlzDefaultPolicies | No       | Set to true to disable enforcement of all default ALZ policies.
-parDisableSlzDefaultPolicies | No       | Set to true to disable enforcement of all default sovereign policies.
+parDisableAlzDefaultPolicies | No       | Set Enforcement Mode of all default Pol Asss to Do Not Enforce.
+parDisableSlzDefaultPolicies | No       | Set Enforcement Mode of all default sovereign Pol Asss to Do Not Enforce.
 parVmBackupExclusionTagName | No       | Tag name for excluding VMs from this policy’s scope. Use with the Exclusion Tag Value parameter.
 parVmBackupExclusionTagValue | No       | Tag value for excluding VMs from this policy’s scope (use a comma-separated list for multiple values). Use with the Exclusion Tag Name parameter.
 parExcludedPolicyAssignments | No       | Add assignment definition names to exclude specific policies. Find values in the Assigning Policies documentation.
@@ -51,11 +51,11 @@ Optional suffix for management group names/IDs. Include a dash if needed.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'
+Object used to assign SovrBL - Global Policies to the intermediate root MG.'
 
-- `parTopLevelSovereignGlobalPoliciesEnable` - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.
+- `parTopLevelSovereignGlobalPoliciesEnable` - Switch to enable/disable deployment of the SovrBL - Global Pol Ass to the intermediate root MG.
 - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
-- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Global Policies Assignment.
+- `parPolicyEffect` - The effect type for the SovrBL - Global Pol Ass.
 
 
 
@@ -65,12 +65,12 @@ Object used to assign Sovereignty Baseline - Global Policies to the intermediate
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'
+Object used to assign SovrBL - Confidential Policies to the confidential landing zone management groups.'
 
 - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.
 - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
 - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.
-- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Confidential Policies Assignment.
+- `parPolicyEffect` - The effect type for the SovrBL - Confidential Pol Ass.
 
 
 
@@ -192,7 +192,7 @@ List of Private DNS Zones to audit if deployed in Subscriptions under the Corp M
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set to true to disable enforcement of all default ALZ policies.
+Set Enforcement Mode of all default Pol Asss to Do Not Enforce.
 
 - Default value: `False`
 
@@ -200,7 +200,7 @@ Set to true to disable enforcement of all default ALZ policies.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set to true to disable enforcement of all default sovereign policies.
+Set Enforcement Mode of all default sovereign Pol Asss to Do Not Enforce.
 
 - Default value: `False`
 

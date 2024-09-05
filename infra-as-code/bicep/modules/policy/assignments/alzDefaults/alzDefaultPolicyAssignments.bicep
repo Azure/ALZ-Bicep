@@ -2,13 +2,13 @@ metadata name = 'ALZ Bicep - Default Policy Assignments'
 metadata description = 'Assigns ALZ Default Policies to the Management Group hierarchy'
 
 type policyAssignmentSovereigntyGlobalOptionsType = {
-  @sys.description('Toggle to enable/disable deployment of Sovereignty Baseline - Global Policies at the intermediate root management group.')
+  @sys.description('Switch to enable/disable deployment of the SovrBL - Global Pol Ass to the intermediate root MG.')
   parTopLevelSovereigntyGlobalPoliciesEnable: bool
 
   @sys.description('List of allowed locations for resource deployment. If empty, only the deployment location is allowed.')
   parListOfAllowedLocations: string[]
 
-  @sys.description('Effect type for Sovereignty Baseline - Global Policies.')
+  @sys.description('The effect type for the SovrBL - Global Pol Ass.')
   parPolicyEffect: ('Audit' | 'Deny' | 'Disabled' | 'AuditIfNotExists')
 }
 
@@ -22,7 +22,7 @@ type policyAssignmentSovereigntyConfidentialOptionsType = {
   @sys.description('List of approved VM SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.')
   parAllowedVirtualMachineSKUs: string[]
 
-  @sys.description('Effect type for Sovereignty Baseline - Confidential Policies.')
+  @sys.description('The effect type for the SovrBL - Confidential Pol Ass.')
   parPolicyEffect: ('Audit' | 'Deny' | 'Disabled' | 'AuditIfNotExists')
 }
 
@@ -35,11 +35,11 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @maxLength(10)
 param parTopLevelManagementGroupSuffix string = ''
 
-@sys.description('''Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'
+@sys.description('''Object used to assign SovrBL - Global Policies to the intermediate root MG.'
 
-- `parTopLevelSovereignGlobalPoliciesEnable` - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.
+- `parTopLevelSovereignGlobalPoliciesEnable` - Switch to enable/disable deployment of the SovrBL - Global Pol Ass to the intermediate root MG.
 - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
-- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Global Policies Assignment.
+- `parPolicyEffect` - The effect type for the SovrBL - Global Pol Ass.
 
 ''')
 param parTopLevelPolicyAssignmentSovereigntyGlobal policyAssignmentSovereigntyGlobalOptionsType = {
@@ -48,12 +48,12 @@ param parTopLevelPolicyAssignmentSovereigntyGlobal policyAssignmentSovereigntyGl
   parPolicyEffect: 'Deny'
 }
 
-@sys.description('''Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'
+@sys.description('''Object used to assign SovrBL - Confidential Policies to the confidential landing zone management groups.'
 
 - `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.
 - `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
 - `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.
-- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Confidential Policies Assignment.
+- `parPolicyEffect` - The effect type for the SovrBL - Confidential Pol Ass.
 
 ''')
 param parPolicyAssignmentSovereigntyConfidential policyAssignmentSovereigntyConfidentialOptionsType = {
@@ -111,10 +111,10 @@ param parPrivateDnsResourceGroupId string = ''
 @sys.description('List of Private DNS Zones to audit if deployed in Subscriptions under the Corp Management Group. Include all zones, as this parameter overwrites default values. Retrieve names from the outPrivateDnsZonesNames output in the Hub Networking or Private DNS Zone modules.')
 param parPrivateDnsZonesNamesToAuditInCorp array = []
 
-@sys.description('Set to true to disable enforcement of all default ALZ policies.')
+@sys.description('Set Enforcement Mode of all default Pol Asss to Do Not Enforce.')
 param parDisableAlzDefaultPolicies bool = false
 
-@sys.description('Set to true to disable enforcement of all default sovereign policies.')
+@sys.description('Set Enforcement Mode of all default sovereign Pol Asss to Do Not Enforce.')
 param parDisableSlzDefaultPolicies bool = false
 
 @sys.description('Tag name for excluding VMs from this policy’s scope. Use with the Exclusion Tag Value parameter.')
@@ -612,7 +612,7 @@ module modCustomerUsageAttributionZtnP1 '../../../../CRML/customerUsageAttributi
   params: {}
 }
 
-// Modules - Policy Assignments - Intermediate Root Management Group
+// Modules - Policy Assignments - Intermediate root MG
 // Module - Policy Assignment - Enforce-Sovereign-Global
 module modPolicyAssignmentIntRootEnforceSovereigntyGlobal '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSovereignGlobal.libDefinition.name) && parTopLevelPolicyAssignmentSovereigntyGlobal.parTopLevelSovereigntyGlobalPoliciesEnable) {
   scope: managementGroup(varManagementGroupIds.intRoot)

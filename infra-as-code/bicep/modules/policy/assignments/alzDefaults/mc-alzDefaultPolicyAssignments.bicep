@@ -28,7 +28,7 @@ param parMsDefenderForCloudEmailSecurityContact string = 'security_contact@repla
 @sys.description('ID of the DdosProtectionPlan which will be applied to the Virtual Networks. If left empty, the policy Enable-DDoS-VNET will not be assigned at connectivity or landing zone Management Groups to avoid VNET deployment issues.')
 param parDdosProtectionPlanId string = ''
 
-@sys.description('Set Enforcement Mode of all default Policies assignments to Do Not Enforce.')
+@sys.description('Set Enforcement Mode of all default Pol Asss to Do Not Enforce.')
 param parDisableAlzDefaultPolicies bool = false
 
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
@@ -222,7 +222,7 @@ module modCustomerUsageAttribution '../../../../CRML/customerUsageAttribution/cu
   params: {}
 }
 
-// Modules - Policy Assignments - Intermediate Root Management Group
+// Modules - Policy Assignments - Intermediate root MG
 // Module - Policy Assignment - Deploy-MDFC-Config
 module modPolicyAssignmentIntRootDeployMDFCConfig '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
   scope: managementGroup(varManagementGroupIDs.intRoot)

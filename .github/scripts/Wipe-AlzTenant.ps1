@@ -5,9 +5,9 @@ param (
     [string]
     $tenantRootGroupID = "<Insert the Tenant ID (GUID) of your Microsoft Entra tenant>",
 
-    [Parameter(Mandatory = $true, Position = 2, HelpMessage = "Insert the name of your intermediate root Management Group e.g. 'Contoso'")]
+    [Parameter(Mandatory = $true, Position = 2, HelpMessage = "Insert the name of your intermediate root MG e.g. 'Contoso'")]
     [string]
-    $intermediateRootGroupID = "<Insert the name of your intermediate root Management Group e.g. Contoso>",
+    $intermediateRootGroupID = "<Insert the name of your intermediate root MG e.g. Contoso>",
 
     [Parameter(Mandatory = $true, Position = 4, HelpMessage = "Insert the subscription name of the subscription to wipe e.g. sub-unit-test-pr-108")]
     [string]
@@ -22,12 +22,12 @@ $StopWatch.Start()
 $subToMove = Get-AzSubscription -SubscriptionName $subscriptionName
 
 if ($subToMove.State -ne "Disabled") {
-    Write-Information "Moving Subscription: '$($subscriptionName)' under Tenant Root Management Group: '$tenantRootGroupID'"
+    Write-Information "Moving Subscription: '$($subscriptionName)' under Tenant root MG: '$tenantRootGroupID'"
     New-AzManagementGroupSubscription -GroupId $tenantRootGroupID -SubscriptionId $subToMove.Id
 }
 
 
-# For each Subscription in the Intermediate Root Management Group's hierarchy tree, remove all Resources, Resource Groups and Deployments
+# For each Subscription in the Intermediate root MG's hierarchy tree, remove all Resources, Resource Groups and Deployments
 Write-Information "Removing all Azure Resources, Resource Groups and Deployments from subscription $($subscriptionName)"
 Write-Information "Set context to SubscriptionId: '$($subToMove.Id)'"
 Set-AzContext -Subscription $subToMove.Id #| Out-Null
@@ -63,7 +63,7 @@ $tenantDeployments | ForEach-Object -Parallel {
     Remove-AzTenantDeployment -Id $_.Id
 }
 
-# This function only deletes Management Groups in the Intermediate Root Management Group's hierarchy tree and will NOT delete other Intermediate Root level Management Groups and their children e.g. in the case of "canary"
+# This function only deletes Management Groups in the Intermediate root MG's hierarchy tree and will NOT delete other Intermediate Root level Management Groups and their children e.g. in the case of "canary"
 function Remove-Recursively {
     [CmdletBinding(SupportsShouldProcess)]
     param($name)
@@ -91,7 +91,7 @@ function Remove-Recursively {
     Remove-AzManagementGroup -InputObject $parent -ErrorAction SilentlyContinue
 }
 
-# Remove all the Management Groups in Intermediate Root Management Group's hierarchy tree, including itself
+# Remove all the Management Groups in Intermediate root MG's hierarchy tree, including itself
 Remove-Recursively($intermediateRootGroupID)
 
 # Stop timer

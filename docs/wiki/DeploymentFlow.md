@@ -27,7 +27,7 @@ We have created a short 3-part series of video on the Azure Enablement Show that
 
 1. Microsoft Entra Tenant.
 2. Minimum 1 subscription.  Subscription(s) are required when configuring `Log Analytics Workspace` & `Hub Networking` services.  Each can be deployed in the same subscription or separate subscriptions based on deployment requirements.
-3. Deployment Identity with `Owner` permission to the `/` root management group.  Owner permission is required to allow the Service Principal Account to create role-based access control assignments.  See [configuration instructions below](#deployment-identity).
+3. Deployment Identity with `Owner` permission to the `/` root MG.  Owner permission is required to allow the Service Principal Account to create role-based access control assignments.  See [configuration instructions below](#deployment-identity).
 
 ## High Level Deployment Flow
 
@@ -41,7 +41,7 @@ Modules in this reference implementation must be deployed in the following order
 
 | Order | Module                                 | Description                                                                                                                                                                 | Prerequisites                                                          | Module Documentation                                                                                                                                                  |
 | :---: | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|   1   | Management Groups                      | Configures the management group hierarchy to support Azure Landing Zone reference implementation.                                                                           | Owner role assignment at `/` root management group.                    | [infra-as-code/bicep/modules/managementGroups](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/managementGroups)                             |
+|   1   | Management Groups                      | Configures the management group hierarchy to support Azure Landing Zone reference implementation.                                                                           | Owner role assignment at `/` root MG.                    | [infra-as-code/bicep/modules/managementGroups](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/managementGroups)                             |
 |   2   | Custom Policy Definitions              | Configures Custom Policy Definitions at the `organization management group`.                                                                                                | Management Groups.                                                     | [infra-as-code/bicep/modules/policy/definitions](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/definitions)                         |
 |   3   | Custom Role Definitions                | Configures custom roles based on Cloud Adoption Framework's recommendations at the `organization management group`.                                                         | Management Groups.                                                     | [infra-as-code/bicep/modules/customRoleDefinitions](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/customRoleDefinitions)                   |
 |   4   | Logging & Sentinel                     | Configures a centrally managed Log Analytics Workspace, Automation Account and Sentinel in the `Logging` subscription.                                                      | Management Groups & Subscription for Log Analytics and Sentinel.       | [infra-as-code/bicep/modules/logging](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/logging)                                               |
@@ -84,7 +84,7 @@ The current available orchestration modules are listed below:
 
 When first working with Management Groups, the Microsoft Entra Global Administrator must assign the User Access Administrator role to themselves at the `/` scope first before being able to further delegate. See [Elevate access to manage all Azure subscriptions and management groups](https://learn.microsoft.com/azure/role-based-access-control/elevate-access-global-admin) documentation for further information.
 
-In addition, the identity that wants to create a Tenant scope deployment must have the *Owner* role assigned to the `/` root management group. Whether this is your user account (even if a Global Administrator) or a Service Principal. See [Required access for Tenant deployments on Azure Docs](https://learn.microsoft.com/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-powershell#required-access).
+In addition, the identity that wants to create a Tenant scope deployment must have the *Owner* role assigned to the `/` root MG. Whether this is your user account (even if a Global Administrator) or a Service Principal. See [Required access for Tenant deployments on Azure Docs](https://learn.microsoft.com/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-powershell#required-access).
 
 ### Service Principal Account
 
@@ -92,7 +92,7 @@ A service principal account is required to automate through Azure DevOps or GitH
 
 - **Service Principal Name**:  any name (i.e. `spn-azure-platform-ops`)
 - **RBAC Assignment**
-  - Scope:  `/` (Root Management Group)
+  - Scope:  `/` (root MG)
   - Role Assignment:  `Owner`
 
 ### Configure Service Principal Account in Azure DevOps or GitHub

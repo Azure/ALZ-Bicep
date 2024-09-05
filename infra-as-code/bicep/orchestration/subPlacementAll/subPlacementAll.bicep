@@ -12,7 +12,7 @@ param parTopLevelManagementGroupPrefix string = 'alz'
 @maxLength(10)
 param parTopLevelManagementGroupSuffix string = ''
 
-@sys.description('An array of Subscription IDs to place in the Intermediate Root Management Group. Default: Empty Array')
+@sys.description('An array of Subscription IDs to place in the Intermediate root MG. Default: Empty Array')
 param parIntRootMgSubs array = []
 
 @sys.description('An array of Subscription IDs to place in the Platform Management Group. Default: Empty Array')

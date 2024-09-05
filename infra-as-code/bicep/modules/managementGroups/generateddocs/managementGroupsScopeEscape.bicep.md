@@ -9,7 +9,7 @@ Parameter name | Required | Description
 parTopLevelManagementGroupPrefix | No       | Prefix used for the management group hierarchy. This management group will be created as part of the deployment.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for the management group hierarchy. This suffix will be appended to management group names/IDs. Include a preceding dash if required. Example: -suffix
 parTopLevelManagementGroupDisplayName | No       | Display name for top level management group. This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter.
-parTopLevelManagementGroupParentId | No       | Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group.
+parTopLevelManagementGroupParentId | No       | Optional parent for Management Group hierarchy, used as intermediate root MG parent, if specified. If empty, default, will deploy beneath Tenant root MG.
 parLandingZoneMgAlzDefaultsEnable | No       | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.
 parPlatformMgAlzDefaultsEnable | No       | Deploys Management, Identity and Connectivity Management Groups beneath Platform Management Group if set to true.
 parLandingZoneMgConfidentialEnable | No       | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.
@@ -43,7 +43,7 @@ Display name for top level management group. This name will be applied to the ma
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group.
+Optional parent for Management Group hierarchy, used as intermediate root MG parent, if specified. If empty, default, will deploy beneath Tenant root MG.
 
 ### parLandingZoneMgAlzDefaultsEnable
 

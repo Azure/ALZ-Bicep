@@ -45,7 +45,7 @@ az deployment tenant create --name ${NAME:0:63} --location $LOCATION --template-
 
 ### Azure CLI - `subscriptionAliasScopeEscape.bicep`
 
-Use this module if you do not want to grant Tenant Root Management Group Deployment permissions.
+Use this module if you do not want to grant Tenant root MG Deployment permissions.
 
 ```bash
 
@@ -75,7 +75,7 @@ New-AzTenantDeployment @inputObject
 
 ### PowerShell - `subscriptionAliasScopeEscape.bicep`
 
-Use this module if you do not want to grant Tenant Root Management Group Deployment permissions.
+Use this module if you do not want to grant Tenant root MG Deployment permissions.
 
 ```powershell
 
