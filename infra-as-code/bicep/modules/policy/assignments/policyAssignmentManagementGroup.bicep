@@ -1,75 +1,75 @@
 targetScope = 'managementGroup'
 
 metadata name = 'ALZ Bicep - Management Group Policy Assignments'
-metadata description = 'Module used to assign policy definitions to management groups'
+metadata description = 'Module to assign policy definitions to management groups'
 
 type nonComplianceMessageType = {
-  @description('The message to display when the policy is non-compliant.')
+  @description('Message for non-compliance.')
   message: string
 
-  @description('The reference ID of the policy definition.')
+  @description('Policy definition reference ID.')
   policyDefinitionReferenceId: string
 }[]
 
 @minLength(1)
 @maxLength(24)
-@sys.description('The name of the policy assignment. e.g. "Deny-Public-IP"')
+@description('Policy assignment name.')
 param parPolicyAssignmentName string
 
-@sys.description('The display name of the policy assignment. e.g. "Deny the creation of Public IPs"')
+@description('Policy assignment display name.')
 param parPolicyAssignmentDisplayName string
 
-@sys.description('The description of the policy assignment. e.g. "This policy denies creation of Public IPs under the assigned scope."')
+@description('Policy assignment description.')
 param parPolicyAssignmentDescription string
 
-@sys.description('The policy definition ID for the policy to be assigned. e.g. "/providers/Microsoft.Authorization/policyDefinitions/9d0a794f-1444-4c96-9534-e35fc8c39c91" or "/providers/Microsoft.Management/managementgroups/alz/providers/Microsoft.Authorization/policyDefinitions/Deny-Public-IP"')
+@description('Policy definition ID.')
 param parPolicyAssignmentDefinitionId string
 
-@sys.description('An object containing the parameter values for the policy to be assigned.')
+@description('Parameter values for the assigned policy.')
 param parPolicyAssignmentParameters object = {}
 
-@sys.description('An object containing parameter values that override those provided to parPolicyAssignmentParameters, usually via a JSON file and loadJsonContent(FILE_PATH). This is only useful when wanting to take values from a source like a JSON file for the majority of the parameters but override specific parameter inputs from other sources or hardcoded. If duplicate parameters exist between parPolicyAssignmentParameters & parPolicyAssignmentParameterOverrides, inputs provided to parPolicyAssignmentParameterOverrides will win.')
+@description('Overrides for parameter values in parPolicyAssignmentParameters.')
 param parPolicyAssignmentParameterOverrides object = {}
 
-@sys.description('An array containing object/s for the non-compliance messages for the policy to be assigned. See https://docs.microsoft.com/en-us/azure/governance/policy/concepts/assignment-structure#non-compliance-messages for more details on use.')
+@description('Non-compliance messages for the assigned policy.')
 param parPolicyAssignmentNonComplianceMessages nonComplianceMessageType = []
 
-@sys.description('An array containing a list of scope Resource IDs to be excluded for the policy assignment. e.g. [\'/providers/Microsoft.Management/managementgroups/alz\', \'/providers/Microsoft.Management/managementgroups/alz-sandbox\' ].')
+@description('Scope Resource IDs excluded from policy assignment.')
 param parPolicyAssignmentNotScopes array = []
 
 @allowed([
   'Default'
   'DoNotEnforce'
 ])
-@sys.description('The enforcement mode for the policy assignment. See https://aka.ms/EnforcementMode for more details on use.')
+@description('Enforcement mode for the policy assignment.')
 param parPolicyAssignmentEnforcementMode string = 'Default'
 
-@sys.description('An array containing a list of objects containing the required overrides to be set on the assignment. See https://learn.microsoft.com/azure/governance/policy/concepts/assignment-structure#overrides-preview for more details on use.')
+@description('List of required overrides for the policy assignment.')
 param parPolicyAssignmentOverrides array = []
 
-@sys.description('An array containing a list of objects containing the required resource selectors to be set on the assignment. See https://learn.microsoft.com/azure/governance/policy/concepts/assignment-structure#resource-selectors-preview for more details on use.')
+@description('List of required resource selectors for the policy assignment.')
 param parPolicyAssignmentResourceSelectors array = []
 
 @allowed([
   'None'
   'SystemAssigned'
 ])
-@sys.description('The type of identity to be created and associated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects.')
+@description('Identity type for the policy assignment (required for Modify/DeployIfNotExists effects).')
 param parPolicyAssignmentIdentityType string = 'None'
 
-@sys.description('An array containing a list of additional Management Group IDs (as the Management Group deployed to is included automatically) that the System-assigned Managed Identity, associated to the policy assignment, will be assigned to additionally. e.g. [\'alz\', \'alz-sandbox\' ].')
+@description('Additional Management Groups for System-assigned Managed Identity role assignments.')
 param parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs array = []
 
-@sys.description('An array containing a list of Subscription IDs that the System-assigned Managed Identity associated to the policy assignment will be assigned to in addition to the Management Group the policy is deployed/assigned to. e.g. [\'8200b669-cbc6-4e6c-b6d8-f4797f924074\', \'7d58dc5d-93dc-43cd-94fc-57da2e74af0d\' ].')
+@description('Subscription IDs for System-assigned Managed Identity role assignments.')
 param parPolicyAssignmentIdentityRoleAssignmentsSubs array = []
 
-@sys.description('An array containing a list of Subscription IDs and Resource Group names seperated by a / (subscription ID/resource group name) that the System-assigned Managed Identity associated to the policy assignment will be assigned to in addition to the Management Group the policy is deployed/assigned to. e.g. [\'8200b669-cbc6-4e6c-b6d8-f4797f924074/rg01\', \'7d58dc5d-93dc-43cd-94fc-57da2e74af0d/rg02\' ].')
+@description('Subscription IDs and Resource Groups for System-assigned Managed Identity role assignments.')
 param parPolicyAssignmentIdentityRoleAssignmentsResourceGroups array = []
 
-@sys.description('An array containing a list of RBAC role definition IDs to be assigned to the Managed Identity that is created and associated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects. e.g. [\'/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c\'].')
+@description('RBAC role definition IDs for Managed Identity role assignments (required for Modify/DeployIfNotExists effects).')
 param parPolicyAssignmentIdentityRoleDefinitionIds array = []
 
-@sys.description('Set Parameter to true to Opt-out of deployment telemetry')
+@description('Opt-out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 var varPolicyAssignmentParametersMerged = union(parPolicyAssignmentParameters, parPolicyAssignmentParameterOverrides)

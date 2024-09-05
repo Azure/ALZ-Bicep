@@ -2,60 +2,47 @@ metadata name = 'ALZ Bicep - Default Policy Assignments'
 metadata description = 'Assigns ALZ Default Policies to the Management Group hierarchy'
 
 type policyAssignmentSovereigntyGlobalOptionsType = {
-  @sys.description('Toggle to enable/disable deployment of Sovereignty Baseline - Global Policies at the intermediate root management group.')
+  @description('Enable/disable Sovereignty Baseline - Global Policies at root management group.')
   parTopLevelSovereigntyGlobalPoliciesEnable: bool
 
-  @sys.description('List of allowed locations for resource deployment. If empty, only the deployment location is allowed.')
+  @description('Allowed locations for resource deployment. Empty = deployment location only.')
   parListOfAllowedLocations: string[]
 
-  @sys.description('Effect type for Sovereignty Baseline - Global Policies.')
+  @description('Effect for Sovereignty Baseline - Global Policies.')
   parPolicyEffect: ('Audit' | 'Deny' | 'Disabled' | 'AuditIfNotExists')
 }
 
 type policyAssignmentSovereigntyConfidentialOptionsType = {
-  @sys.description('List of approved Azure resource types (e.g., Confidential Computing SKUs or those not processing customer data). Leave empty to allow all relevant types.')
+  @description('Approved Azure resource types (e.g., Confidential Computing SKUs). Empty = allow all.')
   parAllowedResourceTypes: string[]
 
-  @sys.description('List of allowed locations for resource deployment. If empty, only the deployment location is allowed.')
+  @description('Allowed locations for resource deployment. Empty = deployment location only.')
   parListOfAllowedLocations: string[]
 
-  @sys.description('List of approved VM SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.')
+  @description('Approved VM SKUs for Azure Confidential Computing. Empty = allow all.')
   parAllowedVirtualMachineSKUs: string[]
 
-  @sys.description('Effect type for Sovereignty Baseline - Confidential Policies.')
+  @description('Effect for Sovereignty Baseline - Confidential Policies.')
   parPolicyEffect: ('Audit' | 'Deny' | 'Disabled' | 'AuditIfNotExists')
 }
 
-@sys.description('Prefix for the management group hierarchy.')
+@description('Prefix for management group hierarchy.')
 @minLength(2)
 @maxLength(10)
 param parTopLevelManagementGroupPrefix string = 'alz'
 
-@sys.description('Optional suffix for management group names/IDs. Include a dash if needed.')
+@description('Optional suffix for management group names/IDs.')
 @maxLength(10)
 param parTopLevelManagementGroupSuffix string = ''
 
-@sys.description('''Object used to assign Sovereignty Baseline - Global Policies to the intermediate root management group.'
-
-- `parTopLevelSovereignGlobalPoliciesEnable` - Switch to enable/disable deployment of the Sovereignty Baseline - Global Policies Assignment to the intermediate root management group.
-- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
-- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Global Policies Assignment.
-
-''')
+@description('Assign Sovereignty Baseline - Global Policies to root management group.')
 param parTopLevelPolicyAssignmentSovereigntyGlobal policyAssignmentSovereigntyGlobalOptionsType = {
   parTopLevelSovereigntyGlobalPoliciesEnable: false
   parListOfAllowedLocations: []
   parPolicyEffect: 'Deny'
 }
 
-@sys.description('''Object used to assign Sovereignty Baseline - Confidential Policies to the confidential landing zone management groups.'
-
-- `parAllowedResourceTypes` - The list of Azure resource types approved for usage, which is the set of resource types that have a SKU backed by Azure Confidential Computing or resource types that do not process customer data. Leave empty to allow all relevant resource types.
-- `parListOfAllowedLocations` - The list of locations that your organization can use to restrict deploying resources to. If left empty, only the deployment location will be allowed.
-- `parallowedVirtualMachineSKUs` - The list of VM SKUs approved approved for usage, which is the set of SKUs backed by Azure Confidential Computing. Leave empty to allow all relevant SKUs.
-- `parPolicyEffect` - The effect type for the Sovereignty Baseline - Confidential Policies Assignment.
-
-''')
+@description('Assign Sovereignty Baseline - Confidential Policies to confidential landing zone groups.')
 param parPolicyAssignmentSovereigntyConfidential policyAssignmentSovereigntyConfidentialOptionsType = {
   parAllowedResourceTypes: []
   parListOfAllowedLocations: []
@@ -63,70 +50,70 @@ param parPolicyAssignmentSovereigntyConfidential policyAssignmentSovereigntyConf
   parPolicyEffect: 'Deny'
 }
 
-@sys.description('Toggle to apply platform policies to the Platform group or child groups.')
+@description('Apply platform policies to Platform group or child groups.')
 param parPlatformMgAlzDefaultsEnable bool = true
 
-@sys.description('Toggle to assign policies to Corp & Online Management Groups under Landing Zones.')
+@description('Assign policies to Corp & Online Management Groups under Landing Zones.')
 param parLandingZoneChildrenMgAlzDefaultsEnable bool = true
 
-@sys.description('Toggle to assign policies to Confidential Corp and Online groups under Landing Zones.')
+@description('Assign policies to Confidential Corp and Online groups under Landing Zones.')
 param parLandingZoneMgConfidentialEnable bool = false
 
-@sys.description('Location of Log Analytics Workspace & Automation Account.')
+@description('Location of Log Analytics Workspace & Automation Account.')
 param parLogAnalyticsWorkSpaceAndAutomationAccountLocation string = 'eastus'
 
-@sys.description('Resource ID of Log Analytics Workspace.')
+@description('Resource ID of Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceResourceId string = ''
 
-@sys.description('Resource ID for VM Insights Data Collection Rule.')
+@description('Resource ID for VM Insights Data Collection Rule.')
 param parDataCollectionRuleVMInsightsResourceId string = ''
 
-@sys.description('Resource ID for Change Tracking Data Collection Rule.')
+@description('Resource ID for Change Tracking Data Collection Rule.')
 param parDataCollectionRuleChangeTrackingResourceId string = ''
 
-@sys.description('Resource ID for MDFC SQL Data Collection Rule.')
+@description('Resource ID for MDFC SQL Data Collection Rule.')
 param parDataCollectionRuleMDFCSQLResourceId string = ''
 
-@sys.description('Resource ID for User Assigned Managed Identity.')
+@description('Resource ID for User Assigned Managed Identity.')
 param parUserAssignedManagedIdentityResourceId string = ''
 
-@sys.description('Number of days to retain logs in Log Analytics Workspace.')
+@description('Number of days to retain logs in Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceLogRetentionInDays string = '365'
 
-@sys.description('Name of the Automation Account.')
+@description('Name of the Automation Account.')
 param parAutomationAccountName string = 'alz-automation-account'
 
-@sys.description('Email address for Microsoft Defender for Cloud alerts.')
+@description('Email address for Microsoft Defender for Cloud alerts.')
 param parMsDefenderForCloudEmailSecurityContact string = 'security_contact@replace_me.com'
 
-@sys.description('Toggle to enable/disable DDoS Network Protection deployment. True enforces the Enable-DDoS-VNET policy at connectivity or landing zone groups; false does not.')
+@description('Enable/disable DDoS Network Protection. True enforces Enable-DDoS-VNET policy; false disables.')
 param parDdosEnabled bool = true
 
-@sys.description('Resource ID of the DDoS Protection Plan applied to Virtual Networks.')
+@description('Resource ID of the DDoS Protection Plan for Virtual Networks.')
 param parDdosProtectionPlanId string = ''
 
-@sys.description('Resource ID of the Resource Group containing Private DNS Zones. Leave empty to skip assigning the Deploy-Private-DNS-Zones policy to the Corp Management Group.')
+@description('Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning the Deploy-Private-DNS-Zones policy.')
 param parPrivateDnsResourceGroupId string = ''
 
-@sys.description('List of Private DNS Zones to audit if deployed in Subscriptions under the Corp Management Group. Include all zones, as this parameter overwrites default values. Retrieve names from the outPrivateDnsZonesNames output in the Hub Networking or Private DNS Zone modules.')
+@description('List of Private DNS Zones to audit under the Corp Management Group. This overwrites default values.')
 param parPrivateDnsZonesNamesToAuditInCorp array = []
 
-@sys.description('Set to true to disable enforcement of all default ALZ policies.')
+@description('Disable all default ALZ policies.')
 param parDisableAlzDefaultPolicies bool = false
 
-@sys.description('Set to true to disable enforcement of all default sovereign policies.')
+@description('Disable all default sovereign policies.')
 param parDisableSlzDefaultPolicies bool = false
 
-@sys.description('Tag name for excluding VMs from this policy’s scope. Use with the Exclusion Tag Value parameter.')
+@description('Tag name for excluding VMs from this policy’s scope.')
 param parVmBackupExclusionTagName string = ''
 
-@sys.description('Tag value for excluding VMs from this policy’s scope (use a comma-separated list for multiple values). Use with the Exclusion Tag Name parameter.')
+@description('Tag value for excluding VMs from this policy’s scope. Comma-separated list for multiple values.')
 param parVmBackupExclusionTagValue array = []
 
-@sys.description('Add assignment definition names to exclude specific policies. Find values in the Assigning Policies documentation.')
+@description('Names of policy assignments to exclude. Found in Assigning Policies documentation.')
 param parExcludedPolicyAssignments array = []
 
-@sys.description('Set to true to opt out of deployment telemetry.')
+@description('Opt out of deployment telemetry.')
 param parTelemetryOptOut bool = false
 
 var varLogAnalyticsWorkspaceName = split(parLogAnalyticsWorkspaceResourceId, '/')[8]
