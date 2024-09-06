@@ -49,6 +49,7 @@ param parGlobalResourceLock lockType = {
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
 
+
 @sys.description('The IP address range for Hub Network.')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
@@ -165,6 +166,18 @@ param parAzFirewallPoliciesEnabled bool = true
 
 @sys.description('Azure Firewall Policies Name.')
 param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
+
+@description('The operation mode for automatically learning private ranges to not be SNAT.')
+param parAzFirewallPoliciesAutoLearn string = 'Disabled'
+@allowed([
+  'Disabled'
+  'Enabled'
+])
+
+@description('Private IP addresses/IP ranges to which traffic will not be SNAT.')
+param parAzFirewallPoliciesPrivateRanges array = []
+
+@sys.description('Private IP addresses/IP ranges to which traffic will not be SNAT.')
 
 @sys.description('Azure Firewall Tier associated with the Firewall to deploy.')
 @allowed([
@@ -863,6 +876,12 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
     sku: {
       tier: parAzFirewallTier
     }
+    snat: !empty(parAzFirewallPoliciesPrivateRanges)
+    ? {
+      autoLearnPrivateRanges: parAzFirewallPoliciesAutoLearn
+      privateRanges: parAzFirewallPoliciesPrivateRanges
+      }
+    : null
     threatIntelMode: 'Alert'
   } : {
     dnsSettings: {

@@ -30,6 +30,8 @@ parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deploy
 parAzFirewallName | No       | Azure Firewall Name.
 parAzFirewallPoliciesEnabled | No       | Set this to true for the initial deployment as one firewall policy is required. Set this to false in subsequent deployments if using custom policies.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
+parAzFirewallPoliciesAutoLearn | No       | The operation mode for automatically learning private ranges to not be SNAT.
+parAzFirewallPoliciesPrivateRanges | No       | Private IP addresses/IP ranges to which traffic will not be SNAT.
 parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
 parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.
 parAzFirewallCustomPublicIps | No       | Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.
@@ -268,6 +270,22 @@ Set this to true for the initial deployment as one firewall policy is required. 
 Azure Firewall Policies Name.
 
 - Default value: `[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
+
+### parAzFirewallPoliciesAutoLearn
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+The operation mode for automatically learning private ranges to not be SNAT.
+
+- Default value: `Disabled`
+
+### parAzFirewallPoliciesPrivateRanges
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Private IP addresses/IP ranges to which traffic will not be SNAT.
+
+- Allowed values: `Disabled`, `Enabled`
 
 ### parAzFirewallTier
 
@@ -629,6 +647,12 @@ outBastionNsgName | string |
         },
         "parAzFirewallPoliciesName": {
             "value": "[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
+        },
+        "parAzFirewallPoliciesAutoLearn": {
+            "value": "Disabled"
+        },
+        "parAzFirewallPoliciesPrivateRanges": {
+            "value": []
         },
         "parAzFirewallTier": {
             "value": "Standard"

@@ -22,6 +22,8 @@ parVpnGatewayName | No       | VPN Gateway Name.
 parExpressRouteGatewayName | No       | ExpressRoute Gateway Name.
 parAzFirewallName | No       | Azure Firewall Name.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
+parAzFirewallPoliciesAutoLearn | No       | The operation mode for automatically learning private ranges to not be SNAT.
+parAzFirewallPoliciesPrivateRanges | No       | Private IP addresses/IP ranges to which traffic will not be SNAT.
 parAzureFirewallLock | No       | Resource Lock Configuration for Azure Firewall.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVpnGatewayScaleUnit | No       | The scale unit for this VPN Gateway.
 parExpressRouteGatewayScaleUnit | No       | The scale unit for this ExpressRoute Gateway.
@@ -199,6 +201,22 @@ Azure Firewall Name.
 Azure Firewall Policies Name.
 
 - Default value: `[format('{0}-azfwpolicy', parameters('parCompanyPrefix'))]`
+
+### parAzFirewallPoliciesAutoLearn
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+The operation mode for automatically learning private ranges to not be SNAT.
+
+- Default value: `Disabled`
+
+### parAzFirewallPoliciesPrivateRanges
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Private IP addresses/IP ranges to which traffic will not be SNAT.
+
+- Allowed values: `Disabled`, `Enabled`
 
 ### parAzureFirewallLock
 
@@ -432,6 +450,12 @@ outAzFwPrivateIps | array |
         },
         "parAzFirewallPoliciesName": {
             "value": "[format('{0}-azfwpolicy', parameters('parCompanyPrefix'))]"
+        },
+        "parAzFirewallPoliciesAutoLearn": {
+            "value": "Disabled"
+        },
+        "parAzFirewallPoliciesPrivateRanges": {
+            "value": []
         },
         "parAzureFirewallLock": {
             "value": {

@@ -187,6 +187,16 @@ param parAzFirewallName string = '${parCompanyPrefix}-fw'
 @sys.description('Azure Firewall Policies Name.')
 param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy'
 
+@description('The operation mode for automatically learning private ranges to not be SNAT.')
+param parAzFirewallPoliciesAutoLearn string = 'Disabled'
+@allowed([
+  'Disabled'
+  'Enabled'
+])
+
+@description('Private IP addresses/IP ranges to which traffic will not be SNAT.')
+param parAzFirewallPoliciesPrivateRanges array = []
+
 @sys.description('''Resource Lock Configuration for Azure Firewall.
 
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
@@ -487,6 +497,12 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = [
     sku: {
       tier: hub.parAzFirewallTier
     }
+    snat: !empty(parAzFirewallPoliciesPrivateRanges)
+    ? {
+      autoLearnPrivateRanges: parAzFirewallPoliciesAutoLearn
+      privateRanges: parAzFirewallPoliciesPrivateRanges
+      }
+    : null
     threatIntelMode: 'Alert'
   } : {
     dnsSettings: {
