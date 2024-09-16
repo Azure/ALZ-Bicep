@@ -198,6 +198,20 @@
           "group": "connectivity"
         },
         {
+          "name": "hub_and_spoke_multi_region",
+          "displayName": "Hub (Hub-and-Spoke) multi-region Deployment",
+          "templateFilePath": "./accelerator/multi_region_modules/hubNetworking/hubNetworking_multiRegion.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/hubNetworking.parameters.multiRegion.all.json",
+          "templateParametersSourceFilePath": "./accelerator/multi_region_modules/hubNetworking/parameters/hubNetworking.parameters.az.multiRegion.all.json",
+          "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+          "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
+          "networkType": "hubNetworkingMultiRegion",
+          "deploymentType": "resourceGroup",
+          "firstRunWhatIf": false,
+          "order": 11,
+          "group": "connectivity"
+        },
+        {
           "name": "vwan",
           "displayName": "Hub (VWAN) Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep",
@@ -208,7 +222,7 @@
           "networkType": "vwanConnectivity",
           "deploymentType": "resourceGroup",
           "firstRunWhatIf": false,
-          "order": 10,
+          "order": 12,
           "group": "connectivity"
         }
       ],
@@ -279,6 +293,39 @@
             },
             {
               "Name": "LOCATION",
+              "Destination": "Environment"
+            }
+          ],
+          "validation": "azure_location"
+        },
+        "SecondaryLocation":{
+          "source": "input",
+          "type": "string",
+          "description": "Secondary deployment location. (e.g 'westeurope')",
+          "Value": "",
+          "Targets": [
+            {
+              "Name": "parSecondaryLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parAutomationAccountLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parPolicyAssignmentParameters.value.ascExportResourceGroupLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parVirtualWanHubs.value[0].parHubLocation",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "SECONDARYLOCATION",
               "Destination": "Environment"
             }
           ],
@@ -807,6 +854,22 @@
             },
             {
               "Name": "LOCATION",
+              "Destination": "Environment"
+            }
+          ],
+          "validation": "azure_location"
+        },
+        "SecondaryLocation": {
+          "source": "input",
+          "type": "string",
+          "description": "Deployment location. (e.g. 'uksouth')",
+          "Targets": [
+            {
+              "Name": "parLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "SECONDARYLOCATION",
               "Destination": "Environment"
             }
           ],

@@ -1,0 +1,124 @@
+{
+  "analyzers": {
+    "core": {
+      "enabled": true,
+      "verbose": true,
+      "rules": {
+        "adminusername-should-not-be-literal": {
+          "level": "error"
+        },
+        "artifacts-parameters": {
+          "level": "error"
+        },
+        "decompiler-cleanup": {
+          "level": "error"
+        },
+        "max-outputs": {
+          "level": "error"
+        },
+        "max-params": {
+          "level": "error"
+        },
+        "max-resources": {
+          "level": "error"
+        },
+        "max-variables": {
+          "level": "error"
+        },
+        "no-hardcoded-env-urls": {
+          "level": "error",
+          "disallowedhosts": [
+            "management.core.windows.net",
+            "gallery.azure.com",
+            "management.core.windows.net",
+            "management.azure.com",
+            "login.microsoftonline.com",
+            "graph.windows.net",
+            "trafficmanager.net",
+            "vault.azure.net",
+            "datalake.azure.net",
+            "azuredatalakestore.net",
+            "azuredatalakeanalytics.net",
+            "vault.azure.net",
+            "api.loganalytics.io",
+            "api.loganalytics.iov1",
+            "asazure.windows.net",
+            "region.asazure.windows.net",
+            "api.loganalytics.iov1",
+            "api.loganalytics.io",
+            "asazure.windows.net",
+            "region.asazure.windows.net",
+            "batch.core.windows.net"
+          ],
+          "excludedhosts": [
+            "schema.management.azure.com"
+          ]
+        },
+        "no-hardcoded-location": {
+          "level": "error"
+        },
+        "no-loc-expr-outside-params": {
+          "level": "error"
+        },
+        "no-unnecessary-dependson": {
+          "level": "error"
+        },
+        "no-unused-existing-resources": {
+          "level": "error"
+        },
+        "no-unused-params": {
+          "level": "error"
+        },
+        "no-unused-vars": {
+          "level": "error"
+        },
+        "outputs-should-not-contain-secrets": {
+          "level": "error"
+        },
+        "prefer-interpolation": {
+          "level": "error"
+        },
+        "prefer-unquoted-property-names": {
+          "level": "error"
+        },
+        "protect-commandtoexecute-secrets": {
+          "level": "error"
+        },
+        "secure-parameter-default": {
+          "level": "error"
+        },
+        "secure-params-in-nested-deploy": {
+          "level": "error"
+        },
+        "secure-secrets-in-params": {
+          "level": "error"
+        },
+        "simplify-interpolation": {
+          "level": "error"
+        },
+        "simplify-json-null": {
+          "level": "error"
+        },
+        "use-parent-property": {
+          "level": "error"
+        },
+        "use-recent-api-versions": {
+          "level": "warning",
+          "maxAllowedAgeInDays": 730
+        },
+        "use-resource-id-functions": {
+          "level": "error"
+        },
+        "use-resource-symbol-reference": {
+          "level": "error"
+        },
+        "use-stable-resource-identifiers": {
+          "level": "error"
+        },
+        "use-stable-vm-image": {
+          "level": "error"
+        }
+      }
+    }
+  }
+}
