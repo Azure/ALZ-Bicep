@@ -309,15 +309,7 @@
               "Destination": "Parameters"
             },
             {
-              "Name": "parAutomationAccountLocation.value",
-              "Destination": "Parameters"
-            },
-            {
-              "Name": "parPolicyAssignmentParameters.value.ascExportResourceGroupLocation.value",
-              "Destination": "Parameters"
-            },
-            {
-              "Name": "parVirtualWanHubs.value[0].parHubLocation",
+              "Name": "parVirtualWanHubs.value[1].parHubLocation",
               "Destination": "Parameters"
             },
             {
