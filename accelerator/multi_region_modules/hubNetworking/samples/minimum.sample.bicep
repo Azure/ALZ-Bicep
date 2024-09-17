@@ -18,7 +18,7 @@ param location string = resourceGroup().location
 // ---------
 
 @description('Minimum resource configuration')
-module minimum_hub_network '../hubNetworking.bicep' = {
+module minimum_hub_network '../hubNetworking_multiRegion.bicep' = {
   name: 'minimum_hub_network'
   params: {
     parLocation: location
