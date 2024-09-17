@@ -14,7 +14,7 @@
     "parHubNetworkName": {
       "value": "alz-hub-eastus"
     },
-    "parHubNetworkNameSecondaryLoctaion": {
+    "parHubNetworkNameSecondaryLocation": {
       "value": "alz-hub-eastus2"
     },
     "parHubNetworkAddressPrefix": {
@@ -104,10 +104,10 @@
       "value": false
     },
     "parAzBastionName": {
-      "value": "alz-bastion"
+      "value": "alz-bastion-eastus"
     },
     "parAzBastionNameSecondaryLocation": {
-      "value": "alz-bastion"
+      "value": "alz-bastion-eastus2"
     },
     "parAzBastionSku": {
       "value": "Standard"
@@ -122,22 +122,22 @@
       "value": false
     },
     "parAzBastionNsgName": {
-      "value": "nsg-AzureBastionSubnet"
+      "value": "nsg-AzureBastionSubnet-eastus"
     },
     "parAzBastionNsgNameSecondaryLocation": {
-      "value": "nsg-AzureBastionSubnet"
+      "value": "nsg-AzureBastionSubnet-eastus2"
     },
     "parDdosEnabled": {
       "value": true
     },
     "parDdosPlanName": {
-      "value": "alz-ddos-plan"
+      "value": "alz-ddos-plan-eastus"
     },
     "parDdosEnabledSecondaryLocation": {
       "value": true
     },
     "parDdosPlanNameSecondaryLocation": {
-      "value": "alz-ddos-plan"
+      "value": "alz-ddos-plan-eastus2"
     },
     "parAzFirewallEnabled": {
       "value": true
