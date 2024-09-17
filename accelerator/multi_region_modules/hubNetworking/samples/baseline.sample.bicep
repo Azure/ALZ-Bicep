@@ -25,7 +25,7 @@ var parCompanyPrefix = 'test'
 // ---------
 
 @description('Baseline resource configuration')
-module baseline_hub_network '../hubNetworking.bicep' = {
+module baseline_hub_network '../hubNetworking_multiRegion.bicep' = {
   name: 'baseline_hub_network'
   params: {
     parLocation: location
@@ -51,7 +51,7 @@ module baseline_hub_network '../hubNetworking.bicep' = {
 }
 
 @description('Baseline resource configuration using ExpressRoute')
-module baseline_hub_network_with_ER '../hubNetworking.bicep' = {
+module baseline_hub_network_with_ER '../hubNetworking_multiRegion.bicep' = {
   name: 'baseline_hub_network_with_ER'
   params: {
     parLocation: location
@@ -94,7 +94,7 @@ module baseline_hub_network_with_ER '../hubNetworking.bicep' = {
 }
 
 @description('Baseline resource configuration using a VPN Gateway')
-module baseline_hub_network_with_VPN '../hubNetworking.bicep' = {
+module baseline_hub_network_with_VPN '../hubNetworking_multiRegion.bicep' = {
   name: 'baseline_hub_network_with_VPN'
   params: {
     parLocation: location
