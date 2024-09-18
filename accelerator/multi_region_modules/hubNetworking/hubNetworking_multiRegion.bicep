@@ -834,7 +834,7 @@ resource resVirtualNetworkLockSecondaryLocation 'Microsoft.Authorization/locks@2
   }
 }
 
-module modVnetPeering '../../../infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep' = {
+module modVnetPeering '../../../infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep' = if (!empty(parSecondaryLocation)) {
   name: 'deploy-Vnet-Peering'
   params: {
     parSourceVirtualNetworkName: resHubVnet.name
@@ -847,7 +847,7 @@ module modVnetPeering '../../../infra-as-code/bicep/modules/vnetPeering/vnetPeer
   }
 }
 
-module modVnetPeeringSecondaryLocation '../../../infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep' = {
+module modVnetPeeringSecondaryLocation '../../../infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep' = if (!empty(parSecondaryLocation)) {
   name: 'deploy-Vnet-Peering-Secondary-Location'
   params: {
     parSourceVirtualNetworkName: resHubVnetSecondaryLocation.name
