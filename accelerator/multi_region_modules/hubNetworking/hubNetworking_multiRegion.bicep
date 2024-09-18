@@ -33,7 +33,7 @@ type lockType = {
 param parLocation string = resourceGroup().location
 
 @sys.description('The secondary Azure Region to deploy the resources into.')
-param parSecondaryLocation string = resourceGroup().location
+param parSecondaryLocation string
 
 @sys.description('Prefix value which will be prepended to all resource names.')
 param parCompanyPrefix string = 'alz'
@@ -831,6 +831,32 @@ resource resVirtualNetworkLockSecondaryLocation 'Microsoft.Authorization/locks@2
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parVirtualNetworkLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parVirtualNetworkLock.?notes
+  }
+}
+
+module modVnetPeering '../../../infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep' = {
+  name: 'deploy-Vnet-Peering'
+  params: {
+    parSourceVirtualNetworkName: resHubVnet.name
+    parDestinationVirtualNetworkId: resHubVnetSecondaryLocation.id
+    parDestinationVirtualNetworkName: resHubVnetSecondaryLocation.name
+    parAllowForwardedTraffic: true
+    parAllowGatewayTransit: false
+    parAllowVirtualNetworkAccess: true
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+module modVnetPeeringSecondaryLocation '../../../infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep' = {
+  name: 'deploy-Vnet-Peering-Secondary-Location'
+  params: {
+    parSourceVirtualNetworkName: resHubVnetSecondaryLocation.name
+    parDestinationVirtualNetworkId: resHubVnet.id
+    parDestinationVirtualNetworkName: resHubVnet.name
+    parAllowForwardedTraffic: true
+    parAllowGatewayTransit: false
+    parAllowVirtualNetworkAccess: true
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 

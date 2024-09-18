@@ -199,7 +199,7 @@
         },
         {
           "name": "hub_and_spoke_multi_region",
-          "displayName": "Hub (Hub-and-Spoke) multi-region Deployment",
+          "displayName": "Hub (Hub-and-Spoke) Multi-Region Deployment",
           "templateFilePath": "./accelerator/multi_region_modules/hubNetworking/hubNetworking_multiRegion.bicep",
           "templateParametersFilePath": "./config/custom-parameters/hubNetworking.parameters.multiRegion.all.json",
           "templateParametersSourceFilePath": "./accelerator/multi_region_modules/hubNetworking/parameters/hubNetworking.parameters.az.multiRegion.all.json",
