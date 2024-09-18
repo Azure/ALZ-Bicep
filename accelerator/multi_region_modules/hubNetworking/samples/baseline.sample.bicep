@@ -11,11 +11,14 @@ targetScope = 'resourceGroup'
 // ----------
 
 @description('The Azure location to deploy to.')
-param location string = resourceGroup().location
+param location string = 'westus'
 
 // ---------
 // VARIABLES
 // ---------
+
+@description('The Azure location to deploy to.')
+param secondaryLocation string = 'eastus'
 
 // Company prefix for unit testing
 var parCompanyPrefix = 'test'
@@ -29,6 +32,7 @@ module baseline_hub_network '../hubNetworking_multiRegion.bicep' = {
   name: 'baseline_hub_network'
   params: {
     parLocation: location
+    parSecondaryLocation: secondaryLocation
     parPublicIpSku: 'Standard'
     parAzFirewallAvailabilityZones: [
       '1'
@@ -55,6 +59,7 @@ module baseline_hub_network_with_ER '../hubNetworking_multiRegion.bicep' = {
   name: 'baseline_hub_network_with_ER'
   params: {
     parLocation: location
+    parSecondaryLocation: secondaryLocation
     parPublicIpSku: 'Standard'
     parAzFirewallAvailabilityZones: [
       '1'
@@ -98,6 +103,7 @@ module baseline_hub_network_with_VPN '../hubNetworking_multiRegion.bicep' = {
   name: 'baseline_hub_network_with_VPN'
   params: {
     parLocation: location
+    parSecondaryLocation: secondaryLocation
     parPublicIpSku: 'Standard'
     parAzFirewallAvailabilityZones: [
       '1'
