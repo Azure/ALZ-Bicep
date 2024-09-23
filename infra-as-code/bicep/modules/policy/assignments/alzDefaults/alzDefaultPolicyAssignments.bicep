@@ -1023,6 +1023,7 @@ module modPolicyAssignmentPlatformDeployVmArcMonitor '../../../policy/assignment
       varRbacRoleDefinitionIds.logAnalyticsContributor
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.reader
+      varRbacRoleDefinitionIds.connectedMachineResourceAdministrator
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1717,6 +1718,7 @@ module modPolicyAssignmentLzsDeployVmArcMonitor '../../../policy/assignments/pol
       varRbacRoleDefinitionIds.logAnalyticsContributor
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.reader
+      varRbacRoleDefinitionIds.connectedMachineResourceAdministrator
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
