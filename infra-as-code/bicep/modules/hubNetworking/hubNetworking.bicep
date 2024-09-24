@@ -1086,7 +1086,7 @@ output outAzFirewallName string = parAzFirewallEnabled ? parAzFirewallName : ''
 output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
 output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZonesNames : [])
 
-output outDdosPlanResourceId string = resDdosProtectionPlan.id
+output outDdosPlanResourceId string = parDdosEnabled ? resDdosProtectionPlan.id : ''
 output outHubVirtualNetworkName string = resHubVnet.name
 output outHubVirtualNetworkId string = resHubVnet.id
 output outHubRouteTableId string = parAzFirewallEnabled ? resHubRouteTable.id : ''
