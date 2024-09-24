@@ -764,6 +764,26 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in va
   }
 }]
 
+// If the gateway is active-active, create a second public IP
+module modGatewayPublicIpActiveActive '../publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && gateway.activeActive) {
+  name: 'deploy-Gateway-Public-IP-ActiveActive-${i}'
+  params: {
+    parLocation: parLocation
+    parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute' ? parAzErGatewayAvailabilityZones : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZones : []
+    parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}-aa'
+    parPublicIpProperties: {
+      publicIpAddressVersion: 'IPv4'
+      publicIpAllocationMethod: 'Static'
+    }
+    parPublicIpSku: {
+      name: parPublicIpSku
+    }
+    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parVirtualNetworkGatewayLock
+    parTags: parTags
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}]
+
 //Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
 resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: gateway.name
@@ -793,22 +813,42 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for
       radiusServerAddress: gateway.vpnClientConfiguration.?radiusServerAddress ?? ''
       radiusServerSecret: gateway.vpnClientConfiguration.?radiusServerSecret ?? ''
     } : null
-    ipConfigurations: [
-      {
-        id: resHubVnet.id
-        name: 'vnetGatewayConfig'
-        properties: {
-          publicIPAddress: {
-            id: (((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) ? modGatewayPublicIp[i].outputs.outPublicIpId : 'na')
-          }
-          subnet: {
-            id: resGatewaySubnetRef.id
+
+    ipConfigurations: concat(
+      // Primary IP configuration
+      [
+        {
+          id: resHubVnet.id
+          name: 'vnetGatewayConfig1'
+          properties: {
+            publicIPAddress: {
+              id: modGatewayPublicIp[i].outputs.outPublicIpId // Primary Public IP
+            }
+            subnet: {
+              id: resGatewaySubnetRef.id
+            }
           }
         }
-      }
-    ]
+      ],
+      // Add second IP configuration if activeActive is true
+      gateway.activeActive ? [
+        {
+          id: resHubVnet.id
+          name: 'vnetGatewayConfig2'
+          properties: {
+            publicIPAddress: {
+              id: modGatewayPublicIpActiveActive[i].outputs.outPublicIpId // Secondary Public IP
+            }
+            subnet: {
+              id: resGatewaySubnetRef.id
+            }
+          }
+        }
+      ] : []
+    )
   }
 }]
+
 
 // Create a Virtual Network Gateway resource lock if gateway.name is not equal to noconfigVpn or noconfigEr and parGlobalResourceLock.kind != 'None' or if parVirtualNetworkGatewayLock.kind != 'None'
 resource resVirtualNetworkGatewayLock 'Microsoft.Authorization/locks@2020-05-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && (parVirtualNetworkGatewayLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
