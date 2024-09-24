@@ -537,12 +537,12 @@ module modBastionPublicIp '../publicIp/publicIp.bicep' = if (parAzBastionEnabled
   }
 }
 
-resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parAzBastionEnabled) {
+resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzBastionEnabled) {
   parent: resHubVnet
   name: 'AzureBastionSubnet'
 }
 
-resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = if (parAzBastionEnabled) {
+resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2024-01-01' = if (parAzBastionEnabled) {
   name: parAzBastionNsgName
   location: parLocation
   tags: parTags
@@ -704,7 +704,7 @@ resource resBastionNsgLock 'Microsoft.Authorization/locks@2020-05-01' = if (parA
 // AzureBastionSubnet is required to deploy Bastion service. This subnet must exist in the parsubnets array if you enable Bastion Service.
 // There is a minimum subnet requirement of /27 prefix.
 // If you are deploying standard this needs to be larger. https://docs.microsoft.com/en-us/azure/bastion/configuration-settings#subnet
-resource resBastion 'Microsoft.Network/bastionHosts@2023-02-01' = if (parAzBastionEnabled) {
+resource resBastion 'Microsoft.Network/bastionHosts@2024-01-01' = if (parAzBastionEnabled) {
   location: parLocation
   name: parAzBastionName
   tags: parTags
@@ -740,7 +740,7 @@ resource resBastionLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzBa
   }
 }
 
-resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parVpnGatewayEnabled || parExpressRouteGatewayEnabled ) {
+resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parVpnGatewayEnabled || parExpressRouteGatewayEnabled ) {
   parent: resHubVnet
   name: 'GatewaySubnet'
 }
@@ -764,8 +764,28 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in va
   }
 }]
 
+// If the gateway is active-active, create a second public IP
+module modGatewayPublicIpActiveActive '../publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && gateway.activeActive) {
+  name: 'deploy-Gateway-Public-IP-ActiveActive-${i}'
+  params: {
+    parLocation: parLocation
+    parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute' ? parAzErGatewayAvailabilityZones : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZones : []
+    parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}-aa'
+    parPublicIpProperties: {
+      publicIpAddressVersion: 'IPv4'
+      publicIpAllocationMethod: 'Static'
+    }
+    parPublicIpSku: {
+      name: parPublicIpSku
+    }
+    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parVirtualNetworkGatewayLock
+    parTags: parTags
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}]
+
 //Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
-resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
+resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: gateway.name
   location: parLocation
   tags: parTags
@@ -793,22 +813,42 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for
       radiusServerAddress: gateway.vpnClientConfiguration.?radiusServerAddress ?? ''
       radiusServerSecret: gateway.vpnClientConfiguration.?radiusServerSecret ?? ''
     } : null
-    ipConfigurations: [
-      {
-        id: resHubVnet.id
-        name: 'vnetGatewayConfig'
-        properties: {
-          publicIPAddress: {
-            id: (((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) ? modGatewayPublicIp[i].outputs.outPublicIpId : 'na')
-          }
-          subnet: {
-            id: resGatewaySubnetRef.id
+
+    ipConfigurations: concat(
+      // Primary IP configuration
+      [
+        {
+          id: resHubVnet.id
+          name: 'vnetGatewayConfig1'
+          properties: {
+            publicIPAddress: {
+              id: modGatewayPublicIp[i].outputs.outPublicIpId // Primary Public IP
+            }
+            subnet: {
+              id: resGatewaySubnetRef.id
+            }
           }
         }
-      }
-    ]
+      ],
+      // Add second IP configuration if activeActive is true
+      gateway.activeActive ? [
+        {
+          id: resHubVnet.id
+          name: 'vnetGatewayConfig2'
+          properties: {
+            publicIPAddress: {
+              id: modGatewayPublicIpActiveActive[i].outputs.outPublicIpId // Secondary Public IP
+            }
+            subnet: {
+              id: resGatewaySubnetRef.id
+            }
+          }
+        }
+      ] : []
+    )
   }
 }]
+
 
 // Create a Virtual Network Gateway resource lock if gateway.name is not equal to noconfigVpn or noconfigEr and parGlobalResourceLock.kind != 'None' or if parVirtualNetworkGatewayLock.kind != 'None'
 resource resVirtualNetworkGatewayLock 'Microsoft.Authorization/locks@2020-05-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && (parVirtualNetworkGatewayLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
@@ -820,12 +860,12 @@ resource resVirtualNetworkGatewayLock 'Microsoft.Authorization/locks@2020-05-01'
   }
 }]
 
-resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parAzFirewallEnabled) {
+resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabled) {
   parent: resHubVnet
   name: 'AzureFirewallSubnet'
 }
 
-resource resAzureFirewallMgmtSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parAzFirewallEnabled && (contains(map(parSubnets, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
+resource resAzureFirewallMgmtSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabled && (contains(map(parSubnets, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
   parent: resHubVnet
   name: 'AzureFirewallManagementSubnet'
 }
@@ -868,7 +908,7 @@ module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFire
   }
 }
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = if (parAzFirewallEnabled && parAzFirewallPoliciesEnabled) {
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-01-01' = if (parAzFirewallEnabled && parAzFirewallPoliciesEnabled) {
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
@@ -907,7 +947,7 @@ resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = if
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.
-resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (parAzFirewallEnabled) {
+resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-01-01' = if (parAzFirewallEnabled) {
   dependsOn: [
     resGateway
   ]
@@ -1020,7 +1060,7 @@ resource resAzureFirewallLock 'Microsoft.Authorization/locks@2020-05-01' = if (p
 }
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
-resource resHubRouteTable 'Microsoft.Network/routeTables@2023-02-01' = if (parAzFirewallEnabled) {
+resource resHubRouteTable 'Microsoft.Network/routeTables@2024-01-01' = if (parAzFirewallEnabled) {
   name: parHubRouteTableName
   location: parLocation
   tags: parTags
@@ -1086,7 +1126,7 @@ output outAzFirewallName string = parAzFirewallEnabled ? parAzFirewallName : ''
 output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
 output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZonesNames : [])
 
-output outDdosPlanResourceId string = resDdosProtectionPlan.id
+output outDdosPlanResourceId string = parDdosEnabled ? resDdosProtectionPlan.id : ''
 output outHubVirtualNetworkName string = resHubVnet.name
 output outHubVirtualNetworkId string = resHubVnet.id
 output outHubRouteTableId string = parAzFirewallEnabled ? resHubRouteTable.id : ''
