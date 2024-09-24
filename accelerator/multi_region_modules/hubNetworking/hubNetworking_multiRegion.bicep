@@ -1332,6 +1332,26 @@ module modGatewayPublicIp '../../../infra-as-code/bicep/modules/publicIp/publicI
   }
 }]
 
+// If the gateway is active-active, create a second public IP
+module modGatewayPublicIpActiveActive '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && gateway.activeActive) {
+  name: 'deploy-Gateway-Public-IP-ActiveActive-${i}'
+  params: {
+    parLocation: parLocation
+    parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute' ? parAzErGatewayAvailabilityZones : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZones : []
+    parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}-aa'
+    parPublicIpProperties: {
+      publicIpAddressVersion: 'IPv4'
+      publicIpAllocationMethod: 'Static'
+    }
+    parPublicIpSku: {
+      name: parPublicIpSku
+    }
+    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parVirtualNetworkGatewayLock
+    parTags: parTags
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}]
+
 module modGatewayPublicIpSecondaryLocation '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfigSecondaryLocation: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: 'deploy-Gateway-Public-IP-Secondary-Location-${i}'
   params: {
@@ -1344,6 +1364,26 @@ module modGatewayPublicIpSecondaryLocation '../../../infra-as-code/bicep/modules
     }
     parPublicIpSku: {
       name: parPublicIpSkuSecondaryLocation
+    }
+    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parVirtualNetworkGatewayLock
+    parTags: parTags
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}]
+
+// If the gateway is active-active, create a second public IP
+module modGatewayPublicIpActiveActiveSecondaryLocation '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && gateway.activeActive) {
+  name: 'deploy-Gateway-Public-IP-ActiveActive-${i}'
+  params: {
+    parLocation: parLocation
+    parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute' ? parAzErGatewayAvailabilityZones : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZones : []
+    parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}-aa'
+    parPublicIpProperties: {
+      publicIpAddressVersion: 'IPv4'
+      publicIpAllocationMethod: 'Static'
+    }
+    parPublicIpSku: {
+      name: parPublicIpSku
     }
     parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parVirtualNetworkGatewayLock
     parTags: parTags
@@ -1380,20 +1420,38 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for
       radiusServerAddress: gateway.vpnClientConfiguration.?radiusServerAddress ?? ''
       radiusServerSecret: gateway.vpnClientConfiguration.?radiusServerSecret ?? ''
     } : null
-    ipConfigurations: [
-      {
-        id: resHubVnet.id
-        name: 'vnetGatewayConfig'
-        properties: {
-          publicIPAddress: {
-            id: (((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) ? modGatewayPublicIp[i].outputs.outPublicIpId : 'na')
-          }
-          subnet: {
-            id: resGatewaySubnetRef.id
+    ipConfigurations: concat(
+      // Primary IP configuration
+      [
+        {
+          id: resHubVnet.id
+          name: 'vnetGatewayConfig1'
+          properties: {
+            publicIPAddress: {
+              id: modGatewayPublicIp[i].outputs.outPublicIpId // Primary Public IP
+            }
+            subnet: {
+              id: resGatewaySubnetRef.id
+            }
           }
         }
-      }
-    ]
+      ],
+      // Add second IP configuration if activeActive is true
+      gateway.activeActive ? [
+        {
+          id: resHubVnet.id
+          name: 'vnetGatewayConfig2'
+          properties: {
+            publicIPAddress: {
+              id: modGatewayPublicIpActiveActive[i].outputs.outPublicIpId // Secondary Public IP
+            }
+            subnet: {
+              id: resGatewaySubnetRefSecondaryLocation.id
+            }
+          }
+        }
+      ] : []
+    )
   }
 }]
 
@@ -1426,20 +1484,38 @@ resource resGatewaySecondaryLocation 'Microsoft.Network/virtualNetworkGateways@2
       radiusServerAddress: gateway.vpnClientConfiguration.?radiusServerAddress ?? ''
       radiusServerSecret: gateway.vpnClientConfiguration.?radiusServerSecret ?? ''
     } : null
-    ipConfigurations: [
-      {
-        id: resHubVnetSecondaryLocation.id
-        name: 'vnetGatewayConfig'
-        properties: {
-          publicIPAddress: {
-            id: (((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) ? modGatewayPublicIpSecondaryLocation[i].outputs.outPublicIpId : 'na')
-          }
-          subnet: {
-            id: resGatewaySubnetRefSecondaryLocation.id
+    ipConfigurations: concat(
+      // Primary IP configuration
+      [
+        {
+          id: resHubVnet.id
+          name: 'vnetGatewayConfig1'
+          properties: {
+            publicIPAddress: {
+              id: modGatewayPublicIp[i].outputs.outPublicIpId // Primary Public IP
+            }
+            subnet: {
+              id: resGatewaySubnetRef.id
+            }
           }
         }
-      }
-    ]
+      ],
+      // Add second IP configuration if activeActive is true
+      gateway.activeActive ? [
+        {
+          id: resHubVnet.id
+          name: 'vnetGatewayConfig2'
+          properties: {
+            publicIPAddress: {
+              id: modGatewayPublicIpActiveActive[i].outputs.outPublicIpId // Secondary Public IP
+            }
+            subnet: {
+              id: resGatewaySubnetRef.id
+            }
+          }
+        }
+      ] : []
+    )
   }
 }]
 
