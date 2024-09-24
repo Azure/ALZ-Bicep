@@ -618,7 +618,7 @@ output outVirtualHubId array = [for (hub, i) in parVirtualWanHubs: {
 }]
 
 // Output DDoS Plan ID
-output outDdosPlanResourceId string = resDdosProtectionPlan.id
+output outDdosPlanResourceId string = parDdosEnabled ? resDdosProtectionPlan.id : ''
 
 // Output Private DNS Zones
 output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
