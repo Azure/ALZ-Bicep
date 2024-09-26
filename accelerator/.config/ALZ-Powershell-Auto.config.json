@@ -224,6 +224,20 @@
           "firstRunWhatIf": false,
           "order": 12,
           "group": "connectivity"
+        },
+        {
+          "name": "vwan_multi_region",
+          "displayName": "Hub (VWAN) Multi-Region Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/vwanConnectivity.parameters.multiRegion.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.az.multiRegion.all.json",
+          "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+          "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
+          "networkType": "vwanConnectivityMultiRegion",
+          "deploymentType": "resourceGroup",
+          "firstRunWhatIf": false,
+          "order": 13,
+          "group": "connectivity"
         }
       ],
       "inputs": {
