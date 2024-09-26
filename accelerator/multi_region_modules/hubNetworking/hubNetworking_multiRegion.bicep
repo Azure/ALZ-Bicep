@@ -408,20 +408,15 @@ param parHubRouteTableLock lockType = {
 @sys.description('Switch to enable/disable Private DNS Zones deployment.')
 param parPrivateDnsZonesEnabled bool = true
 
-@sys.description('Switch to enable/disable Private DNS Zones deployment in the secondary location.')
-param parPrivateDnsZonesEnabledSecondaryLocation bool = true
-
 @sys.description('Resource Group Name for Private DNS Zones.')
 param parPrivateDnsZonesResourceGroup string = resourceGroup().name
-
-@sys.description('Resource Group Name for Private DNS Zones in the secondary location.')
-param parPrivateDnsZonesResourceGroupSecondaryLocation string = resourceGroup().name
 
 @sys.description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
 param parPrivateDnsZones array = [
   'privatelink.${toLower(parLocation)}.azmk8s.io'
   'privatelink.${toLower(parLocation)}.batch.azure.com'
   'privatelink.${toLower(parLocation)}.kusto.windows.net'
+  'privatelink.${toLower(parLocation)}.backup.windowsazure.com'
   'privatelink.adf.azure.com'
   'privatelink.afs.azure.net'
   'privatelink.agentsvc.azure-automation.net'
@@ -488,24 +483,11 @@ param parPrivateDnsZones array = [
   'privatelink.webpubsub.azure.com'
 ]
 
-@sys.description('Array of DNS Zones to provision in Hub Virtual Network in the secondary location. Default: All known Azure Private DNS Zones')
-param parPrivateDnsZonesSecondaryLocation array = [
-  'privatelink.${toLower(parSecondaryLocation)}.azmk8s.io'
-  'privatelink.${toLower(parSecondaryLocation)}.batch.azure.com'
-  'privatelink.${toLower(parSecondaryLocation)}.kusto.windows.net'
-]
-
 @sys.description('Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.')
 param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
 
-@sys.description('Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup in secondary location.')
-param parPrivateDnsZoneAutoMergeAzureBackupZoneSecondaryLocation bool = true
-
 @sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links')
 param parVirtualNetworkIdToLinkFailover string = ''
-
-@sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links in secondary location')
-param parVirtualNetworkIdToLinkFailoverSecondaryLocation string = ''
 
 @sys.description('''Resource Lock Configuration for Private DNS Zone(s).
 
@@ -527,7 +509,7 @@ param parVpnGatewayEnabledSecondaryLocation bool = true
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
 @sys.description('Configuration for VPN virtual network gateway to be deployed.')
 param parVpnGatewayConfig object = {
-  name: '${parCompanyPrefix}-Vpn-Gateway'
+  name: '${parCompanyPrefix}-Vpn-Gateway-${parLocation}'
   gatewayType: 'Vpn'
   sku: 'VpnGw1'
   vpnType: 'RouteBased'
@@ -548,7 +530,7 @@ param parVpnGatewayConfig object = {
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
 @sys.description('Configuration for VPN virtual network gateway to be deployed in secondary location.')
 param parVpnGatewayConfigSecondaryLocation object = {
-  name: '${parCompanyPrefix}-Vpn-Gateway'
+  name: '${parCompanyPrefix}-Vpn-Gateway-${parSecondaryLocation}'
   gatewayType: 'Vpn'
   sku: 'VpnGw1'
   vpnType: 'RouteBased'
@@ -1488,14 +1470,14 @@ resource resGatewaySecondaryLocation 'Microsoft.Network/virtualNetworkGateways@2
       // Primary IP configuration
       [
         {
-          id: resHubVnet.id
+          id: resHubVnetSecondaryLocation.id
           name: 'vnetGatewayConfig1'
           properties: {
             publicIPAddress: {
-              id: modGatewayPublicIp[i].outputs.outPublicIpId // Primary Public IP
+              id: modGatewayPublicIpSecondaryLocation[i].outputs.outPublicIpId // Primary Public IP
             }
             subnet: {
-              id: resGatewaySubnetRef.id
+              id: resGatewaySubnetRefSecondaryLocation.id
             }
           }
         }
@@ -1503,14 +1485,14 @@ resource resGatewaySecondaryLocation 'Microsoft.Network/virtualNetworkGateways@2
       // Add second IP configuration if activeActive is true
       gateway.activeActive ? [
         {
-          id: resHubVnet.id
+          id: resHubVnetSecondaryLocation.id
           name: 'vnetGatewayConfig2'
           properties: {
             publicIPAddress: {
-              id: modGatewayPublicIpActiveActive[i].outputs.outPublicIpId // Secondary Public IP
+              id: modGatewayPublicIpActiveActiveSecondaryLocation[i].outputs.outPublicIpId // Secondary Public IP
             }
             subnet: {
-              id: resGatewaySubnetRef.id
+              id: resGatewaySubnetRefSecondaryLocation.id
             }
           }
         }
@@ -2012,21 +1994,6 @@ module modPrivateDnsZones '../../../infra-as-code/bicep/modules/privateDnsZones/
   }
 }
 
-module modPrivateDnsZonesSecondaryLocation '../../../infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep' = if (parPrivateDnsZonesEnabledSecondaryLocation) {
-  name: 'deploy-Private-DNS-Zones-Secondary-Location'
-  scope: resourceGroup(parPrivateDnsZonesResourceGroupSecondaryLocation)
-  params: {
-    parLocation: parSecondaryLocation
-    parTags: parTags
-    parVirtualNetworkIdToLink: resHubVnetSecondaryLocation.id
-    parVirtualNetworkIdToLinkFailover: parVirtualNetworkIdToLinkFailoverSecondaryLocation
-    parPrivateDnsZones: parPrivateDnsZonesSecondaryLocation
-    parPrivateDnsZoneAutoMergeAzureBackupZone: parPrivateDnsZoneAutoMergeAzureBackupZoneSecondaryLocation
-    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parPrivateDNSZonesLock
-    parTelemetryOptOut: parTelemetryOptOut
-  }
-}
-
 // Optional Deployments for Customer Usage Attribution
 module modCustomerUsageAttribution '../../../infra-as-code/bicep/CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
   #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
@@ -2050,10 +2017,7 @@ output outAzFirewallName string = parAzFirewallEnabled ? parAzFirewallName : ''
 output outAzFirewallNameSecondaryLocation string = parAzFirewallEnabledSecondaryLocation ? parAzFirewallNameSecondaryLocation : ''
 
 output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
-output outPrivateDnsZonesSecondaryLocation array = (parPrivateDnsZonesEnabledSecondaryLocation ? modPrivateDnsZonesSecondaryLocation.outputs.outPrivateDnsZones : [])
-
 output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZonesNames : [])
-output outPrivateDnsZonesNamesSecondaryLocation array = (parPrivateDnsZonesEnabledSecondaryLocation ? modPrivateDnsZonesSecondaryLocation.outputs.outPrivateDnsZonesNames : [])
 
 output outDdosPlanResourceId string = resDdosProtectionPlan.id
 output outDdosPlanResourceIdSecondaryLocation string = resDdosProtectionPlanSecondaryLocation.id

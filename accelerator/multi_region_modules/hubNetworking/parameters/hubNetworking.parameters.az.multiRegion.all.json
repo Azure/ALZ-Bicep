@@ -6,7 +6,7 @@
       "value": "eastus"
     },
     "parSecondaryLocation": {
-      "value": "eastus"
+      "value": "eastus2"
     },
     "parCompanyPrefix": {
       "value": "alz"
@@ -112,7 +112,7 @@
     "parAzBastionSku": {
       "value": "Standard"
     },
-    "parAzBastionSecondaryLocation": {
+    "parAzBastionSkuSecondaryLocation": {
       "value": "Standard"
     },
     "parAzBastionTunneling": {
@@ -223,9 +223,6 @@
     "parDisableBgpRoutePropagationSecondaryLocation": {
       "value": false
     },
-    "parPrivateDnsZonesEnabledSecondaryLocation": {
-      "value": true
-    },
     "parAzFirewallDnsProxyEnabledSecondaryLocation": {
       "value": true
     },
@@ -313,21 +310,10 @@
         "privatelink.webpubsub.azure.com"
       ]
     },
-    "parPrivateDnsZonesSecondaryLocation": {
-      "value": [
-        "privatelink.xxxxxx.azmk8s.io", // Replace xxxxxx with target region (i.e. eastus2)
-        "privatelink.xxxxxx.batch.azure.com", // Replace xxxxxx with target region (i.e. eastus2)
-        "privatelink.xxxxxx.kusto.windows.net", // Replace xxxxxx with target region (i.e. eastus2)
-        "privatelink.xxxxxx.backup.windowsazure.com" // Replace xxxxxx with target region geo code (i.e. for eastus2, the geo code is eus)
-      ]
-    },
     "parPrivateDnsZoneAutoMergeAzureBackupZone": {
       "value": true
     },
     "parVpnGatewayEnabled": {
-      "value": true
-    },
-    "parPrivateDnsZoneAutoMergeAzureBackupZoneSecondaryLocation": {
       "value": true
     },
     "parVpnGatewayEnabledSecondaryLocation": {
@@ -335,7 +321,7 @@
     },
     "parVpnGatewayConfig": {
       "value": {
-        "name": "alz-Vpn-Gateway",
+        "name": "alz-vpn-gateway",
         "gatewayType": "Vpn",
         "sku": "VpnGw1AZ",
         "vpnType": "RouteBased",
@@ -355,7 +341,7 @@
     },
     "parVpnGatewayConfigSecondaryLocation": {
       "value": {
-        "name": "alz-Vpn-Gateway",
+        "name": "alz-vpn-gateway-secondary",
         "gatewayType": "Vpn",
         "sku": "VpnGw1AZ",
         "vpnType": "RouteBased",
@@ -378,7 +364,7 @@
     },
     "parExpressRouteGatewayConfig": {
       "value": {
-        "name": "alz-ExpressRoute-Gateway",
+        "name": "alz-expressroute-gateway",
         "gatewayType": "ExpressRoute",
         "sku": "ErGw1Az",
         "vpnType": "RouteBased",
@@ -400,7 +386,7 @@
     },
     "parExpressRouteGatewayConfigSecondaryLocation": {
       "value": {
-        "name": "alz-ExpressRoute-Gateway",
+        "name": "alz-expressroute-gateway-secondary",
         "gatewayType": "ExpressRoute",
         "sku": "ErGw1Az",
         "vpnType": "RouteBased",
