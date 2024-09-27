@@ -198,6 +198,20 @@
           "group": "connectivity"
         },
         {
+          "name": "hub_and_spoke_multi_region",
+          "displayName": "Hub (Hub-and-Spoke) Multi-Region Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/hubNetworking/hubNetworking-multiRegion.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/hubNetworking.parameters.multiRegion.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.az.multiRegion.all.json",
+          "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+          "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
+          "networkType": "hubNetworkingMultiRegion",
+          "deploymentType": "resourceGroup",
+          "firstRunWhatIf": false,
+          "order": 11,
+          "group": "connectivity"
+        },
+        {
           "name": "vwan",
           "displayName": "Hub (VWAN) Deployment",
           "templateFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep",
@@ -208,7 +222,21 @@
           "networkType": "vwanConnectivity",
           "deploymentType": "resourceGroup",
           "firstRunWhatIf": false,
-          "order": 10,
+          "order": 12,
+          "group": "connectivity"
+        },
+        {
+          "name": "vwan_multi_region",
+          "displayName": "Hub (VWAN) Multi-Region Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/vwanConnectivity.parameters.multiRegion.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.az.multiRegion.all.json",
+          "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+          "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
+          "networkType": "vwanConnectivityMultiRegion",
+          "deploymentType": "resourceGroup",
+          "firstRunWhatIf": false,
+          "order": 13,
           "group": "connectivity"
         }
       ],
@@ -279,6 +307,27 @@
             },
             {
               "Name": "LOCATION",
+              "Destination": "Environment"
+            }
+          ],
+          "validation": "azure_location"
+        },
+        "SecondaryLocation":{
+          "source": "input",
+          "type": "string",
+          "description": "Secondary deployment location. (e.g 'westeurope')",
+          "Value": "",
+          "Targets": [
+            {
+              "Name": "parSecondaryLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parVirtualWanHubs.value[1].parHubLocation",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "SECONDARYLOCATION",
               "Destination": "Environment"
             }
           ],
@@ -505,6 +554,17 @@
             }
           ]
         },
+        "HubNetworkNameSecondary": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "alz-hub-{%SecondaryLocation%}",
+          "Targets": [
+            {
+              "Name": "parHubNetworkNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
         "VirtualIdToLink": {
           "source": "powershell",
           "type": "string",
@@ -538,6 +598,17 @@
             }
           ]
         },
+        "AzFirewallNameSecondary": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "alz-azfw-{%SecondaryLocation%}",
+          "Targets": [
+            {
+              "Name": "parAzFirewallNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
         "FirewallPoliciesName": {
           "source": "powershell",
           "type": "string",
@@ -545,6 +616,17 @@
           "Targets": [
             {
               "Name": "parAzFirewallPoliciesName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "FirewallPoliciesNameSecondary": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "alz-azfwpolicy-{%SecondaryLocation%}",
+          "Targets": [
+            {
+              "Name": "parAzFirewallPoliciesNameSecondaryLocation.value",
               "Destination": "Parameters"
             }
           ]
@@ -560,6 +642,105 @@
             }
           ]
         },
+        "parAzBastionName": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "alz-bastion-{%Location%}",
+          "Targets": [
+            {
+              "Name": "parAzBastionName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parAzBastionNameSecondaryLocation": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "alz-bastion-{%SecondaryLocation%}",
+          "Targets": [
+            {
+              "Name": "parAzBastionNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parAzBastionNsgName": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "nsg-AzureBastionSubnet-{%Location%}",
+          "Targets": [
+            {
+              "Name": "parAzBastionNsgName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parAzBastionNsgNameSecondaryLocation": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "nsg-AzureBastionSubnet-{%SecondaryLocation%}",
+          "Targets": [
+            {
+              "Name": "parAzBastionNsgNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parDdosPlanName": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "alz-ddos-plan-{%Location%}",
+          "Targets": [
+            {
+              "Name": "parDdosPlanName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parDdosPlanNameSecondaryLocation": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "alz-ddos-plan-{%SecondaryLocation%}",
+          "Targets": [
+            {
+              "Name": "parDdosPlanNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parHubRouteTableName": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "alz-hub-routetable-{%Location%}",
+          "Targets": [
+            {
+              "Name": "parHubRouteTableName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parHubRouteTableNameSecondaryLocation": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "alz-hub-routetable-{%SecondaryLocation%}",
+          "Targets": [
+            {
+              "Name": "parHubRouteTableNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "AK8sPrivateLinkSecondary": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "privatelink.{%SecondaryLocation%}.azmk8s.io",
+          "Targets": [
+            {
+              "Name": "parPrivateDnsZonesSecondaryLocation.value[0]",
+              "Destination": "Parameters"
+            }
+          ]
+        },
         "BatchPrivateLink": {
           "source": "powershell",
           "type": "string",
@@ -567,6 +748,17 @@
           "Targets": [
             {
               "Name": "parPrivateDnsZones.value[1]",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "BatchPrivateLinkSecondary": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "privatelink.{%SecondaryLocation%}.batch.azure.com",
+          "Targets": [
+            {
+              "Name": "parPrivateDnsZonesSecondaryLocation.value[1]",
               "Destination": "Parameters"
             }
           ]
@@ -582,6 +774,17 @@
             }
           ]
         },
+        "KustoPrivateLinkSecondary": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "privatelink.{%SecondaryLocation%}.kusto.windows.net",
+          "Targets": [
+            {
+              "Name": "parPrivateDnsZonesSecondaryLocation.value[2]",
+              "Destination": "Parameters"
+            }
+          ]
+        },
         "BackupPrivateLink": {
           "source": "powershell",
           "type": "string",
@@ -589,6 +792,17 @@
           "Targets": [
             {
               "Name": "parPrivateDnsZones.value[3]",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "BackupPrivateLinkSecondary": {
+          "source": "powershell",
+          "type": "string",
+          "Value": "privatelink.{%SecondaryLocation%}.backup.windowsazure.com",
+          "Targets": [
+            {
+              "Name": "parPrivateDnsZonesSecondaryLocation.value[3]",
               "Destination": "Parameters"
             }
           ]
@@ -661,13 +875,28 @@
               "Destination": "Parameters"
             },
             {
+              "File": "hubNetworking.parameters.multiRegion.all.json",
+              "Name": "parAzErGatewayAvailabilityZonesSecondaryLocation.value",
+              "Destination": "Parameters"
+            },
+            {
               "File": "hubNetworking.parameters.all.json",
               "Name": "parAzVpnGatewayAvailabilityZones.value",
               "Destination": "Parameters"
             },
             {
+              "File": "hubNetworking.parameters.multiRegion.all.json",
+              "Name": "parAzVpnGatewayAvailabilityZonesSecondaryLocation.value",
+              "Destination": "Parameters"
+            },
+            {
               "File": "hubNetworking.parameters.all.json",
               "Name": "parAzFirewallAvailabilityZones.value",
+              "Destination": "Parameters"
+            },
+            {
+              "File": "hubNetworking.parameters.multiRegion.all.json",
+              "Name": "parAzFirewallAvailabilityZonesSecondaryLocation.value",
               "Destination": "Parameters"
             }
           ]
@@ -807,6 +1036,26 @@
             },
             {
               "Name": "LOCATION",
+              "Destination": "Environment"
+            }
+          ],
+          "validation": "azure_location"
+        },
+        "SecondaryLocation": {
+          "source": "input",
+          "type": "string",
+          "description": "Deployment location. (e.g. 'uksouth')",
+          "Targets": [
+            {
+              "Name": "parLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "SECONDARYLOCATION",
               "Destination": "Environment"
             }
           ],
