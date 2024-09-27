@@ -748,7 +748,7 @@ resource resDDoSProtectionPlanLockSecondaryLocation 'Microsoft.Authorization/loc
   }
 }
 
-resource resHubVnet 'Microsoft.Network/virtualNetworks@2023-02-01' = {
+resource resHubVnet 'Microsoft.Network/virtualNetworks@2024-01-01' = {
   dependsOn: [
     resBastionNsg
   ]
@@ -772,7 +772,7 @@ resource resHubVnet 'Microsoft.Network/virtualNetworks@2023-02-01' = {
   }
 }
 
-resource resHubVnetSecondaryLocation 'Microsoft.Network/virtualNetworks@2023-02-01' = {
+resource resHubVnetSecondaryLocation 'Microsoft.Network/virtualNetworks@2024-01-01' = {
   dependsOn: [
     resBastionNsgSecondaryLocation
   ]
@@ -816,7 +816,7 @@ resource resVirtualNetworkLockSecondaryLocation 'Microsoft.Authorization/locks@2
   }
 }
 
-module modVnetPeering '../../../infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep' = if (!empty(parSecondaryLocation)) {
+module modVnetPeering '../vnetPeering/vnetPeering.bicep' = if (!empty(parSecondaryLocation)) {
   name: 'deploy-Vnet-Peering'
   params: {
     parSourceVirtualNetworkName: resHubVnet.name
@@ -829,7 +829,7 @@ module modVnetPeering '../../../infra-as-code/bicep/modules/vnetPeering/vnetPeer
   }
 }
 
-module modVnetPeeringSecondaryLocation '../../../infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep' = if (!empty(parSecondaryLocation)) {
+module modVnetPeeringSecondaryLocation '../vnetPeering/vnetPeering.bicep' = if (!empty(parSecondaryLocation)) {
   name: 'deploy-Vnet-Peering-Secondary-Location'
   params: {
     parSourceVirtualNetworkName: resHubVnetSecondaryLocation.name
@@ -842,7 +842,7 @@ module modVnetPeeringSecondaryLocation '../../../infra-as-code/bicep/modules/vne
   }
 }
 
-module modBastionPublicIp '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = if (parAzBastionEnabled) {
+module modBastionPublicIp '../publicIp/publicIp.bicep' = if (parAzBastionEnabled) {
   name: 'deploy-Bastion-Public-IP'
   params: {
     parLocation: parLocation
@@ -860,7 +860,7 @@ module modBastionPublicIp '../../../infra-as-code/bicep/modules/publicIp/publicI
   }
 }
 
-module modBastionPublicIpSecondaryLocation '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = if (parAzBastionEnabledSecondaryLocation) {
+module modBastionPublicIpSecondaryLocation '../publicIp/publicIp.bicep' = if (parAzBastionEnabledSecondaryLocation) {
   name: 'deploy-Bastion-Public-IP-Secondary-Location'
   params: {
     parLocation: parSecondaryLocation
@@ -878,17 +878,17 @@ module modBastionPublicIpSecondaryLocation '../../../infra-as-code/bicep/modules
   }
 }
 
-resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parAzBastionEnabled) {
+resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzBastionEnabled) {
   parent: resHubVnet
   name: 'AzureBastionSubnet'
 }
 
-resource resBastionSubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parAzBastionEnabledSecondaryLocation) {
+resource resBastionSubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzBastionEnabledSecondaryLocation) {
   parent: resHubVnetSecondaryLocation
   name: 'AzureBastionSubnet'
 }
 
-resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = if (parAzBastionEnabled) {
+resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2024-01-01' = if (parAzBastionEnabled) {
   name: parAzBastionNsgName
   location: parLocation
   tags: parTags
@@ -1037,7 +1037,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = if
   }
 }
 
-resource resBastionNsgSecondaryLocation 'Microsoft.Network/networkSecurityGroups@2023-02-01' = if (parAzBastionEnabledSecondaryLocation) {
+resource resBastionNsgSecondaryLocation 'Microsoft.Network/networkSecurityGroups@2024-01-01' = if (parAzBastionEnabledSecondaryLocation) {
   name: parAzBastionNsgNameSecondaryLocation
   location: parSecondaryLocation
   tags: parTags
@@ -1239,7 +1239,7 @@ resource resBastion 'Microsoft.Network/bastionHosts@2023-02-01' = if (parAzBasti
 // AzureBastionSubnet is required to deploy Bastion service. This subnet must exist in the parsubnets array if you enable Bastion Service.
 // There is a minimum subnet requirement of /27 prefix.
 // If you are deploying standard this needs to be larger. https://docs.microsoft.com/en-us/azure/bastion/configuration-settings#subnet
-resource resBastionSecondaryLocation 'Microsoft.Network/bastionHosts@2023-02-01' = if (parAzBastionEnabledSecondaryLocation) {
+resource resBastionSecondaryLocation 'Microsoft.Network/bastionHosts@2024-01-01' = if (parAzBastionEnabledSecondaryLocation) {
   location: parSecondaryLocation
   name: parAzBastionNameSecondaryLocation
   tags: parTags
@@ -1285,17 +1285,17 @@ resource resBastionLockSecondaryLocation 'Microsoft.Authorization/locks@2020-05-
   }
 }
 
-resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parVpnGatewayEnabled || parExpressRouteGatewayEnabled ) {
+resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parVpnGatewayEnabled || parExpressRouteGatewayEnabled ) {
   parent: resHubVnet
   name: 'GatewaySubnet'
 }
 
-resource resGatewaySubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parVpnGatewayEnabledSecondaryLocation || parExpressRouteGatewayEnabledSecondaryLocation ) {
+resource resGatewaySubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parVpnGatewayEnabledSecondaryLocation || parExpressRouteGatewayEnabledSecondaryLocation ) {
   parent: resHubVnetSecondaryLocation
   name: 'GatewaySubnet'
 }
 
-module modGatewayPublicIp '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
+module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: 'deploy-Gateway-Public-IP-${i}'
   params: {
     parLocation: parLocation
@@ -1315,7 +1315,7 @@ module modGatewayPublicIp '../../../infra-as-code/bicep/modules/publicIp/publicI
 }]
 
 // If the gateway is active-active, create a second public IP
-module modGatewayPublicIpActiveActive '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && gateway.activeActive) {
+module modGatewayPublicIpActiveActive '../publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && gateway.activeActive) {
   name: 'deploy-Gateway-Public-IP-ActiveActive-${i}'
   params: {
     parLocation: parLocation
@@ -1334,7 +1334,7 @@ module modGatewayPublicIpActiveActive '../../../infra-as-code/bicep/modules/publ
   }
 }]
 
-module modGatewayPublicIpSecondaryLocation '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfigSecondaryLocation: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
+module modGatewayPublicIpSecondaryLocation '../publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfigSecondaryLocation: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: 'deploy-Gateway-Public-IP-Secondary-Location-${i}'
   params: {
     parLocation: parSecondaryLocation
@@ -1354,7 +1354,7 @@ module modGatewayPublicIpSecondaryLocation '../../../infra-as-code/bicep/modules
 }]
 
 // If the gateway is active-active, create a second public IP
-module modGatewayPublicIpActiveActiveSecondaryLocation '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && gateway.activeActive) {
+module modGatewayPublicIpActiveActiveSecondaryLocation '../publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && gateway.activeActive) {
   name: 'deploy-Gateway-Public-IP-ActiveActive-${i}'
   params: {
     parLocation: parLocation
@@ -1374,7 +1374,7 @@ module modGatewayPublicIpActiveActiveSecondaryLocation '../../../infra-as-code/b
 }]
 
 //Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
-resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
+resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: gateway.name
   location: parLocation
   tags: parTags
@@ -1438,7 +1438,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for
 }]
 
 //Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
-resource resGatewaySecondaryLocation 'Microsoft.Network/virtualNetworkGateways@2023-02-01' = [for (gateway, i) in varGwConfigSecondaryLocation: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
+resource resGatewaySecondaryLocation 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [for (gateway, i) in varGwConfigSecondaryLocation: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
   name: gateway.name
   location: parSecondaryLocation
   tags: parTags
@@ -1521,27 +1521,27 @@ resource resVirtualNetworkGatewayLockSecondaryLocation 'Microsoft.Authorization/
   }
 }]
 
-resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parAzFirewallEnabled) {
+resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabled) {
   parent: resHubVnet
   name: 'AzureFirewallSubnet'
 }
 
-resource resAzureFirewallSubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parAzFirewallEnabledSecondaryLocation) {
+resource resAzureFirewallSubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabledSecondaryLocation) {
   parent: resHubVnetSecondaryLocation
   name: 'AzureFirewallSubnet'
 }
 
-resource resAzureFirewallMgmtSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parAzFirewallEnabled && (contains(map(parSubnets, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
+resource resAzureFirewallMgmtSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabled && (contains(map(parSubnets, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
   parent: resHubVnet
   name: 'AzureFirewallManagementSubnet'
 }
 
-resource resAzureFirewallMgmtSubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' existing = if (parAzFirewallEnabledSecondaryLocation && (contains(map(parSubnetsSecondaryLocation, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
+resource resAzureFirewallMgmtSubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabledSecondaryLocation && (contains(map(parSubnetsSecondaryLocation, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
   parent: resHubVnetSecondaryLocation
   name: 'AzureFirewallManagementSubnet'
 }
 
-module modAzureFirewallPublicIp '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = if (parAzFirewallEnabled) {
+module modAzureFirewallPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewallEnabled) {
   name: 'deploy-Firewall-Public-IP'
   params: {
     parLocation: parLocation
@@ -1560,7 +1560,7 @@ module modAzureFirewallPublicIp '../../../infra-as-code/bicep/modules/publicIp/p
   }
 }
 
-module modAzureFirewallPublicIpSecondaryLocation '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = if (parAzFirewallEnabledSecondaryLocation) {
+module modAzureFirewallPublicIpSecondaryLocation '../publicIp/publicIp.bicep' = if (parAzFirewallEnabledSecondaryLocation) {
   name: 'deploy-Firewall-Public-IP-Secondary-Location'
   params: {
     parLocation: parSecondaryLocation
@@ -1579,7 +1579,7 @@ module modAzureFirewallPublicIpSecondaryLocation '../../../infra-as-code/bicep/m
   }
 }
 
-module modAzureFirewallMgmtPublicIp '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = if (parAzFirewallEnabled && (contains(map(parSubnets, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
+module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewallEnabled && (contains(map(parSubnets, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
   name: 'deploy-Firewall-mgmt-Public-IP'
   params: {
     parLocation: parLocation
@@ -1598,7 +1598,7 @@ module modAzureFirewallMgmtPublicIp '../../../infra-as-code/bicep/modules/public
   }
 }
 
-module modAzureFirewallMgmtPublicIpSecondaryLocation '../../../infra-as-code/bicep/modules/publicIp/publicIp.bicep' = if (parAzFirewallEnabledSecondaryLocation && (contains(map(parSubnetsSecondaryLocation, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
+module modAzureFirewallMgmtPublicIpSecondaryLocation '../publicIp/publicIp.bicep' = if (parAzFirewallEnabledSecondaryLocation && (contains(map(parSubnetsSecondaryLocation, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
   name: 'deploy-Firewall-mgmt-Public-IP-Secondary-Location'
   params: {
     parLocation: parSecondaryLocation
@@ -1617,7 +1617,7 @@ module modAzureFirewallMgmtPublicIpSecondaryLocation '../../../infra-as-code/bic
   }
 }
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = if (parAzFirewallEnabled && parAzFirewallPoliciesEnabled) {
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-01-01' = if (parAzFirewallEnabled && parAzFirewallPoliciesEnabled) {
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
@@ -1644,7 +1644,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = i
   }
 }
 
-resource resFirewallPoliciesSecondaryLocation 'Microsoft.Network/firewallPolicies@2023-02-01' = if (parAzFirewallEnabledSecondaryLocation && parAzFirewallPoliciesEnabledSecondaryLocation) {
+resource resFirewallPoliciesSecondaryLocation 'Microsoft.Network/firewallPolicies@2024-01-01' = if (parAzFirewallEnabledSecondaryLocation && parAzFirewallPoliciesEnabledSecondaryLocation) {
   name: parAzFirewallPoliciesNameSecondaryLocation
   location: parSecondaryLocation
   tags: parTags
@@ -1693,7 +1693,7 @@ resource resFirewallPoliciesLockSecondaryLocation 'Microsoft.Authorization/locks
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.
-resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (parAzFirewallEnabled) {
+resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-01-01' = if (parAzFirewallEnabled) {
   dependsOn: [
     resGateway
   ]
@@ -1797,7 +1797,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = if (pa
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.
-resource resAzureFirewallSecondaryLocation 'Microsoft.Network/azureFirewalls@2023-02-01' = if (parAzFirewallEnabledSecondaryLocation) {
+resource resAzureFirewallSecondaryLocation 'Microsoft.Network/azureFirewalls@2024-01-01' = if (parAzFirewallEnabledSecondaryLocation) {
   dependsOn: [
     resGatewaySecondaryLocation
   ]
@@ -1920,7 +1920,7 @@ resource resAzureFirewallLockSecondaryLocation 'Microsoft.Authorization/locks@20
 }
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
-resource resHubRouteTable 'Microsoft.Network/routeTables@2023-02-01' = if (parAzFirewallEnabled) {
+resource resHubRouteTable 'Microsoft.Network/routeTables@2024-01-01' = if (parAzFirewallEnabled) {
   name: parHubRouteTableName
   location: parLocation
   tags: parTags
@@ -1940,7 +1940,7 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2023-02-01' = if (parAz
 }
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
-resource resHubRouteTableSecondaryLocation 'Microsoft.Network/routeTables@2023-02-01' = if (parAzFirewallEnabledSecondaryLocation) {
+resource resHubRouteTableSecondaryLocation 'Microsoft.Network/routeTables@2024-01-01' = if (parAzFirewallEnabledSecondaryLocation) {
   name: parHubRouteTableNameSecondaryLocation
   location: parSecondaryLocation
   tags: parTags
@@ -1979,7 +1979,7 @@ resource resHubRouteTableLockSecondaryLocation 'Microsoft.Authorization/locks@20
   }
 }
 
-module modPrivateDnsZones '../../../infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
@@ -1995,13 +1995,13 @@ module modPrivateDnsZones '../../../infra-as-code/bicep/modules/privateDnsZones/
 }
 
 // Optional Deployments for Customer Usage Attribution
-module modCustomerUsageAttribution '../../../infra-as-code/bicep/CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
   #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
   name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
   params: {}
 }
 
-module modCustomerUsageAttributionZtnP1 '../../../infra-as-code/bicep/CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut && (varZtnP1Trigger || varZtnP1TriggerSecondaryLocation)) {
+module modCustomerUsageAttributionZtnP1 '../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut && (varZtnP1Trigger || varZtnP1TriggerSecondaryLocation)) {
   #disable-next-line no-loc-expr-outside-params //Only to ensure telemetry data is stored in same location as deployment. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function for more information
   name: 'pid-${varZtnP1CuaId}-${uniqueString(resourceGroup().location)}'
   params: {}

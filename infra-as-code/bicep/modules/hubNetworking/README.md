@@ -204,6 +204,8 @@ New-AzResourceGroupDeployment @inputObject
 
 To extend your infrastructure to [additional regions](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/considerations/regions), this module can be deployed multiple times with different parameters files to deploy additional hubs in multiple regions. The [vnetPeering module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/vnetPeering) can be leveraged to peer the hub networks together across the different regions.
 
+If you want to use a single deployment targeting two regions, you can use the [hubNetworking-multiRegion.bicep](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/hubNetworking-multiRegion.bicep) file along with the [hubNetwork.parameters.az.multiRegion.all.parameters.json](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.az.all.jso) file. This module uses similar parameters from the `hubNetworking` module, but the parameters specific to the secondary region are suffixed with `SecondaryLocation`. It also leverages the `vnetPeering` module to peer the two hubs together.
+
 > For the example below, two hubs will be deployed across *eastus* and *westus* regions.
 
 1. Duplicate the [parameters file](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.az.all.json) and create a new file for the first hub in the *eastus* region **hubNetworking.parameters.az.all.eastus.json**.
