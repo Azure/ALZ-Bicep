@@ -314,7 +314,7 @@
           "source": "powershell",
           "sourceInput": "starter_locations[1]",
           "description": "Secondary deployment location. (e.g 'westeurope')",
-          "value": "",
+          "default": "",
           "targets": [
             {
               "Name": "parSecondaryLocation.value",
@@ -360,7 +360,7 @@
         },
         "IdentitySubscriptionId": {
           "source": "powershell",
-          "sourceInput": "identity_subscription_id",
+          "sourceInput": "subscription_id_identity",
           "description": "The identifier of the Identity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
           "targets": [
             {
@@ -371,7 +371,7 @@
         },
         "ConnectivitySubscriptionId": {
           "source": "powershell",
-          "sourceInput": "connectivity_subscription_id",
+          "sourceInput": "subscription_id_connectivity",
           "description": "The identifier of the Connectivity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
           "targets": [
             {
@@ -382,7 +382,7 @@
         },
         "ManagementSubscriptionId": {
           "source": "powershell",
-          "sourceInput": "management_subscription_id",
+          "sourceInput": "subscription_id_management",
           "description": "The identifier of the Management Subscription. (e.g 00000000-0000-0000-0000-000000000000)",
           "targets": [
             {
@@ -404,8 +404,8 @@
         },
         "LogAnalyticsWorkspaceLocation": {
           "source": "calculated",
-          "value": "{%Location%}",
-          "Process": "($args[0] -eq \"eastus\") ? \"eastus2\" : ($args[0] -eq \"eastus2\") ? \"eastus\" : $args[0]",
+          "pattern": "{%Location%}",
+          "process": "($args[0] -eq \"eastus\") ? \"eastus2\" : ($args[0] -eq \"eastus2\") ? \"eastus\" : $args[0]",
           "targets": [
             {
               "Name": "parLogAnalyticsWorkspaceLocation.value",
@@ -419,7 +419,7 @@
         },
         "LogAnalyticsResourceId": {
           "source": "calculated",
-          "value": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/microsoft.operationalinsights/workspaces/alz-log-analytics",
+          "pattern": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/microsoft.operationalinsights/workspaces/alz-log-analytics",
           "targets": [
             {
               "Name": "parLogAnalyticsWorkspaceResourceId.value",
@@ -429,7 +429,7 @@
         },
         "DataCollectionRuleVMInsightsResourceId": {
           "source": "calculated",
-          "value": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-vmi-dcr",
+          "pattern": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-vmi-dcr",
           "targets": [
             {
               "Name": "parDataCollectionRuleVMInsightsResourceId.value",
@@ -439,7 +439,7 @@
         },
         "DataCollectionRuleChangeTrackingResourceId": {
           "source": "calculated",
-          "value": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-ct-dcr",
+          "pattern": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-ct-dcr",
           "targets": [
             {
               "Name": "parDataCollectionRuleChangeTrackingResourceId.value",
@@ -449,7 +449,7 @@
         },
         "DataCollectionRuleMDFCSQLResourceId": {
           "source": "calculated",
-          "value": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/ama-mdfcsql-default-dcr",
+          "pattern": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/ama-mdfcsql-default-dcr",
           "targets": [
             {
               "Name": "parDataCollectionRuleMDFCSQLResourceId.value",
@@ -459,7 +459,7 @@
         },
         "UserAssignedManagedIdentityResourceId": {
           "source": "calculated",
-          "value": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.ManagedIdentity/userAssignedIdentities/alz-umi-identity",
+          "pattern": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.ManagedIdentity/userAssignedIdentities/alz-umi-identity",
           "targets": [
             {
               "Name": "parUserAssignedManagedIdentityResourceId.value",
@@ -469,7 +469,7 @@
         },
         "DdosPretectionPlanId": {
           "source": "calculated",
-          "value": "/subscriptions/{%ConnectivitySubscriptionId%}/resourceGroups/rg-{%Prefix%}-connectivity/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan",
+          "pattern": "/subscriptions/{%ConnectivitySubscriptionId%}/resourceGroups/rg-{%Prefix%}-connectivity/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan",
           "targets": [
             {
               "Name": "parDdosProtectionPlanId.value",
@@ -479,7 +479,7 @@
         },
         "PrivateDnsResourceGroupId": {
           "source": "calculated",
-          "value": "/subscriptions/{%ConnectivitySubscriptionId%}/resourceGroups/rg-{%Prefix%}-connectivity",
+          "pattern": "/subscriptions/{%ConnectivitySubscriptionId%}/resourceGroups/rg-{%Prefix%}-connectivity",
           "targets": [
             {
               "Name": "parPrivateDnsResourceGroupId.value",
@@ -489,7 +489,7 @@
         },
         "ManagementSubscriptionGroup": {
           "source": "calculated",
-          "Value": [
+          "pattern": [
             "{%ManagementSubscriptionId%}"
           ],
           "targets": [
@@ -501,7 +501,7 @@
         },
         "ConnectivitySubscriptionGroup": {
           "source": "calculated",
-          "Value": [
+          "pattern": [
             "{%ConnectivitySubscriptionId%}"
           ],
           "targets": [
@@ -513,7 +513,7 @@
         },
         "IdentitySubscriptionGroup": {
           "source": "calculated",
-          "Value": [
+          "pattern": [
             "{%IdentitySubscriptionId%}"
           ],
           "targets": [
@@ -525,7 +525,7 @@
         },
         "HubNetworkName": {
           "source": "calculated",
-          "value": "alz-hub-{%Location%}",
+          "pattern": "alz-hub-{%Location%}",
           "targets": [
             {
               "Name": "parHubNetworkName.value",
@@ -535,7 +535,7 @@
         },
         "HubNetworkNameSecondary": {
           "source": "calculated",
-          "value": "alz-hub-{%SecondaryLocation%}",
+          "pattern": "alz-hub-{%SecondaryLocation%}",
           "targets": [
             {
               "Name": "parHubNetworkNameSecondaryLocation.value",
@@ -545,7 +545,7 @@
         },
         "VirtualIdToLink": {
           "source": "calculated",
-          "value": "",
+          "pattern": "",
           "targets": [
             {
               "Name": "parVirtualNetworkIdToLink.value",
@@ -555,7 +555,7 @@
         },
         "VirtualWanName": {
           "source": "calculated",
-          "value": "alz-vwan-{%Location%}",
+          "pattern": "alz-vwan-{%Location%}",
           "targets": [
             {
               "Name": "parVirtualWanName.value",
@@ -565,7 +565,7 @@
         },
         "AzFirewallName": {
           "source": "calculated",
-          "value": "alz-azfw-{%Location%}",
+          "pattern": "alz-azfw-{%Location%}",
           "targets": [
             {
               "Name": "parAzFirewallName.value",
@@ -575,7 +575,7 @@
         },
         "AzFirewallNameSecondary": {
           "source": "calculated",
-          "value": "alz-azfw-{%SecondaryLocation%}",
+          "pattern": "alz-azfw-{%SecondaryLocation%}",
           "targets": [
             {
               "Name": "parAzFirewallNameSecondaryLocation.value",
@@ -585,7 +585,7 @@
         },
         "FirewallPoliciesName": {
           "source": "calculated",
-          "value": "alz-azfwpolicy-{%Location%}",
+          "pattern": "alz-azfwpolicy-{%Location%}",
           "targets": [
             {
               "Name": "parAzFirewallPoliciesName.value",
@@ -595,7 +595,7 @@
         },
         "FirewallPoliciesNameSecondary": {
           "source": "calculated",
-          "value": "alz-azfwpolicy-{%SecondaryLocation%}",
+          "pattern": "alz-azfwpolicy-{%SecondaryLocation%}",
           "targets": [
             {
               "Name": "parAzFirewallPoliciesNameSecondaryLocation.value",
@@ -605,7 +605,7 @@
         },
         "AK8sPrivateLink": {
           "source": "calculated",
-          "value": "privatelink.{%Location%}.azmk8s.io",
+          "pattern": "privatelink.{%Location%}.azmk8s.io",
           "targets": [
             {
               "Name": "parPrivateDnsZones.value[0]",
@@ -615,7 +615,7 @@
         },
         "parAzBastionName": {
           "source": "calculated",
-          "value": "alz-bastion-{%Location%}",
+          "pattern": "alz-bastion-{%Location%}",
           "targets": [
             {
               "Name": "parAzBastionName.value",
@@ -625,7 +625,7 @@
         },
         "parAzBastionNameSecondaryLocation": {
           "source": "calculated",
-          "value": "alz-bastion-{%SecondaryLocation%}",
+          "pattern": "alz-bastion-{%SecondaryLocation%}",
           "targets": [
             {
               "Name": "parAzBastionNameSecondaryLocation.value",
@@ -635,7 +635,7 @@
         },
         "parAzBastionNsgName": {
           "source": "calculated",
-          "value": "nsg-AzureBastionSubnet-{%Location%}",
+          "pattern": "nsg-AzureBastionSubnet-{%Location%}",
           "targets": [
             {
               "Name": "parAzBastionNsgName.value",
@@ -645,7 +645,7 @@
         },
         "parAzBastionNsgNameSecondaryLocation": {
           "source": "calculated",
-          "value": "nsg-AzureBastionSubnet-{%SecondaryLocation%}",
+          "pattern": "nsg-AzureBastionSubnet-{%SecondaryLocation%}",
           "targets": [
             {
               "Name": "parAzBastionNsgNameSecondaryLocation.value",
@@ -655,7 +655,7 @@
         },
         "parDdosPlanName": {
           "source": "calculated",
-          "value": "alz-ddos-plan-{%Location%}",
+          "pattern": "alz-ddos-plan-{%Location%}",
           "targets": [
             {
               "Name": "parDdosPlanName.value",
@@ -665,7 +665,7 @@
         },
         "parDdosPlanNameSecondaryLocation": {
           "source": "calculated",
-          "value": "alz-ddos-plan-{%SecondaryLocation%}",
+          "pattern": "alz-ddos-plan-{%SecondaryLocation%}",
           "targets": [
             {
               "Name": "parDdosPlanNameSecondaryLocation.value",
@@ -675,7 +675,7 @@
         },
         "parHubRouteTableName": {
           "source": "calculated",
-          "value": "alz-hub-routetable-{%Location%}",
+          "pattern": "alz-hub-routetable-{%Location%}",
           "targets": [
             {
               "Name": "parHubRouteTableName.value",
@@ -685,7 +685,7 @@
         },
         "parHubRouteTableNameSecondaryLocation": {
           "source": "calculated",
-          "value": "alz-hub-routetable-{%SecondaryLocation%}",
+          "pattern": "alz-hub-routetable-{%SecondaryLocation%}",
           "targets": [
             {
               "Name": "parHubRouteTableNameSecondaryLocation.value",
@@ -695,7 +695,7 @@
         },
         "AK8sPrivateLinkSecondary": {
           "source": "calculated",
-          "value": "privatelink.{%SecondaryLocation%}.azmk8s.io",
+          "pattern": "privatelink.{%SecondaryLocation%}.azmk8s.io",
           "targets": [
             {
               "Name": "parPrivateDnsZonesSecondaryLocation.value[0]",
@@ -705,7 +705,7 @@
         },
         "BatchPrivateLink": {
           "source": "calculated",
-          "value": "privatelink.{%Location%}.batch.azure.com",
+          "pattern": "privatelink.{%Location%}.batch.azure.com",
           "targets": [
             {
               "Name": "parPrivateDnsZones.value[1]",
@@ -715,7 +715,7 @@
         },
         "BatchPrivateLinkSecondary": {
           "source": "calculated",
-          "value": "privatelink.{%SecondaryLocation%}.batch.azure.com",
+          "pattern": "privatelink.{%SecondaryLocation%}.batch.azure.com",
           "targets": [
             {
               "Name": "parPrivateDnsZonesSecondaryLocation.value[1]",
@@ -725,7 +725,7 @@
         },
         "KustoPrivateLink": {
           "source": "calculated",
-          "value": "privatelink.{%Location%}.kusto.windows.net",
+          "pattern": "privatelink.{%Location%}.kusto.windows.net",
           "targets": [
             {
               "Name": "parPrivateDnsZones.value[2]",
@@ -735,7 +735,7 @@
         },
         "KustoPrivateLinkSecondary": {
           "source": "calculated",
-          "value": "privatelink.{%SecondaryLocation%}.kusto.windows.net",
+          "pattern": "privatelink.{%SecondaryLocation%}.kusto.windows.net",
           "targets": [
             {
               "Name": "parPrivateDnsZonesSecondaryLocation.value[2]",
@@ -745,7 +745,7 @@
         },
         "BackupPrivateLink": {
           "source": "calculated",
-          "value": "privatelink.{%Location%}.backup.windowsazure.com",
+          "pattern": "privatelink.{%Location%}.backup.windowsazure.com",
           "targets": [
             {
               "Name": "parPrivateDnsZones.value[3]",
@@ -755,7 +755,7 @@
         },
         "BackupPrivateLinkSecondary": {
           "source": "calculated",
-          "value": "privatelink.{%SecondaryLocation%}.backup.windowsazure.com",
+          "pattern": "privatelink.{%SecondaryLocation%}.backup.windowsazure.com",
           "targets": [
             {
               "Name": "parPrivateDnsZonesSecondaryLocation.value[3]",
@@ -765,7 +765,7 @@
         },
         "ConnectivityResourceGroupName": {
           "source": "calculated",
-          "value": "rg-{%Prefix%}-connectivity",
+          "pattern": "rg-{%Prefix%}-connectivity",
           "targets": [
             {
               "Name": "CONNECTIVITY_RESOURCE_GROUP",
@@ -780,7 +780,7 @@
         },
         "LoggingResourceGroupName": {
           "source": "calculated",
-          "value": "rg-{%Prefix%}-logging",
+          "pattern": "rg-{%Prefix%}-logging",
           "targets": [
             {
               "Name": "LOGGING_RESOURCE_GROUP",
@@ -1010,6 +1010,7 @@
           "source": "powershell",
           "sourceInput": "starter_locations[1]",
           "description": "Deployment location. (e.g. 'uksouth')",
+          "default": "",
           "targets": [
             {
               "Name": "parLocation.value",
@@ -1051,7 +1052,7 @@
         },
         "IdentitySubscriptionId": {
           "source": "powershell",
-          "sourceInput": "identity_subscription_id",
+          "sourceInput": "subscription_id_identity",
           "description": "The identifier of the Identity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
           "targets": [
             {
@@ -1062,7 +1063,7 @@
         },
         "ConnectivitySubscriptionId": {
           "source": "powershell",
-          "sourceInput": "connectivity_subscription_id",
+          "sourceInput": "subscription_id_connectivity",
           "description": "The identifier of the Connectivity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
           "targets": [
             {
@@ -1073,7 +1074,7 @@
         },
         "ManagementSubscriptionId": {
           "source": "powershell",
-          "sourceInput": "management_subscription_id",
+          "sourceInput": "subscription_id_management",
           "description": "The identifier of the Management Subscription. (e.g 00000000-0000-0000-0000-000000000000)",
           "targets": [
             {
