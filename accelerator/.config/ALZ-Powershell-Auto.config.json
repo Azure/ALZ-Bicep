@@ -841,6 +841,7 @@
         "AvailabilityZonesSecondary": {
           "source": "powershell",
           "sourceInput": "availability_zones_starter[1]",
+          "default": [],
           "targets": [
             {
               "Name": "AVAILABILITY_ZONES_SECONDARY",
@@ -1156,6 +1157,7 @@
         "AvailabilityZonesSecondary": {
           "source": "powershell",
           "sourceInput": "availability_zones_starter[1]",
+          "default": [],
           "targets": [
             {
               "Name": "AVAILABILITY_ZONES_SECONDARY",
