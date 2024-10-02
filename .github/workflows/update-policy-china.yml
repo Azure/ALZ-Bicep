@@ -10,7 +10,7 @@ env:
   remote_repository: "Azure/Enterprise-Scale"
   branch_name: "patch-policy-library-china"
   az_accounts_minimum_version: "2.2.3"
-  pr_title: "Update Policy Library for Azure China (automated)"
+  pr_title: "feat: Update Policy Library for Azure China (automated)"
   pr_body: "This is an automated 'pull_request' containing updates to the library templates stored in '/infra-as-code/bicep/modules/policy/definitions/lib/china' & '/infra-as-code/bicep/modules/policy/assignments/lib'.\nPlease review the 'files changed' tab to review changes."
 
 jobs:
