@@ -221,10 +221,10 @@ For this framework, we recommend utilizing the [GitHub Flow branching strategy](
 
 As part of the framework, we include two PR workflows. The pipelines will perform the following tasks:
 
-| Workflow Name           | Trigger   | Tasks               |
-|-------------------------|-----------|---------------------|
-| ALZ-Bicep-PR1-Build | Pull request against main branch and changes to any Bicep file or Bicep config file.             | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile.
-| ALZ-Bicep-PR2-Lint | Pull request against main branch. | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.
+| Workflow Name       | Trigger                                                                              | Tasks                                                                                                                                                                                    |
+|---------------------|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ALZ-Bicep-PR1-Build | Pull request against main branch and changes to any Bicep file or Bicep config file. | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile. |
+| ALZ-Bicep-PR2-Lint  | Pull request against main branch.                                                    | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.                                      |
 
 > **Important:**
 > YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
