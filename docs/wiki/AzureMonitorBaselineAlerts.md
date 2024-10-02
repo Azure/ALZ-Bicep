@@ -2,14 +2,12 @@
 ## Azure Monitor Baseline Alerts
 <!-- markdownlint-restore -->
 
-At present, [Azure Monitor Baseline Alerts (AMBA)](https://azure.github.io/azure-monitor-baseline-alerts/) is not integrated into the ALZ-Bicep repository. However, this integration is underway and will soon be available.
+### Deprecation Notice for AMBA Guidance
 
-If you prefer not to wait for this integration, you can deploy AMBA as a standalone deployment. This might be the optimal choice and also aligns with familiar scenarios, especially if you initially deployed the ALZ-Bicep framework using the PowerShell or Azure CLI scripts provided within the module READMEs. Follow the guidance provided in the [AMBA documentation](https://azure.github.io/azure-monitor-baseline-alerts/patterns/alz/deploy/Introduction-to-deploying-the-ALZ-Pattern/) for deployment.
+> [!WARNING]
+> The guidance for Azure Monitor Baseline Alerts (AMBA) provided here is specific to the **classic** version of the ALZ Bicep Accelerator, which has been deprecated. It is not integrated into the newer version of the ALZ-Bicep Accelerator, but integration is currently in on the roadmap for the near future.
 
-Alternatively, if you wish to integrate Azure Monitor Baseline Alerts into your existing [Accelerator](https://github.com/Azure/ALZ-Bicep/wiki/Accelerator) deployment, follow the guidance provided in the following sections.
-
-> **Warning:**
-> The following guidance offers a simplified version of the integration and may differ from the final integration. This is provided for immediate solution.
+In the meantime, if you prefer not to wait for this integration, you can deploy AMBA as a standalone deployment. This option may be optimal, particularly if you initially deployed the classic ALZ-Bicep framework using the PowerShell or Azure CLI scripts found in the module READMEs. Follow the guidance provided in the [AMBA documentation](https://azure.github.io/azure-monitor-baseline-alerts/patterns/alz/deploy/Introduction-to-deploying-the-ALZ-Pattern/) for standalone deployment.
 
 ## Pre-Requisites
 
