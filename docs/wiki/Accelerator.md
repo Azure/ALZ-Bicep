@@ -3,18 +3,31 @@
 <!-- markdownlint-restore -->
 
 > [!IMPORTANT]
-> The ALZ Bicep Accelerator has been updated to automate the bootstrapping of your Version Control System and Azure resources. The ALZ Bicep Accelerator's documentation has been moved to [aka.ms/alz/accelerator/docs](https://aka.ms/alz/accelerator/docs). Head over there now to get started!
-> Use the instructions below only if you need to use the classic version of the ALZ Bicep Accelerator.
+> The ALZ Bicep Accelerator has been updated to automate the bootstrapping of your Version Control System and Azure resources. The documentation for the updated ALZ Bicep Accelerator has been moved to [aka.ms/alz/accelerator/docs](https://aka.ms/alz/accelerator/docs). Head over there now to get started!
+>
+> If you prefer, you can hold off on updating to this new version and wait for the upcoming [ALZ-Bicep Refactor](https://github.com/Azure/ALZ-Bicep/issues/791) which will leverage [Azure Verified Modules](https://azure.github.io/Azure-Verified-Modules). This refactor will provide a further updated version of the ALZ Bicep Accelerator.
+>
+> Use the instructions below only if you need to reference the deprecated classic version of the ALZ Bicep Accelerator.
 
 ### Deprecation Notice
 
 > [!WARNING]
-> The classic version of the ALZ Bicep Accelerator will be maintained for a limited time. We recommend migrating to the new version as soon as possible.
+> The classic version of the ALZ Bicep Accelerator has been **deprecated**. It has been removed from the ALZ PowerShell Module and is only supported in version 3.1.2 or earlier. If you're using a newer version, please migrate to the updated Accelerator.
+
+To use the classic version of the ALZ Bicep Accelerator, you can install the ALZ PowerShell Module version 3.1.2 by running the following command:
+
+```powershell
+# Uninstall current version (if needed)
+Uninstall-Module -Name Az -AllVersions -Force
+
+# Install a specific older version (3.1.2)
+Install-Module -Name Az -RequiredVersion 3.1.2
+```
 
 ### What is the ALZ Bicep Accelerator (Classic)?
 
 > [!NOTE]
-> These instructions now include the `-bicepLegacyMode $true` parameter, which needs be set explicily to use the classic version.
+> These instructions include the `-bicepLegacyMode $true` parameter, which must be explicitly set to use the deprecated classic version of the Accelerator.
 
 The ALZ Bicep Accelerator framework was developed to provide end-users with the following abilities:
 
@@ -88,9 +101,6 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
 1. Depending upon your preferred [network topology deployment](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow#network-topology-deployment),  remove the associated workflow file for each deployment model
     - Traditional VNet Hub and Spoke = .github\workflows\alz-bicep-4a-hubspoke.yml
     - Virtual WAN = .github\workflows\alz-bicep-4b-vwan.yml
-
-    > **Note:**
-    > These workflow files and associated deployment scripts will be programatically removed in the future.
 
 1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration. All files pertaining to the default ALZ Bicep modules are located within the upstream-releases directory. The parameter files are located within the config/custom-parameters directory. For a minimalistic deployment, some example parameters are provided [here](#guidance-for-a-minimalistic-deployment)
 
@@ -211,10 +221,10 @@ For this framework, we recommend utilizing the [GitHub Flow branching strategy](
 
 As part of the framework, we include two PR workflows. The pipelines will perform the following tasks:
 
-| Workflow Name           | Trigger   | Tasks               |
-|-------------------------|-----------|---------------------|
-| ALZ-Bicep-PR1-Build | Pull request against main branch and changes to any Bicep file or Bicep config file.             | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile.
-| ALZ-Bicep-PR2-Lint | Pull request against main branch. | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.
+| Workflow Name       | Trigger                                                                              | Tasks                                                                                                                                                                                    |
+|---------------------|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ALZ-Bicep-PR1-Build | Pull request against main branch and changes to any Bicep file or Bicep config file. | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile. |
+| ALZ-Bicep-PR2-Lint  | Pull request against main branch.                                                    | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.                                      |
 
 > **Important:**
 > YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
