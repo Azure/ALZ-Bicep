@@ -4,6 +4,9 @@
 
 > [!IMPORTANT]
 > The ALZ Bicep Accelerator has been updated to automate the bootstrapping of your Version Control System and Azure resources. The documentation for the updated ALZ Bicep Accelerator has been moved to [aka.ms/alz/accelerator/docs](https://aka.ms/alz/accelerator/docs). Head over there now to get started!
+>
+> If you prefer, you can hold off on updating to this new version and wait for the upcoming [ALZ-Bicep Refactor](https://github.com/Azure/ALZ-Bicep/issues/791) which will leverage [Azure Verified Modules](https://azure.github.io/Azure-Verified-Modules). This refactor will provide a further updated version of the ALZ Bicep Accelerator.
+>
 > Use the instructions below only if you need to reference the deprecated classic version of the ALZ Bicep Accelerator.
 
 ### Deprecation Notice
