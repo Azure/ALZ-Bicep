@@ -1,4 +1,25 @@
 {
+  "Aine-AzureAI-Diag-Settings": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('azureAiDiagSettings')]"
+      }
+    }
+  },
+  "Audit-AzureAI-Private-Link": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('azureAiPrivateLink')]"
+      }
+    }
+  },
+  "Deny-AzureAI-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('azureAiNetworkAccess')]"
+      }
+    }
+  },
   "Deny-Cognitive-Services-Cust-Storage": {
     "parameters": {
       "effect": {
@@ -31,6 +52,20 @@
     "parameters": {
       "effect": {
         "value": "[[parameters('cognitiveServicesOutboundNetworkAccess')]"
+      }
+    }
+  },
+  "Dine-AzureAI-Local-Key": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('azureAiDisableLocalKey')]"
+      }
+    }
+  },
+  "Dine-AzureAI-Local-Key2": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('azureAiDisableLocalKey2')]"
       }
     }
   },

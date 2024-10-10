@@ -253,7 +253,7 @@ var varPolicyAssignmentDeployVMChangeTrack = {
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vm_changetrack.tmpl.json')
 }
 
-var varPolicyAssignmentDeployVMMonitoring = {
+var varPolicyAssignmentDeployVMMonitor24 = {
 	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/924bfe3a-762f-40e7-86dd-5c8b95eb09e6'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vm_monitor.tmpl.json')
 }
@@ -263,7 +263,7 @@ var varPolicyAssignmentDeployVMSSChangeTrack = {
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vmss_changetrack.tmpl.json')
 }
 
-var varPolicyAssignmentDeployVMSSMonitoring = {
+var varPolicyAssignmentDeployVMSSMonitor24 = {
 	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/f5bf694c-cca7-4033-b883-3a23327d5485'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vmss_monitor.tmpl.json')
 }

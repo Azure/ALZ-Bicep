@@ -839,7 +839,7 @@ var varCustomPolicySetDefinitionsArray = [
 			}
 			{
 				definitionReferenceId: 'defenderForCspm'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/689f7782-ef2c-4270-a6d0-7664869076bd'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/72f8cee7-2937-403d-84a1-a4e3e57f3c21'
 				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfig_20240319Parameters.defenderForCspm.parameters
 				definitionGroups: []
 			}
@@ -1672,6 +1672,12 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'Deny-BotService-Cmk'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/51522a96-0869-4791-82f3-981000c2c67f'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptionCMKParameters['Deny-BotService-Cmk'].parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'Deny-CognitiveSearch-Cmk'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/76a56461-9dc0-40f0-82f5-2453283afa2f'
 				definitionParameters: varPolicySetDefinitionEsEnforceEncryptionCMKParameters['Deny-CognitiveSearch-Cmk'].parameters
@@ -2394,9 +2400,57 @@ var varCustomPolicySetDefinitionsArray = [
 		]
 	}
 	{
+		name: 'Enforce-Guardrails-BotService'
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-BotService.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'Audit-BotService-Private-Link'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/ad5621d6-a877-4407-aa93-a950b428315e'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsBotServiceParameters['Audit-BotService-Private-Link'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-BotService-Isolated-Mode'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/52152f42-0dda-40d9-976e-abb1acdd611e'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsBotServiceParameters['Deny-BotService-Isolated-Mode'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-BotService-Local-Auth'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/ffea632e-4e3a-4424-bf78-10e179bb2e1a'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsBotServiceParameters['Deny-BotService-Local-Auth'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-BotService-Valid-Uri'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/6164527b-e1ee-4882-8673-572f425f5e0a'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsBotServiceParameters['Deny-BotService-Valid-Uri'].parameters
+				definitionGroups: []
+			}
+		]
+	}
+	{
 		name: 'Enforce-Guardrails-CognitiveServices'
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-CognitiveServices.json')
 		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'Aine-Cognitive-Services-Resource-Logs'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b4330a05-a843-4bc8-bf9a-cacce50c67f4'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsCognitiveServicesParameters['Aine-Cognitive-Services-Resource-Logs'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-Cognitive-Services-Customer-Storage'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/46aa9b05-0e60-4eae-a88b-1e9d374fa515'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsCognitiveServicesParameters['Deny-Cognitive-Services-Customer-Storage'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-Cognitive-Services-Managed-Identity'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/fe3fd216-4f83-4fc1-8984-2bbec80a3418'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsCognitiveServicesParameters['Deny-Cognitive-Services-Managed-Identity'].parameters
+				definitionGroups: []
+			}
 			{
 				definitionReferenceId: 'Deny-CognitiveSearch-SKU'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a049bf77-880b-470f-ba6d-9f21c530cf83'
@@ -2407,6 +2461,12 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'Deny-CongitiveSearch-LocalAuth'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/6300012e-e9a4-4649-b41f-a85f5c43be91'
 				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsCognitiveServicesParameters['Deny-CongitiveSearch-LocalAuth'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Modify-Cognitive-Services-Local-Auth'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/14de9e63-1b31-492e-a5a3-c3f7fd57f555'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsCognitiveServicesParameters['Modify-Cognitive-Services-Local-Auth'].parameters
 				definitionGroups: []
 			}
 			{
@@ -3052,6 +3112,60 @@ var varCustomPolicySetDefinitionsArray = [
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-MachineLearning.json')
 		libSetChildDefinitions: [
 			{
+				definitionReferenceId: 'Aine-ML-Resource-Logs'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/afe0c3be-ba3b-4544-ba52-0c99672a8ad6'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Aine-ML-Resource-Logs'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Audit-ML-Private-Link'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/45e05259-1eb5-4f70-9574-baf73e9d219b'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Audit-ML-Private-Link'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Audit-ML-Virtual-Network'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/7804b5c7-01dc-4723-969b-ae300cc07ff1'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Audit-ML-Virtual-Network'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-ML-Allowed-Module'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/53c70b02-63dd-11ea-bc55-0242ac130003'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Allowed-Module'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-ML-Allowed-Python'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/77eeea86-7e81-4a7d-9067-de844d096752'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Allowed-Python'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-ML-Allowed-Registries'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/5853517a-63de-11ea-bc55-0242ac130003'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Allowed-Registries'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-ML-Allowed-Registry-Deploy'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/19539b54-c61e-4196-9a38-67598701be90'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Allowed-Registry-Deploy'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-ML-Idle-Shutdown'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/679ddf89-ab8f-48a5-9029-e76054077449'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Idle-Shutdown'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-ML-Legacy-Mode'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e413671a-dd10-4cc1-a943-45b598596cb7'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Legacy-Mode'].parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'Deny-ML-Local-Auth'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e96a9a5f-07ca-471b-9bc5-6a0f33cbd68f'
 				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Local-Auth'].parameters
@@ -3244,6 +3358,24 @@ var varCustomPolicySetDefinitionsArray = [
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-OpenAI.json')
 		libSetChildDefinitions: [
 			{
+				definitionReferenceId: 'Aine-AzureAI-Diag-Settings'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1b4d1c4e-934c-4703-944c-27c82c06bebb'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Aine-AzureAI-Diag-Settings'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Audit-AzureAI-Private-Link'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/d6759c02-b87f-42b7-892e-71b3f471d782'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Audit-AzureAI-Private-Link'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-AzureAI-Network-Access'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/037eea7a-bd0a-46c5-9a66-03aea78705d3'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Deny-AzureAI-Network-Access'].parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'Deny-Cognitive-Services-Cust-Storage'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/46aa9b05-0e60-4eae-a88b-1e9d374fa515'
 				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Deny-Cognitive-Services-Cust-Storage'].parameters
@@ -3271,6 +3403,18 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'Deny-OpenAi-OutboundNetworkAccess'
 				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-CognitiveServices-RestrictOutboundNetworkAccess'
 				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Deny-OpenAi-OutboundNetworkAccess'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Dine-AzureAI-Local-Key'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/d45520cb-31ca-44ba-8da2-fcf914608544'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Dine-AzureAI-Local-Key'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Dine-AzureAI-Local-Key2'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/55eff01b-f2bd-4c32-9203-db285f709d30'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Dine-AzureAI-Local-Key2'].parameters
 				definitionGroups: []
 			}
 			{
@@ -3623,6 +3767,8 @@ var varPolicySetDefinitionEsEnforceGuardrailsAPIMParameters = loadJsonContent('l
 var varPolicySetDefinitionEsEnforceGuardrailsAppServicesParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-AppServices.parameters.json')
 
 var varPolicySetDefinitionEsEnforceGuardrailsAutomationParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Automation.parameters.json')
+
+var varPolicySetDefinitionEsEnforceGuardrailsBotServiceParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-BotService.parameters.json')
 
 var varPolicySetDefinitionEsEnforceGuardrailsCognitiveServicesParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-CognitiveServices.parameters.json')
 

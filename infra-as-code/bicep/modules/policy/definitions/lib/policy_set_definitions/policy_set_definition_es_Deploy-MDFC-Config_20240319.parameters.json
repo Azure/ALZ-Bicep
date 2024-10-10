@@ -7,6 +7,9 @@
       "resourceGroupLocation": {
         "value": "[[parameters('ascExportResourceGroupLocation')]"
       },
+      "createResourceGroup": {
+        "value": "[[parameters('createResourceGroup')]"
+      },
       "workspaceResourceId": {
         "value": "[[parameters('logAnalytics')]"
       }
