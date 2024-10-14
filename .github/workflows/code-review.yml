@@ -59,7 +59,7 @@ jobs:
           egress-policy: audit
 
       - name: Checkout code
-        uses: actions/checkout@61b9e3751b92087fd0b06925ba6dd6314e06f089 # master
+        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # master
         with:
           fetch-depth: 0
 
