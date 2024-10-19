@@ -8,23 +8,11 @@
     "parCompanyPrefix": {
       "value": "alz"
     },
-    "parAzFirewallTier": {
-      "value": "Standard"
-    },
-    "parAzFirewallIntelMode": {
-      "value": "Alert"
-    },
     "parVirtualHubEnabled": {
       "value": true
     },
-    "parAzFirewallDnsProxyEnabled": {
-      "value": true
-    },
-    "parAzFirewallDnsServers": {
-      "value": []
-    },
     "parVirtualWanName": {
-      "value": "alz-vwan-eastus"
+      "value": "alz-vwan"
     },
     "parVirtualWanHubName": {
       "value": "alz-vhub"
@@ -41,11 +29,8 @@
     "parAzFirewallName": {
       "value": "alz-fw"
     },
-    "parAzFirewallAvailabilityZones": {
-      "value": []
-    },
     "parAzFirewallPoliciesName": {
-      "value": "alz-azfwpolicy-eastus"
+      "value": "alz-azfwpolicy"
     },
     "parVirtualWanHubs": {
       "value": [
@@ -57,7 +42,12 @@
           "parHubLocation": "eastus",
           "parHubRoutingPreference": "ExpressRoute",
           "parVirtualRouterAutoScaleConfiguration": 2,
-          "parVirtualHubRoutingIntentDestinations": []
+          "parVirtualHubRoutingIntentDestinations": [],
+          "parAzFirewallDnsServers" : [],
+          "parAzFirewallIntelMode" : "Alert",
+          "parAzFirewallDnsProxyEnabled": true,
+          "parAzFirewallTier": "Standard",
+          "parAzFirewallAvailabilityZones": []
         }
       ]
     },
@@ -116,7 +106,7 @@
         "privatelink.gremlin.cosmos.azure.com",
         "privatelink.guestconfiguration.azure.com",
         "privatelink.his.arc.azure.com",
-        "privatelink.kubernetesconfiguration.azure.com",
+        "privatelink.dp.kubernetesconfiguration.azure.com",
         "privatelink.managedhsm.azure.net",
         "privatelink.mariadb.database.azure.com",
         "privatelink.media.azure.net",

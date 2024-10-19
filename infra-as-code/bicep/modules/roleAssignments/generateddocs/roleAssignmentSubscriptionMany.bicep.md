@@ -1,34 +1,36 @@
 # ALZ Bicep - Role Assignment to Subscriptions
 
-Module used to assign a Role Assignment to multiple Subscriptions
+Module to assign a role to multiple Subscriptions
 
 ## Parameters
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parSubscriptionIds | No       | A list of subscription IDs that will be used for role assignment (i.e. 4f9f8765-911a-4a6d-af60-4bc0473268c0).
-parRoleDefinitionId | Yes      | Role Definition Id (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)
-parAssigneePrincipalType | Yes      | Principal type of the assignee.  Allowed values are 'Group' (Security Group) or 'ServicePrincipal' (Service Principal or System/User Assigned Managed Identity)
-parAssigneeObjectId | Yes      | Object ID of groups, service principals or managed identities. For managed identities use the principal id. For service principals, use the object ID and not the app ID
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
+parSubscriptionIds | No       | List of subscription IDs (e.g., 4f9f8765-911a-4a6d-af60-4bc0473268c0).
+parRoleDefinitionId | Yes      | Role Definition ID (e.g., Reader Role ID: acdd72a7-3385-48ef-bd42-f606fba81ae7).
+parAssigneePrincipalType | Yes      | Principal type: "Group" (Security Group) or "ServicePrincipal" (Service Principal/Managed Identity).
+parAssigneeObjectId | Yes      | Object ID of the group, service principal, or managed identity.
+parTelemetryOptOut | No       | Opt out of deployment telemetry.
+parRoleAssignmentCondition | No       | Role assignment condition (e.g., Owner, User Access Administrator).
+parRoleAssignmentConditionVersion | No       | Role assignment condition version. Must be "2.0".
 
 ### parSubscriptionIds
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-A list of subscription IDs that will be used for role assignment (i.e. 4f9f8765-911a-4a6d-af60-4bc0473268c0).
+List of subscription IDs (e.g., 4f9f8765-911a-4a6d-af60-4bc0473268c0).
 
 ### parRoleDefinitionId
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Role Definition Id (i.e. GUID, Reader Role Definition ID:  acdd72a7-3385-48ef-bd42-f606fba81ae7)
+Role Definition ID (e.g., Reader Role ID: acdd72a7-3385-48ef-bd42-f606fba81ae7).
 
 ### parAssigneePrincipalType
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Principal type of the assignee.  Allowed values are 'Group' (Security Group) or 'ServicePrincipal' (Service Principal or System/User Assigned Managed Identity)
+Principal type: "Group" (Security Group) or "ServicePrincipal" (Service Principal/Managed Identity).
 
 - Allowed values: `Group`, `ServicePrincipal`
 
@@ -36,15 +38,29 @@ Principal type of the assignee.  Allowed values are 'Group' (Security Group) or 
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Object ID of groups, service principals or managed identities. For managed identities use the principal id. For service principals, use the object ID and not the app ID
+Object ID of the group, service principal, or managed identity.
 
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set Parameter to true to Opt-out of deployment telemetry
+Opt out of deployment telemetry.
 
 - Default value: `False`
+
+### parRoleAssignmentCondition
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Role assignment condition (e.g., Owner, User Access Administrator).
+
+### parRoleAssignmentConditionVersion
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Role assignment condition version. Must be "2.0".
+
+- Default value: `2.0`
 
 ## Snippets
 
@@ -72,6 +88,12 @@ Set Parameter to true to Opt-out of deployment telemetry
         },
         "parTelemetryOptOut": {
             "value": false
+        },
+        "parRoleAssignmentCondition": {
+            "value": ""
+        },
+        "parRoleAssignmentConditionVersion": {
+            "value": "2.0"
         }
     }
 }

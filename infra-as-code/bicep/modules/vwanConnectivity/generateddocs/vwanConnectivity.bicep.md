@@ -9,11 +9,7 @@ Parameter name | Required | Description
 parLocation    | No       | Region in which the resource group was created.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
 parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
-parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
-parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode.
 parVirtualHubEnabled | No       | Switch to enable/disable Virtual Hub deployment.
-parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
-parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall.
 parVirtualWanName | No       | Prefix Used for Virtual WAN.
 parVirtualWanLock | No       | Resource Lock Configuration for Virtual WAN.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVirtualWanHubName | No       | Prefix Used for Virtual WAN Hub.
@@ -25,8 +21,9 @@ parVirtualWanHubsLock | No       | Resource Lock Configuration for Virtual WAN H
 parVpnGatewayName | No       | VPN Gateway Name.
 parExpressRouteGatewayName | No       | ExpressRoute Gateway Name.
 parAzFirewallName | No       | Azure Firewall Name.
-parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
+parAzFirewallPoliciesAutoLearn | No       | The operation mode for automatically learning private ranges to not be SNAT.
+parAzFirewallPoliciesPrivateRanges | No       | Private IP addresses/IP ranges to which traffic will not be SNAT.
 parAzureFirewallLock | No       | Resource Lock Configuration for Azure Firewall.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVpnGatewayScaleUnit | No       | The scale unit for this VPN Gateway.
 parExpressRouteGatewayScaleUnit | No       | The scale unit for this ExpressRoute Gateway.
@@ -72,26 +69,6 @@ Global Resource Lock Configuration used for all resources deployed in this modul
 
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
 
-### parAzFirewallTier
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Azure Firewall Tier associated with the Firewall to deploy.
-
-- Default value: `Standard`
-
-- Allowed values: `Basic`, `Standard`, `Premium`
-
-### parAzFirewallIntelMode
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-The Azure Firewall Threat Intelligence Mode.
-
-- Default value: `Alert`
-
-- Allowed values: `Alert`, `Deny`, `Off`
-
 ### parVirtualHubEnabled
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -99,20 +76,6 @@ The Azure Firewall Threat Intelligence Mode.
 Switch to enable/disable Virtual Hub deployment.
 
 - Default value: `True`
-
-### parAzFirewallDnsProxyEnabled
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Switch to enable/disable Azure Firewall DNS Proxy.
-
-- Default value: `True`
-
-### parAzFirewallDnsServers
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Array of custom DNS servers used by Azure Firewall.
 
 ### parVirtualWanName
 
@@ -231,21 +194,29 @@ Azure Firewall Name.
 
 - Default value: `[format('{0}-fw', parameters('parCompanyPrefix'))]`
 
-### parAzFirewallAvailabilityZones
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
-
-- Allowed values: `1`, `2`, `3`
-
 ### parAzFirewallPoliciesName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Azure Firewall Policies Name.
 
-- Default value: `[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
+- Default value: `[format('{0}-azfwpolicy', parameters('parCompanyPrefix'))]`
+
+### parAzFirewallPoliciesAutoLearn
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+The operation mode for automatically learning private ranges to not be SNAT.
+
+- Default value: `Disabled`
+
+### parAzFirewallPoliciesPrivateRanges
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Private IP addresses/IP ranges to which traffic will not be SNAT.
+
+- Allowed values: `Disabled`, `Enabled`
 
 ### parAzureFirewallLock
 
@@ -327,7 +298,7 @@ Resource Group Name for Private DNS Zones.
 
 Array of DNS Zones to provision in Hub Virtual Network.
 
-- Default value: `[format('privatelink.{0}.azmk8s.io', toLower(parameters('parLocation')))] [format('privatelink.{0}.batch.azure.com', toLower(parameters('parLocation')))] [format('privatelink.{0}.kusto.windows.net', toLower(parameters('parLocation')))] privatelink.adf.azure.com privatelink.afs.azure.net privatelink.agentsvc.azure-automation.net privatelink.analysis.windows.net privatelink.api.azureml.ms privatelink.azconfig.io privatelink.azure-api.net privatelink.azure-automation.net privatelink.azurecr.io privatelink.azure-devices.net privatelink.azure-devices-provisioning.net privatelink.azuredatabricks.net privatelink.azurehdinsight.net privatelink.azurehealthcareapis.com privatelink.azurestaticapps.net privatelink.azuresynapse.net privatelink.azurewebsites.net privatelink.batch.azure.com privatelink.blob.core.windows.net privatelink.cassandra.cosmos.azure.com privatelink.cognitiveservices.azure.com privatelink.database.windows.net privatelink.datafactory.azure.net privatelink.dev.azuresynapse.net privatelink.dfs.core.windows.net privatelink.dicom.azurehealthcareapis.com privatelink.digitaltwins.azure.net privatelink.directline.botframework.com privatelink.documents.azure.com privatelink.eventgrid.azure.net privatelink.file.core.windows.net privatelink.gremlin.cosmos.azure.com privatelink.guestconfiguration.azure.com privatelink.his.arc.azure.com privatelink.kubernetesconfiguration.azure.com privatelink.managedhsm.azure.net privatelink.mariadb.database.azure.com privatelink.media.azure.net privatelink.mongo.cosmos.azure.com privatelink.monitor.azure.com privatelink.mysql.database.azure.com privatelink.notebooks.azure.net privatelink.ods.opinsights.azure.com privatelink.oms.opinsights.azure.com privatelink.pbidedicated.windows.net privatelink.postgres.database.azure.com privatelink.prod.migration.windowsazure.com privatelink.purview.azure.com privatelink.purviewstudio.azure.com privatelink.queue.core.windows.net privatelink.redis.cache.windows.net privatelink.redisenterprise.cache.azure.net privatelink.search.windows.net privatelink.service.signalr.net privatelink.servicebus.windows.net privatelink.siterecovery.windowsazure.com privatelink.sql.azuresynapse.net privatelink.table.core.windows.net privatelink.table.cosmos.azure.com privatelink.tip1.powerquery.microsoft.com privatelink.token.botframework.com privatelink.vaultcore.azure.net privatelink.web.core.windows.net privatelink.webpubsub.azure.com`
+- Default value: `[format('privatelink.{0}.azmk8s.io', toLower(parameters('parLocation')))] [format('privatelink.{0}.batch.azure.com', toLower(parameters('parLocation')))] [format('privatelink.{0}.kusto.windows.net', toLower(parameters('parLocation')))] privatelink.adf.azure.com privatelink.afs.azure.net privatelink.agentsvc.azure-automation.net privatelink.analysis.windows.net privatelink.api.azureml.ms privatelink.azconfig.io privatelink.azure-api.net privatelink.azure-automation.net privatelink.azurecr.io privatelink.azure-devices.net privatelink.azure-devices-provisioning.net privatelink.azuredatabricks.net privatelink.azurehdinsight.net privatelink.azurehealthcareapis.com privatelink.azurestaticapps.net privatelink.azuresynapse.net privatelink.azurewebsites.net privatelink.batch.azure.com privatelink.blob.core.windows.net privatelink.cassandra.cosmos.azure.com privatelink.cognitiveservices.azure.com privatelink.database.windows.net privatelink.datafactory.azure.net privatelink.dev.azuresynapse.net privatelink.dfs.core.windows.net privatelink.dicom.azurehealthcareapis.com privatelink.digitaltwins.azure.net privatelink.directline.botframework.com privatelink.documents.azure.com privatelink.eventgrid.azure.net privatelink.file.core.windows.net privatelink.gremlin.cosmos.azure.com privatelink.guestconfiguration.azure.com privatelink.his.arc.azure.com privatelink.dp.kubernetesconfiguration.azure.com privatelink.managedhsm.azure.net privatelink.mariadb.database.azure.com privatelink.media.azure.net privatelink.mongo.cosmos.azure.com privatelink.monitor.azure.com privatelink.mysql.database.azure.com privatelink.notebooks.azure.net privatelink.ods.opinsights.azure.com privatelink.oms.opinsights.azure.com privatelink.pbidedicated.windows.net privatelink.postgres.database.azure.com privatelink.prod.migration.windowsazure.com privatelink.purview.azure.com privatelink.purviewstudio.azure.com privatelink.queue.core.windows.net privatelink.redis.cache.windows.net privatelink.redisenterprise.cache.azure.net privatelink.search.windows.net privatelink.service.signalr.net privatelink.servicebus.windows.net privatelink.siterecovery.windowsazure.com privatelink.sql.azuresynapse.net privatelink.table.core.windows.net privatelink.table.cosmos.azure.com privatelink.tip1.powerquery.microsoft.com privatelink.token.botframework.com privatelink.vaultcore.azure.net privatelink.web.core.windows.net privatelink.webpubsub.azure.com`
 
 ### parPrivateDnsZoneAutoMergeAzureBackupZone
 
@@ -413,20 +384,8 @@ outAzFwPrivateIps | array |
                 "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
             }
         },
-        "parAzFirewallTier": {
-            "value": "Standard"
-        },
-        "parAzFirewallIntelMode": {
-            "value": "Alert"
-        },
         "parVirtualHubEnabled": {
             "value": true
-        },
-        "parAzFirewallDnsProxyEnabled": {
-            "value": true
-        },
-        "parAzFirewallDnsServers": {
-            "value": []
         },
         "parVirtualWanName": {
             "value": "[format('{0}-vwan-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
@@ -453,7 +412,12 @@ outAzFwPrivateIps | array |
                     "parHubLocation": "[parameters('parLocation')]",
                     "parHubRoutingPreference": "ExpressRoute",
                     "parVirtualRouterAutoScaleConfiguration": 2,
-                    "parVirtualHubRoutingIntentDestinations": []
+                    "parVirtualHubRoutingIntentDestinations": [],
+                    "parAzFirewallDnsProxyEnabled": true,
+                    "parAzFirewallDnsServers": [],
+                    "parAzFirewallIntelMode": "Alert",
+                    "parAzFirewallTier": "Standard",
+                    "parAzFirewallAvailabilityZones": []
                 }
             ]
         },
@@ -484,11 +448,14 @@ outAzFwPrivateIps | array |
         "parAzFirewallName": {
             "value": "[format('{0}-fw', parameters('parCompanyPrefix'))]"
         },
-        "parAzFirewallAvailabilityZones": {
-            "value": []
-        },
         "parAzFirewallPoliciesName": {
-            "value": "[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
+            "value": "[format('{0}-azfwpolicy', parameters('parCompanyPrefix'))]"
+        },
+        "parAzFirewallPoliciesAutoLearn": {
+            "value": "Disabled"
+        },
+        "parAzFirewallPoliciesPrivateRanges": {
+            "value": []
         },
         "parAzureFirewallLock": {
             "value": {
@@ -559,7 +526,7 @@ outAzFwPrivateIps | array |
                 "privatelink.gremlin.cosmos.azure.com",
                 "privatelink.guestconfiguration.azure.com",
                 "privatelink.his.arc.azure.com",
-                "privatelink.kubernetesconfiguration.azure.com",
+                "privatelink.dp.kubernetesconfiguration.azure.com",
                 "privatelink.managedhsm.azure.net",
                 "privatelink.mariadb.database.azure.com",
                 "privatelink.media.azure.net",

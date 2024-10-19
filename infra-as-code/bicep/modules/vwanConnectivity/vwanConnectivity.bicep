@@ -1,6 +1,12 @@
 metadata name = 'ALZ Bicep - Azure vWAN Connectivity Module'
 metadata description = 'Module used to set up vWAN Connectivity'
 
+type azFirewallIntelModeType = 'Alert' | 'Deny' | 'Off'
+
+type azFirewallTierType = 'Basic' | 'Standard' | 'Premium'
+
+type azFirewallAvailabilityZones = ('1' | '2' | '3')[]
+
 type virtualWanOptionsType = ({
   @sys.description('Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub.')
   parVpnGatewayEnabled: bool
@@ -39,6 +45,21 @@ type virtualWanOptionsType = ({
 
   @sys.description('This parameter is used to specify a custom name for the Virtual WAN Hub.')
   parVirtualWanHubCustomName: string?
+
+  @sys.description('Array of custom DNS servers used by Azure Firewall.')
+  parAzFirewallDnsServers: array?
+
+  @sys.description('The Azure Firewall Threat Intelligence Mode.')
+  parAzFirewallIntelMode: azFirewallIntelModeType?
+
+  @sys.description('Switch to enable/disable Azure Firewall DNS Proxy.')
+  parAzFirewallDnsProxyEnabled: bool?
+
+  @sys.description('Azure Firewall Tier associated with the Firewall to deploy.')
+  parAzFirewallTier: azFirewallTierType?
+
+  @sys.description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
+  parAzFirewallAvailabilityZones: azFirewallAvailabilityZones?
 })[]
 
 type lockType = {
@@ -69,30 +90,8 @@ param parGlobalResourceLock lockType = {
   notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
 }
 
-@sys.description('Azure Firewall Tier associated with the Firewall to deploy.')
-@allowed([
-  'Basic'
-  'Standard'
-  'Premium'
-])
-param parAzFirewallTier string = 'Standard'
-
-@sys.description('The Azure Firewall Threat Intelligence Mode.')
-@allowed([
-  'Alert'
-  'Deny'
-  'Off'
-])
-param parAzFirewallIntelMode string = 'Alert'
-
 @sys.description('Switch to enable/disable Virtual Hub deployment.')
 param parVirtualHubEnabled bool = true
-
-@sys.description('Switch to enable/disable Azure Firewall DNS Proxy.')
-param parAzFirewallDnsProxyEnabled bool = true
-
-@sys.description('Array of custom DNS servers used by Azure Firewall.')
-param parAzFirewallDnsServers array = []
 
 @sys.description('Prefix Used for Virtual WAN.')
 param parVirtualWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
@@ -135,6 +134,11 @@ param parVirtualWanHubs virtualWanOptionsType = [ {
     parHubRoutingPreference: 'ExpressRoute'
     parVirtualRouterAutoScaleConfiguration: 2
     parVirtualHubRoutingIntentDestinations: []
+    parAzFirewallDnsProxyEnabled: true
+    parAzFirewallDnsServers: []
+    parAzFirewallIntelMode: 'Alert'
+    parAzFirewallTier: 'Standard'
+    parAzFirewallAvailabilityZones: []
   }
 ]
 
@@ -180,16 +184,18 @@ param parExpressRouteGatewayName string = '${parCompanyPrefix}-ergw'
 @sys.description('Azure Firewall Name.')
 param parAzFirewallName string = '${parCompanyPrefix}-fw'
 
-@allowed([
-  '1'
-  '2'
-  '3'
-])
-@sys.description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
-param parAzFirewallAvailabilityZones array = []
-
 @sys.description('Azure Firewall Policies Name.')
-param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
+param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy'
+
+@description('The operation mode for automatically learning private ranges to not be SNAT.')
+param parAzFirewallPoliciesAutoLearn string = 'Disabled'
+@allowed([
+  'Disabled'
+  'Enabled'
+])
+
+@description('Private IP addresses/IP ranges to which traffic will not be SNAT.')
+param parAzFirewallPoliciesPrivateRanges array = []
 
 @sys.description('''Resource Lock Configuration for Azure Firewall.
 
@@ -270,7 +276,7 @@ param parPrivateDnsZones array = [
   'privatelink.gremlin.cosmos.azure.com'
   'privatelink.guestconfiguration.azure.com'
   'privatelink.his.arc.azure.com'
-  'privatelink.kubernetesconfiguration.azure.com'
+  'privatelink.dp.kubernetesconfiguration.azure.com'
   'privatelink.managedhsm.azure.net'
   'privatelink.mariadb.database.azure.com'
   'privatelink.media.azure.net'
@@ -333,7 +339,7 @@ var varCuaid = '7f94f23b-7a59-4a5c-9a8d-2a253a566f61'
 
 // ZTN Telemetry
 var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
-var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub => hub.parAzFirewallEnabled), false)) && (parAzFirewallTier == 'Premium')) ? true : false
+var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub => hub.parAzFirewallEnabled), false)) && (contains(map(parVirtualWanHubs,hub => hub.parAzFirewallTier), 'Premium'))) ? true : false
 
 // Azure Firewalls in Hubs
 var varAzureFirewallInHubs = filter(parVirtualWanHubs, hub => hub.parAzFirewallEnabled == true)
@@ -483,42 +489,48 @@ resource resErGatewayLock 'Microsoft.Authorization/locks@2020-05-01' = [for (hub
   }
 }]
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = if (parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled) {
-  name: parAzFirewallPoliciesName
-  location: parLocation
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2023-02-01' = [for (hub, i) in parVirtualWanHubs: if (parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled) {
+  name: '${parAzFirewallPoliciesName}-${hub.parHubLocation}'
+  location: hub.parHubLocation
   tags: parTags
-  properties: (parAzFirewallTier == 'Basic') ? {
+  properties: (hub.parAzFirewallTier == 'Basic') ? {
     sku: {
-      tier: parAzFirewallTier
+      tier: hub.parAzFirewallTier
     }
+    snat: !empty(parAzFirewallPoliciesPrivateRanges)
+    ? {
+      autoLearnPrivateRanges: parAzFirewallPoliciesAutoLearn
+      privateRanges: parAzFirewallPoliciesPrivateRanges
+      }
+    : null
     threatIntelMode: 'Alert'
   } : {
     dnsSettings: {
-      enableProxy: parAzFirewallDnsProxyEnabled
-      servers: parAzFirewallDnsServers
+      enableProxy: hub.parAzFirewallDnsProxyEnabled
+      servers: hub.parAzFirewallDnsServers
     }
     sku: {
-      tier: parAzFirewallTier
+      tier: hub.parAzFirewallTier
     }
-    threatIntelMode: parAzFirewallIntelMode
+    threatIntelMode: hub.parAzFirewallIntelMode
   }
-}
+}]
 
 // Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
-resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = if ((parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled) && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
-  scope: resFirewallPolicies
-  name: parAzureFirewallLock.?name ?? '${resFirewallPolicies.name}-lock'
+resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled) && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resFirewallPolicies[i]
+  name: parAzureFirewallLock.?name ?? '${resFirewallPolicies[i].name}-lock'
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallLock.?notes
   }
-}
+}]
 
 resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = [for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parAzFirewallEnabled)) {
   name: hub.?parAzFirewallCustomName ?? '${parAzFirewallName}-${hub.parHubLocation}'
   location: hub.parHubLocation
   tags: parTags
-  zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : null)
+  zones: (!empty(hub.parAzFirewallAvailabilityZones) ? hub.parAzFirewallAvailabilityZones : null)
   properties: {
     hubIPAddresses: {
       publicIPs: {
@@ -527,13 +539,13 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2023-02-01' = [for (
     }
     sku: {
       name: 'AZFW_Hub'
-      tier: parAzFirewallTier
+      tier: hub.parAzFirewallTier
     }
     virtualHub: {
       id: parVirtualHubEnabled ? resVhub[i].id : ''
     }
     firewallPolicy: {
-      id: (parVirtualHubEnabled && hub.parAzFirewallEnabled) ? resFirewallPolicies.id : ''
+      id: (parVirtualHubEnabled && hub.parAzFirewallEnabled) ? resFirewallPolicies[i].id : ''
     }
   }
 }]
@@ -606,7 +618,7 @@ output outVirtualHubId array = [for (hub, i) in parVirtualWanHubs: {
 }]
 
 // Output DDoS Plan ID
-output outDdosPlanResourceId string = resDdosProtectionPlan.id
+output outDdosPlanResourceId string = parDdosEnabled ? resDdosProtectionPlan.id : ''
 
 // Output Private DNS Zones
 output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])

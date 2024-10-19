@@ -19,13 +19,25 @@ jobs:
     pool:
       vmImage: ubuntu-latest
     steps:
+      - task: AzureCLI@2
+        displayName: 'Azure CLI Get Federated Token'
+        inputs:
+          azureSubscription: azserviceconnection
+          addSpnToEnvironment: true
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$servicePrincipalId"
+            echo "##vso[task.setvariable variable=ARM_ID_TOKEN]$idToken"
+            echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
+
       - task: Bash@3
-        displayName: Login to Azure
+        displayName: Login to Azure for Subsequent Tasks
         name: git_azlogin
         inputs:
           targetType: "inline"
           script: |
-            az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+            az login --service-principal -u $(ARM_CLIENT_ID) --tenant $(ARM_TENANT_ID) --allow-no-subscriptions --federated-token $(ARM_ID_TOKEN)
 
       - task: Bash@3
         displayName: Az CLI Create Subscription for PR

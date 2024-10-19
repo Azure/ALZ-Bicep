@@ -1,10 +1,33 @@
 <!-- markdownlint-disable -->
-## ALZ Bicep Accelerator
+## ALZ Bicep Accelerator (Classic)
 <!-- markdownlint-restore -->
 
-This document provides prescriptive guidance around implementing, automating, and maintaining your ALZ Bicep module with the ALZ Bicep Accelerator.
+> [!IMPORTANT]
+> The ALZ Bicep Accelerator has been updated to automate the bootstrapping of your Version Control System and Azure resources. The documentation for the updated ALZ Bicep Accelerator has been moved to [aka.ms/alz/accelerator/docs](https://aka.ms/alz/accelerator/docs). Head over there now to get started!
+>
+> If you prefer, you can hold off on updating to this new version and wait for the upcoming [ALZ-Bicep Refactor](https://github.com/Azure/ALZ-Bicep/issues/791) which will leverage [Azure Verified Modules](https://azure.github.io/Azure-Verified-Modules). This refactor will provide a further updated version of the ALZ Bicep Accelerator.
+>
+> Use the instructions below only if you need to reference the deprecated classic version of the ALZ Bicep Accelerator.
 
-### What is the ALZ Bicep Accelerator?
+### Deprecation Notice
+
+> [!WARNING]
+> The classic version of the ALZ Bicep Accelerator has been **deprecated**. It has been removed from the ALZ PowerShell Module and is only supported in version 3.1.2 or earlier. If you're using a newer version, please migrate to the updated Accelerator.
+
+To use the classic version of the ALZ Bicep Accelerator, you can install the ALZ PowerShell Module version 3.1.2 by running the following command:
+
+```powershell
+# Uninstall current version (if needed)
+Uninstall-Module -Name Az -AllVersions -Force
+
+# Install a specific older version (3.1.2)
+Install-Module -Name Az -RequiredVersion 3.1.2
+```
+
+### What is the ALZ Bicep Accelerator (Classic)?
+
+> [!NOTE]
+> These instructions include the `-bicepLegacyMode $true` parameter, which must be explicitly set to use the deprecated classic version of the Accelerator.
 
 The ALZ Bicep Accelerator framework was developed to provide end-users with the following abilities:
 
@@ -67,7 +90,7 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
 1. Create your ALZ Bicep Accelerator framework with the following ALZ PowerShell Module cmdlet:
 
     ```powershell
-    Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_github
+    Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_github" -bicepLegacyMode $true
     ```
 
     > **Note:**
@@ -78,9 +101,6 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
 1. Depending upon your preferred [network topology deployment](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow#network-topology-deployment),  remove the associated workflow file for each deployment model
     - Traditional VNet Hub and Spoke = .github\workflows\alz-bicep-4a-hubspoke.yml
     - Virtual WAN = .github\workflows\alz-bicep-4b-vwan.yml
-
-    > **Note:**
-    > These workflow files and associated deployment scripts will be programatically removed in the future.
 
 1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration. All files pertaining to the default ALZ Bicep modules are located within the upstream-releases directory. The parameter files are located within the config/custom-parameters directory. For a minimalistic deployment, some example parameters are provided [here](#guidance-for-a-minimalistic-deployment)
 
@@ -137,7 +157,7 @@ In order to setup the Accelerator framework with the production ready Azure DevO
 1. Create your ALZ Bicep Accelerator framework with the following ALZ PowerShell Module cmdlet:
 
     ```powershell
-    Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_azuredevops"
+    Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_azuredevops" -bicepLegacyMode $true
     ```
 
     > **Note:**
@@ -201,10 +221,10 @@ For this framework, we recommend utilizing the [GitHub Flow branching strategy](
 
 As part of the framework, we include two PR workflows. The pipelines will perform the following tasks:
 
-| Workflow Name           | Trigger   | Tasks               |
-|-------------------------|-----------|---------------------|
-| ALZ-Bicep-PR1-Build | Pull request against main branch and changes to any Bicep file or Bicep config file.             | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile.
-| ALZ-Bicep-PR2-Lint | Pull request against main branch. | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.
+| Workflow Name       | Trigger                                                                              | Tasks                                                                                                                                                                                    |
+|---------------------|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ALZ-Bicep-PR1-Build | Pull request against main branch and changes to any Bicep file or Bicep config file. | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile. |
+| ALZ-Bicep-PR2-Lint  | Pull request against main branch.                                                    | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.                                      |
 
 > **Important:**
 > YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
@@ -217,20 +237,20 @@ The ALZ-Bicep repository regularly releases new [versions](https://github.com/Az
 
 With the ALZ Accelerator framework, we have designed the pipelines and directory structure to make it easy to upgrade to the latest ALZ Bicep version. The following steps will guide you through the upgrade process.
 
-1. Prior to upgrading, read the release note:s for the version you are upgrading to. The release note:s will provide you with information on any breaking changes that may impact your deployment. This is especially important if you have created any custom modules or have [modified any of the ALZ Bicep modules](#incorporating-modified-alz-modules) that may have dependencies on the modules that are being upgraded.
+1. Prior to upgrading, read the release notes for the version you are upgrading to. The release notes will provide you with information on any breaking changes that may impact your deployment. This is especially important if you have created any custom modules or have [modified any of the ALZ Bicep modules](#incorporating-modified-alz-modules) that may have dependencies on the modules that are being upgraded.
 
 1. Using the ALZ PowerShell Module, you can update to the latest or a specified version. You must specifiy the same IaC, Bootstrap and Output directory that you used when you initially deployed the ALZ Bicep Accelerator.
 
     Here is an example of using the cmdlet to upgrade to the latest version:
 
     ```powershell
-    Deploy-Accelerator -i "bicep" -b "alz_github" -o "C:\Repos\ALZ\accelerator"
+    Deploy-Accelerator -i "bicep" -b "alz_github" -o "C:\Repos\ALZ\accelerator" -bicepLegacyMode $true
     ```
 
     Here is an example of using the to upgrade to version v0.17.2:
 
     ```powershell
-    Deploy-Accelerator -i "bicep" -b "alz_github" -v "v0.17.2" -o "C:\Repos\ALZ\accelerator"
+    Deploy-Accelerator -i "bicep" -b "alz_github" -v "v0.17.2" -o "C:\Repos\ALZ\accelerator" -bicepLegacyMode $true
     ```
 
     You will be prompted for inputs again and the upgrade will be run for you.
@@ -255,15 +275,15 @@ Here you can find the detailed changes for a minimal hub-and-spoke deployment. F
 
 - Remove the DDos Plan: edit config/custom-parameters/hubNetworking.parameters.all.json and set **parDdosEnabled** to **false**.
 
-    ```yaml
+    ```json
     "parDdosEnabled": {
       "value": false
     },
     ```
 
-    Then **you must disable the automatic Policy assignment** by adding the following in config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json (this may no longer be necessary in a future release, see bug #596):
+    Then you can either **disable the automatic Policy assignment** by adding the following in config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json:
 
-    ```yaml
+    ```json
     "parExcludedPolicyAssignments": {
       "value": [
         "Enable-DDoS-VNET"
@@ -271,9 +291,17 @@ Here you can find the detailed changes for a minimal hub-and-spoke deployment. F
     },
     ```
 
+    OR if you want to still deploy the assignment to track the compliance against ALZ recommendations, **set the enforcement mode to DoNotEnforce** in the same parameter file by setting `parDdosEnabled` to `false`:
+
+    ```json
+    "parDdosEnabled": {
+      "value": true
+    },
+    ```
+
 - Remove Bastion or Firewall:  edit config/custom-parameters/hubNetworking.parameters.all.json and set **parAzBastionEnabled** and/or **parAzFirewallEnabled** to **false**. You can also keep it enabled and switch to the **Bastion Basic/Developer SKU and Firewall Basic Tier** for a cost-efficient yet functional starting point.
 
-    ```yaml
+    ```json
     "parAzBastionEnabled": {
       "value": false
     },
@@ -284,7 +312,7 @@ Here you can find the detailed changes for a minimal hub-and-spoke deployment. F
 
 - Remove VPN or ExpressRoute gateways: edit config/custom-parameters/hubNetworking.parameters.all.json and set **parVpnGatewayEnabled** and/or **parExpressRouteGatewayEnabled** to **false**. Optionally the parameter **parVpnGatewayConfig** and/or **parExpressRouteGatewayConfig** could be set to an empty object or removed. For vWAN, look for the **parVpnGatewayEnabled** and **parExpressRouteGatewayEnabled** parameters instead.
 
-    ```yaml
+    ```json
     "parVpnGatewayEnabled": {
       "value": false
     },

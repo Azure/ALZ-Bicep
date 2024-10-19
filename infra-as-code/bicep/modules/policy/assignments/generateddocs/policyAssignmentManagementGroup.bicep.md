@@ -1,82 +1,82 @@
 # ALZ Bicep - Management Group Policy Assignments
 
-Module used to assign policy definitions to management groups
+Module to assign policy definitions to management groups
 
 ## Parameters
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parPolicyAssignmentName | Yes      | The name of the policy assignment. e.g. "Deny-Public-IP"
-parPolicyAssignmentDisplayName | Yes      | The display name of the policy assignment. e.g. "Deny the creation of Public IPs"
-parPolicyAssignmentDescription | Yes      | The description of the policy assignment. e.g. "This policy denies creation of Public IPs under the assigned scope."
-parPolicyAssignmentDefinitionId | Yes      | The policy definition ID for the policy to be assigned. e.g. "/providers/Microsoft.Authorization/policyDefinitions/9d0a794f-1444-4c96-9534-e35fc8c39c91" or "/providers/Microsoft.Management/managementgroups/alz/providers/Microsoft.Authorization/policyDefinitions/Deny-Public-IP"
-parPolicyAssignmentParameters | No       | An object containing the parameter values for the policy to be assigned.
-parPolicyAssignmentParameterOverrides | No       | An object containing parameter values that override those provided to parPolicyAssignmentParameters, usually via a JSON file and loadJsonContent(FILE_PATH). This is only useful when wanting to take values from a source like a JSON file for the majority of the parameters but override specific parameter inputs from other sources or hardcoded. If duplicate parameters exist between parPolicyAssignmentParameters & parPolicyAssignmentParameterOverrides, inputs provided to parPolicyAssignmentParameterOverrides will win.
-parPolicyAssignmentNonComplianceMessages | No       | An array containing object/s for the non-compliance messages for the policy to be assigned. See https://docs.microsoft.com/en-us/azure/governance/policy/concepts/assignment-structure#non-compliance-messages for more details on use.
-parPolicyAssignmentNotScopes | No       | An array containing a list of scope Resource IDs to be excluded for the policy assignment. e.g. ['/providers/Microsoft.Management/managementgroups/alz', '/providers/Microsoft.Management/managementgroups/alz-sandbox' ].
-parPolicyAssignmentEnforcementMode | No       | The enforcement mode for the policy assignment. See https://aka.ms/EnforcementMode for more details on use.
-parPolicyAssignmentOverrides | No       | An array containing a list of objects containing the required overrides to be set on the assignment. See https://learn.microsoft.com/azure/governance/policy/concepts/assignment-structure#overrides-preview for more details on use.
-parPolicyAssignmentResourceSelectors | No       | An array containing a list of objects containing the required resource selectors to be set on the assignment. See https://learn.microsoft.com/azure/governance/policy/concepts/assignment-structure#resource-selectors-preview for more details on use.
-parPolicyAssignmentIdentityType | No       | The type of identity to be created and associated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects.
-parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs | No       | An array containing a list of additional Management Group IDs (as the Management Group deployed to is included automatically) that the System-assigned Managed Identity, associated to the policy assignment, will be assigned to additionally. e.g. ['alz', 'alz-sandbox' ].
-parPolicyAssignmentIdentityRoleAssignmentsSubs | No       | An array containing a list of Subscription IDs that the System-assigned Managed Identity associated to the policy assignment will be assigned to in addition to the Management Group the policy is deployed/assigned to. e.g. ['8200b669-cbc6-4e6c-b6d8-f4797f924074', '7d58dc5d-93dc-43cd-94fc-57da2e74af0d' ].
-parPolicyAssignmentIdentityRoleAssignmentsResourceGroups | No       | An array containing a list of Subscription IDs and Resource Group names seperated by a / (subscription ID/resource group name) that the System-assigned Managed Identity associated to the policy assignment will be assigned to in addition to the Management Group the policy is deployed/assigned to. e.g. ['8200b669-cbc6-4e6c-b6d8-f4797f924074/rg01', '7d58dc5d-93dc-43cd-94fc-57da2e74af0d/rg02' ].
-parPolicyAssignmentIdentityRoleDefinitionIds | No       | An array containing a list of RBAC role definition IDs to be assigned to the Managed Identity that is created and associated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects. e.g. ['/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'].
-parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
+parPolicyAssignmentName | Yes      | Policy assignment name.
+parPolicyAssignmentDisplayName | Yes      | Policy assignment display name.
+parPolicyAssignmentDescription | Yes      | Policy assignment description.
+parPolicyAssignmentDefinitionId | Yes      | Policy definition ID.
+parPolicyAssignmentParameters | No       | Parameter values for the assigned policy.
+parPolicyAssignmentParameterOverrides | No       | Overrides for parameter values in parPolicyAssignmentParameters.
+parPolicyAssignmentNonComplianceMessages | No       | Non-compliance messages for the assigned policy.
+parPolicyAssignmentNotScopes | No       | Scope Resource IDs excluded from policy assignment.
+parPolicyAssignmentEnforcementMode | No       | Enforcement mode for the policy assignment.
+parPolicyAssignmentOverrides | No       | List of required overrides for the policy assignment.
+parPolicyAssignmentResourceSelectors | No       | List of required resource selectors for the policy assignment.
+parPolicyAssignmentIdentityType | No       | Identity type for the policy assignment (required for Modify/DeployIfNotExists effects).
+parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs | No       | Additional Management Groups for System-assigned Managed Identity role assignments.
+parPolicyAssignmentIdentityRoleAssignmentsSubs | No       | Subscription IDs for System-assigned Managed Identity role assignments.
+parPolicyAssignmentIdentityRoleAssignmentsResourceGroups | No       | Subscription IDs and Resource Groups for System-assigned Managed Identity role assignments.
+parPolicyAssignmentIdentityRoleDefinitionIds | No       | RBAC role definition IDs for Managed Identity role assignments (required for Modify/DeployIfNotExists effects).
+parTelemetryOptOut | No       | Opt-out of deployment telemetry.
 
 ### parPolicyAssignmentName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-The name of the policy assignment. e.g. "Deny-Public-IP"
+Policy assignment name.
 
 ### parPolicyAssignmentDisplayName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-The display name of the policy assignment. e.g. "Deny the creation of Public IPs"
+Policy assignment display name.
 
 ### parPolicyAssignmentDescription
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-The description of the policy assignment. e.g. "This policy denies creation of Public IPs under the assigned scope."
+Policy assignment description.
 
 ### parPolicyAssignmentDefinitionId
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-The policy definition ID for the policy to be assigned. e.g. "/providers/Microsoft.Authorization/policyDefinitions/9d0a794f-1444-4c96-9534-e35fc8c39c91" or "/providers/Microsoft.Management/managementgroups/alz/providers/Microsoft.Authorization/policyDefinitions/Deny-Public-IP"
+Policy definition ID.
 
 ### parPolicyAssignmentParameters
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-An object containing the parameter values for the policy to be assigned.
+Parameter values for the assigned policy.
 
 ### parPolicyAssignmentParameterOverrides
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-An object containing parameter values that override those provided to parPolicyAssignmentParameters, usually via a JSON file and loadJsonContent(FILE_PATH). This is only useful when wanting to take values from a source like a JSON file for the majority of the parameters but override specific parameter inputs from other sources or hardcoded. If duplicate parameters exist between parPolicyAssignmentParameters & parPolicyAssignmentParameterOverrides, inputs provided to parPolicyAssignmentParameterOverrides will win.
+Overrides for parameter values in parPolicyAssignmentParameters.
 
 ### parPolicyAssignmentNonComplianceMessages
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-An array containing object/s for the non-compliance messages for the policy to be assigned. See https://docs.microsoft.com/en-us/azure/governance/policy/concepts/assignment-structure#non-compliance-messages for more details on use.
+Non-compliance messages for the assigned policy.
 
 ### parPolicyAssignmentNotScopes
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-An array containing a list of scope Resource IDs to be excluded for the policy assignment. e.g. ['/providers/Microsoft.Management/managementgroups/alz', '/providers/Microsoft.Management/managementgroups/alz-sandbox' ].
+Scope Resource IDs excluded from policy assignment.
 
 ### parPolicyAssignmentEnforcementMode
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The enforcement mode for the policy assignment. See https://aka.ms/EnforcementMode for more details on use.
+Enforcement mode for the policy assignment.
 
 - Default value: `Default`
 
@@ -86,19 +86,19 @@ The enforcement mode for the policy assignment. See https://aka.ms/EnforcementMo
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-An array containing a list of objects containing the required overrides to be set on the assignment. See https://learn.microsoft.com/azure/governance/policy/concepts/assignment-structure#overrides-preview for more details on use.
+List of required overrides for the policy assignment.
 
 ### parPolicyAssignmentResourceSelectors
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-An array containing a list of objects containing the required resource selectors to be set on the assignment. See https://learn.microsoft.com/azure/governance/policy/concepts/assignment-structure#resource-selectors-preview for more details on use.
+List of required resource selectors for the policy assignment.
 
 ### parPolicyAssignmentIdentityType
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The type of identity to be created and associated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects.
+Identity type for the policy assignment (required for Modify/DeployIfNotExists effects).
 
 - Default value: `None`
 
@@ -108,31 +108,31 @@ The type of identity to be created and associated with the policy assignment. On
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-An array containing a list of additional Management Group IDs (as the Management Group deployed to is included automatically) that the System-assigned Managed Identity, associated to the policy assignment, will be assigned to additionally. e.g. ['alz', 'alz-sandbox' ].
+Additional Management Groups for System-assigned Managed Identity role assignments.
 
 ### parPolicyAssignmentIdentityRoleAssignmentsSubs
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-An array containing a list of Subscription IDs that the System-assigned Managed Identity associated to the policy assignment will be assigned to in addition to the Management Group the policy is deployed/assigned to. e.g. ['8200b669-cbc6-4e6c-b6d8-f4797f924074', '7d58dc5d-93dc-43cd-94fc-57da2e74af0d' ].
+Subscription IDs for System-assigned Managed Identity role assignments.
 
 ### parPolicyAssignmentIdentityRoleAssignmentsResourceGroups
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-An array containing a list of Subscription IDs and Resource Group names seperated by a / (subscription ID/resource group name) that the System-assigned Managed Identity associated to the policy assignment will be assigned to in addition to the Management Group the policy is deployed/assigned to. e.g. ['8200b669-cbc6-4e6c-b6d8-f4797f924074/rg01', '7d58dc5d-93dc-43cd-94fc-57da2e74af0d/rg02' ].
+Subscription IDs and Resource Groups for System-assigned Managed Identity role assignments.
 
 ### parPolicyAssignmentIdentityRoleDefinitionIds
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-An array containing a list of RBAC role definition IDs to be assigned to the Managed Identity that is created and associated with the policy assignment. Only required for Modify and DeployIfNotExists policy effects. e.g. ['/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'].
+RBAC role definition IDs for Managed Identity role assignments (required for Modify/DeployIfNotExists effects).
 
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Set Parameter to true to Opt-out of deployment telemetry
+Opt-out of deployment telemetry.
 
 - Default value: `False`
 

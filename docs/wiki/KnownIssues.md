@@ -37,6 +37,16 @@ This page lists the known issues and limitations currently present in ALZ-Bicep.
 
 - **Status:** As our team doesn't directly own the impacted module or have control over the agents/runners, we aim to enhance flexibility to assist with such issues in the future. To achieve this, we plan to introduce a variable in the .env file, enabling version control without the need for individual additions.
 
+## Issue 2: ALZ Default Policy Assignments Module Deployment Failure Due to Template Size
+
+- **Description:** The ALZ Default Policy Assignments module may fail to deploy because the compiled ARM template from the Bicep module exceeds [Azure's 4 MB limit](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/best-practices#template-limits) due to the large number of policy assignments.
+- **Impact:** Deployment may fail with an error indicating that the ARM template is too large.
+- **Workaround:** Consider these approaches:
+  - Deploy the module in smaller chunks.
+  - Split the policy assignments into separate modules and deploy them individually.
+  - If `parTelemetryOptOut` is set to `true`, comment out or remove the parameter and its associated resource declaration from the `.bicep` file.
+- **Status:** We have reduced the ARM template size by condensing parameter descriptions . Refactoring the module will only be considered if necessary, particularly if additional policy assignments from a policy refresh impact deployments. We are also taking into consideration that we are currently working on transition to [Azure Verified Modules](https://github.com/Azure/ALZ-Bicep/issues/791), which will account for this issue in the long-term.
+
 ## How to Report an Issue
 
 If you encounter an issue not listed here that would be helpful to be included or have additional information to provide, please open a [new issue](https://github.com/Azure/ALZ-Bicep/issues/new?assignees=&labels=bug&projects=&template=bug-report-issue-form.yaml&title=%5BPLACEHOLDER%5D+-+Place+a+descriptive+title+here) in the GitHub repository's issue tracker. Be sure to include detailed steps to reproduce the issue and any relevant context or screenshots.

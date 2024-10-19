@@ -124,7 +124,7 @@ $TopLevelMGPrefix = "alz"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'alz-vwanConnectivityDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-vwanConnectivityDeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ResourceGroupName     = "rg-$TopLevelMGPrefix-vwan-001"
   TemplateFile          = "infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
   TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.all.json"
@@ -150,7 +150,7 @@ $TopLevelMGPrefix = "alz"
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName        = 'alz-vwanConnectivityDeploy-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-vwanConnectivityDeploy-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ResourceGroupName     = "rg-$TopLevelMGPrefix-vwan-001"
   TemplateFile          = "infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep"
   TemplateParameterFile = "infra-as-code/bicep/modules/vwanConnectivity/parameters/mc-vwanConnectivity.parameters.all.json"
@@ -176,3 +176,52 @@ New-AzResourceGroupDeployment @inputObject
 ## Bicep Visualizer
 
 ![Bicep Visualizer](media/bicepVisualizer.png "Bicep Visualizer")
+
+## Multi-region deployment
+
+To extend your infrastructure to [additional regions](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/considerations/regions), this module can be used to deploy additional virtual hubs in multiple regions. This is achieved by adding multiple entries for the `parVirtualWanHubs` parameter for each region a virtual hub should be deployed.
+
+Example:
+
+```bicep
+parVirtualWanHubs: [
+    {
+        parVpnGatewayEnabled: true
+        parExpressRouteGatewayEnabled: true
+        parAzFirewallEnabled: true
+        parVirtualHubAddressPrefix: '10.100.0.0/23'
+        parHubLocation: 'eastus2'
+        parHubRoutingPreference: 'ExpressRoute'
+        parVirtualRouterAutoScaleConfiguration: 2
+        parVirtualHubRoutingIntentDestinations: []
+        parAzFirewallDnsProxyEnabled: true
+        parAzFirewallDnsServers: []
+        parAzFirewallIntelMode: 'Alert'
+        parAzFirewallTier: 'Standard'
+        parAzFirewallAvailabilityZones: [
+            '1'
+            '2'
+            '3'
+        ]
+    },
+    {
+        parVpnGatewayEnabled: true
+        parExpressRouteGatewayEnabled: true
+        parAzFirewallEnabled: true
+        parVirtualHubAddressPrefix: '10.90.0.0/23'
+        parHubLocation: 'centralus'
+        parHubRoutingPreference: 'ExpressRoute'
+        parVirtualRouterAutoScaleConfiguration: 2
+        parVirtualHubRoutingIntentDestinations: []
+        parAzFirewallDnsProxyEnabled: true
+        parAzFirewallDnsServers: []
+        parAzFirewallIntelMode: 'Alert'
+        parAzFirewallTier: 'Standard'
+        parAzFirewallAvailabilityZones: [
+            '1'
+            '2'
+            '3'
+        ]
+    }
+]
+```
