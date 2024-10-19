@@ -1,0 +1,30 @@
+{
+  "Audit-BotService-Private-Link": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('botServicePrivateLink')]"
+      }
+    }
+  },
+  "Deny-BotService-Isolated-Mode": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('botServiceIsolatedMode')]"
+      }
+    }
+  },
+  "Deny-BotService-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('botServiceLocalAuth')]"
+      }
+    }
+  },
+  "Deny-BotService-Valid-Uri": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('botServiceValidUri')]"
+      }
+    }
+  }
+}
