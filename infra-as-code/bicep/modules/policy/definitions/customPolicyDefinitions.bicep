@@ -14,637 +14,637 @@ var varTargetManagementGroupResourceId = tenantResourceId('Microsoft.Management/
 // This variable contains a number of objects that load in the custom Azure Policy Defintions that are provided as part of the ESLZ/ALZ reference implementation - this is automatically created in the file 'infra-as-code\bicep\modules\policy\lib\policy_definitions\_policyDefinitionsBicepInput.txt' via a GitHub action, that runs on a daily schedule, and is then manually copied into this variable.
 var varCustomPolicyDefinitionsArray = [
   {
-    name: 'Append-AppService-httpsonly'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-AppService-httpsonly.json')
-  }
-  {
-    name: 'Append-AppService-latestTLS'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-AppService-latestTLS.json')
-  }
-  {
-    name: 'Append-KV-SoftDelete'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-KV-SoftDelete.json')
-  }
-  {
-    name: 'Append-Redis-disableNonSslPort'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-Redis-disableNonSslPort.json')
-  }
-  {
-    name: 'Append-Redis-sslEnforcement'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-Redis-sslEnforcement.json')
-  }
-  {
-    name: 'Audit-AzureHybridBenefit'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-AzureHybridBenefit.json')
-  }
-  {
-    name: 'Audit-Disks-UnusedResourcesCostOptimization'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-Disks-UnusedResourcesCostOptimization.json')
-  }
-  {
-    name: 'Audit-MachineLearning-PrivateEndpointId'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-MachineLearning-PrivateEndpointId.json')
-  }
-  {
-    name: 'Audit-PrivateLinkDnsZones'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-PrivateLinkDnsZones.json')
-  }
-  {
-    name: 'Audit-PublicIpAddresses-UnusedResourcesCostOptimization'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-PublicIpAddresses-UnusedResourcesCostOptimization.json')
-  }
-  {
-    name: 'Audit-ServerFarms-UnusedResourcesCostOptimization'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-ServerFarms-UnusedResourcesCostOptimization.json')
-  }
-  {
-    name: 'Deny-AA-child-resources'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AA-child-resources.json')
-  }
-  {
-    name: 'Deny-APIM-TLS'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-APIM-TLS.json')
-  }
-  {
-    name: 'Deny-AppGw-Without-Tls'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppGw-Without-Tls.json')
-  }
-  {
-    name: 'Deny-AppGW-Without-WAF'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppGW-Without-WAF.json')
-  }
-  {
-    name: 'Deny-AppService-without-BYOC'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppService-without-BYOC.json')
-  }
-  {
-    name: 'Deny-AppServiceApiApp-http'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppServiceApiApp-http.json')
-  }
-  {
-    name: 'Deny-AppServiceFunctionApp-http'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppServiceFunctionApp-http.json')
-  }
-  {
-    name: 'Deny-AppServiceWebApp-http'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppServiceWebApp-http.json')
-  }
-  {
-    name: 'Deny-AzFw-Without-Policy'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AzFw-Without-Policy.json')
-  }
-  {
-    name: 'Deny-CognitiveServices-NetworkAcls'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-CognitiveServices-NetworkAcls.json')
-  }
-  {
-    name: 'Deny-CognitiveServices-Resource-Kinds'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-CognitiveServices-Resource-Kinds.json')
-  }
-  {
-    name: 'Deny-CognitiveServices-RestrictOutboundNetworkAccess'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-CognitiveServices-RestrictOutboundNetworkAccess.json')
-  }
-  {
-    name: 'Deny-Databricks-NoPublicIp'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Databricks-NoPublicIp.json')
-  }
-  {
-    name: 'Deny-Databricks-Sku'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Databricks-Sku.json')
-  }
-  {
-    name: 'Deny-Databricks-VirtualNetwork'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Databricks-VirtualNetwork.json')
-  }
-  {
-    name: 'Deny-EH-minTLS'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-EH-minTLS.json')
-  }
-  {
-    name: 'Deny-EH-Premium-CMK'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-EH-Premium-CMK.json')
-  }
-  {
-    name: 'Deny-FileServices-InsecureAuth'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureAuth.json')
-  }
-  {
-    name: 'Deny-FileServices-InsecureKerberos'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureKerberos.json')
-  }
-  {
-    name: 'Deny-FileServices-InsecureSmbChannel'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureSmbChannel.json')
-  }
-  {
-    name: 'Deny-FileServices-InsecureSmbVersions'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureSmbVersions.json')
-  }
-  {
-    name: 'Deny-LogicApp-Public-Network'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-LogicApp-Public-Network.json')
-  }
-  {
-    name: 'Deny-LogicApps-Without-Https'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-LogicApps-Without-Https.json')
-  }
-  {
-    name: 'Deny-MachineLearning-Aks'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-Aks.json')
-  }
-  {
-    name: 'Deny-MachineLearning-Compute-SubnetId'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-Compute-SubnetId.json')
-  }
-  {
-    name: 'Deny-MachineLearning-Compute-VmSize'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-Compute-VmSize.json')
-  }
-  {
-    name: 'Deny-MachineLearning-ComputeCluster-RemoteLoginPortPublicAccess'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-ComputeCluster-RemoteLoginPortPublicAccess.json')
-  }
-  {
-    name: 'Deny-MachineLearning-ComputeCluster-Scale'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-ComputeCluster-Scale.json')
-  }
-  {
-    name: 'Deny-MachineLearning-HbiWorkspace'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-HbiWorkspace.json')
-  }
-  {
-    name: 'Deny-MachineLearning-PublicAccessWhenBehindVnet'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-PublicAccessWhenBehindVnet.json')
-  }
-  {
-    name: 'Deny-MachineLearning-PublicNetworkAccess'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-PublicNetworkAccess.json')
-  }
-  {
-    name: 'Deny-MgmtPorts-From-Internet'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MgmtPorts-From-Internet.json')
-  }
-  {
-    name: 'Deny-MySql-http'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MySql-http.json')
-  }
-  {
-    name: 'Deny-PostgreSql-http'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-PostgreSql-http.json')
-  }
-  {
-    name: 'Deny-Private-DNS-Zones'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Private-DNS-Zones.json')
-  }
-  {
-    name: 'Deny-PublicEndpoint-MariaDB'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-PublicEndpoint-MariaDB.json')
-  }
-  {
-    name: 'Deny-PublicIP'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-PublicIP.json')
-  }
-  {
-    name: 'Deny-RDP-From-Internet'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-RDP-From-Internet.json')
-  }
-  {
-    name: 'Deny-Redis-http'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Redis-http.json')
-  }
-  {
-    name: 'Deny-Service-Endpoints'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Service-Endpoints.json')
-  }
-  {
-    name: 'Deny-Sql-minTLS'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Sql-minTLS.json')
-  }
-  {
-    name: 'Deny-SqlMi-minTLS'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-SqlMi-minTLS.json')
-  }
-  {
-    name: 'Deny-Storage-ContainerDeleteRetentionPolicy'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-ContainerDeleteRetentionPolicy.json')
-  }
-  {
-    name: 'Deny-Storage-CopyScope'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-CopyScope.json')
-  }
-  {
-    name: 'Deny-Storage-CorsRules'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-CorsRules.json')
-  }
-  {
-    name: 'Deny-Storage-LocalUser'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-LocalUser.json')
-  }
-  {
-    name: 'Deny-Storage-minTLS'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-minTLS.json')
-  }
-  {
-    name: 'Deny-Storage-NetworkAclsBypass'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-NetworkAclsBypass.json')
-  }
-  {
-    name: 'Deny-Storage-NetworkAclsVirtualNetworkRules'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-NetworkAclsVirtualNetworkRules.json')
-  }
-  {
-    name: 'Deny-Storage-ResourceAccessRulesResourceId'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-ResourceAccessRulesResourceId.json')
-  }
-  {
-    name: 'Deny-Storage-ResourceAccessRulesTenantId'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-ResourceAccessRulesTenantId.json')
-  }
-  {
-    name: 'Deny-Storage-ServicesEncryption'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-ServicesEncryption.json')
-  }
-  {
-    name: 'Deny-Storage-SFTP'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-SFTP.json')
-  }
-  {
-    name: 'Deny-StorageAccount-CustomDomain'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-StorageAccount-CustomDomain.json')
-  }
-  {
-    name: 'Deny-Subnet-Without-Nsg'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Subnet-Without-Nsg.json')
-  }
-  {
-    name: 'Deny-Subnet-Without-Penp'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Subnet-Without-Penp.json')
-  }
-  {
-    name: 'Deny-Subnet-Without-Udr'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Subnet-Without-Udr.json')
-  }
-  {
-    name: 'Deny-UDR-With-Specific-NextHop'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-UDR-With-Specific-NextHop.json')
-  }
-  {
-    name: 'Deny-VNET-Peer-Cross-Sub'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-VNET-Peer-Cross-Sub.json')
-  }
-  {
-    name: 'Deny-VNET-Peering-To-Non-Approved-VNETs'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-VNET-Peering-To-Non-Approved-VNETs.json')
-  }
-  {
-    name: 'Deny-VNet-Peering'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-VNet-Peering.json')
-  }
-  {
-    name: 'DenyAction-ActivityLogs'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-ActivityLogs.json')
-  }
-  {
-    name: 'DenyAction-DeleteResources'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-DeleteResources.json')
-  }
-  {
-    name: 'DenyAction-DiagnosticLogs'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-DiagnosticLogs.json')
-  }
-  {
-    name: 'Deploy-ASC-SecurityContacts'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-ASC-SecurityContacts.json')
-  }
-  {
-    name: 'Deploy-Budget'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Budget.json')
-  }
-  {
-    name: 'Deploy-Custom-Route-Table'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Custom-Route-Table.json')
-  }
-  {
-    name: 'Deploy-DDoSProtection'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-DDoSProtection.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-AA'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-AA.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-ACI'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-ACI.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-ACR'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-ACR.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-AnalysisService'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-AnalysisService.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-ApiForFHIR'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-ApiForFHIR.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-APIMgmt'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-APIMgmt.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-ApplicationGateway'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-ApplicationGateway.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-AVDScalingPlans'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-AVDScalingPlans.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-Bastion'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-Bastion.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-CDNEndpoints'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-CDNEndpoints.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-CognitiveServices'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-CognitiveServices.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-CosmosDB'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-CosmosDB.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-Databricks'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-Databricks.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-DataExplorerCluster'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-DataExplorerCluster.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-DataFactory'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-DataFactory.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-DLAnalytics'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-DLAnalytics.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-EventGridSub'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-EventGridSub.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-EventGridSystemTopic'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-EventGridSystemTopic.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-EventGridTopic'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-EventGridTopic.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-ExpressRoute'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-ExpressRoute.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-Firewall'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-Firewall.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-FrontDoor'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-FrontDoor.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-Function'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-Function.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-HDInsight'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-HDInsight.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-iotHub'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-iotHub.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-LoadBalancer'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-LoadBalancer.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-LogAnalytics'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-LogAnalytics.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-LogicAppsISE'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-LogicAppsISE.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-MariaDB'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-MariaDB.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-MediaService'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-MediaService.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-MlWorkspace'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-MlWorkspace.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-MySQL'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-MySQL.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-NetworkSecurityGroups'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-NetworkSecurityGroups.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-NIC'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-NIC.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-PostgreSQL'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-PostgreSQL.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-PowerBIEmbedded'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-PowerBIEmbedded.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-RedisCache'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-RedisCache.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-Relay'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-Relay.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-SignalR'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-SignalR.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-SQLElasticPools'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-SQLElasticPools.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-SQLMI'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-SQLMI.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-TimeSeriesInsights'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-TimeSeriesInsights.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-TrafficManager'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-TrafficManager.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-VirtualNetwork'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-VirtualNetwork.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-VM'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-VM.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-VMSS'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-VMSS.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-VNetGW'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-VNetGW.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-VWanS2SVPNGW'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-VWanS2SVPNGW.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-WebServerFarm'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-WebServerFarm.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-Website'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-Website.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-WVDAppGroup'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-WVDAppGroup.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-WVDHostPools'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-WVDHostPools.json')
-  }
-  {
-    name: 'Deploy-Diagnostics-WVDWorkspace'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-WVDWorkspace.json')
-  }
-  {
-    name: 'Deploy-FirewallPolicy'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-FirewallPolicy.json')
-  }
-  {
-    name: 'Deploy-LogicApp-TLS'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-LogicApp-TLS.json')
-  }
-  {
-    name: 'Deploy-MDFC-Arc-SQL-DCR-Association'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-Arc-SQL-DCR-Association.json')
-  }
-  {
-    name: 'Deploy-MDFC-Arc-Sql-DefenderSQL-DCR'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-Arc-Sql-DefenderSQL-DCR.json')
-  }
-  {
-    name: 'Deploy-MDFC-SQL-AMA'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-SQL-AMA.json')
-  }
-  {
-    name: 'Deploy-MDFC-SQL-DefenderSQL-DCR'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-SQL-DefenderSQL-DCR.json')
-  }
-  {
-    name: 'Deploy-MDFC-SQL-DefenderSQL'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-SQL-DefenderSQL.json')
-  }
-  {
-    name: 'Deploy-MySQL-sslEnforcement'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MySQL-sslEnforcement.json')
-  }
-  {
-    name: 'Deploy-Nsg-FlowLogs-to-LA'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Nsg-FlowLogs-to-LA.json')
-  }
-  {
-    name: 'Deploy-Nsg-FlowLogs'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Nsg-FlowLogs.json')
-  }
-  {
-    name: 'Deploy-PostgreSQL-sslEnforcement'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-PostgreSQL-sslEnforcement.json')
-  }
-  {
-    name: 'Deploy-Private-DNS-Generic'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Private-DNS-Generic.json')
-  }
-  {
-    name: 'Deploy-Sql-AuditingSettings'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-AuditingSettings.json')
-  }
-  {
-    name: 'Deploy-SQL-minTLS'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-SQL-minTLS.json')
-  }
-  {
-    name: 'Deploy-Sql-SecurityAlertPolicies'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-SecurityAlertPolicies.json')
-  }
-  {
-    name: 'Deploy-Sql-Tde'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-Tde.json')
-  }
-  {
-    name: 'Deploy-Sql-vulnerabilityAssessments_20230706'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-vulnerabilityAssessments_20230706.json')
-  }
-  {
-    name: 'Deploy-Sql-vulnerabilityAssessments'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-vulnerabilityAssessments.json')
-  }
-  {
-    name: 'Deploy-SqlMi-minTLS'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-SqlMi-minTLS.json')
-  }
-  {
-    name: 'Deploy-Storage-sslEnforcement'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Storage-sslEnforcement.json')
-  }
-  {
-    name: 'Deploy-UserAssignedManagedIdentity-VMInsights'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-UserAssignedManagedIdentity-VMInsights.json')
-  }
-  {
-    name: 'Deploy-Vm-autoShutdown'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Vm-autoShutdown.json')
-  }
-  {
-    name: 'Deploy-VNET-HubSpoke'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-VNET-HubSpoke.json')
-  }
-  {
-    name: 'Deploy-Windows-DomainJoin'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Windows-DomainJoin.json')
-  }
-  {
-    name: 'Modify-NSG'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Modify-NSG.json')
-  }
-  {
-    name: 'Modify-UDR'
-    libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Modify-UDR.json')
-  }
+		name: 'Append-AppService-httpsonly'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-AppService-httpsonly.json')
+	}
+	{
+		name: 'Append-AppService-latestTLS'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-AppService-latestTLS.json')
+	}
+	{
+		name: 'Append-KV-SoftDelete'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-KV-SoftDelete.json')
+	}
+	{
+		name: 'Append-Redis-disableNonSslPort'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-Redis-disableNonSslPort.json')
+	}
+	{
+		name: 'Append-Redis-sslEnforcement'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Append-Redis-sslEnforcement.json')
+	}
+	{
+		name: 'Audit-AzureHybridBenefit'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-AzureHybridBenefit.json')
+	}
+	{
+		name: 'Audit-Disks-UnusedResourcesCostOptimization'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-Disks-UnusedResourcesCostOptimization.json')
+	}
+	{
+		name: 'Audit-MachineLearning-PrivateEndpointId'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-MachineLearning-PrivateEndpointId.json')
+	}
+	{
+		name: 'Audit-PrivateLinkDnsZones'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-PrivateLinkDnsZones.json')
+	}
+	{
+		name: 'Audit-PublicIpAddresses-UnusedResourcesCostOptimization'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-PublicIpAddresses-UnusedResourcesCostOptimization.json')
+	}
+	{
+		name: 'Audit-ServerFarms-UnusedResourcesCostOptimization'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-ServerFarms-UnusedResourcesCostOptimization.json')
+	}
+	{
+		name: 'Deny-AA-child-resources'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AA-child-resources.json')
+	}
+	{
+		name: 'Deny-APIM-TLS'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-APIM-TLS.json')
+	}
+	{
+		name: 'Deny-AppGw-Without-Tls'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppGw-Without-Tls.json')
+	}
+	{
+		name: 'Deny-AppGW-Without-WAF'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppGW-Without-WAF.json')
+	}
+	{
+		name: 'Deny-AppService-without-BYOC'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppService-without-BYOC.json')
+	}
+	{
+		name: 'Deny-AppServiceApiApp-http'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppServiceApiApp-http.json')
+	}
+	{
+		name: 'Deny-AppServiceFunctionApp-http'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppServiceFunctionApp-http.json')
+	}
+	{
+		name: 'Deny-AppServiceWebApp-http'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AppServiceWebApp-http.json')
+	}
+	{
+		name: 'Deny-AzFw-Without-Policy'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AzFw-Without-Policy.json')
+	}
+	{
+		name: 'Deny-CognitiveServices-NetworkAcls'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-CognitiveServices-NetworkAcls.json')
+	}
+	{
+		name: 'Deny-CognitiveServices-Resource-Kinds'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-CognitiveServices-Resource-Kinds.json')
+	}
+	{
+		name: 'Deny-CognitiveServices-RestrictOutboundNetworkAccess'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-CognitiveServices-RestrictOutboundNetworkAccess.json')
+	}
+	{
+		name: 'Deny-Databricks-NoPublicIp'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Databricks-NoPublicIp.json')
+	}
+	{
+		name: 'Deny-Databricks-Sku'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Databricks-Sku.json')
+	}
+	{
+		name: 'Deny-Databricks-VirtualNetwork'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Databricks-VirtualNetwork.json')
+	}
+	{
+		name: 'Deny-EH-minTLS'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-EH-minTLS.json')
+	}
+	{
+		name: 'Deny-EH-Premium-CMK'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-EH-Premium-CMK.json')
+	}
+	{
+		name: 'Deny-FileServices-InsecureAuth'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureAuth.json')
+	}
+	{
+		name: 'Deny-FileServices-InsecureKerberos'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureKerberos.json')
+	}
+	{
+		name: 'Deny-FileServices-InsecureSmbChannel'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureSmbChannel.json')
+	}
+	{
+		name: 'Deny-FileServices-InsecureSmbVersions'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-FileServices-InsecureSmbVersions.json')
+	}
+	{
+		name: 'Deny-LogicApp-Public-Network'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-LogicApp-Public-Network.json')
+	}
+	{
+		name: 'Deny-LogicApps-Without-Https'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-LogicApps-Without-Https.json')
+	}
+	{
+		name: 'Deny-MachineLearning-Aks'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-Aks.json')
+	}
+	{
+		name: 'Deny-MachineLearning-Compute-SubnetId'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-Compute-SubnetId.json')
+	}
+	{
+		name: 'Deny-MachineLearning-Compute-VmSize'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-Compute-VmSize.json')
+	}
+	{
+		name: 'Deny-MachineLearning-ComputeCluster-RemoteLoginPortPublicAccess'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-ComputeCluster-RemoteLoginPortPublicAccess.json')
+	}
+	{
+		name: 'Deny-MachineLearning-ComputeCluster-Scale'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-ComputeCluster-Scale.json')
+	}
+	{
+		name: 'Deny-MachineLearning-HbiWorkspace'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-HbiWorkspace.json')
+	}
+	{
+		name: 'Deny-MachineLearning-PublicAccessWhenBehindVnet'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-PublicAccessWhenBehindVnet.json')
+	}
+	{
+		name: 'Deny-MachineLearning-PublicNetworkAccess'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-PublicNetworkAccess.json')
+	}
+	{
+		name: 'Deny-MgmtPorts-From-Internet'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MgmtPorts-From-Internet.json')
+	}
+	{
+		name: 'Deny-MySql-http'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MySql-http.json')
+	}
+	{
+		name: 'Deny-PostgreSql-http'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-PostgreSql-http.json')
+	}
+	{
+		name: 'Deny-Private-DNS-Zones'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Private-DNS-Zones.json')
+	}
+	{
+		name: 'Deny-PublicEndpoint-MariaDB'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-PublicEndpoint-MariaDB.json')
+	}
+	{
+		name: 'Deny-PublicIP'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-PublicIP.json')
+	}
+	{
+		name: 'Deny-RDP-From-Internet'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-RDP-From-Internet.json')
+	}
+	{
+		name: 'Deny-Redis-http'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Redis-http.json')
+	}
+	{
+		name: 'Deny-Service-Endpoints'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Service-Endpoints.json')
+	}
+	{
+		name: 'Deny-Sql-minTLS'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Sql-minTLS.json')
+	}
+	{
+		name: 'Deny-SqlMi-minTLS'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-SqlMi-minTLS.json')
+	}
+	{
+		name: 'Deny-Storage-ContainerDeleteRetentionPolicy'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-ContainerDeleteRetentionPolicy.json')
+	}
+	{
+		name: 'Deny-Storage-CopyScope'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-CopyScope.json')
+	}
+	{
+		name: 'Deny-Storage-CorsRules'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-CorsRules.json')
+	}
+	{
+		name: 'Deny-Storage-LocalUser'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-LocalUser.json')
+	}
+	{
+		name: 'Deny-Storage-minTLS'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-minTLS.json')
+	}
+	{
+		name: 'Deny-Storage-NetworkAclsBypass'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-NetworkAclsBypass.json')
+	}
+	{
+		name: 'Deny-Storage-NetworkAclsVirtualNetworkRules'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-NetworkAclsVirtualNetworkRules.json')
+	}
+	{
+		name: 'Deny-Storage-ResourceAccessRulesResourceId'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-ResourceAccessRulesResourceId.json')
+	}
+	{
+		name: 'Deny-Storage-ResourceAccessRulesTenantId'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-ResourceAccessRulesTenantId.json')
+	}
+	{
+		name: 'Deny-Storage-ServicesEncryption'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-ServicesEncryption.json')
+	}
+	{
+		name: 'Deny-Storage-SFTP'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-SFTP.json')
+	}
+	{
+		name: 'Deny-StorageAccount-CustomDomain'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-StorageAccount-CustomDomain.json')
+	}
+	{
+		name: 'Deny-Subnet-Without-Nsg'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Subnet-Without-Nsg.json')
+	}
+	{
+		name: 'Deny-Subnet-Without-Penp'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Subnet-Without-Penp.json')
+	}
+	{
+		name: 'Deny-Subnet-Without-Udr'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Subnet-Without-Udr.json')
+	}
+	{
+		name: 'Deny-UDR-With-Specific-NextHop'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-UDR-With-Specific-NextHop.json')
+	}
+	{
+		name: 'Deny-VNET-Peer-Cross-Sub'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-VNET-Peer-Cross-Sub.json')
+	}
+	{
+		name: 'Deny-VNET-Peering-To-Non-Approved-VNETs'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-VNET-Peering-To-Non-Approved-VNETs.json')
+	}
+	{
+		name: 'Deny-VNet-Peering'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-VNet-Peering.json')
+	}
+	{
+		name: 'DenyAction-ActivityLogs'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-ActivityLogs.json')
+	}
+	{
+		name: 'DenyAction-DeleteResources'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-DeleteResources.json')
+	}
+	{
+		name: 'DenyAction-DiagnosticLogs'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_DenyAction-DiagnosticLogs.json')
+	}
+	{
+		name: 'Deploy-ASC-SecurityContacts'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-ASC-SecurityContacts.json')
+	}
+	{
+		name: 'Deploy-Budget'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Budget.json')
+	}
+	{
+		name: 'Deploy-Custom-Route-Table'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Custom-Route-Table.json')
+	}
+	{
+		name: 'Deploy-DDoSProtection'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-DDoSProtection.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-AA'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-AA.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-ACI'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-ACI.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-ACR'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-ACR.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-AnalysisService'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-AnalysisService.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-ApiForFHIR'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-ApiForFHIR.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-APIMgmt'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-APIMgmt.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-ApplicationGateway'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-ApplicationGateway.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-AVDScalingPlans'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-AVDScalingPlans.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-Bastion'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-Bastion.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-CDNEndpoints'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-CDNEndpoints.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-CognitiveServices'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-CognitiveServices.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-CosmosDB'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-CosmosDB.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-Databricks'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-Databricks.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-DataExplorerCluster'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-DataExplorerCluster.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-DataFactory'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-DataFactory.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-DLAnalytics'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-DLAnalytics.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-EventGridSub'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-EventGridSub.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-EventGridSystemTopic'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-EventGridSystemTopic.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-EventGridTopic'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-EventGridTopic.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-ExpressRoute'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-ExpressRoute.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-Firewall'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-Firewall.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-FrontDoor'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-FrontDoor.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-Function'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-Function.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-HDInsight'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-HDInsight.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-iotHub'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-iotHub.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-LoadBalancer'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-LoadBalancer.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-LogAnalytics'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-LogAnalytics.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-LogicAppsISE'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-LogicAppsISE.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-MariaDB'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-MariaDB.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-MediaService'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-MediaService.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-MlWorkspace'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-MlWorkspace.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-MySQL'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-MySQL.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-NetworkSecurityGroups'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-NetworkSecurityGroups.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-NIC'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-NIC.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-PostgreSQL'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-PostgreSQL.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-PowerBIEmbedded'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-PowerBIEmbedded.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-RedisCache'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-RedisCache.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-Relay'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-Relay.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-SignalR'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-SignalR.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-SQLElasticPools'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-SQLElasticPools.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-SQLMI'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-SQLMI.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-TimeSeriesInsights'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-TimeSeriesInsights.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-TrafficManager'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-TrafficManager.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-VirtualNetwork'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-VirtualNetwork.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-VM'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-VM.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-VMSS'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-VMSS.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-VNetGW'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-VNetGW.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-VWanS2SVPNGW'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-VWanS2SVPNGW.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-WebServerFarm'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-WebServerFarm.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-Website'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-Website.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-WVDAppGroup'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-WVDAppGroup.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-WVDHostPools'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-WVDHostPools.json')
+	}
+	{
+		name: 'Deploy-Diagnostics-WVDWorkspace'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Diagnostics-WVDWorkspace.json')
+	}
+	{
+		name: 'Deploy-FirewallPolicy'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-FirewallPolicy.json')
+	}
+	{
+		name: 'Deploy-LogicApp-TLS'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-LogicApp-TLS.json')
+	}
+	{
+		name: 'Deploy-MDFC-Arc-SQL-DCR-Association'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-Arc-SQL-DCR-Association.json')
+	}
+	{
+		name: 'Deploy-MDFC-Arc-Sql-DefenderSQL-DCR'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-Arc-Sql-DefenderSQL-DCR.json')
+	}
+	{
+		name: 'Deploy-MDFC-SQL-AMA'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-SQL-AMA.json')
+	}
+	{
+		name: 'Deploy-MDFC-SQL-DefenderSQL-DCR'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-SQL-DefenderSQL-DCR.json')
+	}
+	{
+		name: 'Deploy-MDFC-SQL-DefenderSQL'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-SQL-DefenderSQL.json')
+	}
+	{
+		name: 'Deploy-MySQL-sslEnforcement'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MySQL-sslEnforcement.json')
+	}
+	{
+		name: 'Deploy-Nsg-FlowLogs-to-LA'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Nsg-FlowLogs-to-LA.json')
+	}
+	{
+		name: 'Deploy-Nsg-FlowLogs'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Nsg-FlowLogs.json')
+	}
+	{
+		name: 'Deploy-PostgreSQL-sslEnforcement'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-PostgreSQL-sslEnforcement.json')
+	}
+	{
+		name: 'Deploy-Private-DNS-Generic'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Private-DNS-Generic.json')
+	}
+	{
+		name: 'Deploy-Sql-AuditingSettings'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-AuditingSettings.json')
+	}
+	{
+		name: 'Deploy-SQL-minTLS'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-SQL-minTLS.json')
+	}
+	{
+		name: 'Deploy-Sql-SecurityAlertPolicies'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-SecurityAlertPolicies.json')
+	}
+	{
+		name: 'Deploy-Sql-Tde'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-Tde.json')
+	}
+	{
+		name: 'Deploy-Sql-vulnerabilityAssessments_20230706'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-vulnerabilityAssessments_20230706.json')
+	}
+	{
+		name: 'Deploy-Sql-vulnerabilityAssessments'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Sql-vulnerabilityAssessments.json')
+	}
+	{
+		name: 'Deploy-SqlMi-minTLS'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-SqlMi-minTLS.json')
+	}
+	{
+		name: 'Deploy-Storage-sslEnforcement'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Storage-sslEnforcement.json')
+	}
+	{
+		name: 'Deploy-UserAssignedManagedIdentity-VMInsights'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-UserAssignedManagedIdentity-VMInsights.json')
+	}
+	{
+		name: 'Deploy-Vm-autoShutdown'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Vm-autoShutdown.json')
+	}
+	{
+		name: 'Deploy-VNET-HubSpoke'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-VNET-HubSpoke.json')
+	}
+	{
+		name: 'Deploy-Windows-DomainJoin'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Windows-DomainJoin.json')
+	}
+	{
+		name: 'Modify-NSG'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Modify-NSG.json')
+	}
+	{
+		name: 'Modify-UDR'
+		libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Modify-UDR.json')
+	}
 ]
 
 // This variable contains a number of objects that load in the custom Azure Policy Set/Initiative Defintions that are provided as part of the ESLZ/ALZ reference implementation - this is automatically created in the file 'infra-as-code\bicep\modules\policy\lib\policy_set_definitions\_policySetDefinitionsBicepInput.txt' via a GitHub action, that runs on a daily schedule, and is then manually copied into this variable.
@@ -1489,7 +1489,7 @@ var varCustomPolicySetDefinitionsArray = [
 			}
 			{
 				definitionReferenceId: 'defenderForCspm'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/689f7782-ef2c-4270-a6d0-7664869076bd'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/72f8cee7-2937-403d-84a1-a4e3e57f3c21'
 				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfig_20240319Parameters.defenderForCspm.parameters
 				definitionGroups: []
 			}
@@ -2322,6 +2322,12 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 			}
 			{
+				definitionReferenceId: 'Deny-BotService-Cmk'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/51522a96-0869-4791-82f3-981000c2c67f'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptionCMKParameters['Deny-BotService-Cmk'].parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'Deny-CognitiveSearch-Cmk'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/76a56461-9dc0-40f0-82f5-2453283afa2f'
 				definitionParameters: varPolicySetDefinitionEsEnforceEncryptionCMKParameters['Deny-CognitiveSearch-Cmk'].parameters
@@ -3044,9 +3050,57 @@ var varCustomPolicySetDefinitionsArray = [
 		]
 	}
 	{
+		name: 'Enforce-Guardrails-BotService'
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-BotService.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'Audit-BotService-Private-Link'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/ad5621d6-a877-4407-aa93-a950b428315e'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsBotServiceParameters['Audit-BotService-Private-Link'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-BotService-Isolated-Mode'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/52152f42-0dda-40d9-976e-abb1acdd611e'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsBotServiceParameters['Deny-BotService-Isolated-Mode'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-BotService-Local-Auth'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/ffea632e-4e3a-4424-bf78-10e179bb2e1a'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsBotServiceParameters['Deny-BotService-Local-Auth'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-BotService-Valid-Uri'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/6164527b-e1ee-4882-8673-572f425f5e0a'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsBotServiceParameters['Deny-BotService-Valid-Uri'].parameters
+				definitionGroups: []
+			}
+		]
+	}
+	{
 		name: 'Enforce-Guardrails-CognitiveServices'
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-CognitiveServices.json')
 		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'Aine-Cognitive-Services-Resource-Logs'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b4330a05-a843-4bc8-bf9a-cacce50c67f4'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsCognitiveServicesParameters['Aine-Cognitive-Services-Resource-Logs'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-Cognitive-Services-Customer-Storage'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/46aa9b05-0e60-4eae-a88b-1e9d374fa515'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsCognitiveServicesParameters['Deny-Cognitive-Services-Customer-Storage'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-Cognitive-Services-Managed-Identity'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/fe3fd216-4f83-4fc1-8984-2bbec80a3418'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsCognitiveServicesParameters['Deny-Cognitive-Services-Managed-Identity'].parameters
+				definitionGroups: []
+			}
 			{
 				definitionReferenceId: 'Deny-CognitiveSearch-SKU'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a049bf77-880b-470f-ba6d-9f21c530cf83'
@@ -3057,6 +3111,12 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'Deny-CongitiveSearch-LocalAuth'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/6300012e-e9a4-4649-b41f-a85f5c43be91'
 				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsCognitiveServicesParameters['Deny-CongitiveSearch-LocalAuth'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Modify-Cognitive-Services-Local-Auth'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/14de9e63-1b31-492e-a5a3-c3f7fd57f555'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsCognitiveServicesParameters['Modify-Cognitive-Services-Local-Auth'].parameters
 				definitionGroups: []
 			}
 			{
@@ -3702,6 +3762,60 @@ var varCustomPolicySetDefinitionsArray = [
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-MachineLearning.json')
 		libSetChildDefinitions: [
 			{
+				definitionReferenceId: 'Aine-ML-Resource-Logs'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/afe0c3be-ba3b-4544-ba52-0c99672a8ad6'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Aine-ML-Resource-Logs'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Audit-ML-Private-Link'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/45e05259-1eb5-4f70-9574-baf73e9d219b'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Audit-ML-Private-Link'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Audit-ML-Virtual-Network'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/7804b5c7-01dc-4723-969b-ae300cc07ff1'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Audit-ML-Virtual-Network'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-ML-Allowed-Module'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/53c70b02-63dd-11ea-bc55-0242ac130003'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Allowed-Module'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-ML-Allowed-Python'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/77eeea86-7e81-4a7d-9067-de844d096752'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Allowed-Python'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-ML-Allowed-Registries'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/5853517a-63de-11ea-bc55-0242ac130003'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Allowed-Registries'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-ML-Allowed-Registry-Deploy'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/19539b54-c61e-4196-9a38-67598701be90'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Allowed-Registry-Deploy'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-ML-Idle-Shutdown'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/679ddf89-ab8f-48a5-9029-e76054077449'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Idle-Shutdown'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-ML-Legacy-Mode'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e413671a-dd10-4cc1-a943-45b598596cb7'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Legacy-Mode'].parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'Deny-ML-Local-Auth'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e96a9a5f-07ca-471b-9bc5-6a0f33cbd68f'
 				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters['Deny-ML-Local-Auth'].parameters
@@ -3894,6 +4008,24 @@ var varCustomPolicySetDefinitionsArray = [
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-OpenAI.json')
 		libSetChildDefinitions: [
 			{
+				definitionReferenceId: 'Aine-AzureAI-Diag-Settings'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1b4d1c4e-934c-4703-944c-27c82c06bebb'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Aine-AzureAI-Diag-Settings'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Audit-AzureAI-Private-Link'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/d6759c02-b87f-42b7-892e-71b3f471d782'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Audit-AzureAI-Private-Link'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-AzureAI-Network-Access'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/037eea7a-bd0a-46c5-9a66-03aea78705d3'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Deny-AzureAI-Network-Access'].parameters
+				definitionGroups: []
+			}
+			{
 				definitionReferenceId: 'Deny-Cognitive-Services-Cust-Storage'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/46aa9b05-0e60-4eae-a88b-1e9d374fa515'
 				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Deny-Cognitive-Services-Cust-Storage'].parameters
@@ -3921,6 +4053,18 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'Deny-OpenAi-OutboundNetworkAccess'
 				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-CognitiveServices-RestrictOutboundNetworkAccess'
 				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Deny-OpenAi-OutboundNetworkAccess'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Dine-AzureAI-Local-Key'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/d45520cb-31ca-44ba-8da2-fcf914608544'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Dine-AzureAI-Local-Key'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Dine-AzureAI-Local-Key2'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/55eff01b-f2bd-4c32-9203-db285f709d30'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters['Dine-AzureAI-Local-Key2'].parameters
 				definitionGroups: []
 			}
 			{
@@ -4274,6 +4418,8 @@ var varPolicySetDefinitionEsEnforceGuardrailsAppServicesParameters = loadJsonCon
 
 var varPolicySetDefinitionEsEnforceGuardrailsAutomationParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Automation.parameters.json')
 
+var varPolicySetDefinitionEsEnforceGuardrailsBotServiceParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-BotService.parameters.json')
+
 var varPolicySetDefinitionEsEnforceGuardrailsCognitiveServicesParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-CognitiveServices.parameters.json')
 
 var varPolicySetDefinitionEsEnforceGuardrailsComputeParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Compute.parameters.json')
@@ -4319,6 +4465,7 @@ var varPolicySetDefinitionEsEnforceGuardrailsStorageParameters = loadJsonContent
 var varPolicySetDefinitionEsEnforceGuardrailsSynapseParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Synapse.parameters.json')
 
 var varPolicySetDefinitionEsEnforceGuardrailsVirtualDesktopParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-VirtualDesktop.parameters.json')
+
 
 // Customer Usage Attribution Id
 var varCuaid = '2b136786-9881-412e-84ba-f4c2822e1ac9'
