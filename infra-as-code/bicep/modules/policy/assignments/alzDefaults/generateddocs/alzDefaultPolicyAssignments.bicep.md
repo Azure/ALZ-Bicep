@@ -102,6 +102,14 @@ Location of Log Analytics Workspace & Automation Account.
 
 Resource ID of Log Analytics Workspace.
 
+### parLogAnalyticsWorkspaceResourceCategory
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Category of logs for supported resource logging for Log Analytics Workspace.
+
+- Default value: `allLogs`
+
 ### parDataCollectionRuleVMInsightsResourceId
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -265,6 +273,9 @@ Opt out of deployment telemetry.
         },
         "parLogAnalyticsWorkspaceResourceId": {
             "value": ""
+        },
+        "parLogAnalyticsWorkspaceResourceCategory": {
+            "value": "allLogs"
         },
         "parDataCollectionRuleVMInsightsResourceId": {
             "value": ""
