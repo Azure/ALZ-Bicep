@@ -65,6 +65,9 @@ param parLogAnalyticsWorkSpaceAndAutomationAccountLocation string = 'eastus'
 @description('Resource ID of Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceResourceId string = ''
 
+@sys.description('Category of logs for supported resource logging for Log Analytics Workspace.')
+param parLogAnalyticsWorkspaceResourceCategory string = 'allLogs'
+
 @description('Resource ID for VM Insights Data Collection Rule.')
 param parDataCollectionRuleVMInsightsResourceId string = ''
 
@@ -380,6 +383,7 @@ var varPolicyAssignmentDeployPrivateDNSZones = {
 
 var varPolicyAssignmentDeployResourceDiag = {
   definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/0884adba-2312-4468-abeb-5422caed1038'
+  conditionalDefinitionId: '/providers/Microsoft.Authorization/policySetDefinitions/f5b29bc4-feca-4cc6-a58a-772dd5e290a5'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_resource_diag.tmpl.json')
 }
 
@@ -740,7 +744,7 @@ module modPolicyAssignmentIntRootDeployResourceDiag '../../../policy/assignments
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployResourceDiag
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployResourceDiag.definitionId
+    parPolicyAssignmentDefinitionId: parLogAnalyticsWorkspaceResourceCategory =~ 'allLogs' ? varPolicyAssignmentDeployResourceDiag.definitionId : varPolicyAssignmentDeployResourceDiag.conditionalDefinitionId
     parPolicyAssignmentName: varPolicyAssignmentDeployResourceDiag.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployResourceDiag.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployResourceDiag.libDefinition.properties.description
