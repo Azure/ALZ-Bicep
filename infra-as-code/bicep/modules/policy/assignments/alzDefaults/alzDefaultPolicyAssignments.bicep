@@ -65,6 +65,9 @@ param parLogAnalyticsWorkSpaceAndAutomationAccountLocation string = 'eastus'
 @description('Resource ID of Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceResourceId string = ''
 
+@sys.description('Category of logs for supported resource logging for Log Analytics Workspace.')
+param parLogAnalyticsWorkspaceResourceCategory string = 'allLogs'
+
 @description('Resource ID for VM Insights Data Collection Rule.')
 param parDataCollectionRuleVMInsightsResourceId string = ''
 
@@ -164,6 +167,7 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentPlatformDeployVmssMonitor: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVmssMonitor-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformDeployMdfcDefSqlAma: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyDeleteUamiAma-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformDenyDeleteUAMIAMA: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deny-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentPlatformEnforceSubnetPrivate: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceSubnetPrivate-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformEnforceGrKeyVault: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceGrKeyVault-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformEnforceAsr: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployEnforceBackup-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentPlatformEnforceAumCheckUpdates: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployEnforceAumCheckUpdates-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -179,7 +183,6 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentLzsDeployVmBackup: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVMBackup-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsEnableDdosVnet: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enableDDoSVNET-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDenyStorageHttp: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyStorageHttp-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolicyAssignmentLzsDeployAksPolicy: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployAKSPolicy-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDenyPrivEscalationAks: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPrivEscAKS-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDenyPrivContainersAks: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPrivConAKS-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsEnforceAksHttps: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceAKSHTTPS-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -195,6 +198,7 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentLzsDeployVmMonitor: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVmMonitor-Lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDeployVmssMonitor: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVmssMonitor-Lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsDeployMdfcDefSqlAma: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployMdfcDefSqlAma-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolicyAssignmentLzsEnforceSubnetPrivate: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceSubnetPrivate-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsEnforceGrKeyVault: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceGrKeyVault-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsEnforceAsr: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployEnforceBackup-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLzsAumCheckUpdates: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployEnforceAumCheckUpdates-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -327,11 +331,6 @@ var varPolicyAssignmentDenyUnmanagedDisk = {
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_unmanageddisk.tmpl.json')
 }
 
-var varPolicyAssignmentDeployAKSPolicy = {
-  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a8eff44f-8c92-45c3-a3fb-9880802d67a7'
-  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_aks_policy.tmpl.json')
-}
-
 var varPolicyAssignmentDeployASCMonitoring = {
   definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_asc_monitoring.tmpl.json')
@@ -384,6 +383,7 @@ var varPolicyAssignmentDeployPrivateDNSZones = {
 
 var varPolicyAssignmentDeployResourceDiag = {
   definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/0884adba-2312-4468-abeb-5422caed1038'
+  conditionalDefinitionId: '/providers/Microsoft.Authorization/policySetDefinitions/f5b29bc4-feca-4cc6-a58a-772dd5e290a5'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_resource_diag.tmpl.json')
 }
 
@@ -422,12 +422,12 @@ var varPolicyAssignmentDeployvmHybrMonitoring = {
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vm_arc_monitor.tmpl.json')
 }
 
-var varPolicyAssignmentDeployVMMonitoring = {
+var varPolicyAssignmentDeployVMMonitor24 = {
   definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/924bfe3a-762f-40e7-86dd-5c8b95eb09e6'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vm_monitor.tmpl.json')
 }
 
-var varPolicyAssignmentDeployVMSSMonitoring = {
+var varPolicyAssignmentDeployVMSSMonitor24 = {
   definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/f5bf694c-cca7-4033-b883-3a23327d5485'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_vmss_monitor.tmpl.json')
 }
@@ -445,6 +445,11 @@ var varPolicyAssignmentDenyActionDeleteUAMIAMA = {
 var varPolicyAssignmentEnableDDoSVNET = {
   definitionId: '/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enable_ddos_vnet.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceSubnetPrivate = {
+  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/7bca8353-aa3b-429b-904a-9229c4385837'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_subnet_private.tmpl.json')
 }
 
 var varPolicyAssignmentEnforceACSB = {
@@ -739,7 +744,7 @@ module modPolicyAssignmentIntRootDeployResourceDiag '../../../policy/assignments
   scope: managementGroup(varManagementGroupIds.intRoot)
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployResourceDiag
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployResourceDiag.definitionId
+    parPolicyAssignmentDefinitionId: parLogAnalyticsWorkspaceResourceCategory =~ 'allLogs' ? varPolicyAssignmentDeployResourceDiag.definitionId : varPolicyAssignmentDeployResourceDiag.conditionalDefinitionId
     parPolicyAssignmentName: varPolicyAssignmentDeployResourceDiag.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployResourceDiag.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployResourceDiag.libDefinition.properties.description
@@ -1030,17 +1035,17 @@ module modPolicyAssignmentPlatformDeployVmArcMonitor '../../../policy/assignment
 }
 
 // Module - Policy Assignment - Deploy-VM-Monitor-24
-module modPolicyAssignmentPlatformDeployVmMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMMonitoring.libDefinition.name)) {
+module modPolicyAssignmentPlatformDeployVmMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMMonitor24.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.platform)
   name: varModuleDeploymentNames.modPolicyAssignmentPlatformDeployVmMonitor
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMMonitoring.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployVMMonitoring.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMMonitoring.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMMonitor24.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeployVMMonitor24.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMMonitor24.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.enforcementMode
     parPolicyAssignmentParameterOverrides: {
       dcrResourceId: {
         value: parDataCollectionRuleVMInsightsResourceId
@@ -1115,17 +1120,17 @@ module modPolicyAssignmentPlatformDenyDeleteUAMIAMA '../../../policy/assignments
 }
 
 // Module - Policy Assignment - Deploy-VMSS-Monitor-24
-module modPolicyAssignmentPlatformDeployVmssMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMSSMonitoring.libDefinition.name)) {
+module modPolicyAssignmentPlatformDeployVmssMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMSSMonitor24.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.platform)
   name: varModuleDeploymentNames.modPolicyAssignmentPlatformDeployVmssMonitor
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMSSMonitoring.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMSSMonitor24.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.enforcementMode
     parPolicyAssignmentParameterOverrides: {
       dcrResourceId: {
         value: parDataCollectionRuleChangeTrackingResourceId
@@ -1141,6 +1146,21 @@ module modPolicyAssignmentPlatformDeployVmssMonitor '../../../policy/assignments
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
     ]
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+// Module - Policy Assignment - Enforce-Subnet-Private
+module modPolicyAssignmentPlatformEnforceSubnetPrivate '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSubnetPrivate.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModuleDeploymentNames.modPolicyAssignmentPlatformEnforceSubnetPrivate
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSubnetPrivate.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1459,26 +1479,6 @@ module modPolicyAssignmentLzsDenyStorageHttp '../../../policy/assignments/policy
   }
 }
 
-// Module - Policy Assignment - Deploy-AKS-Policy
-module modPolicyAssignmentLzsDeployAksPolicy '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployAKSPolicy.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
-  name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployAksPolicy
-  params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployAKSPolicy.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployAKSPolicy.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployAKSPolicy.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.enforcementMode
-    parPolicyAssignmentIdentityRoleDefinitionIds: [
-      varRbacRoleDefinitionIds.aksContributor
-      varRbacRoleDefinitionIds.aksPolicyAddon
-    ]
-    parTelemetryOptOut: parTelemetryOptOut
-  }
-}
-
 // Module - Policy Assignment - Deny-Priv-Escalation-AKS
 module modPolicyAssignmentLzsDenyPrivEscalationAks '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
@@ -1725,17 +1725,17 @@ module modPolicyAssignmentLzsDeployVmArcMonitor '../../../policy/assignments/pol
 }
 
 // Module - Policy Assignment - Deploy-VM-Monitor-24
-module modPolicyAssignmentLzsDeployVmMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMMonitoring.libDefinition.name)) {
+module modPolicyAssignmentLzsDeployVmMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMMonitor24.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployVmMonitor
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMMonitoring.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployVMMonitoring.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMMonitoring.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMMonitoring.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMMonitor24.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeployVMMonitor24.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMMonitor24.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.enforcementMode
     parPolicyAssignmentParameterOverrides: {
       dcrResourceId: {
         value: parDataCollectionRuleVMInsightsResourceId
@@ -1756,17 +1756,17 @@ module modPolicyAssignmentLzsDeployVmMonitor '../../../policy/assignments/policy
 }
 
 // Module - Policy Assignment - Deploy-VMSS-Monitor-24
-module modPolicyAssignmentLzsDeployVmssMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMSSMonitoring.libDefinition.name)) {
+module modPolicyAssignmentLzsDeployVmssMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMSSMonitor24.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployVmssMonitor
   params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMSSMonitoring.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMSSMonitoring.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMSSMonitoring.libDefinition.properties.enforcementMode
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMSSMonitor24.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.enforcementMode
     parPolicyAssignmentParameterOverrides: {
       dcrResourceId: {
         value: parDataCollectionRuleChangeTrackingResourceId
@@ -1813,6 +1813,22 @@ module modPolicyAssignmentLzsmDeployMdfcDefSqlAma '../../../policy/assignments/p
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
     ]
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-Subnet-Private
+module modPolicyAssignmentLzsEnforceSubnetPrivate '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSubnetPrivate.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModuleDeploymentNames.modPolicyAssignmentLzsEnforceSubnetPrivate
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSubnetPrivate.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }

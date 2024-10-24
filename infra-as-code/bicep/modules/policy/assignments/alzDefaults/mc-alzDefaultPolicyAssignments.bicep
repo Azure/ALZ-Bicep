@@ -68,7 +68,6 @@ var varModuleDeploymentNames = {
   modPolicyAssignmentLZsDeployVMBackup: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployVMBackup-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLZsEnableDDoSVNET: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enableDDoSVNET-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLZsDenyStorageHttp: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyStorageHttp-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolicyAssignmentLZsDeployAKSPolicy: take('${varDeploymentNameWrappers.basePrefix}-polAssi-deployAKSPolicy-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLZsDenyPrivEscalationAKS: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPrivEscAKS-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLZsDenyPrivContainersAKS: take('${varDeploymentNameWrappers.basePrefix}-polAssi-denyPrivConAKS-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolicyAssignmentLZsEnforceAKSHTTPS: take('${varDeploymentNameWrappers.basePrefix}-polAssi-enforceAKSHTTPS-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -127,11 +126,6 @@ var varPolicyAssignmentDenyStoragehttp = {
 var varPolicyAssignmentDenySubnetWithoutNsg = {
   definitionId: '${varTopLevelManagementGroupResourceID}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg'
   libDefinition: loadJsonContent(('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_subnet_without_nsg.tmpl.json'))
-}
-
-var varPolicyAssignmentDeployAKSPolicy = {
-  definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a8eff44f-8c92-45c3-a3fb-9880802d67a7'
-  libDefinition: loadJsonContent(('../../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_aks_policy.tmpl.json'))
 }
 
 var varPolicyAssignmentDeployASCMonitoring = {
@@ -581,25 +575,6 @@ module modPolicyAssignmentLZsDenyStorageHttp '../../../policy/assignments/policy
     parPolicyAssignmentParameters: varPolicyAssignmentDenyStoragehttp.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyStoragehttp.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDenyStoragehttp.libDefinition.properties.enforcementMode
-    parTelemetryOptOut: parTelemetryOptOut
-  }
-}
-
-// Module - Policy Assignment - Deploy-AKS-Policy
-module modPolicyAssignmentLZsDeployAKSPolicy '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = {
-  scope: managementGroup(varManagementGroupIDs.landingZones)
-  name: varModuleDeploymentNames.modPolicyAssignmentLZsDeployAKSPolicy
-  params: {
-    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployAKSPolicy.definitionId
-    parPolicyAssignmentName: varPolicyAssignmentDeployAKSPolicy.libDefinition.name
-    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.displayName
-    parPolicyAssignmentDescription: varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.description
-    parPolicyAssignmentParameters: varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.parameters
-    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployAKSPolicy.libDefinition.identity.type
-    parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployAKSPolicy.libDefinition.properties.enforcementMode
-    parPolicyAssignmentIdentityRoleDefinitionIds: [
-      varRBACRoleDefinitionIDs.aksContributor
-    ]
     parTelemetryOptOut: parTelemetryOptOut
   }
 }

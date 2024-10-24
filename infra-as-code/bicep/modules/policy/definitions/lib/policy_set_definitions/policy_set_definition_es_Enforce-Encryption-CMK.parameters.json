@@ -69,6 +69,13 @@
       }
     }
   },
+  "Deny-BotService-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('botServiceCmk')]"
+      }
+    }
+  },
   "Deny-CognitiveSearch-Cmk": {
     "parameters": {
       "effect": {

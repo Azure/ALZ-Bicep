@@ -4,7 +4,7 @@
       "effect": {
         "value": "[[parameters('effect')]"
       },
-      "CheckLockedImmutabiltyOnly": {
+      "checkLockedImmutabiltyOnly": {
         "value": "[[parameters('checkLockedImmutabilityOnly')]"
       }
     }
