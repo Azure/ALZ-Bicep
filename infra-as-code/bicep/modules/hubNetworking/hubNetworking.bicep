@@ -49,7 +49,6 @@ param parGlobalResourceLock lockType = {
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
 
-
 @sys.description('The IP address range for Hub Network.')
 param parHubNetworkAddressPrefix string = '10.10.0.0/16'
 
@@ -173,12 +172,10 @@ param parAzFirewallPoliciesAutoLearn string = 'Disabled'
   'Disabled'
   'Enabled'
 ])
-
 @description('Private IP addresses/IP ranges to which traffic will not be SNAT.')
 param parAzFirewallPoliciesPrivateRanges array = []
 
 @sys.description('Private IP addresses/IP ranges to which traffic will not be SNAT.')
-
 @sys.description('Azure Firewall Tier associated with the Firewall to deploy.')
 @allowed([
   'Basic'
@@ -262,82 +259,14 @@ param parPrivateDnsZonesEnabled bool = true
 @sys.description('Resource Group Name for Private DNS Zones.')
 param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 
-@sys.description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones')
-param parPrivateDnsZones array = [
-  'privatelink.${toLower(parLocation)}.azmk8s.io'
-  'privatelink.${toLower(parLocation)}.batch.azure.com'
-  'privatelink.${toLower(parLocation)}.kusto.windows.net'
-  'privatelink.adf.azure.com'
-  'privatelink.afs.azure.net'
-  'privatelink.agentsvc.azure-automation.net'
-  'privatelink.analysis.windows.net'
-  'privatelink.api.azureml.ms'
-  'privatelink.azconfig.io'
-  'privatelink.azure-api.net'
-  'privatelink.azure-automation.net'
-  'privatelink.azurecr.io'
-  'privatelink.azure-devices.net'
-  'privatelink.azure-devices-provisioning.net'
-  'privatelink.azuredatabricks.net'
-  'privatelink.azurehdinsight.net'
-  'privatelink.azurehealthcareapis.com'
-  'privatelink.azurestaticapps.net'
-  'privatelink.azuresynapse.net'
-  'privatelink.azurewebsites.net'
-  'privatelink.batch.azure.com'
-  'privatelink.blob.core.windows.net'
-  'privatelink.cassandra.cosmos.azure.com'
-  'privatelink.cognitiveservices.azure.com'
-  'privatelink.database.windows.net'
-  'privatelink.datafactory.azure.net'
-  'privatelink.dev.azuresynapse.net'
-  'privatelink.dfs.core.windows.net'
-  'privatelink.dicom.azurehealthcareapis.com'
-  'privatelink.digitaltwins.azure.net'
-  'privatelink.directline.botframework.com'
-  'privatelink.documents.azure.com'
-  'privatelink.eventgrid.azure.net'
-  'privatelink.file.core.windows.net'
-  'privatelink.gremlin.cosmos.azure.com'
-  'privatelink.guestconfiguration.azure.com'
-  'privatelink.his.arc.azure.com'
-  'privatelink.dp.kubernetesconfiguration.azure.com'
-  'privatelink.managedhsm.azure.net'
-  'privatelink.mariadb.database.azure.com'
-  'privatelink.media.azure.net'
-  'privatelink.mongo.cosmos.azure.com'
-  'privatelink.monitor.azure.com'
-  'privatelink.mysql.database.azure.com'
-  'privatelink.notebooks.azure.net'
-  'privatelink.ods.opinsights.azure.com'
-  'privatelink.oms.opinsights.azure.com'
-  'privatelink.pbidedicated.windows.net'
-  'privatelink.postgres.database.azure.com'
-  'privatelink.prod.migration.windowsazure.com'
-  'privatelink.purview.azure.com'
-  'privatelink.purviewstudio.azure.com'
-  'privatelink.queue.core.windows.net'
-  'privatelink.redis.cache.windows.net'
-  'privatelink.redisenterprise.cache.azure.net'
-  'privatelink.search.windows.net'
-  'privatelink.service.signalr.net'
-  'privatelink.servicebus.windows.net'
-  'privatelink.siterecovery.windowsazure.com'
-  'privatelink.sql.azuresynapse.net'
-  'privatelink.table.core.windows.net'
-  'privatelink.table.cosmos.azure.com'
-  'privatelink.tip1.powerquery.microsoft.com'
-  'privatelink.token.botframework.com'
-  'privatelink.vaultcore.azure.net'
-  'privatelink.web.core.windows.net'
-  'privatelink.webpubsub.azure.com'
-]
-
-@sys.description('Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.')
-param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
+@sys.description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones')
+param parPrivateDnsZones array = []
 
 @sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links')
 param parVirtualNetworkIdToLinkFailover string = ''
+
+@sys.description('Array of Resource IDs of VNets to link to Private DNS Zones. Hub VNet is automatically included by module.')
+param parVirtualNetworkResourceIdsToLinkTo array = []
 
 @sys.description('''Resource Lock Configuration for Private DNS Zone(s).
 
@@ -414,45 +343,59 @@ param parTags object = {}
 param parTelemetryOptOut bool = false
 
 @sys.description('Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.')
-param parBastionOutboundSshRdpPorts array = [ '22', '3389' ]
+param parBastionOutboundSshRdpPorts array = ['22', '3389']
 
 var varSubnetMap = map(range(0, length(parSubnets)), i => {
-    name: parSubnets[i].name
-    ipAddressRange: parSubnets[i].ipAddressRange
-    networkSecurityGroupId: parSubnets[i].?networkSecurityGroupId ?? ''
-    routeTableId: parSubnets[i].?routeTableId ?? ''
-    delegation: parSubnets[i].?delegation ?? ''
-  })
+  name: parSubnets[i].name
+  ipAddressRange: parSubnets[i].ipAddressRange
+  networkSecurityGroupId: parSubnets[i].?networkSecurityGroupId ?? ''
+  routeTableId: parSubnets[i].?routeTableId ?? ''
+  delegation: parSubnets[i].?delegation ?? ''
+})
 
-var varSubnetProperties = [for subnet in varSubnetMap: {
-  name: subnet.name
-  properties: {
-    addressPrefix: subnet.ipAddressRange
+var varSubnetProperties = [
+  for subnet in varSubnetMap: {
+    name: subnet.name
+    properties: {
+      addressPrefix: subnet.ipAddressRange
 
-    delegations: (empty(subnet.delegation)) ? null : [
-      {
-        name: subnet.delegation
-        properties: {
-          serviceName: subnet.delegation
-        }
-      }
-    ]
+      delegations: (empty(subnet.delegation))
+        ? null
+        : [
+            {
+              name: subnet.delegation
+              properties: {
+                serviceName: subnet.delegation
+              }
+            }
+          ]
 
-    networkSecurityGroup: (subnet.name == 'AzureBastionSubnet' && parAzBastionEnabled) ? {
-      id: '${resourceGroup().id}/providers/Microsoft.Network/networkSecurityGroups/${parAzBastionNsgName}'
-    } : (empty(subnet.networkSecurityGroupId)) ? null : {
-      id: subnet.networkSecurityGroupId
-    }
+      networkSecurityGroup: (subnet.name == 'AzureBastionSubnet' && parAzBastionEnabled)
+        ? {
+            id: '${resourceGroup().id}/providers/Microsoft.Network/networkSecurityGroups/${parAzBastionNsgName}'
+          }
+        : (empty(subnet.networkSecurityGroupId))
+            ? null
+            : {
+                id: subnet.networkSecurityGroupId
+              }
 
-    routeTable: (empty(subnet.routeTableId)) ? null : {
-      id: subnet.routeTableId
+      routeTable: (empty(subnet.routeTableId))
+        ? null
+        : {
+            id: subnet.routeTableId
+          }
     }
   }
-}]
+]
 
-var varVpnGwConfig = ((parVpnGatewayEnabled) && (!empty(parVpnGatewayConfig)) ? parVpnGatewayConfig : json('{"name": "noconfigVpn"}'))
+var varVpnGwConfig = ((parVpnGatewayEnabled) && (!empty(parVpnGatewayConfig))
+  ? parVpnGatewayConfig
+  : json('{"name": "noconfigVpn"}'))
 
-var varErGwConfig = ((parExpressRouteGatewayEnabled) && !empty(parExpressRouteGatewayConfig) ? parExpressRouteGatewayConfig : json('{"name": "noconfigEr"}'))
+var varErGwConfig = ((parExpressRouteGatewayEnabled) && !empty(parExpressRouteGatewayConfig)
+  ? parExpressRouteGatewayConfig
+  : json('{"name": "noconfigEr"}'))
 
 var varGwConfig = [
   varVpnGwConfig
@@ -503,9 +446,11 @@ resource resHubVnet 'Microsoft.Network/virtualNetworks@2023-02-01' = {
     }
     subnets: varSubnetProperties
     enableDdosProtection: parDdosEnabled
-    ddosProtectionPlan: (parDdosEnabled) ? {
-      id: resDdosProtectionPlan.id
-    } : null
+    ddosProtectionPlan: (parDdosEnabled)
+      ? {
+          id: resDdosProtectionPlan.id
+        }
+      : null
   }
 }
 
@@ -740,132 +685,154 @@ resource resBastionLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzBa
   }
 }
 
-resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parVpnGatewayEnabled || parExpressRouteGatewayEnabled ) {
+resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parVpnGatewayEnabled || parExpressRouteGatewayEnabled) {
   parent: resHubVnet
   name: 'GatewaySubnet'
 }
 
-module modGatewayPublicIp '../publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
-  name: 'deploy-Gateway-Public-IP-${i}'
-  params: {
-    parLocation: parLocation
-    parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute' ? parAzErGatewayAvailabilityZones : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZones : []
-    parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}'
-    parPublicIpProperties: {
-      publicIpAddressVersion: 'IPv4'
-      publicIpAllocationMethod: 'Static'
+module modGatewayPublicIp '../publicIp/publicIp.bicep' = [
+  for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
+    name: 'deploy-Gateway-Public-IP-${i}'
+    params: {
+      parLocation: parLocation
+      parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
+        ? parAzErGatewayAvailabilityZones
+        : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZones : []
+      parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}'
+      parPublicIpProperties: {
+        publicIpAddressVersion: 'IPv4'
+        publicIpAllocationMethod: 'Static'
+      }
+      parPublicIpSku: {
+        name: parPublicIpSku
+      }
+      parResourceLockConfig: (parGlobalResourceLock.kind != 'None')
+        ? parGlobalResourceLock
+        : parVirtualNetworkGatewayLock
+      parTags: parTags
+      parTelemetryOptOut: parTelemetryOptOut
     }
-    parPublicIpSku: {
-      name: parPublicIpSku
-    }
-    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parVirtualNetworkGatewayLock
-    parTags: parTags
-    parTelemetryOptOut: parTelemetryOptOut
   }
-}]
+]
 
 // If the gateway is active-active, create a second public IP
-module modGatewayPublicIpActiveActive '../publicIp/publicIp.bicep' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && gateway.activeActive) {
-  name: 'deploy-Gateway-Public-IP-ActiveActive-${i}'
-  params: {
-    parLocation: parLocation
-    parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute' ? parAzErGatewayAvailabilityZones : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZones : []
-    parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}-aa'
-    parPublicIpProperties: {
-      publicIpAddressVersion: 'IPv4'
-      publicIpAllocationMethod: 'Static'
+module modGatewayPublicIpActiveActive '../publicIp/publicIp.bicep' = [
+  for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && gateway.activeActive) {
+    name: 'deploy-Gateway-Public-IP-ActiveActive-${i}'
+    params: {
+      parLocation: parLocation
+      parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
+        ? parAzErGatewayAvailabilityZones
+        : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZones : []
+      parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}-aa'
+      parPublicIpProperties: {
+        publicIpAddressVersion: 'IPv4'
+        publicIpAllocationMethod: 'Static'
+      }
+      parPublicIpSku: {
+        name: parPublicIpSku
+      }
+      parResourceLockConfig: (parGlobalResourceLock.kind != 'None')
+        ? parGlobalResourceLock
+        : parVirtualNetworkGatewayLock
+      parTags: parTags
+      parTelemetryOptOut: parTelemetryOptOut
     }
-    parPublicIpSku: {
-      name: parPublicIpSku
-    }
-    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parVirtualNetworkGatewayLock
-    parTags: parTags
-    parTelemetryOptOut: parTelemetryOptOut
   }
-}]
+]
 
 //Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
-resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
-  name: gateway.name
-  location: parLocation
-  tags: parTags
-  properties: {
-    activeActive: gateway.activeActive
-    enableBgp: gateway.enableBgp
-    enableBgpRouteTranslationForNat: gateway.enableBgpRouteTranslationForNat
-    enableDnsForwarding: gateway.enableDnsForwarding
-    bgpSettings: (gateway.enableBgp) ? gateway.bgpSettings : null
-    gatewayType: gateway.gatewayType
-    vpnGatewayGeneration: (toLower(gateway.gatewayType) == 'vpn') ? gateway.generation : 'None'
-    vpnType: gateway.vpnType
-    sku: {
-      name: gateway.sku
-      tier: gateway.sku
+resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [
+  for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
+    name: gateway.name
+    location: parLocation
+    tags: parTags
+    properties: {
+      activeActive: gateway.activeActive
+      enableBgp: gateway.enableBgp
+      enableBgpRouteTranslationForNat: gateway.enableBgpRouteTranslationForNat
+      enableDnsForwarding: gateway.enableDnsForwarding
+      bgpSettings: (gateway.enableBgp) ? gateway.bgpSettings : null
+      gatewayType: gateway.gatewayType
+      vpnGatewayGeneration: (toLower(gateway.gatewayType) == 'vpn') ? gateway.generation : 'None'
+      vpnType: gateway.vpnType
+      sku: {
+        name: gateway.sku
+        tier: gateway.sku
+      }
+      vpnClientConfiguration: (toLower(gateway.gatewayType) == 'vpn')
+        ? {
+            vpnClientAddressPool: gateway.vpnClientConfiguration.?vpnClientAddressPool ?? ''
+            vpnClientProtocols: gateway.vpnClientConfiguration.?vpnClientProtocols ?? ''
+            vpnAuthenticationTypes: gateway.vpnClientConfiguration.?vpnAuthenticationTypes ?? ''
+            aadTenant: gateway.vpnClientConfiguration.?aadTenant ?? ''
+            aadAudience: gateway.vpnClientConfiguration.?aadAudience ?? ''
+            aadIssuer: gateway.vpnClientConfiguration.?aadIssuer ?? ''
+            vpnClientRootCertificates: gateway.vpnClientConfiguration.?vpnClientRootCertificates ?? ''
+            radiusServerAddress: gateway.vpnClientConfiguration.?radiusServerAddress ?? ''
+            radiusServerSecret: gateway.vpnClientConfiguration.?radiusServerSecret ?? ''
+          }
+        : null
+
+      ipConfigurations: concat(
+        // Primary IP configuration
+        [
+          {
+            id: resHubVnet.id
+            name: 'vnetGatewayConfig1'
+            properties: {
+              publicIPAddress: {
+                id: modGatewayPublicIp[i].outputs.outPublicIpId // Primary Public IP
+              }
+              subnet: {
+                id: resGatewaySubnetRef.id
+              }
+            }
+          }
+        ],
+        // Add second IP configuration if activeActive is true
+        gateway.activeActive
+          ? [
+              {
+                id: resHubVnet.id
+                name: 'vnetGatewayConfig2'
+                properties: {
+                  publicIPAddress: {
+                    id: modGatewayPublicIpActiveActive[i].outputs.outPublicIpId // Secondary Public IP
+                  }
+                  subnet: {
+                    id: resGatewaySubnetRef.id
+                  }
+                }
+              }
+            ]
+          : []
+      )
     }
-    vpnClientConfiguration: (toLower(gateway.gatewayType) == 'vpn') ? {
-      vpnClientAddressPool: gateway.vpnClientConfiguration.?vpnClientAddressPool ?? ''
-      vpnClientProtocols: gateway.vpnClientConfiguration.?vpnClientProtocols ?? ''
-      vpnAuthenticationTypes: gateway.vpnClientConfiguration.?vpnAuthenticationTypes ?? ''
-      aadTenant: gateway.vpnClientConfiguration.?aadTenant ?? ''
-      aadAudience: gateway.vpnClientConfiguration.?aadAudience ?? ''
-      aadIssuer: gateway.vpnClientConfiguration.?aadIssuer ?? ''
-      vpnClientRootCertificates: gateway.vpnClientConfiguration.?vpnClientRootCertificates ?? ''
-      radiusServerAddress: gateway.vpnClientConfiguration.?radiusServerAddress ?? ''
-      radiusServerSecret: gateway.vpnClientConfiguration.?radiusServerSecret ?? ''
-    } : null
-
-    ipConfigurations: concat(
-      // Primary IP configuration
-      [
-        {
-          id: resHubVnet.id
-          name: 'vnetGatewayConfig1'
-          properties: {
-            publicIPAddress: {
-              id: modGatewayPublicIp[i].outputs.outPublicIpId // Primary Public IP
-            }
-            subnet: {
-              id: resGatewaySubnetRef.id
-            }
-          }
-        }
-      ],
-      // Add second IP configuration if activeActive is true
-      gateway.activeActive ? [
-        {
-          id: resHubVnet.id
-          name: 'vnetGatewayConfig2'
-          properties: {
-            publicIPAddress: {
-              id: modGatewayPublicIpActiveActive[i].outputs.outPublicIpId // Secondary Public IP
-            }
-            subnet: {
-              id: resGatewaySubnetRef.id
-            }
-          }
-        }
-      ] : []
-    )
   }
-}]
-
+]
 
 // Create a Virtual Network Gateway resource lock if gateway.name is not equal to noconfigVpn or noconfigEr and parGlobalResourceLock.kind != 'None' or if parVirtualNetworkGatewayLock.kind != 'None'
-resource resVirtualNetworkGatewayLock 'Microsoft.Authorization/locks@2020-05-01' = [for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && (parVirtualNetworkGatewayLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
-  scope: resGateway[i]
-  name: parVirtualNetworkGatewayLock.?name ?? '${resGateway[i].name}-lock'
-  properties: {
-    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parVirtualNetworkGatewayLock.kind
-    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parVirtualNetworkGatewayLock.?notes
+resource resVirtualNetworkGatewayLock 'Microsoft.Authorization/locks@2020-05-01' = [
+  for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr') && (parVirtualNetworkGatewayLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+    scope: resGateway[i]
+    name: parVirtualNetworkGatewayLock.?name ?? '${resGateway[i].name}-lock'
+    properties: {
+      level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parVirtualNetworkGatewayLock.kind
+      notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parVirtualNetworkGatewayLock.?notes
+    }
   }
-}]
+]
 
 resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabled) {
   parent: resHubVnet
   name: 'AzureFirewallSubnet'
 }
 
-resource resAzureFirewallMgmtSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabled && (contains(map(parSubnets, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
+resource resAzureFirewallMgmtSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabled && (contains(
+  map(parSubnets, subnets => subnets.name),
+  'AzureFirewallManagementSubnet'
+))) {
   parent: resHubVnet
   name: 'AzureFirewallManagementSubnet'
 }
@@ -889,7 +856,10 @@ module modAzureFirewallPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewall
   }
 }
 
-module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewallEnabled && (contains(map(parSubnets, subnets => subnets.name), 'AzureFirewallManagementSubnet'))) {
+module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewallEnabled && (contains(
+  map(parSubnets, subnets => subnets.name),
+  'AzureFirewallManagementSubnet'
+))) {
   name: 'deploy-Firewall-mgmt-Public-IP'
   params: {
     parLocation: parLocation
@@ -912,27 +882,29 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-01-01' = i
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
-  properties: (parAzFirewallTier == 'Basic') ? {
-    sku: {
-      tier: parAzFirewallTier
-    }
-    snat: !empty(parAzFirewallPoliciesPrivateRanges)
+  properties: (parAzFirewallTier == 'Basic')
     ? {
-      autoLearnPrivateRanges: parAzFirewallPoliciesAutoLearn
-      privateRanges: parAzFirewallPoliciesPrivateRanges
+        sku: {
+          tier: parAzFirewallTier
+        }
+        snat: !empty(parAzFirewallPoliciesPrivateRanges)
+          ? {
+              autoLearnPrivateRanges: parAzFirewallPoliciesAutoLearn
+              privateRanges: parAzFirewallPoliciesPrivateRanges
+            }
+          : null
+        threatIntelMode: 'Alert'
       }
-    : null
-    threatIntelMode: 'Alert'
-  } : {
-    dnsSettings: {
-      enableProxy: parAzFirewallDnsProxyEnabled
-      servers: parAzFirewallDnsServers
-    }
-    sku: {
-      tier: parAzFirewallTier
-    }
-    threatIntelMode: parAzFirewallIntelMode
-  }
+    : {
+        dnsSettings: {
+          enableProxy: parAzFirewallDnsProxyEnabled
+          servers: parAzFirewallDnsServers
+        }
+        sku: {
+          tier: parAzFirewallTier
+        }
+        threatIntelMode: parAzFirewallIntelMode
+      }
 }
 
 // Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
@@ -955,98 +927,98 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-01-01' = if (pa
   location: parLocation
   tags: parTags
   zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : [])
-  properties: parAzFirewallTier == 'Basic' ? {
-    ipConfigurations: varAzFirewallUseCustomPublicIps
-     ? map(parAzFirewallCustomPublicIps, ip =>
-       {
-        name: 'ipconfig${uniqueString(ip)}'
-        properties: ip == parAzFirewallCustomPublicIps[0]
-         ? {
-          subnet: {
-            id: resAzureFirewallSubnetRef.id
-          }
-          publicIPAddress: {
-            id: parAzFirewallEnabled ? ip : ''
-          }
-        }
-         : {
-          publicIPAddress: {
-            id: parAzFirewallEnabled ? ip : ''
-          }
-        }
-      })
-     : [
-      {
-        name: 'ipconfig1'
-        properties: {
-          subnet: {
-            id: resAzureFirewallSubnetRef.id
-          }
-          publicIPAddress: {
-            id: parAzFirewallEnabled ? modAzureFirewallPublicIp.outputs.outPublicIpId : ''
-          }
-        }
-      }
-    ]
-    managementIpConfiguration: {
-      name: 'mgmtIpConfig'
-      properties: {
-        publicIPAddress: {
-          id: parAzFirewallEnabled ? modAzureFirewallMgmtPublicIp.outputs.outPublicIpId : ''
-        }
-        subnet: {
-          id: resAzureFirewallMgmtSubnetRef.id
-        }
-      }
-    }
-    sku: {
-      name: 'AZFW_VNet'
-      tier: parAzFirewallTier
-    }
-    firewallPolicy: {
-      id: resFirewallPolicies.id
-    }
-  } : {
-    ipConfigurations: varAzFirewallUseCustomPublicIps
-     ? map(parAzFirewallCustomPublicIps, ip =>
-       {
-        name: 'ipconfig${uniqueString(ip)}'
-        properties: ip == parAzFirewallCustomPublicIps[0]
-         ? {
-          subnet: {
-            id: resAzureFirewallSubnetRef.id
-          }
-          publicIPAddress: {
-            id: parAzFirewallEnabled ? ip : ''
+  properties: parAzFirewallTier == 'Basic'
+    ? {
+        ipConfigurations: varAzFirewallUseCustomPublicIps
+          ? map(parAzFirewallCustomPublicIps, ip => {
+              name: 'ipconfig${uniqueString(ip)}'
+              properties: ip == parAzFirewallCustomPublicIps[0]
+                ? {
+                    subnet: {
+                      id: resAzureFirewallSubnetRef.id
+                    }
+                    publicIPAddress: {
+                      id: parAzFirewallEnabled ? ip : ''
+                    }
+                  }
+                : {
+                    publicIPAddress: {
+                      id: parAzFirewallEnabled ? ip : ''
+                    }
+                  }
+            })
+          : [
+              {
+                name: 'ipconfig1'
+                properties: {
+                  subnet: {
+                    id: resAzureFirewallSubnetRef.id
+                  }
+                  publicIPAddress: {
+                    id: parAzFirewallEnabled ? modAzureFirewallPublicIp.outputs.outPublicIpId : ''
+                  }
+                }
+              }
+            ]
+        managementIpConfiguration: {
+          name: 'mgmtIpConfig'
+          properties: {
+            publicIPAddress: {
+              id: parAzFirewallEnabled ? modAzureFirewallMgmtPublicIp.outputs.outPublicIpId : ''
+            }
+            subnet: {
+              id: resAzureFirewallMgmtSubnetRef.id
+            }
           }
         }
-         : {
-          publicIPAddress: {
-            id: parAzFirewallEnabled ? ip : ''
-          }
+        sku: {
+          name: 'AZFW_VNet'
+          tier: parAzFirewallTier
         }
-      })
-     : [
-      {
-        name: 'ipconfig1'
-        properties: {
-          subnet: {
-            id: resAzureFirewallSubnetRef.id
-          }
-          publicIPAddress: {
-            id: parAzFirewallEnabled ? modAzureFirewallPublicIp.outputs.outPublicIpId : ''
-          }
+        firewallPolicy: {
+          id: resFirewallPolicies.id
         }
       }
-    ]
-    sku: {
-      name: 'AZFW_VNet'
-      tier: parAzFirewallTier
-    }
-    firewallPolicy: {
-      id: resFirewallPolicies.id
-    }
-  }
+    : {
+        ipConfigurations: varAzFirewallUseCustomPublicIps
+          ? map(parAzFirewallCustomPublicIps, ip => {
+              name: 'ipconfig${uniqueString(ip)}'
+              properties: ip == parAzFirewallCustomPublicIps[0]
+                ? {
+                    subnet: {
+                      id: resAzureFirewallSubnetRef.id
+                    }
+                    publicIPAddress: {
+                      id: parAzFirewallEnabled ? ip : ''
+                    }
+                  }
+                : {
+                    publicIPAddress: {
+                      id: parAzFirewallEnabled ? ip : ''
+                    }
+                  }
+            })
+          : [
+              {
+                name: 'ipconfig1'
+                properties: {
+                  subnet: {
+                    id: resAzureFirewallSubnetRef.id
+                  }
+                  publicIPAddress: {
+                    id: parAzFirewallEnabled ? modAzureFirewallPublicIp.outputs.outPublicIpId : ''
+                  }
+                }
+              }
+            ]
+        sku: {
+          name: 'AZFW_VNet'
+          tier: parAzFirewallTier
+        }
+        firewallPolicy: {
+          id: resFirewallPolicies.id
+        }
+      }
 }
 
 // Create Azure Firewall resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
@@ -1071,7 +1043,9 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2024-01-01' = if (parAz
         properties: {
           addressPrefix: '0.0.0.0/0'
           nextHopType: 'VirtualAppliance'
-          nextHopIpAddress: parAzFirewallEnabled ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress : ''
+          nextHopIpAddress: parAzFirewallEnabled
+            ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress
+            : ''
         }
       }
     ]
@@ -1089,18 +1063,23 @@ resource resHubRouteTableLock 'Microsoft.Authorization/locks@2020-05-01' = if (p
   }
 }
 
-module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPrivateDnsZonesEnabled) {
-  name: 'deploy-Private-DNS-Zones'
+module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.2.0' = if (parPrivateDnsZonesEnabled) {
+  name: 'deploy-Private-DNS-Zones-AVM'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
-    parLocation: parLocation
-    parTags: parTags
-    parVirtualNetworkIdToLink: resHubVnet.id
-    parVirtualNetworkIdToLinkFailover: parVirtualNetworkIdToLinkFailover
-    parPrivateDnsZones: parPrivateDnsZones
-    parPrivateDnsZoneAutoMergeAzureBackupZone: parPrivateDnsZoneAutoMergeAzureBackupZone
-    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parPrivateDNSZonesLock
-    parTelemetryOptOut: parTelemetryOptOut
+    location: parLocation
+    privateLinkPrivateDnsZones: empty(parPrivateDnsZones) ? null : parPrivateDnsZones
+    virtualNetworkResourceIdsToLinkTo: union(
+      [resHubVnet.id],
+      !empty(parVirtualNetworkIdToLinkFailover) ? [parVirtualNetworkIdToLinkFailover] : [],
+      parVirtualNetworkResourceIdsToLinkTo
+    )
+    enableTelemetry: parTelemetryOptOut ? false : true
+    tags: parTags
+    lock: {
+      name: parPrivateDNSZonesLock.?name ?? 'pl-pdns-zone-lock'
+      kind: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parPrivateDNSZonesLock.kind
+    }
   }
 }
 
@@ -1118,13 +1097,16 @@ module modCustomerUsageAttributionZtnP1 '../../CRML/customerUsageAttribution/cua
 }
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
-output outAzFirewallPrivateIp string = parAzFirewallEnabled ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress : ''
+output outAzFirewallPrivateIp string = parAzFirewallEnabled
+  ? resAzureFirewall.properties.ipConfigurations[0].properties.privateIPAddress
+  : ''
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
 output outAzFirewallName string = parAzFirewallEnabled ? parAzFirewallName : ''
 
-output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
-output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZonesNames : [])
+output outPrivateDnsZones array = (parPrivateDnsZonesEnabled
+  ? modPrivateDnsZonesAVM.outputs.combinedPrivateLinkPrivateDnsZonesReplacedWithVnetsToLink
+  : [])
 
 output outDdosPlanResourceId string = parDdosEnabled ? resDdosProtectionPlan.id : ''
 output outHubVirtualNetworkName string = resHubVnet.name
