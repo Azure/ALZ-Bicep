@@ -514,6 +514,7 @@ Name | Type | Description
 outAzFirewallPrivateIp | string |
 outAzFirewallName | string |
 outPrivateDnsZones | array |
+outPrivateDnsZonesNames | array |
 outDdosPlanResourceId | string |
 outHubVirtualNetworkName | string |
 outHubVirtualNetworkId | string |
