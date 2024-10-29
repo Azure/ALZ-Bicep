@@ -1108,7 +1108,10 @@ output outPrivateDnsZones array = (parPrivateDnsZonesEnabled
   ? modPrivateDnsZonesAVM.outputs.combinedPrivateLinkPrivateDnsZonesReplacedWithVnetsToLink
   : [])
 output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled
-  ? map(modPrivateDnsZonesAVM.outputs.combinedPrivateLinkPrivateDnsZonesReplacedWithVnetsToLink, zone => zone.pdnsZoneName)
+  ? map(
+      modPrivateDnsZonesAVM.outputs.combinedPrivateLinkPrivateDnsZonesReplacedWithVnetsToLink,
+      zone => zone.pdnsZoneName
+    )
   : [])
 
 output outDdosPlanResourceId string = parDdosEnabled ? resDdosProtectionPlan.id : ''
