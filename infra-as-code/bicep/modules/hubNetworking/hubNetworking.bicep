@@ -1063,8 +1063,8 @@ resource resHubRouteTableLock 'Microsoft.Authorization/locks@2020-05-01' = if (p
   }
 }
 
-module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.2.0' = if (parPrivateDnsZonesEnabled) {
-  name: 'deploy-Private-DNS-Zones-AVM'
+module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.2.1' = if (parPrivateDnsZonesEnabled) {
+  name: 'deploy-Private-DNS-Zones-AVM-Single'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
     location: parLocation
