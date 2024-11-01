@@ -9,7 +9,49 @@ This has meant some breaking changes to each of the networking modules that are 
 - `parPrivateDnsZones` default value changed to an empty array (`[]`)
     - Only enter values in here if you want to override the defaults in the underlying AVM pattern module. See: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
 - `parPrivateDnsZoneAutoMergeAzureBackupZone` removed from module
-- `parVirtualNetworkResourceIdsToLinkTo` added to module
+- `parVirtualNetworkResourceIdsToLinkTo` added to module, you can prefer to use this parameter instead of `parVirtualNetworkIdToLink` & `parVirtualNetworkIdToLinkFailover` if you wish (they are automatically all merged together by the module anyway)
+- The value returned in `outPrivateDnsZones` has changed
+
+**From:**
+
+```
+[
+  {
+    "name": "privatelink.api.azureml.ms",
+    "id": "/subscriptions/<subID>/resourceGroups/<rgID>/providers/Microsoft.Network/privateDnsZones/privatelink.api.azureml.ms"
+  },
+  {
+    "name": "privatelink.notebooks.azure.net",
+    "id": "subscriptions/<subID>/resourceGroups/<rgID>/providers/Microsoft.Network/privateDnsZones/privatelink.notebooks.azure.net"
+  },
+  …
+]
+```
+
+**To:**
+```
+[
+  {
+    "pdnsZoneName": "privatelink.api.azureml.ms",
+    "virtualNetworkResourceIdsToLinkTo": [
+      "/subscriptions/<subID>/resourceGroups/<rgID>/providers/Microsoft.Network/virtualNetworks/alz-hub-uksouth"
+    ]
+  },
+  {
+    "pdnsZoneName": "privatelink.notebooks.azure.net",
+    "virtualNetworkResourceIdsToLinkTo": [
+      "/subscriptions/<subID>/resourceGroups/<rgID>/providers/Microsoft.Network/virtualNetworks/alz-hub-uksouth"
+    ]
+  },
+  …
+]
+```
+
+#### `vwanConnectivity.bicep`
+
+- `parPrivateDnsZones` default value changed to an empty array (`[]`)
+    - Only enter values in here if you want to override the defaults in the underlying AVM pattern module. See: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
+- `parVirtualNetworkIdToLink` & `parVirtualNetworkIdToLinkFailover` removed from module and replaced with `parVirtualNetworkResourceIdsToLinkTo`
 - The value returned in `outPrivateDnsZones` has changed
 
 **From:**
