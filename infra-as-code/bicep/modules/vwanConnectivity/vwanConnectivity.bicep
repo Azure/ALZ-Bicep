@@ -237,85 +237,11 @@ param parPrivateDnsZonesEnabled bool = true
 @sys.description('Resource Group Name for Private DNS Zones.')
 param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 
-@sys.description('Array of DNS Zones to provision in Hub Virtual Network.')
-param parPrivateDnsZones array = [
-  'privatelink.${toLower(parLocation)}.azmk8s.io'
-  'privatelink.${toLower(parLocation)}.batch.azure.com'
-  'privatelink.${toLower(parLocation)}.kusto.windows.net'
-  'privatelink.adf.azure.com'
-  'privatelink.afs.azure.net'
-  'privatelink.agentsvc.azure-automation.net'
-  'privatelink.analysis.windows.net'
-  'privatelink.api.azureml.ms'
-  'privatelink.azconfig.io'
-  'privatelink.azure-api.net'
-  'privatelink.azure-automation.net'
-  'privatelink.azurecr.io'
-  'privatelink.azure-devices.net'
-  'privatelink.azure-devices-provisioning.net'
-  'privatelink.azuredatabricks.net'
-  'privatelink.azurehdinsight.net'
-  'privatelink.azurehealthcareapis.com'
-  'privatelink.azurestaticapps.net'
-  'privatelink.azuresynapse.net'
-  'privatelink.azurewebsites.net'
-  'privatelink.batch.azure.com'
-  'privatelink.blob.core.windows.net'
-  'privatelink.cassandra.cosmos.azure.com'
-  'privatelink.cognitiveservices.azure.com'
-  'privatelink.database.windows.net'
-  'privatelink.datafactory.azure.net'
-  'privatelink.dev.azuresynapse.net'
-  'privatelink.dfs.core.windows.net'
-  'privatelink.dicom.azurehealthcareapis.com'
-  'privatelink.digitaltwins.azure.net'
-  'privatelink.directline.botframework.com'
-  'privatelink.documents.azure.com'
-  'privatelink.eventgrid.azure.net'
-  'privatelink.file.core.windows.net'
-  'privatelink.gremlin.cosmos.azure.com'
-  'privatelink.guestconfiguration.azure.com'
-  'privatelink.his.arc.azure.com'
-  'privatelink.dp.kubernetesconfiguration.azure.com'
-  'privatelink.managedhsm.azure.net'
-  'privatelink.mariadb.database.azure.com'
-  'privatelink.media.azure.net'
-  'privatelink.mongo.cosmos.azure.com'
-  'privatelink.monitor.azure.com'
-  'privatelink.mysql.database.azure.com'
-  'privatelink.notebooks.azure.net'
-  'privatelink.ods.opinsights.azure.com'
-  'privatelink.oms.opinsights.azure.com'
-  'privatelink.pbidedicated.windows.net'
-  'privatelink.postgres.database.azure.com'
-  'privatelink.prod.migration.windowsazure.com'
-  'privatelink.purview.azure.com'
-  'privatelink.purviewstudio.azure.com'
-  'privatelink.queue.core.windows.net'
-  'privatelink.redis.cache.windows.net'
-  'privatelink.redisenterprise.cache.azure.net'
-  'privatelink.search.windows.net'
-  'privatelink.service.signalr.net'
-  'privatelink.servicebus.windows.net'
-  'privatelink.siterecovery.windowsazure.com'
-  'privatelink.sql.azuresynapse.net'
-  'privatelink.table.core.windows.net'
-  'privatelink.table.cosmos.azure.com'
-  'privatelink.tip1.powerquery.microsoft.com'
-  'privatelink.token.botframework.com'
-  'privatelink.vaultcore.azure.net'
-  'privatelink.web.core.windows.net'
-  'privatelink.webpubsub.azure.com'
-]
+@sys.description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones')
+param parPrivateDnsZones array = []
 
-@sys.description('Set Parameter to false to skip the addition of a Private DNS Zone for Azure Backup.')
-param parPrivateDnsZoneAutoMergeAzureBackupZone bool = true
-
-@sys.description('Resource ID of VNet for Private DNS Zone VNet Links')
-param parVirtualNetworkIdToLink string = ''
-
-@sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links')
-param parVirtualNetworkIdToLinkFailover string = ''
+@sys.description('Array of Resource IDs of VNets to link to Private DNS Zones.')
+param parVirtualNetworkResourceIdsToLinkTo array = []
 
 @sys.description('''Resource Lock Configuration for Private DNS Zone(s).
 
@@ -578,17 +504,19 @@ resource resDDoSProtectionPlanLock 'Microsoft.Authorization/locks@2020-05-01' = 
 }
 
 // Private DNS Zones cannot be linked to the Virtual WAN Hub today however, they can be linked to spokes as they are normal VNets as per https://docs.microsoft.com/azure/virtual-wan/howto-private-link
-module modPrivateDnsZones '../privateDnsZones/privateDnsZones.bicep' = if (parPrivateDnsZonesEnabled) {
-  name: 'deploy-Private-DNS-Zones'
+module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.2.1' = if (parPrivateDnsZonesEnabled) {
+  name: 'deploy-Private-DNS-Zones-AVM-Single'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
-    parLocation: parLocation
-    parTags: parTags
-    parPrivateDnsZones: parPrivateDnsZones
-    parPrivateDnsZoneAutoMergeAzureBackupZone: parPrivateDnsZoneAutoMergeAzureBackupZone
-    parVirtualNetworkIdToLink: parVirtualNetworkIdToLink
-    parVirtualNetworkIdToLinkFailover: parVirtualNetworkIdToLinkFailover
-    parResourceLockConfig: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock : parPrivateDNSZonesLock
+    location: parLocation
+    privateLinkPrivateDnsZones: empty(parPrivateDnsZones) ? null : parPrivateDnsZones
+    virtualNetworkResourceIdsToLinkTo: parVirtualNetworkResourceIdsToLinkTo
+    enableTelemetry: parTelemetryOptOut ? false : true
+    tags: parTags
+    lock: {
+      name: parPrivateDNSZonesLock.?name ?? 'pl-pdns-zone-lock'
+      kind: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parPrivateDNSZonesLock.kind
+    }
   }
 }
 
@@ -621,8 +549,15 @@ output outVirtualHubId array = [for (hub, i) in parVirtualWanHubs: {
 output outDdosPlanResourceId string = parDdosEnabled ? resDdosProtectionPlan.id : ''
 
 // Output Private DNS Zones
-output outPrivateDnsZones array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZones : [])
-output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled ? modPrivateDnsZones.outputs.outPrivateDnsZonesNames : [])
+output outPrivateDnsZones array = (parPrivateDnsZonesEnabled
+  ? modPrivateDnsZonesAVM.outputs.combinedPrivateLinkPrivateDnsZonesReplacedWithVnetsToLink
+  : [])
+output outPrivateDnsZonesNames array = (parPrivateDnsZonesEnabled
+  ? map(
+      modPrivateDnsZonesAVM.outputs.combinedPrivateLinkPrivateDnsZonesReplacedWithVnetsToLink,
+      zone => zone.pdnsZoneName
+    )
+  : [])
 
 // Output Azure Firewall Private IP's
 output outAzFwPrivateIps array = [for (hub, i) in azureFirewallInHubsIndex: {
