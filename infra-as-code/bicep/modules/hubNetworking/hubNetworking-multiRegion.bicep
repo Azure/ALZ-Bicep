@@ -1265,8 +1265,14 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [
     params: {
       parLocation: parLocation
       parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
-        ? parAzErGatewayAvailabilityZones
-        : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZones : []
+      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
+          ? ['1', '2']
+          : parAzErGatewayAvailabilityZones)
+      : (toLower(gateway.gatewayType) == 'vpn'
+          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
+              ? ['1', '2']
+              : parAzVpnGatewayAvailabilityZones)
+          : [])
       parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}'
       parPublicIpProperties: {
         publicIpAddressVersion: 'IPv4'
@@ -1291,8 +1297,14 @@ module modGatewayPublicIpActiveActive '../publicIp/publicIp.bicep' = [
     params: {
       parLocation: parLocation
       parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
-        ? parAzErGatewayAvailabilityZones
-        : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZones : []
+      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
+          ? ['1', '2']
+          : parAzErGatewayAvailabilityZones)
+      : (toLower(gateway.gatewayType) == 'vpn'
+          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
+              ? ['1', '2']
+              : parAzVpnGatewayAvailabilityZones)
+          : [])
       parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}-aa'
       parPublicIpProperties: {
         publicIpAddressVersion: 'IPv4'
@@ -1316,8 +1328,14 @@ module modGatewayPublicIpSecondaryLocation '../publicIp/publicIp.bicep' = [
     params: {
       parLocation: parSecondaryLocation
       parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
-        ? parAzErGatewayAvailabilityZonesSecondaryLocation
-        : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZonesSecondaryLocation : []
+      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
+          ? ['1', '2']
+          : parAzErGatewayAvailabilityZones)
+      : (toLower(gateway.gatewayType) == 'vpn'
+          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
+              ? ['1', '2']
+              : parAzVpnGatewayAvailabilityZones)
+          : [])
       parPublicIpName: '${parPublicIpPrefixSecondaryLocation}${gateway.name}${parPublicIpSuffix}'
       parPublicIpProperties: {
         publicIpAddressVersion: 'IPv4'
@@ -1342,8 +1360,14 @@ module modGatewayPublicIpActiveActiveSecondaryLocation '../publicIp/publicIp.bic
     params: {
       parLocation: parLocation
       parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
-        ? parAzErGatewayAvailabilityZones
-        : toLower(gateway.gatewayType) == 'vpn' ? parAzVpnGatewayAvailabilityZones : []
+      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
+          ? ['1', '2']
+          : parAzErGatewayAvailabilityZones)
+      : (toLower(gateway.gatewayType) == 'vpn'
+          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
+              ? ['1', '2']
+              : parAzVpnGatewayAvailabilityZones)
+          : [])
       parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}-aa'
       parPublicIpProperties: {
         publicIpAddressVersion: 'IPv4'
