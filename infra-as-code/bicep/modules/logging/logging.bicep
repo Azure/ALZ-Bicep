@@ -187,6 +187,7 @@ var varCuaid = 'f8087c67-cc41-46b2-994d-66e4b661860d'
 resource resUserAssignedManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: parUserAssignedManagedIdentityName
   location: parUserAssignedManagedIdentityLocation
+  tags: parTags
 }
 
 resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2023-11-01' = {
@@ -243,6 +244,7 @@ resource resLogAnalyticsWorkspaceLock 'Microsoft.Authorization/locks@2020-05-01'
 resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
   name: parDataCollectionRuleVMInsightsName
   location: parLogAnalyticsWorkspaceLocation
+  tags: parTags
   properties: {
     description: 'Data collection rule for VM Insights'
     dataSources: {
@@ -311,6 +313,7 @@ resource resDataCollectionRuleVMInsightsLock 'Microsoft.Authorization/locks@2020
 resource resDataCollectionRuleChangeTracking 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
   name: parDataCollectionRuleChangeTrackingName
   location: parLogAnalyticsWorkspaceLocation
+  tags: parTags
   properties: {
     description: 'Data collection rule for CT.'
     dataSources: {
@@ -582,6 +585,7 @@ resource resDataCollectionRuleChangeTrackingLock 'Microsoft.Authorization/locks@
 resource resDataCollectionRuleMDFCSQL'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
   name: parDataCollectionRuleMDFCSQLName
   location: parLogAnalyticsWorkspaceLocation
+  tags: parTags
   properties: {
     description: 'Data collection rule for Defender for SQL.'
     dataSources: {
