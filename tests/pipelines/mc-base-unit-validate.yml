@@ -156,14 +156,6 @@ jobs:
             az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep --parameters parDestinationVirtualNetworkId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"  parSourceVirtualNetworkName="vnet-spoke" parDestinationVirtualNetworkName="alz-hub-eastus" --name $(ManagementGroupPrefix)
 
       - task: Bash@3
-        displayName: Az CLI Validate Private DNS Zones
-        name: validate_private_dns
-        inputs:
-          targetType: "inline"
-          script: |
-            az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep --parameters @infra-as-code/bicep/modules/privateDnsZones/parameters/mc-privateDnsZones.parameters.all.json --name $(ManagementGroupPrefix)
-
-      - task: Bash@3
         displayName: Az CLI Validate Public IP
         name: validate_public_ip
         inputs:

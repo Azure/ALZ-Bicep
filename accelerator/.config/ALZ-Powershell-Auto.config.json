@@ -603,16 +603,6 @@
             }
           ]
         },
-        "AK8sPrivateLink": {
-          "source": "calculated",
-          "pattern": "privatelink.{%Location%}.azmk8s.io",
-          "targets": [
-            {
-              "Name": "parPrivateDnsZones.value[0]",
-              "Destination": "Parameters"
-            }
-          ]
-        },
         "parAzBastionName": {
           "source": "calculated",
           "pattern": "alz-bastion-{%Location%}",
@@ -689,76 +679,6 @@
           "targets": [
             {
               "Name": "parHubRouteTableNameSecondaryLocation.value",
-              "Destination": "Parameters"
-            }
-          ]
-        },
-        "AK8sPrivateLinkSecondary": {
-          "source": "calculated",
-          "pattern": "privatelink.{%SecondaryLocation%}.azmk8s.io",
-          "targets": [
-            {
-              "Name": "parPrivateDnsZonesSecondaryLocation.value[0]",
-              "Destination": "Parameters"
-            }
-          ]
-        },
-        "BatchPrivateLink": {
-          "source": "calculated",
-          "pattern": "privatelink.{%Location%}.batch.azure.com",
-          "targets": [
-            {
-              "Name": "parPrivateDnsZones.value[1]",
-              "Destination": "Parameters"
-            }
-          ]
-        },
-        "BatchPrivateLinkSecondary": {
-          "source": "calculated",
-          "pattern": "privatelink.{%SecondaryLocation%}.batch.azure.com",
-          "targets": [
-            {
-              "Name": "parPrivateDnsZonesSecondaryLocation.value[1]",
-              "Destination": "Parameters"
-            }
-          ]
-        },
-        "KustoPrivateLink": {
-          "source": "calculated",
-          "pattern": "privatelink.{%Location%}.kusto.windows.net",
-          "targets": [
-            {
-              "Name": "parPrivateDnsZones.value[2]",
-              "Destination": "Parameters"
-            }
-          ]
-        },
-        "KustoPrivateLinkSecondary": {
-          "source": "calculated",
-          "pattern": "privatelink.{%SecondaryLocation%}.kusto.windows.net",
-          "targets": [
-            {
-              "Name": "parPrivateDnsZonesSecondaryLocation.value[2]",
-              "Destination": "Parameters"
-            }
-          ]
-        },
-        "BackupPrivateLink": {
-          "source": "calculated",
-          "pattern": "privatelink.{%Location%}.backup.windowsazure.com",
-          "targets": [
-            {
-              "Name": "parPrivateDnsZones.value[3]",
-              "Destination": "Parameters"
-            }
-          ]
-        },
-        "BackupPrivateLinkSecondary": {
-          "source": "calculated",
-          "pattern": "privatelink.{%SecondaryLocation%}.backup.windowsazure.com",
-          "targets": [
-            {
-              "Name": "parPrivateDnsZonesSecondaryLocation.value[3]",
               "Destination": "Parameters"
             }
           ]

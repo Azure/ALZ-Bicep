@@ -603,46 +603,6 @@
         }
       ]
     },
-    "AK8sPrivateLink": {
-      "Type": "Computed",
-      "Value": "privatelink.{%Location%}.azmk8s.io",
-      "Targets": [
-        {
-          "Name": "parPrivateDnsZones.value.[0]",
-          "Destination": "Parameters"
-        }
-      ]
-    },
-    "BatchPrivateLink": {
-      "Type": "Computed",
-      "Value": "privatelink.{%Location%}.batch.azure.com",
-      "Targets": [
-        {
-          "Name": "parPrivateDnsZones.value.[1]",
-          "Destination": "Parameters"
-        }
-      ]
-    },
-    "KustoPrivateLink": {
-      "Type": "Computed",
-      "Value": "privatelink.{%Location%}.kusto.windows.net",
-      "Targets": [
-        {
-          "Name": "parPrivateDnsZones.value.[2]",
-          "Destination": "Parameters"
-        }
-      ]
-    },
-    "BackupPrivateLink": {
-      "Type": "Computed",
-      "Value": "privatelink.{%Location%}.backup.windowsazure.com",
-      "Targets": [
-        {
-          "Name": "parPrivateDnsZones.value.[3]",
-          "Destination": "Parameters"
-        }
-      ]
-    },
     "UpstreamReleaseVersion": {
       "Type": "Computed",
       "Value": "{REPLACED_BY_ALZ_POWERSHELL_MODULE}",
