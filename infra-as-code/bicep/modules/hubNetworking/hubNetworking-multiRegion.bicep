@@ -1328,13 +1328,13 @@ module modGatewayPublicIpSecondaryLocation '../publicIp/publicIp.bicep' = [
     params: {
       parLocation: parSecondaryLocation
       parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
-      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
+      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZonesSecondaryLocation)
           ? ['1', '2']
           : parAzErGatewayAvailabilityZones)
       : (toLower(gateway.gatewayType) == 'vpn'
-          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
+          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZonesSecondaryLocation)
               ? ['1', '2']
-              : parAzVpnGatewayAvailabilityZones)
+              : parAzVpnGatewayAvailabilityZonesSecondaryLocation)
           : [])
       parPublicIpName: '${parPublicIpPrefixSecondaryLocation}${gateway.name}${parPublicIpSuffix}'
       parPublicIpProperties: {
@@ -1360,13 +1360,13 @@ module modGatewayPublicIpActiveActiveSecondaryLocation '../publicIp/publicIp.bic
     params: {
       parLocation: parLocation
       parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
-      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
+      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZonesSecondaryLocation)
           ? ['1', '2']
           : parAzErGatewayAvailabilityZones)
       : (toLower(gateway.gatewayType) == 'vpn'
-          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
+          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZonesSecondaryLocation)
               ? ['1', '2']
-              : parAzVpnGatewayAvailabilityZones)
+              : parAzVpnGatewayAvailabilityZonesSecondaryLocation)
           : [])
       parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}-aa'
       parPublicIpProperties: {
