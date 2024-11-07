@@ -941,6 +941,12 @@ module modPolicyAssignmentPlatformDeployVmArcChangeTrack '../../../policy/assign
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.reader
     ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      {
+        mgId: varManagementGroupIds.landingZones
+        roleDefinitionId: varRbacRoleDefinitionIds.reader
+      }
+    ]
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -971,6 +977,16 @@ module modPolicyAssignmentPlatformDeployVmChangeTrack '../../../policy/assignmen
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
+    ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      {
+        mgId: varManagementGroupIds.landingZones
+        roleDefinitionId: varRbacRoleDefinitionIds.managedIdentityOperator
+      }
+      {
+        mgId: varManagementGroupIds.landingZones
+        roleDefinitionId: varRbacRoleDefinitionIds.reader
+      }
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1003,6 +1019,16 @@ module modPolicyAssignmentPlatformDeployVmssChangeTrack '../../../policy/assignm
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
     ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      {
+        mgId: varManagementGroupIds.landingZones
+        roleDefinitionId: varRbacRoleDefinitionIds.managedIdentityOperator
+      }
+      {
+        mgId: varManagementGroupIds.landingZones
+        roleDefinitionId: varRbacRoleDefinitionIds.reader
+      }
+    ]
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1029,6 +1055,12 @@ module modPolicyAssignmentPlatformDeployVmArcMonitor '../../../policy/assignment
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.reader
       varRbacRoleDefinitionIds.connectedMachineResourceAdministrator
+    ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      {
+        mgId: varManagementGroupIds.landingZones
+        roleDefinitionId: varRbacRoleDefinitionIds.reader
+      }
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1060,6 +1092,16 @@ module modPolicyAssignmentPlatformDeployVmMonitor '../../../policy/assignments/p
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
+    ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      {
+        mgId: varManagementGroupIds.landingZones
+        roleDefinitionId: varRbacRoleDefinitionIds.managedIdentityOperator
+      }
+      {
+        mgId: varManagementGroupIds.landingZones
+        roleDefinitionId: varRbacRoleDefinitionIds.reader
+      }
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1094,6 +1136,16 @@ module modPolicyAssignmentPlatformDeployMdfcDefSqlAma '../../../policy/assignmen
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
+    ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      {
+        mgId: varManagementGroupIds.landingZones
+        roleDefinitionId: varRbacRoleDefinitionIds.managedIdentityOperator
+      }
+      {
+        mgId: varManagementGroupIds.landingZones
+        roleDefinitionId: varRbacRoleDefinitionIds.reader
+      }
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1145,6 +1197,16 @@ module modPolicyAssignmentPlatformDeployVmssMonitor '../../../policy/assignments
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
+    ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      {
+        mgId: varManagementGroupIds.landingZones
+        roleDefinitionId: varRbacRoleDefinitionIds.managedIdentityOperator
+      }
+      {
+        mgId: varManagementGroupIds.landingZones
+        roleDefinitionId: varRbacRoleDefinitionIds.reader
+      }
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1751,6 +1813,16 @@ module modPolicyAssignmentLzsDeployVmMonitor '../../../policy/assignments/policy
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
     ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      {
+        mgId: varManagementGroupIds.platform
+        roleDefinitionId: varRbacRoleDefinitionIds.managedIdentityOperator
+      }
+      {
+        mgId: varManagementGroupIds.platform
+        roleDefinitionId: varRbacRoleDefinitionIds.reader
+      }
+    ]
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1782,6 +1854,16 @@ module modPolicyAssignmentLzsDeployVmssMonitor '../../../policy/assignments/poli
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
     ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      {
+        mgId: varManagementGroupIds.platform
+        roleDefinitionId: varRbacRoleDefinitionIds.managedIdentityOperator
+      }
+      {
+        mgId: varManagementGroupIds.platform
+        roleDefinitionId: varRbacRoleDefinitionIds.reader
+      }
+    ]
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1812,6 +1894,16 @@ module modPolicyAssignmentLzsmDeployMdfcDefSqlAma '../../../policy/assignments/p
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
+    ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      {
+        mgId: varManagementGroupIds.platform
+        roleDefinitionId: varRbacRoleDefinitionIds.managedIdentityOperator
+      }
+      {
+        mgId: varManagementGroupIds.platform
+        roleDefinitionId: varRbacRoleDefinitionIds.reader
+      }
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
