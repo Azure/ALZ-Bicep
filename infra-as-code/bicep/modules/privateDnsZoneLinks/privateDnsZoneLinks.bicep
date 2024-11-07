@@ -30,7 +30,7 @@ param parResourceLockConfig lockType = {
 
 var varSpokeVirtualNetworkName = split(parSpokeVirtualNetworkResourceId, '/')[8]
 
-resource resPrivateDnsZoneLinkToSpoke 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = if (!empty(parPrivateDnsZoneResourceId)) {
+resource resPrivateDnsZoneLinkToSpoke 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2024-06-01' = if (!empty(parPrivateDnsZoneResourceId)) {
   location: 'global'
   name: '${split(parPrivateDnsZoneResourceId, '/')[8]}/dnslink-to-${varSpokeVirtualNetworkName}'
   properties: {
