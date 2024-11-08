@@ -19,11 +19,13 @@ env:
   github_pr_repo: ${{ github.event.pull_request.head.repo.full_name }}
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   arm_docs:
     name: Generate Markdown
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Harden Runner
