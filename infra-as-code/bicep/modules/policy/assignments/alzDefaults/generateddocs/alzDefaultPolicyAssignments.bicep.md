@@ -179,6 +179,14 @@ Resource ID of the DDoS Protection Plan for Virtual Networks.
 
 Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning the Deploy-Private-DNS-Zones policy.
 
+### parPrivateDnsZonesLocation
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Location of Private DNS Zones.
+
+- Default value: `eastus`
+
 ### parPrivateDnsZonesNamesToAuditInCorp
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -307,6 +315,9 @@ Opt out of deployment telemetry.
         },
         "parPrivateDnsResourceGroupId": {
             "value": ""
+        },
+        "parPrivateDnsZonesLocation": {
+            "value": "eastus"
         },
         "parPrivateDnsZonesNamesToAuditInCorp": {
             "value": []
