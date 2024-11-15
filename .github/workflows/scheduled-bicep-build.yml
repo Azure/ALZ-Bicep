@@ -2,7 +2,6 @@ name: Unit Tests - Scheduled Bicep Build
 
 permissions:
   contents: read
-  issues: write
 
 on:
   schedule:
@@ -13,6 +12,8 @@ jobs:
   bicep_unit_tests:
     name: Bicep Build & Lint All Modules
     if: github.repository == 'Azure/ALZ-Bicep'
+    permissions:
+      issues: write
     runs-on: ubuntu-latest
 
     steps:

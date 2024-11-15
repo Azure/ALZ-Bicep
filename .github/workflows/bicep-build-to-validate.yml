@@ -15,7 +15,6 @@ jobs:
   bicep_unit_tests:
     name: Bicep Build & Lint All Modules
     runs-on: ubuntu-latest
-
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
@@ -117,7 +116,6 @@ jobs:
   azure_waf:
     name: Test Azure Well-Architected Framework (PSRule)
     runs-on: ubuntu-latest
-
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
