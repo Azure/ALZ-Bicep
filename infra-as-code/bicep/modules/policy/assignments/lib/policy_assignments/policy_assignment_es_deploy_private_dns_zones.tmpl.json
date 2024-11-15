@@ -16,9 +16,6 @@
       "azureAcrPrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureAcrPrivateDnsZoneId"
       },
-      "azureAcrDataPrivateDnsZoneId": {
-        "value": "${varPrivateDnsZonesFinalResourceIds}.azureAcrDataPrivateDnsZoneId"
-      },
       "azureAppPrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureAppPrivateDnsZoneId"
       },
@@ -70,9 +67,6 @@
       "azureCosmosTablePrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureCosmosTablePrivateDnsZoneId"
       },
-      "azureDataExplorerPrivateDnsZoneId": {
-        "value": "${varPrivateDnsZonesFinalResourceIds}.azureDataExplorerPrivateDnsZoneId"
-      },
       "azureDataFactoryPortalPrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureDataFactoryPortalPrivateDnsZoneId"
       },
@@ -114,9 +108,6 @@
       },
       "azureKeyVaultPrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureKeyVaultPrivateDnsZoneId"
-      },
-      "azureKubernetesManagementPrivateDnsZoneId": {
-        "value": "${varPrivateDnsZonesFinalResourceIds}.azureKubernetesManagementPrivateDnsZoneId"
       },
       "azureMachineLearningWorkspacePrivateDnsZoneId": {
         "value": "${varPrivateDnsZonesFinalResourceIds}.azureMachineLearningWorkspacePrivateDnsZoneId"
