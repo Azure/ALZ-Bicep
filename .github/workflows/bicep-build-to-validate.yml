@@ -11,6 +11,9 @@ on:
       - "**/bicepconfig.json"
   workflow_dispatch: {}
 
+permissions:
+  contents: read
+
 jobs:
   bicep_unit_tests:
     name: Bicep Build & Lint All Modules

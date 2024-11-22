@@ -1,12 +1,12 @@
 name: Unit Tests - Scheduled Bicep Build
 
-permissions:
-  contents: read
-
 on:
   schedule:
     - cron: "0 8 * * 1-5"
   workflow_dispatch: {}
+
+permissions:
+  contents: read
 
 jobs:
   bicep_unit_tests:
