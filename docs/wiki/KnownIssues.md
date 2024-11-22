@@ -4,38 +4,88 @@
 
 This page lists the known issues and limitations currently present in ALZ-Bicep. Please review these before using the repository to understand any potential challenges or constraints.
 
-## Issue 1: What-If Check Fails within Azure DevOps Pipeline/GitHub Actions Workflow with the error: `Additional content found in JSON reference object. A JSON reference object should only have a $ref property. Path 'parResourceLockConfig.defaultValue'`
+## Issue 1: Pipeline Deployment Failures with Azure PowerShell Version 13.0.0 on Azure DevOps Agents
 
-- **Description:** There is a bug with the Azure PowerShell Module version 11.3.1 where the default JSON serializer used to read Bicep output treats `$ref` properties as a JSON reference, whereas the desired behavior is to preserve it in the serialized JSON. We do specify within our workflows/pipelines to use the latest version of Az module within each relevant task/action. However, the "latest" version correlates to the latest version installed on the particular agent/runner, which is 11.3.1 at this time.
-- **Impact:** All What-If checks/operations fail within Azure DevOps Pipeline/GitHub Actions Workflows
-- **Workaround:** To mitigate this issue until the agents have the updated Az version installed, you can explicitly reference a particular Az version for each PowerShell task/action. For example:
-  Azure DevOps Workaround:
+- **Description:**
+  When using the Accelerator, multiple users have reported deployment failures when utilizing Azure DevOps Agents with the latest Azure PowerShell version (13.0.0), configured as the default in the AzurePowerShell@5 task. The error message encountered is:
+  `Error: Code=; Message=Received unexpected type Newtonsoft.Json.Linq.JObject`.
+
+  This issue occurs during the deployment of the following modules:
+  - Custom Policy Definitions
+  - Custom Management Group Diagnostic Settings
+  - ALZ Default Policy Assignments
+
+  Preliminary reports suggest this issue may be specific to Azure DevOps Agents, though testing is underway to determine if it also impacts GitHub Actions workflows or other environments. Notably, deployments using version 13.0.0 of Azure PowerShell on local machines have been successful, indicating the issue might be limited to hosted agents.
+
+- **Impact:**
+  The following deployments fail:
+  - Custom Policy Definitions
+  - Custom Management Group Diagnostic Settings
+  - ALZ Default Policy Assignments
+
+- **Workaround:**
+  Until the Azure DevOps Agents are updated with a compatible version of Az modules, you can explicitly pin a specific Az version for the AzurePowerShell task. For example removing the `azurePowerShellVersion: LatestVersion` and adding `preferredAzurePowerShellVersion: 12.5.0` to the AzurePowerShell task in your pipeline configuration.
+
+  **Azure DevOps Workaround**
+
+  **Before:**
 
   ```yaml
   - task: AzurePowerShell@5
-        displayName: "Logging and Sentinel Resource Group Deployment"
-        inputs:
-          azureSubscription: ${{ variables.SERVICE_CONNECTION_NAME }}
-          azurePowerShellVersion: OtherVersion
-          preferredAzurePowerShellVersion: 11.5.0
-          pwsh: true
-          ScriptType: "InlineScript"
-          Inline: |
-            .\pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1
+    displayName: Check for First Deployment
+    condition: eq(${{ parameters.whatIfEnabled }}, true)
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      pwsh: true
+      azurePowerShellVersion: LatestVersion
+      ScriptType: "InlineScript"
+      Inline: |
+        $managementGroupId = $env:MANAGEMENT_GROUP_ID
+        $managementGroups = Get-AzManagementGroup
+        $managementGroup = $managementGroups | Where-Object { $_.Name -eq $managementGroupId }
+
+        $firstDeployment = $true
+
+        if ($managementGroup -eq $null) {
+          Write-Warning "Cannot find the $managementGroupId Management Group, assuming this is the first deployment. Some dependent resources may not exist yet."
+        } else {
+          Write-Host "Found the $managementGroupId Management Group, assuming this is not the first deployment."
+          $firstDeployment = $false
+        }
+
+        Write-Host "##vso[task.setvariable variable=FIRST_DEPLOYMENT;]$firstDeployment"
   ```
 
-  GitHub Actions Workaround:
+  **After**
 
   ```yaml
-  - name: "Logging and Sentinel Resource Group Deployment"
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            .\pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1
-          azPSVersion: "11.5.0"
+  - task: AzurePowerShell@5
+    displayName: Check for First Deployment
+    condition: eq(${{ parameters.whatIfEnabled }}, true)
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      pwsh: true
+      azurePowerShellVersion: OtherVersion
+      preferredAzurePowerShellVersion: 12.5.0
+      ScriptType: "InlineScript"
+      Inline: |
+        $managementGroupId = $env:MANAGEMENT_GROUP_ID
+        $managementGroups = Get-AzManagementGroup
+        $managementGroup = $managementGroups | Where-Object { $_.Name -eq $managementGroupId }
+
+        $firstDeployment = $true
+
+        if($managementGroup -eq $null) {
+          Write-Warning "Cannot find the $managementGroupId Management Group, so assuming this is the first deployment. We must skip checking some deployments since their dependent resources do not exist yet."
+        } else {
+          Write-Host "Found the $managementGroupId Management Group, so assuming this is not the first deployment."
+          $firstDeployment = $false
+        }
+
+        Write-Host "##vso[task.setvariable variable=FIRST_DEPLOYMENT;]$firstDeployment"
   ```
 
-- **Status:** As our team doesn't directly own the impacted module or have control over the agents/runners, we aim to enhance flexibility to assist with such issues in the future. To achieve this, we plan to introduce a variable in the .env file, enabling version control without the need for individual additions.
+- **Status:** As we are not the team who owns Azure PowerShell or the Azure PowerShell Task, we are actively investigating the cause and will report the issue once confirmed to the applicable team(s). Updates will be provided as new information becomes available within the [original GitHub issue](https://github.com/Azure/ALZ-Bicep/issues/907). In the interim, pinning the Az version to 12.5.0 in your pipeline configurations is the recommended workaround if you encounter this issue.
 
 ## Issue 2: ALZ Default Policy Assignments Module Deployment Failure Due to Template Size
 
