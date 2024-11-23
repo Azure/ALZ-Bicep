@@ -11,14 +11,21 @@ on:
       - "**/bicepconfig.json"
   workflow_dispatch: {}
 
+permissions:
+  contents: read
+
 jobs:
   bicep_unit_tests:
     name: Bicep Build & Lint All Modules
     runs-on: ubuntu-latest
-
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        with:
+          egress-policy: audit
+
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
 
@@ -73,20 +80,34 @@ jobs:
       - name: List Azure Resource Types
         shell: pwsh
         run: |
-          $resourceTypesFullList = @{}
-
-          Get-ChildItem -Path '.\infra-as-code\bicep\modules' -Recurse -Filter '*.json' -Exclude 'callModuleFromACR.example.json', 'orchHubSpoke.json', '*parameters*.json', 'bicepconfig.json', '*policy_*.json' | ForEach-Object {
-            Write-Information "==> Reading Built ARM Template JSON File: $_" -InformationAction Continue
-            $armTemplate = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
-            $armResourceTypes = $armTemplate.Resources
-            $armResourceTypes | ForEach-Object {
-              if (!$resourceTypesFullList.ContainsKey($_.Type)) {
-                $resourceTypesFullList.Add($_.Type, 1)
+          function Add-ToResourceTypesList {
+              param (
+                  [Parameter(Mandatory = $true)]
+                  [string] $Type
+              )
+              if (!$resourceTypesFullList.ContainsKey($Type)) {
+                  $resourceTypesFullList.Add($Type, 1)
               }
               else {
-                $resourceTypesFullList[$_.Type] += 1
+                  $resourceTypesFullList[$Type] += 1
               }
-            }
+          }
+
+          $resourceTypesFullList = @{}
+          Get-ChildItem -Path '.\infra-as-code\bicep\modules' -Recurse -Filter '*.json' -Exclude 'callModuleFromACR.example.json', 'orchHubSpoke.json', '*parameters*.json', 'bicepconfig.json', '*policy_*.json' | ForEach-Object {
+              Write-Information "==> Reading Built ARM Template JSON File: $_" -InformationAction Continue
+              $armTemplate = Get-Content $_.FullName | ConvertFrom-Json -Depth 100
+              $armResourceTypes = $armTemplate.Resources
+              $armResourceTypes | ForEach-Object {
+                  if ($null -eq $_.Type) {
+                      $_.PSObject.Properties | ForEach-Object {
+                          Add-ToResourceTypesList -Type $_.Value.Type
+                      }
+                  }
+                  else {
+                      Add-ToResourceTypesList -Type $_.Type
+                  }
+              }
           }
 
           Write-Information "==> Remove nested deployments resource type" -InformationAction Continue
@@ -98,17 +119,21 @@ jobs:
   azure_waf:
     name: Test Azure Well-Architected Framework (PSRule)
     runs-on: ubuntu-latest
-
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        with:
+          egress-policy: audit
+
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
 
       # Add pipeline tests for Azure Well-Architected Framework.
       # See https://aka.ms/ps-rule-action for configuration options.
       - name: Run PSRule analysis
-        uses: Microsoft/ps-rule@v2
+        uses: Microsoft/ps-rule@46451b8f5258c41beb5ae69ed7190ccbba84112c # v2.9.0
         with:
           modules: PSRule.Rules.Azure
           baseline: Azure.Preview

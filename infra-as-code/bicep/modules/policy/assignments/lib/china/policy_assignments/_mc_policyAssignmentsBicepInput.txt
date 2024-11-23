@@ -68,11 +68,6 @@ var varPolicyAssignmentDenySubnetWithoutUdr = {
 	libDefinition: loadJsonContent('../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deny_subnet_without_udr.tmpl.json')
 }
 
-var varPolicyAssignmentDeployAKSPolicy = {
-	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a8eff44f-8c92-45c3-a3fb-9880802d67a7'
-	libDefinition: loadJsonContent('../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_aks_policy.tmpl.json')
-}
-
 var varPolicyAssignmentDeployASCMonitoring = {
 	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8'
 	libDefinition: loadJsonContent('../../policy/assignments/lib/china/policy_assignments/policy_assignment_es_deploy_asc_monitoring.tmpl.json')

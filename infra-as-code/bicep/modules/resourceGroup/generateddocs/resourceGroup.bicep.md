@@ -8,6 +8,7 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parLocation    | Yes      | Azure Region where Resource Group will be created.
 parResourceGroupName | Yes      | Name of Resource Group to be created.
+parResourceLockConfig | No       | Resource Lock Configuration for Resource Groups.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 
@@ -22,6 +23,19 @@ Azure Region where Resource Group will be created.
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
 Name of Resource Group to be created.
+
+### parResourceLockConfig
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Resource Groups.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Resource Group Module.}`
 
 ### parTags
 
@@ -61,6 +75,12 @@ outResourceGroupId | string |
         },
         "parResourceGroupName": {
             "value": ""
+        },
+        "parResourceLockConfig": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Resource Group Module."
+            }
         },
         "parTags": {
             "value": {}

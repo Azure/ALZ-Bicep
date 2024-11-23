@@ -1,0 +1,16 @@
+{
+  "Modify-Hostpool-PublicNetworkAccess": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('avdHostPoolModifyPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Modify-Workspace-PublicNetworkAccess": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('avdWorkspaceModifyPublicNetworkAccess')]"
+      }
+    }
+  }
+}

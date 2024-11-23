@@ -1,0 +1,100 @@
+{
+  "Aine-ML-Resource-Logs": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlResourceLogs')]"
+      }
+    }
+  },
+  "Audit-ML-Private-Link": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlPrivateLink')]"
+      }
+    }
+  },
+  "Audit-ML-Virtual-Network": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlVirtualNetwork')]"
+      }
+    }
+  },
+  "Deny-ML-Allowed-Module": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlAllowedModule')]"
+      }
+    }
+  },
+  "Deny-ML-Allowed-Python": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlAllowedPython')]"
+      }
+    }
+  },
+  "Deny-ML-Allowed-Registries": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlAllowedRegistries')]"
+      }
+    }
+  },
+  "Deny-ML-Allowed-Registry-Deploy": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlAllowedRegistryDeploy')]"
+      }
+    }
+  },
+  "Deny-ML-Idle-Shutdown": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlIdleShutdown')]"
+      }
+    }
+  },
+  "Deny-ML-Legacy-Mode": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlLegacyMode')]"
+      }
+    }
+  },
+  "Deny-ML-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlLocalAuth')]"
+      }
+    }
+  },
+  "Deny-ML-Outdated-Os": {
+    "parameters": {
+      "effects": {
+        "value": "[[parameters('mlOutdatedOS')]"
+      }
+    }
+  },
+  "Deny-ML-User-Assigned-Identity": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlUserAssignedIdentity')]"
+      }
+    }
+  },
+  "Modify-ML-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlModifyLocalAuth')]"
+      }
+    }
+  },
+  "Modify-ML-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('mlModifyPublicNetworkAccess')]"
+      }
+    }
+  }
+}

@@ -6,6 +6,9 @@
     {
       "pattern": "^(https:\\/\\/)?([www.]?)+(microsoft.com\\/)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+$"
     }
+    {
+      "pattern": "^mailto:"
+    }
   ],
   "httpHeaders": [
     {

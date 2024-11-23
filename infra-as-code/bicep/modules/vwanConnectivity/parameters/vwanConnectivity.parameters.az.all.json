@@ -1,0 +1,132 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parLocation": {
+      "value": "eastus"
+    },
+    "parCompanyPrefix": {
+      "value": "alz"
+    },
+    "parVirtualHubEnabled": {
+      "value": true
+    },
+    "parVirtualWanName": {
+      "value": "alz-vwan"
+    },
+    "parVirtualWanHubName": {
+      "value": "alz-vhub"
+    },
+    "parVirtualWanHubDefaultRouteName": {
+      "value": "default-to-azfw"
+    },
+    "parVpnGatewayName": {
+      "value": "alz-vpngw"
+    },
+    "parExpressRouteGatewayName": {
+      "value": "alz-ergw"
+    },
+    "parAzFirewallName": {
+      "value": "alz-fw"
+    },
+    "parAzFirewallPoliciesName": {
+      "value": "alz-azfwpolicy"
+    },
+    "parVirtualWanHubs": {
+      "value": [
+        {
+          "parVpnGatewayEnabled": true,
+          "parExpressRouteGatewayEnabled": true,
+          "parAzFirewallEnabled": true,
+          "parVirtualHubAddressPrefix": "10.100.0.0/23",
+          "parHubLocation": "eastus",
+          "parHubRoutingPreference": "ExpressRoute",
+          "parVirtualRouterAutoScaleConfiguration": 2,
+          "parVirtualHubRoutingIntentDestinations": [],
+          "parAzFirewallDnsServers" : [],
+          "parAzFirewallIntelMode" : "Alert",
+          "parAzFirewallDnsProxyEnabled": true,
+          "parAzFirewallTier": "Standard",
+          "parAzFirewallAvailabilityZones": ["1","2","3"]
+        }
+      ]
+    },
+    "parVpnGatewayScaleUnit": {
+      "value": 1
+    },
+    "parExpressRouteGatewayScaleUnit": {
+      "value": 1
+    },
+    "parDdosEnabled": {
+      "value": true
+    },
+    "parDdosPlanName": {
+      "value": "alz-ddos-plan"
+    },
+    "parPrivateDnsZonesEnabled": {
+      "value": true
+    },
+    "parPrivateDnsZones": {
+      "value": []
+    },
+    "parVirtualNetworkResourceIdsToLinkTo": {
+      "value": []
+    },
+    "parTags": {
+      "value": {
+        "Environment": "Live"
+      }
+    },
+    "parTelemetryOptOut": {
+      "value": false
+    },
+    "parGlobalResourceLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+      }
+    },
+    "parVirtualWanLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+      }
+    },
+    "parVirtualWanHubsLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+      }
+    },
+    "parDdosLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+      }
+    },
+    "parAzureFirewallLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+      }
+    },
+    "parVpnGatewayLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+      }
+    },
+    "parPrivateDNSZonesLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+      }
+    },
+    "parExpressRouteGatewayLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+      }
+    }
+  }
+}

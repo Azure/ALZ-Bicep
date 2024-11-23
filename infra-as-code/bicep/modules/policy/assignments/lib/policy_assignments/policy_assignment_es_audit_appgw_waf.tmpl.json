@@ -1,7 +1,7 @@
 {
   "name": "Audit-AppGW-WAF",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Assign the WAF should be enabled for Application Gateway audit policy.",
     "displayName": "Web Application Firewall (WAF) should be enabled for Application Gateway",

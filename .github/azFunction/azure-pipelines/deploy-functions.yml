@@ -14,15 +14,27 @@ steps:
     includeRootFolder: false
     archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
 
+- task: AzureCLI@2
+  displayName: 'Azure CLI Get Federated Token'
+  inputs:
+    azureSubscription: azserviceconnection
+    addSpnToEnvironment: true
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$servicePrincipalId"
+      echo "##vso[task.setvariable variable=ARM_ID_TOKEN]$idToken"
+      echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
+
 - task: Bash@3
-  displayName: Login to Azure
+  displayName: Login to Azure for Subsequent Tasks
   name: git_azlogin
   inputs:
-    targetType: 'inline'
+    targetType: "inline"
     script: |
-      az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+      az login --service-principal -u $(ARM_CLIENT_ID) --tenant $(ARM_TENANT_ID) --allow-no-subscriptions --federated-token $(ARM_ID_TOKEN)
 
-- task: Bash@3    
+- task: Bash@3
   displayName: Deploy Base Azure Function
   name: create_az_function
   inputs:
@@ -30,15 +42,15 @@ steps:
     script: |
       az deployment group create --resource-group cancelsubscription --template-file .github/azFunction/AzFunctionInfrastructure/main.bicep --parameters parAzFunctionName=$(cancelsubfunctionname)
 
-- task: AzureFunctionApp@1 
+- task: AzureFunctionApp@1
   displayName: "Deploy Functions to base"
   inputs:
     azureSubscription: 'azserviceconnection'
-    appType: functionAppLinux 
+    appType: functionAppLinux
     appName: $(cancelsubfunctionname)
     package: $(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip
 
-- task: Bash@3    
+- task: Bash@3
   displayName: Az CLI create Role Assignment to Tenant root group
   name: create_role_assign_tenant
   inputs:

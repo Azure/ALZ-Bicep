@@ -1,0 +1,37 @@
+{
+  "Deny-Adf-Git": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adfGit')]"
+      }
+    }
+  },
+  "Deny-Adf-Linked-Service-Key-Vault": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adfLinkedServiceKeyVault')]"
+      }
+    }
+  },
+  "Deny-Adf-Managed-Identity": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adfManagedIdentity')]"
+      }
+    }
+  },
+  "Deny-Adf-Sql-Integration": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adfSqlIntegration')]"
+      }
+    }
+  },
+  "Modify-Adf-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adfModifyPublicNetworkAccess')]"
+      }
+    }
+  }
+}

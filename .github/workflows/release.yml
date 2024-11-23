@@ -1,0 +1,51 @@
+name: Artifacts
+
+on:
+  release:
+    types: [ published ]
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: Generate Accelerator Release Artifacts
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+      with:
+        egress-policy: audit
+
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+    - name: Zip and Tar
+      run: |
+        mkdir staging
+        cp -r accelerator staging
+        cp -r infra-as-code staging
+        cd staging
+        tar -cvzf ../accelerator.tar.gz .
+        zip -r ../accelerator.zip .
+
+    - name: Upload Artifacts to Action
+      uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+      with:
+        name: accelerator
+        path: |
+          accelerator.tar.gz
+          accelerator.zip
+
+    - name: Add Artifacts to Release
+      uses: softprops/action-gh-release@01570a1f39cb168c169c802c3bceb9e93fb10974 # v2.1.0
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: |
+          ./accelerator.tar.gz
+          ./accelerator.zip

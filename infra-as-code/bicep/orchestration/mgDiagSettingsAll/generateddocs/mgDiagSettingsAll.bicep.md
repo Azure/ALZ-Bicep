@@ -11,6 +11,7 @@ parTopLevelManagementGroupSuffix | No       | Optional suffix for the management
 parLandingZoneMgChildren | No       | Array of strings to allow additional or different child Management Groups of the Landing Zones Management Group.
 parPlatformMgChildren | No       | Array of strings to allow additional or different child Management Groups of the Platform Management Group.
 parLogAnalyticsWorkspaceResourceId | Yes      | Log Analytics Workspace Resource ID.
+parDiagnosticSettingsName | No       | Diagnostic Settings Name.
 parLandingZoneMgAlzDefaultsEnable | No       | Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true.
 parPlatformMgAlzDefaultsEnable | No       | Deploys Diagnostic Settings on Management, Connectivity and Identity Management Groups beneath Platform Management Group if set to true.
 parLandingZoneMgConfidentialEnable | No       | Deploys Diagnostic Settings on Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.
@@ -47,6 +48,14 @@ Array of strings to allow additional or different child Management Groups of the
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
 Log Analytics Workspace Resource ID.
+
+### parDiagnosticSettingsName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Diagnostic Settings Name.
+
+- Default value: `toLa`
 
 ### parLandingZoneMgAlzDefaultsEnable
 
@@ -106,6 +115,9 @@ Set Parameter to true to Opt-out of deployment telemetry.
         },
         "parLogAnalyticsWorkspaceResourceId": {
             "value": ""
+        },
+        "parDiagnosticSettingsName": {
+            "value": "toLa"
         },
         "parLandingZoneMgAlzDefaultsEnable": {
             "value": true

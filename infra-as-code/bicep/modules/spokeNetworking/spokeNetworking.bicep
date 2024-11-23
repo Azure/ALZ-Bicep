@@ -1,6 +1,17 @@
 metadata name = 'ALZ Bicep - Spoke Networking module'
 metadata description = 'This module creates spoke networking resources'
 
+type lockType = {
+  @description('Optional. Specify the name of lock.')
+  name: string?
+
+  @description('Optional. The lock settings of the service.')
+  kind: ('CanNotDelete' | 'ReadOnly' | 'None')
+
+  @description('Optional. Notes about this lock.')
+  notes: string?
+}
+
 @sys.description('The Azure Region to deploy the resources into.')
 param parLocation string = resourceGroup().location
 
@@ -10,11 +21,33 @@ param parDisableBgpRoutePropagation bool = false
 @sys.description('Id of the DdosProtectionPlan which will be applied to the Virtual Network.')
 param parDdosProtectionPlanId string = ''
 
+@sys.description('''Global Resource Lock Configuration used for all resources deployed in this module.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
+param parGlobalResourceLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+}
+
 @sys.description('The IP address range for all virtual networks to use.')
 param parSpokeNetworkAddressPrefix string = '10.11.0.0/16'
 
 @sys.description('The Name of the Spoke Virtual Network.')
 param parSpokeNetworkName string = 'vnet-spoke'
+
+@sys.description('''Resource Lock Configuration for Spoke Network
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
+param parSpokeNetworkLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Spoke Networking Module.'
+}
 
 @sys.description('Array of DNS Server IP addresses for VNet.')
 param parDnsServerIps array = []
@@ -24,6 +57,17 @@ param parNextHopIpAddress string = ''
 
 @sys.description('Name of Route table to create for the default route of Hub.')
 param parSpokeToHubRouteTableName string = 'rtb-spoke-to-hub'
+
+@sys.description('''Resource Lock Configuration for Spoke Network Route Table.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
+param parSpokeRouteTableLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Spoke Networking Module.'
+}
 
 @sys.description('Tags you would like to be applied to all resources in this module.')
 param parTags object = {}
@@ -56,6 +100,16 @@ resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2023-02-01' =
   }
 }
 
+// Create a virtual network resource lock if parGlobalResourceLock.kind != 'None' or if parSpokeNetworkLock.kind != 'None'
+resource resSpokeVirtualNetworkLock 'Microsoft.Authorization/locks@2020-05-01' = if (parSpokeNetworkLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resSpokeVirtualNetwork
+  name: parSpokeNetworkLock.?name ?? '${resSpokeVirtualNetwork.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parSpokeNetworkLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parSpokeNetworkLock.?notes
+  }
+}
+
 resource resSpokeToHubRouteTable 'Microsoft.Network/routeTables@2023-02-01' = if (!empty(parNextHopIpAddress)) {
   name: parSpokeToHubRouteTableName
   location: parLocation
@@ -72,6 +126,16 @@ resource resSpokeToHubRouteTable 'Microsoft.Network/routeTables@2023-02-01' = if
       }
     ]
     disableBgpRoutePropagation: parDisableBgpRoutePropagation
+  }
+}
+
+// Create a Route Table if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parHubRouteTableLock.kind != 'None'
+resource resSpokeToHubRouteTableLock 'Microsoft.Authorization/locks@2020-05-01' = if (!empty(parNextHopIpAddress) && (parSpokeRouteTableLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resSpokeToHubRouteTable
+  name: parSpokeRouteTableLock.?name ?? '${resSpokeToHubRouteTable.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parSpokeRouteTableLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parSpokeRouteTableLock.?notes
   }
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "Enable-DDoS-VNET",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Protect your virtual networks against volumetric and protocol attacks with Azure DDoS Protection Standard. For more information, visit https://aka.ms/ddosprotectiondocs.",
     "displayName": "Virtual networks should be protected by Azure DDoS Protection Standard",

@@ -33,6 +33,24 @@
     },
     "parTelemetryOptOut": {
       "value": false
+    },
+    "parGlobalResourceLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Spoke Networking Module."
+      }
+    },
+    "parSpokeNetworkLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Spoke Networking Module."
+      }
+    },
+    "parSpokeRouteTableLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Spoke Networking Module."
+      }
     }
   }
 }

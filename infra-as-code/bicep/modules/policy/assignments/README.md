@@ -9,8 +9,9 @@ If you wish to add your own additional Azure Policy Assignments please review [H
 ## Parameters
 
 - [Parameters for Azure Commercial Cloud](generateddocs/policyAssignmentManagementGroup.bicep.md)
+- This same module can still be used in Azure China. Example parameters are in the [parameters](./parameters/) folder.
 
-> **NOTE:** Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
+> **IMPORTANT:** Due to the size of ARM template generated from this module, we had to condense the descriptions for the parameters in certain cases. If you need more information on a parameter, please refer to the [release v0.19.0](https://github.com/Azure/ALZ-Bicep/releases/tag/v0.19.0). Otherwise, feel free to reach out by opening an issue for additional clarification.
 
 ## Outputs
 
@@ -60,7 +61,7 @@ az deployment mg create --name ${NAME:0:63} --location $LOCATION --management-gr
 # For Azure global regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-PolicyDenyAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-PolicyDenyAssignments-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ManagementGroupId     = 'alz-landingzones'
   Location              = 'eastus'
   TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json'
@@ -73,7 +74,7 @@ OR
 # For Azure China regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-PolicyDenyAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-PolicyDenyAssignments-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   ManagementGroupId     = 'alz-landingzones'
   Location              = 'chinaeast2'
   TemplateParameterFile = 'infra-as-code/bicep/modules/policy/assignments/parameters/policyAssignmentManagementGroup.deny.parameters.all.json'
@@ -127,7 +128,7 @@ az deployment mg create --name $NAME --location $LOCATION --management-group-id 
 # For Azure global regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-PolicyDineAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-PolicyDenyAssignments-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = 'eastus'
   ManagementGroupId     = 'alz-landingzones'
   TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"
@@ -141,7 +142,7 @@ OR
 # For Azure China regions
 
 $inputObject = @{
-  DeploymentName        = 'alz-PolicyDineAssignments-{0}' -f (-join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  DeploymentName        = -join ('alz-PolicyDenyAssignments-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
   Location              = 'chinaeast2'
   ManagementGroupId     = 'alz-landingzones'
   TemplateFile          = "infra-as-code/bicep/modules/policy/assignments/policyAssignmentManagementGroup.bicep"

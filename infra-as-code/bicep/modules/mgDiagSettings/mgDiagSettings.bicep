@@ -6,6 +6,9 @@ metadata description = 'Module used to set up Diagnostic Settings for Management
 @sys.description('Log Analytics Workspace Resource ID.')
 param parLogAnalyticsWorkspaceResourceId string
 
+@sys.description('Diagnostic Settings Name.')
+param parDiagnosticSettingsName string = 'toLa'
+
 @sys.description('Set Parameter to true to Opt-out of deployment telemetry')
 param parTelemetryOptOut bool = false
 
@@ -13,7 +16,7 @@ param parTelemetryOptOut bool = false
 var varCuaid = '5d17f1c2-f17b-4426-9712-0cd2652c4435'
 
 resource mgDiagSet 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
-  name: 'toLa'
+  name: parDiagnosticSettingsName
   properties: {
     workspaceId: parLogAnalyticsWorkspaceResourceId
     logs: [

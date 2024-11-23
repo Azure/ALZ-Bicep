@@ -1,19 +1,39 @@
 <!-- markdownlint-disable -->
-## ALZ Bicep Accelerator
+## ALZ Bicep Accelerator (Classic)
 <!-- markdownlint-restore -->
 
-> **Note:**
-> This is an MVP release of the ALZ Bicep Accelerator. We are actively working on adding additional features and functionality to the Accelerator. Please check back often for updates.
+> [!IMPORTANT]
+> The ALZ Bicep Accelerator has been updated to automate the bootstrapping of your Version Control System and Azure resources. The documentation for the updated ALZ Bicep Accelerator has been moved to [aka.ms/alz/accelerator/docs](https://aka.ms/alz/accelerator/docs). Head over there now to get started!
+>
+> If you prefer, you can hold off on updating to this new version and wait for the upcoming [ALZ-Bicep Refactor](https://github.com/Azure/ALZ-Bicep/issues/791) which will leverage [Azure Verified Modules](https://azure.github.io/Azure-Verified-Modules). This refactor will provide a further updated version of the ALZ Bicep Accelerator.
+>
+> Use the instructions below only if you need to reference the deprecated classic version of the ALZ Bicep Accelerator.
 
-This document provides prescriptive guidance around implementing, automating, and maintaining your ALZ Bicep module with the ALZ Bicep Accelerator.
+### Deprecation Notice
 
-### What is the ALZ Bicep Accelerator?
+> [!WARNING]
+> The classic version of the ALZ Bicep Accelerator has been **deprecated**. It has been removed from the ALZ PowerShell Module and is only supported in version 3.1.2 or earlier. If you're using a newer version, please migrate to the updated Accelerator.
+
+To use the classic version of the ALZ Bicep Accelerator, you can install the ALZ PowerShell Module version 3.1.2 by running the following command:
+
+```powershell
+# Uninstall current version (if needed)
+Uninstall-Module -Name Az -AllVersions -Force
+
+# Install a specific older version (3.1.2)
+Install-Module -Name Az -RequiredVersion 3.1.2
+```
+
+### What is the ALZ Bicep Accelerator (Classic)?
+
+> [!NOTE]
+> These instructions include the `-bicepLegacyMode $true` parameter, which must be explicitly set to use the deprecated classic version of the Accelerator.
 
 The ALZ Bicep Accelerator framework was developed to provide end-users with the following abilities:
 
 - Allows for rapid onboarding and deployment of ALZ Bicep using full-fledged CI/CD pipelines with user provided input
-  > **Note**
-  > Currently we offer support for [GitHub Action Workflows](#getting-started-if-youre-using-github-actions) and [Azure DevOps Pipelines](#getting-started-if-youre-using-azure-devops-pipelines), but there are plans to add support for GitLab pipelines in the future
+  > **Note:**
+  > Currently we offer support for [GitHub Action Workflows](#getting-started-if-youre-using-github-actions) and [Azure DevOps Pipelines](#getting-started-if-youre-using-azure-devops-pipelines)
 - Provides framework to not only stay in-sync with new [ALZ Bicep releases](https://github.com/Azure/ALZ-Bicep/releases), but also incorporates guidance around modifiying existing ALZ Bicep modules and/or associating custom modules to the framework
 - Offers branching strategy guidance and pull request pipelines for linting the repository as well as validating any existing custom and/or modified Bicep modules
 
@@ -70,7 +90,7 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
 1. Create your ALZ Bicep Accelerator framework with the following ALZ PowerShell Module cmdlet:
 
     ```powershell
-    New-ALZEnvironment -o <output_directory> -IaC "bicep" -cicd "github
+    Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_github" -bicepLegacyMode $true
     ```
 
     > **Note:**
@@ -82,10 +102,7 @@ In order to setup the Accelerator framework with the production GitHub Action Wo
     - Traditional VNet Hub and Spoke = .github\workflows\alz-bicep-4a-hubspoke.yml
     - Virtual WAN = .github\workflows\alz-bicep-4b-vwan.yml
 
-    > **Note:**
-    > These workflow files and associated deployment scripts will be programatically removed in the future.
-
-1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration. All files pertaining to the default ALZ Bicep modules are located within the upstream-releases directory. The parameter files are located within the config/custom-parameters directory.
+1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration. All files pertaining to the default ALZ Bicep modules are located within the upstream-releases directory. The parameter files are located within the config/custom-parameters directory. For a minimalistic deployment, some example parameters are provided [here](#guidance-for-a-minimalistic-deployment)
 
     > **Note:** To further understand the purpose of each parameter, please review the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow). For design considerations, please review our page in the [Azure Architecture Center](https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
 
@@ -140,7 +157,7 @@ In order to setup the Accelerator framework with the production ready Azure DevO
 1. Create your ALZ Bicep Accelerator framework with the following ALZ PowerShell Module cmdlet:
 
     ```powershell
-    New-ALZEnvironment -o <output_directory> -IaC "bicep" -cicd "azuredevops"
+    Deploy-Accelerator -o <output_directory> -i "bicep" -b "alz_azuredevops" -bicepLegacyMode $true
     ```
 
     > **Note:**
@@ -155,7 +172,7 @@ In order to setup the Accelerator framework with the production ready Azure DevO
     > **Note:**
     > These workflow files and associated deployment scripts will be programatically removed in the future.
 
-1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration. All files pertaining to the default ALZ Bicep modules are located within the upstream-releases directory. The parameter files are located within the config/custom-parameters directory.
+1. Review all parameter files within config/custom-parameters and update the values as needed for your desired ALZ configuration. All files pertaining to the default ALZ Bicep modules are located within the upstream-releases directory. The parameter files are located within the config/custom-parameters directory. For a minimalistic deployment, some example parameters are provided [here](#guidance-for-a-minimalistic-deployment)
 
     > **Note:** To further understand the purpose of each parameter, please review the [deployment flow documentation](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow). For design considerations, please review our page in the [Azure Architecture Center](https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep).
 
@@ -204,10 +221,15 @@ For this framework, we recommend utilizing the [GitHub Flow branching strategy](
 
 As part of the framework, we include two PR workflows. The pipelines will perform the following tasks:
 
-| Workflow Name           | Trigger   | Tasks               |
-|-------------------------|-----------|---------------------|
-| ALZ-Bicep-PR1-Build | Pull request against main branch and changes to any Bicep file or Bicep config file.             | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile.
-| ALZ-Bicep-PR2-Lint | Pull request against main branch. | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.
+| Workflow Name       | Trigger                                                                              | Tasks                                                                                                                                                                                    |
+|---------------------|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ALZ-Bicep-PR1-Build | Pull request against main branch and changes to any Bicep file or Bicep config file. | Checks to see if there are any modified or custom modules residing within the config\custom-modules directory and if so, the workflow will lint the modules and ensure they can compile. |
+| ALZ-Bicep-PR2-Lint  | Pull request against main branch.                                                    | Using [Super-Linter](https://github.com/github/super-linter), the workflow will lint everything in the codebase apart from the Bicep modules/files.                                      |
+
+> **Important:**
+> YAML PR triggers are supported only in GitHub and Bitbucket Cloud.
+> If you use Azure Repos Git, you can configure a branch policy for build validation to trigger your build pipeline for validation.
+> For more information, please refer to [Azure DevOps: Branch policies and settings - Build validation | Microsoft Learn](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation)
 
 ### Upgrading ALZ-Bicep Versions
 
@@ -217,21 +239,93 @@ With the ALZ Accelerator framework, we have designed the pipelines and directory
 
 1. Prior to upgrading, read the release notes for the version you are upgrading to. The release notes will provide you with information on any breaking changes that may impact your deployment. This is especially important if you have created any custom modules or have [modified any of the ALZ Bicep modules](#incorporating-modified-alz-modules) that may have dependencies on the modules that are being upgraded.
 
-1. Using the ALZ PowerShell Module, there is a cmdlet called `Get-ALZBicepRelease`. This will download a specified release version from the remote ALZ-Bicep repository and pull down to the local directory where your Accelerator framework was initially deployed.
+1. Using the ALZ PowerShell Module, you can update to the latest or a specified version. You must specifiy the same IaC, Bootstrap and Output directory that you used when you initially deployed the ALZ Bicep Accelerator.
 
-    Here is an example of using the cmdlet to pull down version v0.16.5:
+    Here is an example of using the cmdlet to upgrade to the latest version:
 
     ```powershell
-    Get-ALZGithubRelease -githubRepoUrl "https://github.com/Azure/ALZ-Bicep" -release "v0.16.6" -directoryForReleases "C:\Repos\ALZ\accelerator\upstream-releases\"
+    Deploy-Accelerator -i "bicep" -b "alz_github" -o "C:\Repos\ALZ\accelerator" -bicepLegacyMode $true
     ```
 
-1. Once the ALZ Bicep release has been downloaded, you will need to update `upstream-releases-version` within the environment variables file (.env) with the version number of the release that you just downloaded. For example, if you downloaded v0.16.5, you would update the file with the following:
+    Here is an example of using the to upgrade to version v0.17.2:
 
-    ```text
-    UPSTREAM_RELEASE_VERSION="v0.16.5"
+    ```powershell
+    Deploy-Accelerator -i "bicep" -b "alz_github" -v "v0.17.2" -o "C:\Repos\ALZ\accelerator" -bicepLegacyMode $true
+    ```
+
+    You will be prompted for inputs again and the upgrade will be run for you.
+
+    Verify that the cmdlet has updated the environment variables file (.env):
+
+    ```bash
+    UPSTREAM_RELEASE_VERSION="v0.17.2"
     ```
 
 1. You can now deploy the updated modules.
+    > **Tip:**
+    > The current pipelines trigger What-If deployment in PRs for changes in the Bicep parameter files. If you also want to include the What-If deployment process in the module upgrade process, consider the following options:
+    > - Adding the environment variables file (.env) as an additional trigger in the module pipelines
+    > - Introducing inputs/parameters in the module pipelines so you can manually trigger What-If deployments in a controlled manner.
+
+### Guidance for a minimalistic deployment
+
+Some organizations may want to start with a Landing Zone with the least cost possible, sacrificing recommended security settings, as a way to learn how to start governing their infrastructure using an Enterprise Scale approach. In that case, you may want to disable some networking settings like the DDoS network protection plan (which is the item with the *highest cost* when using the defaults), Firewall and VPN or Expressroute gateways, and deploy just the skeleton of your network in a first iteration, which can be easily modified later.
+
+Here you can find the detailed changes for a minimal hub-and-spoke deployment. For vWAN, use the file config/custom-parameters/vwanConnectivity.parameters.all.json instead, and look for the equivalent parameters.
+
+- Remove the DDos Plan: edit config/custom-parameters/hubNetworking.parameters.all.json and set **parDdosEnabled** to **false**.
+
+    ```json
+    "parDdosEnabled": {
+      "value": false
+    },
+    ```
+
+    Then you can either **disable the automatic Policy assignment** by adding the following in config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json:
+
+    ```json
+    "parExcludedPolicyAssignments": {
+      "value": [
+        "Enable-DDoS-VNET"
+      ]
+    },
+    ```
+
+    OR if you want to still deploy the assignment to track the compliance against ALZ recommendations, **set the enforcement mode to DoNotEnforce** in the same parameter file by setting `parDdosEnabled` to `false`:
+
+    ```json
+    "parDdosEnabled": {
+      "value": true
+    },
+    ```
+
+- Remove Bastion or Firewall:  edit config/custom-parameters/hubNetworking.parameters.all.json and set **parAzBastionEnabled** and/or **parAzFirewallEnabled** to **false**. You can also keep it enabled and switch to the **Bastion Basic/Developer SKU and Firewall Basic Tier** for a cost-efficient yet functional starting point.
+
+    ```json
+    "parAzBastionEnabled": {
+      "value": false
+    },
+    "parAzFirewallEnabled": {
+      "value": false
+    },
+    ```
+
+- Remove VPN or ExpressRoute gateways: edit config/custom-parameters/hubNetworking.parameters.all.json and set **parVpnGatewayEnabled** and/or **parExpressRouteGatewayEnabled** to **false**. Optionally the parameter **parVpnGatewayConfig** and/or **parExpressRouteGatewayConfig** could be set to an empty object or removed. For vWAN, look for the **parVpnGatewayEnabled** and **parExpressRouteGatewayEnabled** parameters instead.
+
+    ```json
+    "parVpnGatewayEnabled": {
+      "value": false
+    },
+    "parVpnGatewayConfig": {
+      "value": {}
+    },
+    "parExpressRouteGatewayEnabled": {
+      "value": false
+    },
+    "parExpressRouteGatewayConfig": {
+      "value": {}
+    },
+    ```
 
 ### Incorporating Modified ALZ Modules
 
@@ -247,14 +341,14 @@ We recommend that you do not modify the ALZ Bicep modules directly within the up
 
     `// This module has been modified from the upstream-releases version <UpstreamReleaseVersion>`
 
-1. Update the pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1 file and change the TemplateFile variable to point to the modified module file location as shown below:
+1. Update the pipeline-scripts\Deploy-ALZLoggingAndSentinel.ps1 file and change the TemplateFile variable to point to the modified module file location as shown below:
 
     ```powershell
     [Parameter()]
     [String]$TemplateFile = "config\custom-modules\logging.bicep",
     ```
 
-1. In order to trigger new deployments when subsequent changes are made, add the new module file path to the path-based filter workflow trigger in the ALZ-Bicep-1 workflow file as shown below:
+1. In order to trigger new deployments when subsequent changes are made, add the new module file path to the path-based filter workflow trigger in the ALZ-Bicep-1-Core workflow file as shown below:
 
     ```yaml
     on:
@@ -264,3 +358,22 @@ We recommend that you do not modify the ALZ Bicep modules directly within the up
     ```
 
 1. You are now ready to commit your changes to the main branch and trigger a new deployment.
+
+### Enhancing Your ALZ Bicep Accelerator Framework
+
+Here are additional scenarios and/or implementations to consider incorporating to enhance your Azure Landing Zone architecture and associated processes for both your platform and application teams:
+
+1. **Azure Monitor Baseline Alerts (AMBA) Integration:**
+   Consider integrating [Azure Monitor Baseline Alerts (AMBA)](https://github.com/Azure/ALZ-Bicep/wiki/AzureMonitorBaselineAlerts) into your framework. AMBA provides a comprehensive set of baseline alerts and thresholds tailored to monitor your Azure environment for security and compliance issues.
+
+1. **Bicep Landing Zone Vending Module:**
+   You might be curious about the absence of spoke networking modules in the Accelerator. This is because we recommend leveraging the [Bicep landing zone vending module](https://github.com/Azure/bicep-lz-vending/wiki) instead of the Spoke Networking module within ALZ-Bicep. The vending module not only establishes a virtual network for spoke connectivity (Hub & Spoke or VWAN) but also provides various capabilities for application landing zones. Subscription vending standardizes the process for requesting, deploying, and governing subscriptions so that application teams can deploy their workloads faster. This includes:
+   - Linking the spoke networks to existing DDoS Network Protection Plans
+   - Specifying Custom DNS Servers for the spoke networks
+   - Subscription creation and management group placement
+   - Role assignments
+   - Tags
+   - Registration of resource providers and their features
+
+> **Note:**
+> Explore the different types of landing zones in the Azure Landing Zones documentation: [What is an Azure landing zone? - Platform vs. application landing zones](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/#platform-vs-application-landing-zones)

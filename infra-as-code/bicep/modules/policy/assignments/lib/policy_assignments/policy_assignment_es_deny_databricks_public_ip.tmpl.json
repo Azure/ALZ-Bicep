@@ -1,7 +1,7 @@
 {
   "name": "Deny-DataB-Pip",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Prevent the deployment of Databricks workspaces that do not use the noPublicIp feature to host Databricks clusters without public IPs.",
     "displayName": "Prevent usage of Databricks with public IP",

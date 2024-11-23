@@ -19,7 +19,7 @@ param (
 
 if ($NonRootParentManagementGroupId -eq '') {
   $inputObject = @{
-    DeploymentName        = 'alz-MGDeployment-{0}' -f ( -join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+    DeploymentName        = -join ('alz-MGDeployment-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
     Location              = $Location
     TemplateFile          = $TemplateFile + "managementGroups.bicep"
     TemplateParameterFile = $TemplateParameterFile
@@ -33,7 +33,7 @@ if ($NonRootParentManagementGroupId -eq '') {
 if ($NonRootParentManagementGroupId -ne '') {
   $inputObject = @{
     ManagementGroupId     = $NonRootParentManagementGroupId
-    DeploymentName        = 'alz-MGDeployment-{0}' -f ( -join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+    DeploymentName        = -join ('alz-MGDeployment-{0}' -f (Get-Date -Format 'yyyyMMddTHHMMssffffZ'))[0..63]
     Location              = $Location
     TemplateFile          = $TemplateFile + "managementGroupsScopeEscape.bicep"
     TemplateParameterFile = $TemplateParameterFile

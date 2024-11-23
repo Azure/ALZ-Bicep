@@ -1,0 +1,65 @@
+{
+  "Aine-Cognitive-Services-Resource-Logs": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesResourceLogs')]"
+      }
+    }
+  },
+  "Deny-Cognitive-Services-Customer-Storage": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesCustomerStorage')]"
+      }
+    }
+  },
+  "Deny-Cognitive-Services-Managed-Identity": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesManagedIdentity')]"
+      }
+    }
+  },
+  "Deny-CognitiveSearch-SKU": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveSearchSku')]"
+      }
+    }
+  },
+  "Deny-CongitiveSearch-LocalAuth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveSearchLocalAuth')]"
+      }
+    }
+  },
+  "Modify-Cognitive-Services-Local-Auth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesLocalAuth')]"
+      }
+    }
+  },
+  "Modify-Cognitive-Services-Public-Network-Access": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveServicesModifyPublicNetworkAccess')]"
+      }
+    }
+  },
+  "Modify-CogntiveSearch-LocalAuth": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('modifyCognitiveSearchLocalAuth')]"
+      }
+    }
+  },
+  "Modify-CogntiveSearch-PublicEndpoint": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('modifyCognitiveSearchPublicEndpoint')]"
+      }
+    }
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parLocation": {
+      "value": "eastus"
+    },
+    "parCompanyPrefix": {
+      "value": "alz"
+    },
+    "parHubNetworkName": {
+      "value": "alz-hub-eastus"
+    },
+    "parHubNetworkAddressPrefix": {
+      "value": "10.20.0.0/16"
+    },
+    "parSubnets": {
+      "value": [
+        {
+          "name": "AzureBastionSubnet",
+          "ipAddressRange": "10.20.0.0/24",
+          "networkSecurityGroupId": "",
+          "routeTableId": ""
+        },
+        {
+          "name": "GatewaySubnet",
+          "ipAddressRange": "10.20.254.0/24",
+          "networkSecurityGroupId": "",
+          "routeTableId": ""
+        },
+        {
+          "name": "AzureFirewallSubnet",
+          "ipAddressRange": "10.20.255.0/24",
+          "networkSecurityGroupId": "",
+          "routeTableId": ""
+        },
+        {
+          "name": "AzureFirewallManagementSubnet",
+          "ipAddressRange": "10.20.253.0/24",
+          "networkSecurityGroupId": "",
+          "routeTableId": ""
+        }
+      ]
+    },
+    "parDnsServerIps": {
+      "value": []
+    },
+    "parPublicIpSku": {
+      "value": "Standard"
+    },
+    "parPublicIpPrefix": {
+      "value": ""
+    },
+    "parPublicIpSuffix": {
+      "value": "-PublicIP"
+    },
+    "parAzBastionEnabled": {
+      "value": true
+    },
+    "parAzBastionName": {
+      "value": "alz-bastion"
+    },
+    "parAzBastionSku": {
+      "value": "Standard"
+    },
+    "parAzBastionTunneling": {
+      "value": false
+    },
+    "parAzBastionNsgName": {
+      "value": "nsg-AzureBastionSubnet"
+    },
+    "parDdosEnabled": {
+      "value": true
+    },
+    "parDdosPlanName": {
+      "value": "alz-ddos-plan"
+    },
+    "parAzFirewallEnabled": {
+      "value": true
+    },
+    "parAzFirewallName": {
+      "value": "alz-azfw-eastus"
+    },
+    "parAzFirewallPoliciesName": {
+      "value": "alz-azfwpolicy-eastus"
+    },
+    "parAzFirewallTier": {
+      "value": "Standard"
+    },
+    "parAzFirewallIntelMode": {
+      "value": "Alert"
+    },
+    "parAzFirewallAvailabilityZones": {
+      "value": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    "parAzErGatewayAvailabilityZones": {
+      "value": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    "parAzVpnGatewayAvailabilityZones": {
+      "value": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    "parAzFirewallDnsProxyEnabled": {
+      "value": true
+    },
+    "parAzFirewallDnsServers": {
+      "value": []
+    },
+    "parHubRouteTableName": {
+      "value": "alz-hub-routetable-eastus"
+    },
+    "parDisableBgpRoutePropagation": {
+      "value": false
+    },
+    "parPrivateDnsZonesEnabled": {
+      "value": true
+    },
+    "parPrivateDnsZones": {
+      "value": []
+    },
+    "parVpnGatewayEnabled": {
+      "value": true
+    },
+    "parVpnGatewayConfig": {
+      "value": {
+        "name": "alz-Vpn-Gateway",
+        "gatewayType": "Vpn",
+        "sku": "VpnGw1AZ",
+        "vpnType": "RouteBased",
+        "generation": "Generation1",
+        "enableBgp": false,
+        "activeActive": false,
+        "enableBgpRouteTranslationForNat": false,
+        "enableDnsForwarding": false,
+        "bgpPeeringAddress": "",
+        "bgpsettings": {
+          "asn": "65515",
+          "bgpPeeringAddress": "",
+          "peerWeight": "5"
+        },
+        "vpnClientConfiguration": {}
+      }
+    },
+    "parExpressRouteGatewayEnabled": {
+      "value": true
+    },
+    "parExpressRouteGatewayConfig": {
+      "value": {
+        "name": "alz-ExpressRoute-Gateway",
+        "gatewayType": "ExpressRoute",
+        "sku": "ErGw1Az",
+        "vpnType": "RouteBased",
+        "generation": "None",
+        "enableBgp": false,
+        "activeActive": false,
+        "enableBgpRouteTranslationForNat": false,
+        "enableDnsForwarding": false,
+        "bgpPeeringAddress": "",
+        "bgpsettings": {
+          "asn": "65515",
+          "bgpPeeringAddress": "",
+          "peerWeight": "5"
+        }
+      }
+    },
+    "parTags": {
+      "value": {
+        "Environment": "Live"
+      }
+    },
+    "parTelemetryOptOut": {
+      "value": false
+    },
+    "parBastionOutboundSshRdpPorts": {
+      "value": [
+        "22",
+        "3389"
+      ]
+    },
+    "parGlobalResourceLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parVirtualNetworkLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parBastionLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parDdosLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parAzureFirewallLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parHubRouteTableLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parPrivateDNSZonesLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parVirtualNetworkGatewayLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    }
+  }
+}

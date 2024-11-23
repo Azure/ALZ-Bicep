@@ -15,20 +15,31 @@ env:
   github_email: "41898282+github-actions[bot]@users.noreply.github.com"
   github_commit_message: "Wiki Sync from docs/wiki"
 
+permissions:
+  contents: read
+
 jobs:
   sync-wiki:
     name: Sync docs/wiki to Wiki
     if: github.repository == 'Azure/ALZ-Bicep'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        with:
+          egress-policy: audit
+
       - name: Checkout Source Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: ${{ env.wiki_source_repo }}
           path: ${{ env.wiki_source_repo }}
 
       - name: Checkout Wiki Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: ${{ env.wiki_target_repo }}
           path: ${{ env.wiki_target_repo }}

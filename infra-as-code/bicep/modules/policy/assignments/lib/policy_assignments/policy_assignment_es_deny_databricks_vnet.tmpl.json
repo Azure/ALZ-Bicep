@@ -1,7 +1,7 @@
 {
   "name": "Deny-DataB-Vnet",
   "type": "Microsoft.Authorization/policyAssignments",
-  "apiVersion": "2019-09-01",
+  "apiVersion": "2024-04-01",
   "properties": {
     "description": "Enforces the use of vnet injection for Databricks workspaces.",
     "displayName": "Enforces the use of vnet injection for Databricks",

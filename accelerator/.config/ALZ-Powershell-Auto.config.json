@@ -1,0 +1,1091 @@
+{
+  "starter_modules": {
+    "complete": {
+      "location": ".",
+      "short_name": "Complete",
+      "description": "Complete Azure Landing Zones Deployment",
+      "destroy_script_path": "accelerator/scripts/destroy-landing-zone.ps1",
+      "folders_or_files_to_retain": [
+        "accelerator",
+        "infra-as-code"
+      ],
+      "subfolders_or_files_to_remove" : [
+        "media",
+        "samples",
+        "generateddocs",
+        ".azuredevops/pipelines",
+        ".github/workflows",
+        "pipeline-scripts",
+        "china",
+        "china/policy_definitions",
+        "china/policy_set_definitions",
+        "china/policy_assignments",
+        "parameters",
+        "README.md",
+        "ALZ-Powershell.config.json",
+        "test_modules/managementGroup"
+      ],
+      "on_demand_folders" : [
+        {
+          "target": "infra-as-code",
+          "source": "infra-as-code"
+        }
+      ],
+      "deployment_file_groups" : [
+        {
+          "name": "management_groups",
+          "displayName": "Management Groups",
+          "order": 1
+        },
+        {
+          "name": "logging_and_sentinel",
+          "displayName": "Logging and Sentinel",
+          "order": 2
+        },
+        {
+          "name": "policy_definitions",
+          "displayName": "Policy Definitions",
+          "order": 3
+        },
+        {
+          "name": "role_definitions",
+          "displayName": "Role Definitions",
+          "order": 4
+        },
+        {
+          "name": "policy_assignments",
+          "displayName": "Policy Assignments",
+          "order": 5
+        },
+        {
+          "name": "management_group_diagnostic_settings",
+          "displayName": "Management Group Diagnostic Settings",
+          "order": 6
+        },
+        {
+          "name": "subscription_placement",
+          "displayName": "Subscription Placement",
+          "order": 7
+        },
+        {
+          "name": "connectivity",
+          "displayName": "Connectivity",
+          "order": 8
+        }
+      ],
+      "deployment_files": [
+        {
+          "name": "management_groups",
+          "displayName": "Management Groups Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/managementGroups/managementGroupsScopeEscape.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/managementGroups.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/managementGroups/parameters/managementGroups.parameters.all.json",
+          "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
+          "deploymentType": "managementGroup",
+          "firstRunWhatIf": true,
+          "order": 1,
+          "group": "management_groups"
+        },
+        {
+          "name": "logging_and_sentinel_resource_group",
+          "displayName": "Logging and Sentinel Resource Group Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/resourceGroupLoggingAndSentinel.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+          "subscriptionId": "MANAGEMENT_SUBSCRIPTION_ID",
+          "deploymentType": "subscription",
+          "firstRunWhatIf": true,
+          "order": 2,
+          "group": "logging_and_sentinel"
+        },
+        {
+          "name": "logging_and_sentinel",
+          "displayName": "Logging and Sentinel Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/logging/logging.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/logging.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/logging/parameters/logging.parameters.all.json",
+          "subscriptionId": "MANAGEMENT_SUBSCRIPTION_ID",
+          "resourceGroupName": "LOGGING_RESOURCE_GROUP",
+          "deploymentType": "resourceGroup",
+          "firstRunWhatIf": false,
+          "order": 3,
+          "group": "logging_and_sentinel"
+        },
+        {
+          "name": "custom_policy_definitions",
+          "displayName": "Custom Policy Definitions Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/policy/definitions/customPolicyDefinitions.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/customPolicyDefinitions.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/definitions/parameters/customPolicyDefinitions.parameters.all.json",
+          "managementGroupId": "MANAGEMENT_GROUP_ID",
+          "deploymentType": "managementGroup",
+          "firstRunWhatIf": false,
+          "order": 4,
+          "group": "policy_definitions"
+        },
+        {
+          "name": "custom_role_definitions",
+          "displayName": "Custom Role Definitions Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/customRoleDefinitions/customRoleDefinitions.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/customRoleDefinitions.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/customRoleDefinitions/parameters/customRoleDefinitions.parameters.all.json",
+          "managementGroupId": "MANAGEMENT_GROUP_ID",
+          "deploymentType": "managementGroup",
+          "firstRunWhatIf": false,
+          "order": 5,
+          "group": "role_definitions"
+        },
+        {
+          "name": "management_group_diagnostic_settings",
+          "displayName": "Custom Management Group Diagnostic Settings",
+          "templateFilePath": "./infra-as-code/bicep/orchestration/mgDiagSettingsAll/mgDiagSettingsAll.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/mgDiagSettingsAll.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/orchestration/mgDiagSettingsAll/parameters/mgDiagSettingsAll.parameters.all.json",
+          "managementGroupId": "MANAGEMENT_GROUP_ID",
+          "deploymentType": "managementGroup",
+          "firstRunWhatIf": false,
+          "order": 6,
+          "group": "management_group_diagnostic_settings"
+        },
+        {
+          "name": "policy_assignments",
+          "displayName": "Built-in and Custom Policy Assignments Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/alzDefaultPolicyAssignments.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json",
+          "managementGroupId": "MANAGEMENT_GROUP_ID",
+          "deploymentType": "managementGroup",
+          "firstRunWhatIf": false,
+          "order": 7,
+          "group": "policy_assignments"
+        },
+        {
+          "name": "subscription_placement",
+          "displayName": "Deploy Subscription Placement",
+          "templateFilePath": "./infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/subPlacementAll.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/orchestration/subPlacementAll/parameters/subPlacementAll.parameters.all.json",
+          "managementGroupId": "MANAGEMENT_GROUP_ID",
+          "deploymentType": "managementGroup",
+          "firstRunWhatIf": false,
+          "order": 8,
+          "group": "subscription_placement"
+        },
+        {
+          "name": "connectivity_resource_group",
+          "displayName": "Connectivity Resource Group Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/resourceGroupConnectivity.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+          "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+          "deploymentType": "subscription",
+          "firstRunWhatIf": true,
+          "order": 9,
+          "group": "connectivity"
+        },
+        {
+          "name": "hub_and_spoke",
+          "displayName": "Hub (Hub-and-Spoke) Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/hubNetworking/hubNetworking.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/hubNetworking.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.az.all.json",
+          "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+          "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
+          "networkType": "hubNetworking",
+          "deploymentType": "resourceGroup",
+          "firstRunWhatIf": false,
+          "order": 10,
+          "group": "connectivity"
+        },
+        {
+          "name": "hub_and_spoke_multi_region",
+          "displayName": "Hub (Hub-and-Spoke) Multi-Region Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/hubNetworking/hubNetworking-multiRegion.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/hubNetworking.parameters.multiRegion.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/hubNetworking/parameters/hubNetworking.parameters.az.multiRegion.all.json",
+          "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+          "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
+          "networkType": "hubNetworkingMultiRegion",
+          "deploymentType": "resourceGroup",
+          "firstRunWhatIf": false,
+          "order": 11,
+          "group": "connectivity"
+        },
+        {
+          "name": "vwan",
+          "displayName": "Hub (VWAN) Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/vwanConnectivity.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.az.all.json",
+          "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+          "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
+          "networkType": "vwanConnectivity",
+          "deploymentType": "resourceGroup",
+          "firstRunWhatIf": false,
+          "order": 12,
+          "group": "connectivity"
+        },
+        {
+          "name": "vwan_multi_region",
+          "displayName": "Hub (VWAN) Multi-Region Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/vwanConnectivity.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/vwanConnectivity.parameters.multiRegion.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/vwanConnectivity/parameters/vwanConnectivity.parameters.az.multiRegion.all.json",
+          "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+          "resourceGroupName": "CONNECTIVITY_RESOURCE_GROUP",
+          "networkType": "vwanConnectivityMultiRegion",
+          "deploymentType": "resourceGroup",
+          "firstRunWhatIf": false,
+          "order": 13,
+          "group": "connectivity"
+        }
+      ],
+      "inputs": {
+        "ReleaseVersion": {
+          "source": "powershell",
+          "sourceInput": "release_version",
+          "targets": [
+            {
+              "Name": "RELEASE_VERSION",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "Prefix": {
+          "source": "input",
+          "description": "The prefix that will be added to all resources created by this deployment. (e.g. 'alz')",
+          "targets": [
+            {
+              "Name": "parTopLevelManagementGroupPrefix.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parCompanyPrefix.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parTargetManagementGroupId.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parAssignableScopeManagementGroupId.value",
+              "Destination": "Parameters"
+            },
+            {
+              "name": "MANAGEMENT_GROUP_ID",
+              "Destination": "Environment"
+            },
+            {
+              "name": "PREFIX",
+              "Destination": "Environment"
+            }
+          ],
+          "default": "alz",
+          "validation": "azure_name"
+        },
+        "Location": {
+          "source": "powershell",
+          "sourceInput": "starter_locations[0]",
+          "description": "Deployment location. (e.g. 'uksouth')",
+          "targets": [
+            {
+              "Name": "parLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parAutomationAccountLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parPolicyAssignmentParameters.value.ascExportResourceGroupLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parVirtualWanHubs.value[0].parHubLocation",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "LOCATION",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "SecondaryLocation":{
+          "source": "powershell",
+          "sourceInput": "starter_locations[1]",
+          "description": "Secondary deployment location. (e.g 'westeurope')",
+          "default": "",
+          "targets": [
+            {
+              "Name": "parSecondaryLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parVirtualWanHubs.value[1].parHubLocation",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "SECONDARYLOCATION",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "Environment": {
+          "source": "input",
+          "description": "The Type of environment that will be created. (e.g. 'live', 'canary')",
+          "targets": [
+            {
+              "Name": "parEnvironment.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parTags.value.Environment",
+              "Destination": "Parameters"
+            }
+          ],
+          "default": "live",
+          "validation": "azure_name_section"
+        },
+        "networkType": {
+          "source": "input",
+          "description": "The type of networking to deploy. (e.g. 'hubNetworking', 'vwanConnectivity')",
+          "default": "hubNetworking",
+          "targets": [
+            {
+              "Name": "NETWORK_TYPE",
+              "Destination": "Environment"
+            }
+          ],
+          "validation": "network_type"
+        },
+        "IdentitySubscriptionId": {
+          "source": "powershell",
+          "sourceInput": "subscription_id_identity",
+          "description": "The identifier of the Identity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
+          "targets": [
+            {
+              "Name": "IDENTITY_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "ConnectivitySubscriptionId": {
+          "source": "powershell",
+          "sourceInput": "subscription_id_connectivity",
+          "description": "The identifier of the Connectivity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
+          "targets": [
+            {
+              "Name": "CONNECTIVITY_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "ManagementSubscriptionId": {
+          "source": "powershell",
+          "sourceInput": "subscription_id_management",
+          "description": "The identifier of the Management Subscription. (e.g 00000000-0000-0000-0000-000000000000)",
+          "targets": [
+            {
+              "Name": "MANAGEMENT_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "SecurityContact": {
+          "source": "input",
+          "description": "The email address of the contact for security issues. (e.g. security@contactme.com)",
+          "validation": "email",
+          "targets": [
+            {
+              "Name": "parMsDefenderForCloudEmailSecurityContact.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "LogAnalyticsWorkspaceLocation": {
+          "source": "calculated",
+          "pattern": "{%Location%}",
+          "process": "($args[0] -eq \"eastus\") ? \"eastus2\" : ($args[0] -eq \"eastus2\") ? \"eastus\" : $args[0]",
+          "targets": [
+            {
+              "Name": "parLogAnalyticsWorkspaceLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parLogAnalyticsWorkSpaceAndAutomationAccountLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "LogAnalyticsResourceId": {
+          "source": "calculated",
+          "pattern": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/microsoft.operationalinsights/workspaces/alz-log-analytics",
+          "targets": [
+            {
+              "Name": "parLogAnalyticsWorkspaceResourceId.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "DataCollectionRuleVMInsightsResourceId": {
+          "source": "calculated",
+          "pattern": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-vmi-dcr",
+          "targets": [
+            {
+              "Name": "parDataCollectionRuleVMInsightsResourceId.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "DataCollectionRuleChangeTrackingResourceId": {
+          "source": "calculated",
+          "pattern": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-ct-dcr",
+          "targets": [
+            {
+              "Name": "parDataCollectionRuleChangeTrackingResourceId.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "DataCollectionRuleMDFCSQLResourceId": {
+          "source": "calculated",
+          "pattern": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/ama-mdfcsql-default-dcr",
+          "targets": [
+            {
+              "Name": "parDataCollectionRuleMDFCSQLResourceId.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "UserAssignedManagedIdentityResourceId": {
+          "source": "calculated",
+          "pattern": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.ManagedIdentity/userAssignedIdentities/alz-umi-identity",
+          "targets": [
+            {
+              "Name": "parUserAssignedManagedIdentityResourceId.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "DdosPretectionPlanId": {
+          "source": "calculated",
+          "pattern": "/subscriptions/{%ConnectivitySubscriptionId%}/resourceGroups/rg-{%Prefix%}-connectivity/providers/Microsoft.Network/ddosProtectionPlans/alz-ddos-plan",
+          "targets": [
+            {
+              "Name": "parDdosProtectionPlanId.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "PrivateDnsResourceGroupId": {
+          "source": "calculated",
+          "pattern": "/subscriptions/{%ConnectivitySubscriptionId%}/resourceGroups/rg-{%Prefix%}-connectivity",
+          "targets": [
+            {
+              "Name": "parPrivateDnsResourceGroupId.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "ManagementSubscriptionGroup": {
+          "source": "calculated",
+          "pattern": [
+            "{%ManagementSubscriptionId%}"
+          ],
+          "targets": [
+            {
+              "Name": "parPlatformManagementMgSubs.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "ConnectivitySubscriptionGroup": {
+          "source": "calculated",
+          "pattern": [
+            "{%ConnectivitySubscriptionId%}"
+          ],
+          "targets": [
+            {
+              "Name": "parPlatformConnectivityMgSubs.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "IdentitySubscriptionGroup": {
+          "source": "calculated",
+          "pattern": [
+            "{%IdentitySubscriptionId%}"
+          ],
+          "targets": [
+            {
+              "Name": "parPlatformIdentityMgSubs.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "HubNetworkName": {
+          "source": "calculated",
+          "pattern": "alz-hub-{%Location%}",
+          "targets": [
+            {
+              "Name": "parHubNetworkName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "HubNetworkNameSecondary": {
+          "source": "calculated",
+          "pattern": "alz-hub-{%SecondaryLocation%}",
+          "targets": [
+            {
+              "Name": "parHubNetworkNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "VirtualIdToLink": {
+          "source": "calculated",
+          "pattern": "",
+          "targets": [
+            {
+              "Name": "parVirtualNetworkIdToLink.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "VirtualWanName": {
+          "source": "calculated",
+          "pattern": "alz-vwan-{%Location%}",
+          "targets": [
+            {
+              "Name": "parVirtualWanName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "AzFirewallName": {
+          "source": "calculated",
+          "pattern": "alz-azfw-{%Location%}",
+          "targets": [
+            {
+              "Name": "parAzFirewallName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "AzFirewallNameSecondary": {
+          "source": "calculated",
+          "pattern": "alz-azfw-{%SecondaryLocation%}",
+          "targets": [
+            {
+              "Name": "parAzFirewallNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "FirewallPoliciesName": {
+          "source": "calculated",
+          "pattern": "alz-azfwpolicy-{%Location%}",
+          "targets": [
+            {
+              "Name": "parAzFirewallPoliciesName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "FirewallPoliciesNameSecondary": {
+          "source": "calculated",
+          "pattern": "alz-azfwpolicy-{%SecondaryLocation%}",
+          "targets": [
+            {
+              "Name": "parAzFirewallPoliciesNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parAzBastionName": {
+          "source": "calculated",
+          "pattern": "alz-bastion-{%Location%}",
+          "targets": [
+            {
+              "Name": "parAzBastionName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parAzBastionNameSecondaryLocation": {
+          "source": "calculated",
+          "pattern": "alz-bastion-{%SecondaryLocation%}",
+          "targets": [
+            {
+              "Name": "parAzBastionNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parAzBastionNsgName": {
+          "source": "calculated",
+          "pattern": "nsg-AzureBastionSubnet-{%Location%}",
+          "targets": [
+            {
+              "Name": "parAzBastionNsgName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parAzBastionNsgNameSecondaryLocation": {
+          "source": "calculated",
+          "pattern": "nsg-AzureBastionSubnet-{%SecondaryLocation%}",
+          "targets": [
+            {
+              "Name": "parAzBastionNsgNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parDdosPlanName": {
+          "source": "calculated",
+          "pattern": "alz-ddos-plan-{%Location%}",
+          "targets": [
+            {
+              "Name": "parDdosPlanName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parDdosPlanNameSecondaryLocation": {
+          "source": "calculated",
+          "pattern": "alz-ddos-plan-{%SecondaryLocation%}",
+          "targets": [
+            {
+              "Name": "parDdosPlanNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parHubRouteTableName": {
+          "source": "calculated",
+          "pattern": "alz-hub-routetable-{%Location%}",
+          "targets": [
+            {
+              "Name": "parHubRouteTableName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "parHubRouteTableNameSecondaryLocation": {
+          "source": "calculated",
+          "pattern": "alz-hub-routetable-{%SecondaryLocation%}",
+          "targets": [
+            {
+              "Name": "parHubRouteTableNameSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "ConnectivityResourceGroupName": {
+          "source": "calculated",
+          "pattern": "rg-{%Prefix%}-connectivity",
+          "targets": [
+            {
+              "Name": "CONNECTIVITY_RESOURCE_GROUP",
+              "Destination": "Environment"
+            },
+            {
+              "File": "resourceGroupConnectivity.parameters.all.json",
+              "Name": "parResourceGroupName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "LoggingResourceGroupName": {
+          "source": "calculated",
+          "pattern": "rg-{%Prefix%}-logging",
+          "targets": [
+            {
+              "Name": "LOGGING_RESOURCE_GROUP",
+              "Destination": "Environment"
+            },
+            {
+              "File": "resourceGroupLoggingAndSentinel.parameters.all.json",
+              "Name": "parResourceGroupName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "RootParentManagementGroupId": {
+          "source": "powershell",
+          "sourceInput": "root_parent_management_group_id",
+          "targets": [
+            {
+              "Name": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
+              "Destination": "Environment"
+            },
+            {
+              "File": "managementGroups.parameters.all.json",
+              "Name": "parTopLevelManagementGroupParentId.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "AvailabilityZones": {
+          "source": "powershell",
+          "sourceInput": "availability_zones_starter[0]",
+          "targets": [
+            {
+              "Name": "AVAILABILITY_ZONES",
+              "Destination": "Environment"
+            },
+            {
+              "File": "vwanConnectivity.parameters.all.json",
+              "Name": "parVirtualWanHubs.value[0].parAzFirewallAvailabilityZones",
+              "Destination": "Parameters"
+            },
+            {
+              "File": "hubNetworking.parameters.all.json",
+              "Name": "parAzErGatewayAvailabilityZones.value",
+              "Destination": "Parameters"
+            },
+            {
+              "File": "hubNetworking.parameters.all.json",
+              "Name": "parAzVpnGatewayAvailabilityZones.value",
+              "Destination": "Parameters"
+            },
+            {
+              "File": "hubNetworking.parameters.all.json",
+              "Name": "parAzFirewallAvailabilityZones.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "AvailabilityZonesSecondary": {
+          "source": "powershell",
+          "sourceInput": "availability_zones_starter[1]",
+          "default": [],
+          "targets": [
+            {
+              "Name": "AVAILABILITY_ZONES_SECONDARY",
+              "Destination": "Environment"
+            },
+            {
+              "File": "vwanConnectivity.parameters.all.json",
+              "Name": "parVirtualWanHubs.value[1].parAzFirewallAvailabilityZones",
+              "Destination": "Parameters"
+            },
+            {
+              "File": "hubNetworking.parameters.multiRegion.all.json",
+              "Name": "parAzErGatewayAvailabilityZonesSecondaryLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "File": "hubNetworking.parameters.multiRegion.all.json",
+              "Name": "parAzVpnGatewayAvailabilityZonesSecondaryLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "File": "hubNetworking.parameters.multiRegion.all.json",
+              "Name": "parAzFirewallAvailabilityZonesSecondaryLocation.value",
+              "Destination": "Parameters"
+            }
+          ]
+        }
+      }
+    },
+    "test": {
+      "location": ".",
+      "short_name": "Test",
+      "description": "Test Azure Landing Zones Deployment for e2e testing",
+      "destroy_script_path": "accelerator/scripts/destroy-landing-zone.ps1",
+      "folders_or_files_to_retain": [
+        "accelerator",
+        "infra-as-code/bicep/modules/resourceGroup",
+        "infra-as-code/bicep/CRML/customerUsageAttribution"
+      ],
+      "subfolders_or_files_to_remove" : [
+        "media",
+        "samples",
+        "generateddocs",
+        ".azuredevops/pipelines",
+        ".github/workflows",
+        "pipeline-scripts",
+        "china",
+        "parameters",
+        "README.md",
+        "ALZ-Powershell.config.json"
+      ],
+      "on_demand_folders" : [
+        {
+          "target": "infra-as-code",
+          "source": "infra-as-code"
+        }
+      ],
+      "deployment_file_groups" : [
+        {
+          "name": "management_groups",
+          "displayName": "Management Groups",
+          "order": 1
+        },
+        {
+          "name": "resource_groups",
+          "displayName": "Resource Groups",
+          "order": 2
+        }
+      ],
+      "deployment_files": [
+        {
+          "name": "management_groups",
+          "displayName": "Management Groups Deployment",
+          "templateFilePath": "./accelerator/test_modules/managementGroup/managementGroup.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/managementGroup.parameters.all.json",
+          "templateParametersSourceFilePath": "./accelerator/test_modules/managementGroup/parameters/managementGroup.parameters.all.json",
+          "managementGroupId": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
+          "deploymentType": "managementGroup",
+          "firstRunWhatIf": true,
+          "order": 1,
+          "group": "management_groups"
+        },
+        {
+          "name": "management_resource_group",
+          "displayName": "Management Resource Group Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/resourceGroupManagement.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+          "subscriptionId": "MANAGEMENT_SUBSCRIPTION_ID",
+          "deploymentType": "subscription",
+          "firstRunWhatIf": true,
+          "order": 2,
+          "group": "resource_groups"
+        },
+        {
+          "name": "connectivity_resource_group",
+          "displayName": "Connectivity Resource Group Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/resourceGroupConnectivity.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+          "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
+          "deploymentType": "subscription",
+          "firstRunWhatIf": true,
+          "order": 3,
+          "group": "resource_groups"
+        },
+        {
+          "name": "identity_resource_group",
+          "displayName": "Identity Resource Group Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/resourceGroupIdentity.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+          "subscriptionId": "IDENTITY_SUBSCRIPTION_ID",
+          "deploymentType": "subscription",
+          "firstRunWhatIf": true,
+          "order": 4,
+          "group": "resource_groups"
+        }
+      ],
+      "inputs": {
+        "ReleaseVersion": {
+          "source": "powershell",
+          "sourceInput": "release_version",
+          "targets": [
+            {
+              "Name": "RELEASE_VERSION",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "Prefix": {
+          "source": "input",
+          "description": "The prefix that will be added to all resources created by this deployment. (e.g. 'alz')",
+          "targets": [
+            {
+              "Name": "parTopLevelManagementGroupPrefix.value",
+              "Destination": "Parameters"
+            },
+            {
+              "name": "MANAGEMENT_GROUP_ID",
+              "Destination": "Environment"
+            },
+            {
+              "Name": "PREFIX",
+              "Destination": "Environment"
+            }
+          ],
+          "default": "alz",
+          "validation": "azure_name"
+        },
+        "Location": {
+          "source": "powershell",
+          "sourceInput": "starter_locations[0]",
+          "description": "Deployment location. (e.g. 'uksouth')",
+          "targets": [
+            {
+              "Name": "parLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "LOCATION",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "SecondaryLocation": {
+          "source": "powershell",
+          "sourceInput": "starter_locations[1]",
+          "description": "Deployment location. (e.g. 'uksouth')",
+          "default": "",
+          "targets": [
+            {
+              "Name": "parLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "parLocation.value",
+              "Destination": "Parameters"
+            },
+            {
+              "Name": "SECONDARYLOCATION",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "Environment": {
+          "source": "input",
+          "description": "The Type of environment that will be created. (e.g. 'live', 'canary')",
+          "targets": [
+            {
+              "Name": "parTags.value.Environment",
+              "Destination": "Parameters"
+            }
+          ],
+          "default": "live",
+          "validation": "azure_name_section"
+        },
+        "networkType": {
+          "source": "input",
+          "description": "The type of networking to deploy. (e.g. 'hubNetworking', 'vwanConnectivity')",
+          "default": "hubNetworking",
+          "targets": [
+            {
+              "Name": "NETWORK_TYPE",
+              "Destination": "Environment"
+            }
+          ],
+          "validation": "network_type"
+        },
+        "IdentitySubscriptionId": {
+          "source": "powershell",
+          "sourceInput": "subscription_id_identity",
+          "description": "The identifier of the Identity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
+          "targets": [
+            {
+              "Name": "IDENTITY_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "ConnectivitySubscriptionId": {
+          "source": "powershell",
+          "sourceInput": "subscription_id_connectivity",
+          "description": "The identifier of the Connectivity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
+          "targets": [
+            {
+              "Name": "CONNECTIVITY_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "ManagementSubscriptionId": {
+          "source": "powershell",
+          "sourceInput": "subscription_id_management",
+          "description": "The identifier of the Management Subscription. (e.g 00000000-0000-0000-0000-000000000000)",
+          "targets": [
+            {
+              "Name": "MANAGEMENT_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "RootParentManagementGroupId": {
+          "source": "powershell",
+          "sourceInput": "root_parent_management_group_id",
+          "targets": [
+            {
+              "Name": "ROOT_PARENT_MANAGEMENT_GROUP_ID",
+              "Destination": "Environment"
+            },
+            {
+              "File": "managementGroup.parameters.all.json",
+              "Name": "parTopLevelManagementGroupParentId.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "ConnectivityResourceGroupName": {
+          "source": "calculated",
+          "pattern": "rg-{%Prefix%}-connectivity",
+          "targets": [
+            {
+              "Name": "CONNECTIVITY_RESOURCE_GROUP",
+              "Destination": "Environment"
+            },
+            {
+              "File": "resourceGroupConnectivity.parameters.all.json",
+              "Name": "parResourceGroupName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "ManagementResourceGroupName": {
+          "source": "calculated",
+          "pattern": "rg-{%Prefix%}-management",
+          "targets": [
+            {
+              "Name": "MANAGEMENT_RESOURCE_GROUP",
+              "Destination": "Environment"
+            },
+            {
+              "File": "resourceGroupManagement.parameters.all.json",
+              "Name": "parResourceGroupName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "IdentityResourceGroupName": {
+          "source": "calculated",
+          "pattern": "rg-{%Prefix%}-identity",
+          "targets": [
+            {
+              "Name": "IDENTITY_RESOURCE_GROUP",
+              "Destination": "Environment"
+            },
+            {
+              "File": "resourceGroupIdentity.parameters.all.json",
+              "Name": "parResourceGroupName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "AvailabilityZones": {
+          "source": "powershell",
+          "sourceInput": "availability_zones_starter[0]",
+          "targets": [
+            {
+              "Name": "AVAILABILITY_ZONES",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "AvailabilityZonesSecondary": {
+          "source": "powershell",
+          "sourceInput": "availability_zones_starter[1]",
+          "default": [],
+          "targets": [
+            {
+              "Name": "AVAILABILITY_ZONES_SECONDARY",
+              "Destination": "Environment"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

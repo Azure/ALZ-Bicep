@@ -17,14 +17,26 @@ jobs:
     pool:
       vmImage: ubuntu-latest
     steps:
+      - task: AzureCLI@2
+        displayName: 'Azure CLI Get Federated Token'
+        inputs:
+          azureSubscription: mcserviceconnection
+          addSpnToEnvironment: true
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$servicePrincipalId"
+            echo "##vso[task.setvariable variable=ARM_ID_TOKEN]$idToken"
+            echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
+
       - task: Bash@3
-        displayName: Login to Azure
+        displayName: Login to Azure for Subsequent Tasks
         name: git_azlogin
         inputs:
           targetType: "inline"
           script: |
             az cloud set --name AzureChinaCloud
-            az login --service-principal --username $(azclilogin) --password $(azclipwd) --tenant $(azclitenant)
+            az login --service-principal -u $(ARM_CLIENT_ID) --tenant $(ARM_TENANT_ID) --allow-no-subscriptions --federated-token $(ARM_ID_TOKEN)
 
       - task: Bash@3
         displayName: Az CLI Create Resource Group for PR
@@ -142,14 +154,6 @@ jobs:
           targetType: "inline"
           script: |
             az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/vnetPeering/vnetPeering.bicep --parameters parDestinationVirtualNetworkId="/subscriptions/$(subscriptionId)/resourceGroups/$(ResourceGroupName)/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"  parSourceVirtualNetworkName="vnet-spoke" parDestinationVirtualNetworkName="alz-hub-eastus" --name $(ManagementGroupPrefix)
-
-      - task: Bash@3
-        displayName: Az CLI Validate Private DNS Zones
-        name: validate_private_dns
-        inputs:
-          targetType: "inline"
-          script: |
-            az deployment group validate --resource-group $(ResourceGroupName) --template-file infra-as-code/bicep/modules/privateDnsZones/privateDnsZones.bicep --parameters @infra-as-code/bicep/modules/privateDnsZones/parameters/mc-privateDnsZones.parameters.all.json --name $(ManagementGroupPrefix)
 
       - task: Bash@3
         displayName: Az CLI Validate Public IP

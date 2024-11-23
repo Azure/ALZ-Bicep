@@ -48,7 +48,6 @@ The following are the unique ID's (also known as PIDs) used in each of the modul
 | virtualNetworkPeer                | ab8e3b12-b0fa-40aa-8630-e3f7699e2142 |
 | vwanConnectivity                  | 7f94f23b-7a59-4a5c-9a8d-2a253a566f61 |
 | vnetPeeringVwan                   | 7b5e6db2-1e8c-4b01-8eee-e1830073a63d |
-| privateDnsZones                   | 981733dd-3195-4fda-a4ee-605ab959edb6 |
 | hubSpoke - Orchestration          | 50ad3b1a-f72c-4de4-8293-8a6399991beb |
 | hubPeeredSpoke - Orchestration    | 8ea6f19a-d698-4c00-9afb-5c92d4766fd2 |
 | SubPlacementAll - Orchestration   | bb800623-86ff-4ab4-8901-93c2b70967ae |
