@@ -193,7 +193,7 @@ param parAzFirewallName string = '${parCompanyPrefix}-fw'
 @sys.description('The deployment style of the Azure Firewall Policy. Either one shared firewall policy (`SharedGlobal`) or one policy per region (`PerRegion`), defaults to `SharedGlobal`.')
 param parAzFirewallPolicyDeploymentStyle azFirewallPolicyDeploymentStyleType = 'SharedGlobal'
 
-@sys.description('Azure Firewall Policies Name.')
+@sys.description('Azure Firewall Policies Name. This is used to automatically generate a name for the Azure Firewall Policy following concat of the pattern `parAzFirewallPoliciesName-hub.parHubLocation` if you want to provide a true custom name then specify a value in each object in the array of `parVirtualWanHubs.parAzFirewallPolicyCustomName`.')
 param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy'
 
 @description('The operation mode for automatically learning private ranges to not be SNAT.')
