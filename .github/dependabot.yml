@@ -7,3 +7,6 @@ updates:
     labels:
       - "Type: Hygiene :broom:"
       - "Needs: Attention :wave:"
+    commit-message:
+      prefix: 'build: '
+
