@@ -21,7 +21,8 @@ parVirtualWanHubsLock | No       | Resource Lock Configuration for Virtual WAN H
 parVpnGatewayName | No       | VPN Gateway Name.
 parExpressRouteGatewayName | No       | ExpressRoute Gateway Name.
 parAzFirewallName | No       | Azure Firewall Name.
-parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
+parAzFirewallPolicyDeploymentStyle | No       | The deployment style of the Azure Firewall Policy. Either one shared firewall policy (`SharedGlobal`) or one policy per region (`PerRegion`), defaults to `SharedGlobal`.
+parAzFirewallPoliciesName | No       | Azure Firewall Policies Name. This is used to automatically generate a name for the Azure Firewall Policy following concat of the pattern `parAzFirewallPoliciesName-hub.parHubLocation` if you want to provide a true custom name then specify a value in each object in the array of `parVirtualWanHubs.parAzFirewallPolicyCustomName`.
 parAzFirewallPoliciesAutoLearn | No       | The operation mode for automatically learning private ranges to not be SNAT.
 parAzFirewallPoliciesPrivateRanges | No       | Private IP addresses/IP ranges to which traffic will not be SNAT.
 parAzureFirewallLock | No       | Resource Lock Configuration for Azure Firewall.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
@@ -192,11 +193,19 @@ Azure Firewall Name.
 
 - Default value: `[format('{0}-fw', parameters('parCompanyPrefix'))]`
 
+### parAzFirewallPolicyDeploymentStyle
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+The deployment style of the Azure Firewall Policy. Either one shared firewall policy (`SharedGlobal`) or one policy per region (`PerRegion`), defaults to `SharedGlobal`.
+
+- Default value: `SharedGlobal`
+
 ### parAzFirewallPoliciesName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Azure Firewall Policies Name.
+Azure Firewall Policies Name. This is used to automatically generate a name for the Azure Firewall Policy following concat of the pattern `parAzFirewallPoliciesName-hub.parHubLocation` if you want to provide a true custom name then specify a value in each object in the array of `parVirtualWanHubs.parAzFirewallPolicyCustomName`.
 
 - Default value: `[format('{0}-azfwpolicy', parameters('parCompanyPrefix'))]`
 
@@ -429,6 +438,9 @@ outAzFwPrivateIps | array |
         },
         "parAzFirewallName": {
             "value": "[format('{0}-fw', parameters('parCompanyPrefix'))]"
+        },
+        "parAzFirewallPolicyDeploymentStyle": {
+            "value": "SharedGlobal"
         },
         "parAzFirewallPoliciesName": {
             "value": "[format('{0}-azfwpolicy', parameters('parCompanyPrefix'))]"

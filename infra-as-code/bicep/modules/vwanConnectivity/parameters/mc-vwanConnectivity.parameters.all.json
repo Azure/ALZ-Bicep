@@ -35,6 +35,9 @@
     "parAzFirewallPoliciesName": {
       "value": "alz-azfwpolicy"
     },
+    "parAzFirewallPolicyDeploymentStyle": {
+      "value": "SharedGlobal"
+    },
     "parVirtualWanHubs": {
       "value": [
         {

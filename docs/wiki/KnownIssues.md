@@ -4,38 +4,81 @@
 
 This page lists the known issues and limitations currently present in ALZ-Bicep. Please review these before using the repository to understand any potential challenges or constraints.
 
-## Issue 1: What-If Check Fails within Azure DevOps Pipeline/GitHub Actions Workflow with the error: `Additional content found in JSON reference object. A JSON reference object should only have a $ref property. Path 'parResourceLockConfig.defaultValue'`
+## Issue 1: Deployment Failures with Azure PowerShell Version 13.0.0
 
-- **Description:** There is a bug with the Azure PowerShell Module version 11.3.1 where the default JSON serializer used to read Bicep output treats `$ref` properties as a JSON reference, whereas the desired behavior is to preserve it in the serialized JSON. We do specify within our workflows/pipelines to use the latest version of Az module within each relevant task/action. However, the "latest" version correlates to the latest version installed on the particular agent/runner, which is 11.3.1 at this time.
-- **Impact:** All What-If checks/operations fail within Azure DevOps Pipeline/GitHub Actions Workflows
-- **Workaround:** To mitigate this issue until the agents have the updated Az version installed, you can explicitly reference a particular Az version for each PowerShell task/action. For example:
-  Azure DevOps Workaround:
+- **Description:**
+  When using the Accelerator or deploying locally with Azure PowerShell version 13.0.0 (the default version for both GitHub Actions and Azure DevOps in the Accelerator), the following error message may be encountered:
+  `Error: Code=; Message=Received unexpected type Newtonsoft.Json.Linq.JObject`.
+
+  Testing conducted by the ALZ Core team has confirmed that this issue directly impacts the deployment of the **ALZ Default Policy Assignments** module. However, there have also been reports of similar issues affecting the **ALZ Default Policy Definitions** module and the **ALZ Custom Role Definitions** module. This suggests that other modules may also experience the error, depending on specific parameters or customizations used during deployment.
+
+- **Impact:**
+  This issue affects Azure DevOps Agents, GitHub Actions workflows, and local deployments using Azure PowerShell version 13.0.0.
+  The following deployments will fail:
+  - ALZ Default Policy Assignments
+
+  The following deployments may fail depending on specific parameters or customizations:
+  - ALZ Default Policy Definitions
+  - ALZ Custom Role Definitions
+
+- **Workaround:**
+  Until Azure DevOps Agents and GitHub-hosted runners are updated with a compatible version of Az modules, you can explicitly pin a specific Az version in the AzurePowerShell task. For example, remove the `azurePowerShellVersion: LatestVersion` and add `preferredAzurePowerShellVersion: 12.5.0` to your pipeline configuration.
+
+  **Azure DevOps Workaround**
+
+  **Before:**
 
   ```yaml
   - task: AzurePowerShell@5
-        displayName: "Logging and Sentinel Resource Group Deployment"
-        inputs:
-          azureSubscription: ${{ variables.SERVICE_CONNECTION_NAME }}
-          azurePowerShellVersion: OtherVersion
-          preferredAzurePowerShellVersion: 11.5.0
-          pwsh: true
-          ScriptType: "InlineScript"
-          Inline: |
-            .\pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1
+    displayName: Check for First Deployment
+    condition: eq(${{ parameters.whatIfEnabled }}, true)
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      pwsh: true
+      azurePowerShellVersion: LatestVersion
+      ScriptType: "InlineScript"
   ```
 
-  GitHub Actions Workaround:
+  **After**
 
   ```yaml
-  - name: "Logging and Sentinel Resource Group Deployment"
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            .\pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1
-          azPSVersion: "11.5.0"
+  - task: AzurePowerShell@5
+    displayName: Check for First Deployment
+    condition: eq(${{ parameters.whatIfEnabled }}, true)
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      pwsh: true
+      azurePowerShellVersion: OtherVersion
+      preferredAzurePowerShellVersion: 12.5.0
   ```
 
-- **Status:** As our team doesn't directly own the impacted module or have control over the agents/runners, we aim to enhance flexibility to assist with such issues in the future. To achieve this, we plan to introduce a variable in the .env file, enabling version control without the need for individual additions.
+  **GitHub Actions Workaround**
+
+  **Before:**
+
+  ```yaml
+  runs:
+  using: "composite"
+  steps:
+    - name: Run Bicep Deploy
+      uses: azure/powershell@v2
+      with:
+        azPSVersion: 'latest'
+  ```
+
+  **After:**
+
+  ```yaml
+  runs:
+  using: "composite"
+  steps:
+    - name: Run Bicep Deploy
+      uses: azure/powershell@v2
+      with:
+        azPSVersion: '12.5.0'
+  ```
+
+- **Status:** As we are not the team who owns Azure PowerShell or the Azure PowerShell Task, we are actively investigating the cause and will report the issue once confirmed to the applicable team(s). Updates will be provided as new information becomes available within the [original GitHub issue](https://github.com/Azure/ALZ-Bicep/issues/907). In the interim, pinning the Az version to 12.5.0 in your pipeline configurations is the recommended workaround if you encounter this issue.
 
 ## Issue 2: ALZ Default Policy Assignments Module Deployment Failure Due to Template Size
 
