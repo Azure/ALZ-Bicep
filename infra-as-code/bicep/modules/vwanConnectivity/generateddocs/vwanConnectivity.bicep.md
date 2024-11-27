@@ -21,6 +21,7 @@ parVirtualWanHubsLock | No       | Resource Lock Configuration for Virtual WAN H
 parVpnGatewayName | No       | VPN Gateway Name.
 parExpressRouteGatewayName | No       | ExpressRoute Gateway Name.
 parAzFirewallName | No       | Azure Firewall Name.
+parAzFirewallPolicyDeploymentStyle | No       | The deployment style of the Azure Firewall Policy. Either one shared firewall policy (`SharedGlobal`) or one policy per region (`PerRegion`), defaults to `SharedGlobal`.
 parAzFirewallPoliciesName | No       | Azure Firewall Policies Name.
 parAzFirewallPoliciesAutoLearn | No       | The operation mode for automatically learning private ranges to not be SNAT.
 parAzFirewallPoliciesPrivateRanges | No       | Private IP addresses/IP ranges to which traffic will not be SNAT.
@@ -191,6 +192,14 @@ ExpressRoute Gateway Name.
 Azure Firewall Name.
 
 - Default value: `[format('{0}-fw', parameters('parCompanyPrefix'))]`
+
+### parAzFirewallPolicyDeploymentStyle
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+The deployment style of the Azure Firewall Policy. Either one shared firewall policy (`SharedGlobal`) or one policy per region (`PerRegion`), defaults to `SharedGlobal`.
+
+- Default value: `SharedGlobal`
 
 ### parAzFirewallPoliciesName
 
@@ -429,6 +438,9 @@ outAzFwPrivateIps | array |
         },
         "parAzFirewallName": {
             "value": "[format('{0}-fw', parameters('parCompanyPrefix'))]"
+        },
+        "parAzFirewallPolicyDeploymentStyle": {
+            "value": "SharedGlobal"
         },
         "parAzFirewallPoliciesName": {
             "value": "[format('{0}-azfwpolicy', parameters('parCompanyPrefix'))]"
