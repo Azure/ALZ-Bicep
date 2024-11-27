@@ -32,6 +32,9 @@
     "parAzFirewallPoliciesName": {
       "value": "alz-azfwpolicy"
     },
+    "parAzFirewallPolicyDeploymentStyle": {
+      "value": "PerRegion"
+    },
     "parVirtualWanHubs": {
       "value": [
         {
@@ -81,7 +84,7 @@
       "value": 1
     },
     "parDdosEnabled": {
-      "value": false
+      "value": true
     },
     "parDdosPlanName": {
       "value": "alz-ddos-plan"
