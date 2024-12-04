@@ -305,6 +305,10 @@
               "Destination": "Parameters"
             },
             {
+              "Name": "parPrivateDnsZonesLocation.value",
+              "Destination": "Parameters"
+            },
+            {
               "Name": "LOCATION",
               "Destination": "Environment"
             }

@@ -26,6 +26,7 @@ parMsDefenderForCloudEmailSecurityContact | No       | Email address for Microso
 parDdosEnabled | No       | Enable/disable DDoS Network Protection. True enforces Enable-DDoS-VNET policy; false disables.
 parDdosProtectionPlanId | No       | Resource ID of the DDoS Protection Plan for Virtual Networks.
 parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning the Deploy-Private-DNS-Zones policy.
+parPrivateDnsZonesLocation | No       | Location of Private DNS Zones.
 parPrivateDnsZonesNamesToAuditInCorp | No       | List of Private DNS Zones to audit under the Corp Management Group. This overwrites default values.
 parDisableAlzDefaultPolicies | No       | Disable all default ALZ policies.
 parDisableSlzDefaultPolicies | No       | Disable all default sovereign policies.
@@ -178,6 +179,12 @@ Resource ID of the DDoS Protection Plan for Virtual Networks.
 
 Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning the Deploy-Private-DNS-Zones policy.
 
+### parPrivateDnsZonesLocation
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Location of Private DNS Zones.
+
 ### parPrivateDnsZonesNamesToAuditInCorp
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -305,6 +312,9 @@ Opt out of deployment telemetry.
             "value": ""
         },
         "parPrivateDnsResourceGroupId": {
+            "value": ""
+        },
+        "parPrivateDnsZonesLocation": {
             "value": ""
         },
         "parPrivateDnsZonesNamesToAuditInCorp": {
