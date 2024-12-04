@@ -181,11 +181,9 @@ Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning
 
 ### parPrivateDnsZonesLocation
 
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
 Location of Private DNS Zones.
-
-- Default value: `eastus`
 
 ### parPrivateDnsZonesNamesToAuditInCorp
 
@@ -317,7 +315,7 @@ Opt out of deployment telemetry.
             "value": ""
         },
         "parPrivateDnsZonesLocation": {
-            "value": "eastus"
+            "value": ""
         },
         "parPrivateDnsZonesNamesToAuditInCorp": {
             "value": []
