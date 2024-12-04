@@ -99,7 +99,7 @@ param parDdosProtectionPlanId string = ''
 param parPrivateDnsResourceGroupId string = ''
 
 @description('Location of Private DNS Zones.')
-param parPrivateDnsZonesLocation string
+param parPrivateDnsZonesLocation string = ''
 
 @description('List of Private DNS Zones to audit under the Corp Management Group. This overwrites default values.')
 param parPrivateDnsZonesNamesToAuditInCorp array = []
@@ -595,7 +595,7 @@ var varGeoCodes = {
   westus3: 'wus3'
 }
 
-var varSelectedGeoCode = varGeoCodes[?parPrivateDnsZonesLocation]
+var varSelectedGeoCode = !empty(parPrivateDnsZonesLocation) ?  varGeoCodes[parPrivateDnsZonesLocation] : null
 
 var varPrivateDnsZonesFinalResourceIds = {
   azureAcrPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.azurecr.io'
