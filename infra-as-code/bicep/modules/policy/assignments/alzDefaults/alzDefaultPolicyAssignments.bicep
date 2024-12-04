@@ -595,7 +595,7 @@ var varGeoCodes = {
   westus3: 'wus3'
 }
 
-var varSelectedGeoCode = !empty(parPrivateDnsZonesLocation) ?  varGeoCodes[parPrivateDnsZonesLocation] : null
+var varSelectedGeoCode = !empty(parPrivateDnsZonesLocation) ? varGeoCodes[parPrivateDnsZonesLocation] : null
 
 var varPrivateDnsZonesFinalResourceIds = {
   azureAcrPrivateDnsZoneId: '${varPrivateDnsZonesBaseResourceId}privatelink.azurecr.io'
