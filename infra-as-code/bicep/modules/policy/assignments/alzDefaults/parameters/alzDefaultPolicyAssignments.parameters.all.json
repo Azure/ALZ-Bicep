@@ -71,6 +71,9 @@
     "parPrivateDnsResourceGroupId": {
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/rg-alz-hub-networking-001"
     },
+    "parPrivateDnsZonesLocation": {
+      "value": "eastus"
+    },
     "parPrivateDnsZonesNamesToAuditInCorp": {
       "value": []
     },
