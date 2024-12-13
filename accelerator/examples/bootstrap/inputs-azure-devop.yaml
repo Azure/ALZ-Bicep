@@ -1,0 +1,46 @@
+---
+# For detailed instructions on using this file, visit:
+# https://github.com/Azure/ALZ-PowerShell-Module/wiki/%5BUser-Guide%5D-Quick-Start-Phase-2-Azure-DevOps#2211-azure-devops-with-bicep
+
+# Basic Inputs
+iac_type: "bicep"
+bootstrap_module_name: "alz_azuredevops"
+starter_module_name: "complete"
+
+# Shared Interface Inputs
+bootstrap_location: "<region>"
+starter_locations: ["<region>"]
+root_parent_management_group_id: ""
+subscription_id_management: "<management-subscription-id>"
+subscription_id_identity: "<identity-subscription-id>"
+subscription_id_connectivity: "<connectivity-subscription-id>"
+
+# Bootstrap Inputs
+azure_devops_personal_access_token: "<token-1>"
+azure_devops_agents_personal_access_token: "<token-2>"
+azure_devops_organization_name: "<azure-devops-organization>"
+use_separate_repository_for_templates: true
+bootstrap_subscription_id: ""
+service_name: "alz"
+environment_name: "mgmt"
+postfix_number: 1
+azure_devops_use_organisation_legacy_url: false
+azure_devops_create_project: true
+azure_devops_project_name: "<azure-devops-project-name>"
+use_self_hosted_agents: true
+use_private_networking: true
+allow_storage_access_from_my_ip: false
+apply_approvers: ["<email-address>"]
+create_branch_policies: true
+
+# Complete Starter Module Specific Variables
+# (Details: https://github.com/Azure/ALZ-PowerShell-Module/wiki/%5BUser-Guide%5D-Starter-Module-Bicep-Complete)
+Prefix: "alz"
+Environment: "live"
+networkType: "hubNetworking"
+SecurityContact: "<email-address>"
+
+# Advanced Inputs
+bootstrap_module_version: "latest"
+starter_module_version: "latest"
+#output_folder_path: "/accelerator/output"
