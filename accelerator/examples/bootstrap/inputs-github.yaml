@@ -1,0 +1,43 @@
+---
+# For detailed instructions on using this file, visit:
+# https://github.com/Azure/ALZ-PowerShell-Module/wiki/%5BUser-Guide%5D-Quick-Start-Phase-2-GitHub#2221-github-with-bicep
+
+# Basic Inputs
+iac_type: "bicep"
+bootstrap_module_name: "alz_github"
+starter_module_name: "complete"
+
+# Shared Interface Inputs
+bootstrap_location: "<region>"
+starter_locations: ["<region>"]
+root_parent_management_group_id: ""
+subscription_id_management: "<management-subscription-id>"
+subscription_id_identity: "<identity-subscription-id>"
+subscription_id_connectivity: "<connectivity-subscription-id>"
+
+# Bootstrap Inputs
+github_personal_access_token: "<token-1>"
+github_runners_personal_access_token: "<token-2>"
+github_organization_name: "<github-organization>"
+use_separate_repository_for_templates: true
+bootstrap_subscription_id: ""
+service_name: "alz"
+environment_name: "mgmt"
+postfix_number: 1
+use_self_hosted_runners: true
+use_private_networking: true
+allow_storage_access_from_my_ip: false
+apply_approvers: ["<email-address>"]
+create_branch_policies: true
+
+# Starter Module Specific Variables
+# (Details: https://github.com/Azure/ALZ-PowerShell-Module/wiki/%5BUser-Guide%5D-Starter-Module-Bicep-Complete)
+Prefix: "alz"
+Environment: "live"
+networkType: "hubNetworking"
+SecurityContact: "<email-address>"
+
+# Advanced Inputs
+bootstrap_module_version: "latest"
+starter_module_version: "latest"
+#output_folder_path: "/accelerator/output"

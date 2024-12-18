@@ -19,7 +19,7 @@ Detailed information about how to use, deploy and extend artifacts found in this
   - [Network Topology: Virtual WAN][wiki_deployment_flow_vwan]
 - [Consumer Guide][wiki_consumer_guide]
   - [Accelerator][wiki_accelerator]
-  - [Azure Montior Baseline Alerts][wiki_amba]
+  - [Azure Monitor Baseline Alerts][wiki_amba]
   - [Known Issues][wiki_known_issues]
   - [Frequently Asked Questions][wiki_faq]
 - [How Does ALZ-Bicep Implement Azure Policies?][wiki_policy_deep_dive]

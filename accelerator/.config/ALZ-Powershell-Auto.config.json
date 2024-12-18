@@ -23,7 +23,8 @@
         "parameters",
         "README.md",
         "ALZ-Powershell.config.json",
-        "test_modules/managementGroup"
+        "test_modules/managementGroup",
+        "examples"
       ],
       "on_demand_folders" : [
         {
@@ -815,7 +816,8 @@
         "china",
         "parameters",
         "README.md",
-        "ALZ-Powershell.config.json"
+        "ALZ-Powershell.config.json",
+        "examples"
       ],
       "on_demand_folders" : [
         {
