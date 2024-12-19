@@ -301,6 +301,8 @@ param parVpnGatewayConfig object = {
     peerWeight: 5
   }
   vpnClientConfiguration: {}
+  ipConfigurationName: 'vnetGatewayConfig'
+  ipConfigurationActiveActiveName: 'vnetGatewayConfig2'
 }
 
 @sys.description('Switch to enable/disable ExpressRoute virtual network gateway deployment.')
@@ -323,6 +325,8 @@ param parExpressRouteGatewayConfig object = {
     bgpPeeringAddress: ''
     peerWeight: '5'
   }
+  ipConfigurationName: 'vnetGatewayConfig'
+  ipConfigurationActiveActiveName: 'vnetGatewayConfig2'
 }
 
 @sys.description('''Resource Lock Configuration for ExpressRoute Virtual Network Gateway.
@@ -791,7 +795,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [
         [
           {
             id: resHubVnet.id
-            name: 'vnetGatewayConfig1'
+            name: gateway.ipConfigurationName
             properties: {
               publicIPAddress: {
                 id: modGatewayPublicIp[i].outputs.outPublicIpId // Primary Public IP
@@ -807,7 +811,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [
           ? [
               {
                 id: resHubVnet.id
-                name: 'vnetGatewayConfig2'
+                name: gateway.ipConfigurationActiveActiveName
                 properties: {
                   publicIPAddress: {
                     id: modGatewayPublicIpActiveActive[i].outputs.outPublicIpId // Secondary Public IP

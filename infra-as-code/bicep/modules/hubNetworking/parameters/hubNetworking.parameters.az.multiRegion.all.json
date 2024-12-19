@@ -264,7 +264,9 @@
           "bgpPeeringAddress": "",
           "peerWeight": "5"
         },
-        "vpnClientConfiguration": {}
+        "vpnClientConfiguration": {},
+        "ipConfigurationName": "vnetGatewayConfig",
+        "ipConfigurationActiveActiveName": "vnetGatewayConfig2"
       }
     },
     "parVpnGatewayConfigSecondaryLocation": {
@@ -284,7 +286,9 @@
           "bgpPeeringAddress": "",
           "peerWeight": "5"
         },
-        "vpnClientConfiguration": {}
+        "vpnClientConfiguration": {},
+        "ipConfigurationName": "vnetGatewayConfig",
+        "ipConfigurationActiveActiveName": "vnetGatewayConfig2"
       }
     },
     "parExpressRouteGatewayEnabled": {
@@ -306,7 +310,9 @@
           "asn": "65515",
           "bgpPeeringAddress": "",
           "peerWeight": "5"
-        }
+        },
+        "ipConfigurationName": "vnetGatewayConfig",
+        "ipConfigurationActiveActiveName": "vnetGatewayConfig2"
       }
     },
     "parExpressRouteGatewayEnabledSecondaryLocation": {
