@@ -599,6 +599,7 @@ resource resDataCollectionRuleMDFCSQL'Microsoft.Insights/dataCollectionRules@202
             'Microsoft-DefenderForSqlTelemetry'
             'Microsoft-DefenderForSqlScanEvents'
             'Microsoft-DefenderForSqlScanResults'
+            'Microsoft-SqlAtpStatus-DefenderForSql'
           ]
           extensionSettings: {
             enableCollectionOfSqlQueriesForSecurityResearch: true
@@ -622,6 +623,7 @@ resource resDataCollectionRuleMDFCSQL'Microsoft.Insights/dataCollectionRules@202
           'Microsoft-DefenderForSqlTelemetry'
           'Microsoft-DefenderForSqlScanEvents'
           'Microsoft-DefenderForSqlScanResults'
+          'Microsoft-SqlAtpStatus-DefenderForSql'
         ]
         destinations: [
           'Microsoft-DefenderForSQL-Dest'
