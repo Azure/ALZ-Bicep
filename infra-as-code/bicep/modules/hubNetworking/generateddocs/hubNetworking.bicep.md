@@ -454,7 +454,7 @@ Switch to enable/disable VPN virtual network gateway deployment.
 
 Configuration for VPN virtual network gateway to be deployed.
 
-- Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; vpnClientConfiguration=}`
+- Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; vpnClientConfiguration=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
 
 ### parExpressRouteGatewayEnabled
 
@@ -470,7 +470,7 @@ Switch to enable/disable ExpressRoute virtual network gateway deployment.
 
 Configuration for ExpressRoute virtual network gateway to be deployed.
 
-- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=}`
+- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
 
 ### parVirtualNetworkGatewayLock
 
@@ -733,7 +733,9 @@ outBastionNsgName | string |
                     "bgpPeeringAddress": "",
                     "peerWeight": 5
                 },
-                "vpnClientConfiguration": {}
+                "vpnClientConfiguration": {},
+                "ipConfigurationName": "vnetGatewayConfig",
+                "ipConfigurationActiveActiveName": "vnetGatewayConfig2"
             }
         },
         "parExpressRouteGatewayEnabled": {
@@ -755,7 +757,9 @@ outBastionNsgName | string |
                     "asn": "65515",
                     "bgpPeeringAddress": "",
                     "peerWeight": "5"
-                }
+                },
+                "ipConfigurationName": "vnetGatewayConfig",
+                "ipConfigurationActiveActiveName": "vnetGatewayConfig2"
             }
         },
         "parVirtualNetworkGatewayLock": {

@@ -454,6 +454,8 @@ param parVpnGatewayConfig object = {
     peerWeight: 5
   }
   vpnClientConfiguration: {}
+  ipConfigurationName: 'vnetGatewayConfig'
+  ipConfigurationActiveActiveName: 'vnetGatewayConfig2'
 }
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
@@ -475,6 +477,8 @@ param parVpnGatewayConfigSecondaryLocation object = {
     peerWeight: 5
   }
   vpnClientConfiguration: {}
+  ipConfigurationName: 'vnetGatewayConfig'
+  ipConfigurationActiveActiveName: 'vnetGatewayConfig2'
 }
 
 @sys.description('Switch to enable/disable ExpressRoute virtual network gateway deployment.')
@@ -500,6 +504,8 @@ param parExpressRouteGatewayConfig object = {
     bgpPeeringAddress: ''
     peerWeight: '5'
   }
+  ipConfigurationName: 'vnetGatewayConfig'
+  ipConfigurationActiveActiveName: 'vnetGatewayConfig2'
 }
 
 @sys.description('Configuration for ExpressRoute virtual network gateway to be deployed in secondary location.')
@@ -519,6 +525,8 @@ param parExpressRouteGatewayConfigSecondaryLocation object = {
     bgpPeeringAddress: ''
     peerWeight: '5'
   }
+  ipConfigurationName: 'vnetGatewayConfig'
+  ipConfigurationActiveActiveName: 'vnetGatewayConfig2'
 }
 
 @sys.description('''Resource Lock Configuration for ExpressRoute Virtual Network Gateway.
@@ -1422,7 +1430,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [
         [
           {
             id: resHubVnet.id
-            name: 'vnetGatewayConfig1'
+            name: gateway.ipConfigurationName
             properties: {
               publicIPAddress: {
                 id: modGatewayPublicIp[i].outputs.outPublicIpId // Primary Public IP
@@ -1438,7 +1446,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [
           ? [
               {
                 id: resHubVnet.id
-                name: 'vnetGatewayConfig2'
+                name: gateway.ipConfigurationActiveActiveName
                 properties: {
                   publicIPAddress: {
                     id: modGatewayPublicIpActiveActive[i].outputs.outPublicIpId // Secondary Public IP
@@ -1492,7 +1500,7 @@ resource resGatewaySecondaryLocation 'Microsoft.Network/virtualNetworkGateways@2
         [
           {
             id: resHubVnetSecondaryLocation.id
-            name: 'vnetGatewayConfig1'
+            name: gateway.ipConfigurationName
             properties: {
               publicIPAddress: {
                 id: modGatewayPublicIpSecondaryLocation[i].outputs.outPublicIpId // Primary Public IP
@@ -1508,7 +1516,7 @@ resource resGatewaySecondaryLocation 'Microsoft.Network/virtualNetworkGateways@2
           ? [
               {
                 id: resHubVnetSecondaryLocation.id
-                name: 'vnetGatewayConfig2'
+                name: gateway.ipConfigurationActiveActiveName
                 properties: {
                   publicIPAddress: {
                     id: modGatewayPublicIpActiveActiveSecondaryLocation[i].outputs.outPublicIpId // Secondary Public IP
