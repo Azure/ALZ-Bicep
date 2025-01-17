@@ -1,5 +1,5 @@
 <!-- markdownlint-disable -->
-## Azure Monitor Baseline Alerts
+## Azure Monitor Baseline Alerts for the Classic Accelerator
 <!-- markdownlint-restore -->
 
 ### Deprecation Notice for AMBA Guidance
