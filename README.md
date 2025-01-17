@@ -9,9 +9,9 @@
 
 ![Bicep Logo](docs/wiki/media/bicep-logo.png)
 
-Welcome to the Azure Landing Zones Bicep repo.
+Welcome to the Azure Landing Zones Bicep repository.
 
-Detailed information about how to use, deploy and extend artifacts found in this repo can be found on our Wiki:
+Detailed information about how to use, deploy, and extend artifacts found in this repository can be found on our Wiki:
 
 - [Home][wiki_home]
 - [Deployment Flow][wiki_deployment_flow]
@@ -19,7 +19,8 @@ Detailed information about how to use, deploy and extend artifacts found in this
   - [Network Topology: Virtual WAN][wiki_deployment_flow_vwan]
 - [Consumer Guide][wiki_consumer_guide]
   - [Accelerator][wiki_accelerator]
-  - [Azure Monitor Baseline Alerts][wiki_amba]
+  - [Classic Accelerator][wiki_classic_accelerator]
+  - [Azure Monitor Baseline Alerts for the Classic Accelerator][wiki_amba_classic_accelerator]
   - [Known Issues][wiki_known_issues]
   - [Frequently Asked Questions][wiki_faq]
 - [How Does ALZ-Bicep Implement Azure Policies?][wiki_policy_deep_dive]
@@ -36,11 +37,11 @@ Detailed information about how to use, deploy and extend artifacts found in this
 
 ## Overview
 
-The Azure Landing Zones Bicep repo provides an approach for deploying and managing the core platform capabilities of Cloud Adoption Framework Azure Landing Zones conceptual architecture using Bicep.
+The Azure Landing Zones Bicep repository provides an approach for deploying and managing the core platform capabilities of the Cloud Adoption Framework Azure Landing Zones conceptual architecture using Bicep.
 
-In its current incarnation each module can be deployed separately via command line but in future releases a more automated approach, via orchestration modules, will be published; but due to current Bicep & ARM limitations this is not possible today.
+Currently, each module can be deployed separately via the command line. Future releases will include a more automated approach using orchestration modules, but due to current Bicep & ARM limitations, this is not possible today.
 
-> Have you seen our page in the Azure Architecture Center here: [Azure landing zones - Bicep modules design considerations][aac_article]
+> Check out our page in the Azure Architecture Center: [Azure landing zones - Bicep modules design considerations][aac_article]
 
 ## Getting Started
 
@@ -52,7 +53,7 @@ To get started with ALZ Bicep, please refer to the [Deployment Flow wiki page][w
 
 ### Azure Enablement Show Videos
 
-We have created a short 3-part series of video on the Azure Enablement Show that can be found below:
+We have created a short 3-part series of videos on the Azure Enablement Show that can be found below:
 
 <!-- markdownlint-disable -->
 #### Part 1 - Introduction to Azure Landing Zones Bicep
@@ -117,7 +118,8 @@ For support on the artifacts contained in this repository, please refer to [this
 [wiki_resiliency]:                            https://github.com/Azure/ALZ-Bicep/wiki/Resiliency "Wiki - Resiliency"
 [wiki_contributing]:                          https://github.com/Azure/ALZ-Bicep/wiki/Contributing "Wiki - Contributing"
 [wiki_accelerator]:                          <https://github.com/Azure/ALZ-Bicep/wiki/Accelerator> "Wiki - Accelerator"
-[wiki_amba]:                            <https://github.com/Azure/ALZ-Bicep/wiki/AzureMonitorBaselineAlerts> "Wiki - AMBA"
+[wiki_classic_accelerator]:                          <https://github.com/Azure/ALZ-Bicep/wiki/ClassicAccelerator> "Wiki - Classic Accelerator (Deprecated)"
+[wiki_amba_classic_accelerator]:             <https://github.com/Azure/ALZ-Bicep/wiki/AzureMonitorBaselineAlerts> "Wiki - AMBA for Classic Accelerator (Deprecated)"
 [wiki_known_issues]:                          <https://github.com/Azure/ALZ-Bicep/wiki/KnownIssues> "Wiki - Known Issues"
 [wiki_faq]:                          <https://github.com/Azure/ALZ-Bicep/wiki/FAQ> "Wiki - FAQs"
 [wiki_cuaid]:                          <https://github.com/Azure/ALZ-Bicep/wiki/CustomerUsage> "Wiki - Telemetry Usage ID"
