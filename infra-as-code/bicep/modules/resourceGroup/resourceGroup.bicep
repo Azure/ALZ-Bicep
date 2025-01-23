@@ -40,7 +40,7 @@ param parTelemetryOptOut bool = false
 // Customer Usage Attribution Id
 var varCuaid = 'b6718c54-b49e-4748-a466-88e3d7c789c8'
 
-resource resResourceGroup 'Microsoft.Resources/resourceGroups@2022-09-01' = {
+resource resResourceGroup 'Microsoft.Resources/resourceGroups@2024-07-01' = {
   location: parLocation
   name: parResourceGroupName
   tags: parTags
