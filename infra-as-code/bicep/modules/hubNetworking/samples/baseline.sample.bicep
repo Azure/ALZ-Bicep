@@ -115,7 +115,7 @@ module baseline_hub_network_with_VPN '../hubNetworking.bicep' = {
     parVpnGatewayConfig: {
       name: '${parCompanyPrefix}-Vpn-Gateway'
       gatewayType: 'Vpn'
-      sku: 'VpnGw1AZAZ'
+      sku: 'VpnGw1AZ'
       vpnType: 'RouteBased'
       vpnGatewayGeneration: 'Generation1'
       enableBgp: false

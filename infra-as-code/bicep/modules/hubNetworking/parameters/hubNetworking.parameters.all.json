@@ -124,7 +124,7 @@
       "value": {
         "name": "alz-Vpn-Gateway",
         "gatewayType": "Vpn",
-        "sku": "VpnGw1AZAZ",
+        "sku": "VpnGw1AZ",
         "vpnType": "RouteBased",
         "vpnGatewayGeneration": "Generation1",
         "enableBgp": false,
