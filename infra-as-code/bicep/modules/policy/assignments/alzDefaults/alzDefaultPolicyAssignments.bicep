@@ -1730,6 +1730,9 @@ module modPolicyAssignmentLzsDeployVmArcTrack '../../../policy/assignments/polic
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.reader
     ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      string(varManagementGroupIds.platform)
+    ]
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1760,6 +1763,9 @@ module modPolicyAssignmentLzsDeployVmChangeTrack '../../../policy/assignments/po
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
+    ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      string(varManagementGroupIds.platform)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1792,6 +1798,9 @@ module modPolicyAssignmentLzsDeployVmssChangeTrack '../../../policy/assignments/
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
     ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      string(varManagementGroupIds.platform)
+    ]
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1818,6 +1827,9 @@ module modPolicyAssignmentLzsDeployVmArcMonitor '../../../policy/assignments/pol
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.reader
       varRbacRoleDefinitionIds.connectedMachineResourceAdministrator
+    ]
+    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
+      string(varManagementGroupIds.platform)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
