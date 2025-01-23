@@ -22,7 +22,7 @@ var varSpokeVnetName = split(parRemoteVirtualNetworkResourceId, '/')[8]
 
 var varVnetPeeringVwanName = '${varVwanHubName}/${parVirtualHubConnectionPrefix}${varSpokeVnetName}${parVirtualHubConnectionSuffix}'
 
-resource resVnetPeeringVwan 'Microsoft.Network/virtualHubs/hubVirtualNetworkConnections@2023-02-01' = if (!empty(parVirtualWanHubResourceId) && !empty(parRemoteVirtualNetworkResourceId)) {
+resource resVnetPeeringVwan 'Microsoft.Network/virtualHubs/hubVirtualNetworkConnections@2024-05-01' = if (!empty(parVirtualWanHubResourceId) && !empty(parRemoteVirtualNetworkResourceId)) {
   name: varVnetPeeringVwanName
   properties: {
     remoteVirtualNetwork: {

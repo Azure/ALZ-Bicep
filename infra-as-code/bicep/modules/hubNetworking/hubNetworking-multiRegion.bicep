@@ -682,14 +682,14 @@ var varAzFirewallUseCustomPublicIps = length(parAzFirewallCustomPublicIps) > 0
 var varAzFirewallUseCustomPublicIpsSecondaryLocation = length(parAzFirewallCustomPublicIpsSecondaryLocation) > 0
 
 //DDos Protection plan will only be enabled if parDdosEnabled is true.
-resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01' = if (parDdosEnabled) {
+resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2024-05-01' = if (parDdosEnabled) {
   name: parDdosPlanName
   location: parLocation
   tags: parTags
 }
 
 //DDos Protection plan will only be enabled if parDdosEnabled is true.
-resource resDdosProtectionPlanSecondaryLocation 'Microsoft.Network/ddosProtectionPlans@2023-02-01' = if (parDdosEnabledSecondaryLocation) {
+resource resDdosProtectionPlanSecondaryLocation 'Microsoft.Network/ddosProtectionPlans@2024-05-01' = if (parDdosEnabledSecondaryLocation) {
   name: parDdosPlanNameSecondaryLocation
   location: parSecondaryLocation
   tags: parTags
@@ -715,7 +715,7 @@ resource resDDoSProtectionPlanLockSecondaryLocation 'Microsoft.Authorization/loc
   }
 }
 
-resource resHubVnet 'Microsoft.Network/virtualNetworks@2024-01-01' = {
+resource resHubVnet 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   dependsOn: [
     resBastionNsg
   ]
@@ -741,7 +741,7 @@ resource resHubVnet 'Microsoft.Network/virtualNetworks@2024-01-01' = {
   }
 }
 
-resource resHubVnetSecondaryLocation 'Microsoft.Network/virtualNetworks@2024-01-01' = {
+resource resHubVnetSecondaryLocation 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   dependsOn: [
     resBastionNsgSecondaryLocation
   ]
@@ -849,17 +849,17 @@ module modBastionPublicIpSecondaryLocation '../publicIp/publicIp.bicep' = if (pa
   }
 }
 
-resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzBastionEnabled) {
+resource resBastionSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' existing = if (parAzBastionEnabled) {
   parent: resHubVnet
   name: 'AzureBastionSubnet'
 }
 
-resource resBastionSubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzBastionEnabledSecondaryLocation) {
+resource resBastionSubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' existing = if (parAzBastionEnabledSecondaryLocation) {
   parent: resHubVnetSecondaryLocation
   name: 'AzureBastionSubnet'
 }
 
-resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2024-01-01' = if (parAzBastionEnabled) {
+resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2024-05-01' = if (parAzBastionEnabled) {
   name: parAzBastionNsgName
   location: parLocation
   tags: parTags
@@ -1008,7 +1008,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2024-01-01' = if
   }
 }
 
-resource resBastionNsgSecondaryLocation 'Microsoft.Network/networkSecurityGroups@2024-01-01' = if (parAzBastionEnabledSecondaryLocation) {
+resource resBastionNsgSecondaryLocation 'Microsoft.Network/networkSecurityGroups@2024-05-01' = if (parAzBastionEnabledSecondaryLocation) {
   name: parAzBastionNsgNameSecondaryLocation
   location: parSecondaryLocation
   tags: parTags
@@ -1180,7 +1180,7 @@ resource resBastionNsgLockSecondaryLocation 'Microsoft.Authorization/locks@2020-
 // AzureBastionSubnet is required to deploy Bastion service. This subnet must exist in the parsubnets array if you enable Bastion Service.
 // There is a minimum subnet requirement of /27 prefix.
 // If you are deploying standard this needs to be larger. https://docs.microsoft.com/en-us/azure/bastion/configuration-settings#subnet
-resource resBastion 'Microsoft.Network/bastionHosts@2023-02-01' = if (parAzBastionEnabled) {
+resource resBastion 'Microsoft.Network/bastionHosts@2024-05-01' = if (parAzBastionEnabled) {
   location: parLocation
   name: parAzBastionName
   tags: parTags
@@ -1209,7 +1209,7 @@ resource resBastion 'Microsoft.Network/bastionHosts@2023-02-01' = if (parAzBasti
 // AzureBastionSubnet is required to deploy Bastion service. This subnet must exist in the parsubnets array if you enable Bastion Service.
 // There is a minimum subnet requirement of /27 prefix.
 // If you are deploying standard this needs to be larger. https://docs.microsoft.com/en-us/azure/bastion/configuration-settings#subnet
-resource resBastionSecondaryLocation 'Microsoft.Network/bastionHosts@2024-01-01' = if (parAzBastionEnabledSecondaryLocation) {
+resource resBastionSecondaryLocation 'Microsoft.Network/bastionHosts@2024-05-01' = if (parAzBastionEnabledSecondaryLocation) {
   location: parSecondaryLocation
   name: parAzBastionNameSecondaryLocation
   tags: parTags
@@ -1257,12 +1257,12 @@ resource resBastionLockSecondaryLocation 'Microsoft.Authorization/locks@2020-05-
   }
 }
 
-resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parVpnGatewayEnabled || parExpressRouteGatewayEnabled) {
+resource resGatewaySubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' existing = if (parVpnGatewayEnabled || parExpressRouteGatewayEnabled) {
   parent: resHubVnet
   name: 'GatewaySubnet'
 }
 
-resource resGatewaySubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parVpnGatewayEnabledSecondaryLocation || parExpressRouteGatewayEnabledSecondaryLocation) {
+resource resGatewaySubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' existing = if (parVpnGatewayEnabledSecondaryLocation || parExpressRouteGatewayEnabledSecondaryLocation) {
   parent: resHubVnetSecondaryLocation
   name: 'GatewaySubnet'
 }
@@ -1394,7 +1394,7 @@ module modGatewayPublicIpActiveActiveSecondaryLocation '../publicIp/publicIp.bic
 ]
 
 //Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
-resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [
+resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-05-01' = [
   for (gateway, i) in varGwConfig: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
     name: gateway.name
     location: parLocation
@@ -1464,7 +1464,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [
 ]
 
 //Minumum subnet size is /27 supporting documentation https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub
-resource resGatewaySecondaryLocation 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [
+resource resGatewaySecondaryLocation 'Microsoft.Network/virtualNetworkGateways@2024-05-01' = [
   for (gateway, i) in varGwConfigSecondaryLocation: if ((gateway.name != 'noconfigVpn') && (gateway.name != 'noconfigEr')) {
     name: gateway.name
     location: parSecondaryLocation
@@ -1557,17 +1557,17 @@ resource resVirtualNetworkGatewayLockSecondaryLocation 'Microsoft.Authorization/
   }
 ]
 
-resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabled) {
+resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' existing = if (parAzFirewallEnabled) {
   parent: resHubVnet
   name: 'AzureFirewallSubnet'
 }
 
-resource resAzureFirewallSubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabledSecondaryLocation) {
+resource resAzureFirewallSubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' existing = if (parAzFirewallEnabledSecondaryLocation) {
   parent: resHubVnetSecondaryLocation
   name: 'AzureFirewallSubnet'
 }
 
-resource resAzureFirewallMgmtSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabled && (contains(
+resource resAzureFirewallMgmtSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' existing = if (parAzFirewallEnabled && (contains(
   map(parSubnets, subnets => subnets.name),
   'AzureFirewallManagementSubnet'
 ))) {
@@ -1575,7 +1575,7 @@ resource resAzureFirewallMgmtSubnetRef 'Microsoft.Network/virtualNetworks/subnet
   name: 'AzureFirewallManagementSubnet'
 }
 
-resource resAzureFirewallMgmtSubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' existing = if (parAzFirewallEnabledSecondaryLocation && (contains(
+resource resAzureFirewallMgmtSubnetRefSecondaryLocation 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' existing = if (parAzFirewallEnabledSecondaryLocation && (contains(
   map(parSubnetsSecondaryLocation, subnets => subnets.name),
   'AzureFirewallManagementSubnet'
 ))) {
@@ -1665,7 +1665,7 @@ module modAzureFirewallMgmtPublicIpSecondaryLocation '../publicIp/publicIp.bicep
   }
 }
 
-resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-01-01' = if (parAzFirewallEnabled && parAzFirewallPoliciesEnabled) {
+resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-05-01' = if (parAzFirewallEnabled && parAzFirewallPoliciesEnabled) {
   name: parAzFirewallPoliciesName
   location: parLocation
   tags: parTags
@@ -1694,7 +1694,7 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-01-01' = i
       }
 }
 
-resource resFirewallPoliciesSecondaryLocation 'Microsoft.Network/firewallPolicies@2024-01-01' = if (parAzFirewallEnabledSecondaryLocation && parAzFirewallPoliciesEnabledSecondaryLocation) {
+resource resFirewallPoliciesSecondaryLocation 'Microsoft.Network/firewallPolicies@2024-05-01' = if (parAzFirewallEnabledSecondaryLocation && parAzFirewallPoliciesEnabledSecondaryLocation) {
   name: parAzFirewallPoliciesNameSecondaryLocation
   location: parSecondaryLocation
   tags: parTags
@@ -1745,7 +1745,7 @@ resource resFirewallPoliciesLockSecondaryLocation 'Microsoft.Authorization/locks
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.
-resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-01-01' = if (parAzFirewallEnabled) {
+resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-05-01' = if (parAzFirewallEnabled) {
   dependsOn: [
     resGateway
   ]
@@ -1849,7 +1849,7 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-01-01' = if (pa
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.
-resource resAzureFirewallSecondaryLocation 'Microsoft.Network/azureFirewalls@2024-01-01' = if (parAzFirewallEnabledSecondaryLocation) {
+resource resAzureFirewallSecondaryLocation 'Microsoft.Network/azureFirewalls@2024-05-01' = if (parAzFirewallEnabledSecondaryLocation) {
   dependsOn: [
     resGatewaySecondaryLocation
   ]
@@ -1978,7 +1978,7 @@ resource resAzureFirewallLockSecondaryLocation 'Microsoft.Authorization/locks@20
 }
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
-resource resHubRouteTable 'Microsoft.Network/routeTables@2024-01-01' = if (parAzFirewallEnabled) {
+resource resHubRouteTable 'Microsoft.Network/routeTables@2024-05-01' = if (parAzFirewallEnabled) {
   name: parHubRouteTableName
   location: parLocation
   tags: parTags
@@ -2000,7 +2000,7 @@ resource resHubRouteTable 'Microsoft.Network/routeTables@2024-01-01' = if (parAz
 }
 
 //If Azure Firewall is enabled we will deploy a RouteTable to redirect Traffic to the Firewall.
-resource resHubRouteTableSecondaryLocation 'Microsoft.Network/routeTables@2024-01-01' = if (parAzFirewallEnabledSecondaryLocation) {
+resource resHubRouteTableSecondaryLocation 'Microsoft.Network/routeTables@2024-05-01' = if (parAzFirewallEnabledSecondaryLocation) {
   name: parHubRouteTableNameSecondaryLocation
   location: parSecondaryLocation
   tags: parTags
@@ -2041,7 +2041,7 @@ resource resHubRouteTableLockSecondaryLocation 'Microsoft.Authorization/locks@20
   }
 }
 
-module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-private-dns-zones:0.2.1' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-private-dns-zones:0.3.0' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-${parLocation}'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
@@ -2061,7 +2061,7 @@ module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-priv
   }
 }
 
-module modPrivateDnsZonesAVMRegion2 'br/public:avm/ptn/network/private-link-private-dns-zones:0.2.1' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVMRegion2 'br/public:avm/ptn/network/private-link-private-dns-zones:0.3.0' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-Multi-${parSecondaryLocation}'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
