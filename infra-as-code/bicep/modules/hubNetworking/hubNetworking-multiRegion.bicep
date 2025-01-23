@@ -1,5 +1,5 @@
-metadata name = 'ALZ Bicep - Hub Networking Module'
-metadata description = 'ALZ Bicep Module used to set up Hub Networking'
+metadata name = 'ALZ Bicep - Hub Networking Multi-Region Module'
+metadata description = 'ALZ Bicep Module used to set up Hub Networking in two regions.'
 
 type subnetOptionsType = ({
   @description('Name of subnet.')
@@ -17,6 +17,61 @@ type subnetOptionsType = ({
   @description('Name of the delegation to create for the subnet.')
   delegation: string?
 })[]
+
+type virtualNetworkGatewayOptionsType = {
+  @description('Name of the gateway.')
+  name: string
+
+  @description('Type of gateway.')
+  gatewayType: ('Vpn' | 'ExpressRoute')
+
+  @description('SKU of the gateway.')
+  sku: ('Basic' | 'VpnGw1AZAZ' | 'VpnGw2AZ' | 'VpnGw3AZ' | 'VpnGw4AZ' | 'VpnGw5AZ' | 'ErGw1AZ' | 'ErGw2AZ' | 'ErGw3AZ' | 'ErGwScale' | 'HighPerformance' | 'Standard' | 'UltraPerformance')
+
+  @description('Type of VPN.')
+  vpnType: string
+
+  @description('Generation of the VPN Gateway.')
+  vpnGatewayGeneration: ('Generation1' | 'Generation2' | 'None' )
+
+  @description('Enable BGP on the gateway.')
+  enableBgp: bool
+
+  @description('Enable Active-Active on the gateway.')
+  activeActive: bool
+
+  @description('Enable BGP Route Translation for NAT on the gateway.')
+  enableBgpRouteTranslationForNat: bool
+
+  @description('Enable DNS Forwarding on the gateway.')
+  enableDnsForwarding: bool
+
+  @description('BGP Peering Address for the gateway.')
+  bgpPeeringAddress: string?
+
+  @description('BGP Settings for the gateway.')
+  bgpSettings: {
+    @minValue(0)
+    @maxValue(4294967295)
+    @description('ASN for the gateway.')
+    asn: int
+
+    @description('BGP Peering Address for the gateway.')
+    bgpPeeringAddress: string?
+
+    @description('Peer Weight for the gateway.')
+    peerWeight: int
+  }
+
+  @description('VPN Client Configuration for the gateway.')
+  vpnClientConfiguration: object?
+
+  @description('Name of the IP Configuration for the gateway.')
+  ipConfigurationName: string
+
+  @description('Name of the Active-Active IP Configuration for the gateway.')
+  ipConfigurationActiveActiveName: string
+}
 
 type lockType = {
   @description('Optional. Specify the name of lock.')
@@ -437,18 +492,18 @@ param parVpnGatewayEnabledSecondaryLocation bool = true
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
 @sys.description('Configuration for VPN virtual network gateway to be deployed.')
-param parVpnGatewayConfig object = {
+param parVpnGatewayConfig virtualNetworkGatewayOptionsType = {
   name: '${parCompanyPrefix}-Vpn-Gateway-${parLocation}'
   gatewayType: 'Vpn'
-  sku: 'VpnGw1'
+  sku: 'ErGw1AZ'
   vpnType: 'RouteBased'
-  generation: 'Generation1'
+  vpnGatewayGeneration: 'Generation1'
   enableBgp: false
   activeActive: false
   enableBgpRouteTranslationForNat: false
   enableDnsForwarding: false
   bgpPeeringAddress: ''
-  bgpsettings: {
+  bgpSettings: {
     asn: 65515
     bgpPeeringAddress: ''
     peerWeight: 5
@@ -460,18 +515,18 @@ param parVpnGatewayConfig object = {
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
 @sys.description('Configuration for VPN virtual network gateway to be deployed in secondary location.')
-param parVpnGatewayConfigSecondaryLocation object = {
+param parVpnGatewayConfigSecondaryLocation virtualNetworkGatewayOptionsType = {
   name: '${parCompanyPrefix}-Vpn-Gateway-${parSecondaryLocation}'
   gatewayType: 'Vpn'
-  sku: 'VpnGw1'
+  sku: 'VpnGw1AZAZ'
   vpnType: 'RouteBased'
-  generation: 'Generation1'
+  vpnGatewayGeneration: 'Generation1'
   enableBgp: false
   activeActive: false
   enableBgpRouteTranslationForNat: false
   enableDnsForwarding: false
   bgpPeeringAddress: ''
-  bgpsettings: {
+  bgpSettings: {
     asn: 65515
     bgpPeeringAddress: ''
     peerWeight: 5
@@ -488,7 +543,7 @@ param parExpressRouteGatewayEnabled bool = true
 param parExpressRouteGatewayEnabledSecondaryLocation bool = true
 
 @sys.description('Configuration for ExpressRoute virtual network gateway to be deployed.')
-param parExpressRouteGatewayConfig object = {
+param parExpressRouteGatewayConfig virtualNetworkGatewayOptionsType = {
   name: '${parCompanyPrefix}-ExpressRoute-Gateway'
   gatewayType: 'ExpressRoute'
   sku: 'ErGw1AZ'
@@ -499,17 +554,17 @@ param parExpressRouteGatewayConfig object = {
   enableBgpRouteTranslationForNat: false
   enableDnsForwarding: false
   bgpPeeringAddress: ''
-  bgpsettings: {
-    asn: '65515'
+  bgpSettings: {
+    asn: 65515
     bgpPeeringAddress: ''
-    peerWeight: '5'
+    peerWeight: 5
   }
   ipConfigurationName: 'vnetGatewayConfig'
   ipConfigurationActiveActiveName: 'vnetGatewayConfig2'
 }
 
 @sys.description('Configuration for ExpressRoute virtual network gateway to be deployed in secondary location.')
-param parExpressRouteGatewayConfigSecondaryLocation object = {
+param parExpressRouteGatewayConfigSecondaryLocation virtualNetworkGatewayOptionsType = {
   name: '${parCompanyPrefix}-ExpressRoute-Gateway'
   gatewayType: 'ExpressRoute'
   sku: 'ErGw1AZ'
@@ -520,10 +575,10 @@ param parExpressRouteGatewayConfigSecondaryLocation object = {
   enableBgpRouteTranslationForNat: false
   enableDnsForwarding: false
   bgpPeeringAddress: ''
-  bgpsettings: {
-    asn: '65515'
+  bgpSettings: {
+    asn: 65515
     bgpPeeringAddress: ''
-    peerWeight: '5'
+    peerWeight: 5
   }
   ipConfigurationName: 'vnetGatewayConfig'
   ipConfigurationActiveActiveName: 'vnetGatewayConfig2'
@@ -1406,7 +1461,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-01-01' = [
       enableDnsForwarding: gateway.enableDnsForwarding
       bgpSettings: (gateway.enableBgp) ? gateway.bgpSettings : null
       gatewayType: gateway.gatewayType
-      vpnGatewayGeneration: (toLower(gateway.gatewayType) == 'vpn') ? gateway.generation : 'None'
+      vpnGatewayGeneration: (toLower(gateway.gatewayType) == 'vpn') ? gateway.vpnGatewayGeneration : 'None'
       vpnType: gateway.vpnType
       sku: {
         name: gateway.sku
@@ -1476,7 +1531,7 @@ resource resGatewaySecondaryLocation 'Microsoft.Network/virtualNetworkGateways@2
       enableDnsForwarding: gateway.enableDnsForwarding
       bgpSettings: (gateway.enableBgp) ? gateway.bgpSettings : null
       gatewayType: gateway.gatewayType
-      vpnGatewayGeneration: (toLower(gateway.gatewayType) == 'vpn') ? gateway.generation : 'None'
+      vpnGatewayGeneration: (toLower(gateway.gatewayType) == 'vpn') ? gateway.vpnGatewayGeneration : 'None'
       vpnType: gateway.vpnType
       sku: {
         name: gateway.sku
