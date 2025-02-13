@@ -43,7 +43,7 @@ param (
 if (-not (Get-Module -ListAvailable -Name ALZ)) {
   # Module doesn't exist, so install it
   Write-Information "====> ALZ module isn't already installed. Installing..." -InformationAction Continue
-  Install-Module -Name ALZ -Force -Scope CurrentUser -ErrorAction Stop
+  Install-Module -Name ALZ -Force -Scope CurrentUser -ErrorAction Stop -RequiredVersion '4.1.5'
   Write-Information "====> ALZ module now installed." -InformationAction Continue
 } else {
   Write-Information "====> ALZ module is already installed." -InformationAction Continue
