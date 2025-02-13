@@ -1020,9 +1020,6 @@ module modPolicyAssignmentPlatformDeployVmArcChangeTrack '../../../policy/assign
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.reader
     ]
-    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.landingZones)
-    ]
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1053,9 +1050,6 @@ module modPolicyAssignmentPlatformDeployVmChangeTrack '../../../policy/assignmen
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
-    ]
-    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.landingZones)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1088,9 +1082,6 @@ module modPolicyAssignmentPlatformDeployVmssChangeTrack '../../../policy/assignm
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
     ]
-    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.landingZones)
-    ]
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1118,8 +1109,6 @@ module modPolicyAssignmentPlatformDeployVmArcMonitor '../../../policy/assignment
       varRbacRoleDefinitionIds.reader
       varRbacRoleDefinitionIds.connectedMachineResourceAdministrator
     ]
-    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.landingZones)    ]
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -1150,9 +1139,6 @@ module modPolicyAssignmentPlatformDeployVmMonitor '../../../policy/assignments/p
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
-    ]
-    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.landingZones)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1187,9 +1173,6 @@ module modPolicyAssignmentPlatformDeployMdfcDefSqlAma '../../../policy/assignmen
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
-    ]
-    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.landingZones)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1241,9 +1224,6 @@ module modPolicyAssignmentPlatformDeployVmssMonitor '../../../policy/assignments
       varRbacRoleDefinitionIds.monitoringContributor
       varRbacRoleDefinitionIds.managedIdentityOperator
       varRbacRoleDefinitionIds.reader
-    ]
-    parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.landingZones)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
