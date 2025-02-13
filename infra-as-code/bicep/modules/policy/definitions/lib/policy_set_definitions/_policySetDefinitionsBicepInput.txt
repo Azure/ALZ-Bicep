@@ -2028,6 +2028,234 @@ var varCustomPolicySetDefinitionsArray = [
 		]
 	}
 	{
+		name: 'Enforce-EncryptTransit_20241211'
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-EncryptTransit_20241211.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'AKSIngressHttpsOnlyEffect'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.AKSIngressHttpsOnlyEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'APIAppServiceHttpsEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-AppServiceApiApp-http'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.APIAppServiceHttpsEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'AppServiceHttpEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Append-AppService-httpsonly'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.AppServiceHttpEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'AppServiceminTlsVersion'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Append-AppService-latestTLS'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.AppServiceminTlsVersion.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'ContainerAppsHttpsOnlyEffect'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/0e80e269-43a4-4ae9-b5bc-178126b8a5cb'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.ContainerAppsHttpsOnlyEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-AppService-Apps-Https'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a4af4a39-4135-47fb-b175-47fbdf85311d'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-AppService-Apps-Https'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-AppService-Slots-Https'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/ae1b9a8c-dfce-4605-bd91-69213b4a26fc'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-AppService-Slots-Https'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-AppService-Tls'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/d6545c6b-dd9d-4265-91e6-0b451e2f1c50'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-AppService-Tls'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-EH-minTLS'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-EH-minTLS'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-EH-minTLS'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-FuncAppSlots-Https'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/5e5dbe3f-2702-4ffc-8b1e-0cae008a5c71'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-FuncAppSlots-Https'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-FunctionApp-Https'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/6d555dd1-86f2-4f1c-8ed7-5abae7c6cbab'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-FunctionApp-Https'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-LogicApp-Without-Https'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-LogicApps-Without-Https'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-LogicApp-Without-Https'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-Sql-Db-Tls'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/32e6bbec-16b6-44c2-be37-c5b672d103cf'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-Sql-Db-Tls'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-Sql-Managed-Tls-Version'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a8793640-60f7-487c-b5c3-1d37215905c4'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-Sql-Managed-Tls-Version'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-Storage-Tls'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/fe83a0eb-a853-422d-aac2-1bffd182c5d0'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-Storage-Tls'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deny-Synapse-Tls-Version'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/cb3738a6-82a2-4a18-b87b-15217b9deff4'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-Synapse-Tls-Version'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Deploy-LogicApp-TLS'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-LogicApp-TLS'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deploy-LogicApp-TLS'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Dine-AppService-Apps-Tls'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/ae44c1d1-0df2-4ca9-98fa-a3d3ae5b409d'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Dine-AppService-Apps-Tls'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'DINE-AppService-AppSlotTls'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/014664e7-e348-41a3-aeb9-566e4ff6a9df'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['DINE-AppService-AppSlotTls'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Dine-Function-Apps-Slots-Tls'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/fa3a6357-c6d6-4120-8429-855577ec0063'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Dine-Function-Apps-Slots-Tls'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'Dine-FunctionApp-Tls'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1f01f1c7-539c-49b5-9ef4-d4ffa37d22e0'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Dine-FunctionApp-Tls'].parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'FunctionLatestTlsEffect'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/f9d614c5-c173-4d56-95a7-b4437057d193'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.FunctionLatestTlsEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'FunctionServiceHttpsEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-AppServiceFunctionApp-http'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.FunctionServiceHttpsEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'MySQLEnableSSLDeployEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-MySQL-sslEnforcement'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.MySQLEnableSSLDeployEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'MySQLEnableSSLEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-MySql-http'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.MySQLEnableSSLEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'PostgreSQLEnableSSLDeployEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-PostgreSQL-sslEnforcement'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.PostgreSQLEnableSSLDeployEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'PostgreSQLEnableSSLEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-PostgreSql-http'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.PostgreSQLEnableSSLEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'RedisDenyhttps'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Redis-http'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.RedisDenyhttps.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'RedisdisableNonSslPort'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Append-Redis-disableNonSslPort'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.RedisdisableNonSslPort.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'RedisTLSDeployEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Append-Redis-sslEnforcement'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.RedisTLSDeployEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'SQLManagedInstanceTLSDeployEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-SqlMi-minTLS'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.SQLManagedInstanceTLSDeployEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'SQLManagedInstanceTLSEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-SqlMi-minTLS'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.SQLManagedInstanceTLSEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'SQLServerTLSDeployEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-SQL-minTLS'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.SQLServerTLSDeployEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'SQLServerTLSEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Sql-minTLS'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.SQLServerTLSEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'StorageDeployHttpsEnabledEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Storage-sslEnforcement'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.StorageDeployHttpsEnabledEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'WebAppServiceHttpsEffect'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-AppServiceWebApp-http'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.WebAppServiceHttpsEffect.parameters
+				definitionGroups: []
+			}
+			{
+				definitionReferenceId: 'WebAppServiceLatestTlsEffect'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/f0e6e85b-9b9f-4a4b-b67b-f730d42f1b0b'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.WebAppServiceLatestTlsEffect.parameters
+				definitionGroups: []
+			}
+		]
+	}
+	{
 		name: 'Enforce-EncryptTransit'
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-EncryptTransit.json')
 		libSetChildDefinitions: [
@@ -3759,6 +3987,8 @@ var varPolicySetDefinitionEsEnforceBackupParameters = loadJsonContent('lib/polic
 var varPolicySetDefinitionEsEnforceEncryptionCMKParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Encryption-CMK.parameters.json')
 
 var varPolicySetDefinitionEsEnforceEncryptTransit_20240509Parameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-EncryptTransit_20240509.parameters.json')
+
+var varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-EncryptTransit_20241211.parameters.json')
 
 var varPolicySetDefinitionEsEnforceEncryptTransitParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-EncryptTransit.parameters.json')
 
