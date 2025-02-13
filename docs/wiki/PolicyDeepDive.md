@@ -154,7 +154,7 @@ To carry out the instructions in the scenario the operator will require Resource
 
   ```kusto
     PolicyResources |
-    where kind =~ 'policyassignments' and tostring(properties.policyDefinitionId) =~ '/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diagnostics-LogAnalytics'
+    where kind =~ 'policyassignments' and tostring(properties.policyDefinitionId) =~ '/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policySetDefinitions/Deploy-MDFC-Config_20240319'
     | extend
         assignmentScope = tostring(properties.scope),
         assignmmentNotScopes = tostring(properties.notScopes),
