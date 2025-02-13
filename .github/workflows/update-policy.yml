@@ -87,7 +87,7 @@ jobs:
       - name: Install ALZ PowerShell Module
         shell: pwsh
         run: |
-          Install-Module -Name 'ALZ' -Force
+          Install-Module -Name 'ALZ' -Force -RequiredVersion '4.1.5'
 
       - name: Update Policy Definition Bicep Input Files
         uses: azure/powershell@53dd145408794f7e80f97cfcca04155c85234709 # v2.0.0
