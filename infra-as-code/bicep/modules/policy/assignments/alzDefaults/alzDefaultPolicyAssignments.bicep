@@ -745,6 +745,7 @@ module modPolicyAssignmentIntRootDeployMDEndpoints '../../../policy/assignments/
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployMDEnpoints
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMDEndpoints.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployMDEndpoints.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployMDEndpoints.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDEndpoints.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMDEndpoints.libDefinition.properties.description
@@ -764,6 +765,7 @@ module modPolicyAssignmentIntRootDeployMDEndpointsAMA '../../../policy/assignmen
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployMDEnpointsAma
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMDEndpointsAma.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployMDEndpointsAma.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployMDEndpointsAma.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDEndpointsAma.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMDEndpointsAma.libDefinition.properties.description
@@ -783,6 +785,7 @@ module modPolicyAssignmentIntRootDeployAzActivityLog '../../../policy/assignment
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployAzActivityLog
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployAzActivityLog.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployAzActivityLog.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployAzActivityLog.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployAzActivityLog.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployAzActivityLog.libDefinition.properties.description
@@ -824,6 +827,7 @@ module modPolicyAssignmentIntRootDeployResourceDiag '../../../policy/assignments
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployResourceDiag
   params: {
     parPolicyAssignmentDefinitionId: parLogAnalyticsWorkspaceResourceCategory =~ 'allLogs' ? varPolicyAssignmentDeployResourceDiag.definitionId : varPolicyAssignmentDeployResourceDiag.conditionalDefinitionId
+    parPolicyAssignmentDefinitionVersion: parLogAnalyticsWorkspaceResourceCategory =~ 'allLogs' ? varPolicyAssignmentDeployResourceDiag.libDefinition.properties.definitionVersion : varPolicyAssignmentDeployResourceDiag.libDefinition.properties.conditionalDefinitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployResourceDiag.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployResourceDiag.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployResourceDiag.libDefinition.properties.description
@@ -868,6 +872,7 @@ module modPolicyAssignmentIntRootDeployMdfcOssDb '../../../policy/assignments/po
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployMdfcOssDb
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMDFCOssDb.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployMDFCOssDb.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployMDFCOssDb.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDFCOssDb.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMDFCOssDb.libDefinition.properties.description
@@ -887,6 +892,7 @@ module modPolicyAssignmentIntRootDeployMdfcSqlAtp '../../../policy/assignments/p
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDeployMdfcSqlAtp
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMDFCSqlAtp.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.properties.description
@@ -906,6 +912,7 @@ module modPolicyAssignmentIntRootAuditLocationMatch '../../../policy/assignments
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootAuditLocationMatch
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentAuditLocationMatch.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentAuditLocationMatch.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentAuditLocationMatch.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentAuditLocationMatch.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentAuditLocationMatch.libDefinition.properties.description
@@ -922,6 +929,7 @@ module modPolicyAssignmentIntRootAuditZoneResiliency '../../../policy/assignment
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootAuditZoneResiliency
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentAuditZoneResiliency.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentAuditZoneResiliency.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentAuditZoneResiliency.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentAuditZoneResiliency.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentAuditZoneResiliency.libDefinition.properties.description
@@ -970,6 +978,7 @@ module modPolicyAssignmentIntRootDenyUnmanagedDisks '../../../policy/assignments
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDenyUnmanagedDisks
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyUnmanagedDisk.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDenyUnmanagedDisk.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDenyUnmanagedDisk.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyUnmanagedDisk.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyUnmanagedDisk.libDefinition.properties.description
@@ -987,6 +996,7 @@ module modPolicyAssignmentIntRootDenyClassicRes '../../../policy/assignments/pol
   name: varModuleDeploymentNames.modPolicyAssignmentIntRootDenyClassicRes
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyClassicResources.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDenyClassicResources.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDenyClassicResources.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyClassicResources.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyClassicResources.libDefinition.properties.description
@@ -1004,6 +1014,7 @@ module modPolicyAssignmentPlatformDeployVmArcChangeTrack '../../../policy/assign
   name: varModuleDeploymentNames.modPolicyAssignmentPlatformDeployVmArcTrack
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmArcChangeTrack.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployVmArcChangeTrack.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployVmArcChangeTrack.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVmArcChangeTrack.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVmArcChangeTrack.libDefinition.properties.description
@@ -1030,6 +1041,7 @@ module modPolicyAssignmentPlatformDeployVmChangeTrack '../../../policy/assignmen
   name: varModuleDeploymentNames.modPolicyAssignmentPlatformDeployVmChangeTrack
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmChangeTrack.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployVmChangeTrack.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployVmChangeTrack.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVmChangeTrack.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVmChangeTrack.libDefinition.properties.description
@@ -1061,6 +1073,7 @@ module modPolicyAssignmentPlatformDeployVmssChangeTrack '../../../policy/assignm
   name: varModuleDeploymentNames.modPolicyAssignmentPlatformDeployVmssChangeTrack
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmssChangeTrack.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployVmssChangeTrack.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployVmssChangeTrack.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVmssChangeTrack.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVmssChangeTrack.libDefinition.properties.description
@@ -1092,6 +1105,7 @@ module modPolicyAssignmentPlatformDeployVmArcMonitor '../../../policy/assignment
   name: varModuleDeploymentNames.modPolicyAssignmentPlatformDeployVmArcMonitor
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployvmHybrMonitoring.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.description
@@ -1119,6 +1133,7 @@ module modPolicyAssignmentPlatformDeployVmMonitor '../../../policy/assignments/p
   name: varModuleDeploymentNames.modPolicyAssignmentPlatformDeployVmMonitor
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMMonitor24.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployVMMonitor24.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.description
@@ -1150,6 +1165,7 @@ module modPolicyAssignmentPlatformDeployMdfcDefSqlAma '../../../policy/assignmen
   name: varModuleDeploymentNames.modPolicyAssignmentPlatformDeployMdfcDefSqlAma
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMdfcDefSqlAma.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.properties.description
@@ -1204,6 +1220,7 @@ module modPolicyAssignmentPlatformDeployVmssMonitor '../../../policy/assignments
   name: varModuleDeploymentNames.modPolicyAssignmentPlatformDeployVmssMonitor
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMSSMonitor24.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.description
@@ -1234,6 +1251,7 @@ module modPolicyAssignmentPlatformEnforceSubnetPrivate '../../../policy/assignme
   name: varModuleDeploymentNames.modPolicyAssignmentPlatformEnforceSubnetPrivate
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSubnetPrivate.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.description
@@ -1307,6 +1325,7 @@ module modPolicyAssignmentConnEnableDdosVnet '../../../policy/assignments/policy
   name: varModuleDeploymentNames.modPolicyAssignmentConnEnableDdosVnet
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnableDDoSVNET.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentEnableDDoSVNET.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.description
@@ -1332,6 +1351,7 @@ module modPolicyAssignmentIdentDenyPublicIp '../../../policy/assignments/policyA
   name: varModuleDeploymentNames.modPolicyAssignmentIdentDenyPublicIp
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPublicIP.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDenyPublicIP.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDenyPublicIP.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPublicIP.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyPublicIP.libDefinition.properties.description
@@ -1380,6 +1400,7 @@ module modPolicyAssignmentIdentDeployVmBackup '../../../policy/assignments/polic
   name: varModuleDeploymentNames.modPolicyAssignmentIdentDeployVmBackup
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMBackup.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployVMBackup.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployVMBackup.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMBackup.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMBackup.libDefinition.properties.description
@@ -1409,6 +1430,7 @@ module modPolicyAssignmentMgmtDeployLogAnalytics '../../../policy/assignments/po
   name: varModuleDeploymentNames.modPolicyAssignmentMgmtDeployLogAnalytics
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployLogAnalytics.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployLogAnalytics.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployLogAnalytics.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployLogAnalytics.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployLogAnalytics.libDefinition.properties.description
@@ -1449,6 +1471,7 @@ module modPolicyAssignmentLzsDenyIpForwarding '../../../policy/assignments/polic
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyIpForwarding
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyIPForwarding.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDenyIPForwarding.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDenyIPForwarding.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyIPForwarding.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyIPForwarding.libDefinition.properties.description
@@ -1497,6 +1520,7 @@ module modPolicyAssignmentLzsDeployVmBackup '../../../policy/assignments/policyA
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployVmBackup
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMBackup.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployVMBackup.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployVMBackup.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMBackup.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMBackup.libDefinition.properties.description
@@ -1524,6 +1548,7 @@ module modPolicyAssignmentLzsEnableDdosVnet '../../../policy/assignments/policyA
   name: varModuleDeploymentNames.modPolicyAssignmentLzsEnableDdosVnet
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnableDDoSVNET.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentEnableDDoSVNET.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.description
@@ -1548,6 +1573,7 @@ module modPolicyAssignmentLzsDenyStorageHttp '../../../policy/assignments/policy
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyStorageHttp
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyStoragehttp.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDenyStoragehttp.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDenyStoragehttp.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyStoragehttp.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyStoragehttp.libDefinition.properties.description
@@ -1564,6 +1590,7 @@ module modPolicyAssignmentLzsDenyPrivEscalationAks '../../../policy/assignments/
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyPrivEscalationAks
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPrivEscalationAKS.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.properties.description
@@ -1580,6 +1607,7 @@ module modPolicyAssignmentLzsDenyPrivContainersAks '../../../policy/assignments/
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDenyPrivContainersAks
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPrivContainersAKS.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.properties.description
@@ -1596,6 +1624,7 @@ module modPolicyAssignmentLzsEnforceAksHttps '../../../policy/assignments/policy
   name: varModuleDeploymentNames.modPolicyAssignmentLzsEnforceAksHttps
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceAKSHTTPS.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.properties.description
@@ -1628,6 +1657,7 @@ module modPolicyAssignmentLzsDeployAzSqlDbAuditing '../../../policy/assignments/
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployAzSqlDbAuditing
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployAzSqlDbAuditing.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployAzSqlDbAuditing.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployAzSqlDbAuditing.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployAzSqlDbAuditing.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployAzSqlDbAuditing.libDefinition.properties.description
@@ -1656,6 +1686,7 @@ module modPolicyAssignmentLzsDeploySqlThreat '../../../policy/assignments/policy
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeploySqlThreat
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeploySQLThreat.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeploySQLThreat.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeploySQLThreat.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeploySQLThreat.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeploySQLThreat.libDefinition.properties.description
@@ -1675,6 +1706,7 @@ module modPolicyAssignmentLzsDeploySqlTde '../../../policy/assignments/policyAss
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeploySqlTde
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeploySQLTDE.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeploySQLTDE.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeploySQLTDE.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeploySQLTDE.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeploySQLTDE.libDefinition.properties.description
@@ -1694,6 +1726,7 @@ module modPolicyAssignmentLzsDeployVmArcTrack '../../../policy/assignments/polic
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployVmArcTrack
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmArcChangeTrack.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployVmArcChangeTrack.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployVmArcChangeTrack.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVmArcChangeTrack.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVmArcChangeTrack.libDefinition.properties.description
@@ -1723,6 +1756,7 @@ module modPolicyAssignmentLzsDeployVmChangeTrack '../../../policy/assignments/po
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployVmChangeTrack
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmChangeTrack.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployVmChangeTrack.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployVmChangeTrack.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVmChangeTrack.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVmChangeTrack.libDefinition.properties.description
@@ -1757,6 +1791,7 @@ module modPolicyAssignmentLzsDeployVmssChangeTrack '../../../policy/assignments/
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployVmssChangeTrack
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmssChangeTrack.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployVmssChangeTrack.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployVmssChangeTrack.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVmssChangeTrack.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVmssChangeTrack.libDefinition.properties.description
@@ -1791,6 +1826,7 @@ module modPolicyAssignmentLzsDeployVmArcMonitor '../../../policy/assignments/pol
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployVmArcMonitor
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployvmHybrMonitoring.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.description
@@ -1821,6 +1857,7 @@ module modPolicyAssignmentLzsDeployVmMonitor '../../../policy/assignments/policy
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployVmMonitor
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMMonitor24.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployVMMonitor24.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.description
@@ -1855,6 +1892,7 @@ module modPolicyAssignmentLzsDeployVmssMonitor '../../../policy/assignments/poli
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployVmssMonitor
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMSSMonitor24.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.description
@@ -1889,6 +1927,7 @@ module modPolicyAssignmentLzsmDeployMdfcDefSqlAma '../../../policy/assignments/p
   name: varModuleDeploymentNames.modPolicyAssignmentLzsDeployMdfcDefSqlAma
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMdfcDefSqlAma.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.properties.description
@@ -1923,6 +1962,7 @@ module modPolicyAssignmentLzsEnforceSubnetPrivate '../../../policy/assignments/p
   name: varModuleDeploymentNames.modPolicyAssignmentLzsEnforceSubnetPrivate
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSubnetPrivate.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.description
@@ -1995,6 +2035,7 @@ module modPolicyAssignmentLzsAuditAppGwWaf '../../../policy/assignments/policyAs
   name: varModuleDeploymentNames.modPolicyAssignmentLzsAuditAppGwWaf
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentAuditAppGWWAF.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentAuditAppGWWAF.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentAuditAppGWWAF.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentAuditAppGWWAF.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentAuditAppGWWAF.libDefinition.properties.description
@@ -2253,6 +2294,7 @@ module modPolicyAssignmentLzsCorpDenyPipOnNic '../../../policy/assignments/polic
   name: contains(mgScope, 'confidential') ? varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpDenyPipOnNic : varModuleDeploymentNames.modPolicyAssignmentLzsCorpDenyPipOnNic
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPublicIPOnNIC.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.properties.description
@@ -2269,6 +2311,7 @@ module modPolicyAssignmentLzsCorpDenyHybridNet '../../../policy/assignments/poli
   name: contains(mgScope, 'confidential') ? varModuleDeploymentNames.modPolicyAssignmentLzsConfidentialCorpDenyHybridNet : varModuleDeploymentNames.modPolicyAssignmentLzsCorpDenyHybridNet
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyHybridNetworking.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDenyHybridNetworking.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDenyHybridNetworking.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyHybridNetworking.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyHybridNetworking.libDefinition.properties.description

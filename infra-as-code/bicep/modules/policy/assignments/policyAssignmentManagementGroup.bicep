@@ -50,6 +50,9 @@ param parPolicyAssignmentOverrides array = []
 @description('List of required resource selectors for the policy assignment.')
 param parPolicyAssignmentResourceSelectors array = []
 
+@description('The version of the policy definition to use.')
+param parPolicyAssignmentDefinitionVersion string?
+
 @allowed([
   'None'
   'SystemAssigned'
@@ -93,6 +96,7 @@ resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2025-01-
     enforcementMode: parPolicyAssignmentEnforcementMode
     overrides: parPolicyAssignmentOverrides
     resourceSelectors: parPolicyAssignmentResourceSelectors
+    definitionVersion: parPolicyAssignmentDefinitionVersion
   }
   identity: {
     type: varPolicyIdentity
