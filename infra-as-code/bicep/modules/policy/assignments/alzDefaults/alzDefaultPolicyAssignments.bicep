@@ -95,13 +95,13 @@ param parDdosEnabled bool = true
 @description('Resource ID of the DDoS Protection Plan for Virtual Networks.')
 param parDdosProtectionPlanId string = ''
 
-@description('Resource ID of the Resource Group for Private DNS Zones.')
+@description('Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning the Deploy-Private-DNS-Zones policy.')
 param parPrivateDnsResourceGroupId string = ''
 
 @description('Location of Private DNS Zones.')
 param parPrivateDnsZonesLocation string = ''
 
-@description('List of Private DNS Zones to audit under the Corp Management Group.')
+@description('List of Private DNS Zones to audit under the Corp Management Group. This overwrites default values.')
 param parPrivateDnsZonesNamesToAuditInCorp array = []
 
 @description('Disable all default ALZ policies.')
