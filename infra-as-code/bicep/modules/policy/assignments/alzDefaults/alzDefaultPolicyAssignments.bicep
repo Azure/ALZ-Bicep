@@ -1634,7 +1634,7 @@ module modPolAssiLzsEnforceAksHttps '../../../policy/assignments/policyAssignmen
   }
 }
 
-// Module - Policy Assignment - Enforce-TLS-SSL
+// Module - Policy Assignment - Enforce-TLS-SSL-H224
 module modPolAssiLzsEnforceTlsSsl '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceTLSSSL.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIds.landingZones)
   name: varModDepNames.modPolAssiLzsEnforceTlsSsl
@@ -1646,6 +1646,9 @@ module modPolAssiLzsEnforceTlsSsl '../../../policy/assignments/policyAssignmentM
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceTLSSSL.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceTLSSSL.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentEnforceTLSSSL.libDefinition.properties.enforcementMode
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.owner
+    ]
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
