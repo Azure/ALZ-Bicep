@@ -2338,6 +2338,7 @@ var varCustomPolicySetDefinitionsArray = [
 			{
 				definitionReferenceId: 'Deny-CognitiveSearch-Cmk'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/76a56461-9dc0-40f0-82f5-2453283afa2f'
+				definitionVersion: '2.*.*'
 				definitionParameters: varPolicySetDefinitionEsEnforceEncryptionCMK_20250218Parameters['Deny-CognitiveSearch-Cmk'].parameters
 				definitionGroups: []
 			}
@@ -4736,6 +4737,7 @@ resource resPolicySetDefinitions 'Microsoft.Authorization/policySetDefinitions@2
       policyDefinitionId: policySetDef.definitionId
       parameters: policySetDef.definitionParameters
       groupNames: policySetDef.definitionGroups
+			definitionVersion: policySetDef.?definitionVersion
     }]
     policyDefinitionGroups: policySet.libSetDefinition.properties.policyDefinitionGroups
   }
