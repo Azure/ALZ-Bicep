@@ -1,0 +1,212 @@
+{
+  "ACRCmkDeny": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('ACRCmkEffect')]"
+      }
+    }
+  },
+  "AksCmkDeny": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('AksCmkEffect')]"
+      }
+    }
+  },
+  "AzureBatchCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('AzureBatchCMKEffect')]"
+      }
+    }
+  },
+  "CognitiveServicesCMK": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('CognitiveServicesCMKEffect')]"
+      }
+    }
+  },
+  "CosmosCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('CosmosCMKEffect')]"
+      }
+    }
+  },
+  "DataBoxCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('DataBoxCMKEffect')]"
+      }
+    }
+  },
+  "Deny-Aa-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('AutomationAccountCmkEffect')]"
+      }
+    }
+  },
+  "Deny-Adf-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adfCmk')]"
+      }
+    }
+  },
+  "Deny-ADX-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('adxCmk')]"
+      }
+    }
+  },
+  "Deny-Backup-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('BackupCmkEffect')]"
+      }
+    }
+  },
+  "Deny-BotService-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('botServiceCmk')]"
+      }
+    }
+  },
+  "Deny-CognitiveSearch-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('cognitiveSearchCmk')]"
+      }
+    }
+  },
+  "Deny-ContainerInstance-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('containerInstanceCmk')]"
+      }
+    }
+  },
+  "Deny-EH-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventHubNamespacesCmk')]"
+      }
+    }
+  },
+  "Deny-EH-Premium-CMK": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('eventHubPremiumCmk')]"
+      }
+    }
+  },
+  "Deny-OsAndDataDisk-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('osAndDataDiskCmk')]"
+      }
+    }
+  },
+  "Deny-Sb-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('serviceBusDenyCmk')]"
+      }
+    }
+  },
+  "Deny-Sql-Managed-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('sqlManagedCmk')]"
+      }
+    }
+  },
+  "Deny-Storage-Encryption-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageAccountsEncryptionCmk')]"
+      }
+    }
+  },
+  "Deny-Storage-Queue-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageQueueCmk')]"
+      }
+    }
+  },
+  "Deny-Storage-Table-Cmk": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('storageTableCmk')]"
+      }
+    }
+  },
+  "EncryptedVMDisksEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('EncryptedVMDisksEffect')]"
+      }
+    }
+  },
+  "HealthcareAPIsCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('HealthcareAPIsCMKEffect')]"
+      }
+    }
+  },
+  "MySQLCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('MySQLCMKEffect')]"
+      }
+    }
+  },
+  "PostgreSQLCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('PostgreSQLCMKEffect')]"
+      }
+    }
+  },
+  "SqlServerTDECMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SqlServerTDECMKEffect')]"
+      }
+    }
+  },
+  "StorageCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('StorageCMKEffect')]"
+      }
+    }
+  },
+  "StreamAnalyticsCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('StreamAnalyticsCMKEffect')]"
+      }
+    }
+  },
+  "SynapseWorkspaceCMKEffect": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('SynapseWorkspaceCMKEffect')]"
+      }
+    }
+  },
+  "WorkspaceCMK": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('WorkspaceCMKEffect')]"
+      }
+    }
+  }
+}
