@@ -200,6 +200,11 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
         $groups = $($policySetDefinitionsOutputForBicep[$_][1])
         $definitionVersion = $($policySetDefinitionsOutputForBicep[$_][2])
 
+        # Ensure definitionVersion is always set to ''
+        if ([string]::IsNullOrEmpty($definitionVersion)) {
+          $definitionVersion = "''"
+        }
+
         # If definitionReferenceId or definitionReferenceIdForParameters contains apostrophes, replace that apostrophe with a backslash and an apostrophe for Bicep string escaping
         if ($definitionReferenceId.Contains("'")) {
           $definitionReferenceId = $definitionReferenceId.Replace("'", "\'")
@@ -214,11 +219,10 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
           $definitionReferenceIdForParameters = "['$definitionReferenceIdForParameters']"
 
           # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable, without the '.' before the definitionReferenceId to make it an accessor
-          Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tdefinitionGroups: [$groups]`r`n`t`t`t`tdefinitionVersion: $definitionVersion`r`n`t`t`t`t}"
-        }
-        else {
+          Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tdefinitionGroups: [$groups]`r`n`t`t`t`tdefinitionVersion: $definitionVersion`r`n`t`t`t}"
+        } else {
           # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
-          Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation.$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tdefinitionGroups: [$groups]`r`n`t`t`t`tdefinitionVersion: '$definitionVersion'`r`n`t`t`t`t}"
+          Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation.$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tdefinitionGroups: [$groups]`r`n`t`t`t`tdefinitionVersion: $definitionVersion`r`n`t`t`t}"
         }
       }
     }
