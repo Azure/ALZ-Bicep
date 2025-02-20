@@ -218,7 +218,7 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
         }
         else {
           # Add nested array of objects to each Policy Set/Initiative Definition in the Bicep variable
-          Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation.$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tdefinitionGroups: [$groups]`r`n`t`t`tdefinitionVersion: $definitionVersion`r`n`t`t`t}"
+          Add-Content -Path "$rootPath/$definitionsSetLongPath/$defintionsSetTxtFileName" -Encoding "utf8" -Value "`t`t`t{`r`n`t`t`t`tdefinitionReferenceId: '$definitionReferenceId'`r`n`t`t`t`tdefinitionId: '$definitionId'`r`n`t`t`t`tdefinitionParameters: $policySetDefParamVarCreation.$definitionReferenceIdForParameters.parameters`r`n`t`t`t`tdefinitionGroups: [$groups]`r`n`t`t`t`definitionVersion: '$definitionVersion'`r`n`t`t`t}"
         }
       }
     }
