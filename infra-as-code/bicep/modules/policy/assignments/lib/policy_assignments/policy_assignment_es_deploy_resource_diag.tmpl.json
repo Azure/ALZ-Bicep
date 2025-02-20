@@ -12,6 +12,8 @@
       }
     },
     "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/0884adba-2312-4468-abeb-5422caed1038",
+    "definitionVersion": "1.*.*",
+    "conditionalDefinitionVersion": "1.*.*",
     "scope": null,
     "enforcementMode": "Default"
   },

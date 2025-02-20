@@ -30,6 +30,7 @@
       }
     },
     "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/924bfe3a-762f-40e7-86dd-5c8b95eb09e6",
+    "definitionVersion": "1.*.*",
     "scope": null,
     "enforcementMode": "Default"
   },

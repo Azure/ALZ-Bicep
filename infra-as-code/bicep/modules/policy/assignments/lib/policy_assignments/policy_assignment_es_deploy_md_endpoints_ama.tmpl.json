@@ -8,6 +8,7 @@
     "notScopes": [],
     "parameters": {},
     "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/77b391e3-2d5d-40c3-83bf-65c846b3c6a3",
+    "definitionVersion": "1.*.*",
     "scope": null,
     "enforcementMode": "Default"
   },

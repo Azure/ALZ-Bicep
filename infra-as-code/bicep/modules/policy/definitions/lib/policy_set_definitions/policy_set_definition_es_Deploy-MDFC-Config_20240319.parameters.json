@@ -120,7 +120,11 @@
     }
   },
   "migrateToMdeTvm": {
-    "parameters": {}
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('enableTvmCheck')]"
+      }
+    }
   },
   "securityEmailContact": {
     "parameters": {

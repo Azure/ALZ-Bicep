@@ -27,7 +27,7 @@ var varPolicyAssignmentDenyPublicIp = {
   libDefinition: loadJsonContent('../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_public_ip.tmpl.json')
 }
 
-module modPolicyAssignmentDenyPublicIP '../../policyAssignments/policyAssignmentManagementGroup.bicep' = {
+module modPolAssiDenyPublicIP '../../policyAssignments/policyAssignmentManagementGroup.bicep' = {
   name: 'PolicyAssignmentDenyPublicIP'
   scope: managementGroup('alz')
   params: {

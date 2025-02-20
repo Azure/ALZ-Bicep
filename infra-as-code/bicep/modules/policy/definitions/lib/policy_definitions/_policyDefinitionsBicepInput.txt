@@ -43,6 +43,14 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-ServerFarms-UnusedResourcesCostOptimization.json')
 }
 {
+	name: 'Audit-Tags-Mandatory-Rg'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-Tags-Mandatory-Rg.json')
+}
+{
+	name: 'Audit-Tags-Mandatory'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Audit-Tags-Mandatory.json')
+}
+{
 	name: 'Deny-AA-child-resources'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-AA-child-resources.json')
 }

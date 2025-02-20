@@ -23,16 +23,16 @@ parUserAssignedManagedIdentityResourceId | No       | Resource ID for User Assig
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days to retain logs in Log Analytics Workspace.
 parAutomationAccountName | No       | Name of the Automation Account.
 parMsDefenderForCloudEmailSecurityContact | No       | Email address for Microsoft Defender for Cloud alerts.
-parDdosEnabled | No       | Enable/disable DDoS Network Protection. True enforces Enable-DDoS-VNET policy; false disables.
+parDdosEnabled | No       | Enable/disable DDoS Network Protection.
 parDdosProtectionPlanId | No       | Resource ID of the DDoS Protection Plan for Virtual Networks.
 parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning the Deploy-Private-DNS-Zones policy.
 parPrivateDnsZonesLocation | No       | Location of Private DNS Zones.
 parPrivateDnsZonesNamesToAuditInCorp | No       | List of Private DNS Zones to audit under the Corp Management Group. This overwrites default values.
 parDisableAlzDefaultPolicies | No       | Disable all default ALZ policies.
 parDisableSlzDefaultPolicies | No       | Disable all default sovereign policies.
-parVmBackupExclusionTagName | No       | Tag name for excluding VMs from this policy’s scope.
-parVmBackupExclusionTagValue | No       | Tag value for excluding VMs from this policy’s scope. Comma-separated list for multiple values.
-parExcludedPolicyAssignments | No       | Names of policy assignments to exclude. Found in Assigning Policies documentation.
+parVmBackupExclusionTagName | No       | Tag name for excluding VMs from this policy scope.
+parVmBackupExclusionTagValue | No       | Tag value for excluding VMs from this policy scope.
+parExcludedPolicyAssignments | No       | Names of policy assignments to exclude.
 parTelemetryOptOut | No       | Opt out of deployment telemetry.
 
 ### parTopLevelManagementGroupPrefix
@@ -163,7 +163,7 @@ Email address for Microsoft Defender for Cloud alerts.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Enable/disable DDoS Network Protection. True enforces Enable-DDoS-VNET policy; false disables.
+Enable/disable DDoS Network Protection.
 
 - Default value: `True`
 
@@ -211,19 +211,19 @@ Disable all default sovereign policies.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Tag name for excluding VMs from this policy’s scope.
+Tag name for excluding VMs from this policy scope.
 
 ### parVmBackupExclusionTagValue
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Tag value for excluding VMs from this policy’s scope. Comma-separated list for multiple values.
+Tag value for excluding VMs from this policy scope.
 
 ### parExcludedPolicyAssignments
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Names of policy assignments to exclude. Found in Assigning Policies documentation.
+Names of policy assignments to exclude.
 
 ### parTelemetryOptOut
 

@@ -1,38 +1,37 @@
 targetScope = 'managementGroup'
 
 metadata name = 'ALZ Bicep - Management Group Policy Exemptions'
-metadata description = 'Module used to create a policy exemption for a policy assignment in a management group'
+metadata description = 'Creates a policy exemption for a management group policy assignment.'
 
-@sys.description('The ID of the policy set assignment for which the exemption will be established.')
+@sys.description('The policy assignment ID for the exemption.')
 param parPolicyAssignmentId string
 
 @allowed([
   'Waiver'
   'Mitigated'
 ])
-@sys.description('The exemption category to be used.')
+@sys.description('Exemption category.')
 param parExemptionCategory string = 'Waiver'
 
-@sys.description('The description which provides context for the policy exemption.')
+@sys.description('Context for the exemption.')
 param parDescription string
 
 @allowed([
   'Default'
   'DoNotValidate'
 ])
-@sys.description('Sets the scope to permit an exemption to bypass this validation and be created beyond the assignment scope.')
+@sys.description('Scope validation setting.')
 param parAssignmentScopeValidation string = 'Default'
 
-@sys.description('List used to specify which policy definition(s) in the initiative the subject resource has an exemption to.')
+@sys.description('List of policy definitions exempted in the initiative.')
 param parPolicyDefinitionReferenceIds array
 
-@sys.description('The resource name of the policy exemption.')
+@sys.description('Policy exemption resource name.')
 param parExemptionName string
 
-@sys.description('The display name of the exemption.')
+@sys.description('Exemption display name.')
 param parExemptionDisplayName string
 
-// Create Policy Exemption
 resource resPolicyExemption 'Microsoft.Authorization/policyExemptions@2022-07-01-preview' = {
   name: parExemptionName
   properties: {

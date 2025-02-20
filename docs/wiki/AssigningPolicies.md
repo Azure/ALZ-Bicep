@@ -63,9 +63,9 @@ To extend the [ALZ Default Policy Assignments module](https://github.com/Azure/A
    1. Copy the entire contents of the relevant `_policyAssignmentsBicepInput.txt` file and replace the variables for the policy assignments metadata ([lines 78 to 202 today in the `alzDefaultPolicyAssignments.bicep` module](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep#L78-L202))
 5. Define a new module declaration using the [Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments) in the [`alzDefaultPolicyAssignments.bicep` module](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep)
    - You could also copy an existing [`alzDefaultPolicyAssignments.bicep` module](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep) policy assignment module declaration that uses the same effect as you require in your new assignment
-     - [`DeployIfNotExists` effect example - `Deploy-MDFC-Config` policy assignment - `modPolicyAssignmentIntRootDeployMDFCConfig` (lines 242 to 269)](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep#L242-L269)
+     - [`DeployIfNotExists` effect example - `Deploy-MDFC-Config` policy assignment - `modPolAssiIntRootDeployMDFCConfig` (lines 242 to 269)](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep#L242-L269)
        - *Note the use of `parPolicyAssignmentParameterOverrides`*
-     - [`Deny` effect example - `Deny-Subnet-Without-Nsg` policy assignment - `modPolicyAssignmentIdentDenySubnetWithoutNSG` (lines 445 to 458)](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep#L445-L458)
+     - [`Deny` effect example - `Deny-Subnet-Without-Nsg` policy assignment - `modPolAssiIdentDenySubnetWithoutNSG` (lines 445 to 458)](https://github.com/Azure/ALZ-Bicep/blob/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep#L445-L458)
    - Change the parameter input values to the desired values to assign your new policy
      - Refer to the [Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments) documentation for parameter information
      - These can be "hardcoded" **or** from the associated `.json` file in the `lib`, referenced via a variable generated in step 4, that you have created in the previous steps
@@ -76,7 +76,7 @@ To extend the [ALZ Default Policy Assignments module](https://github.com/Azure/A
 
 The steps explained in the above section to extend the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) still apply and should be followed however you will do this in a separate Bicep file instead.
 
-You will also need to ensure you create unique deployment names for each policy assignment as we do in the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) in the variable named `varModuleDeploymentNames` which is referenced for each policy assignment to its associated deployment name.
+You will also need to ensure you create unique deployment names for each policy assignment as we do in the [ALZ Default Policy Assignments module](https://github.com/Azure/ALZ-Bicep/tree/main/infra-as-code/bicep/modules/policy/assignments/alzDefaults) in the variable named `varModDepNames` which is referenced for each policy assignment to its associated deployment name.
 
 ## What if I want to exclude specific policy assignments from ALZ Default Policy Assignments?
 
