@@ -200,9 +200,11 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
         $groups = $($policySetDefinitionsOutputForBicep[$_][1])
         $definitionVersion = $($policySetDefinitionsOutputForBicep[$_][2])
 
-        # Ensure definitionVersion is always set to ''
+        # Ensure definitionVersion is always set to '' if empty, otherwise wrap it in single quotes
         if ([string]::IsNullOrEmpty($definitionVersion)) {
           $definitionVersion = "''"
+        } else {
+          $definitionVersion = "'$definitionVersion'"
         }
 
         # If definitionReferenceId or definitionReferenceIdForParameters contains apostrophes, replace that apostrophe with a backslash and an apostrophe for Bicep string escaping
