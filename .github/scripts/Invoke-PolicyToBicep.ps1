@@ -45,7 +45,8 @@ if (-not (Get-Module -ListAvailable -Name ALZ)) {
   Write-Information "====> ALZ module isn't already installed. Installing..." -InformationAction Continue
   Install-Module -Name ALZ -Force -Scope CurrentUser -ErrorAction Stop -RequiredVersion '4.1.5'
   Write-Information "====> ALZ module now installed." -InformationAction Continue
-} else {
+}
+else {
   Write-Information "====> ALZ module is already installed." -InformationAction Continue
 }
 
@@ -157,14 +158,24 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
     [System.Collections.Hashtable]$policySetDefinitionsOutputForBicep = [ordered]@{}
 
     # Loop through child Policy Set/Initiative Definitions if HashTable not == 0
-    if (($policyDefinitions.Count) -ne 0) {
+    if ($policyDefinitions.Count -ne 0) {
       $policyDefinitions | Sort-Object | ForEach-Object {
         if ($null -ne $_.groupNames -and $_.groupNames.Count -ne 0) {
           $joinedGroupNames = "'" + ($_.groupNames -join "','" ) + "'"
-          $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, @($_.policyDefinitionId, $joinedGroupNames))
+          if (![string]::IsNullOrEmpty($_.definitionVersion)) {
+            $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, @($_.policyDefinitionId, $joinedGroupNames, $_.definitionVersion))
+          }
+          else {
+            $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, @($_.policyDefinitionId, $joinedGroupNames, ""))
+          }
         }
         else {
-          $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, @($_.policyDefinitionId, ""))
+          if (![string]::IsNullOrEmpty($_.definitionVersion)) {
+            $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, @($_.policyDefinitionId, "", $_.definitionVersion))
+          }
+          else {
+            $policySetDefinitionsOutputForBicep.Add($_.policyDefinitionReferenceId, @($_.policyDefinitionId, "", ""))
+          }
         }
       }
     }
@@ -187,7 +198,7 @@ function New-PolicySetDefinitionsBicepInputTxtFile {
         $definitionId = $($policySetDefinitionsOutputForBicep[$_][0])
         $groups = $($policySetDefinitionsOutputForBicep[$_][1])
 
-        # If definitionReferenceId or definitionReferenceIdForParameters contains apostrophes, replace that apostrophe with a backslash and an apostrohphe for Bicep string escaping
+        # If definitionReferenceId or definitionReferenceIdForParameters contains apostrophes, replace that apostrophe with a backslash and an apostrophe for Bicep string escaping
         if ($definitionReferenceId.Contains("'")) {
           $definitionReferenceId = $definitionReferenceId.Replace("'", "\'")
         }
