@@ -4737,7 +4737,7 @@ resource resPolicySetDefinitions 'Microsoft.Authorization/policySetDefinitions@2
       policyDefinitionId: policySetDef.definitionId
       parameters: policySetDef.definitionParameters
       groupNames: policySetDef.definitionGroups
-			definitionVersion: policySetDef.?definitionVersion
+			definitionVersion: policySetDef.definitionVersion
     }]
     policyDefinitionGroups: policySet.libSetDefinition.properties.policyDefinitionGroups
   }
