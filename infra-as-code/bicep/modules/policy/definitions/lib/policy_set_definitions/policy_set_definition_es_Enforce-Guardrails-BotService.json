@@ -69,7 +69,8 @@
             "value": "[[parameters('botServiceValidUri')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "Deny-BotService-Isolated-Mode",
@@ -79,7 +80,8 @@
             "value": "[[parameters('botServiceIsolatedMode')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "2.*.*"
       },
       {
         "policyDefinitionReferenceId": "Deny-BotService-Local-Auth",
@@ -89,7 +91,8 @@
             "value": "[[parameters('botServiceLocalAuth')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "Audit-BotService-Private-Link",
@@ -99,7 +102,8 @@
             "value": "[[parameters('botServicePrivateLink')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       }
     ],
     "policyDefinitionGroups": null

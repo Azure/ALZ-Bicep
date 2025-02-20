@@ -37,7 +37,8 @@
             "value": "[[parameters('containerInstanceVnet')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "2.*.*"
       }
     ],
     "policyDefinitionGroups": null

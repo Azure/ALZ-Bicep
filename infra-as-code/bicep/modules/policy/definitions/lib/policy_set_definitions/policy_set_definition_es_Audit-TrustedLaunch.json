@@ -40,7 +40,8 @@
             "value": "[[parameters('effect')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "AuditTrustedLaunchEnabled",
@@ -50,7 +51,8 @@
             "value": "[[parameters('effect')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       }
     ],
     "policyDefinitionGroups": null

@@ -79,7 +79,8 @@
             "value": "[[parameters('tagOperator')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "4.*.*"
       },
       {
         "policyDefinitionReferenceId": "azureUpdateManagerVmCheckUpdateLinux",
@@ -101,7 +102,8 @@
             "value": "[[parameters('tagOperator')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "4.*.*"
       },
       {
         "policyDefinitionReferenceId": "azureUpdateManagerVmArcCheckUpdateWindows",
@@ -123,7 +125,8 @@
             "value": "[[parameters('tagOperator')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "2.*.*"
       },
       {
         "policyDefinitionReferenceId": "azureUpdateManagerVmArcCheckUpdateLinux",
@@ -145,7 +148,8 @@
             "value": "[[parameters('tagOperator')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "2.*.*"
       }
     ],
     "policyDefinitionGroups": null

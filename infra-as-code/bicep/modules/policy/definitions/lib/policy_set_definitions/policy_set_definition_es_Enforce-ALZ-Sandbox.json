@@ -66,7 +66,8 @@
             "value": "[[parameters('listOfResourceTypesNotAllowed')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "2.*.*"
       },
       {
         "policyDefinitionReferenceId": "SandboxDenyVnetPeering",
@@ -76,7 +77,8 @@
             "value": "[[parameters('effectDenyVnetPeering')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       }
     ],
     "policyDefinitionGroups": null

@@ -63,7 +63,8 @@
             "value": "[[parameters('serviceBusAuthzRules')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "Deny-Sb-Encryption",
@@ -73,7 +74,8 @@
             "value": "[[parameters('serviceBusDoubleEncryption')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "Deny-Sb-LocalAuth",
@@ -83,7 +85,8 @@
             "value": "[[parameters('serviceBusDenyDisabledLocalAuth')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "Modify-Sb-LocalAuth",
@@ -93,7 +96,8 @@
             "value": "[[parameters('serviceBusModifyDisableLocalAuth')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       }
     ],
     "policyDefinitionGroups": null

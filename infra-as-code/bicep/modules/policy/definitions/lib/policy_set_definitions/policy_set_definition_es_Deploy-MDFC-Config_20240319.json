@@ -249,7 +249,8 @@
             "value": "[[parameters('enableAscForOssDb')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "defenderForVM",
@@ -259,7 +260,8 @@
             "value": "[[parameters('enableAscForServers')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "defenderForVMVulnerabilityAssessment",
@@ -272,7 +274,8 @@
             "value": "[[parameters('vulnerabilityAssessmentProvider')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "4.*.*"
       },
       {
         "policyDefinitionReferenceId": "defenderForSqlServerVirtualMachines",
@@ -282,7 +285,8 @@
             "value": "[[parameters('enableAscForSqlOnVm')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "defenderForAppServices",
@@ -292,7 +296,8 @@
             "value": "[[parameters('enableAscForAppServices')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "defenderForStorageAccountsV2",
@@ -302,7 +307,8 @@
             "value": "[[parameters('enableAscForStorage')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "defenderforContainers",
@@ -312,7 +318,8 @@
             "value": "[[parameters('enableAscForContainers')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "defenderforKubernetes",
@@ -325,7 +332,8 @@
             "value": "[[parameters('logAnalytics')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "4.*.*"
       },
       {
         "policyDefinitionReferenceId": "azurePolicyForKubernetes",
@@ -335,7 +343,8 @@
             "value": "[[parameters('enableAscForContainers')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "4.*.*"
       },
       {
         "policyDefinitionReferenceId": "defenderForKeyVaults",
@@ -345,7 +354,8 @@
             "value": "[[parameters('enableAscForKeyVault')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "defenderForArm",
@@ -355,7 +365,8 @@
             "value": "[[parameters('enableAscForArm')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "defenderForSqlPaas",
@@ -365,7 +376,8 @@
             "value": "[[parameters('enableAscForSql')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "defenderForCosmosDbs",
@@ -375,7 +387,8 @@
             "value": "[[parameters('enableAscForCosmosDbs')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "defenderForCspm",
@@ -385,7 +398,8 @@
             "value": "[[parameters('enableAscForCspm')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "securityEmailContact",
@@ -398,7 +412,8 @@
             "value": "[[parameters('minimalSeverity')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "ascExport",
@@ -417,7 +432,8 @@
             "value": "[[parameters('logAnalytics')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "4.*.*"
       },
       {
         "policyDefinitionReferenceId": "migrateToMdeTvm",
@@ -427,7 +443,8 @@
             "value": "[[parameters('enableTvmCheck')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": ""
       }
     ],
     "policyDefinitionGroups": null

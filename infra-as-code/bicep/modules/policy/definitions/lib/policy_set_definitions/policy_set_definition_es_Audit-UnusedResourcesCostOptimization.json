@@ -64,7 +64,8 @@
             "value": "[[parameters('effectDisks')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "AuditPublicIpAddressesUnusedResourcesCostOptimization",
@@ -74,7 +75,8 @@
             "value": "[[parameters('effectPublicIpAddresses')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "AuditServerFarmsUnusedResourcesCostOptimization",
@@ -84,7 +86,8 @@
             "value": "[[parameters('effectServerFarms')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       },
       {
         "policyDefinitionReferenceId": "AuditAzureHybridBenefitUnusedResourcesCostOptimization",
@@ -94,7 +97,8 @@
             "value": "Audit"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       }
     ],
     "policyDefinitionGroups": null

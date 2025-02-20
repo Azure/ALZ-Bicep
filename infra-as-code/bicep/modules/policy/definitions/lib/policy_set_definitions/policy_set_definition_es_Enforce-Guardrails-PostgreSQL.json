@@ -36,7 +36,8 @@
             "value": "[[parameters('postgreSqlAdvThreatProtection')]"
           }
         },
-        "groupNames": []
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
       }
     ],
     "policyDefinitionGroups": null
