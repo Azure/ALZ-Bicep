@@ -1,30 +1,30 @@
 # ALZ Bicep - Management Group Policy Exemptions
 
-Module used to create a policy exemption for a policy assignment in a management group
+Creates a policy exemption for a management group policy assignment.
 
 ## Parameters
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parPolicyAssignmentId | Yes      | The ID of the policy set assignment for which the exemption will be established.
-parExemptionCategory | No       | The exemption category to be used.
-parDescription | Yes      | The description which provides context for the policy exemption.
-parAssignmentScopeValidation | No       | Sets the scope to permit an exemption to bypass this validation and be created beyond the assignment scope.
-parPolicyDefinitionReferenceIds | Yes      | List used to specify which policy definition(s) in the initiative the subject resource has an exemption to.
-parExemptionName | Yes      | The resource name of the policy exemption.
-parExemptionDisplayName | Yes      | The display name of the exemption.
+parPolicyAssignmentId | Yes      | The policy assignment ID for the exemption.
+parExemptionCategory | No       | Exemption category.
+parDescription | Yes      | Context for the exemption.
+parAssignmentScopeValidation | No       | Scope validation setting.
+parPolicyDefinitionReferenceIds | Yes      | List of policy definitions exempted in the initiative.
+parExemptionName | Yes      | Policy exemption resource name.
+parExemptionDisplayName | Yes      | Exemption display name.
 
 ### parPolicyAssignmentId
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-The ID of the policy set assignment for which the exemption will be established.
+The policy assignment ID for the exemption.
 
 ### parExemptionCategory
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The exemption category to be used.
+Exemption category.
 
 - Default value: `Waiver`
 
@@ -34,13 +34,13 @@ The exemption category to be used.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-The description which provides context for the policy exemption.
+Context for the exemption.
 
 ### parAssignmentScopeValidation
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Sets the scope to permit an exemption to bypass this validation and be created beyond the assignment scope.
+Scope validation setting.
 
 - Default value: `Default`
 
@@ -50,19 +50,19 @@ Sets the scope to permit an exemption to bypass this validation and be created b
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-List used to specify which policy definition(s) in the initiative the subject resource has an exemption to.
+List of policy definitions exempted in the initiative.
 
 ### parExemptionName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-The resource name of the policy exemption.
+Policy exemption resource name.
 
 ### parExemptionDisplayName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-The display name of the exemption.
+Exemption display name.
 
 ## Snippets
 

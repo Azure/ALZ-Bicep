@@ -1,10 +1,10 @@
 targetScope = 'managementGroup'
 
 metadata name = 'ALZ Bicep - Management Group Policy Assignments'
-metadata description = 'Module to assign policy definitions to management groups'
+metadata description = 'Assign policies to management groups'
 
 type nonComplianceMessageType = {
-  @description('Message for non-compliance.')
+  @description('Non-compliance message.')
   message: string
 
   @description('Policy definition reference ID.')
@@ -16,60 +16,63 @@ type nonComplianceMessageType = {
 @description('Policy assignment name.')
 param parPolicyAssignmentName string
 
-@description('Policy assignment display name.')
+@description('Display name.')
 param parPolicyAssignmentDisplayName string
 
-@description('Policy assignment description.')
+@description('Assignment description.')
 param parPolicyAssignmentDescription string
 
 @description('Policy definition ID.')
 param parPolicyAssignmentDefinitionId string
 
-@description('Parameter values for the assigned policy.')
+@description('Policy parameters.')
 param parPolicyAssignmentParameters object = {}
 
-@description('Overrides for parameter values in parPolicyAssignmentParameters.')
+@description('Parameter overrides.')
 param parPolicyAssignmentParameterOverrides object = {}
 
-@description('Non-compliance messages for the assigned policy.')
+@description('Non-compliance messages.')
 param parPolicyAssignmentNonComplianceMessages nonComplianceMessageType = []
 
-@description('Scope Resource IDs excluded from policy assignment.')
+@description('Excluded scope IDs.')
 param parPolicyAssignmentNotScopes array = []
 
 @allowed([
   'Default'
   'DoNotEnforce'
 ])
-@description('Enforcement mode for the policy assignment.')
+@description('Enforcement mode.')
 param parPolicyAssignmentEnforcementMode string = 'Default'
 
-@description('List of required overrides for the policy assignment.')
+@description('Required overrides.')
 param parPolicyAssignmentOverrides array = []
 
-@description('List of required resource selectors for the policy assignment.')
+@description('Required resource selectors.')
 param parPolicyAssignmentResourceSelectors array = []
+
+@description('Policy definition version.')
+param parPolicyAssignmentDefinitionVersion string?
 
 @allowed([
   'None'
   'SystemAssigned'
 ])
-@description('Identity type for the policy assignment (required for Modify/DeployIfNotExists effects).')
+@description('Identity type.')
 param parPolicyAssignmentIdentityType string = 'None'
 
-@description('Additional Management Groups for System-assigned Managed Identity role assignments.')
+@description('Additional MGs for role assignments.')
 param parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs array = []
 
-@description('Subscription IDs for System-assigned Managed Identity role assignments.')
+@description('Subscription IDs for role assignments.')
 param parPolicyAssignmentIdentityRoleAssignmentsSubs array = []
 
-@description('Subscription IDs and Resource Groups for System-assigned Managed Identity role assignments.')
+@description('Subscriptions & resource groups for role assignments.')
 param parPolicyAssignmentIdentityRoleAssignmentsResourceGroups array = []
 
-@description('RBAC role definition IDs for Managed Identity role assignments (required for Modify/DeployIfNotExists effects).')
+@description('RBAC role definition IDs.')
 param parPolicyAssignmentIdentityRoleDefinitionIds array = []
 
-@description('Opt-out of deployment telemetry.')
+@description('Opt-out of telemetry.')
 param parTelemetryOptOut bool = false
 
 var varPolicyAssignmentParametersMerged = union(parPolicyAssignmentParameters, parPolicyAssignmentParameterOverrides)
@@ -93,6 +96,7 @@ resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2025-01-
     enforcementMode: parPolicyAssignmentEnforcementMode
     overrides: parPolicyAssignmentOverrides
     resourceSelectors: parPolicyAssignmentResourceSelectors
+    definitionVersion: parPolicyAssignmentDefinitionVersion
   }
   identity: {
     type: varPolicyIdentity
