@@ -15,7 +15,11 @@ type lockType = {
 param parSpokeVirtualNetworkResourceId string = ''
 
 @sys.description('Fallback to internet for Azure Private DNS zones.')
-param parResolutionPolicy string = 'NxDomainRedirect'
+@allowed([
+  'Default'
+  'NxDomainRedirect'
+])
+param parResolutionPolicy string = 'Default'
 
 @sys.description('The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.')
 param parPrivateDnsZoneResourceId string = ''
