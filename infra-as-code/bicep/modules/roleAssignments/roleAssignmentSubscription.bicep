@@ -1,31 +1,31 @@
 targetScope = 'subscription'
 
 metadata name = 'ALZ Bicep - Role Assignment to a Subscription'
-metadata description = 'Module to assign a role to a Subscription'
+metadata description = 'Assigns a role to a subscription.'
 
-@description('GUID for the role assignment name.')
+@description('GUID for role assignment.')
 param parRoleAssignmentNameGuid string = guid(subscription().subscriptionId, parRoleDefinitionId, parAssigneeObjectId)
 
-@description('Role Definition ID (e.g., Reader Role ID: acdd72a7-3385-48ef-bd42-f606fba81ae7).')
+@description('Role Definition ID (e.g., Reader: acdd72a7-3385-48ef-bd42-f606fba81ae7).')
 param parRoleDefinitionId string
 
-@description('Principal type: "Group" (Security Group) or "ServicePrincipal" (Service Principal/Managed Identity).')
+@description('Principal type: "Group" or "ServicePrincipal".')
 @allowed([
   'Group'
   'ServicePrincipal'
 ])
 param parAssigneePrincipalType string
 
-@description('Object ID of the group, service principal, or managed identity.')
+@description('Object ID of the assignee.')
 param parAssigneeObjectId string
 
-@description('Opt out of deployment telemetry.')
+@description('Opt out of telemetry.')
 param parTelemetryOptOut bool = false
 
 @description('Role assignment condition (e.g., Owner, User Access Administrator).')
 param parRoleAssignmentCondition string = ''
 
-@description('Role assignment condition version. Must be "2.0".')
+@description('Role condition version (must be "2.0").')
 param parRoleAssignmentConditionVersion string = '2.0'
 
 // Customer Usage Attribution Id
@@ -42,7 +42,7 @@ resource resRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' 
   }
 }
 
-// Optional Deployment for Customer Usage Attribution
+// Optional Customer Usage Attribution
 module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdSubscription.bicep' = if (!parTelemetryOptOut) {
   name: 'pid-${varCuaid}-${uniqueString(subscription().subscriptionId, parAssigneeObjectId)}'
   params: {}

@@ -1,24 +1,24 @@
 # ALZ Bicep - Role Assignment to a Subscription
 
-Module to assign a role to a Subscription
+Assigns a role to a subscription.
 
 ## Parameters
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parRoleAssignmentNameGuid | No       | GUID for the role assignment name.
-parRoleDefinitionId | Yes      | Role Definition ID (e.g., Reader Role ID: acdd72a7-3385-48ef-bd42-f606fba81ae7).
-parAssigneePrincipalType | Yes      | Principal type: "Group" (Security Group) or "ServicePrincipal" (Service Principal/Managed Identity).
-parAssigneeObjectId | Yes      | Object ID of the group, service principal, or managed identity.
-parTelemetryOptOut | No       | Opt out of deployment telemetry.
+parRoleAssignmentNameGuid | No       | GUID for role assignment.
+parRoleDefinitionId | Yes      | Role Definition ID (e.g., Reader: acdd72a7-3385-48ef-bd42-f606fba81ae7).
+parAssigneePrincipalType | Yes      | Principal type: "Group" or "ServicePrincipal".
+parAssigneeObjectId | Yes      | Object ID of the assignee.
+parTelemetryOptOut | No       | Opt out of telemetry.
 parRoleAssignmentCondition | No       | Role assignment condition (e.g., Owner, User Access Administrator).
-parRoleAssignmentConditionVersion | No       | Role assignment condition version. Must be "2.0".
+parRoleAssignmentConditionVersion | No       | Role condition version (must be "2.0").
 
 ### parRoleAssignmentNameGuid
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-GUID for the role assignment name.
+GUID for role assignment.
 
 - Default value: `[guid(subscription().subscriptionId, parameters('parRoleDefinitionId'), parameters('parAssigneeObjectId'))]`
 
@@ -26,13 +26,13 @@ GUID for the role assignment name.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Role Definition ID (e.g., Reader Role ID: acdd72a7-3385-48ef-bd42-f606fba81ae7).
+Role Definition ID (e.g., Reader: acdd72a7-3385-48ef-bd42-f606fba81ae7).
 
 ### parAssigneePrincipalType
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Principal type: "Group" (Security Group) or "ServicePrincipal" (Service Principal/Managed Identity).
+Principal type: "Group" or "ServicePrincipal".
 
 - Allowed values: `Group`, `ServicePrincipal`
 
@@ -40,13 +40,13 @@ Principal type: "Group" (Security Group) or "ServicePrincipal" (Service Principa
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Object ID of the group, service principal, or managed identity.
+Object ID of the assignee.
 
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Opt out of deployment telemetry.
+Opt out of telemetry.
 
 - Default value: `False`
 
@@ -60,7 +60,7 @@ Role assignment condition (e.g., Owner, User Access Administrator).
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Role assignment condition version. Must be "2.0".
+Role condition version (must be "2.0").
 
 - Default value: `2.0`
 

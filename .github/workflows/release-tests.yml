@@ -28,7 +28,7 @@ jobs:
 
       - name: Pester Tests
         id: pester
-        if: startsWith(github.head_ref, 'release')
+        if: contains(github.head_ref, 'release')
         uses: azure/powershell@53dd145408794f7e80f97cfcca04155c85234709 # v2.0.0
         with:
           inlineScript: |

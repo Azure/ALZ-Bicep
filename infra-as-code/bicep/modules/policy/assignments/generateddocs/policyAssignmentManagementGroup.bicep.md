@@ -1,28 +1,29 @@
 # ALZ Bicep - Management Group Policy Assignments
 
-Module to assign policy definitions to management groups
+Assign policies to management groups
 
 ## Parameters
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
 parPolicyAssignmentName | Yes      | Policy assignment name.
-parPolicyAssignmentDisplayName | Yes      | Policy assignment display name.
-parPolicyAssignmentDescription | Yes      | Policy assignment description.
+parPolicyAssignmentDisplayName | Yes      | Display name.
+parPolicyAssignmentDescription | Yes      | Assignment description.
 parPolicyAssignmentDefinitionId | Yes      | Policy definition ID.
-parPolicyAssignmentParameters | No       | Parameter values for the assigned policy.
-parPolicyAssignmentParameterOverrides | No       | Overrides for parameter values in parPolicyAssignmentParameters.
-parPolicyAssignmentNonComplianceMessages | No       | Non-compliance messages for the assigned policy.
-parPolicyAssignmentNotScopes | No       | Scope Resource IDs excluded from policy assignment.
-parPolicyAssignmentEnforcementMode | No       | Enforcement mode for the policy assignment.
-parPolicyAssignmentOverrides | No       | List of required overrides for the policy assignment.
-parPolicyAssignmentResourceSelectors | No       | List of required resource selectors for the policy assignment.
-parPolicyAssignmentIdentityType | No       | Identity type for the policy assignment (required for Modify/DeployIfNotExists effects).
-parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs | No       | Additional Management Groups for System-assigned Managed Identity role assignments.
-parPolicyAssignmentIdentityRoleAssignmentsSubs | No       | Subscription IDs for System-assigned Managed Identity role assignments.
-parPolicyAssignmentIdentityRoleAssignmentsResourceGroups | No       | Subscription IDs and Resource Groups for System-assigned Managed Identity role assignments.
-parPolicyAssignmentIdentityRoleDefinitionIds | No       | RBAC role definition IDs for Managed Identity role assignments (required for Modify/DeployIfNotExists effects).
-parTelemetryOptOut | No       | Opt-out of deployment telemetry.
+parPolicyAssignmentParameters | No       | Policy parameters.
+parPolicyAssignmentParameterOverrides | No       | Parameter overrides.
+parPolicyAssignmentNonComplianceMessages | No       | Non-compliance messages.
+parPolicyAssignmentNotScopes | No       | Excluded scope IDs.
+parPolicyAssignmentEnforcementMode | No       | Enforcement mode.
+parPolicyAssignmentOverrides | No       | Required overrides.
+parPolicyAssignmentResourceSelectors | No       | Required resource selectors.
+parPolicyAssignmentDefinitionVersion | Yes      | Policy definition version.
+parPolicyAssignmentIdentityType | No       | Identity type.
+parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs | No       | Additional MGs for role assignments.
+parPolicyAssignmentIdentityRoleAssignmentsSubs | No       | Subscription IDs for role assignments.
+parPolicyAssignmentIdentityRoleAssignmentsResourceGroups | No       | Subscriptions & resource groups for role assignments.
+parPolicyAssignmentIdentityRoleDefinitionIds | No       | RBAC role definition IDs.
+parTelemetryOptOut | No       | Opt-out of telemetry.
 
 ### parPolicyAssignmentName
 
@@ -34,13 +35,13 @@ Policy assignment name.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Policy assignment display name.
+Display name.
 
 ### parPolicyAssignmentDescription
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
 
-Policy assignment description.
+Assignment description.
 
 ### parPolicyAssignmentDefinitionId
 
@@ -52,31 +53,31 @@ Policy definition ID.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Parameter values for the assigned policy.
+Policy parameters.
 
 ### parPolicyAssignmentParameterOverrides
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Overrides for parameter values in parPolicyAssignmentParameters.
+Parameter overrides.
 
 ### parPolicyAssignmentNonComplianceMessages
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Non-compliance messages for the assigned policy.
+Non-compliance messages.
 
 ### parPolicyAssignmentNotScopes
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Scope Resource IDs excluded from policy assignment.
+Excluded scope IDs.
 
 ### parPolicyAssignmentEnforcementMode
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Enforcement mode for the policy assignment.
+Enforcement mode.
 
 - Default value: `Default`
 
@@ -86,19 +87,25 @@ Enforcement mode for the policy assignment.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-List of required overrides for the policy assignment.
+Required overrides.
 
 ### parPolicyAssignmentResourceSelectors
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-List of required resource selectors for the policy assignment.
+Required resource selectors.
+
+### parPolicyAssignmentDefinitionVersion
+
+![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
+
+Policy definition version.
 
 ### parPolicyAssignmentIdentityType
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Identity type for the policy assignment (required for Modify/DeployIfNotExists effects).
+Identity type.
 
 - Default value: `None`
 
@@ -108,31 +115,31 @@ Identity type for the policy assignment (required for Modify/DeployIfNotExists e
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Additional Management Groups for System-assigned Managed Identity role assignments.
+Additional MGs for role assignments.
 
 ### parPolicyAssignmentIdentityRoleAssignmentsSubs
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Subscription IDs for System-assigned Managed Identity role assignments.
+Subscription IDs for role assignments.
 
 ### parPolicyAssignmentIdentityRoleAssignmentsResourceGroups
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Subscription IDs and Resource Groups for System-assigned Managed Identity role assignments.
+Subscriptions & resource groups for role assignments.
 
 ### parPolicyAssignmentIdentityRoleDefinitionIds
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-RBAC role definition IDs for Managed Identity role assignments (required for Modify/DeployIfNotExists effects).
+RBAC role definition IDs.
 
 ### parTelemetryOptOut
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Opt-out of deployment telemetry.
+Opt-out of telemetry.
 
 - Default value: `False`
 
@@ -186,6 +193,9 @@ outPolicyAssignmentId | string |
         },
         "parPolicyAssignmentResourceSelectors": {
             "value": []
+        },
+        "parPolicyAssignmentDefinitionVersion": {
+            "value": ""
         },
         "parPolicyAssignmentIdentityType": {
             "value": "None"
