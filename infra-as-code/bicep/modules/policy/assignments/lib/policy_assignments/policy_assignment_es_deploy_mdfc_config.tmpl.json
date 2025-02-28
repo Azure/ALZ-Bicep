@@ -8,7 +8,7 @@
     "notScopes": [],
     "parameters": {
       "emailSecurityContact": {
-        "value": "security_contact@replace_me"
+        "value": ""
       },
       "logAnalytics": {
         "value": "law-alz"

@@ -1,5 +1,5 @@
 {
-  "name": "Enforce-TLS-SSL-H224",
+  "name": "Enforce-TLS-SSL-Q225",
   "type": "Microsoft.Authorization/policyAssignments",
   "apiVersion": "2024-04-01",
   "properties": {
@@ -7,7 +7,7 @@
     "displayName": "Deny or Deploy and append TLS requirements and SSL enforcement on resources without Encryption in transit",
     "notScopes": [],
     "parameters": {},
-    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-EncryptTransit_20240509",
+    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-EncryptTransit_20241211",
     "scope": null,
     "enforcementMode": "Default"
   },
