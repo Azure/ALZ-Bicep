@@ -22,7 +22,7 @@ parDataCollectionRuleMDFCSQLResourceId | No       | Resource ID for MDFC SQL Dat
 parUserAssignedManagedIdentityResourceId | No       | Resource ID for User Assigned Managed Identity.
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days to retain logs in Log Analytics Workspace.
 parAutomationAccountName | No       | Name of the Automation Account.
-parMsDefenderForCloudEmailSecurityContact | Yes       | Email address for Microsoft Defender for Cloud alerts.
+parMsDefenderForCloudEmailSecurityContact | No       | Email address for Microsoft Defender for Cloud alerts.
 parDdosEnabled | No       | Enable/disable DDoS Network Protection.
 parDdosProtectionPlanId | No       | Resource ID of the DDoS Protection Plan for Virtual Networks.
 parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning the Deploy-Private-DNS-Zones policy.
@@ -156,8 +156,6 @@ Name of the Automation Account.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Email address for Microsoft Defender for Cloud alerts.
-
-- Default value: `security_contact@replace_me.com`
 
 ### parDdosEnabled
 
