@@ -5,15 +5,25 @@
 Parameter name | Required | Description
 -------------- | -------- | -----------
 parSpokeVirtualNetworkResourceId | No       | The Spoke Virtual Network Resource ID.
+parPrivateDnsZoneLinkResolutionPolicy | No       | Fallback to internet for Azure Private DNS zones.
 parPrivateDnsZoneResourceId | No       | The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.
-parPrivateDnsZoneLinkResolutionPolicy | No       | The resolution policy on the virtual network link. Only applicable for virtual network links to privatelink zones, and for A,AAAA,CNAME queries. When set to 'NxDomainRedirect', Azure DNS resolver falls back to public resolution if private dns query resolution results in non-existent domain response.
-parResourceLockConfig | No       | Resource Lock Configuration for Private DNS Zone Links.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
+parResourceLockConfig | No       | Resource Lock Configuration for Private DNS Zone Links.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 
 ### parSpokeVirtualNetworkResourceId
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 The Spoke Virtual Network Resource ID.
+
+### parPrivateDnsZoneLinkResolutionPolicy
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Fallback to internet for Azure Private DNS zones.
+
+- Default value: `Default`
+
+- Allowed values: `Default`, `NxDomainRedirect`
 
 ### parPrivateDnsZoneResourceId
 
@@ -49,11 +59,11 @@ Resource Lock Configuration for Private DNS Zone Links.
         "parSpokeVirtualNetworkResourceId": {
             "value": ""
         },
+        "parPrivateDnsZoneLinkResolutionPolicy": {
+            "value": "Default"
+        },
         "parPrivateDnsZoneResourceId": {
             "value": ""
-        },
-        "parPrivateDnsZoneLinkResolutionPolicy": {
-            "value": "NxDomainRedirect"
         },
         "parResourceLockConfig": {
             "value": {
