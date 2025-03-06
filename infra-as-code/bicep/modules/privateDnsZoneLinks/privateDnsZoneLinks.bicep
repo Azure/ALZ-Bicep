@@ -19,7 +19,7 @@ param parSpokeVirtualNetworkResourceId string = ''
   'Default'
   'NxDomainRedirect'
 ])
-param parResolutionPolicy string = 'Default'
+param parPrivateDnsZoneLinkResolutionPolicy string = 'Default'
 
 @sys.description('The Private DNS Zone Resource IDs to associate with the spoke Virtual Network.')
 param parPrivateDnsZoneResourceId string = ''
@@ -42,7 +42,7 @@ resource resPrivateDnsZoneLinkToSpoke 'Microsoft.Network/privateDnsZones/virtual
   name: '${split(parPrivateDnsZoneResourceId, '/')[8]}/dnslink-to-${varSpokeVirtualNetworkName}'
   properties: {
     registrationEnabled: false
-    resolutionPolicy: parResolutionPolicy
+    resolutionPolicy: parPrivateDnsZoneLinkResolutionPolicy
     virtualNetwork: {
       id: parSpokeVirtualNetworkResourceId
     }

@@ -8,7 +8,7 @@
     "parPrivateDnsZoneResourceIds":{
       "value": []
     },
-    "parResolutionPolicy": {
+    "parPrivateDnsZoneLinkResolutionPolicy": {
       "value": "Default"
     }
   }
