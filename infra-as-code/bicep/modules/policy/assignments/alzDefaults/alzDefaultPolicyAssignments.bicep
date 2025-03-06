@@ -87,7 +87,7 @@ param parLogAnalyticsWorkspaceLogRetentionInDays string = '365'
 param parAutomationAccountName string = 'alz-automation-account'
 
 @description('Email address for Microsoft Defender for Cloud alerts.')
-param parMsDefenderForCloudEmailSecurityContact string = 'security_contact@replace_me.com'
+param parMsDefenderForCloudEmailSecurityContact string = ''
 
 @description('Enable/disable DDoS Network Protection.')
 param parDdosEnabled bool = true
@@ -480,7 +480,7 @@ var varPolicyAssignmentEnforceGRKeyVault = {
 }
 
 var varPolicyAssignmentEnforceTLSSSL = {
-  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-EncryptTransit_20240509'
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-EncryptTransit_20241211'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_tls_ssl.tmpl.json')
 }
 

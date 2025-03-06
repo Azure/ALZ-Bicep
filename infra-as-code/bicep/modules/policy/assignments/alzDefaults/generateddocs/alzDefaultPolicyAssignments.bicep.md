@@ -157,8 +157,6 @@ Name of the Automation Account.
 
 Email address for Microsoft Defender for Cloud alerts.
 
-- Default value: `security_contact@replace_me.com`
-
 ### parDdosEnabled
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -303,7 +301,7 @@ Opt out of deployment telemetry.
             "value": "alz-automation-account"
         },
         "parMsDefenderForCloudEmailSecurityContact": {
-            "value": "security_contact@replace_me.com"
+            "value": ""
         },
         "parDdosEnabled": {
             "value": true
