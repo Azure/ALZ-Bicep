@@ -11,13 +11,6 @@
     "parDdosEnabled": {
       "value": true
     },
-    "parTopLevelPolicyAssignmentSovereigntyGlobal": {
-      "value": {
-        "parTopLevelSovereigntyGlobalPoliciesEnable": false,
-        "parListOfAllowedLocations": [],
-        "parPolicyEffect": "Deny"
-      }
-    },
     "parPlatformMgAlzDefaultsEnable": {
       "value": true
     },
@@ -26,14 +19,6 @@
     },
     "parLandingZoneMgConfidentialEnable": {
       "value": false
-    },
-    "parPolicyAssignmentSovereigntyConfidential": {
-      "value": {
-        "parAllowedResourceTypes": [],
-        "parListOfAllowedLocations": [],
-        "parAllowedVirtualMachineSKUs": [],
-        "parPolicyEffect": "Deny"
-      }
     },
     "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
       "value": "eastus"
