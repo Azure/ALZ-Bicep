@@ -34,8 +34,11 @@
     "parUserAssignedManagedIdentityName": {
       "value": "alz-umi-identity"
     },
+    "parAutomationAccountEnabled": {
+      "value": false
+    },
     "parLogAnalyticsWorkspaceLinkAutomationAccount": {
-      "value": true
+      "value": false
     },
     "parAutomationAccountName": {
       "value": "alz-automation-account"
