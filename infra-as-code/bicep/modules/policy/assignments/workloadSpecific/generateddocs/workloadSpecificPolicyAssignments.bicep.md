@@ -4,36 +4,15 @@ Assigns ALZ Default Policies to the Management Group hierarchy
 
 ## Parameters
 
-Parameter name | Required | Description
--------------- | -------- | -----------
-parTopLevelManagementGroupPrefix | No       | Prefix for management group hierarchy.
-parTopLevelManagementGroupSuffix | No       | Optional suffix for management group names/IDs.
-parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Assign Sovereignty Baseline - Global Policies to root management group.
-parPolicyAssignmentSovereigntyConfidential | No       | Assign Sovereignty Baseline - Confidential Policies to confidential landing zone groups.
-parPlatformMgAlzDefaultsEnable | No       | Apply platform policies to Platform group or child groups.
-parLandingZoneChildrenMgAlzDefaultsEnable | No       | Assign policies to Corp & Online Management Groups under Landing Zones.
-parLandingZoneMgConfidentialEnable | No       | Assign policies to Confidential Corp and Online groups under Landing Zones.
-parLogAnalyticsWorkSpaceAndAutomationAccountLocation | No       | Location of Log Analytics Workspace & Automation Account.
-parLogAnalyticsWorkspaceResourceId | No       | Resource ID of Log Analytics Workspace.
-parLogAnalyticsWorkspaceResourceCategory | No       | Category of logs for supported resource logging for Log Analytics Workspace.
-parDataCollectionRuleVMInsightsResourceId | No       | Resource ID for VM Insights Data Collection Rule.
-parDataCollectionRuleChangeTrackingResourceId | No       | Resource ID for Change Tracking Data Collection Rule.
-parDataCollectionRuleMDFCSQLResourceId | No       | Resource ID for MDFC SQL Data Collection Rule.
-parUserAssignedManagedIdentityResourceId | No       | Resource ID for User Assigned Managed Identity.
-parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days to retain logs in Log Analytics Workspace.
-parAutomationAccountName | No       | Name of the Automation Account.
-parMsDefenderForCloudEmailSecurityContact | No       | Email address for Microsoft Defender for Cloud alerts.
-parDdosEnabled | No       | Enable/disable DDoS Network Protection.
-parDdosProtectionPlanId | No       | Resource ID of the DDoS Protection Plan for Virtual Networks.
-parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning the Deploy-Private-DNS-Zones policy.
-parPrivateDnsZonesLocation | No       | Location of Private DNS Zones.
-parPrivateDnsZonesNamesToAuditInCorp | No       | List of Private DNS Zones to audit under the Corp Management Group. This overwrites default values.
-parDisableAlzDefaultPolicies | No       | Disable all default ALZ policies.
-parDisableSlzDefaultPolicies | No       | Disable all default sovereign policies.
-parVmBackupExclusionTagName | No       | Tag name for excluding VMs from this policy scope.
-parVmBackupExclusionTagValue | No       | Tag value for excluding VMs from this policy scope.
-parExcludedPolicyAssignments | No       | Names of policy assignments to exclude.
-parTelemetryOptOut | No       | Opt out of deployment telemetry.
+| Parameter name                               | Required | Description                                                                              |
+|----------------------------------------------|----------|------------------------------------------------------------------------------------------|
+| parTopLevelManagementGroupPrefix             | No       | Prefix for management group hierarchy.                                                   |
+| parTopLevelManagementGroupSuffix             | No       | Optional suffix for management group names/IDs.                                          |
+| parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Assign Sovereignty Baseline - Global Policies to root management group.                  |
+| parPolicyAssignmentSovereigntyConfidential   | No       | Assign Sovereignty Baseline - Confidential Policies to confidential landing zone groups. |
+| parExcludedPolicyAssignments                 | No       | Names of policy assignments to exclude.                                                  |
+| parDisableWorkloadSpecificPolicies           | No       | Set the enforcement mode to DoNotEnforce for all workload specific policies.             |
+| parTelemetryOptOut                           | No       | Opt out of deployment telemetry.                                                         |
 
 ### parTopLevelManagementGroupPrefix
 

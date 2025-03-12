@@ -9,7 +9,7 @@
     "parameters": {},
     "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Enforce-Encryption-CMK_20250218",
     "scope": null,
-    "enforcementMode": "DoNotEnforce"
+    "enforcementMode": "Default"
   },
   "location": null,
   "identity": {

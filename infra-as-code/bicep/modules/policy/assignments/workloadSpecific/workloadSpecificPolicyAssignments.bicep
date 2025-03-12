@@ -50,14 +50,14 @@ param parPolicyAssignmentSovereigntyConfidential policyAssignmentSovereigntyConf
   parPolicyEffect: 'Deny'
 }
 
-@description('Apply platform policies to Platform group or child groups.')
-param parPlatformMgAlzDefaultsEnable bool = true
-
 @description('Assign policies to Confidential Corp and Online groups under Landing Zones.')
 param parLandingZoneMgConfidentialEnable bool = false
 
-@description('Disable all default sovereign policies.')
-param parDisableSlzDefaultPolicies bool = false
+@description('Set the enforcement mode to DoNotEnforce for all SLZ policies.')
+param parDisableSlzDefaultPolicies bool = true
+
+@description('Set the enforcement mode to DoNotEnforce for all workload specific policies.')
+param parDisableWorkloadSpecificPolicies bool = true
 
 @description('Names of policy assignments to exclude.')
 param parExcludedPolicyAssignments array = []
@@ -81,13 +81,64 @@ var varDeploymentNameWrappers = {
 
 var varModDepNames = {
   modPolAssiIntRootEnforceSovereigntyGlobal: take('${varDeploymentNameWrappers.basePrefix}-enforceSovGlob-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolAssiPlatformEnforceEncryptionCMK: take('${varDeploymentNameWrappers.basePrefix}-enforceEncCMK-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolAssiLzsEnforceEncryptionCMK: take('${varDeploymentNameWrappers.basePrefix}-enforceEncCMK-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
-  modPolAssiLzsConfidentialOnlineEnforceSovereigntyConf: take('${varDeploymentNameWrappers.basePrefix}-enforceSovConf-confOnline-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiLzsConfidentialCorpEnforceSovereigntyConf: take('${varDeploymentNameWrappers.basePrefix}-enforceSovConf-confCorp-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsConfidentialOnlineEnforceSovereigntyConf: take('${varDeploymentNameWrappers.basePrefix}-enforceSovConf-confOnline-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceEncryptionCMK: take('${varDeploymentNameWrappers.basePrefix}-enforceEncCMK-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRAPIM: take('${varDeploymentNameWrappers.basePrefix}-enforceGRAPIM-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRAppServices: take('${varDeploymentNameWrappers.basePrefix}-enforceGRAppServices-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRAutomation: take('${varDeploymentNameWrappers.basePrefix}-enforceGRAutomation-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRBotService: take('${varDeploymentNameWrappers.basePrefix}-enforceGRBotService-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRCognitiveServices: take('${varDeploymentNameWrappers.basePrefix}-enforceGRCogServ-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRCompute: take('${varDeploymentNameWrappers.basePrefix}-enforceGRCompute-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRContainerApps: take('${varDeploymentNameWrappers.basePrefix}-enforceGRContApps-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRContainerInstance: take('${varDeploymentNameWrappers.basePrefix}-enforceGRContInst-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRContainerRegistry: take('${varDeploymentNameWrappers.basePrefix}-enforceGRContReg-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRCosmosDb: take('${varDeploymentNameWrappers.basePrefix}-enforceGRCosmosDb-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRDataExplorer: take('${varDeploymentNameWrappers.basePrefix}-enforceGRDataExplorer-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRDataFactory: take('${varDeploymentNameWrappers.basePrefix}-enforceGRDataFactory-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGREventGrid: take('${varDeploymentNameWrappers.basePrefix}-enforceGREventGrid-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGREventHub: take('${varDeploymentNameWrappers.basePrefix}-enforceGREventHub-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRKeyVaultSup: take('${varDeploymentNameWrappers.basePrefix}-enforceGRKeyVaultSup-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRKubernetes: take('${varDeploymentNameWrappers.basePrefix}-enforceGRKubernetes-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRMachineLearning: take('${varDeploymentNameWrappers.basePrefix}-enforceGRMachineLearning-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRMySQL: take('${varDeploymentNameWrappers.basePrefix}-enforceGRMySQL-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRNetwork: take('${varDeploymentNameWrappers.basePrefix}-enforceGRNetwork-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGROpenAI: take('${varDeploymentNameWrappers.basePrefix}-enforceGROpenAI-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRPostgreSQL: take('${varDeploymentNameWrappers.basePrefix}-enforceGRPostgreSQL-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRSQL: take('${varDeploymentNameWrappers.basePrefix}-enforceGRSQL-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRServiceBus: take('${varDeploymentNameWrappers.basePrefix}-enforceGRServiceBus-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRStorage: take('${varDeploymentNameWrappers.basePrefix}-enforceGRStorage-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRSynapse: take('${varDeploymentNameWrappers.basePrefix}-enforceGRSynapse-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsEnforceGRVirtualDesktop: take('${varDeploymentNameWrappers.basePrefix}-enforceGRVirtualDesktop-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceEncryptionCMK: take('${varDeploymentNameWrappers.basePrefix}-enforceGREncCMK-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRAPIM: take('${varDeploymentNameWrappers.basePrefix}-enforceGRAPIM-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRAppServices: take('${varDeploymentNameWrappers.basePrefix}-enforceGRAppServices-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRAutomation: take('${varDeploymentNameWrappers.basePrefix}-enforceGRAutomation-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRBotService: take('${varDeploymentNameWrappers.basePrefix}-enforceGRBotService-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRCognitiveServices: take('${varDeploymentNameWrappers.basePrefix}-enforceGRCogServ-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRCosmosDb: take('${varDeploymentNameWrappers.basePrefix}-enforceGRCosmosDb-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRCompute: take('${varDeploymentNameWrappers.basePrefix}-enforceGRCompute-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRContainerApps: take('${varDeploymentNameWrappers.basePrefix}-enforceGRContApps-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRContainerInstance: take('${varDeploymentNameWrappers.basePrefix}-enforceGRContInst-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRContainerRegistry: take('${varDeploymentNameWrappers.basePrefix}-enforceGRContReg-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRDataExplorer: take('${varDeploymentNameWrappers.basePrefix}-enforceGRDataExplorer-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRDataFactory: take('${varDeploymentNameWrappers.basePrefix}-enforceGRDataFactory-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGREventGrid: take('${varDeploymentNameWrappers.basePrefix}-enforceGREventGrid-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGREventHub: take('${varDeploymentNameWrappers.basePrefix}-enforceGREventHub-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRKeyVaultSup: take('${varDeploymentNameWrappers.basePrefix}-enforceGRKeyVaultSup-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRKubernetes: take('${varDeploymentNameWrappers.basePrefix}-enforceGRKubernetes-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRMachineLearning: take('${varDeploymentNameWrappers.basePrefix}-enforceGRMachineLearning-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRMySQL: take('${varDeploymentNameWrappers.basePrefix}-enforceGRMySQL-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRNetwork: take('${varDeploymentNameWrappers.basePrefix}-enforceGRNetwork-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGROpenAI: take('${varDeploymentNameWrappers.basePrefix}-enforceGROpenAI-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRPostgreSQL: take('${varDeploymentNameWrappers.basePrefix}-enforceGRPostgreSQL-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRSQL: take('${varDeploymentNameWrappers.basePrefix}-enforceGRSQL-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRServiceBus: take('${varDeploymentNameWrappers.basePrefix}-enforceGRServiceBus-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRStorage: take('${varDeploymentNameWrappers.basePrefix}-enforceGRStorage-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRSynapse: take('${varDeploymentNameWrappers.basePrefix}-enforceGRSynapse-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformEnforceGRVirtualDesktop: take('${varDeploymentNameWrappers.basePrefix}-enforceGRVirtualDesktop-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
 }
 
-// Policy Assignments Modules Variables
 var varPolicyAssignmentEnforceSovereignConf = {
   definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/03de05a4-c324-4ccd-882f-a814ea8ab9ea'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_sovereignty_baseline_conf.tmpl.json')
@@ -99,9 +150,140 @@ var varPolicyAssignmentEnforceSovereignGlobal = {
 }
 
 var varPolicyAssignmentEnforceEncryptionCMK = {
-  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Encryption-CMK_20250218'
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Encryption-CMK_20250218'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_encryption_cmk.tmpl.json')
 }
+
+var varPolicyAssignmentEnforceGRAPIM = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-APIM'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_apim.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRAutomation = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Automation'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_automation.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRAppServices = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-AppServices'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_appservices.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRBotService = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-BotService'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_botservice.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRCognitiveServices = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-CognitiveServices'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_cognitiveservices.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRCompute = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Compute'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_compute.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRContainerApps = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-ContainerApps'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_containerapps.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRContainerInstance = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-ContainerInstance'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_containerinstance.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRContainerRegistry = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-ContainerRegistry'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_containerregistry.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRCosmosDb = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-CosmosDb'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_cosmosdb.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRDataExplorer = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-DataExplorer'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_dataexplorer.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRDataFactory = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-DataFactory'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_datafactory.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGREventGrid = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-EventGrid'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_eventgrid.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGREventHub = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-EventHub'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_eventhub.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRKeyVaultSup = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-KeyVault-Sup'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_keyvault_sup.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRKubernetes = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Kubernetes'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_kubernetes.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRMachineLearning = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-MachineLearning'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_machinelearning.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRMySQL = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-MySQL'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_mysql.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRNetwork = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Network'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_network.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGROpenAI = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-OpenAI'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_openai.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRPostgreSQL = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-PostgreSQL'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_postgressql.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRServiceBus = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-ServiceBus'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_servicebus.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRSQL = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-SQL'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_sql.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRStorage = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Storage'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_storage.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRSynapse = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Synapse'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_synapse.tmpl.json')
+}
+
+var varPolicyAssignmentEnforceGRVirtualDesktop = {
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-VirtualDesktop'
+  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_virtualdesktop.tmpl.json')
+}
+
 
 // RBAC Role Definitions Variables - Used For Policy Assignments
 var varRbacRoleDefinitionIds = {
@@ -126,16 +308,11 @@ var varRbacRoleDefinitionIds = {
 var varManagementGroupIds = {
   intRoot: '${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}'
   platform: '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
-  platformManagement: parPlatformMgAlzDefaultsEnable ? '${parTopLevelManagementGroupPrefix}-platform-management${parTopLevelManagementGroupSuffix}' : '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
-  platformConnectivity: parPlatformMgAlzDefaultsEnable ? '${parTopLevelManagementGroupPrefix}-platform-connectivity${parTopLevelManagementGroupSuffix}' : '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
-  platformIdentity: parPlatformMgAlzDefaultsEnable ? '${parTopLevelManagementGroupPrefix}-platform-identity${parTopLevelManagementGroupSuffix}' : '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
   landingZones: '${parTopLevelManagementGroupPrefix}-landingzones${parTopLevelManagementGroupSuffix}'
   landingZonesCorp: '${parTopLevelManagementGroupPrefix}-landingzones-corp${parTopLevelManagementGroupSuffix}'
   landingZonesOnline: '${parTopLevelManagementGroupPrefix}-landingzones-online${parTopLevelManagementGroupSuffix}'
   landingZonesConfidentialCorp: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-corp${parTopLevelManagementGroupSuffix}'
   landingZonesConfidentialOnline: '${parTopLevelManagementGroupPrefix}-landingzones-confidential-online${parTopLevelManagementGroupSuffix}'
-  decommissioned: '${parTopLevelManagementGroupPrefix}-decommissioned${parTopLevelManagementGroupSuffix}'
-  sandbox: '${parTopLevelManagementGroupPrefix}-sandbox${parTopLevelManagementGroupSuffix}'
 }
 
 var varTopLevelManagementGroupResourceId = '/providers/Microsoft.Management/managementGroups/${varManagementGroupIds.intRoot}'
@@ -197,7 +374,501 @@ module modPolAssiPlatformEnforceEncryptionCMK '../../../policy/assignments/polic
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.contributor
     ]
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.properties.enforcementMode
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceEncryptionCMK.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-APIM
+module modPolAssiPlatformEnforceGRAPIM '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRAPIM.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRAPIM
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRAPIM.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRAPIM.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRAPIM.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-AppServices
+module modPolAssiPlatformEnforceGRAppServices '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRAppServices.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRAppServices
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRAppServices.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRAppServices.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRAppServices.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-Automation
+module modPolAssiPlatformEnforceGRAutomation '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRAutomation.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRAutomation
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRAutomation.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRAutomation.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRAutomation.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-BotService
+module modPolAssiPlatformEnforceGRBotService '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRBotService.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRBotService
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRBotService.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRBotService.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRBotService.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRBotService.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-CognitiveServices
+module modPolAssiPlatformEnforceGRCognitiveServices '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRCognitiveServices
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRCognitiveServices.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-Compute
+module modPolAssiPlatformEnforceGRCompute '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRCompute.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRCompute
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRCompute.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRCompute.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRCompute.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRCompute.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-ContainerApps
+module modPolAssiPlatformEnforceGRContainerApps '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRContainerApps.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRContainerApps
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRContainerApps.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRContainerApps.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRContainerApps.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-ContainerInstance
+module modPolAssiPlatformEnforceGRContainerInstance '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRContainerInstance.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRContainerInstance
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRContainerInstance.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-ContainerRegistry
+module modPolAssiPlatformEnforceGRContainerRegistry '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRContainerRegistry
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRContainerRegistry.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-CosmosDb
+module modPolAssiPlatformEnforceGRCosmosDb '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRCosmosDb.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRCosmosDb
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRCosmosDb.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-DataExplorer
+module modPolAssiPlatformEnforceGRDataExplorer '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRDataExplorer.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRDataExplorer
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRDataExplorer.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-DataFactory
+module modPolAssiPlatformEnforceGRDataFactory '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRDataFactory.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRDataFactory
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRDataFactory.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRDataFactory.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRDataFactory.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-EventGrid
+module modPolAssiPlatformEnforceGREventGrid '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGREventGrid.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGREventGrid
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGREventGrid.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGREventGrid.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGREventGrid.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-EventHub
+module modPolAssiPlatformEnforceGREventHub '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGREventHub.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGREventHub
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGREventHub.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGREventHub.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGREventHub.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGREventHub.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-KeyVaultSup
+module modPolAssiPlatformEnforceGRKeyVaultSup '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRKeyVaultSup
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRKeyVaultSup.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-Kubernetes
+module modPolAssiPlatformEnforceGRKubernetes '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRKubernetes.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRKubernetes
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRKubernetes.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRKubernetes.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRKubernetes.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-MachineLearning
+module modPolAssiPlatformEnforceGRMachineLearning '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRMachineLearning.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRMachineLearning
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRMachineLearning.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-MySQL
+module modPolAssiPlatformEnforceGRMySQL '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRMySQL.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRMySQL
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRMySQL.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRMySQL.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRMySQL.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-Network
+module modPolAssiPlatformEnforceGRNetwork '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRNetwork.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRNetwork
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRNetwork.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRNetwork.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRNetwork.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-OpenAI
+module modPolAssiPlatformEnforceGROpenAI '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGROpenAI.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGROpenAI
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGROpenAI.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGROpenAI.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGROpenAI.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-PostgreSQL
+module modPolAssiPlatformEnforceGRPostgreSQL '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRPostgreSQL
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRPostgreSQL.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-ServiceBus
+module modPolAssiPlatformEnforceGRServiceBus '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRServiceBus.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRServiceBus
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRServiceBus.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRServiceBus.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRServiceBus.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-SQL
+module modPolAssiPlatformEnforceGRSQL '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRSQL.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRSQL
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRSQL.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRSQL.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRSQL.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRSQL.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-Storage
+module modPolAssiPlatformEnforceGRStorage '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRStorage.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRStorage
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRStorage.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRStorage.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRStorage.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRStorage.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-Synapse
+module modPolAssiPlatformEnforceGRSynapse '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRSynapse.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRSynapse
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRSynapse.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRSynapse.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRSynapse.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-VirtualDesktop
+module modPolAssiPlatformEnforceGRVirtualDesktop '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.platform)
+  name: varModDepNames.modPolAssiPlatformEnforceGRVirtualDesktop
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRVirtualDesktop.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -205,8 +876,8 @@ module modPolAssiPlatformEnforceEncryptionCMK '../../../policy/assignments/polic
 // Modules - Policy Assignments - Landing Zones Management Group
 // Module - Policy Assignment - Enforce-Encryption-CMK
 module modPolAssiLzsEnforceEncryptionCMK '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceEncryptionCMK.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
-  name: varModDepNames.modPolAssiPlatformEnforceEncryptionCMK
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceEncryptionCMK
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceEncryptionCMK.definitionId
     parPolicyAssignmentName: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.name
@@ -217,11 +888,504 @@ module modPolAssiLzsEnforceEncryptionCMK '../../../policy/assignments/policyAssi
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.contributor
     ]
-    parPolicyAssignmentEnforcementMode: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.properties.enforcementMode
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceEncryptionCMK.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
+// Module - Policy Assignment - Enforce-GR-APIM
+module modPolAssiLzsEnforceGRAPIM '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRAPIM.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRAPIM
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRAPIM.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRAPIM.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRAPIM.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-AppServices
+module modPolAssiLzsEnforceGRAppServices '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRAppServices.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRAppServices
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRAppServices.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRAppServices.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRAppServices.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-Automation
+module modPolAssiLzsEnforceGRAutomation '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRAutomation.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRAutomation
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRAutomation.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRAutomation.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRAutomation.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-BotService
+module modPolAssiLzsEnforceGRBotService '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRBotService.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRBotService
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRBotService.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRBotService.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRBotService.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRBotService.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-CognitiveServices
+module modPolAssiLzsEnforceGRCognitiveServices '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRCognitiveServices
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRCognitiveServices.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-Compute
+module modPolAssiLzsEnforceGRCompute '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRCompute.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRCompute
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRCompute.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRCompute.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRCompute.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRCompute.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-ContainerApps
+module modPolAssiLzsEnforceGRContainerApps '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRContainerApps.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRContainerApps
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRContainerApps.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRContainerApps.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRContainerApps.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-ContainerInstance
+module modPolAssiLzsEnforceGRContainerInstance '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRContainerInstance.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRContainerInstance
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRContainerInstance.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-ContainerRegistry
+module modPolAssiLzsEnforceGRContainerRegistry '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRContainerRegistry
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRContainerRegistry.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-CosmosDB
+module varPolAssiLzsEnforceGRCosmosDb '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRCosmosDb.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRCosmosDb
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRCosmosDb.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-DataExplorer
+module modPolAssiLzsEnforceGRDataExplorer '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRDataExplorer.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRDataExplorer
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRDataExplorer.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-DataFactory
+module modPolAssiLzsEnforceGRDataFactory '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRDataFactory.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRDataFactory
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRDataFactory.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRDataFactory.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRDataFactory.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-EventGrid
+module modPolAssiLzsEnforceGREventGrid '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGREventGrid.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGREventGrid
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGREventGrid.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGREventGrid.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGREventGrid.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-EventHub
+module modPolAssiLzsEnforceGREventHub '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGREventHub.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGREventHub
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGREventHub.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGREventHub.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGREventHub.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGREventHub.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-KeyVaultSup
+module modPolAssiLzsEnforceGRKeyVaultSup '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRKeyVaultSup
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRKeyVaultSup.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-Kubernetes
+module modPolAssiLzsEnforceGRKubernetes '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRKubernetes.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRKubernetes
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRKubernetes.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRKubernetes.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRKubernetes.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-MachineLearning
+module modPolAssiLzsEnforceGRMachineLearning '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRMachineLearning.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRMachineLearning
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRMachineLearning.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-MySQL
+module modPolAssiLzsEnforceGRMySQL '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRMySQL.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRMySQL
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRMySQL.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRMySQL.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRMySQL.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-Network
+module modPolAssiLzsEnforceGRNetwork '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRNetwork.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRNetwork
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRNetwork.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRNetwork.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRNetwork.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-OpenAI
+module modPolAssiLzsEnforceGROpenAI '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGROpenAI.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGROpenAI
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGROpenAI.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGROpenAI.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGROpenAI.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-PostgreSQL
+module modPolAssiLzsEnforceGRPostgreSQL '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRPostgreSQL
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRPostgreSQL.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-ServiceBus
+module modPolAssiLzsEnforceGRServiceBus '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRServiceBus.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRServiceBus
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRServiceBus.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRServiceBus.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRServiceBus.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-SQL
+module modPolAssiLzsEnforceGRSQL '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRSQL.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRSQL
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRSQL.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRSQL.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRSQL.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRSQL.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-Storage
+module modPolAssiLzsEnforceGRStorage '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRStorage.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRStorage
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRStorage.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRStorage.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRStorage.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRStorage.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-Synapse
+module modPolAssiLzsEnforceGRSynapse '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRSynapse.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRSynapse
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRSynapse.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRSynapse.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRSynapse.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Enforce-GR-VirtualDesktop
+module modPolAssiLzsEnforceGRVirtualDesktop '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIds.landingZones)
+  name: varModDepNames.modPolAssiLzsEnforceGRVirtualDesktop
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRVirtualDesktop.definitionId
+    parPolicyAssignmentName: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+    ]
+    parPolicyAssignmentEnforcementMode: parDisableWorkloadSpecificPolicies ? 'DoNotEnforce': varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
 
 // Modules - Policy Assignments - Confidential Online Management Group
 // Module - Policy Assignment - Enforce-Sovereign-Conf

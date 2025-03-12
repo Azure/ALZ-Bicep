@@ -15,12 +15,6 @@
         "parPolicyEffect": "Deny"
       }
     },
-    "parPlatformMgAlzDefaultsEnable": {
-      "value": true
-    },
-    "parLandingZoneMgConfidentialEnable": {
-      "value": false
-    },
     "parPolicyAssignmentSovereigntyConfidential": {
       "value": {
         "parAllowedResourceTypes": [],
@@ -31,6 +25,9 @@
     },
     "parExcludedPolicyAssignments": {
       "value": []
+    },
+    "parDisableWorkloadSpecificPolicies": {
+      "value": true
     },
     "parTelemetryOptOut": {
       "value": false

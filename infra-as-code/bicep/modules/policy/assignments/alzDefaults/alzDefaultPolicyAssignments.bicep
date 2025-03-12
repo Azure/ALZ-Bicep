@@ -64,7 +64,7 @@ param parPrivateDnsZonesLocation string = ''
 @description('List of Private DNS Zones to audit under the Corp Management Group. This overwrites default values.')
 param parPrivateDnsZonesNamesToAuditInCorp array = []
 
-@description('Disable all default ALZ policies.')
+@description('Set the enforcement mode to DoNotEnforce for all default ALZ policies.')
 param parDisableAlzDefaultPolicies bool = false
 
 @description('Tag name for excluding VMs from this policy scope.')

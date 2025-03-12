@@ -1,0 +1,18 @@
+{
+  "name": "Enforce-GR-Storage",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2025-01-01",
+  "properties": {
+    "description": "This initiative assignment enables additional ALZ guardrails for Storage.",
+    "displayName": "Enforce recommended guardrails for Storage",
+    "notScopes": [],
+    "parameters": {},
+    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Storage",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}
