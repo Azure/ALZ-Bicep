@@ -1,18 +1,20 @@
-# ALZ Bicep - Default Policy Assignments
+# ALZ Bicep - Workload Specific Policy Assignments and Exemptions
 
-Assigns ALZ Default Policies to the Management Group hierarchy
+Assigns Workload Specific Policy Assignments and Exemptions to the Management Group hierarchy
 
 ## Parameters
 
-| Parameter name                               | Required | Description                                                                              |
-|----------------------------------------------|----------|------------------------------------------------------------------------------------------|
-| parTopLevelManagementGroupPrefix             | No       | Prefix for management group hierarchy.                                                   |
-| parTopLevelManagementGroupSuffix             | No       | Optional suffix for management group names/IDs.                                          |
-| parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Assign Sovereignty Baseline - Global Policies to root management group.                  |
-| parPolicyAssignmentSovereigntyConfidential   | No       | Assign Sovereignty Baseline - Confidential Policies to confidential landing zone groups. |
-| parExcludedPolicyAssignments                 | No       | Names of policy assignments to exclude.                                                  |
-| parDisableWorkloadSpecificPolicies           | No       | Set the enforcement mode to DoNotEnforce for all workload specific policies.             |
-| parTelemetryOptOut                           | No       | Opt out of deployment telemetry.                                                         |
+Parameter name | Required | Description
+-------------- | -------- | -----------
+parTopLevelManagementGroupPrefix | No       | Prefix for management group hierarchy.
+parTopLevelManagementGroupSuffix | No       | Optional suffix for management group names/IDs.
+parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Assign Sovereignty Baseline - Global Policies to root management group.
+parPolicyAssignmentSovereigntyConfidential | No       | Assign Sovereignty Baseline - Confidential Policies to confidential landing zone groups.
+parLandingZoneMgConfidentialEnable | No       | Assign policies to Confidential Corp and Online groups under Landing Zones.
+parDisableSlzDefaultPolicies | No       | Set the enforcement mode to DoNotEnforce for all SLZ policies.
+parDisableWorkloadSpecificPolicies | No       | Set the enforcement mode to DoNotEnforce for all workload specific policies.
+parExcludedPolicyAssignments | No       | Names of policy assignments to exclude.
+parTelemetryOptOut | No       | Opt out of deployment telemetry.
 
 ### parTopLevelManagementGroupPrefix
 
@@ -44,22 +46,6 @@ Assign Sovereignty Baseline - Confidential Policies to confidential landing zone
 
 - Default value: `@{parAllowedResourceTypes=System.Object[]; parListOfAllowedLocations=System.Object[]; parAllowedVirtualMachineSKUs=System.Object[]; parPolicyEffect=Deny}`
 
-### parPlatformMgAlzDefaultsEnable
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Apply platform policies to Platform group or child groups.
-
-- Default value: `True`
-
-### parLandingZoneChildrenMgAlzDefaultsEnable
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Assign policies to Corp & Online Management Groups under Landing Zones.
-
-- Default value: `True`
-
 ### parLandingZoneMgConfidentialEnable
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -68,133 +54,21 @@ Assign policies to Confidential Corp and Online groups under Landing Zones.
 
 - Default value: `False`
 
-### parLogAnalyticsWorkSpaceAndAutomationAccountLocation
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Location of Log Analytics Workspace & Automation Account.
-
-- Default value: `eastus`
-
-### parLogAnalyticsWorkspaceResourceId
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Resource ID of Log Analytics Workspace.
-
-### parLogAnalyticsWorkspaceResourceCategory
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Category of logs for supported resource logging for Log Analytics Workspace.
-
-- Default value: `allLogs`
-
-### parDataCollectionRuleVMInsightsResourceId
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Resource ID for VM Insights Data Collection Rule.
-
-### parDataCollectionRuleChangeTrackingResourceId
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Resource ID for Change Tracking Data Collection Rule.
-
-### parDataCollectionRuleMDFCSQLResourceId
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Resource ID for MDFC SQL Data Collection Rule.
-
-### parUserAssignedManagedIdentityResourceId
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Resource ID for User Assigned Managed Identity.
-
-### parLogAnalyticsWorkspaceLogRetentionInDays
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Number of days to retain logs in Log Analytics Workspace.
-
-- Default value: `365`
-
-### parAutomationAccountName
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Name of the Automation Account.
-
-- Default value: `alz-automation-account`
-
-### parMsDefenderForCloudEmailSecurityContact
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Email address for Microsoft Defender for Cloud alerts.
-
-### parDdosEnabled
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Enable/disable DDoS Network Protection.
-
-- Default value: `True`
-
-### parDdosProtectionPlanId
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Resource ID of the DDoS Protection Plan for Virtual Networks.
-
-### parPrivateDnsResourceGroupId
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning the Deploy-Private-DNS-Zones policy.
-
-### parPrivateDnsZonesLocation
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Location of Private DNS Zones.
-
-### parPrivateDnsZonesNamesToAuditInCorp
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-List of Private DNS Zones to audit under the Corp Management Group. This overwrites default values.
-
-### parDisableAlzDefaultPolicies
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Disable all default ALZ policies.
-
-- Default value: `False`
-
 ### parDisableSlzDefaultPolicies
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Disable all default sovereign policies.
+Set the enforcement mode to DoNotEnforce for all SLZ policies.
 
-- Default value: `False`
+- Default value: `True`
 
-### parVmBackupExclusionTagName
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Tag name for excluding VMs from this policy scope.
-
-### parVmBackupExclusionTagValue
+### parDisableWorkloadSpecificPolicies
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Tag value for excluding VMs from this policy scope.
+Set the enforcement mode to DoNotEnforce for all workload specific policies.
+
+- Default value: `True`
 
 ### parExcludedPolicyAssignments
 
@@ -219,7 +93,7 @@ Opt out of deployment telemetry.
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "metadata": {
-        "template": "infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.json"
+        "template": "infra-as-code/bicep/modules/policy/assignments/workloadSpecific/workloadSpecificPolicyAssignments.json"
     },
     "parameters": {
         "parTopLevelManagementGroupPrefix": {
@@ -243,71 +117,14 @@ Opt out of deployment telemetry.
                 "parPolicyEffect": "Deny"
             }
         },
-        "parPlatformMgAlzDefaultsEnable": {
-            "value": true
-        },
-        "parLandingZoneChildrenMgAlzDefaultsEnable": {
-            "value": true
-        },
         "parLandingZoneMgConfidentialEnable": {
             "value": false
         },
-        "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
-            "value": "eastus"
-        },
-        "parLogAnalyticsWorkspaceResourceId": {
-            "value": ""
-        },
-        "parLogAnalyticsWorkspaceResourceCategory": {
-            "value": "allLogs"
-        },
-        "parDataCollectionRuleVMInsightsResourceId": {
-            "value": ""
-        },
-        "parDataCollectionRuleChangeTrackingResourceId": {
-            "value": ""
-        },
-        "parDataCollectionRuleMDFCSQLResourceId": {
-            "value": ""
-        },
-        "parUserAssignedManagedIdentityResourceId": {
-            "value": ""
-        },
-        "parLogAnalyticsWorkspaceLogRetentionInDays": {
-            "value": "365"
-        },
-        "parAutomationAccountName": {
-            "value": "alz-automation-account"
-        },
-        "parMsDefenderForCloudEmailSecurityContact": {
-            "value": ""
-        },
-        "parDdosEnabled": {
+        "parDisableSlzDefaultPolicies": {
             "value": true
         },
-        "parDdosProtectionPlanId": {
-            "value": ""
-        },
-        "parPrivateDnsResourceGroupId": {
-            "value": ""
-        },
-        "parPrivateDnsZonesLocation": {
-            "value": ""
-        },
-        "parPrivateDnsZonesNamesToAuditInCorp": {
-            "value": []
-        },
-        "parDisableAlzDefaultPolicies": {
-            "value": false
-        },
-        "parDisableSlzDefaultPolicies": {
-            "value": false
-        },
-        "parVmBackupExclusionTagName": {
-            "value": ""
-        },
-        "parVmBackupExclusionTagValue": {
-            "value": []
+        "parDisableWorkloadSpecificPolicies": {
+            "value": true
         },
         "parExcludedPolicyAssignments": {
             "value": []
