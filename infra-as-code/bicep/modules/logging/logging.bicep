@@ -716,5 +716,5 @@ output outLogAnalyticsWorkspaceId string = resLogAnalyticsWorkspace.id
 output outLogAnalyticsCustomerId string = resLogAnalyticsWorkspace.properties.customerId
 output outLogAnalyticsSolutions array = parLogAnalyticsWorkspaceSolutions
 
-output outAutomationAccountName string = resAutomationAccount.name ?? null
-output outAutomationAccountId string = resAutomationAccount.id ?? null
+output outAutomationAccountName string = parAutomationAccountEnabled ? resAutomationAccount.id : 'AA Deployment Disabled'
+output outAutomationAccountId string = parAutomationAccountEnabled ? resAutomationAccount.id : 'AA Deployment Disabled'
