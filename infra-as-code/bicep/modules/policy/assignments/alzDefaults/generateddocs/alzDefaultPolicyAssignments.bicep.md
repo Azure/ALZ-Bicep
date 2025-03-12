@@ -8,8 +8,6 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parTopLevelManagementGroupPrefix | No       | Prefix for management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for management group names/IDs.
-parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Assign Sovereignty Baseline - Global Policies to root management group.
-parPolicyAssignmentSovereigntyConfidential | No       | Assign Sovereignty Baseline - Confidential Policies to confidential landing zone groups.
 parPlatformMgAlzDefaultsEnable | No       | Apply platform policies to Platform group or child groups.
 parLandingZoneChildrenMgAlzDefaultsEnable | No       | Assign policies to Corp & Online Management Groups under Landing Zones.
 parLandingZoneMgConfidentialEnable | No       | Assign policies to Confidential Corp and Online groups under Landing Zones.
@@ -28,8 +26,7 @@ parDdosProtectionPlanId | No       | Resource ID of the DDoS Protection Plan for
 parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning the Deploy-Private-DNS-Zones policy.
 parPrivateDnsZonesLocation | No       | Location of Private DNS Zones.
 parPrivateDnsZonesNamesToAuditInCorp | No       | List of Private DNS Zones to audit under the Corp Management Group. This overwrites default values.
-parDisableAlzDefaultPolicies | No       | Disable all default ALZ policies.
-parDisableSlzDefaultPolicies | No       | Disable all default sovereign policies.
+parDisableAlzDefaultPolicies | No       | Set the enforcement mode to DoNotEnforce for all default ALZ policies.
 parVmBackupExclusionTagName | No       | Tag name for excluding VMs from this policy scope.
 parVmBackupExclusionTagValue | No       | Tag value for excluding VMs from this policy scope.
 parExcludedPolicyAssignments | No       | Names of policy assignments to exclude.
@@ -48,22 +45,6 @@ Prefix for management group hierarchy.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Optional suffix for management group names/IDs.
-
-### parTopLevelPolicyAssignmentSovereigntyGlobal
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Assign Sovereignty Baseline - Global Policies to root management group.
-
-- Default value: `@{parTopLevelSovereigntyGlobalPoliciesEnable=False; parListOfAllowedLocations=System.Object[]; parPolicyEffect=Deny}`
-
-### parPolicyAssignmentSovereigntyConfidential
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Assign Sovereignty Baseline - Confidential Policies to confidential landing zone groups.
-
-- Default value: `@{parAllowedResourceTypes=System.Object[]; parListOfAllowedLocations=System.Object[]; parAllowedVirtualMachineSKUs=System.Object[]; parPolicyEffect=Deny}`
 
 ### parPlatformMgAlzDefaultsEnable
 
@@ -193,15 +174,7 @@ List of Private DNS Zones to audit under the Corp Management Group. This overwri
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Disable all default ALZ policies.
-
-- Default value: `False`
-
-### parDisableSlzDefaultPolicies
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Disable all default sovereign policies.
+Set the enforcement mode to DoNotEnforce for all default ALZ policies.
 
 - Default value: `False`
 
@@ -248,21 +221,6 @@ Opt out of deployment telemetry.
         },
         "parTopLevelManagementGroupSuffix": {
             "value": ""
-        },
-        "parTopLevelPolicyAssignmentSovereigntyGlobal": {
-            "value": {
-                "parTopLevelSovereigntyGlobalPoliciesEnable": false,
-                "parListOfAllowedLocations": [],
-                "parPolicyEffect": "Deny"
-            }
-        },
-        "parPolicyAssignmentSovereigntyConfidential": {
-            "value": {
-                "parAllowedResourceTypes": [],
-                "parListOfAllowedLocations": [],
-                "parAllowedVirtualMachineSKUs": [],
-                "parPolicyEffect": "Deny"
-            }
         },
         "parPlatformMgAlzDefaultsEnable": {
             "value": true
@@ -319,9 +277,6 @@ Opt out of deployment telemetry.
             "value": []
         },
         "parDisableAlzDefaultPolicies": {
-            "value": false
-        },
-        "parDisableSlzDefaultPolicies": {
             "value": false
         },
         "parVmBackupExclusionTagName": {

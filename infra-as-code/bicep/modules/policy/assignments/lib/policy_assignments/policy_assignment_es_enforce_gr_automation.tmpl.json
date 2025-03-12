@@ -1,0 +1,18 @@
+{
+  "name": "Enforce-GR-Automation",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2025-01-01",
+  "properties": {
+    "description": "This initiative assignment enables additional ALZ guardrails for Automation Accounts.",
+    "displayName": "Enforce recommended guardrails for Automation Accounts",
+    "notScopes": [],
+    "parameters": {},
+    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Automation",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

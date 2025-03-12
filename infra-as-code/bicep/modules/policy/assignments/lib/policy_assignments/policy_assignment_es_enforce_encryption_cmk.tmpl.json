@@ -1,0 +1,18 @@
+{
+  "name": "Enforce-Encryption-CMK",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2025-01-01",
+  "properties": {
+    "description": "This initiative assignment enables additional ALZ guardrails for Customer Managed Keys.",
+    "displayName": "Enforce recommended guardrails for Customer Managed Keys",
+    "notScopes": [],
+    "parameters": {},
+    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Enforce-Encryption-CMK_20250218",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}
