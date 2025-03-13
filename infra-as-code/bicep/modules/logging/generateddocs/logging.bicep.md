@@ -23,6 +23,7 @@ parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to t
 parLogAnalyticsWorkspaceSolutionsLock | No       | Resource Lock Configuration for Log Analytics Workspace Solutions.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parUserAssignedManagedIdentityName | No       | Name of the User Assigned Managed Identity required for authenticating Azure Monitoring Agent to Azure.
 parUserAssignedManagedIdentityLocation | No       | User Assigned Managed Identity location.
+parAutomationAccountEnabled | No       | Switch to enable/disable Automation Account deployment.
 parLogAnalyticsWorkspaceLinkAutomationAccount | No       | Log Analytics Workspace should be linked with the automation account.
 parAutomationAccountName | No       | Automation account name.
 parAutomationAccountLocation | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
@@ -208,13 +209,21 @@ User Assigned Managed Identity location.
 
 - Default value: `[resourceGroup().location]`
 
+### parAutomationAccountEnabled
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable Automation Account deployment.
+
+- Default value: `False`
+
 ### parLogAnalyticsWorkspaceLinkAutomationAccount
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Log Analytics Workspace should be linked with the automation account.
 
-- Default value: `True`
+- Default value: `False`
 
 ### parAutomationAccountName
 
@@ -409,8 +418,11 @@ outAutomationAccountId | string |
         "parUserAssignedManagedIdentityLocation": {
             "value": "[resourceGroup().location]"
         },
+        "parAutomationAccountEnabled": {
+            "value": false
+        },
         "parLogAnalyticsWorkspaceLinkAutomationAccount": {
-            "value": true
+            "value": false
         },
         "parAutomationAccountName": {
             "value": "alz-automation-account"

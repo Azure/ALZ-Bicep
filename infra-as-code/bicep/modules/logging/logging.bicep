@@ -138,11 +138,15 @@ param parUserAssignedManagedIdentityName string = 'alz-logging-mi'
 @sys.description('User Assigned Managed Identity location.')
 param parUserAssignedManagedIdentityLocation string = resourceGroup().location
 
+@sys.description('Switch to enable/disable Automation Account deployment.')
+param parAutomationAccountEnabled bool = false
+
 @sys.description('Log Analytics Workspace should be linked with the automation account.')
-param parLogAnalyticsWorkspaceLinkAutomationAccount bool = true
+param parLogAnalyticsWorkspaceLinkAutomationAccount bool = false
 
 @sys.description('Automation account name.')
 param parAutomationAccountName string = 'alz-automation-account'
+
 @sys.description('Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.')
 param parAutomationAccountLocation string = resourceGroup().location
 
@@ -190,7 +194,7 @@ resource resUserAssignedManagedIdentity 'Microsoft.ManagedIdentity/userAssignedI
   tags: parTags
 }
 
-resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2023-11-01' = {
+resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2024-10-23' = if (parAutomationAccountEnabled) {
   name: parAutomationAccountName
   location: parAutomationAccountLocation
   tags: parAutomationAccountTags
@@ -712,5 +716,5 @@ output outLogAnalyticsWorkspaceId string = resLogAnalyticsWorkspace.id
 output outLogAnalyticsCustomerId string = resLogAnalyticsWorkspace.properties.customerId
 output outLogAnalyticsSolutions array = parLogAnalyticsWorkspaceSolutions
 
-output outAutomationAccountName string = resAutomationAccount.name
-output outAutomationAccountId string = resAutomationAccount.id
+output outAutomationAccountName string = parAutomationAccountEnabled ? resAutomationAccount.id : 'AA Deployment Disabled'
+output outAutomationAccountId string = parAutomationAccountEnabled ? resAutomationAccount.id : 'AA Deployment Disabled'
