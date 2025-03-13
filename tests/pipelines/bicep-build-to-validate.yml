@@ -229,6 +229,18 @@ jobs:
           azurePowerShellVersion: "LatestVersion"
           pwsh: true
 
+      - task: AzurePowerShell@5
+        displayName: Az PwSh workloadSpecificPolicyAssignments for PR
+        name: alz_default_policy_assignments
+        condition: and(ne(variables['gitManagementOUTPUT'], ''), ne(variables['subscriptionId'], ''))
+        inputs:
+        azureSubscription: "azserviceconnection"
+        ScriptType: "FilePath"
+        ScriptPath: ".github/scripts/Set-AlzDefaultPolicyAssignment.ps1"
+        ScriptArguments: '-ManagementGroupId "$(ManagementGroupPrefix)-platform" -parLocation $(Location) -templateFile ./infra-as-code/bicep/modules/policy/assignments/workloadSpecific/workloadSpecificPolicyAssignments.bicep -parameterFile .\infra-as-code\bicep\modules\policy\assignments\workloadSpecific\parameters\workloadSpecificPolicyAssignments.parameters.min.json -parTopLevelManagementGroupPrefix $(ManagementGroupPrefix)'
+        azurePowerShellVersion: "LatestVersion"
+        pwsh: true
+
       - task: Bash@3
         displayName: Az CLI Deploy Hub Networking for PR
         name: create_hub_network

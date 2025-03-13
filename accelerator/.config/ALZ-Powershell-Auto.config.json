@@ -161,6 +161,18 @@
           "group": "policy_assignments"
         },
         {
+          "name": "workload_specific_policy_assignments",
+          "displayName": "Workload Specific Policy Assignments Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/policy/assignments/workloadSpecific/workloadSpecificPolicyAssignments.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/workloadSpecificPolicyAssignments.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/policy/assignments/workloadSpecific/parameters/workloadSpecificPolicyAssignments.parameters.all.json",
+          "managementGroupId": "MANAGEMENT_GROUP_ID",
+          "deploymentType": "managementGroup",
+          "firstRunWhatIf": false,
+          "order": 8,
+          "group": "policy_assignments"
+        },
+        {
           "name": "subscription_placement",
           "displayName": "Deploy Subscription Placement",
           "templateFilePath": "./infra-as-code/bicep/orchestration/subPlacementAll/subPlacementAll.bicep",
@@ -169,7 +181,7 @@
           "managementGroupId": "MANAGEMENT_GROUP_ID",
           "deploymentType": "managementGroup",
           "firstRunWhatIf": false,
-          "order": 8,
+          "order": 9,
           "group": "subscription_placement"
         },
         {
@@ -181,7 +193,7 @@
           "subscriptionId": "CONNECTIVITY_SUBSCRIPTION_ID",
           "deploymentType": "subscription",
           "firstRunWhatIf": true,
-          "order": 9,
+          "order": 10,
           "group": "connectivity"
         },
         {
@@ -195,7 +207,7 @@
           "networkType": "hubNetworking",
           "deploymentType": "resourceGroup",
           "firstRunWhatIf": false,
-          "order": 10,
+          "order": 11,
           "group": "connectivity"
         },
         {
@@ -209,7 +221,7 @@
           "networkType": "hubNetworkingMultiRegion",
           "deploymentType": "resourceGroup",
           "firstRunWhatIf": false,
-          "order": 11,
+          "order": 12,
           "group": "connectivity"
         },
         {
@@ -223,7 +235,7 @@
           "networkType": "vwanConnectivity",
           "deploymentType": "resourceGroup",
           "firstRunWhatIf": false,
-          "order": 12,
+          "order": 13,
           "group": "connectivity"
         },
         {
@@ -237,7 +249,7 @@
           "networkType": "vwanConnectivityMultiRegion",
           "deploymentType": "resourceGroup",
           "firstRunWhatIf": false,
-          "order": 13,
+          "order": 14,
           "group": "connectivity"
         }
       ],
