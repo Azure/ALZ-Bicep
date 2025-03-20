@@ -101,6 +101,9 @@ param parVirtualHubEnabled bool = true
 @sys.description('Prefix Used for Virtual WAN.')
 param parVirtualWanName string = '${parCompanyPrefix}-vwan-${parLocation}'
 
+@description('The type of Virtual WAN to create.')
+param parVirtualWanType string = 'Standard'
+
 @sys.description('''Resource Lock Configuration for Virtual WAN.
 
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
@@ -299,7 +302,7 @@ resource resVwan 'Microsoft.Network/virtualWans@2024-05-01' = {
     allowBranchToBranchTraffic: true
     allowVnetToVnetTraffic: true
     disableVpnEncryption: false
-    type: 'Standard'
+    type: parVirtualWanType
   }
 }
 
