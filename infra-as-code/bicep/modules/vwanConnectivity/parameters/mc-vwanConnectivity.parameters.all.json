@@ -14,7 +14,7 @@
     "parVirtualWanName": {
       "value": "alz-vwan"
     },
-    parVirtualWanType: {
+    "parVirtualWanType": {
       "value": "Standard"
     },
     "parVirtualWanHubName": {
