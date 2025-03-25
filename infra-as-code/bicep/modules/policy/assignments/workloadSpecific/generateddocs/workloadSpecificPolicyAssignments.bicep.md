@@ -7,7 +7,6 @@ Assigns Workload Specific Policy Assignments and Exemptions to the Management Gr
 Parameter name | Required | Description
 -------------- | -------- | -----------
 parTopLevelManagementGroupPrefix | No       | Prefix for management group hierarchy.
-parManagementGroupIdOverrides | No      | Specify the ALZ Default Management Group IDs to override as specified in `varManagementGroupIds`. Useful for scenarios when renaming ALZ default management groups names and IDs but not their intent or hierarchy structure.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for management group names/IDs.
 parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Assign Sovereignty Baseline - Global Policies to root management group.
 parPolicyAssignmentSovereigntyConfidential | No       | Assign Sovereignty Baseline - Confidential Policies to confidential landing zone groups.
@@ -16,6 +15,7 @@ parDisableSlzDefaultPolicies | No       | Set the enforcement mode to DoNotEnfor
 parDisableWorkloadSpecificPolicies | No       | Set the enforcement mode to DoNotEnforce for all workload specific policies.
 parExcludedPolicyAssignments | No       | Names of policy assignments to exclude.
 parTelemetryOptOut | No       | Opt out of deployment telemetry.
+parManagementGroupIdOverrides | Yes      | Specify the ALZ Default Management Group IDs to override as specified in `varManagementGroupIds`. Useful for scenarios when renaming ALZ default management groups names and IDs but not their intent or hierarchy structure.
 
 ### parTopLevelManagementGroupPrefix
 
