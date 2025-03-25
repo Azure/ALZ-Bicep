@@ -17,7 +17,7 @@ var policyAssignmentConfig = loadJsonContent('../assignments/parameters/mc-polic
 
 @description('Minimum resource configuration')
 module minimum_policy '../assignments/policyAssignmentManagementGroup.bicep' = {
-  name: 'minimum policy'
+  name: 'minimum_policy'
   params: {
     parPolicyAssignmentName: policyAssignmentConfig.parameters.parPolicyAssignmentName.value
     parPolicyAssignmentDisplayName: policyAssignmentConfig.parameters.parPolicyAssignmentDisplayName.value
