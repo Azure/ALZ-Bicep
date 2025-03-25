@@ -15,6 +15,7 @@ parDisableSlzDefaultPolicies | No       | Set the enforcement mode to DoNotEnfor
 parDisableWorkloadSpecificPolicies | No       | Set the enforcement mode to DoNotEnforce for all workload specific policies.
 parExcludedPolicyAssignments | No       | Names of policy assignments to exclude.
 parTelemetryOptOut | No       | Opt out of deployment telemetry.
+parManagementGroupIdOverrides | Yes      | Specify the ALZ Default Management Group IDs to override as specified in `varManagementGroupIds`. Useful for scenarios when renaming ALZ default management groups names and IDs but not their intent or hierarchy structure.
 
 ### parTopLevelManagementGroupPrefix
 
@@ -84,6 +85,12 @@ Opt out of deployment telemetry.
 
 - Default value: `False`
 
+### parManagementGroupIdOverrides
+
+![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
+
+Specify the ALZ Default Management Group IDs to override as specified in `varManagementGroupIds`. Useful for scenarios when renaming ALZ default management groups names and IDs but not their intent or hierarchy structure.
+
 ## Snippets
 
 ### Parameter file
@@ -131,6 +138,9 @@ Opt out of deployment telemetry.
         },
         "parTelemetryOptOut": {
             "value": false
+        },
+        "parManagementGroupIdOverrides": {
+            "value": null
         }
     }
 }
