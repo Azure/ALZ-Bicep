@@ -6,7 +6,7 @@
       "value": "alz"
     },
     "parManagementGroupIdOverrides": {
-      "value": []
+      "value": {}
     },
     "parTopLevelManagementGroupSuffix": {
       "value": ""
