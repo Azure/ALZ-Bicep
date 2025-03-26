@@ -16,5 +16,5 @@ targetScope = 'managementGroup'
 
 @description('Minimum resource configuration')
 module minimum_policy '../definitions/customPolicyDefinitions.bicep' = {
-  name: 'minimum policy'
+  name: 'minimum_policy'
 }

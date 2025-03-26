@@ -16,7 +16,7 @@ targetScope = 'managementGroup'
 
 @description('Baseline resource configuration')
 module baseline_policy '../definitions/customPolicyDefinitions.bicep' = {
-  name: 'minimum policy'
+  name: 'minimum_policy'
   params: {
     parTargetManagementGroupId: 'alz'
     parTelemetryOptOut: false
