@@ -90,11 +90,11 @@ resource resSpokeVirtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' =
         parSpokeNetworkAddressPrefix
       ]
     }
-    enableDdosProtection: (!empty(parDdosProtectionPlanId) ? true : false)
-    ddosProtectionPlan: (!empty(parDdosProtectionPlanId) ? true : false) ? {
+    enableDdosProtection: !empty(parDdosProtectionPlanId)
+    ddosProtectionPlan: !empty(parDdosProtectionPlanId) ? {
       id: parDdosProtectionPlanId
     } : null
-    dhcpOptions: (!empty(parDnsServerIps) ? true : false) ? {
+    dhcpOptions: !empty(parDnsServerIps) ? {
       dnsServers: parDnsServerIps
     } : null
   }
