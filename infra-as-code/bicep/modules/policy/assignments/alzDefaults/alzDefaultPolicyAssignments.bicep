@@ -92,7 +92,7 @@ var varCuaid = '98cef979-5a6b-403b-83c7-10c8f04ac9a2'
 
 // ZTN Telemetry
 var varZtnP1CuaId = '4eaba1fc-d30a-4e63-a57f-9e6c3d86a318'
-var varZtnP1Trigger = ((!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyStoragehttp.libDefinition.name))) ? true : false
+var varZtnP1Trigger = ((!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyStoragehttp.libDefinition.name)))
 
 // **Variables**
 // Orchestration Module Variables
