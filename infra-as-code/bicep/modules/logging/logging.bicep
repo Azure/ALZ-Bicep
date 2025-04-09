@@ -115,10 +115,12 @@ param parLogAnalyticsWorkspaceLock lockType = {
 
 @allowed([
   'SecurityInsights'
+  'ChangeTracking'
 ])
 @sys.description('Solutions that will be added to the Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceSolutions array = [
   'SecurityInsights'
+  'ChangeTracking'
 ]
 
 @sys.description('''Resource Lock Configuration for Log Analytics Workspace Solutions.
@@ -649,6 +651,12 @@ resource resDataCollectionRuleMDFCSQLLock 'Microsoft.Authorization/locks@2020-05
 
 // Onboard the Log Analytics Workspace to Sentinel if SecurityInsights is in parLogAnalyticsWorkspaceSolutions
 resource resSentinelOnboarding 'Microsoft.SecurityInsights/onboardingStates@2024-03-01' = if (contains(parLogAnalyticsWorkspaceSolutions, 'SecurityInsights')) {
+  name: 'default'
+  scope: resLogAnalyticsWorkspace
+  properties: {}
+}
+
+resource resChangeTrackingOnboarding 'Microsoft.SecurityInsights/onboardingStates@2024-03-01' = if (contains(parLogAnalyticsWorkspaceSolutions, 'ChangeTracking')) {
   name: 'default'
   scope: resLogAnalyticsWorkspace
   properties: {}
