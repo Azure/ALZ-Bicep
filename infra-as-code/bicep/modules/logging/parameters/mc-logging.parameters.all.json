@@ -14,7 +14,7 @@
     "parLogAnalyticsWorkspaceLogRetentionInDays": {
       "value": 365
     },
-        "parDataCollectionRuleVMInsightsName": {
+    "parDataCollectionRuleVMInsightsName": {
       "value": "alz-ama-vmi-dcr"
     },
     "parDataCollectionRuleChangeTrackingName": {

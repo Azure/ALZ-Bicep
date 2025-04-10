@@ -35,9 +35,9 @@
     "parUserAssignedManagedIdentityName": {
       "value": "alz-umi-identity"
     },
-"parUserAssignedManagedIdentityLocation": {
-  "value": "eastus"
-},
+    "parUserAssignedManagedIdentityLocation": {
+      "value": "eastus"
+    },
     "parAutomationAccountEnabled": {
       "value": false
     },
@@ -61,15 +61,15 @@
         "Environment": "Live"
       }
     },
-"parLogAnalyticsWorkspaceTags": {
-  "value": {
-    "Environment": "Live"
-  }
-},
-"parAutomationAccountTags": {
-  "value": {
-    "Environment": "Live"
-  }
+    "parLogAnalyticsWorkspaceTags": {
+      "value": {
+        "Environment": "Live"
+      }
+    },
+    "parAutomationAccountTags": {
+      "value": {
+        "Environment": "Live"
+      }
     },
     "parLogAnalyticsLinkedServiceAutomationAccountName": {
       "value": "Automation"
