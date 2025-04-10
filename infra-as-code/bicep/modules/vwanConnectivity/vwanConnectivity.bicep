@@ -276,12 +276,7 @@ var varCuaid = '7f94f23b-7a59-4a5c-9a8d-2a253a566f61'
 
 // ZTN Telemetry
 var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
-var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub => hub.parAzFirewallEnabled), false)) && (contains(
-    map(parVirtualWanHubs, hub => hub.parAzFirewallTier),
-    'Premium'
-  )))
-  ? true
-  : false
+var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub => hub.parAzFirewallEnabled), false)) && (contains(map(parVirtualWanHubs, hub => hub.?parAzFirewallTier), 'Premium')))
 
 // Azure Firewalls in Hubs
 var varAzureFirewallInHubs = filter(parVirtualWanHubs, hub => hub.parAzFirewallEnabled == true)

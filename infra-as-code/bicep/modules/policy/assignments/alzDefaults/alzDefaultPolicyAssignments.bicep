@@ -92,7 +92,7 @@ var varCuaid = '98cef979-5a6b-403b-83c7-10c8f04ac9a2'
 
 // ZTN Telemetry
 var varZtnP1CuaId = '4eaba1fc-d30a-4e63-a57f-9e6c3d86a318'
-var varZtnP1Trigger = ((!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyStoragehttp.libDefinition.name))) ? true : false
+var varZtnP1Trigger = ((!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyStoragehttp.libDefinition.name)))
 
 // **Variables**
 // Orchestration Module Variables
@@ -463,14 +463,37 @@ var varManagementGroupIds = {
   sandbox: '${parTopLevelManagementGroupPrefix}-sandbox${parTopLevelManagementGroupSuffix}'
 }
 
+type typManagementGroupIdOverrides = {
+  intRoot: string?
+  platform: string?
+  platformManagement: string?
+  platformConnectivity: string?
+  platformIdentity: string?
+  landingZones: string?
+  landingZonesCorp: string?
+  landingZonesOnline: string?
+  landingZonesConfidentialCorp: string?
+  landingZonesConfidentialOnline: string?
+  decommissioned: string?
+  sandbox: string?
+}
+
+@description('Specify the ALZ Default Management Group IDs to override as specified in `varManagementGroupIds`. Useful for scenarios when renaming ALZ default management groups names and IDs but not their intent or hierarchy structure.')
+param parManagementGroupIdOverrides typManagementGroupIdOverrides?
+
+var varManagementGroupIdsUnioned = union(
+  varManagementGroupIds,
+  parManagementGroupIdOverrides ?? {}
+)
+
 var varCorpManagementGroupIds = [
-  varManagementGroupIds.landingZonesCorp
-  varManagementGroupIds.landingZonesConfidentialCorp
+  varManagementGroupIdsUnioned.landingZonesCorp
+  varManagementGroupIdsUnioned.landingZonesConfidentialCorp
 ]
 
 var varCorpManagementGroupIdsFiltered = parLandingZoneMgConfidentialEnable ? varCorpManagementGroupIds : filter(varCorpManagementGroupIds, mg => !contains(toLower(mg), 'confidential'))
 
-var varTopLevelManagementGroupResourceId = '/providers/Microsoft.Management/managementGroups/${varManagementGroupIds.intRoot}'
+var varTopLevelManagementGroupResourceId = '/providers/Microsoft.Management/managementGroups/${varManagementGroupIdsUnioned.intRoot}'
 
 // Deploy-Private-DNS-Zones Variables
 
@@ -629,7 +652,7 @@ module modCustomerUsageAttributionZtnP1 '../../../../CRML/customerUsageAttributi
 // Modules - Policy Assignments - Intermediate Root Management Group
 // Module - Policy Assignment - Deploy-MDFC-Config-H224
 module modPolAssiIntRootDeployMdfcConfig '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMDFCConfig.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootDeployMdfcConfig
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMDFCConfig.definitionId
@@ -659,7 +682,7 @@ module modPolAssiIntRootDeployMdfcConfig '../../../policy/assignments/policyAssi
 
 // Module - Policy Assignment - Deploy-MDEndpoints
 module modPolAssiIntRootDeployMDEndpoints '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMDEndpoints.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootDeployMDEnpoints
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMDEndpoints.definitionId
@@ -679,7 +702,7 @@ module modPolAssiIntRootDeployMDEndpoints '../../../policy/assignments/policyAss
 
 // Module - Policy Assignment - Deploy-MDEndpointsAMA
 module modPolAssiIntRootDeployMDEndpointsAMA '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMDEndpointsAma.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootDeployMDEnpointsAma
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMDEndpointsAma.definitionId
@@ -699,7 +722,7 @@ module modPolAssiIntRootDeployMDEndpointsAMA '../../../policy/assignments/policy
 
 // Module - Policy Assignment - Deploy-AzActivity-Log
 module modPolAssiIntRootDeployAzActivityLog '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployAzActivityLog.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootDeployAzActivityLog
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployAzActivityLog.definitionId
@@ -725,7 +748,7 @@ module modPolAssiIntRootDeployAzActivityLog '../../../policy/assignments/policyA
 
 // Module - Policy Assignment - Deploy-ASC-Monitoring
 module modPolAssiIntRootDeployAscMonitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployASCMonitoring.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootDeployAscMonitoring
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployASCMonitoring.definitionId
@@ -741,7 +764,7 @@ module modPolAssiIntRootDeployAscMonitoring '../../../policy/assignments/policyA
 
 // Module - Policy Assignment - Deploy-Diag-Logs
 module modPolAssiIntRootDeployResourceDiag '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployResourceDiag.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootDeployResourceDiag
   params: {
     parPolicyAssignmentDefinitionId: parLogAnalyticsWorkspaceResourceCategory =~ 'allLogs' ? varPolicyAssignmentDeployResourceDiag.definitionId : varPolicyAssignmentDeployResourceDiag.conditionalDefinitionId
@@ -767,7 +790,7 @@ module modPolAssiIntRootDeployResourceDiag '../../../policy/assignments/policyAs
 
 // Module - Policy Assignment - Enforce-ACSB
 module modPolAssiIntRootEnforceAcsb '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceACSB.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootEnforceAcsb
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceACSB.definitionId
@@ -786,7 +809,7 @@ module modPolAssiIntRootEnforceAcsb '../../../policy/assignments/policyAssignmen
 
 // Module - Policy Assignment - Deploy-MDFC-OssDb
 module modPolAssiIntRootDeployMdfcOssDb '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMDFCOssDb.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootDeployMdfcOssDb
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMDFCOssDb.definitionId
@@ -806,7 +829,7 @@ module modPolAssiIntRootDeployMdfcOssDb '../../../policy/assignments/policyAssig
 
 // Module - Policy Assignment - Deploy-MDFC-SqlAtp
 module modPolAssiIntRootDeployMdfcSqlAtp '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootDeployMdfcSqlAtp
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMDFCSqlAtp.definitionId
@@ -826,7 +849,7 @@ module modPolAssiIntRootDeployMdfcSqlAtp '../../../policy/assignments/policyAssi
 
 // Module - Policy Assignment - Audit Location Match
 module modPolAssiIntRootAuditLocationMatch '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentAuditLocationMatch.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootAuditLocationMatch
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentAuditLocationMatch.definitionId
@@ -843,7 +866,7 @@ module modPolAssiIntRootAuditLocationMatch '../../../policy/assignments/policyAs
 
 // Module - Policy Assignment - Audit Zone Resiliency
 module modPolAssiIntRootAuditZoneResiliency '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentAuditZoneResiliency.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootAuditZoneResiliency
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentAuditZoneResiliency.definitionId
@@ -860,7 +883,7 @@ module modPolAssiIntRootAuditZoneResiliency '../../../policy/assignments/policyA
 
 // Module - Policy Assignment - Audit-UnusedResources
 module modPolAssiIntRootAuditUnusedRes '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentAuditUnusedResources.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootAuditUnusedRes
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentAuditUnusedResources.definitionId
@@ -876,7 +899,7 @@ module modPolAssiIntRootAuditUnusedRes '../../../policy/assignments/policyAssign
 
 // Module - Policy Assignment - Audit Trusted Launch
 module modPolAssiIntRootAuditTrustedLaunch '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentAuditTrustedLaunch.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootAuditTrustedLaunch
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentAuditTrustedLaunch.definitionId
@@ -892,7 +915,7 @@ module modPolAssiIntRootAuditTrustedLaunch '../../../policy/assignments/policyAs
 
 // Module - Policy Assignment - Deny-UnmanagedDisk
 module modPolAssiIntRootDenyUnmanagedDisks '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyUnmanagedDisk.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootDenyUnmanagedDisks
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyUnmanagedDisk.definitionId
@@ -910,7 +933,7 @@ module modPolAssiIntRootDenyUnmanagedDisks '../../../policy/assignments/policyAs
 
 // Module - Policy Assignment - Deny-Classic-Resources
 module modPolAssiIntRootDenyClassicRes '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyClassicResources.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
   name: varModDepNames.modPolAssiIntRootDenyClassicRes
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyClassicResources.definitionId
@@ -928,7 +951,7 @@ module modPolAssiIntRootDenyClassicRes '../../../policy/assignments/policyAssign
 // Modules - Policy Assignments - Platform Management Group
 // Module - Policy Assignment - Deploy-vmArc-ChangeTrack
 module modPolAssiPlatformDeployVmArcChangeTrack '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVmArcChangeTrack.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformDeployVmArcTrack
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmArcChangeTrack.definitionId
@@ -955,7 +978,7 @@ module modPolAssiPlatformDeployVmArcChangeTrack '../../../policy/assignments/pol
 
 // Module - Policy Assignment - Deploy-VM-ChangeTrack
 module modPolAssiPlatformDeployVmChangeTrack '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVmChangeTrack.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformDeployVmChangeTrack
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmChangeTrack.definitionId
@@ -987,7 +1010,7 @@ module modPolAssiPlatformDeployVmChangeTrack '../../../policy/assignments/policy
 
 // Module - Policy Assignment - Deploy-VMSS-ChangeTrack
 module modPolAssiPlatformDeployVmssChangeTrack '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVmssChangeTrack.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformDeployVmssChangeTrack
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmssChangeTrack.definitionId
@@ -1019,7 +1042,7 @@ module modPolAssiPlatformDeployVmssChangeTrack '../../../policy/assignments/poli
 
 // Module - Policy Assignment - Deploy-vmHybr-Monitoring
 module modPolAssiPlatformDeployVmArcMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformDeployVmArcMonitor
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployvmHybrMonitoring.definitionId
@@ -1047,7 +1070,7 @@ module modPolAssiPlatformDeployVmArcMonitor '../../../policy/assignments/policyA
 
 // Module - Policy Assignment - Deploy-VM-Monitor-24
 module modPolAssiPlatformDeployVmMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMMonitor24.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformDeployVmMonitor
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMMonitor24.definitionId
@@ -1079,7 +1102,7 @@ module modPolAssiPlatformDeployVmMonitor '../../../policy/assignments/policyAssi
 
 // Module - Policy Assignment - Deploy-MDFC-DefSQL-AMA
 module modPolAssiPlatformDeployMdfcDefSqlAma '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformDeployMdfcDefSqlAma
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMdfcDefSqlAma.definitionId
@@ -1113,7 +1136,7 @@ module modPolAssiPlatformDeployMdfcDefSqlAma '../../../policy/assignments/policy
 }
 
 module modPolAssiPlatformDenyDeleteUAMIAMA '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformDenyDeleteUAMIAMA
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyActionDeleteUAMIAMA.definitionId
@@ -1134,7 +1157,7 @@ module modPolAssiPlatformDenyDeleteUAMIAMA '../../../policy/assignments/policyAs
 
 // Module - Policy Assignment - Deploy-VMSS-Monitor-24
 module modPolAssiPlatformDeployVmssMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMSSMonitor24.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformDeployVmssMonitor
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMSSMonitor24.definitionId
@@ -1165,7 +1188,7 @@ module modPolAssiPlatformDeployVmssMonitor '../../../policy/assignments/policyAs
 }
 // Module - Policy Assignment - Enforce-Subnet-Private
 module modPolAssiPlatformEnforceSubnetPrivate '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSubnetPrivate.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformEnforceSubnetPrivate
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSubnetPrivate.definitionId
@@ -1182,7 +1205,7 @@ module modPolAssiPlatformEnforceSubnetPrivate '../../../policy/assignments/polic
 
 // Module - Policy Assignment - Enforce-GR-KeyVault
 module modPolAssiPlatformEnforceGrKeyVault '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRKeyVault.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformEnforceGrKeyVault
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRKeyVault.definitionId
@@ -1198,7 +1221,7 @@ module modPolAssiPlatformEnforceGrKeyVault '../../../policy/assignments/policyAs
 
 // Module - Policy Assignment - Enforce-ASR
 module modPolAssiPlatformEnforceAsr '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceAsr.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformEnforceAsr
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceAsr.definitionId
@@ -1217,7 +1240,7 @@ module modPolAssiPlatformEnforceAsr '../../../policy/assignments/policyAssignmen
 
 // Module - Policy Assignment - Enable-AUM-CheckUpdates
 module modPolAssiPlatformEnforceAumCheckUpdates '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceAumCheckUpdates.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platform)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformEnforceAumCheckUpdates
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceAumCheckUpdates.definitionId
@@ -1239,7 +1262,7 @@ module modPolAssiPlatformEnforceAumCheckUpdates '../../../policy/assignments/pol
 // Modules - Policy Assignments - Connectivity Management Group
 // Module - Policy Assignment - Enable-DDoS-VNET
 module modPolAssiConnEnableDdosVnet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if ((!empty(parDdosProtectionPlanId)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnableDDoSVNET.libDefinition.name))) {
-  scope: managementGroup(varManagementGroupIds.platformConnectivity)
+  scope: managementGroup(varManagementGroupIdsUnioned.platformConnectivity)
   name: varModDepNames.modPolAssiConnEnableDdosVnet
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnableDDoSVNET.definitionId
@@ -1265,7 +1288,7 @@ module modPolAssiConnEnableDdosVnet '../../../policy/assignments/policyAssignmen
 // Modules - Policy Assignments - Identity Management Group
 // Module - Policy Assignment - Deny-Public-IP
 module modPolAssiIdentDenyPublicIp '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPublicIP.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platformIdentity)
+  scope: managementGroup(varManagementGroupIdsUnioned.platformIdentity)
   name: varModDepNames.modPolAssiIdentDenyPublicIp
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPublicIP.definitionId
@@ -1282,7 +1305,7 @@ module modPolAssiIdentDenyPublicIp '../../../policy/assignments/policyAssignment
 
 // Module - Policy Assignment - Deny-MgmtPorts-Internet
 module modPolAssiIdentDenyMgmtFromInternet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platformIdentity)
+  scope: managementGroup(varManagementGroupIdsUnioned.platformIdentity)
   name: varModDepNames.modPolAssiIdentDenyMgmtPortsFromInternet
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyMgmtPortsInternet.definitionId
@@ -1298,7 +1321,7 @@ module modPolAssiIdentDenyMgmtFromInternet '../../../policy/assignments/policyAs
 
 // Module - Policy Assignment - Deny-Subnet-Without-Nsg
 module modPolAssiIdentDenySubnetWithoutNsg '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platformIdentity)
+  scope: managementGroup(varManagementGroupIdsUnioned.platformIdentity)
   name: varModDepNames.modPolAssiIdentDenySubnetWithoutNsg
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenySubnetWithoutNsg.definitionId
@@ -1314,7 +1337,7 @@ module modPolAssiIdentDenySubnetWithoutNsg '../../../policy/assignments/policyAs
 
 // Module - Policy Assignment - Deploy-VM-Backup
 module modPolAssiIdentDeployVmBackup '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMBackup.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platformIdentity)
+  scope: managementGroup(varManagementGroupIdsUnioned.platformIdentity)
   name: varModDepNames.modPolAssiIdentDeployVmBackup
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMBackup.definitionId
@@ -1344,7 +1367,7 @@ module modPolAssiIdentDeployVmBackup '../../../policy/assignments/policyAssignme
 // Modules - Policy Assignments - Management Management Group
 // Module - Policy Assignment - Deploy-Log-Analytics
 module modPolAssiMgmtDeployLogAnalytics '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployLogAnalytics.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.platformManagement)
+  scope: managementGroup(varManagementGroupIdsUnioned.platformManagement)
   name: varModDepNames.modPolAssiMgmtDeployLogAnalytics
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployLogAnalytics.definitionId
@@ -1385,7 +1408,7 @@ module modPolAssiMgmtDeployLogAnalytics '../../../policy/assignments/policyAssig
 // Modules - Policy Assignments - Landing Zones Management Group
 // Module - Policy Assignment - Deny-IP-Forwarding
 module modPolAssiLzsDenyIpForwarding '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyIPForwarding.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDenyIpForwarding
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyIPForwarding.definitionId
@@ -1402,7 +1425,7 @@ module modPolAssiLzsDenyIpForwarding '../../../policy/assignments/policyAssignme
 
 // Module - Policy Assignment - Deny-MgmtPorts-Internet
 module modPolAssiLzsDenyMgmtFromInternet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDenyMgmtPortsFromInternet
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyMgmtPortsInternet.definitionId
@@ -1418,7 +1441,7 @@ module modPolAssiLzsDenyMgmtFromInternet '../../../policy/assignments/policyAssi
 
 // Module - Policy Assignment - Deny-Subnet-Without-Nsg
 module modPolAssiLzsDenySubnetWithoutNsg '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDenySubnetWithoutNsg
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenySubnetWithoutNsg.definitionId
@@ -1434,7 +1457,7 @@ module modPolAssiLzsDenySubnetWithoutNsg '../../../policy/assignments/policyAssi
 
 // Module - Policy Assignment - Deploy-VM-Backup
 module modPolAssiLzsDeployVmBackup '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMBackup.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDeployVmBackup
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMBackup.definitionId
@@ -1462,7 +1485,7 @@ module modPolAssiLzsDeployVmBackup '../../../policy/assignments/policyAssignment
 
 // Module - Policy Assignment - Enable-DDoS-VNET
 module modPolAssiLzsEnableDdosVnet '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if ((!empty(parDdosProtectionPlanId)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnableDDoSVNET.libDefinition.name))) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsEnableDdosVnet
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnableDDoSVNET.definitionId
@@ -1487,7 +1510,7 @@ module modPolAssiLzsEnableDdosVnet '../../../policy/assignments/policyAssignment
 
 // Module - Policy Assignment - Deny-Storage-http
 module modPolAssiLzsDenyStorageHttp '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyStoragehttp.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDenyStorageHttp
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyStoragehttp.definitionId
@@ -1504,7 +1527,7 @@ module modPolAssiLzsDenyStorageHttp '../../../policy/assignments/policyAssignmen
 
 // Module - Policy Assignment - Deny-Priv-Escalation-AKS
 module modPolAssiLzsDenyPrivEscalationAks '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDenyPrivEscalationAks
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPrivEscalationAKS.definitionId
@@ -1521,7 +1544,7 @@ module modPolAssiLzsDenyPrivEscalationAks '../../../policy/assignments/policyAss
 
 // Module - Policy Assignment - Deny-Priv-Containers-AKS
 module modPolAssiLzsDenyPrivContainersAks '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyPrivContainersAKS.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDenyPrivContainersAks
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDenyPrivContainersAKS.definitionId
@@ -1538,7 +1561,7 @@ module modPolAssiLzsDenyPrivContainersAks '../../../policy/assignments/policyAss
 
 // Module - Policy Assignment - Enforce-AKS-HTTPS
 module modPolAssiLzsEnforceAksHttps '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceAKSHTTPS.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsEnforceAksHttps
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceAKSHTTPS.definitionId
@@ -1555,7 +1578,7 @@ module modPolAssiLzsEnforceAksHttps '../../../policy/assignments/policyAssignmen
 
 // Module - Policy Assignment - Enforce-TLS-SSL-H224
 module modPolAssiLzsEnforceTlsSsl '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceTLSSSL.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsEnforceTlsSsl
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceTLSSSL.definitionId
@@ -1574,7 +1597,7 @@ module modPolAssiLzsEnforceTlsSsl '../../../policy/assignments/policyAssignmentM
 
 // Module - Policy Assignment - Deploy-AzSqlDb-Auditing
 module modPolAssiLzsDeployAzSqlDbAuditing '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if ((!empty(parLogAnalyticsWorkspaceResourceId)) && (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployAzSqlDbAuditing.libDefinition.name))) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDeployAzSqlDbAuditing
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployAzSqlDbAuditing.definitionId
@@ -1603,7 +1626,7 @@ module modPolAssiLzsDeployAzSqlDbAuditing '../../../policy/assignments/policyAss
 
 // Module - Policy Assignment - Deploy-SQL-Threat
 module modPolAssiLzsDeploySqlThreat '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeploySQLThreat.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDeploySqlThreat
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeploySQLThreat.definitionId
@@ -1623,7 +1646,7 @@ module modPolAssiLzsDeploySqlThreat '../../../policy/assignments/policyAssignmen
 
 // Module - Policy Assignment - Deploy-SQL-TDE
 module modPolAssiLzsDeploySqlTde '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeploySQLTDE.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDeploySqlTde
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeploySQLTDE.definitionId
@@ -1643,7 +1666,7 @@ module modPolAssiLzsDeploySqlTde '../../../policy/assignments/policyAssignmentMa
 
 // Module - Policy Assignment - Deploy-vmArc-ChangeTrack
 module modPolAssiLzsDeployVmArcTrack '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVmArcChangeTrack.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDeployVmArcTrack
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmArcChangeTrack.definitionId
@@ -1665,7 +1688,7 @@ module modPolAssiLzsDeployVmArcTrack '../../../policy/assignments/policyAssignme
       varRbacRoleDefinitionIds.reader
     ]
     parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.platform)
+      string(varManagementGroupIdsUnioned.platform)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1673,7 +1696,7 @@ module modPolAssiLzsDeployVmArcTrack '../../../policy/assignments/policyAssignme
 
 // Module - Policy Assignment - Deploy-VM-ChangeTrack
 module modPolAssiLzsDeployVmChangeTrack '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVmChangeTrack.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDeployVmChangeTrack
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmChangeTrack.definitionId
@@ -1700,7 +1723,7 @@ module modPolAssiLzsDeployVmChangeTrack '../../../policy/assignments/policyAssig
       varRbacRoleDefinitionIds.reader
     ]
     parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.platform)
+      string(varManagementGroupIdsUnioned.platform)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1708,7 +1731,7 @@ module modPolAssiLzsDeployVmChangeTrack '../../../policy/assignments/policyAssig
 
 // Module - Policy Assignment - Deploy-VMSS-ChangeTrack
 module modPolAssiLzsDeployVmssChangeTrack '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVmssChangeTrack.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDeployVmssChangeTrack
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVmssChangeTrack.definitionId
@@ -1735,7 +1758,7 @@ module modPolAssiLzsDeployVmssChangeTrack '../../../policy/assignments/policyAss
       varRbacRoleDefinitionIds.reader
     ]
     parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.platform)
+      string(varManagementGroupIdsUnioned.platform)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1743,7 +1766,7 @@ module modPolAssiLzsDeployVmssChangeTrack '../../../policy/assignments/policyAss
 
 // Module - Policy Assignment - Deploy-vmHybr-Monitoring
 module modPolAssiLzsDeployVmArcMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDeployVmArcMonitor
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployvmHybrMonitoring.definitionId
@@ -1766,7 +1789,7 @@ module modPolAssiLzsDeployVmArcMonitor '../../../policy/assignments/policyAssign
       varRbacRoleDefinitionIds.connectedMachineResourceAdministrator
     ]
     parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.platform)
+      string(varManagementGroupIdsUnioned.platform)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1774,7 +1797,7 @@ module modPolAssiLzsDeployVmArcMonitor '../../../policy/assignments/policyAssign
 
 // Module - Policy Assignment - Deploy-VM-Monitor-24
 module modPolAssiLzsDeployVmMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMMonitor24.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDeployVmMonitor
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMMonitor24.definitionId
@@ -1801,7 +1824,7 @@ module modPolAssiLzsDeployVmMonitor '../../../policy/assignments/policyAssignmen
       varRbacRoleDefinitionIds.reader
     ]
     parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.platform)
+      string(varManagementGroupIdsUnioned.platform)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1809,7 +1832,7 @@ module modPolAssiLzsDeployVmMonitor '../../../policy/assignments/policyAssignmen
 
 // Module - Policy Assignment - Deploy-VMSS-Monitor-24
 module modPolAssiLzsDeployVmssMonitor '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVMSSMonitor24.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDeployVmssMonitor
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployVMSSMonitor24.definitionId
@@ -1836,7 +1859,7 @@ module modPolAssiLzsDeployVmssMonitor '../../../policy/assignments/policyAssignm
       varRbacRoleDefinitionIds.reader
     ]
     parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.platform)
+      string(varManagementGroupIdsUnioned.platform)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1844,7 +1867,7 @@ module modPolAssiLzsDeployVmssMonitor '../../../policy/assignments/policyAssignm
 
 // Module - Policy Assignment - Deploy-MDFC-DefSQL-AMA
 module modPolAssiLzsmDeployMdfcDefSqlAma '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDeployMdfcDefSqlAma
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMdfcDefSqlAma.definitionId
@@ -1871,7 +1894,7 @@ module modPolAssiLzsmDeployMdfcDefSqlAma '../../../policy/assignments/policyAssi
       varRbacRoleDefinitionIds.reader
     ]
     parPolicyAssignmentIdentityRoleAssignmentsAdditionalMgs: [
-      string(varManagementGroupIds.platform)
+      string(varManagementGroupIdsUnioned.platform)
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
@@ -1879,7 +1902,7 @@ module modPolAssiLzsmDeployMdfcDefSqlAma '../../../policy/assignments/policyAssi
 
 // Module - Policy Assignment - Enforce-Subnet-Private
 module modPolAssiLzsEnforceSubnetPrivate '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceSubnetPrivate.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsEnforceSubnetPrivate
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceSubnetPrivate.definitionId
@@ -1896,7 +1919,7 @@ module modPolAssiLzsEnforceSubnetPrivate '../../../policy/assignments/policyAssi
 
 // Module - Policy Assignment - Enforce-GR-KeyVault
 module modPolAssiLzsEnforceGrKeyVault '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRKeyVault.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsEnforceGrKeyVault
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceGRKeyVault.definitionId
@@ -1912,7 +1935,7 @@ module modPolAssiLzsEnforceGrKeyVault '../../../policy/assignments/policyAssignm
 
 // Module - Policy Assignment - Enforce-ASR
 module modPolAssiLzsEnforceAsr '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceAsr.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsEnforceAsr
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceAsr.definitionId
@@ -1931,7 +1954,7 @@ module modPolAssiLzsEnforceAsr '../../../policy/assignments/policyAssignmentMana
 
 // Module - Policy Assignment - Enable-AUM-CheckUpdates
 module modPolAssiLzsAumCheckUpdates '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceAumCheckUpdates.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsAumCheckUpdates
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceAumCheckUpdates.definitionId
@@ -1952,7 +1975,7 @@ module modPolAssiLzsAumCheckUpdates '../../../policy/assignments/policyAssignmen
 
 // Module - Policy Assignment - Audit-AppGW-WAF
 module modPolAssiLzsAuditAppGwWaf '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentAuditAppGWWAF.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.landingZones)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsAuditAppGwWaf
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentAuditAppGWWAF.definitionId
@@ -2267,7 +2290,7 @@ module modPolAssiLzsCorpAuditPeDnsZones '../../../policy/assignments/policyAssig
 // Modules - Policy Assignments - Decommissioned Management Group
 // Module - Policy Assignment - Enforce-ALZ-Decomm
 module modPolAssiDecommEnforceAlz '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceALZDecomm.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.decommissioned)
+  scope: managementGroup(varManagementGroupIdsUnioned.decommissioned)
   name: varModDepNames.modPolAssiDecommEnforceAlz
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceALZDecomm.definitionId
@@ -2287,7 +2310,7 @@ module modPolAssiDecommEnforceAlz '../../../policy/assignments/policyAssignmentM
 // Modules - Policy Assignments - Sandbox Management Group
 // Module - Policy Assignment - Enforce-ALZ-Sandbox
 module modPolAssiSandboxEnforceAlz '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceALZSandbox.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIds.sandbox)
+  scope: managementGroup(varManagementGroupIdsUnioned.sandbox)
   name: varModDepNames.modPolAssiSandboxEnforceAlz
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentEnforceALZSandbox.definitionId
