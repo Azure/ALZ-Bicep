@@ -20,7 +20,8 @@ parLogAnalyticsWorkspaceCapacityReservationLevel | No       | Log Analytics Work
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
 parLogAnalyticsWorkspaceLock | No       | Resource Lock Configuration for Log Analytics Workspace.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace.
-parLogAnalyticsWorkspaceSolutionsLock | No       | Resource Lock Configuration for Log Analytics Workspace Solutions.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parSecurityInsightsOnboardingLock | No       | Resource Lock Configuration for Security Insights solution.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parChangeTrackingSolutionLock | No       | Resource Lock Configuration for Change Tracking solution. - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parUserAssignedManagedIdentityName | No       | Name of the User Assigned Managed Identity required for authenticating Azure Monitoring Agent to Azure.
 parUserAssignedManagedIdentityLocation | No       | User Assigned Managed Identity location.
 parAutomationAccountEnabled | No       | Switch to enable/disable Automation Account deployment.
@@ -33,7 +34,6 @@ parAutomationAccountLock | No       | Resource Lock Configuration for Automation
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parAutomationAccountTags | No       | Tags you would like to be applied to Automation Account.
 parLogAnalyticsWorkspaceTags | No       | Tags you would like to be applied to Log Analytics Workspace.
-parUseSentinelClassicPricingTiers | No       | Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.
 parLogAnalyticsLinkedServiceAutomationAccountName | No       | Log Analytics LinkedService name for Automation Account.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
@@ -176,16 +176,28 @@ Resource Lock Configuration for Log Analytics Workspace.
 
 Solutions that will be added to the Log Analytics Workspace.
 
-- Default value: `SecurityInsights`
+- Default value: `SecurityInsights ChangeTracking`
 
-- Allowed values: `SecurityInsights`
+- Allowed values: `SecurityInsights`, `ChangeTracking`
 
-### parLogAnalyticsWorkspaceSolutionsLock
+### parSecurityInsightsOnboardingLock
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Resource Lock Configuration for Log Analytics Workspace Solutions.
+Resource Lock Configuration for Security Insights solution.
 
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
+
+### parChangeTrackingSolutionLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Change Tracking solution.
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
 - `notes` - Notes about this lock.
 
@@ -292,14 +304,6 @@ Tags you would like to be applied to Log Analytics Workspace.
 
 - Default value: `[parameters('parTags')]`
 
-### parUseSentinelClassicPricingTiers
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.
-
-- Default value: `False`
-
 ### parLogAnalyticsLinkedServiceAutomationAccountName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -403,10 +407,17 @@ outAutomationAccountId | string |
         },
         "parLogAnalyticsWorkspaceSolutions": {
             "value": [
-                "SecurityInsights"
+                "SecurityInsights",
+                "ChangeTracking"
             ]
         },
-        "parLogAnalyticsWorkspaceSolutionsLock": {
+        "parSecurityInsightsOnboardingLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Logging Module."
+            }
+        },
+        "parChangeTrackingSolutionLock": {
             "value": {
                 "kind": "None",
                 "notes": "This lock was created by the ALZ Bicep Logging Module."
@@ -450,9 +461,6 @@ outAutomationAccountId | string |
         },
         "parLogAnalyticsWorkspaceTags": {
             "value": "[parameters('parTags')]"
-        },
-        "parUseSentinelClassicPricingTiers": {
-            "value": false
         },
         "parLogAnalyticsLinkedServiceAutomationAccountName": {
             "value": "Automation"

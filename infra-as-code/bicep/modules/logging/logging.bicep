@@ -115,22 +115,35 @@ param parLogAnalyticsWorkspaceLock lockType = {
 
 @allowed([
   'SecurityInsights'
+  'ChangeTracking'
 ])
 @sys.description('Solutions that will be added to the Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceSolutions array = [
   'SecurityInsights'
+  'ChangeTracking'
 ]
 
-@sys.description('''Resource Lock Configuration for Log Analytics Workspace Solutions.
+@sys.description('''Resource Lock Configuration for Security Insights solution.
 
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
 - `notes` - Notes about this lock.
 
 ''')
-param parLogAnalyticsWorkspaceSolutionsLock lockType = {
+param parSecurityInsightsOnboardingLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Logging Module.'
 }
+
+@sys.description('''Resource Lock Configuration for Change Tracking solution.
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
+param parChangeTrackingSolutionLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Logging Module.'
+}
+
 
 @sys.description('Name of the User Assigned Managed Identity required for authenticating Azure Monitoring Agent to Azure.')
 param parUserAssignedManagedIdentityName string = 'alz-logging-mi'
@@ -175,9 +188,6 @@ param parAutomationAccountTags object = parTags
 
 @sys.description('Tags you would like to be applied to Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceTags object = parTags
-
-@sys.description('Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.')
-param parUseSentinelClassicPricingTiers bool = false
 
 @sys.description('Log Analytics LinkedService name for Automation Account.')
 param parLogAnalyticsLinkedServiceAutomationAccountName string = 'Automation'
@@ -654,35 +664,40 @@ resource resSentinelOnboarding 'Microsoft.SecurityInsights/onboardingStates@2024
   properties: {}
 }
 
-resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solutions@2015-11-01-preview' = [for solution in parLogAnalyticsWorkspaceSolutions: {
-  name: '${solution}(${resLogAnalyticsWorkspace.name})'
+resource resChangeTrackingSolution 'Microsoft.OperationsManagement/solutions@2015-11-01-preview' = if (contains(parLogAnalyticsWorkspaceSolutions, 'ChangeTracking')) {
+  name: 'ChangeTracking(${resLogAnalyticsWorkspace.name})'
   location: parLogAnalyticsWorkspaceLocation
-  tags: parTags
-  properties: solution == 'SecurityInsights' ? {
-    workspaceResourceId: resLogAnalyticsWorkspace.id
-    sku: parUseSentinelClassicPricingTiers ? null : {
-      name: 'Unified'
-    }
-  } : {
+  properties: {
     workspaceResourceId: resLogAnalyticsWorkspace.id
   }
   plan: {
-    name: '${solution}(${resLogAnalyticsWorkspace.name})'
-    product: 'OMSGallery/${solution}'
+    name: 'ChangeTracking(${resLogAnalyticsWorkspace.name})'
+    product: 'OMSGallery/ChangeTracking'
     publisher: 'Microsoft'
     promotionCode: ''
   }
-}]
+}
 
-// Create a resource lock for each log analytics workspace solutions in parLogAnalyticsWorkspaceSolutions if parGlobalResourceLock.kind != 'None' or if parLogAnalyticsWorkspaceSolutionsLock.kind != 'None'
-resource resLogAnalyticsWorkspaceSolutionsLock 'Microsoft.Authorization/locks@2020-05-01' = [for (solution, index) in parLogAnalyticsWorkspaceSolutions: if (parLogAnalyticsWorkspaceSolutionsLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
-  scope: resLogAnalyticsWorkspaceSolutions[index]
-  name: parLogAnalyticsWorkspaceSolutionsLock.?name ?? '${resLogAnalyticsWorkspaceSolutions[index].name}-lock'
+
+// Add resource lock for SecurityInsights solution
+resource resSecurityInsightsSolutionLock 'Microsoft.Authorization/locks@2020-05-01' = if (parSecurityInsightsOnboardingLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resSentinelOnboarding
+  name: parSecurityInsightsOnboardingLock.?name ?? '${resSentinelOnboarding.name}-lock'
   properties: {
-    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parLogAnalyticsWorkspaceSolutionsLock.kind
-    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parLogAnalyticsWorkspaceSolutionsLock.?notes
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parSecurityInsightsOnboardingLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parSecurityInsightsOnboardingLock.?notes
   }
-}]
+}
+
+// Add resource lock for ChangeTracking solution
+resource resChangeTrackingSolutionLock 'Microsoft.Authorization/locks@2020-05-01' = if (parChangeTrackingSolutionLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resChangeTrackingSolution
+  name: parChangeTrackingSolutionLock.?name ?? '${resChangeTrackingSolution.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parChangeTrackingSolutionLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parChangeTrackingSolutionLock.?notes
+  }
+}
 
 resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2023-09-01' = if (parLogAnalyticsWorkspaceLinkAutomationAccount) {
   parent: resLogAnalyticsWorkspace

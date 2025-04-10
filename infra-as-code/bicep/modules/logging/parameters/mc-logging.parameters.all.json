@@ -14,22 +14,23 @@
     "parLogAnalyticsWorkspaceLogRetentionInDays": {
       "value": 365
     },
-    "parLogAnalyticsWorkspaceSolutions": {
-      "value": [
-        "SecurityInsights"
-      ]
-    },
     "parDataCollectionRuleVMInsightsName": {
-      "value": "ama-vmi-default-perfAndda-dcr"
+      "value": "alz-ama-vmi-dcr"
     },
     "parDataCollectionRuleChangeTrackingName": {
-      "value": "ama-ct-default-dcr"
+      "value": "alz-ama-ct-dcr"
     },
     "parDataCollectionRuleMDFCSQLName": {
-      "value": "ama-mdfcsql-default-dcr"
+      "value": "alz-ama-mdfcsql-dcr"
     },
     "parUserAssignedManagedIdentityName": {
       "value": "alz-umi-identity"
+    },
+    "parUserAssignedManagedIdentityLocation": {
+      "value": "chinaeast2"
+    },
+    "parAutomationAccountEnabled": {
+      "value": false
     },
     "parLogAnalyticsWorkspaceLinkAutomationAccount": {
       "value": true
@@ -47,6 +48,16 @@
       "value": true
     },
     "parTags": {
+      "value": {
+        "Environment": "Live"
+      }
+    },
+    "parLogAnalyticsWorkspaceTags": {
+      "value": {
+        "Environment": "Live"
+      }
+    },
+    "parAutomationAccountTags": {
       "value": {
         "Environment": "Live"
       }
@@ -75,12 +86,6 @@
         "notes": "This lock was created by the ALZ Bicep Logging Module."
       }
     },
-    "parLogAnalyticsWorkspaceSolutionsLock": {
-      "value": {
-        "kind": "None",
-        "notes": "This lock was created by the ALZ Bicep Logging Module."
-      }
-    },
     "parDataCollectionRuleVMInsightsLock": {
       "value": {
         "kind": "None",
@@ -94,6 +99,18 @@
       }
     },
     "parDataCollectionRuleMDFCSQLLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parSecurityInsightsOnboardingLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Logging Module."
+      }
+    },
+    "parChangeTrackingSolutionLock": {
       "value": {
         "kind": "None",
         "notes": "This lock was created by the ALZ Bicep Logging Module."
