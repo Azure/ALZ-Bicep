@@ -306,6 +306,10 @@
               "Destination": "Parameters"
             },
             {
+              "Name": "parUserAssignedManagedIdentityLocation.value",
+              "Destination": "Parameters"
+            },
+            {
               "Name": "parAutomationAccountLocation.value",
               "Destination": "Parameters"
             },
