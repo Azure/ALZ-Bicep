@@ -6,22 +6,22 @@ ALZ Bicep Module used to set up Logging
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
+parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceName | No       | Log Analytics Workspace name.
 parLogAnalyticsWorkspaceLocation | No       | Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
 parDataCollectionRuleVMInsightsName | No       | VM Insights Data Collection Rule name for AMA integration.
-parDataCollectionRuleVMInsightsLock | No       | Resource Lock Configuration for VM Insights Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
+parDataCollectionRuleVMInsightsLock | No       | Resource Lock Configuration for VM Insights Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parDataCollectionRuleChangeTrackingName | No       | Change Tracking Data Collection Rule name for AMA integration.
-parDataCollectionRuleChangeTrackingLock | No       | Resource Lock Configuration for Change Tracking Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
+parDataCollectionRuleChangeTrackingLock | No       | Resource Lock Configuration for Change Tracking Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parDataCollectionRuleMDFCSQLName | No       | MDFC for SQL Data Collection Rule name for AMA integration.
-parDataCollectionRuleMDFCSQLLock | No       | Resource Lock Configuration for MDFC Defender for SQL Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
+parDataCollectionRuleMDFCSQLLock | No       | Resource Lock Configuration for MDFC Defender for SQL Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceSkuName | No       | Log Analytics Workspace sku name.
 parLogAnalyticsWorkspaceCapacityReservationLevel | No       | Log Analytics Workspace Capacity Reservation Level. Only used if parLogAnalyticsWorkspaceSkuName is set to CapacityReservation.
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
-parLogAnalyticsWorkspaceLock | No       | Resource Lock Configuration for Log Analytics Workspace.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
+parLogAnalyticsWorkspaceLock | No       | Resource Lock Configuration for Log Analytics Workspace.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace.
-parSecurityInsightsOnboardingLock | No       | Resource Lock Configuration for Security Insights solution.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
-parChangeTrackingSolutionLock | No       | Resource Lock Configuration for Change Tracking solution. - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
+parSecurityInsightsOnboardingLock | No       | Resource Lock Configuration for Security Insights solution.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parChangeTrackingSolutionLock | No       | Resource Lock Configuration for Change Tracking solution. - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parUserAssignedManagedIdentityName | No       | Name of the User Assigned Managed Identity required for authenticating Azure Monitoring Agent to Azure.
 parUserAssignedManagedIdentityLocation | No       | User Assigned Managed Identity location.
 parAutomationAccountEnabled | No       | Switch to enable/disable Automation Account deployment.
@@ -30,7 +30,7 @@ parAutomationAccountName | No       | Automation account name.
 parAutomationAccountLocation | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
 parAutomationAccountUseManagedIdentity | No       | Automation Account - use managed identity.
 parAutomationAccountPublicNetworkAccess | No       | Automation Account - Public network access.
-parAutomationAccountLock | No       | Resource Lock Configuration for Automation Account.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
+parAutomationAccountLock | No       | Resource Lock Configuration for Automation Account.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parAutomationAccountTags | No       | Tags you would like to be applied to Automation Account.
 parLogAnalyticsWorkspaceTags | No       | Tags you would like to be applied to Log Analytics Workspace.
