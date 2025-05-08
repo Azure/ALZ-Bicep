@@ -204,7 +204,7 @@ resource resUserAssignedManagedIdentity 'Microsoft.ManagedIdentity/userAssignedI
   tags: parTags
 }
 
-resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2024-10-23' = if (parAutomationAccountEnabled) {
+resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2023-11-01' = if (parAutomationAccountEnabled) {
   name: parAutomationAccountName
   location: parAutomationAccountLocation
   tags: parAutomationAccountTags
@@ -223,7 +223,7 @@ resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2024-10-2
 }
 
 // Create a resource lock for the automation account if parGlobalResourceLock.kind != 'None' or if parAutomationAccountLock.kind != 'None'
-resource resAutomationAccountLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAutomationAccountLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+resource resAutomationAccountLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAutomationAccountEnabled && (parAutomationAccountLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
   scope: resAutomationAccount
   name: parAutomationAccountLock.?name ?? '${resAutomationAccount.name}-lock'
   properties: {
