@@ -479,7 +479,7 @@
     },
     "DataCollectionRuleMDFCSQLResourceId": {
       "Type": "Computed",
-      "Value": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/ama-mdfcsql-default-dcr",
+      "Value": "/subscriptions/{%ManagementSubscriptionId%}/resourcegroups/rg-{%Prefix%}-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-mdfcsql-dcr",
       "Targets": [
         {
           "Name": "parDataCollectionRuleMDFCSQLResourceId.value",

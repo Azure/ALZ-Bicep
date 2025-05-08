@@ -269,7 +269,7 @@ resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules
           'Microsoft-InsightsMetrics'
          ]
          counterSpecifiers: [
-          '\\VMInsights\\DetailedMetrics'
+          '\\VmInsights\\DetailedMetrics'
          ]
          samplingFrequencyInSeconds: 60
        }
