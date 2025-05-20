@@ -16,6 +16,7 @@ parVirtualWanLock | No       | Resource Lock Configuration for Virtual WAN.  - `
 parVirtualWanHubName | No       | Prefix Used for Virtual WAN Hub.
 parVirtualWanHubDefaultRouteName | No       | The name of the route table that manages routing between the Virtual WAN Hub and the Azure Firewall.
 parVirtualWanHubs | No       | Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects in the array to meet the number of Virtual WAN Hubs required.  - `parVpnGatewayEnabled` - Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub. - `parExpressRouteGatewayEnabled` - Switch to enable/disable ExpressRoute Gateway deployment on the respective Virtual WAN Hub. - `parAzFirewallEnabled` - Switch to enable/disable Azure Firewall deployment on the respective Virtual WAN Hub. - `parVirtualHubAddressPrefix` - The IP address range in CIDR notation for the vWAN virtual Hub to use. - `parHubLocation` - The Virtual WAN Hub location. - `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASPath`, `VpnGateway`, `ExpressRoute`. - `parVirtualRouterAutoScaleConfiguration` - The Virtual WAN Hub capacity. The value should be between 2 to 50. - `parVirtualHubRoutingIntentDestinations` - The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.  
+parSidecarVirtualNetwork | No       |
 parVpnGatewayLock | No       | Resource Lock Configuration for Virtual WAN Hub VPN Gateway.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parExpressRouteGatewayLock | No       | Resource Lock Configuration for Virtual WAN Hub ExpressRoute Gateway.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVirtualWanHubsLock | No       | Resource Lock Configuration for Virtual WAN Hub.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
@@ -138,6 +139,14 @@ Array Used for multiple Virtual WAN Hubs deployment. Each object in the array re
 - `parVirtualHubRoutingIntentDestinations` - The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.
 
 
+
+### parSidecarVirtualNetwork
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+
+
+- Default value: `@{name=[format('vnet-sidecar-{0}', parameters('parLocation'))]; sidecarVirtualNetworkEnabled=False; addressPrefixes=System.Object[]; location=[parameters('parLocation')]; virtualHubIdOverride=; flowTimeoutInMinutes=0; ipamPoolNumberOfIpAddresses=; lock=; vnetPeerings=System.Object[]; vnetEncryption=False; vnetEncryptionEnforcement=; roleAssignments=System.Object[]; virtualNetworkBgpCommunity=; diagnosticSettings=System.Object[]; dnsServers=System.Object[]; enableVmProtection=False; ddosProtectionPlanResourceIdOverride=}`
 
 ### parVpnGatewayLock
 
@@ -423,6 +432,32 @@ outAzFwPrivateIps | array |
                     "parAzFirewallAvailabilityZones": []
                 }
             ]
+        },
+        "parSidecarVirtualNetwork": {
+            "value": {
+                "name": "[format('vnet-sidecar-{0}', parameters('parLocation'))]",
+                "sidecarVirtualNetworkEnabled": false,
+                "addressPrefixes": [
+                    "10.101.0.0/24"
+                ],
+                "location": "[parameters('parLocation')]",
+                "virtualHubIdOverride": "",
+                "flowTimeoutInMinutes": 0,
+                "ipamPoolNumberOfIpAddresses": "",
+                "lock": {
+                    "name": "vnet-sidecar-lock",
+                    "kind": "None"
+                },
+                "vnetPeerings": [],
+                "vnetEncryption": false,
+                "vnetEncryptionEnforcement": null,
+                "roleAssignments": [],
+                "virtualNetworkBgpCommunity": "",
+                "diagnosticSettings": [],
+                "dnsServers": [],
+                "enableVmProtection": false,
+                "ddosProtectionPlanResourceIdOverride": ""
+            }
         },
         "parVpnGatewayLock": {
             "value": {
