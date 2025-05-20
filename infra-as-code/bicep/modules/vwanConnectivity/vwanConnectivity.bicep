@@ -67,6 +67,22 @@ type virtualWanOptionsType = ({
   parAzFirewallAvailabilityZones: azFirewallAvailabilityZones?
 })[]
 
+type sideCarVirtualNetworkType = {
+  @description('The name of the sidecar virtual network.')
+  name: string
+
+  @description('The address space of the sidecar virtual network.')
+  addressPrefixes: string[]
+
+  @description('The location of the sidecar virtual network.')
+  location: string
+
+  @description()
+
+  @description('The resource ID of the virtual hub to associate with the sidecar virtual network.')
+  virtualHubId: string
+}
+
 type lockType = {
   @description('Optional. Specify the name of lock.')
   name: string?
@@ -150,6 +166,14 @@ param parVirtualWanHubs virtualWanOptionsType = [
     parAzFirewallAvailabilityZones: []
   }
 ]
+
+param parSidecarVirtualNetwork sideCarVirtualNetworkType = {
+  name: 'vnet-sidecar-${parLocation}'
+  addressPrefixes: [
+    '10.101.0.0/24'
+  ]
+  location: parLocation
+}
 
 @sys.description('''Resource Lock Configuration for Virtual WAN Hub VPN Gateway.
 
@@ -384,6 +408,33 @@ resource resVhubRoutingIntent 'Microsoft.Network/virtualHubs/routingIntent@2024-
     }
   }
 ]
+
+module modSidecarVirtualNetwork 'br/public:avm/res/network/virtual-network:0.7.0' = {
+  params: {
+    name: parSidecarVirtualNetwork.name
+    addressPrefixes: parSidecarVirtualNetwork.addressPrefixes
+    location: parLocation
+    flowTimeoutInMinutes:
+    ipamPoolNumberOfIpAddresses:
+    lock:
+    peerings:
+    subnets:[
+      {
+        name:
+      }
+    ]
+    vnetEncryption:
+    vnetEncryptionEnforcement:
+    roleAssignments:
+    virtualNetworkBgpCommunity:
+    tags: parTags
+    diagnosticSettings: []
+    dnsServers: []
+    enableVmProtection:
+    ddosProtectionPlanResourceId: parDdosEnabled ? resDdosProtectionPlan.id : null
+    enableTelemetry: parTelemetryOptOut ? false : true
+  }
+}
 
 resource resVpnGateway 'Microsoft.Network/vpnGateways@2024-05-01' = [
   for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parVpnGatewayEnabled)) {
