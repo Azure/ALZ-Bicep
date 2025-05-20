@@ -1879,6 +1879,9 @@ module modPolAssiLzsmDeployMdfcDefSqlAma '../../../policy/assignments/policyAssi
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: parDisableAlzDefaultPolicies ? 'DoNotEnforce' : varPolicyAssignmentDeployMdfcDefSqlAma.libDefinition.properties.enforcementMode
     parPolicyAssignmentParameterOverrides: {
+      userWorkspaceResourceId: {
+        value: parLogAnalyticsWorkspaceResourceId
+      }
       dcrResourceId: {
         value: parDataCollectionRuleMDFCSQLResourceId
       }
