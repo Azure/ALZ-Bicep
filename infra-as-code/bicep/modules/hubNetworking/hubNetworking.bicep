@@ -349,12 +349,17 @@ param parTelemetryOptOut bool = false
 @sys.description('Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.')
 param parBastionOutboundSshRdpPorts array = ['22', '3389']
 
-var varSubnetMap = map(range(0, length(parSubnets)), i => {
-  name: parSubnets[i].name
-  ipAddressRange: parSubnets[i].ipAddressRange
-  networkSecurityGroupId: parSubnets[i].?networkSecurityGroupId ?? ''
-  routeTableId: parSubnets[i].?routeTableId ?? ''
-  delegation: parSubnets[i].?delegation ?? ''
+// Filter out AzureBastionSubnet if Bastion is not enabled
+var varSubnets = parAzBastionEnabled
+  ? parSubnets
+  : [for s in parSubnets: if (s.name != 'AzureBastionSubnet') s]
+
+var varSubnetMap = map(range(0, length(varSubnets)), i => {
+  name: varSubnets[i].name
+  ipAddressRange: varSubnets[i].ipAddressRange
+  networkSecurityGroupId: varSubnets[i].?networkSecurityGroupId ?? ''
+  routeTableId: varSubnets[i].?routeTableId ?? ''
+  delegation: varSubnets[i].?delegation ?? ''
 })
 
 var varSubnetProperties = [
@@ -838,7 +843,7 @@ resource resVirtualNetworkGatewayLock 'Microsoft.Authorization/locks@2020-05-01'
       notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parVirtualNetworkGatewayLock.?notes
     }
   }
-]
+}
 
 resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' existing = if (parAzFirewallEnabled) {
   parent: resHubVnet
@@ -846,7 +851,7 @@ resource resAzureFirewallSubnetRef 'Microsoft.Network/virtualNetworks/subnets@20
 }
 
 resource resAzureFirewallMgmtSubnetRef 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' existing = if (parAzFirewallEnabled && (contains(
-  map(parSubnets, subnets => subnets.name),
+  map(varSubnets, subnets => subnets.name),
   'AzureFirewallManagementSubnet'
 ))) {
   parent: resHubVnet
@@ -873,7 +878,7 @@ module modAzureFirewallPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewall
 }
 
 module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewallEnabled && (contains(
-  map(parSubnets, subnets => subnets.name),
+  map(varSubnets, subnets => subnets.name),
   'AzureFirewallManagementSubnet'
 ))) {
   name: 'deploy-Firewall-mgmt-Public-IP'
