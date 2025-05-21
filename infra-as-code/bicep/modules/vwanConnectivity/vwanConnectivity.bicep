@@ -357,7 +357,10 @@ var varCuaid = '7f94f23b-7a59-4a5c-9a8d-2a253a566f61'
 
 // ZTN Telemetry
 var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
-var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub => hub.parAzFirewallEnabled), false)) && (contains(map(parVirtualWanHubs, hub => hub.?parAzFirewallTier), 'Premium')))
+var varZtnP1Trigger = (parDdosEnabled && !(contains(map(parVirtualWanHubs, hub => hub.parAzFirewallEnabled), false)) && (contains(
+  map(parVirtualWanHubs, hub => hub.?parAzFirewallTier),
+  'Premium'
+)))
 
 // Azure Firewalls in Hubs
 var varAzureFirewallInHubs = filter(parVirtualWanHubs, hub => hub.parAzFirewallEnabled == true)
@@ -466,36 +469,41 @@ resource resVhubRoutingIntent 'Microsoft.Network/virtualHubs/routingIntent@2024-
   }
 ]
 
-module modSidecarVirtualNetwork 'br/public:avm/res/network/virtual-network:0.7.0' = if (parSidecarVirtualNetwork.sidecarVirtualNetworkEnabled) {
-  params: {
-    name: parSidecarVirtualNetwork.name
-    addressPrefixes: parSidecarVirtualNetwork.addressPrefixes
-    location: parSidecarVirtualNetwork.location != null ? parSidecarVirtualNetwork.location : parLocation
-    flowTimeoutInMinutes: parSidecarVirtualNetwork.?flowTimeoutInMinutes
-    ipamPoolNumberOfIpAddresses: parSidecarVirtualNetwork.?ipamPoolNumberOfIpAddresses
-    lock: parSidecarVirtualNetwork.?lock
-    peerings: parSidecarVirtualNetwork.?vnetPeerings
-    subnets: parSidecarVirtualNetwork.?subnets
-    vnetEncryption: parSidecarVirtualNetwork.?vnetEncryption
-    vnetEncryptionEnforcement: parSidecarVirtualNetwork.?vnetEncryptionEnforcement
-    roleAssignments: parSidecarVirtualNetwork.?roleAssignments
-    virtualNetworkBgpCommunity: parSidecarVirtualNetwork.?virtualNetworkBgpCommunity
-    tags: parTags
-    diagnosticSettings: parSidecarVirtualNetwork.?diagnosticSettings
-    dnsServers: parSidecarVirtualNetwork.?dnsServers
-    enableVmProtection: parSidecarVirtualNetwork.?enableVmProtection
-    ddosProtectionPlanResourceId: parDdosEnabled ? resDdosProtectionPlan.id : null
-    enableTelemetry: parTelemetryOptOut ? false : true
+module modSidecarVirtualNetwork 'br/public:avm/res/network/virtual-network:0.7.0' = [
+  for (hub, i) in parVirtualWanHubs: if (parSidecarVirtualNetwork.sidecarVirtualNetworkEnabled) {
+    params: {
+      name: parSidecarVirtualNetwork.name
+      addressPrefixes: parSidecarVirtualNetwork.addressPrefixes
+      location: parSidecarVirtualNetwork.location != null ? parSidecarVirtualNetwork.location : parLocation
+      flowTimeoutInMinutes: parSidecarVirtualNetwork.?flowTimeoutInMinutes
+      ipamPoolNumberOfIpAddresses: parSidecarVirtualNetwork.?ipamPoolNumberOfIpAddresses
+      lock: parSidecarVirtualNetwork.?lock
+      peerings: parSidecarVirtualNetwork.?vnetPeerings
+      subnets: parSidecarVirtualNetwork.?subnets
+      vnetEncryption: parSidecarVirtualNetwork.?vnetEncryption
+      vnetEncryptionEnforcement: parSidecarVirtualNetwork.?vnetEncryptionEnforcement
+      roleAssignments: parSidecarVirtualNetwork.?roleAssignments
+      virtualNetworkBgpCommunity: parSidecarVirtualNetwork.?virtualNetworkBgpCommunity
+      tags: parTags
+      diagnosticSettings: parSidecarVirtualNetwork.?diagnosticSettings
+      dnsServers: parSidecarVirtualNetwork.?dnsServers
+      enableVmProtection: parSidecarVirtualNetwork.?enableVmProtection
+      ddosProtectionPlanResourceId: parDdosEnabled ? resDdosProtectionPlan.id : null
+      enableTelemetry: parTelemetryOptOut ? false : true
+    }
   }
-}
+]
 
-module modVnetPeeringVwan '../vnetPeeringVwan/vnetPeeringVwan.bicep' = if (parSidecarVirtualNetwork.sidecarVirtualNetworkEnabled) {
-  scope: subscription()
-  params: {
-    parRemoteVirtualNetworkResourceId: modSidecarVirtualNetwork.outputs.resourceId
-    parVirtualWanHubResourceId: resVhub[0].id
+module modVnetPeeringVwan '../vnetPeeringVwan/vnetPeeringVwan.bicep' = [
+  for (hub, i) in parVirtualWanHubs: if (parSidecarVirtualNetwork.sidecarVirtualNetworkEnabled) {
+    name: 'deploy-vnet-peering-vwan-${parSidecarVirtualNetwork.name}-${hub.parHubLocation}'
+    scope: subscription()
+    params: {
+      parRemoteVirtualNetworkResourceId: modSidecarVirtualNetwork[i].outputs.resourceId
+      parVirtualWanHubResourceId: resVhub[0].id
+    }
   }
-}
+]
 
 resource resVpnGateway 'Microsoft.Network/vpnGateways@2024-05-01' = [
   for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled) && (hub.parVpnGatewayEnabled)) {
