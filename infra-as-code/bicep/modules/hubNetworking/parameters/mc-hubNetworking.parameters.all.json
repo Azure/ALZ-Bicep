@@ -147,6 +147,9 @@
         "privatelink.redis.cache.chinacloudapi.cn"
       ]
     },
+    "parPrivateDnsZonesFallbackToInternet": {
+      "value": false
+    },
     "parPrivateDnsZoneAutoMergeAzureBackupZone": {
       "value": true
     },

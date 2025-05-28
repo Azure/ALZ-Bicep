@@ -77,6 +77,7 @@ parHubRouteTableLock | No       | Resource Lock Configuration for Hub Route Tabl
 parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment.
 parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones.
 parPrivateDnsZones | No       | Array of DNS Zones to provision and link to Hub Virtual Networks. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
+parPrivateDnsZonesFallbackToInternet | No       | Switch to enable/disable fallback to internet Private DNS Zones (option only available for Private DNS zones associated to Private Link resources.
 parVirtualNetworkIdToLinkFailover | No       | Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 parVirtualNetworkResourceIdsToLinkTo | No       | Array of Resource IDs of VNets to link to Private DNS Zones. Hub VNets are automatically included by module.
 parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS Zone(s).  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
@@ -688,6 +689,14 @@ Resource Group Name for Private DNS Zones.
 
 Array of DNS Zones to provision and link to Hub Virtual Networks. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
 
+### parPrivateDnsZonesFallbackToInternet
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable fallback to internet Private DNS Zones (option only available for Private DNS zones associated to Private Link resources.
+
+- Default value: `False`
+
 ### parVirtualNetworkIdToLinkFailover
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -1137,6 +1146,9 @@ outBastionNsgNameSecondaryLocation | string |
         },
         "parPrivateDnsZones": {
             "value": []
+        },
+        "parPrivateDnsZonesFallbackToInternet": {
+            "value": false
         },
         "parVirtualNetworkIdToLinkFailover": {
             "value": ""
