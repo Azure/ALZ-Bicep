@@ -65,11 +65,14 @@ type virtualWanOptionsType = ({
 
   @sys.description('Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.')
   parAzFirewallAvailabilityZones: azFirewallAvailabilityZones?
+
+  @sys.description('Configuration of sidecar virtual network for the Virtual WAN Hub.')
+  parSidecarVirtualNetwork: sideCarVirtualNetworkType
 })[]
 
 type sideCarVirtualNetworkType = {
   @description('The name of the sidecar virtual network.')
-  name: string
+  name: string?
 
   @description('Disable the sidecar virtual network.')
   sidecarVirtualNetworkEnabled: bool
@@ -78,13 +81,13 @@ type sideCarVirtualNetworkType = {
   addressPrefixes: string[]
 
   @description('The location of the sidecar virtual network.')
-  location: string
+  location: string?
 
   @description('The resource ID of the virtual hub to associate with the sidecar virtual network.')
   virtualHubIdOverride: string?
 
   @description('Flow timeout in minutes for the virtual network.')
-  flowTimeoutInMinutes: int
+  flowTimeoutInMinutes: int?
 
   @description('Number of IP addresses allocated from the pool. To be used only when the addressPrefix param is defined with a resource ID of an IPAM pool.')
   ipamPoolNumberOfIpAddresses: string?
@@ -99,7 +102,7 @@ type sideCarVirtualNetworkType = {
   subnets: array?
 
   @description('Enable VNet encryption for the virtual network.')
-  vnetEncryption: bool
+  vnetEncryption: bool?
 
   @description('If the encrypted VNet allows VM that does not support encryption. Can only be used when vnetEncryption is enabled.')
   vnetEncryptionEnforcement: 'AllowUnencrypted' | 'DropUnencrypted'?
@@ -204,33 +207,16 @@ param parVirtualWanHubs virtualWanOptionsType = [
     parAzFirewallIntelMode: 'Alert'
     parAzFirewallTier: 'Standard'
     parAzFirewallAvailabilityZones: []
+    parSidecarVirtualNetwork: {
+      addressPrefixes: [
+        '10.101.0.0/24'
+      ]
+      flowTimeoutInMinutes: 0
+      sidecarVirtualNetworkEnabled: true
+      vnetEncryption: false
+    }
   }
 ]
-
-param parSidecarVirtualNetwork sideCarVirtualNetworkType = {
-  name: 'vnet-sidecar-${parLocation}'
-  sidecarVirtualNetworkEnabled: false
-  addressPrefixes: [
-    '10.101.0.0/24'
-  ]
-  location: parLocation
-  virtualHubIdOverride: ''
-  flowTimeoutInMinutes: 0
-  ipamPoolNumberOfIpAddresses: ''
-  lock: {
-    name: 'vnet-sidecar-lock'
-    kind: 'None'
-  }
-  vnetPeerings: []
-  vnetEncryption: false
-  vnetEncryptionEnforcement: null
-  roleAssignments: []
-  virtualNetworkBgpCommunity: ''
-  diagnosticSettings: []
-  dnsServers: []
-  enableVmProtection: false
-  ddosProtectionPlanResourceIdOverride: ''
-}
 
 @sys.description('''Resource Lock Configuration for Virtual WAN Hub VPN Gateway.
 
@@ -470,24 +456,28 @@ resource resVhubRoutingIntent 'Microsoft.Network/virtualHubs/routingIntent@2024-
 ]
 
 module modSidecarVirtualNetwork 'br/public:avm/res/network/virtual-network:0.7.0' = [
-  for (hub, i) in parVirtualWanHubs: if (parSidecarVirtualNetwork.sidecarVirtualNetworkEnabled) {
+  for (hub, i) in parVirtualWanHubs: if (hub.parSidecarVirtualNetwork.sidecarVirtualNetworkEnabled) {
     params: {
-      name: parSidecarVirtualNetwork.name
-      addressPrefixes: parSidecarVirtualNetwork.addressPrefixes
-      location: parSidecarVirtualNetwork.location != null ? parSidecarVirtualNetwork.location : parLocation
-      flowTimeoutInMinutes: parSidecarVirtualNetwork.?flowTimeoutInMinutes
-      ipamPoolNumberOfIpAddresses: parSidecarVirtualNetwork.?ipamPoolNumberOfIpAddresses
-      lock: parSidecarVirtualNetwork.?lock
-      peerings: parSidecarVirtualNetwork.?vnetPeerings
-      subnets: parSidecarVirtualNetwork.?subnets
-      vnetEncryption: parSidecarVirtualNetwork.?vnetEncryption
-      vnetEncryptionEnforcement: parSidecarVirtualNetwork.?vnetEncryptionEnforcement
-      roleAssignments: parSidecarVirtualNetwork.?roleAssignments
-      virtualNetworkBgpCommunity: parSidecarVirtualNetwork.?virtualNetworkBgpCommunity
+      name: hub.parSidecarVirtualNetwork.?name ?? '${parCompanyPrefix}-sidecar-vnet-${hub.parHubLocation}'
+      addressPrefixes: hub.parSidecarVirtualNetwork.addressPrefixes
+      location: hub.parSidecarVirtualNetwork.?location != null ? hub.parSidecarVirtualNetwork.?location : hub.parHubLocation
+      flowTimeoutInMinutes: hub.parSidecarVirtualNetwork.?flowTimeoutInMinutes != null ? hub.parSidecarVirtualNetwork.?flowTimeoutInMinutes : 0
+      ipamPoolNumberOfIpAddresses: hub.parSidecarVirtualNetwork.?ipamPoolNumberOfIpAddresses != null ? hub.parSidecarVirtualNetwork.?ipamPoolNumberOfIpAddresses : null
+      lock: (parGlobalResourceLock.kind != 'None' || (hub.parSidecarVirtualNetwork.?lock != null && hub.parSidecarVirtualNetwork.?lock.?kind != 'None')) ? {
+        name: hub.parSidecarVirtualNetwork.?lock.?name ?? 'pl-sidecar-vnet-lock'
+        kind: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : hub.parSidecarVirtualNetwork.?lock.?kind
+        notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : hub.parSidecarVirtualNetwork.?lock.?notes ?? 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
+      } : null
+      peerings: hub.parSidecarVirtualNetwork.?vnetPeerings != null ? hub.parSidecarVirtualNetwork.?vnetPeerings : []
+      subnets: hub.parSidecarVirtualNetwork.?subnets != null ? hub.parSidecarVirtualNetwork.?subnets : []
+      vnetEncryption: hub.parSidecarVirtualNetwork.?vnetEncryption != null ? hub.parSidecarVirtualNetwork.?vnetEncryption : null
+      vnetEncryptionEnforcement: hub.parSidecarVirtualNetwork.?vnetEncryptionEnforcement != null ? hub.parSidecarVirtualNetwork.?vnetEncryptionEnforcement : null
+      roleAssignments: hub.parSidecarVirtualNetwork.?roleAssignments
+      virtualNetworkBgpCommunity: hub.parSidecarVirtualNetwork.?virtualNetworkBgpCommunity != null ? hub.parSidecarVirtualNetwork.?virtualNetworkBgpCommunity : null
       tags: parTags
-      diagnosticSettings: parSidecarVirtualNetwork.?diagnosticSettings
-      dnsServers: parSidecarVirtualNetwork.?dnsServers
-      enableVmProtection: parSidecarVirtualNetwork.?enableVmProtection
+      diagnosticSettings: hub.parSidecarVirtualNetwork.?diagnosticSettings != null ? hub.parSidecarVirtualNetwork.?diagnosticSettings : []
+      dnsServers: hub.parSidecarVirtualNetwork.?dnsServers != null ? hub.parSidecarVirtualNetwork.?dnsServers : []
+      enableVmProtection: hub.parSidecarVirtualNetwork.?enableVmProtection != null ? hub.parSidecarVirtualNetwork.?enableVmProtection : null
       ddosProtectionPlanResourceId: parDdosEnabled ? resDdosProtectionPlan.id : null
       enableTelemetry: parTelemetryOptOut ? false : true
     }
@@ -495,8 +485,8 @@ module modSidecarVirtualNetwork 'br/public:avm/res/network/virtual-network:0.7.0
 ]
 
 module modVnetPeeringVwan '../vnetPeeringVwan/vnetPeeringVwan.bicep' = [
-  for (hub, i) in parVirtualWanHubs: if (parSidecarVirtualNetwork.sidecarVirtualNetworkEnabled) {
-    name: 'deploy-vnet-peering-vwan-${parSidecarVirtualNetwork.name}-${hub.parHubLocation}'
+  for (hub, i) in parVirtualWanHubs: if (hub.parSidecarVirtualNetwork.sidecarVirtualNetworkEnabled) {
+    name: 'deploy-vnet-peering-vwan-${hub.parSidecarVirtualNetwork.?name}-${hub.parHubLocation}'
     scope: subscription()
     params: {
       parRemoteVirtualNetworkResourceId: modSidecarVirtualNetwork[i].outputs.resourceId
