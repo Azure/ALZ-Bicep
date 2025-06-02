@@ -63,33 +63,6 @@
         }
       ]
     },
-    "parSidecarVirtualNetwork": {
-      "value": {
-        "name": "alz-vnet-sidecar-eastus",
-        "sidecarVirtualNetworkEnabled": true,
-        "addressPrefixes": [
-          "10.101.0.0/24"
-        ],
-        "location": "eastus",
-        "virtualHubIdOverride": null,
-        "flowTimeoutInMinutes": 0,
-        "ipamPoolNumberOfIpAddresses": null,
-        "lock": {
-          "name": "alz-vnet-sidecar-lock",
-          "kind": "None"
-        },
-        "vnetPeerings": [],
-        "subnets": [],
-        "vnetEncryption": false,
-        "vnetEncryptionEnforcement": null,
-        "roleAssignments": [],
-        "virtualNetworkBgpCommunity": null,
-        "diagnosticSettings": [],
-        "dnsServers": [],
-        "enableVmProtection": false,
-        "ddosProtectionPlanResourceIdOverride": null
-      }
-    },
     "parVpnGatewayScaleUnit": {
       "value": 1
     },
