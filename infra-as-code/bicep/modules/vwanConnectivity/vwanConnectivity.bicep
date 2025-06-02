@@ -208,12 +208,10 @@ param parVirtualWanHubs virtualWanOptionsType = [
     parAzFirewallTier: 'Standard'
     parAzFirewallAvailabilityZones: []
     parSidecarVirtualNetwork: {
+      sidecarVirtualNetworkEnabled: true
       addressPrefixes: [
         '10.101.0.0/24'
       ]
-      flowTimeoutInMinutes: 0
-      sidecarVirtualNetworkEnabled: true
-      vnetEncryption: false
     }
   }
 ]

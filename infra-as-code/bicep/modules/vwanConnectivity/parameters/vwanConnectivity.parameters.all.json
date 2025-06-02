@@ -49,18 +49,24 @@
           "parHubRoutingPreference": "ExpressRoute",
           "parVirtualRouterAutoScaleConfiguration": 2,
           "parVirtualHubRoutingIntentDestinations": [],
-          "parAzFirewallDnsServers" : [],
-          "parAzFirewallIntelMode" : "Alert",
+          "parAzFirewallDnsServers": [],
+          "parAzFirewallIntelMode": "Alert",
           "parAzFirewallDnsProxyEnabled": true,
           "parAzFirewallTier": "Standard",
-          "parAzFirewallAvailabilityZones": []
+          "parAzFirewallAvailabilityZones": [],
+          "parSidecarVirtualNetwork": {
+            "sidecarVirtualNetworkEnabled": true,
+            "addressPrefixes": [
+              "10.101.0.0/24"
+            ]
+          }
         }
       ]
     },
     "parSidecarVirtualNetwork": {
       "value": {
         "name": "alz-vnet-sidecar-eastus",
-        "sidecarVirtualNetworkEnabled": false,
+        "sidecarVirtualNetworkEnabled": true,
         "addressPrefixes": [
           "10.101.0.0/24"
         ],
