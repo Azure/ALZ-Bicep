@@ -322,10 +322,6 @@
               "Destination": "Parameters"
             },
             {
-              "Name": "parSidecarVirtualNetwork.value.location",
-              "Destination": "Parameters"
-            },
-            {
               "Name": "parPrivateDnsZonesLocation.value",
               "Destination": "Parameters"
             },
