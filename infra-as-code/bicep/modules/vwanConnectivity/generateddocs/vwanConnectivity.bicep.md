@@ -15,8 +15,7 @@ parVirtualWanType | No       | The type of Virtual WAN to create.
 parVirtualWanLock | No       | Resource Lock Configuration for Virtual WAN.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parVirtualWanHubName | No       | Prefix Used for Virtual WAN Hub.
 parVirtualWanHubDefaultRouteName | No       | The name of the route table that manages routing between the Virtual WAN Hub and the Azure Firewall.
-parVirtualWanHubs | No       | Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects in the array to meet the number of Virtual WAN Hubs required.  - `parVpnGatewayEnabled` - Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub. - `parExpressRouteGatewayEnabled` - Switch to enable/disable ExpressRoute Gateway deployment on the respective Virtual WAN Hub. - `parAzFirewallEnabled` - Switch to enable/disable Azure Firewall deployment on the respective Virtual WAN Hub. - `parVirtualHubAddressPrefix` - The IP address range in CIDR notation for the vWAN virtual Hub to use. - `parHubLocation` - The Virtual WAN Hub location. - `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASPath`, `VpnGateway`, `ExpressRoute`. - `parVirtualRouterAutoScaleConfiguration` - The Virtual WAN Hub capacity. The value should be between 2 to 50. - `parVirtualHubRoutingIntentDestinations` - The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.
-parSidecarVirtualNetwork | No       | Sidecar Virtual Network configuration object. Used to optionally deploy a sidecar VNet alongside the vWAN Hub. The object supports the following properties:  - `name` (string): The name of the sidecar virtual network.  - `sidecarVirtualNetworkEnabled` (bool): Switch to enable/disable the sidecar virtual network.  - `addressPrefixes` (array of string): The address space of the sidecar virtual network.  - `location` (string): The location of the sidecar virtual network.  - `virtualHubIdOverride` (string, optional): Resource ID of the virtual hub to associate with the sidecar VNet.  - `flowTimeoutInMinutes` (int): Flow timeout in minutes for the virtual network.  - `ipamPoolNumberOfIpAddresses` (string, optional): Number of IP addresses allocated from the pool (used with IPAM pool resource ID).  - `lock` (object, optional): Resource lock configuration for the virtual network.  - `vnetPeerings` (array, optional): Additional virtual network peerings.  - `subnets` (array, optional): Subnets for the virtual network.  - `vnetEncryption` (bool): Switch to enable/disable VNet encryption.  - `vnetEncryptionEnforcement` (string, optional): If the encrypted VNet allows VMs that do not support encryption. Allowed values: `AllowUnencrypted`, `DropUnencrypted`.  - `roleAssignments` (array, optional): Role assignments for the virtual network.  - `virtualNetworkBgpCommunity` (string, optional): BGP community for the virtual network.  - `diagnosticSettings` (array, optional): Diagnostic settings for the virtual network.  - `dnsServers` (array, optional): DNS servers for the virtual network.  - `enableVmProtection` (bool, optional): Switch to enable/disable VM protection for the virtual network.  - `ddosProtectionPlanResourceIdOverride` (string, optional): DDoS protection plan resource ID.
+parVirtualWanHubs | No       | Array used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects in the array to meet the number of Virtual WAN Hubs required. The following properties are part of each object in this array:- `parVpnGatewayEnabled` Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub. - `parExpressRouteGatewayEnabled` Switch to enable/disable ExpressRoute Gateway deployment on the respective Virtual WAN Hub. - `parAzFirewallEnabled` Switch to enable/disable Azure Firewall deployment on the respective Virtual WAN Hub. - `parVirtualHubAddressPrefix` The IP address range in CIDR notation for the vWAN virtual Hub to use. - `parHubLocation` : The Virtual WAN Hub location. - `parHubRoutingPreference`: The Virtual WAN Hub routing preference. The allowed values are `ASPath`, `VpnGateway`, `ExpressRoute`. - `parVirtualRouterAutoScaleConfiguration`: The Virtual WAN Hub capacity. The value should be between 2 to 50. - `parVirtualHubRoutingIntentDestinations`: The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.- `parSidecarVirtualNetwork`: Configuration object to optionally deploy a sidecar VNet alongside the vWAN Hub. Use `sidecarVirtualNetworkEnabled`: Used to enable/disable the sidecar VNet and `addressPrefixes`: Used to specify sidecar network address space.
 parVpnGatewayLock | No       | Resource Lock Configuration for Virtual WAN Hub VPN Gateway.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parExpressRouteGatewayLock | No       | Resource Lock Configuration for Virtual WAN Hub ExpressRoute Gateway.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parVirtualWanHubsLock | No       | Resource Lock Configuration for Virtual WAN Hub.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
@@ -127,7 +126,7 @@ The name of the route table that manages routing between the Virtual WAN Hub and
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Array Used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects in the array to meet the number of Virtual WAN Hubs required.
+Array used for multiple Virtual WAN Hubs deployment. Each object in the array represents an individual Virtual WAN Hub configuration. Add/remove additional objects in the array to meet the number of Virtual WAN Hubs required. The following properties are part of each object in this array:
 
 - `parVpnGatewayEnabled` - Switch to enable/disable VPN Gateway deployment on the respective Virtual WAN Hub.
 - `parExpressRouteGatewayEnabled` - Switch to enable/disable ExpressRoute Gateway deployment on the respective Virtual WAN Hub.
@@ -137,14 +136,37 @@ Array Used for multiple Virtual WAN Hubs deployment. Each object in the array re
 - `parHubRoutingPreference` - The Virtual WAN Hub routing preference. The allowed values are `ASPath`, `VpnGateway`, `ExpressRoute`.
 - `parVirtualRouterAutoScaleConfiguration` - The Virtual WAN Hub capacity. The value should be between 2 to 50.
 - `parVirtualHubRoutingIntentDestinations` - The Virtual WAN Hub routing intent destinations, leave empty if not wanting to enable routing intent. The allowed values are `Internet`, `PrivateTraffic`.
-
-
+- `parSidecarVirtualNetwork` - Configuration object to optionally deploy a sidecar VNet alongside the vWAN Hub. Use `sidecarVirtualNetworkEnabled` (bool) to enable/disable the sidecar VNet and `addressPrefixes` (array of string) to specify its address space.
 
 ### parSidecarVirtualNetwork
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Sidecar Virtual Network configuration object. Used to optionally deploy a sidecar VNet alongside the vWAN Hub. The object supports the following properties:  - `name` (string): The name of the sidecar virtual network.  - `sidecarVirtualNetworkEnabled` (bool): Switch to enable/disable the sidecar virtual network.  - `addressPrefixes` (array of string): The address space of the sidecar virtual network.  - `location` (string): The location of the sidecar virtual network.  - `virtualHubIdOverride` (string, optional): Resource ID of the virtual hub to associate with the sidecar VNet.  - `flowTimeoutInMinutes` (int): Flow timeout in minutes for the virtual network.  - `ipamPoolNumberOfIpAddresses` (string, optional): Number of IP addresses allocated from the pool (used with IPAM pool resource ID).  - `lock` (object, optional): Resource lock configuration for the virtual network.  - `vnetPeerings` (array, optional): Additional virtual network peerings.  - `subnets` (array, optional): Subnets for the virtual network.  - `vnetEncryption` (bool): Switch to enable/disable VNet encryption.  - `vnetEncryptionEnforcement` (string, optional): If the encrypted VNet allows VMs that do not support encryption. Allowed values: `AllowUnencrypted`, `DropUnencrypted`.  - `roleAssignments` (array, optional): Role assignments for the virtual network.  - `virtualNetworkBgpCommunity` (string, optional): BGP community for the virtual network.  - `diagnosticSettings` (array, optional): Diagnostic settings for the virtual network.  - `dnsServers` (array, optional): DNS servers for the virtual network.  - `enableVmProtection` (bool, optional): Switch to enable/disable VM protection for the virtual network.  - `ddosProtectionPlanResourceIdOverride` (string, optional): DDoS protection plan resource ID.
+Sidecar Virtual Network configuration object. Used to optionally deploy a sidecar VNet alongside the vWAN Hub. **As of the latest update, only the following properties are required in parameter files:**
+
+- `sidecarVirtualNetworkEnabled` (bool): Switch to enable/disable the sidecar virtual network.
+- `addressPrefixes` (array of string): The address space of the sidecar virtual network.
+
+All other properties listed below are optional and may be omitted from parameter files unless needed for advanced scenarios:
+
+- `name` (string): The name of the sidecar virtual network.
+- `location` (string): The location of the sidecar virtual network.
+- `virtualHubIdOverride` (string, optional): Resource ID of the virtual hub to associate with the sidecar VNet.
+- `flowTimeoutInMinutes`: Flow timeout in minutes for the virtual network.
+- `ipamPoolNumberOfIpAddresses` (string, optional): Number of IP addresses allocated from the pool (used with IPAM pool resource ID).
+- `lock`: Resource lock configuration for the virtual network.
+- `vnetPeerings` (array, optional): Additional virtual network peerings.
+- `subnets` (array, optional): Subnets for the virtual network.
+- `vnetEncryption` (bool): Switch to enable/disable VNet encryption.
+- `vnetEncryptionEnforcement` (string, optional): If the encrypted VNet allows VMs that do not support encryption. Allowed values: `AllowUnencrypted`, `DropUnencrypted`.
+- `roleAssignments` (array, optional): Role assignments for the virtual network.
+- `virtualNetworkBgpCommunity` (string, optional): BGP community for the virtual network.
+- `diagnosticSettings` (array, optional): Diagnostic settings for the virtual network.
+- `dnsServers` (array, optional): DNS servers for the virtual network.
+- `enableVmProtection` (bool, optional): Switch to enable/disable VM protection for the virtual network.
+- `ddosProtectionPlanResourceIdOverride` (string, optional): DDoS protection plan resource ID.
+
+> **Note:** The parameter files have been updated to only include the required properties for `parSidecarVirtualNetwork`.
 
 ### parVpnGatewayLock
 
