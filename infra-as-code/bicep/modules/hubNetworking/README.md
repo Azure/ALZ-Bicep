@@ -14,11 +14,14 @@ Module deploys the following resources:
 - Bastion
 - Route Table
 
+If you are deploying this as a standalone module without using the Accelerator, please ensure you have the required permissions as listed in the [Enterprise-Scale pre-requisites](https://github.com/Azure/Enterprise-Scale/wiki/Deploying-ALZ-Pre-requisites#elevate-access-to-manage-azure-resources-in-the-directory).
+
 ## Parameters
 
 - [Parameters for Azure Commercial Cloud](generateddocs/hubNetworking.bicep.md)
 
 > **NOTE:**
+>
 > - Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
 >
 > - The file `parameters/hubNetworking.parameters.az.all.json` contains parameter values for SKUs that are compatible with availability zones for relevant resource types. In cases where you are deploying to a region that does not support availability zones, you should opt for the `parameters/hubNetworking.parameters.all.json` file.
