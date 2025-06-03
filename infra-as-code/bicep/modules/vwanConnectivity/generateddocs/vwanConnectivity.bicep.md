@@ -420,7 +420,13 @@ outAzFwPrivateIps | array |
                     "parAzFirewallDnsServers": [],
                     "parAzFirewallIntelMode": "Alert",
                     "parAzFirewallTier": "Standard",
-                    "parAzFirewallAvailabilityZones": []
+                    "parAzFirewallAvailabilityZones": [],
+                    "parSidecarVirtualNetwork": {
+                        "sidecarVirtualNetworkEnabled": true,
+                        "addressPrefixes": [
+                            "10.101.0.0/24"
+                        ]
+                    }
                 }
             ]
         },

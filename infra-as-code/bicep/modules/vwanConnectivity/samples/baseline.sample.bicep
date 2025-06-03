@@ -21,7 +21,8 @@ module minimum_vwan_conn '../vwanConnectivity.bicep' = {
   params: {
     parLocation: parLocation
     parVirtualHubEnabled: true
-    parVirtualWanHubs: [ {
+    parVirtualWanHubs: [
+      {
         parVpnGatewayEnabled: true
         parExpressRouteGatewayEnabled: true
         parAzFirewallEnabled: true
@@ -38,23 +39,26 @@ module minimum_vwan_conn '../vwanConnectivity.bicep' = {
           '1'
           '2'
           '3'
-      ]
-      } ]
+        ]
+        parSidecarVirtualNetwork: {
+          sidecarVirtualNetworkEnabled: false
+          addressPrefixes: [
+            '10.101.0.0/24'
+          ]
+        }
+      }
+    ]
     parVirtualWanName: '${parCompanyPrefix}-vwan-${parLocation}'
     parVirtualWanHubName: '${parCompanyPrefix}-vhub'
     parVpnGatewayName: '${parCompanyPrefix}-vpngw'
     parExpressRouteGatewayName: '${parCompanyPrefix}-ergw'
     parAzFirewallName: '${parCompanyPrefix}-fw'
     parAzFirewallPoliciesName: '${parCompanyPrefix}-azfwpolicy-${parLocation}'
-
     parVpnGatewayScaleUnit: 1
-
     parExpressRouteGatewayScaleUnit: 1
-
     parDdosEnabled: true
     parDdosPlanName: '${parCompanyPrefix}-ddos-plan'
     parPrivateDnsZonesEnabled: true
-
     parPrivateDnsZonesResourceGroup: resourceGroup().name
     parTags: {
       key1: 'value1'
