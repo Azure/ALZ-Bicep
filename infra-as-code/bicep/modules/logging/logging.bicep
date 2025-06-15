@@ -363,9 +363,19 @@ resource resDataCollectionRuleVMInsightsPerfOnly 'Microsoft.Insights/dataCollect
 }
 
 // Create a resource lock for the Data Collection Rule if parGlobalResourceLock.kind != 'None' or if parDataCollectionRuleVMInsightsLock.kind != 'None'
-resource resDataCollectionRuleVMInsightsLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleVMInsightsLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
-  scope: resDataCollectionRuleVMInsights
-  name: parDataCollectionRuleVMInsightsLock.?name ?? '${resDataCollectionRuleVMInsights.name}-lock'
+resource resDataCollectionRuleVMInsightsPerfAndMapLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfAndMap' && (parDataCollectionRuleVMInsightsLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resDataCollectionRuleVMInsightsPerfAndMap
+  name: parDataCollectionRuleVMInsightsLock.?name ?? '${resDataCollectionRuleVMInsightsPerfAndMap.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleVMInsightsLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleVMInsightsLock.?notes
+  }
+}
+
+// Create a resource lock for the Data Collection Rule if parGlobalResourceLock.kind != 'None' or if parDataCollectionRuleVMInsightsLock.kind != 'None'
+resource resDataCollectionRuleVMInsightsPerfOnlyLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfOnly' && (parDataCollectionRuleVMInsightsLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resDataCollectionRuleVMInsightsPerfOnly
+  name: parDataCollectionRuleVMInsightsLock.?name ?? '${resDataCollectionRuleVMInsightsPerfOnly.name}-lock'
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleVMInsightsLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleVMInsightsLock.?notes
@@ -765,8 +775,8 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdRes
 output outUserAssignedManagedIdentityId string = resUserAssignedManagedIdentity.id
 output outUserAssignedManagedIdentityPrincipalId string = resUserAssignedManagedIdentity.properties.principalId
 
-output outDataCollectionRuleVMInsightsName string = resDataCollectionRuleVMInsights.name
-output outDataCollectionRuleVMInsightsId string = resDataCollectionRuleVMInsights.id
+output outDataCollectionRuleVMInsightsName string = parDataCollectionRuleVMInsightsExperience == 'PerfAndMap' ? resDataCollectionRuleVMInsightsPerfAndMap.name : resDataCollectionRuleVMInsightsPerfOnly.name
+output outDataCollectionRuleVMInsightsId string = parDataCollectionRuleVMInsightsExperience == 'PerfAndMap' ? resDataCollectionRuleVMInsightsPerfAndMap.id : resDataCollectionRuleVMInsightsPerfOnly.id
 
 output outDataCollectionRuleChangeTrackingName string = resDataCollectionRuleChangeTracking.name
 output outDataCollectionRuleChangeTrackingId string = resDataCollectionRuleChangeTracking.id
