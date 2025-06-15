@@ -33,7 +33,7 @@ param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
   'PerfAndMap'
   'PerfOnly'
 ])
-@sys.description('VM Insights Experience.')
+@sys.description('VM Insights Experience - For details see: https://learn.microsoft.com/en-us/azure/azure-monitor/vm/vminsights-enable.')
 param parDataCollectionRuleVMInsightsExperience string = 'PerfAndMap'
 
 @sys.description('VM Insights Data Collection Rule name for AMA integration.')

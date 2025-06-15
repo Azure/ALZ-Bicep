@@ -9,6 +9,7 @@ Parameter name | Required | Description
 parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceName | No       | Log Analytics Workspace name.
 parLogAnalyticsWorkspaceLocation | No       | Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
+parDataCollectionRuleVMInsightsExperience | No       | VM Insights Experience - For details see: https://learn.microsoft.com/en-us/azure/azure-monitor/vm/vminsights-enable.
 parDataCollectionRuleVMInsightsName | No       | VM Insights Data Collection Rule name for AMA integration.
 parDataCollectionRuleVMInsightsLock | No       | Resource Lock Configuration for VM Insights Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parDataCollectionRuleChangeTrackingName | No       | Change Tracking Data Collection Rule name for AMA integration.
@@ -67,6 +68,16 @@ Log Analytics region name - Ensure the regions selected is a supported mapping a
 - Default value: `[resourceGroup().location]`
 
 ### parDataCollectionRuleVMInsightsName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+VM Insights Experience - For details see: https://learn.microsoft.com/en-us/azure/azure-monitor/vm/vminsights-enable.
+
+- Default value: `PerfAndMap` 
+
+- Allowed values: `PerfAndMap`, `PerfOnly`
+
+### parDataCollectionRuleVMInsightsExperience
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
@@ -362,6 +373,9 @@ outAutomationAccountId | string |
         },
         "parLogAnalyticsWorkspaceLocation": {
             "value": "[resourceGroup().location]"
+        },
+        "parDataCollectionRuleVMInsightsExperience": {
+            "value": "PerfAndMap"
         },
         "parDataCollectionRuleVMInsightsName": {
             "value": "alz-ama-vmi-dcr"
