@@ -263,7 +263,7 @@ param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 param parPrivateDnsZones array = []
 
 @sys.description('Switch to enable/disable fallback to internet Private DNS Zones (option only available for Private DNS zones associated to Private Link resources.')
-parPrivateDnsZonesFallbackToInternet bool = false
+param parPrivateDnsZonesFallbackToInternet bool = false
 
 @sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links')
 param parVirtualNetworkIdToLinkFailover string = ''
