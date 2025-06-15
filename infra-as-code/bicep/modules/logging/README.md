@@ -6,11 +6,11 @@ Automation Account will be linked to Log Analytics Workspace to provide integrat
 
 We provision several data collection rules (VM Insights, Change Tracking, and Defender for SQL) as well as a user-assigned managed identity (UAMI). These resources are utilized in tandem with various policies as part of deploying the Azure Monitor Agent (AMA).
 
-The module will deploy the following Log Analytics Workspace solutions by default.  Solutions can be customized as required:
+The module will deploy the following Log Analytics Workspace solutions by default. Solutions can be customized as required:
 
 - SecurityInsights (Azure Sentinel)
 
- > Only certain regions are supported to link Log Analytics Workspace & Automation Account together (linked workspaces). Reference:  [Supported regions for linked Log Analytics workspace](https://learn.microsoft.com/azure/automation/how-to/region-mappings)
+ > Only certain regions are supported to link Log Analytics Workspace & Automation Account together (linked workspaces). Reference: [Supported regions for linked Log Analytics workspace](https://learn.microsoft.com/azure/automation/how-to/region-mappings)
 
 ## Parameters
 
