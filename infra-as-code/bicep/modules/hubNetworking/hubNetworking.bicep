@@ -1088,11 +1088,17 @@ module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns
   params: {
     location: parLocation
     privateLinkPrivateDnsZones: empty(parPrivateDnsZones) ? null : parPrivateDnsZones
-    virtualNetworkLinks: [for vnetId in union( [resHubVnet.id], !empty(parVirtualNetworkIdToLinkFailover) ? [parVirtualNetworkIdToLinkFailover] : [], parVirtualNetworkResourceIdsToLinkTo): {
-      virtualNetworkResourceId: vnetId
-      registrationEnabled: false
-      resolutionPolicy: parPrivateDnsZonesFallbackToInternet ? 'NxDomainRedirect' : 'Default'
-    }]
+    virtualNetworkLinks: [
+      for vnetId in union(
+        [resHubVnet.id],
+        !empty(parVirtualNetworkIdToLinkFailover) ? [parVirtualNetworkIdToLinkFailover] : [],
+        parVirtualNetworkResourceIdsToLinkTo
+      ): {
+        virtualNetworkResourceId: vnetId
+        registrationEnabled: false
+        resolutionPolicy: parPrivateDnsZonesFallbackToInternet ? 'NxDomainRedirect' : 'Default'
+      }
+    ]
     enableTelemetry: parTelemetryOptOut ? false : true
     tags: parTags
     lock: {
