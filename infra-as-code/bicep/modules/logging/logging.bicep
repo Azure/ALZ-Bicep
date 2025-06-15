@@ -29,6 +29,13 @@ param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 @sys.description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.')
 param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 
+@allowed([
+  'PerfAndMap'
+  'PerfOnly'
+])
+@sys.description('VM Insights Experience - For details see: https://learn.microsoft.com/en-us/azure/azure-monitor/vm/vminsights-enable.')
+param parDataCollectionRuleVMInsightsExperience string = 'PerfAndMap'
+
 @sys.description('VM Insights Data Collection Rule name for AMA integration.')
 param parDataCollectionRuleVMInsightsName string = 'alz-ama-vmi-dcr'
 
@@ -255,7 +262,7 @@ resource resLogAnalyticsWorkspaceLock 'Microsoft.Authorization/locks@2020-05-01'
   }
 }
 
-resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
+resource resDataCollectionRuleVMInsightsPerfAndMap 'Microsoft.Insights/dataCollectionRules@2021-04-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfAndMap') {
   name: parDataCollectionRuleVMInsightsName
   location: parLogAnalyticsWorkspaceLocation
   tags: parTags
@@ -314,10 +321,61 @@ resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules
   }
 }
 
+resource resDataCollectionRuleVMInsightsPerfOnly 'Microsoft.Insights/dataCollectionRules@2021-04-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfOnly') {
+  name: parDataCollectionRuleVMInsightsName
+  location: parLogAnalyticsWorkspaceLocation
+  tags: parTags
+  properties: {
+    description: 'Data collection rule for VM Insights'
+    dataSources: {
+      performanceCounters: [
+       {
+         name: 'VMInsightsPerfCounters'
+         streams: [
+          'Microsoft-InsightsMetrics'
+         ]
+         counterSpecifiers: [
+          '\\VmInsights\\DetailedMetrics'
+         ]
+         samplingFrequencyInSeconds: 60
+       }
+      ]
+    }
+    destinations: {
+      logAnalytics: [
+        {
+          workspaceResourceId: resLogAnalyticsWorkspace.id
+          name: 'VMInsightsPerf-Logs-Dest'
+        }
+      ]
+    }
+    dataFlows: [
+      {
+        streams: [
+          'Microsoft-InsightsMetrics'
+        ]
+        destinations: [
+          'VMInsightsPerf-Logs-Dest'
+        ]
+      }
+    ]
+  }
+}
+
 // Create a resource lock for the Data Collection Rule if parGlobalResourceLock.kind != 'None' or if parDataCollectionRuleVMInsightsLock.kind != 'None'
-resource resDataCollectionRuleVMInsightsLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleVMInsightsLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
-  scope: resDataCollectionRuleVMInsights
-  name: parDataCollectionRuleVMInsightsLock.?name ?? '${resDataCollectionRuleVMInsights.name}-lock'
+resource resDataCollectionRuleVMInsightsPerfAndMapLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfAndMap' && (parDataCollectionRuleVMInsightsLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resDataCollectionRuleVMInsightsPerfAndMap
+  name: parDataCollectionRuleVMInsightsLock.?name ?? '${resDataCollectionRuleVMInsightsPerfAndMap.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleVMInsightsLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleVMInsightsLock.?notes
+  }
+}
+
+// Create a resource lock for the Data Collection Rule if parGlobalResourceLock.kind != 'None' or if parDataCollectionRuleVMInsightsLock.kind != 'None'
+resource resDataCollectionRuleVMInsightsPerfOnlyLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfOnly' && (parDataCollectionRuleVMInsightsLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resDataCollectionRuleVMInsightsPerfOnly
+  name: parDataCollectionRuleVMInsightsLock.?name ?? '${resDataCollectionRuleVMInsightsPerfOnly.name}-lock'
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleVMInsightsLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleVMInsightsLock.?notes
@@ -717,8 +775,8 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdRes
 output outUserAssignedManagedIdentityId string = resUserAssignedManagedIdentity.id
 output outUserAssignedManagedIdentityPrincipalId string = resUserAssignedManagedIdentity.properties.principalId
 
-output outDataCollectionRuleVMInsightsName string = resDataCollectionRuleVMInsights.name
-output outDataCollectionRuleVMInsightsId string = resDataCollectionRuleVMInsights.id
+output outDataCollectionRuleVMInsightsName string = parDataCollectionRuleVMInsightsExperience == 'PerfAndMap' ? resDataCollectionRuleVMInsightsPerfAndMap.name : resDataCollectionRuleVMInsightsPerfOnly.name
+output outDataCollectionRuleVMInsightsId string = parDataCollectionRuleVMInsightsExperience == 'PerfAndMap' ? resDataCollectionRuleVMInsightsPerfAndMap.id : resDataCollectionRuleVMInsightsPerfOnly.id
 
 output outDataCollectionRuleChangeTrackingName string = resDataCollectionRuleChangeTracking.name
 output outDataCollectionRuleChangeTrackingId string = resDataCollectionRuleChangeTracking.id
