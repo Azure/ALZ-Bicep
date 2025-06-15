@@ -29,6 +29,13 @@ param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 @sys.description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.')
 param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 
+@allowed([
+  'PerfAndMap'
+  'PerfOnly'
+])
+@sys.description('VM Insights Experience.')
+param parDataCollectionRuleVMInsightsExperience string = 'PerfAndMap'
+
 @sys.description('VM Insights Data Collection Rule name for AMA integration.')
 param parDataCollectionRuleVMInsightsName string = 'alz-ama-vmi-dcr'
 
@@ -255,7 +262,7 @@ resource resLogAnalyticsWorkspaceLock 'Microsoft.Authorization/locks@2020-05-01'
   }
 }
 
-resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
+resource resDataCollectionRuleVMInsightsPerfAndMap 'Microsoft.Insights/dataCollectionRules@2021-04-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfAndMap') {
   name: parDataCollectionRuleVMInsightsName
   location: parLogAnalyticsWorkspaceLocation
   tags: parTags
@@ -305,6 +312,47 @@ resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules
       {
         streams: [
           'Microsoft-ServiceMap'
+        ]
+        destinations: [
+          'VMInsightsPerf-Logs-Dest'
+        ]
+      }
+    ]
+  }
+}
+
+resource resDataCollectionRuleVMInsightsPerfOnly 'Microsoft.Insights/dataCollectionRules@2021-04-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfOnly') {
+  name: parDataCollectionRuleVMInsightsName
+  location: parLogAnalyticsWorkspaceLocation
+  tags: parTags
+  properties: {
+    description: 'Data collection rule for VM Insights'
+    dataSources: {
+      performanceCounters: [
+       {
+         name: 'VMInsightsPerfCounters'
+         streams: [
+          'Microsoft-InsightsMetrics'
+         ]
+         counterSpecifiers: [
+          '\\VmInsights\\DetailedMetrics'
+         ]
+         samplingFrequencyInSeconds: 60
+       }
+      ]
+    }
+    destinations: {
+      logAnalytics: [
+        {
+          workspaceResourceId: resLogAnalyticsWorkspace.id
+          name: 'VMInsightsPerf-Logs-Dest'
+        }
+      ]
+    }
+    dataFlows: [
+      {
+        streams: [
+          'Microsoft-InsightsMetrics'
         ]
         destinations: [
           'VMInsightsPerf-Logs-Dest'
