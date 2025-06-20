@@ -2050,12 +2050,17 @@ module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-priv
   params: {
     location: parLocation
     privateLinkPrivateDnsZones: empty(parPrivateDnsZones) ? null : parPrivateDnsZones
-    virtualNetworkResourceIdsToLinkTo:
-    virtualNetworkLinks: [for vnetId in union([resHubVnet.id, resHubVnetSecondaryLocation.id], !empty(parVirtualNetworkIdToLinkFailover) ? [parVirtualNetworkIdToLinkFailover] : [], parVirtualNetworkResourceIdsToLinkTo): {
-      virtualNetworkResourceId: vnetId
-      registrationEnabled: false
-      resolutionPolicy: parPrivateDnsZonesFallbackToInternet ? 'NxDomainRedirect' : 'Default'
-    }
+    virtualNetworkLinks: [
+      for vnetId in union(
+        [resHubVnet.id, resHubVnetSecondaryLocation.id],
+        !empty(parVirtualNetworkIdToLinkFailover) ? [parVirtualNetworkIdToLinkFailover] : [],
+        parVirtualNetworkResourceIdsToLinkTo
+      ): {
+        virtualNetworkResourceId: vnetId
+        registrationEnabled: false
+        resolutionPolicy: parPrivateDnsZonesFallbackToInternet ? 'NxDomainRedirect' : 'Default'
+      }
+    ]
     enableTelemetry: parTelemetryOptOut ? false : true
     tags: parTags
     lock: {
