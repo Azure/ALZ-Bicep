@@ -23,6 +23,9 @@
         "ChangeTracking"
       ]
     },
+    "parDataCollectionRuleVMInsightsExperience": {
+      "value": "PerfAndMap"
+    },
     "parDataCollectionRuleVMInsightsName": {
       "value": "alz-ama-vmi-dcr"
     },
