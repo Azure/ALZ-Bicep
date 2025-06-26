@@ -65,6 +65,9 @@
     "parPrivateDnsZonesNamesToAuditInCorp": {
       "value": []
     },
+    "parPolicyAssignmentsToDisableEnforcement": {
+      "value": []
+    },
     "parDisableAlzDefaultPolicies": {
       "value": false
     },
