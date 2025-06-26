@@ -26,10 +26,11 @@ parDdosProtectionPlanId | No       | Resource ID of the DDoS Protection Plan for
 parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning the Deploy-Private-DNS-Zones policy.
 parPrivateDnsZonesLocation | No       | Location of Private DNS Zones.
 parPrivateDnsZonesNamesToAuditInCorp | No       | List of Private DNS Zones to audit under the Corp Management Group. This overwrites default values.
+parPolicyAssignmentsToDisableEnforcement | No | Set the enforcement mode to DoNotEnforce for specific default ALZ policies.
 parDisableAlzDefaultPolicies | No       | Set the enforcement mode to DoNotEnforce for all default ALZ policies.
 parVmBackupExclusionTagName | No       | Tag name for excluding VMs from this policy scope.
 parVmBackupExclusionTagValue | No       | Tag value for excluding VMs from this policy scope.
-parExcludedPolicyAssignments | No       | Names of policy assignments to exclude.
+parExcludedPolicyAssignments | No       | Names of policy assignments to exclude from deployment.
 parTelemetryOptOut | No       | Opt out of deployment telemetry.
 parManagementGroupIdOverrides | Yes      | Specify the ALZ Default Management Group IDs to override as specified in `varManagementGroupIds`. Useful for scenarios when renaming ALZ default management groups names and IDs but not their intent or hierarchy structure.
 
