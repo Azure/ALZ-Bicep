@@ -18,6 +18,7 @@ Module deploys the following resources which can be configured by parameters:
 - [Parameters for Azure Commercial Cloud](generateddocs/vwanConnectivity.bicep.md)
 
 > **NOTE:**
+>
 > - Within the `parVirtualWanHubs` parameter, the following keys (parVpnGatewayCustomName, parExpressRouteGatewayCustomName, parAzFirewallCustomName, and parVirtualWanHubCustomName) can be added to create custom names for the associated resources.
 >
 > - Although there are generated parameter markdowns for Azure Commercial Cloud, this same module can still be used in Azure China. Example parameter are in the [parameters](./parameters/) folder.
@@ -64,6 +65,7 @@ In this example, the resources required for Virtual WAN connectivity will be dep
 > For the examples below we assume you have downloaded or cloned the Git repo as-is and are in the root of the repository as your selected directory in your terminal of choice.
 
 ### Azure CLI
+
 ```bash
 # For Azure global regions
 # Set Platform connectivity subscription ID as the the current subscription
@@ -86,7 +88,9 @@ az group create \
 
 az deployment group create --name ${NAME:0:63} --resource-group $GROUP --template-file $TEMPLATEFILE --parameters $PARAMETERS
 ```
+
 OR
+
 ```bash
 # For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription
@@ -137,7 +141,9 @@ New-AzResourceGroup `
 
 New-AzResourceGroupDeployment @inputObject
 ```
+
 OR
+
 ```powershell
 # For Azure China regions
 # Set Platform connectivity subscription ID as the the current subscription
@@ -162,6 +168,7 @@ New-AzResourceGroup `
 
 New-AzResourceGroupDeployment @inputObject
   ```
+
 ## Example Output in Azure global regions
 
 ![Example Deployment Output](media/exampleDeploymentOutputConnectivity.png "Example Deployment Output in Azure global regions")
@@ -169,6 +176,7 @@ New-AzResourceGroupDeployment @inputObject
 ![Example Virtual WAN Deployment Output](media/exampleDeploymentOutput.png "Example Virtual WAN Deployment Output in Azure global regions")
 
 ## Example Output in Azure China regions
+
 ![Example Deployment Output](media/mc-exampleDeploymentOutputConnectivity.png "Example Deployment Output in Azure China")
 
 ![Example Virtual WAN Deployment Output](media/mc-exampleDeploymentOutput.png "Example Virtual WAN Deployment Output in Azure China")

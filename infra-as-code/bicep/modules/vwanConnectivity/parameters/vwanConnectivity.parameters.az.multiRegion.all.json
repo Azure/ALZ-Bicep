@@ -57,7 +57,13 @@
             "1",
             "2",
             "3"
-          ]
+          ],
+          "parSidecarVirtualNetwork": {
+            "sidecarVirtualNetworkEnabled": true,
+            "addressPrefixes": [
+              "10.101.0.0/24"
+            ]
+          }
         },
         {
           "parVpnGatewayEnabled": true,
@@ -76,7 +82,13 @@
             "1",
             "2",
             "3"
-          ]
+          ],
+          "parSidecarVirtualNetwork": {
+            "sidecarVirtualNetworkEnabled": true,
+            "addressPrefixes": [
+              "10.201.0.0/24"
+            ]
+          }
         }
       ]
     },
