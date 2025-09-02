@@ -943,6 +943,13 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionVersion: '4.*.*'
 			}
 			{
+				definitionReferenceId: 'defenderForAI'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/359a48a3-351a-4618-bb32-f1628645694b'
+				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfig_20240319Parameters.defenderForAI.parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
 				definitionReferenceId: 'defenderForAppServices'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b40e7bcd-a1e5-47fe-b9cf-2f534d0bfb7d'
 				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfig_20240319Parameters.defenderForAppServices.parameters
@@ -1021,7 +1028,7 @@ var varCustomPolicySetDefinitionsArray = [
 			}
 			{
 				definitionReferenceId: 'defenderForVM'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/8e86a5b6-b9bd-49d1-8e21-4bb8a0862222'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/5eb6d64a-4086-4d7a-92da-ec51aed0332d'
 				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfig_20240319Parameters.defenderForVM.parameters
 				definitionGroups: []
 				definitionVersion: '1.*.*'
@@ -2011,11 +2018,18 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionVersion: '1.*.*'
 			}
 			{
-				definitionReferenceId: 'EncryptedVMDisksEffect'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/0961003e-5a0a-4549-abde-af6a37f2724d'
-				definitionParameters: varPolicySetDefinitionEsEnforceEncryptionCMK_20250218Parameters.EncryptedVMDisksEffect.parameters
+				definitionReferenceId: 'EncryptedVMDisksEffectLin'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/ca88aadc-6e2b-416c-9de2-5a0f01d1693f'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptionCMK_20250218Parameters.EncryptedVMDisksEffectLin.parameters
 				definitionGroups: []
-				definitionVersion: '2.*.*'
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'EncryptedVMDisksEffectWin'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/3dc5edcd-002d-444c-b216-e123bbfa37c0'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptionCMK_20250218Parameters.EncryptedVMDisksEffectWin.parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
 			}
 			{
 				definitionReferenceId: 'HealthcareAPIsCMKEffect'
@@ -2624,9 +2638,9 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionVersion: '2.*.*'
 			}
 			{
-				definitionReferenceId: 'Deny-EH-minTLS'
-				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-EH-minTLS'
-				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-EH-minTLS'].parameters
+				definitionReferenceId: 'Deny-EH-MINTLS'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-EH-MINTLS'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-EH-MINTLS'].parameters
 				definitionGroups: []
 				definitionVersion: '1.*.*'
 			}
@@ -4195,6 +4209,131 @@ var varCustomPolicySetDefinitionsArray = [
 		]
 	}
 	{
+		name: 'Enforce-Guardrails-Network_20250326'
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Network_20250326.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'Deny-AppGw-Without-Tls'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGw-Without-Tls'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-AppGw-Without-Tls'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-AppGw-Without-Waf'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/564feb30-bf6a-4854-b4bb-0d2d2d1e6c66'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-AppGw-Without-Waf'].parameters
+				definitionGroups: []
+				definitionVersion: '2.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Ip-Forwarding'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/88c0b9da-ce96-4b03-9635-f29a937e2900'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-Ip-Forwarding'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Mgmt-From-Internet'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-MgmtPorts-From-Internet'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-Mgmt-From-Internet'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Nsg-GW-subnet'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/35f9c03a-cc27-418e-9c0c-539ff999d010'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-Nsg-GW-subnet'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Subnet-with-Service-Endpoints'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Service-Endpoints'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-Subnet-with-Service-Endpoints'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Subnet-Without-NSG'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-Subnet-Without-NSG'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Subnet-Without-Udr'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Udr'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-Subnet-Without-Udr'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-vNic-Pip'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/83a86a26-fd1f-447c-b59d-e51f44264114'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-vNic-Pip'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-VPN-AzureAD'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/21a6bc25-125e-4d13-b82d-2e19b7208ab7'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-VPN-AzureAD'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Waf-Afd-Enabled'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/055aa869-bc98-4af8-bafc-23f1ab6ffe2c'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-Waf-Afd-Enabled'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Waf-AppGw-mode'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/12430be1-6cc8-4527-a9a8-e3d38f250096'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-Waf-AppGw-mode'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Waf-Fw-rules'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/564feb30-bf6a-4854-b4bb-0d2d2d1e6c66'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-Waf-Fw-rules'].parameters
+				definitionGroups: []
+				definitionVersion: '2.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Waf-mode'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/425bea59-a659-4cbb-8d31-34499bd030b8'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Deny-Waf-mode'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Modify-Nsg'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Modify-NSG'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Modify-Nsg'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Modify-Udr'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Modify-UDR'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Modify-Udr'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Modify-vNet-DDoS'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters['Modify-vNet-DDoS'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+		]
+	}
+	{
 		name: 'Enforce-Guardrails-Network'
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Network.json')
 		libSetChildDefinitions: [
@@ -4858,6 +4997,8 @@ var varPolicySetDefinitionEsEnforceGuardrailsKubernetesParameters = loadJsonCont
 var varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-MachineLearning.parameters.json')
 
 var varPolicySetDefinitionEsEnforceGuardrailsMySQLParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-MySQL.parameters.json')
+
+var varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Network_20250326.parameters.json')
 
 var varPolicySetDefinitionEsEnforceGuardrailsNetworkParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Network.parameters.json')
 

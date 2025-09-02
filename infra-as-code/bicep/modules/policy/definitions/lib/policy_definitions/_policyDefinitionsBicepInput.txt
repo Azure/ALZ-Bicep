@@ -111,8 +111,8 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Databricks-VirtualNetwork.json')
 }
 {
-	name: 'Deny-EH-minTLS'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-EH-minTLS.json')
+	name: 'Deny-EH-MINTLS'
+	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-EH-MINTLS.json')
 }
 {
 	name: 'Deny-EH-Premium-CMK'
