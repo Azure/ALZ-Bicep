@@ -135,6 +135,14 @@ jobs:
             az deployment mg validate --template-file infra-as-code/bicep/modules/policy/assignments/alzDefaults/alzDefaultPolicyAssignments.bicep --parameters @infra-as-code/bicep/modules/policy/assignments/alzDefaults/parameters/alzDefaultPolicyAssignments.parameters.all.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
 
       - task: Bash@3
+        displayName: Az CLI Validate Alz Workload Specific policy assignments
+        name: validate_alz_workload_specific_policy_assign
+        inputs:
+          targetType: "inline"
+          script: |
+            az deployment mg validate --template-file infra-as-code/bicep/modules/policy/assignments/workloadSpecific/workloadSpecificPolicyAssignments.bicep --parameters @infra-as-code/bicep/modules/policy/assignments/workloadSpecific/parameters/workloadSpecificPolicyAssignments.parameters.all.json parTopLevelManagementGroupPrefix=$(ManagementGroupPrefix) --location $(Location) --management-group-id $(ManagementGroupPrefix) --name $(ManagementGroupPrefix)
+
+      - task: Bash@3
         displayName: Az CLI Validate Hub Networking for PR
         name: validate_hub_network
         inputs:

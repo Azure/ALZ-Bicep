@@ -16,7 +16,7 @@ targetScope = 'tenant'
 
 @description('Baseline resource configuration')
 module baseline_managementgroups'../managementGroups.bicep' = {
-  name: 'baseline managementGroups'
+  name: 'baseline_managementGroups'
   params: {
     parTopLevelManagementGroupParentId: '00000000-0000-0000-0000-000000000000'
     parLandingZoneMgChildren: {

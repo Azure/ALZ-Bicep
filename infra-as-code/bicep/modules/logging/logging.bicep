@@ -29,6 +29,13 @@ param parLogAnalyticsWorkspaceName string = 'alz-log-analytics'
 @sys.description('Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.')
 param parLogAnalyticsWorkspaceLocation string = resourceGroup().location
 
+@allowed([
+  'PerfAndMap'
+  'PerfOnly'
+])
+@sys.description('VM Insights Experience - For details see: https://learn.microsoft.com/en-us/azure/azure-monitor/vm/vminsights-enable.')
+param parDataCollectionRuleVMInsightsExperience string = 'PerfAndMap'
+
 @sys.description('VM Insights Data Collection Rule name for AMA integration.')
 param parDataCollectionRuleVMInsightsName string = 'alz-ama-vmi-dcr'
 
@@ -115,22 +122,35 @@ param parLogAnalyticsWorkspaceLock lockType = {
 
 @allowed([
   'SecurityInsights'
+  'ChangeTracking'
 ])
 @sys.description('Solutions that will be added to the Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceSolutions array = [
   'SecurityInsights'
+  'ChangeTracking'
 ]
 
-@sys.description('''Resource Lock Configuration for Log Analytics Workspace Solutions.
+@sys.description('''Resource Lock Configuration for Security Insights solution.
 
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
 - `notes` - Notes about this lock.
 
 ''')
-param parLogAnalyticsWorkspaceSolutionsLock lockType = {
+param parSecurityInsightsOnboardingLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Logging Module.'
 }
+
+@sys.description('''Resource Lock Configuration for Change Tracking solution.
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
+param parChangeTrackingSolutionLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Logging Module.'
+}
+
 
 @sys.description('Name of the User Assigned Managed Identity required for authenticating Azure Monitoring Agent to Azure.')
 param parUserAssignedManagedIdentityName string = 'alz-logging-mi'
@@ -138,11 +158,15 @@ param parUserAssignedManagedIdentityName string = 'alz-logging-mi'
 @sys.description('User Assigned Managed Identity location.')
 param parUserAssignedManagedIdentityLocation string = resourceGroup().location
 
+@sys.description('Switch to enable/disable Automation Account deployment.')
+param parAutomationAccountEnabled bool = false
+
 @sys.description('Log Analytics Workspace should be linked with the automation account.')
-param parLogAnalyticsWorkspaceLinkAutomationAccount bool = true
+param parLogAnalyticsWorkspaceLinkAutomationAccount bool = false
 
 @sys.description('Automation account name.')
 param parAutomationAccountName string = 'alz-automation-account'
+
 @sys.description('Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.')
 param parAutomationAccountLocation string = resourceGroup().location
 
@@ -172,9 +196,6 @@ param parAutomationAccountTags object = parTags
 @sys.description('Tags you would like to be applied to Log Analytics Workspace.')
 param parLogAnalyticsWorkspaceTags object = parTags
 
-@sys.description('Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.')
-param parUseSentinelClassicPricingTiers bool = false
-
 @sys.description('Log Analytics LinkedService name for Automation Account.')
 param parLogAnalyticsLinkedServiceAutomationAccountName string = 'Automation'
 
@@ -190,7 +211,7 @@ resource resUserAssignedManagedIdentity 'Microsoft.ManagedIdentity/userAssignedI
   tags: parTags
 }
 
-resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2023-11-01' = {
+resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2023-11-01' = if (parAutomationAccountEnabled) {
   name: parAutomationAccountName
   location: parAutomationAccountLocation
   tags: parAutomationAccountTags
@@ -209,7 +230,7 @@ resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2023-11-0
 }
 
 // Create a resource lock for the automation account if parGlobalResourceLock.kind != 'None' or if parAutomationAccountLock.kind != 'None'
-resource resAutomationAccountLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAutomationAccountLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+resource resAutomationAccountLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAutomationAccountEnabled && (parAutomationAccountLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
   scope: resAutomationAccount
   name: parAutomationAccountLock.?name ?? '${resAutomationAccount.name}-lock'
   properties: {
@@ -241,7 +262,7 @@ resource resLogAnalyticsWorkspaceLock 'Microsoft.Authorization/locks@2020-05-01'
   }
 }
 
-resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
+resource resDataCollectionRuleVMInsightsPerfAndMap 'Microsoft.Insights/dataCollectionRules@2021-04-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfAndMap') {
   name: parDataCollectionRuleVMInsightsName
   location: parLogAnalyticsWorkspaceLocation
   tags: parTags
@@ -255,7 +276,7 @@ resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules
           'Microsoft-InsightsMetrics'
          ]
          counterSpecifiers: [
-          '\\VMInsights\\DetailedMetrics'
+          '\\VmInsights\\DetailedMetrics'
          ]
          samplingFrequencyInSeconds: 60
        }
@@ -300,10 +321,61 @@ resource resDataCollectionRuleVMInsights 'Microsoft.Insights/dataCollectionRules
   }
 }
 
+resource resDataCollectionRuleVMInsightsPerfOnly 'Microsoft.Insights/dataCollectionRules@2021-04-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfOnly') {
+  name: parDataCollectionRuleVMInsightsName
+  location: parLogAnalyticsWorkspaceLocation
+  tags: parTags
+  properties: {
+    description: 'Data collection rule for VM Insights'
+    dataSources: {
+      performanceCounters: [
+       {
+         name: 'VMInsightsPerfCounters'
+         streams: [
+          'Microsoft-InsightsMetrics'
+         ]
+         counterSpecifiers: [
+          '\\VmInsights\\DetailedMetrics'
+         ]
+         samplingFrequencyInSeconds: 60
+       }
+      ]
+    }
+    destinations: {
+      logAnalytics: [
+        {
+          workspaceResourceId: resLogAnalyticsWorkspace.id
+          name: 'VMInsightsPerf-Logs-Dest'
+        }
+      ]
+    }
+    dataFlows: [
+      {
+        streams: [
+          'Microsoft-InsightsMetrics'
+        ]
+        destinations: [
+          'VMInsightsPerf-Logs-Dest'
+        ]
+      }
+    ]
+  }
+}
+
 // Create a resource lock for the Data Collection Rule if parGlobalResourceLock.kind != 'None' or if parDataCollectionRuleVMInsightsLock.kind != 'None'
-resource resDataCollectionRuleVMInsightsLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleVMInsightsLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
-  scope: resDataCollectionRuleVMInsights
-  name: parDataCollectionRuleVMInsightsLock.?name ?? '${resDataCollectionRuleVMInsights.name}-lock'
+resource resDataCollectionRuleVMInsightsPerfAndMapLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfAndMap' && (parDataCollectionRuleVMInsightsLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resDataCollectionRuleVMInsightsPerfAndMap
+  name: parDataCollectionRuleVMInsightsLock.?name ?? '${resDataCollectionRuleVMInsightsPerfAndMap.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleVMInsightsLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleVMInsightsLock.?notes
+  }
+}
+
+// Create a resource lock for the Data Collection Rule if parGlobalResourceLock.kind != 'None' or if parDataCollectionRuleVMInsightsLock.kind != 'None'
+resource resDataCollectionRuleVMInsightsPerfOnlyLock 'Microsoft.Authorization/locks@2020-05-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfOnly' && (parDataCollectionRuleVMInsightsLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  scope: resDataCollectionRuleVMInsightsPerfOnly
+  name: parDataCollectionRuleVMInsightsLock.?name ?? '${resDataCollectionRuleVMInsightsPerfOnly.name}-lock'
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parDataCollectionRuleVMInsightsLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parDataCollectionRuleVMInsightsLock.?notes
@@ -650,35 +722,40 @@ resource resSentinelOnboarding 'Microsoft.SecurityInsights/onboardingStates@2024
   properties: {}
 }
 
-resource resLogAnalyticsWorkspaceSolutions 'Microsoft.OperationsManagement/solutions@2015-11-01-preview' = [for solution in parLogAnalyticsWorkspaceSolutions: {
-  name: '${solution}(${resLogAnalyticsWorkspace.name})'
+resource resChangeTrackingSolution 'Microsoft.OperationsManagement/solutions@2015-11-01-preview' = if (contains(parLogAnalyticsWorkspaceSolutions, 'ChangeTracking')) {
+  name: 'ChangeTracking(${resLogAnalyticsWorkspace.name})'
   location: parLogAnalyticsWorkspaceLocation
-  tags: parTags
-  properties: solution == 'SecurityInsights' ? {
-    workspaceResourceId: resLogAnalyticsWorkspace.id
-    sku: parUseSentinelClassicPricingTiers ? null : {
-      name: 'Unified'
-    }
-  } : {
+  properties: {
     workspaceResourceId: resLogAnalyticsWorkspace.id
   }
   plan: {
-    name: '${solution}(${resLogAnalyticsWorkspace.name})'
-    product: 'OMSGallery/${solution}'
+    name: 'ChangeTracking(${resLogAnalyticsWorkspace.name})'
+    product: 'OMSGallery/ChangeTracking'
     publisher: 'Microsoft'
     promotionCode: ''
   }
-}]
+}
 
-// Create a resource lock for each log analytics workspace solutions in parLogAnalyticsWorkspaceSolutions if parGlobalResourceLock.kind != 'None' or if parLogAnalyticsWorkspaceSolutionsLock.kind != 'None'
-resource resLogAnalyticsWorkspaceSolutionsLock 'Microsoft.Authorization/locks@2020-05-01' = [for (solution, index) in parLogAnalyticsWorkspaceSolutions: if (parLogAnalyticsWorkspaceSolutionsLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
-  scope: resLogAnalyticsWorkspaceSolutions[index]
-  name: parLogAnalyticsWorkspaceSolutionsLock.?name ?? '${resLogAnalyticsWorkspaceSolutions[index].name}-lock'
+
+// Add resource lock for SecurityInsights solution
+resource resSecurityInsightsSolutionLock 'Microsoft.Authorization/locks@2020-05-01' = if (parSecurityInsightsOnboardingLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resSentinelOnboarding
+  name: parSecurityInsightsOnboardingLock.?name ?? '${resSentinelOnboarding.name}-lock'
   properties: {
-    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parLogAnalyticsWorkspaceSolutionsLock.kind
-    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parLogAnalyticsWorkspaceSolutionsLock.?notes
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parSecurityInsightsOnboardingLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parSecurityInsightsOnboardingLock.?notes
   }
-}]
+}
+
+// Add resource lock for ChangeTracking solution
+resource resChangeTrackingSolutionLock 'Microsoft.Authorization/locks@2020-05-01' = if (parChangeTrackingSolutionLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+  scope: resChangeTrackingSolution
+  name: parChangeTrackingSolutionLock.?name ?? '${resChangeTrackingSolution.name}-lock'
+  properties: {
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parChangeTrackingSolutionLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parChangeTrackingSolutionLock.?notes
+  }
+}
 
 resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2023-09-01' = if (parLogAnalyticsWorkspaceLinkAutomationAccount) {
   parent: resLogAnalyticsWorkspace
@@ -698,8 +775,8 @@ module modCustomerUsageAttribution '../../CRML/customerUsageAttribution/cuaIdRes
 output outUserAssignedManagedIdentityId string = resUserAssignedManagedIdentity.id
 output outUserAssignedManagedIdentityPrincipalId string = resUserAssignedManagedIdentity.properties.principalId
 
-output outDataCollectionRuleVMInsightsName string = resDataCollectionRuleVMInsights.name
-output outDataCollectionRuleVMInsightsId string = resDataCollectionRuleVMInsights.id
+output outDataCollectionRuleVMInsightsName string = parDataCollectionRuleVMInsightsExperience == 'PerfAndMap' ? resDataCollectionRuleVMInsightsPerfAndMap.name : resDataCollectionRuleVMInsightsPerfOnly.name
+output outDataCollectionRuleVMInsightsId string = parDataCollectionRuleVMInsightsExperience == 'PerfAndMap' ? resDataCollectionRuleVMInsightsPerfAndMap.id : resDataCollectionRuleVMInsightsPerfOnly.id
 
 output outDataCollectionRuleChangeTrackingName string = resDataCollectionRuleChangeTracking.name
 output outDataCollectionRuleChangeTrackingId string = resDataCollectionRuleChangeTracking.id
@@ -712,5 +789,5 @@ output outLogAnalyticsWorkspaceId string = resLogAnalyticsWorkspace.id
 output outLogAnalyticsCustomerId string = resLogAnalyticsWorkspace.properties.customerId
 output outLogAnalyticsSolutions array = parLogAnalyticsWorkspaceSolutions
 
-output outAutomationAccountName string = resAutomationAccount.name
-output outAutomationAccountId string = resAutomationAccount.id
+output outAutomationAccountName string = parAutomationAccountEnabled ? resAutomationAccount.id : 'AA Deployment Disabled'
+output outAutomationAccountId string = parAutomationAccountEnabled ? resAutomationAccount.id : 'AA Deployment Disabled'

@@ -466,7 +466,7 @@ var varCuaid = '2686e846-5fdc-4d4f-b533-16dcb09d6e6c'
 
 // ZTN Telemetry
 var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
-var varZtnP1Trigger = (parDdosEnabled && parAzFirewallEnabled && (parAzFirewallTier == 'Premium')) ? true : false
+var varZtnP1Trigger = (parDdosEnabled && parAzFirewallEnabled && (parAzFirewallTier == 'Premium'))
 
 var varAzFirewallUseCustomPublicIps = length(parAzFirewallCustomPublicIps) > 0
 

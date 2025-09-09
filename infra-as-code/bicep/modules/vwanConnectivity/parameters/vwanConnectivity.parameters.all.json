@@ -14,6 +14,9 @@
     "parVirtualWanName": {
       "value": "alz-vwan"
     },
+    "parVirtualWanType": {
+      "value": "Standard"
+    },
     "parVirtualWanHubName": {
       "value": "alz-vhub"
     },
@@ -46,11 +49,17 @@
           "parHubRoutingPreference": "ExpressRoute",
           "parVirtualRouterAutoScaleConfiguration": 2,
           "parVirtualHubRoutingIntentDestinations": [],
-          "parAzFirewallDnsServers" : [],
-          "parAzFirewallIntelMode" : "Alert",
+          "parAzFirewallDnsServers": [],
+          "parAzFirewallIntelMode": "Alert",
           "parAzFirewallDnsProxyEnabled": true,
           "parAzFirewallTier": "Standard",
-          "parAzFirewallAvailabilityZones": []
+          "parAzFirewallAvailabilityZones": [],
+          "parSidecarVirtualNetwork": {
+            "sidecarVirtualNetworkEnabled": true,
+            "addressPrefixes": [
+              "10.101.0.0/24"
+            ]
+          }
         }
       ]
     },

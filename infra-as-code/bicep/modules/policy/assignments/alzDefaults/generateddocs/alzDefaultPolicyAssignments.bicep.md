@@ -8,8 +8,6 @@ Parameter name | Required | Description
 -------------- | -------- | -----------
 parTopLevelManagementGroupPrefix | No       | Prefix for management group hierarchy.
 parTopLevelManagementGroupSuffix | No       | Optional suffix for management group names/IDs.
-parTopLevelPolicyAssignmentSovereigntyGlobal | No       | Assign Sovereignty Baseline - Global Policies to root management group.
-parPolicyAssignmentSovereigntyConfidential | No       | Assign Sovereignty Baseline - Confidential Policies to confidential landing zone groups.
 parPlatformMgAlzDefaultsEnable | No       | Apply platform policies to Platform group or child groups.
 parLandingZoneChildrenMgAlzDefaultsEnable | No       | Assign policies to Corp & Online Management Groups under Landing Zones.
 parLandingZoneMgConfidentialEnable | No       | Assign policies to Confidential Corp and Online groups under Landing Zones.
@@ -23,17 +21,18 @@ parUserAssignedManagedIdentityResourceId | No       | Resource ID for User Assig
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days to retain logs in Log Analytics Workspace.
 parAutomationAccountName | No       | Name of the Automation Account.
 parMsDefenderForCloudEmailSecurityContact | No       | Email address for Microsoft Defender for Cloud alerts.
-parDdosEnabled | No       | Enable/disable DDoS Network Protection. True enforces Enable-DDoS-VNET policy; false disables.
+parDdosEnabled | No       | Enable/disable DDoS Network Protection.
 parDdosProtectionPlanId | No       | Resource ID of the DDoS Protection Plan for Virtual Networks.
 parPrivateDnsResourceGroupId | No       | Resource ID of the Resource Group for Private DNS Zones. Empty to skip assigning the Deploy-Private-DNS-Zones policy.
 parPrivateDnsZonesLocation | No       | Location of Private DNS Zones.
 parPrivateDnsZonesNamesToAuditInCorp | No       | List of Private DNS Zones to audit under the Corp Management Group. This overwrites default values.
-parDisableAlzDefaultPolicies | No       | Disable all default ALZ policies.
-parDisableSlzDefaultPolicies | No       | Disable all default sovereign policies.
-parVmBackupExclusionTagName | No       | Tag name for excluding VMs from this policy’s scope.
-parVmBackupExclusionTagValue | No       | Tag value for excluding VMs from this policy’s scope. Comma-separated list for multiple values.
-parExcludedPolicyAssignments | No       | Names of policy assignments to exclude. Found in Assigning Policies documentation.
+parPolicyAssignmentsToDisableEnforcement | No       | Set the enforcement mode to DoNotEnforce for specific default ALZ policies.
+parDisableAlzDefaultPolicies | No       | Set the enforcement mode to DoNotEnforce for all default ALZ policies.
+parVmBackupExclusionTagName | No       | Tag name for excluding VMs from this policy scope.
+parVmBackupExclusionTagValue | No       | Tag value for excluding VMs from this policy scope.
+parExcludedPolicyAssignments | No       | Names of policy assignments to exclude from the deployment entirely.
 parTelemetryOptOut | No       | Opt out of deployment telemetry.
+parManagementGroupIdOverrides | Yes      | Specify the ALZ Default Management Group IDs to override as specified in `varManagementGroupIds`. Useful for scenarios when renaming ALZ default management groups names and IDs but not their intent or hierarchy structure.
 
 ### parTopLevelManagementGroupPrefix
 
@@ -48,22 +47,6 @@ Prefix for management group hierarchy.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Optional suffix for management group names/IDs.
-
-### parTopLevelPolicyAssignmentSovereigntyGlobal
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Assign Sovereignty Baseline - Global Policies to root management group.
-
-- Default value: `@{parTopLevelSovereigntyGlobalPoliciesEnable=False; parListOfAllowedLocations=System.Object[]; parPolicyEffect=Deny}`
-
-### parPolicyAssignmentSovereigntyConfidential
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Assign Sovereignty Baseline - Confidential Policies to confidential landing zone groups.
-
-- Default value: `@{parAllowedResourceTypes=System.Object[]; parListOfAllowedLocations=System.Object[]; parAllowedVirtualMachineSKUs=System.Object[]; parPolicyEffect=Deny}`
 
 ### parPlatformMgAlzDefaultsEnable
 
@@ -157,13 +140,11 @@ Name of the Automation Account.
 
 Email address for Microsoft Defender for Cloud alerts.
 
-- Default value: `security_contact@replace_me.com`
-
 ### parDdosEnabled
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Enable/disable DDoS Network Protection. True enforces Enable-DDoS-VNET policy; false disables.
+Enable/disable DDoS Network Protection.
 
 - Default value: `True`
 
@@ -191,19 +172,17 @@ Location of Private DNS Zones.
 
 List of Private DNS Zones to audit under the Corp Management Group. This overwrites default values.
 
+### parPolicyAssignmentsToDisableEnforcement
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Set the enforcement mode to DoNotEnforce for specific default ALZ policies.
+
 ### parDisableAlzDefaultPolicies
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Disable all default ALZ policies.
-
-- Default value: `False`
-
-### parDisableSlzDefaultPolicies
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Disable all default sovereign policies.
+Set the enforcement mode to DoNotEnforce for all default ALZ policies.
 
 - Default value: `False`
 
@@ -211,19 +190,19 @@ Disable all default sovereign policies.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Tag name for excluding VMs from this policy’s scope.
+Tag name for excluding VMs from this policy scope.
 
 ### parVmBackupExclusionTagValue
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Tag value for excluding VMs from this policy’s scope. Comma-separated list for multiple values.
+Tag value for excluding VMs from this policy scope.
 
 ### parExcludedPolicyAssignments
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Names of policy assignments to exclude. Found in Assigning Policies documentation.
+Names of policy assignments to exclude from the deployment entirely.
 
 ### parTelemetryOptOut
 
@@ -232,6 +211,12 @@ Names of policy assignments to exclude. Found in Assigning Policies documentatio
 Opt out of deployment telemetry.
 
 - Default value: `False`
+
+### parManagementGroupIdOverrides
+
+![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
+
+Specify the ALZ Default Management Group IDs to override as specified in `varManagementGroupIds`. Useful for scenarios when renaming ALZ default management groups names and IDs but not their intent or hierarchy structure.
 
 ## Snippets
 
@@ -250,21 +235,6 @@ Opt out of deployment telemetry.
         },
         "parTopLevelManagementGroupSuffix": {
             "value": ""
-        },
-        "parTopLevelPolicyAssignmentSovereigntyGlobal": {
-            "value": {
-                "parTopLevelSovereigntyGlobalPoliciesEnable": false,
-                "parListOfAllowedLocations": [],
-                "parPolicyEffect": "Deny"
-            }
-        },
-        "parPolicyAssignmentSovereigntyConfidential": {
-            "value": {
-                "parAllowedResourceTypes": [],
-                "parListOfAllowedLocations": [],
-                "parAllowedVirtualMachineSKUs": [],
-                "parPolicyEffect": "Deny"
-            }
         },
         "parPlatformMgAlzDefaultsEnable": {
             "value": true
@@ -303,7 +273,7 @@ Opt out of deployment telemetry.
             "value": "alz-automation-account"
         },
         "parMsDefenderForCloudEmailSecurityContact": {
-            "value": "security_contact@replace_me.com"
+            "value": ""
         },
         "parDdosEnabled": {
             "value": true
@@ -320,10 +290,10 @@ Opt out of deployment telemetry.
         "parPrivateDnsZonesNamesToAuditInCorp": {
             "value": []
         },
-        "parDisableAlzDefaultPolicies": {
-            "value": false
+        "parPolicyAssignmentsToDisableEnforcement": {
+            "value": []
         },
-        "parDisableSlzDefaultPolicies": {
+        "parDisableAlzDefaultPolicies": {
             "value": false
         },
         "parVmBackupExclusionTagName": {
@@ -337,6 +307,9 @@ Opt out of deployment telemetry.
         },
         "parTelemetryOptOut": {
             "value": false
+        },
+        "parManagementGroupIdOverrides": {
+            "value": null
         }
     }
 }

@@ -1,0 +1,18 @@
+{
+  "name": "Enforce-GR-ContReg",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2025-01-01",
+  "properties": {
+    "description": "This initiative assignment enables additional ALZ guardrails for Container Registry.",
+    "displayName": "Enforce recommended guardrails for Container Registry",
+    "notScopes": [],
+    "parameters": {},
+    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-ContainerRegistry",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

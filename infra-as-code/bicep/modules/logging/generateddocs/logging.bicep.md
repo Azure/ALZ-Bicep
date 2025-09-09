@@ -9,6 +9,7 @@ Parameter name | Required | Description
 parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceName | No       | Log Analytics Workspace name.
 parLogAnalyticsWorkspaceLocation | No       | Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
+parDataCollectionRuleVMInsightsExperience | No       | VM Insights Experience - For details see: https://learn.microsoft.com/en-us/azure/azure-monitor/vm/vminsights-enable.
 parDataCollectionRuleVMInsightsName | No       | VM Insights Data Collection Rule name for AMA integration.
 parDataCollectionRuleVMInsightsLock | No       | Resource Lock Configuration for VM Insights Data Collection Rule.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parDataCollectionRuleChangeTrackingName | No       | Change Tracking Data Collection Rule name for AMA integration.
@@ -20,9 +21,11 @@ parLogAnalyticsWorkspaceCapacityReservationLevel | No       | Log Analytics Work
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
 parLogAnalyticsWorkspaceLock | No       | Resource Lock Configuration for Log Analytics Workspace.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace.
-parLogAnalyticsWorkspaceSolutionsLock | No       | Resource Lock Configuration for Log Analytics Workspace Solutions.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parSecurityInsightsOnboardingLock | No       | Resource Lock Configuration for Security Insights solution.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parChangeTrackingSolutionLock | No       | Resource Lock Configuration for Change Tracking solution. - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parUserAssignedManagedIdentityName | No       | Name of the User Assigned Managed Identity required for authenticating Azure Monitoring Agent to Azure.
 parUserAssignedManagedIdentityLocation | No       | User Assigned Managed Identity location.
+parAutomationAccountEnabled | No       | Switch to enable/disable Automation Account deployment.
 parLogAnalyticsWorkspaceLinkAutomationAccount | No       | Log Analytics Workspace should be linked with the automation account.
 parAutomationAccountName | No       | Automation account name.
 parAutomationAccountLocation | No       | Automation Account region name. - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
@@ -32,7 +35,6 @@ parAutomationAccountLock | No       | Resource Lock Configuration for Automation
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parAutomationAccountTags | No       | Tags you would like to be applied to Automation Account.
 parLogAnalyticsWorkspaceTags | No       | Tags you would like to be applied to Log Analytics Workspace.
-parUseSentinelClassicPricingTiers | No       | Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.
 parLogAnalyticsLinkedServiceAutomationAccountName | No       | Log Analytics LinkedService name for Automation Account.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
 
@@ -64,6 +66,16 @@ Log Analytics Workspace name.
 Log Analytics region name - Ensure the regions selected is a supported mapping as per: https://docs.microsoft.com/azure/automation/how-to/region-mappings.
 
 - Default value: `[resourceGroup().location]`
+
+### parDataCollectionRuleVMInsightsExperience
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+VM Insights Experience - For details see: https://learn.microsoft.com/en-us/azure/azure-monitor/vm/vminsights-enable.
+
+- Default value: `PerfAndMap`
+
+- Allowed values: `PerfAndMap`, `PerfOnly`
 
 ### parDataCollectionRuleVMInsightsName
 
@@ -175,16 +187,28 @@ Resource Lock Configuration for Log Analytics Workspace.
 
 Solutions that will be added to the Log Analytics Workspace.
 
-- Default value: `SecurityInsights`
+- Default value: `SecurityInsights ChangeTracking`
 
-- Allowed values: `SecurityInsights`
+- Allowed values: `SecurityInsights`, `ChangeTracking`
 
-### parLogAnalyticsWorkspaceSolutionsLock
+### parSecurityInsightsOnboardingLock
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Resource Lock Configuration for Log Analytics Workspace Solutions.
+Resource Lock Configuration for Security Insights solution.
 
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
+
+### parChangeTrackingSolutionLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource Lock Configuration for Change Tracking solution.
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
 - `notes` - Notes about this lock.
 
@@ -208,13 +232,21 @@ User Assigned Managed Identity location.
 
 - Default value: `[resourceGroup().location]`
 
+### parAutomationAccountEnabled
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable Automation Account deployment.
+
+- Default value: `False`
+
 ### parLogAnalyticsWorkspaceLinkAutomationAccount
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Log Analytics Workspace should be linked with the automation account.
 
-- Default value: `True`
+- Default value: `False`
 
 ### parAutomationAccountName
 
@@ -283,14 +315,6 @@ Tags you would like to be applied to Log Analytics Workspace.
 
 - Default value: `[parameters('parTags')]`
 
-### parUseSentinelClassicPricingTiers
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Set Parameter to true to use Sentinel Classic Pricing Tiers, following changes introduced in July 2023 as documented here: https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier.
-
-- Default value: `False`
-
 ### parLogAnalyticsLinkedServiceAutomationAccountName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -350,6 +374,9 @@ outAutomationAccountId | string |
         "parLogAnalyticsWorkspaceLocation": {
             "value": "[resourceGroup().location]"
         },
+        "parDataCollectionRuleVMInsightsExperience": {
+            "value": "PerfAndMap"
+        },
         "parDataCollectionRuleVMInsightsName": {
             "value": "alz-ama-vmi-dcr"
         },
@@ -394,10 +421,17 @@ outAutomationAccountId | string |
         },
         "parLogAnalyticsWorkspaceSolutions": {
             "value": [
-                "SecurityInsights"
+                "SecurityInsights",
+                "ChangeTracking"
             ]
         },
-        "parLogAnalyticsWorkspaceSolutionsLock": {
+        "parSecurityInsightsOnboardingLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Logging Module."
+            }
+        },
+        "parChangeTrackingSolutionLock": {
             "value": {
                 "kind": "None",
                 "notes": "This lock was created by the ALZ Bicep Logging Module."
@@ -409,8 +443,11 @@ outAutomationAccountId | string |
         "parUserAssignedManagedIdentityLocation": {
             "value": "[resourceGroup().location]"
         },
+        "parAutomationAccountEnabled": {
+            "value": false
+        },
         "parLogAnalyticsWorkspaceLinkAutomationAccount": {
-            "value": true
+            "value": false
         },
         "parAutomationAccountName": {
             "value": "alz-automation-account"
@@ -438,9 +475,6 @@ outAutomationAccountId | string |
         },
         "parLogAnalyticsWorkspaceTags": {
             "value": "[parameters('parTags')]"
-        },
-        "parUseSentinelClassicPricingTiers": {
-            "value": false
         },
         "parLogAnalyticsLinkedServiceAutomationAccountName": {
             "value": "Automation"

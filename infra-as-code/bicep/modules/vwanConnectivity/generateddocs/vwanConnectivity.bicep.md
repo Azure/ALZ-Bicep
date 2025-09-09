@@ -11,6 +11,7 @@ parCompanyPrefix | No       | Prefix value which will be prepended to all resour
 parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVirtualHubEnabled | No       | Switch to enable/disable Virtual Hub deployment.
 parVirtualWanName | No       | Prefix Used for Virtual WAN.
+parVirtualWanType | No       | The type of Virtual WAN to create.
 parVirtualWanLock | No       | Resource Lock Configuration for Virtual WAN.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVirtualWanHubName | No       | Prefix Used for Virtual WAN Hub.
 parVirtualWanHubDefaultRouteName | No       | The name of the route table that manages routing between the Virtual WAN Hub and the Azure Firewall.
@@ -83,6 +84,14 @@ Switch to enable/disable Virtual Hub deployment.
 Prefix Used for Virtual WAN.
 
 - Default value: `[format('{0}-vwan-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
+
+### parVirtualWanType
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+The type of Virtual WAN to create.
+
+- Default value: `Standard`
 
 ### parVirtualWanLock
 
@@ -381,6 +390,9 @@ outAzFwPrivateIps | array |
         "parVirtualWanName": {
             "value": "[format('{0}-vwan-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
         },
+        "parVirtualWanType": {
+            "value": "Standard"
+        },
         "parVirtualWanLock": {
             "value": {
                 "kind": "None",
@@ -408,7 +420,13 @@ outAzFwPrivateIps | array |
                     "parAzFirewallDnsServers": [],
                     "parAzFirewallIntelMode": "Alert",
                     "parAzFirewallTier": "Standard",
-                    "parAzFirewallAvailabilityZones": []
+                    "parAzFirewallAvailabilityZones": [],
+                    "parSidecarVirtualNetwork": {
+                        "sidecarVirtualNetworkEnabled": true,
+                        "addressPrefixes": [
+                            "10.101.0.0/24"
+                        ]
+                    }
                 }
             ]
         },

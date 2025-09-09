@@ -5,18 +5,14 @@
     "parTopLevelManagementGroupPrefix": {
       "value": "alz"
     },
+    "parManagementGroupIdOverrides": {
+      "value": {}
+    },
     "parTopLevelManagementGroupSuffix": {
       "value": ""
     },
     "parDdosEnabled": {
       "value": true
-    },
-    "parTopLevelPolicyAssignmentSovereigntyGlobal": {
-      "value": {
-        "parTopLevelSovereigntyGlobalPoliciesEnable": false,
-        "parListOfAllowedLocations": [],
-        "parPolicyEffect": "Deny"
-      }
     },
     "parPlatformMgAlzDefaultsEnable": {
       "value": true
@@ -26,14 +22,6 @@
     },
     "parLandingZoneMgConfidentialEnable": {
       "value": false
-    },
-    "parPolicyAssignmentSovereigntyConfidential": {
-      "value": {
-        "parAllowedResourceTypes": [],
-        "parListOfAllowedLocations": [],
-        "parAllowedVirtualMachineSKUs": [],
-        "parPolicyEffect": "Deny"
-      }
     },
     "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
       "value": "eastus"
@@ -54,7 +42,7 @@
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-ct-dcr"
     },
     "parDataCollectionRuleMDFCSQLResourceId": {
-      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.Insights/dataCollectionRules/ama-mdfcsql-default-dcr"
+      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.Insights/dataCollectionRules/alz-ama-mdfcsql-dcr"
     },
     "parUserAssignedManagedIdentityResourceId": {
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/alz-logging/providers/Microsoft.ManagedIdentity/userAssignedIdentities/alz-umi-identity"
@@ -75,6 +63,9 @@
       "value": "eastus"
     },
     "parPrivateDnsZonesNamesToAuditInCorp": {
+      "value": []
+    },
+    "parPolicyAssignmentsToDisableEnforcement": {
       "value": []
     },
     "parDisableAlzDefaultPolicies": {
