@@ -198,7 +198,7 @@ On your Pull Request (PR), the following steps will happen:
 
 ### Manually Generating the Parameter Markdown Files
 
-Sometimes the Parameter Markdown Generation Workflow may fail due to you not allowing maintainers to push to your PR as documented [here](https://docs.github.com/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork). Or you may not wish to grant this permission but instead generate the documentation manually by running the below PowerShell Script (this is taken from the GitHub Action [Workflow](https://github.com/Azure/ALZ-Bicep/blob/main/.github/workflows/psdocs-mdtogit.yml).
+You MUST manually generate the parameter markdown files for your Bicep modules before submitting a PR to the repository. This is to ensure that the documentation is up-to-date and reflects the current state of the Bicep modules. This will be checked as part of a GitHub Action workflow that runs on your PR and fail if the markdown files are not present or not up-to-date.
 
 To do this copy and run the below PowerShell Script in your PR Branch and then stage and commit the files that are generated/updated once it has ran and completed. **You need to be in the root of the ALZ-Bicep repo directory you have cloned to your machine and on the correct branch that your are working on for the PR before running the script!**
 
