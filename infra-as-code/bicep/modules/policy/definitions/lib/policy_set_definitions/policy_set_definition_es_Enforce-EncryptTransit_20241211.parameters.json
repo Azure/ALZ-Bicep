@@ -58,7 +58,7 @@
       }
     }
   },
-  "Deny-EH-MINTLS": {
+  "Deny-EH-minTLS": {
     "parameters": {
       "effect": {
         "value": "[[parameters('eventHubMinTls')]"

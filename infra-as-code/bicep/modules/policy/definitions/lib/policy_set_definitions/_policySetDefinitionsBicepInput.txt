@@ -2638,9 +2638,9 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionVersion: '2.*.*'
 			}
 			{
-				definitionReferenceId: 'Deny-EH-MINTLS'
-				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-EH-MINTLS'
-				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-EH-MINTLS'].parameters
+				definitionReferenceId: 'Deny-EH-minTLS'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-EH-minTLS'
+				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters['Deny-EH-minTLS'].parameters
 				definitionGroups: []
 				definitionVersion: '1.*.*'
 			}
