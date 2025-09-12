@@ -412,6 +412,17 @@
             }
           ]
         },
+        "SecuritySubscriptionId": {
+          "source": "powershell",
+          "sourceInput": "subscription_id_security",
+          "description": "The identifier of the Security Subscription. (e.g 00000000-0000-0000-0000-000000000000)",
+          "targets": [
+            {
+              "Name": "SECURITY_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
         "SecurityContact": {
           "source": "input",
           "description": "The email address of the contact for security issues. (e.g. security@contactme.com)",
@@ -1022,6 +1033,17 @@
           "targets": [
             {
               "Name": "MANAGEMENT_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "SecuritySubscriptionId": {
+          "source": "powershell",
+          "sourceInput": "subscription_id_security",
+          "description": "The identifier of the Security Subscription. (e.g 00000000-0000-0000-0000-000000000000)",
+          "targets": [
+            {
+              "Name": "SECURITY_SUBSCRIPTION_ID",
               "Destination": "Environment"
             }
           ]
