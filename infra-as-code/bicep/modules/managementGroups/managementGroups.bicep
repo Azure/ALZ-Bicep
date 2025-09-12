@@ -22,7 +22,7 @@ param parTopLevelManagementGroupParentId string = ''
 @sys.description('Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
 param parLandingZoneMgAlzDefaultsEnable bool = true
 
-@sys.description('Deploys Management, Identity and Connectivity Management Groups beneath Platform Management Group if set to true.')
+@sys.description('Deploys Management, Security, Identity and Connectivity Management Groups beneath Platform Management Group if set to true.')
 param parPlatformMgAlzDefaultsEnable bool = true
 
 @sys.description('Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.')
@@ -53,6 +53,9 @@ var varPlatformMgChildrenAlzDefault = {
   }
   management: {
     displayName: 'Management'
+  }
+  security: {
+    displayName: 'Security'
   }
 }
 
