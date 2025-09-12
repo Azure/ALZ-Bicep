@@ -14,6 +14,8 @@ on:
 jobs:
   arm_docs:
     name: Check Docs Generation
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Harden Runner
