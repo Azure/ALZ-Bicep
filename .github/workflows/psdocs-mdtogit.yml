@@ -58,7 +58,8 @@ jobs:
                       Start-Sleep -Seconds ([int][Math]::Pow(2, $attempt))
                     }
                     else {
-                      throw "Bicep build failed after $maxAttempts attempts for $file: `n$out"
+                      $errMsg = "Bicep build failed after {0} attempts for {1}: `n{2}" -f $maxAttempts, $file, ($out -join "`n")
+                      throw $errMsg
                     }
                   }
                   else {
