@@ -51,7 +51,9 @@ jobs:
               }
               catch {
                 [System.Console]::Error.WriteLine($_)
-                $using:errors.Add("$($_.FullName): $_")
+                $errBag = $using:errors
+                $msg = "{0}: {1}" -f $_.FullName, $_
+                [void]$errBag.Add($msg)
               }
             } -ThrottleLimit $throttle
             if ($errors.Count -gt 0) {
@@ -107,7 +109,9 @@ jobs:
               }
               catch {
                 [System.Console]::Error.WriteLine($_)
-                $using:mdErrors.Add("$($_.TemplateFile): $_")
+                $mdErrBag = $using:mdErrors
+                $msg = "{0}: {1}" -f $_.TemplateFile, $_
+                [void]$mdErrBag.Add($msg)
               }
             } -ThrottleLimit $mdThrottle
           }
