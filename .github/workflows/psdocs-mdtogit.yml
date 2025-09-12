@@ -1,8 +1,8 @@
 # Example: .github/workflows/arm-docs.yaml
 
-name: Generate Markdown
+name: Check Docs Generation
 on:
-  pull_request_target:
+  pull_request:
     types:
       - edited
       - opened
@@ -11,23 +11,10 @@ on:
     paths:
       - '**.bicep'
 
-env:
-  github_user_name: 'github-actions'
-  github_email: '41898282+github-actions[bot]@users.noreply.github.com'
-  github_commit_message: 'Generate Parameter Markdowns'
-  github_pr_number: ${{ github.event.number }}
-  github_pr_repo: ${{ github.event.pull_request.head.repo.full_name }}
-
-permissions:
-  contents: read
-
 jobs:
   arm_docs:
-    name: Generate Markdown
-    permissions:
-      contents: write
+    name: Check Docs Generation
     runs-on: ubuntu-latest
-    environment: BicepUpdateDocumentation
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@002fdce3c6a235733a90a27c80493a3241e56863 # v2.12.1
@@ -36,22 +23,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
-      - name: Show env
-        run: env | sort
-
-      - name: Check out PR
-        run: |
-          echo "==> Check out PR..."
-          gh pr checkout "$github_pr_number"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Configure local git
-        run: |
-          echo "git user name  : $github_user_name"
-          git config --global user.name "$github_user_name"
-          echo "git user email : $github_email"
-          git config --global user.email "$github_email"
 
       - name: Bicep Build
         shell: pwsh
@@ -110,33 +81,28 @@ jobs:
       - name: Check git status
         run: |
           echo "==> Check git status..."
-          git status --short --branch
+          git status
 
-      - name: Stage changes
+      - name: Fail if markdown docs changed
+        shell: pwsh
         run: |
-          echo "==> Stage changes..."
-          mapfile -t STATUS_LOG < <(git status --short | grep .)
-          if [ ${#STATUS_LOG[@]} -gt 0 ]; then
-              echo "Found changes to the following files:"
-              printf "%s\n" "${STATUS_LOG[@]}"
-              git add --all
-          else
-              echo "No changes to add."
-          fi
+          Write-Host "==> Verifying no markdown (*.md) changes were produced by doc generation..."
+          $mdChanges = git status --porcelain | Where-Object { $_ -match '\.md$' }
+          if ($mdChanges) {
+            Write-Host '::warning::Markdown documentation changes detected. These should be generated and committed locally.'
+            Write-Host "Changed markdown files:";
+            $mdChanges | ForEach-Object { Write-Host $_ }
+            Write-Host ''
+            Write-Host 'To fix:'
+            Write-Host '  1. Follow the manual generation steps in the contributing guide:'
+            Write-Host '     https://github.com/Azure/ALZ-Bicep/wiki/Contributing#manually-generating-the-parameter-markdown-files'
+            Write-Host '  2. Regenerate the parameter markdown files locally, as per instructions.'
+            Write-Host '  3. Commit the updated .md files and push to this branch.'
+            Write-Host ''
+            Write-Host 'Failing the workflow to enforce up-to-date documentation.'
+            exit 1
+          }
+          else {
+            Write-Host 'No markdown documentation changes detected.'
+          }
 
-      - name: Push changes
-        run: |
-          echo "==> Check git diff..."
-          mapfile -t GIT_DIFF < <(git diff --cached)
-          printf "%s\n" "${GIT_DIFF[@]}"
-          if [ ${#GIT_DIFF[@]} -gt 0 ]; then
-              echo "==> Commit changes..."
-              git commit --message "$github_commit_message [$GITHUB_ACTOR/${GITHUB_SHA::8}]"
-              echo "==> Push changes..."
-              echo "Pushing changes to: $github_pr_repo"
-              git push "https://$GITHUB_TOKEN@github.com/$github_pr_repo.git"
-          else
-              echo "No changes found."
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
