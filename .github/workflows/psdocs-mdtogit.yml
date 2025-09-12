@@ -43,17 +43,37 @@ jobs:
             Write-Host "Using parallel builds with ThrottleLimit=$throttle"
             $errors = [System.Collections.Concurrent.ConcurrentBag[string]]::new()
             $bicepFiles | ForEach-Object -Parallel {
-              try {
-                Write-Information "==> [Parallel] Building: $($_.FullName)" -InformationAction Continue
-                $out = bicep build $_.FullName 2>&1
-                if ($LASTEXITCODE -ne 0) { throw "Bicep build failed (exit $LASTEXITCODE) for $($_.FullName): `n$out" }
-                else { $out | ForEach-Object { Write-Host $_ } }
-              }
-              catch {
-                [System.Console]::Error.WriteLine($_)
-                $errBag = $using:errors
-                $msg = "{0}: {1}" -f $_.FullName, $_
-                [void]$errBag.Add($msg)
+              $file = $_.FullName
+              $maxAttempts = 3
+              $attempt = 0
+              $success = $false
+              while (-not $success -and $attempt -lt $maxAttempts) {
+                $attempt++
+                try {
+                  Write-Information "==> [Parallel] Building (Attempt $attempt/$maxAttempts): $file" -InformationAction Continue
+                  $out = bicep build $file 2>&1
+                  if ($LASTEXITCODE -ne 0) {
+                    if ($attempt -lt $maxAttempts) {
+                      Write-Warning "Build failed for $file (attempt $attempt). Retrying..."
+                      Start-Sleep -Seconds ([int][Math]::Pow(2, $attempt))
+                    }
+                    else {
+                      throw "Bicep build failed after $maxAttempts attempts for $file: `n$out"
+                    }
+                  }
+                  else {
+                    $out | ForEach-Object { Write-Host $_ }
+                    $success = $true
+                  }
+                }
+                catch {
+                  if ($attempt -ge $maxAttempts) {
+                    [System.Console]::Error.WriteLine($_)
+                    $errBag = $using:errors
+                    $msg = "{0}: {1}" -f $file, $_
+                    [void]$errBag.Add($msg)
+                  }
+                }
               }
             } -ThrottleLimit $throttle
             if ($errors.Count -gt 0) {
