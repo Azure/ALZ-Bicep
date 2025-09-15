@@ -245,7 +245,7 @@ var varPolicyAssignmentEnforceGRMySQL = {
 }
 
 var varPolicyAssignmentEnforceGRNetwork = {
-  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Network'
+  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Network_20250326'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_network.tmpl.json')
 }
 
