@@ -1,0 +1,19 @@
+{
+  "name": "Deploy-GuestAttest",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2024-04-01",
+  "properties": {
+    "description": "Configure the Trusted Launch enabled virtual machines to automatically install the Guest Attestation extension and enable system-assigned managed identity to allow Azure Security Center to proactively attest and monitor the boot integrity. Boot integrity is attested via Remote Attestation. For more details, please refer to the following link - https://aka.ms/trustedlaunch.",
+    "displayName": "Configure prerequisites to enable Guest Attestation on Trusted Launch enabled VMs",
+    "notScopes": [],
+    "parameters": {},
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/281d9e47-d14d-4f05-b8eb-18f2c4a034ff",
+    "definitionVersion": "3.*.*-preview",
+    "scope": null,
+    "enforcementMode": "Default"
+  },
+  "location": null,
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}
