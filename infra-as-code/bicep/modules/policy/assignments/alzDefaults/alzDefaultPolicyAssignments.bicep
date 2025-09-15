@@ -989,7 +989,7 @@ module modPolAssiIntRootDeploySvcHealthBuiltIn '../../../policy/assignments/poli
 // Modules - Policy Assignments - Platform Management Group
 // Module - Policy Assignment - Deploy-GuestAttest
 module modPolAssiPlatformDeployGuestAttest '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployGuestattest.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
   name: varModDepNames.modPolAssiPlatformDeployGuestAttest
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployGuestattest.definitionId
@@ -1469,7 +1469,7 @@ module modPolAssiMgmtDeployLogAnalytics '../../../policy/assignments/policyAssig
 // Modules - Policy Assignments - Landing Zones Management Group
 // Module - Policy Assignment - Deploy-GuestAttest
 module modPolAssiLzsDeployGuestAttest '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployGuestattest.libDefinition.name)) {
-  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsDeployGuestAttest
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployGuestattest.definitionId
