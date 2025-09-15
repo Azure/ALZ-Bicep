@@ -1,8 +1,8 @@
 # Example: .github/workflows/arm-docs.yaml
 
-name: Generate Markdown
+name: Check Docs Generation
 on:
-  pull_request_target:
+  pull_request:
     types:
       - edited
       - opened
@@ -11,23 +11,12 @@ on:
     paths:
       - '**.bicep'
 
-env:
-  github_user_name: 'github-actions'
-  github_email: '41898282+github-actions[bot]@users.noreply.github.com'
-  github_commit_message: 'Generate Parameter Markdowns'
-  github_pr_number: ${{ github.event.number }}
-  github_pr_repo: ${{ github.event.pull_request.head.repo.full_name }}
-
-permissions:
-  contents: read
-
 jobs:
   arm_docs:
-    name: Generate Markdown
+    name: Check Docs Generation
     permissions:
-      contents: write
+      contents: read
     runs-on: ubuntu-latest
-    environment: BicepUpdateDocumentation
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@002fdce3c6a235733a90a27c80493a3241e56863 # v2.12.1
@@ -37,106 +26,161 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - name: Show env
-        run: env | sort
-
-      - name: Check out PR
+      - name: Generate Docs
         run: |
-          echo "==> Check out PR..."
-          gh pr checkout "$github_pr_number"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Configure local git
-        run: |
-          echo "git user name  : $github_user_name"
-          git config --global user.name "$github_user_name"
-          echo "git user email : $github_email"
-          git config --global user.email "$github_email"
-
-      - name: Bicep Build
-        shell: pwsh
-        run: |
-          Get-ChildItem -Recurse -Path infra-as-code/bicep/ -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
-              Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
-              $output = bicep build $_.FullName 2>&1
-              if ($LastExitCode -ne 0)
-              {
-                throw $output
+          Write-Host "==> Starting Bicep build (parallel capable)"
+          $bicepFiles = Get-ChildItem -Recurse -Path infra-as-code/bicep/ -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep'
+          if ($PSVersionTable.PSVersion.Major -lt 7) {
+            Write-Host "PowerShell version does not support -Parallel. Falling back to sequential builds."
+            foreach ($f in $bicepFiles) {
+              Write-Information "==> Attempting Bicep Build For File: $f" -InformationAction Continue
+              $null = bicep build $f.FullName 2>&1 | Tee-Object -Variable buildOut
+              if ($LASTEXITCODE -ne 0) { throw "Bicep build failed for $($f.FullName): `n$buildOut" }
+            }
+          }
+          else {
+            $throttle = if ($env:BICEP_BUILD_PARALLEL_LIMIT) { [int]$env:BICEP_BUILD_PARALLEL_LIMIT } else { 8 }
+            Write-Host "Using parallel builds with ThrottleLimit=$throttle"
+            $errors = [System.Collections.Concurrent.ConcurrentBag[string]]::new()
+            $bicepFiles | ForEach-Object -Parallel {
+              $file = $_.FullName
+              $maxAttempts = 3
+              $attempt = 0
+              $success = $false
+              while (-not $success -and $attempt -lt $maxAttempts) {
+                $attempt++
+                try {
+                  Write-Information "==> [Parallel] Building (Attempt $attempt/$maxAttempts): $file" -InformationAction Continue
+                  $out = bicep build $file 2>&1
+                  if ($LASTEXITCODE -ne 0) {
+                    if ($attempt -lt $maxAttempts) {
+                      Write-Warning "Build failed for $file (attempt $attempt). Retrying..."
+                      Start-Sleep -Seconds ([int][Math]::Pow(2, $attempt))
+                    }
+                    else {
+                      $errMsg = "Bicep build failed after {0} attempts for {1}: `n{2}" -f $maxAttempts, $file, ($out -join "`n")
+                      throw $errMsg
+                    }
+                  }
+                  else {
+                    $out | ForEach-Object { Write-Host $_ }
+                    $success = $true
+                  }
+                }
+                catch {
+                  if ($attempt -ge $maxAttempts) {
+                    [System.Console]::Error.WriteLine($_)
+                    $errBag = $using:errors
+                    $msg = "{0}: {1}" -f $file, $_
+                    [void]$errBag.Add($msg)
+                  }
+                }
               }
-              Else
-              {
-                echo $output
-              }
+            } -ThrottleLimit $throttle
+            if ($errors.Count -gt 0) {
+              Write-Host '--- Bicep build errors detected ---'
+              $errors | ForEach-Object { Write-Host $_ }
+              throw "One or more Bicep builds failed."
+            }
           }
 
-      - name: Generate ARM markdowns
-        run: |
-          Install-Module -Name 'PSDocs.Azure' -Repository PSGallery -force;
-          # Scan for Azure template file recursively in the infra-as-code/bicep/ directory
-          Get-AzDocTemplateFile -Path infra-as-code/bicep/ | ForEach-Object {
-            # Generate a standard name of the markdown file. i.e. <name>_<version>.md
-            $template = Get-Item -Path $_.TemplateFile;
-            $templateraw = Get-Content -Raw -Path $_.Templatefile;
-            $templateName = $template.Directory.Parent.Name;
-            $version = $template.Directory.Name;
-            $docNameWithoutExtension = [System.IO.Path]::GetFileNameWithoutExtension($template.Name);
-            $docName = "$($docNameWithoutExtension)_$version";
-            $jobj = ConvertFrom-Json -InputObject $templateraw
-
-            $outputpathformds = $template.DirectoryName+'/generateddocs'
-            New-Item -Path $outputpathformds -ItemType Directory -Force
-
-            # Conversion
-
-            $templatepath = $template.DirectoryName
-            $convertedtemplatename = $template.Name
-            $convertedfullpath = $templatepath+"\"+$convertedtemplatename
-            $jobj | ConvertTo-Json -Depth 100 | Set-Content -Path $convertedfullpath
-            $mdname = ($docNameWithoutExtension)+'.bicep'
-
-            # Generate markdown
-            Invoke-PSDocument -Module PSDocs.Azure -OutputPath $outputpathformds -InputObject $template.FullName -InstanceName $mdname -Culture en-US;
+          Install-Module -Name 'PSDocs.Azure' -Repository PSGallery -force; Import-Module PSDocs.Azure -Force
+          # Scan for Azure template file recursively in the infra-as-code/bicep/ directory and generate markdown in parallel
+          Write-Host "==> Starting markdown generation (parallel capable)"
+          $templates = Get-AzDocTemplateFile -Path infra-as-code/bicep/
+          $mdThrottle = if ($env:MD_GEN_PARALLEL_LIMIT) { [int]$env:MD_GEN_PARALLEL_LIMIT } else { 8 }
+          $mdErrors = [System.Collections.Concurrent.ConcurrentBag[string]]::new()
+          if ($PSVersionTable.PSVersion.Major -lt 7) {
+            Write-Host "PowerShell version does not support -Parallel for markdown generation. Falling back to sequential."
+            foreach ($t in $templates) {
+              try {
+                $template = Get-Item -Path $t.TemplateFile
+                $templateraw = Get-Content -Raw -Path $t.Templatefile
+                $version = $template.Directory.Name
+                $docNameWithoutExtension = [System.IO.Path]::GetFileNameWithoutExtension($template.Name)
+                $jobj = ConvertFrom-Json -InputObject $templateraw
+                $outputpathformds = $template.DirectoryName + '/generateddocs'
+                New-Item -Path $outputpathformds -ItemType Directory -Force | Out-Null
+                $convertedfullpath = $template.DirectoryName + "\\" + $template.Name
+                $jobj | ConvertTo-Json -Depth 100 | Set-Content -Path $convertedfullpath
+                $mdname = $docNameWithoutExtension + '.bicep'
+                Invoke-PSDocument -Module PSDocs.Azure -OutputPath $outputpathformds -InputObject $template.FullName -InstanceName $mdname -Culture en-US
+              }
+              catch {
+                Write-Host "[Markdown-Error] $($template.FullName): $_"
+                $mdErrors.Add("$($template.FullName): $_")
+              }
+            }
           }
-        shell: pwsh
+          else {
+            Write-Host "Using parallel markdown generation with ThrottleLimit=$mdThrottle"
+            $templates | ForEach-Object -Parallel {
+              try {
+                $template = Get-Item -Path $_.TemplateFile
+                $templateraw = Get-Content -Raw -Path $_.Templatefile
+                $version = $template.Directory.Name
+                $docNameWithoutExtension = [System.IO.Path]::GetFileNameWithoutExtension($template.Name)
+                $jobj = ConvertFrom-Json -InputObject $templateraw
+                $outputpathformds = $template.DirectoryName + '/generateddocs'
+                New-Item -Path $outputpathformds -ItemType Directory -Force | Out-Null
+                $convertedfullpath = $template.DirectoryName + "\\" + $template.Name
+                $jobj | ConvertTo-Json -Depth 100 | Set-Content -Path $convertedfullpath
+                $mdname = $docNameWithoutExtension + '.bicep'
+                Invoke-PSDocument -Module PSDocs.Azure -OutputPath $outputpathformds -InputObject $template.FullName -InstanceName $mdname -Culture en-US
+              }
+              catch {
+                [System.Console]::Error.WriteLine($_)
+                $mdErrBag = $using:mdErrors
+                $msg = "{0}: {1}" -f $_.TemplateFile, $_
+                [void]$mdErrBag.Add($msg)
+              }
+            } -ThrottleLimit $mdThrottle
+          }
+          if ($mdErrors.Count -gt 0) {
+            Write-Host '--- Markdown generation errors detected ---'
+            $mdErrors | ForEach-Object { Write-Host $_ }
+            throw "One or more markdown generations failed."
+          }
 
-      - name: Remove Generated JSONs
-        shell: pwsh
-        run: |
           Get-ChildItem -Recurse -Path infra-as-code/bicep/ -Filter '*.json' -Exclude 'bicepconfig.json','*.parameters.json','*.parameters.*.json','policy_*' | ForEach-Object {
-              Write-Information "==> Removing generated JSON file $_ from Bicep Build" -InformationAction Continue
-              Remove-Item -Path $_.FullName
+            Write-Information "==> Removing generated JSON file $_ from Bicep Build" -InformationAction Continue
+            Remove-Item -Path $_.FullName
           }
+        shell: pwsh
 
       - name: Check git status
         run: |
           echo "==> Check git status..."
-          git status --short --branch
+          git status
 
-      - name: Stage changes
+      - name: Fail if markdown docs changed
+        shell: pwsh
         run: |
-          echo "==> Stage changes..."
-          mapfile -t STATUS_LOG < <(git status --short | grep .)
-          if [ ${#STATUS_LOG[@]} -gt 0 ]; then
-              echo "Found changes to the following files:"
-              printf "%s\n" "${STATUS_LOG[@]}"
-              git add --all
-          else
-              echo "No changes to add."
-          fi
+          Write-Host "==> Verifying no markdown (*.md) changes were produced by doc generation..."
+          $mdChanges = git status --porcelain | Where-Object { $_ -match '\.md$' }
+          if ($mdChanges) {
+            Write-Host '::warning::Markdown documentation changes detected. These should be generated and committed locally.'
+            Write-Host "Changed markdown files:";
+            $mdChanges | ForEach-Object { Write-Host $_ }
+            Write-Host ''
+            Write-Host 'Unified diff (markdown changes):'
+            # Extract just the file paths (status codes in first 3 chars of porcelain output)
+            $mdFiles = $mdChanges | ForEach-Object { $_.Substring(3) }
+            foreach ($f in $mdFiles) {
+              Write-Host "---- Diff: $f ----"
+              git --no-pager diff --unified=3 -- $f | Write-Host
+            }
+            Write-Host ''
+            Write-Host 'To fix:'
+            Write-Host '  1. Follow the manual generation steps in the contributing guide:'
+            Write-Host '     https://github.com/Azure/ALZ-Bicep/wiki/Contributing#manually-generating-the-parameter-markdown-files'
+            Write-Host '  2. Regenerate the parameter markdown files locally, as per instructions.'
+            Write-Host '  3. Commit the updated .md files and push to this branch.'
+            Write-Host ''
+            Write-Host 'Failing the workflow to enforce up-to-date documentation.'
+            exit 1
+          }
+          else {
+            Write-Host 'No markdown documentation changes detected.'
+          }
 
-      - name: Push changes
-        run: |
-          echo "==> Check git diff..."
-          mapfile -t GIT_DIFF < <(git diff --cached)
-          printf "%s\n" "${GIT_DIFF[@]}"
-          if [ ${#GIT_DIFF[@]} -gt 0 ]; then
-              echo "==> Commit changes..."
-              git commit --message "$github_commit_message [$GITHUB_ACTOR/${GITHUB_SHA::8}]"
-              echo "==> Push changes..."
-              echo "Pushing changes to: $github_pr_repo"
-              git push "https://$GITHUB_TOKEN@github.com/$github_pr_repo.git"
-          else
-              echo "No changes found."
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

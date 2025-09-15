@@ -11,6 +11,7 @@ parTopLevelManagementGroupSuffix | No       | Optional suffix for the management
 parIntRootMgSubs | No       | An array of Subscription IDs to place in the Intermediate Root Management Group. Default: Empty Array
 parPlatformMgSubs | No       | An array of Subscription IDs to place in the Platform Management Group. Default: Empty Array
 parPlatformManagementMgSubs | No       | An array of Subscription IDs to place in the (Platform) Management Management Group. Default: Empty Array
+parPlatformSecurityMgSubs | No       | An array of Subscription IDs to place in the (Platform) Security Management Group. Default: Empty Array
 parPlatformConnectivityMgSubs | No       | An array of Subscription IDs to place in the (Platform) Connectivity Management Group. Default: Empty Array
 parPlatformMgChildrenSubs | No       | Dictionary Object to allow additional or different child Management Groups of the Platform Management Group describing the Subscription IDs which each of them contain. Default: Empty Object
 parPlatformIdentityMgSubs | No       | An array of Subscription IDs to place in the (Platform) Identity Management Group. Default: Empty Array
@@ -55,6 +56,12 @@ An array of Subscription IDs to place in the Platform Management Group. Default:
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 An array of Subscription IDs to place in the (Platform) Management Management Group. Default: Empty Array
+
+### parPlatformSecurityMgSubs
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+An array of Subscription IDs to place in the (Platform) Security Management Group. Default: Empty Array
 
 ### parPlatformConnectivityMgSubs
 
@@ -155,6 +162,9 @@ Set Parameter to true to Opt-out of deployment telemetry.
             "value": []
         },
         "parPlatformManagementMgSubs": {
+            "value": []
+        },
+        "parPlatformSecurityMgSubs": {
             "value": []
         },
         "parPlatformConnectivityMgSubs": {

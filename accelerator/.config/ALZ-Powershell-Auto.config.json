@@ -381,7 +381,7 @@
         },
         "IdentitySubscriptionId": {
           "source": "powershell",
-          "sourceInput": "subscription_id_identity",
+          "sourceInput": "subscription_ids[\"identity\"]",
           "description": "The identifier of the Identity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
           "targets": [
             {
@@ -392,7 +392,7 @@
         },
         "ConnectivitySubscriptionId": {
           "source": "powershell",
-          "sourceInput": "subscription_id_connectivity",
+          "sourceInput": "subscription_ids[\"connectivity\"]",
           "description": "The identifier of the Connectivity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
           "targets": [
             {
@@ -403,11 +403,22 @@
         },
         "ManagementSubscriptionId": {
           "source": "powershell",
-          "sourceInput": "subscription_id_management",
+          "sourceInput": "subscription_ids[\"management\"]",
           "description": "The identifier of the Management Subscription. (e.g 00000000-0000-0000-0000-000000000000)",
           "targets": [
             {
               "Name": "MANAGEMENT_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "SecuritySubscriptionId": {
+          "source": "powershell",
+          "sourceInput": "subscription_ids[\"security\"]",
+          "description": "The identifier of the Security Subscription. (e.g 00000000-0000-0000-0000-000000000000)",
+          "targets": [
+            {
+              "Name": "SECURITY_SUBSCRIPTION_ID",
               "Destination": "Environment"
             }
           ]
@@ -540,6 +551,18 @@
           "targets": [
             {
               "Name": "parPlatformIdentityMgSubs.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "SecuritySubscriptionGroup": {
+          "source": "calculated",
+          "pattern": [
+            "{%SecuritySubscriptionId%}"
+          ],
+          "targets": [
+            {
+              "Name": "parPlatformSecurityMgSubs.value",
               "Destination": "Parameters"
             }
           ]
@@ -901,6 +924,18 @@
           "firstRunWhatIf": true,
           "order": 4,
           "group": "resource_groups"
+        },
+                {
+          "name": "security_resource_group",
+          "displayName": "Security Resource Group Deployment",
+          "templateFilePath": "./infra-as-code/bicep/modules/resourceGroup/resourceGroup.bicep",
+          "templateParametersFilePath": "./config/custom-parameters/resourceGroupSecurity.parameters.all.json",
+          "templateParametersSourceFilePath": "./infra-as-code/bicep/modules/resourceGroup/parameters/resourceGroup.parameters.all.json",
+          "subscriptionId": "SECURITY_SUBSCRIPTION_ID",
+          "deploymentType": "subscription",
+          "firstRunWhatIf": true,
+          "order": 5,
+          "group": "resource_groups"
         }
       ],
       "inputs": {
@@ -995,7 +1030,7 @@
         },
         "IdentitySubscriptionId": {
           "source": "powershell",
-          "sourceInput": "subscription_id_identity",
+          "sourceInput": "subscription_ids[\"identity\"]",
           "description": "The identifier of the Identity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
           "targets": [
             {
@@ -1006,7 +1041,7 @@
         },
         "ConnectivitySubscriptionId": {
           "source": "powershell",
-          "sourceInput": "subscription_id_connectivity",
+          "sourceInput": "subscription_ids[\"connectivity\"]",
           "description": "The identifier of the Connectivity Subscription. (e.g '00000000-0000-0000-0000-000000000000')",
           "targets": [
             {
@@ -1017,11 +1052,22 @@
         },
         "ManagementSubscriptionId": {
           "source": "powershell",
-          "sourceInput": "subscription_id_management",
+          "sourceInput": "subscription_ids[\"management\"]",
           "description": "The identifier of the Management Subscription. (e.g 00000000-0000-0000-0000-000000000000)",
           "targets": [
             {
               "Name": "MANAGEMENT_SUBSCRIPTION_ID",
+              "Destination": "Environment"
+            }
+          ]
+        },
+        "SecuritySubscriptionId": {
+          "source": "powershell",
+          "sourceInput": "subscription_ids[\"security\"]",
+          "description": "The identifier of the Security Subscription. (e.g 00000000-0000-0000-0000-000000000000)",
+          "targets": [
+            {
+              "Name": "SECURITY_SUBSCRIPTION_ID",
               "Destination": "Environment"
             }
           ]
@@ -1081,6 +1127,21 @@
             },
             {
               "File": "resourceGroupIdentity.parameters.all.json",
+              "Name": "parResourceGroupName.value",
+              "Destination": "Parameters"
+            }
+          ]
+        },
+        "SecurityResourceGroupName": {
+          "source": "calculated",
+          "pattern": "rg-{%Prefix%}-security",
+          "targets": [
+            {
+              "Name": "SECURITY_RESOURCE_GROUP",
+              "Destination": "Environment"
+            },
+            {
+              "File": "resourceGroupSecurity.parameters.all.json",
               "Name": "parResourceGroupName.value",
               "Destination": "Parameters"
             }
