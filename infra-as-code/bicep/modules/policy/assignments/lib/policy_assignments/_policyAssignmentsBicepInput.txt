@@ -158,7 +158,7 @@ var varPolicyAssignmentDeployAzSqlDbAuditing = {
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_azsql_db_auditing.tmpl.json')
 }
 
-var varPolicyAssignmentDeployGuestattest = {
+var varPolicyAssignmentDeployGuestAttest = {
 	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/281d9e47-d14d-4f05-b8eb-18f2c4a034ff'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_guestattest.tmpl.json')
 }
@@ -233,7 +233,7 @@ var varPolicyAssignmentDeploySQLThreat = {
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_sql_threat.tmpl.json')
 }
 
-var varPolicyAssignmentDeploySvchealthBuiltin = {
+var varPolicyAssignmentDeploySvcHealthBuiltIn = {
 	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/98903777-a9f6-47f5-90a9-acaf62ab01a8'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_svchealth_builtin.tmpl.json')
 }
@@ -409,7 +409,7 @@ var varPolicyAssignmentEnforceGRMySQL = {
 }
 
 var varPolicyAssignmentEnforceGRNetwork = {
-	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Network'
+	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Network_20250326'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_network.tmpl.json')
 }
 
