@@ -146,7 +146,14 @@
       }
     }
   },
-  "EncryptedVMDisksEffect": {
+  "EncryptedVMDisksEffectLin": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('EncryptedVMDisksEffect')]"
+      }
+    }
+  },
+  "EncryptedVMDisksEffectWin": {
     "parameters": {
       "effect": {
         "value": "[[parameters('EncryptedVMDisksEffect')]"

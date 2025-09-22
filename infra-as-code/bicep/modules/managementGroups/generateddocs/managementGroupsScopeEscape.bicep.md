@@ -11,7 +11,7 @@ parTopLevelManagementGroupSuffix | No       | Optional suffix for the management
 parTopLevelManagementGroupDisplayName | No       | Display name for top level management group. This name will be applied to the management group prefix defined in parTopLevelManagementGroupPrefix parameter.
 parTopLevelManagementGroupParentId | No       | Optional parent for Management Group hierarchy, used as intermediate root Management Group parent, if specified. If empty, default, will deploy beneath Tenant Root Management Group.
 parLandingZoneMgAlzDefaultsEnable | No       | Deploys Corp & Online Management Groups beneath Landing Zones Management Group if set to true.
-parPlatformMgAlzDefaultsEnable | No       | Deploys Management, Identity and Connectivity Management Groups beneath Platform Management Group if set to true.
+parPlatformMgAlzDefaultsEnable | No       | Deploys Management, Security, Identity and Connectivity Management Groups beneath Platform Management Group if set to true.
 parLandingZoneMgConfidentialEnable | No       | Deploys Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.
 parLandingZoneMgChildren | No       | Dictionary Object to allow additional or different child Management Groups of Landing Zones Management Group to be deployed.
 parPlatformMgChildren | No       | Dictionary Object to allow additional or different child Management Groups of Platform Management Group to be deployed.
@@ -57,7 +57,7 @@ Deploys Corp & Online Management Groups beneath Landing Zones Management Group i
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Deploys Management, Identity and Connectivity Management Groups beneath Platform Management Group if set to true.
+Deploys Management, Security, Identity and Connectivity Management Groups beneath Platform Management Group if set to true.
 
 - Default value: `True`
 

@@ -17,6 +17,9 @@
     "parPlatformManagementMgSubs": {
       "value": []
     },
+    "parPlatformSecurityMgSubs": {
+      "value": []
+    },
     "parPlatformConnectivityMgSubs": {
       "value": []
     },

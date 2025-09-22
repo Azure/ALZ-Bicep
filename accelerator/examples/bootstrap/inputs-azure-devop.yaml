@@ -11,9 +11,11 @@ starter_module_name: "complete"
 bootstrap_location: "<region>"
 starter_locations: ["<region>"]
 root_parent_management_group_id: ""
-subscription_id_management: "<management-subscription-id>"
-subscription_id_identity: "<identity-subscription-id>"
-subscription_id_connectivity: "<connectivity-subscription-id>"
+subscription_ids:
+  management: "<management-subscription-id>"
+  identity: "<identity-subscription-id>"
+  connectivity: "<connectivity-subscription-id>"
+  security: "<security-subscription-id>"
 
 # Bootstrap Inputs
 azure_devops_personal_access_token: "<token-1>"

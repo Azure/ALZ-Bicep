@@ -484,7 +484,7 @@ module modSidecarVirtualNetwork 'br/public:avm/res/network/virtual-network:0.7.0
 
 module modVnetPeeringVwan '../vnetPeeringVwan/vnetPeeringVwan.bicep' = [
   for (hub, i) in parVirtualWanHubs: if (hub.parSidecarVirtualNetwork.sidecarVirtualNetworkEnabled) {
-    name: 'deploy-vnet-peering-vwan-${hub.parSidecarVirtualNetwork.?name}-${hub.parHubLocation}'
+    name: take('deploy-vnet-peering-vwan-${hub.parSidecarVirtualNetwork.?name}-${hub.parHubLocation}', 64)
     scope: subscription()
     params: {
       parRemoteVirtualNetworkResourceId: modSidecarVirtualNetwork[i].outputs.resourceId
