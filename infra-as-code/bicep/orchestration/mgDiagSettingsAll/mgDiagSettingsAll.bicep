@@ -27,7 +27,7 @@ param parDiagnosticSettingsName string = 'toLa'
 @sys.description('Deploys Diagnostic Settings on Corp & Online Management Groups beneath Landing Zones Management Group if set to true.')
 param parLandingZoneMgAlzDefaultsEnable bool = true
 
-@sys.description('Deploys Diagnostic Settings on Management, Connectivity and Identity Management Groups beneath Platform Management Group if set to true.')
+@sys.description('Deploys Diagnostic Settings on Management, Security, Connectivity and Identity Management Groups beneath Platform Management Group if set to true.')
 param parPlatformMgAlzDefaultsEnable bool = true
 
 @sys.description('Deploys Diagnostic Settings on Confidential Corp & Confidential Online Management Groups beneath Landing Zones Management Group if set to true.')
@@ -53,6 +53,7 @@ var varLandingZoneMgChildrenAlzDefault = {
 // Used if parPlatformMgAlzDefaultsEnable == true
 var varPlatformMgChildrenAlzDefault = {
   platformManagement: '${parTopLevelManagementGroupPrefix}-platform-management${parTopLevelManagementGroupSuffix}'
+  platformSecurity: '${parTopLevelManagementGroupPrefix}-platform-security${parTopLevelManagementGroupSuffix}'
   platformConnectivity: '${parTopLevelManagementGroupPrefix}-platform-connectivity${parTopLevelManagementGroupSuffix}'
   platformIdentity: '${parTopLevelManagementGroupPrefix}-platform-identity${parTopLevelManagementGroupSuffix}'
 }
