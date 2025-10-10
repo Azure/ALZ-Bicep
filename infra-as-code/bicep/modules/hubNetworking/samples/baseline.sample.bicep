@@ -72,11 +72,11 @@ module baseline_hub_network_with_ER '../hubNetworking.bicep' = {
     parExpressRouteGatewayConfig: {
       name: '${parCompanyPrefix}-ExpressRoute-Gateway'
       gatewayType: 'ExpressRoute'
-      sku: 'ErGw1AZ'
+      sku: 'ErGw1Az'
       vpnType: 'RouteBased'
       vpnGatewayGeneration: 'None'
       enableBgp: false
-      activeActive: false
+      activeActive: true
       enableBgpRouteTranslationForNat: false
       enableDnsForwarding: false
       bgpPeeringAddress: ''
@@ -115,11 +115,11 @@ module baseline_hub_network_with_VPN '../hubNetworking.bicep' = {
     parVpnGatewayConfig: {
       name: '${parCompanyPrefix}-Vpn-Gateway'
       gatewayType: 'Vpn'
-      sku: 'VpnGw1AZ'
+      sku: 'VpnGw1Az'
       vpnType: 'RouteBased'
       vpnGatewayGeneration: 'Generation1'
       enableBgp: false
-      activeActive: false
+      activeActive: true
       enableBgpRouteTranslationForNat: false
       enableDnsForwarding: false
       bgpPeeringAddress: ''

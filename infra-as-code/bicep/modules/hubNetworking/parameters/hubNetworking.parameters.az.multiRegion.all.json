@@ -251,9 +251,9 @@
       "value": {
         "name": "alz-vpn-gateway",
         "gatewayType": "Vpn",
-        "sku": "VpnGw1AZ",
+        "sku": "VpnGw1Az",
         "vpnType": "RouteBased",
-        "vpnGatewayGeneration": "vpnGatewayGeneration",
+        "vpnGatewayGeneration": "Generation1",
         "enableBgp": false,
         "activeActive": false,
         "enableBgpRouteTranslationForNat": false,
@@ -273,9 +273,9 @@
       "value": {
         "name": "alz-vpn-gateway-secondary",
         "gatewayType": "Vpn",
-        "sku": "VpnGw1AZ",
+        "sku": "VpnGw1Az",
         "vpnType": "RouteBased",
-        "vpnGatewayGeneration": "vpnGatewayGeneration",
+        "vpnGatewayGeneration": "Generation1",
         "enableBgp": false,
         "activeActive": false,
         "enableBgpRouteTranslationForNat": false,
@@ -298,7 +298,7 @@
       "value": {
         "name": "alz-expressroute-gateway",
         "gatewayType": "ExpressRoute",
-        "sku": "ErGw1AZ",
+        "sku": "ErGw1Az",
         "vpnType": "RouteBased",
         "vpnGatewayGeneration": "None",
         "enableBgp": false,
@@ -322,7 +322,7 @@
       "value": {
         "name": "alz-expressroute-gateway-secondary",
         "gatewayType": "ExpressRoute",
-        "sku": "ErGw1AZ",
+        "sku": "ErGw1Az",
         "vpnType": "RouteBased",
         "vpnGatewayGeneration": "None",
         "enableBgp": false,

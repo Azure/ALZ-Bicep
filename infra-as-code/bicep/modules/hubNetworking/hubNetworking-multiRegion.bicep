@@ -26,7 +26,7 @@ type virtualNetworkGatewayOptionsType = {
   gatewayType: ('Vpn' | 'ExpressRoute')
 
   @description('SKU of the gateway.')
-  sku: ('Basic' | 'VpnGw1AZ' | 'VpnGw2AZ' | 'VpnGw3AZ' | 'VpnGw4AZ' | 'VpnGw5AZ' | 'ErGw1AZ' | 'ErGw2AZ' | 'ErGw3AZ' | 'ErGwScale' | 'HighPerformance' | 'Standard' | 'UltraPerformance')
+  sku: ('Basic' | 'VpnGw1Az' | 'VpnGw2AZ' | 'VpnGw3AZ' | 'VpnGw4AZ' | 'VpnGw5AZ' | 'ErGw1Az' | 'ErGw2AZ' | 'ErGw3AZ' | 'ErGwScale' | 'HighPerformance' | 'Standard' | 'UltraPerformance')
 
   @description('Type of VPN.')
   vpnType: string
@@ -495,7 +495,7 @@ param parVpnGatewayEnabledSecondaryLocation bool = true
 param parVpnGatewayConfig virtualNetworkGatewayOptionsType = {
   name: '${parCompanyPrefix}-Vpn-Gateway-${parLocation}'
   gatewayType: 'Vpn'
-  sku: 'ErGw1AZ'
+  sku: 'VpnGw1Az'
   vpnType: 'RouteBased'
   vpnGatewayGeneration: 'Generation1'
   enableBgp: false
@@ -518,7 +518,7 @@ param parVpnGatewayConfig virtualNetworkGatewayOptionsType = {
 param parVpnGatewayConfigSecondaryLocation virtualNetworkGatewayOptionsType = {
   name: '${parCompanyPrefix}-Vpn-Gateway-${parSecondaryLocation}'
   gatewayType: 'Vpn'
-  sku: 'VpnGw1AZ'
+  sku: 'VpnGw1Az'
   vpnType: 'RouteBased'
   vpnGatewayGeneration: 'Generation1'
   enableBgp: false
@@ -546,7 +546,7 @@ param parExpressRouteGatewayEnabledSecondaryLocation bool = true
 param parExpressRouteGatewayConfig virtualNetworkGatewayOptionsType = {
   name: '${parCompanyPrefix}-ExpressRoute-Gateway'
   gatewayType: 'ExpressRoute'
-  sku: 'ErGw1AZ'
+  sku: 'ErGw1Az'
   vpnType: 'RouteBased'
   vpnGatewayGeneration: 'None'
   enableBgp: false
@@ -567,7 +567,7 @@ param parExpressRouteGatewayConfig virtualNetworkGatewayOptionsType = {
 param parExpressRouteGatewayConfigSecondaryLocation virtualNetworkGatewayOptionsType = {
   name: '${parCompanyPrefix}-ExpressRoute-Gateway'
   gatewayType: 'ExpressRoute'
-  sku: 'ErGw1AZ'
+  sku: 'ErGw1Az'
   vpnType: 'RouteBased'
   vpnGatewayGeneration: 'None'
   enableBgp: false
