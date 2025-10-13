@@ -997,100 +997,60 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-05-01' = if (pa
   name: parAzFirewallName
   location: parLocation
   tags: parTags
-  zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : [])
-  properties: parAzFirewallTier == 'Basic'
-    ? {
-        ipConfigurations: varAzFirewallUseCustomPublicIps
-          ? map(parAzFirewallCustomPublicIps, ip => {
-              name: 'ipconfig${uniqueString(ip)}'
-              properties: ip == parAzFirewallCustomPublicIps[0]
-                ? {
-                    subnet: {
-                      id: resAzureFirewallSubnetRef.id
-                    }
-                    publicIPAddress: {
-                      id: parAzFirewallEnabled ? ip : ''
-                    }
-                  }
-                : {
-                    publicIPAddress: {
-                      id: parAzFirewallEnabled ? ip : ''
-                    }
-                  }
-            })
-          : [
-              {
-                name: 'ipconfig1'
-                properties: {
-                  subnet: {
-                    id: resAzureFirewallSubnetRef.id
-                  }
-                  publicIPAddress: {
-                    id: parAzFirewallEnabled ? modAzureFirewallPublicIp.outputs.outPublicIpId : ''
-                  }
+  zones: !empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : []
+  properties: {
+    ipConfigurations: varAzFirewallUseCustomPublicIps
+      ? map(parAzFirewallCustomPublicIps, ip => {
+          name: 'ipconfig${uniqueString(ip)}'
+          properties: ip == parAzFirewallCustomPublicIps[0]
+            ? {
+                subnet: {
+                  id: resAzureFirewallSubnetRef.id
+                }
+                publicIPAddress: {
+                  id: parAzFirewallEnabled ? ip : ''
                 }
               }
-            ]
-        managementIpConfiguration: {
-          name: 'mgmtIpConfig'
-          properties: {
-            publicIPAddress: {
-              id: parAzFirewallEnabled ? modAzureFirewallMgmtPublicIp.outputs.outPublicIpId : ''
-            }
-            subnet: {
-              id: resAzureFirewallMgmtSubnetRef.id
+            : {
+                publicIPAddress: {
+                  id: parAzFirewallEnabled ? ip : ''
+                }
+              }
+        })
+      : [
+          {
+            name: 'ipconfig1'
+            properties: {
+              subnet: {
+                id: resAzureFirewallSubnetRef.id
+              }
+              publicIPAddress: {
+                id: parAzFirewallEnabled ? modAzureFirewallPublicIp.?outputs.outPublicIpId : ''
+              }
             }
           }
+        ]
+    managementIpConfiguration: {
+      name: 'mgmtIpConfig'
+      properties: {
+        subnet: {
+          id: resAzureFirewallMgmtSubnetRef.id
         }
-        sku: {
-          name: 'AZFW_VNet'
-          tier: parAzFirewallTier
-        }
-        firewallPolicy: {
-          id: resFirewallPolicies.id
-        }
-      }
-    : {
-        ipConfigurations: varAzFirewallUseCustomPublicIps
-          ? map(parAzFirewallCustomPublicIps, ip => {
-              name: 'ipconfig${uniqueString(ip)}'
-              properties: ip == parAzFirewallCustomPublicIps[0]
-                ? {
-                    subnet: {
-                      id: resAzureFirewallSubnetRef.id
-                    }
-                    publicIPAddress: {
-                      id: parAzFirewallEnabled ? ip : ''
-                    }
-                  }
-                : {
-                    publicIPAddress: {
-                      id: parAzFirewallEnabled ? ip : ''
-                    }
-                  }
-            })
-          : [
-              {
-                name: 'ipconfig1'
-                properties: {
-                  subnet: {
-                    id: resAzureFirewallSubnetRef.id
-                  }
-                  publicIPAddress: {
-                    id: parAzFirewallEnabled ? modAzureFirewallPublicIp.outputs.outPublicIpId : ''
-                  }
-                }
-              }
-            ]
-        sku: {
-          name: 'AZFW_VNet'
-          tier: parAzFirewallTier
-        }
-        firewallPolicy: {
-          id: resFirewallPolicies.id
+        publicIPAddress: {
+          id: parAzFirewallEnabled ? modAzureFirewallMgmtPublicIp.?outputs.outPublicIpId : ''
         }
       }
+    }
+    sku: {
+      name: 'AZFW_VNet'
+      tier: parAzFirewallTier
+    }
+    firewallPolicy: {
+      id: resFirewallPolicies.id
+    }
+  }
 }
+
 
 // Create Azure Firewall resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
 resource resAzureFirewallLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallEnabled && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
