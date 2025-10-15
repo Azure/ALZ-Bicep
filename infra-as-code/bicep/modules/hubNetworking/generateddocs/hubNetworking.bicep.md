@@ -47,7 +47,7 @@ parHubRouteTableLock | No       | Resource Lock Configuration for Hub Route Tabl
 parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment.
 parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones.
 parPrivateDnsZones | No       | Array of DNS Zones to provision and link to  Hub Virtual Network. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
-parPrivateDnsZonesFallbackToInternet | No       | Switch to enable/disable fallback to internet Private DNS Zones (option only available for Private DNS zones associated to Private Link resources.
+parPrivateDnsZonesFallbackToInternet | No       | Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).
 parVirtualNetworkIdToLinkFailover | No       | Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 parVirtualNetworkResourceIdsToLinkTo | No       | Array of Resource IDs of VNets to link to Private DNS Zones. Hub VNet is automatically included by module.
 parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS Zone(s).  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  

@@ -317,7 +317,7 @@ param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 @sys.description('Array of DNS Zones to provision and link to  Hub Virtual Network. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones')
 param parPrivateDnsZones array = []
 
-@sys.description('Switch to enable/disable fallback to internet Private DNS Zones (option only available for Private DNS zones associated to Private Link resources.')
+@sys.description('Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).')
 param parPrivateDnsZonesFallbackToInternet bool = false
 
 @sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links')
