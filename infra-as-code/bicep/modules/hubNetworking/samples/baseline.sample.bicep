@@ -45,8 +45,6 @@ module baseline_hub_network '../hubNetworking.bicep' = {
       '2'
       '3'
     ]
-    parVpnGatewayConfig: {}
-    parExpressRouteGatewayConfig: {}
   }
 }
 
@@ -71,24 +69,24 @@ module baseline_hub_network_with_ER '../hubNetworking.bicep' = {
       '2'
       '3'
     ]
-    parVpnGatewayConfig: {}
     parExpressRouteGatewayConfig: {
       name: '${parCompanyPrefix}-ExpressRoute-Gateway'
-      gatewaytype: 'ExpressRoute'
-      sku: 'ErGw1AZ'
-      vpntype: 'RouteBased'
+      gatewayType: 'ExpressRoute'
+      sku: 'ErGw1Az'
+      vpnType: 'RouteBased'
       vpnGatewayGeneration: 'None'
       enableBgp: false
       activeActive: true
       enableBgpRouteTranslationForNat: false
       enableDnsForwarding: false
-      asn: '65515'
       bgpPeeringAddress: ''
-      bgpsettings: {
-        asn: '65515'
+      bgpSettings: {
+        asn: 65515
         bgpPeeringAddress: ''
-        peerWeight: '5'
+        peerWeight: 5
       }
+      ipConfigurationName: 'vnetGatewayConfig'
+      ipConfigurationActiveActiveName: 'vnetGatewayConfig2'
     }
   }
 }
@@ -116,22 +114,23 @@ module baseline_hub_network_with_VPN '../hubNetworking.bicep' = {
     ]
     parVpnGatewayConfig: {
       name: '${parCompanyPrefix}-Vpn-Gateway'
-      gatewaytype: 'Vpn'
-      sku: 'VpnGw1AZ'
-      vpntype: 'RouteBased'
-      generation: 'Generation1'
+      gatewayType: 'Vpn'
+      sku: 'VpnGw1Az'
+      vpnType: 'RouteBased'
+      vpnGatewayGeneration: 'Generation1'
       enableBgp: false
       activeActive: true
       enableBgpRouteTranslationForNat: false
       enableDnsForwarding: false
-      asn: 65515
       bgpPeeringAddress: ''
-      bgpsettings: {
+      bgpSettings: {
         asn: 65515
         bgpPeeringAddress: ''
         peerWeight: 5
       }
+      vpnClientConfiguration: {}
+      ipConfigurationName: 'vnetGatewayConfig'
+      ipConfigurationActiveActiveName: 'vnetGatewayConfig2'
     }
-    parExpressRouteGatewayConfig: {}
   }
 }
