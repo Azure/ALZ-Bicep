@@ -2017,7 +2017,7 @@ resource resHubRouteTableLockSecondaryLocation 'Microsoft.Authorization/locks@20
   }
 }
 
-module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-private-dns-zones:0.5.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-${parLocation}'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
@@ -2043,7 +2043,7 @@ module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-priv
   }
 }
 
-module modPrivateDnsZonesAVMRegion2 'br/public:avm/ptn/network/private-link-private-dns-zones:0.5.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVMRegion2 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-Multi-${parSecondaryLocation}'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {

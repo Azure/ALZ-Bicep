@@ -701,7 +701,7 @@ resource resDDoSProtectionPlanLock 'Microsoft.Authorization/locks@2020-05-01' = 
 }
 
 // Private DNS Zones cannot be linked to the Virtual WAN Hub today however, they can be linked to spokes as they are normal VNets as per https://docs.microsoft.com/azure/virtual-wan/howto-private-link
-module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.5.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-Single'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
