@@ -32,9 +32,6 @@
     "parAzFirewallName": {
       "value": "alz-fw"
     },
-    "parAzFirewallAvailabilityZones": {
-      "value": []
-    },
     "parAzFirewallPoliciesName": {
       "value": "alz-azfwpolicy"
     },
