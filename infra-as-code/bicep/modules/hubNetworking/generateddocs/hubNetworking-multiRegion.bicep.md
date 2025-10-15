@@ -11,14 +11,14 @@ parSecondaryLocation | Yes      | The secondary Azure Region to deploy the resou
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
 parHubNetworkName | No       | Name for Hub Network.
 parHubNetworkNameSecondaryLocation | No       | Name for Hub Network in the secondary location.
-parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parGlobalResourceLock | No       | Global Resource Lock Configuration used for all resources deployed in this module.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parHubNetworkAddressPrefix | No       | The IP address range for Hub Network.
 parHubNetworkAddressPrefixSecondaryLocation | No       | The IP address range for Hub Network in the secondary location.
 parSubnets     | No       | The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks.
 parSubnetsSecondaryLocation | No       | The name, IP address range, network security group, route table and delegation serviceName for each subnet in the virtual networks in the secondary location.
 parDnsServerIps | No       | Array of DNS Server IP addresses for VNet.
 parDnsServerIpsSecondaryLocation | No       | Array of DNS Server IP addresses for VNet in the secondary location.
-parVirtualNetworkLock | No       | Resource Lock Configuration for Virtual Network.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parVirtualNetworkLock | No       | Resource Lock Configuration for Virtual Network.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parPublicIpSku | No       | Public IP Address SKU.
 parPublicIpSkuSecondaryLocation | No       | Public IP Address SKU in secondary location.
 parPublicIpPrefix | No       | Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
@@ -34,12 +34,12 @@ parAzBastionTunneling | No       | Switch to enable/disable Bastion native clien
 parAzBastionTunnelingSecondaryLocation | No       | Switch to enable/disable Bastion native client support in secondary location. This is only supported when the Standard SKU is used for Bastion as documented here: https://learn.microsoft.com/azure/bastion/native-client
 parAzBastionNsgName | No       | Name for Azure Bastion Subnet NSG.
 parAzBastionNsgNameSecondaryLocation | No       | Name for Azure Bastion Subnet NSG in secondary location.
-parBastionLock | No       | Resource Lock Configuration for Bastion.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parBastionLock | No       | Resource Lock Configuration for Bastion.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment.
 parDdosEnabledSecondaryLocation | No       | Switch to enable/disable DDoS Network Protection deployment in the secondary location.
 parDdosPlanName | No       | DDoS Plan Name.
 parDdosPlanNameSecondaryLocation | No       | DDoS Plan Name in the secondary location.
-parDdosLock    | No       | Resource Lock Configuration for DDoS Plan.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parDdosLock    | No       | Resource Lock Configuration for DDoS Plan.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parAzFirewallEnabled | No       | Switch to enable/disable Azure Firewall deployment.
 parAzFirewallEnabledSecondaryLocation | No       | Switch to enable/disable Azure Firewall deployment in the secondary location.
 parAzFirewallName | No       | Azure Firewall Name.
@@ -68,19 +68,19 @@ parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewal
 parAzFirewallDnsProxyEnabledSecondaryLocation | No       | Switch to enable/disable Azure Firewall DNS Proxy in the secndary location.
 parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall.
 parAzFirewallDnsServersSecondaryLocation | No       | Array of custom DNS servers used by Azure Firewall in the secondary location.
-parAzureFirewallLock | No       |  Resource Lock Configuration for Azure Firewall.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parAzureFirewallLock | No       |  Resource Lock Configuration for Azure Firewall.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parHubRouteTableName | No       | Name of Route table to create for the default route of Hub.
 parHubRouteTableNameSecondaryLocation | No       | Name of Route table to create for the default route of Hub in the secondary location.
 parDisableBgpRoutePropagation | No       | Switch to enable/disable BGP Propagation on route table.
 parDisableBgpRoutePropagationSecondaryLocation | No       | Switch to enable/disable BGP Propagation on route table in the secondary location.
-parHubRouteTableLock | No       | Resource Lock Configuration for Hub Route Table.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parHubRouteTableLock | No       | Resource Lock Configuration for Hub Route Table.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment.
 parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones.
 parPrivateDnsZones | No       | Array of DNS Zones to provision and link to Hub Virtual Networks. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
 parPrivateDnsZonesFallbackToInternet | No       | Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).
 parVirtualNetworkIdToLinkFailover | No       | Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 parVirtualNetworkResourceIdsToLinkTo | No       | Array of Resource IDs of VNets to link to Private DNS Zones. Hub VNets are automatically included by module.
-parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS Zone(s).  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS Zone(s).  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parVpnGatewayEnabled | No       | Switch to enable/disable VPN virtual network gateway deployment.
 parVpnGatewayEnabledSecondaryLocation | No       | Switch to enable/disable VPN virtual network gateway deployment in secondary location.
 parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway to be deployed.
@@ -89,7 +89,7 @@ parExpressRouteGatewayEnabled | No       | Switch to enable/disable ExpressRoute
 parExpressRouteGatewayEnabledSecondaryLocation | No       | Switch to enable/disable ExpressRoute virtual network gateway deployment in secondary location.
 parExpressRouteGatewayConfig | No       | Configuration for ExpressRoute virtual network gateway to be deployed.
 parExpressRouteGatewayConfigSecondaryLocation | No       | Configuration for ExpressRoute virtual network gateway to be deployed in secondary location.
-parVirtualNetworkGatewayLock | No       | Resource Lock Configuration for ExpressRoute Virtual Network Gateway.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parVirtualNetworkGatewayLock | No       | Resource Lock Configuration for ExpressRoute Virtual Network Gateway.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry.
 parBastionOutboundSshRdpPorts | No       | Define outbound destination ports or ranges for SSH or RDP that you want to access from Azure Bastion.
@@ -693,7 +693,7 @@ Array of DNS Zones to provision and link to Hub Virtual Networks. Default: All k
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Switch to enable/disable fallback to internet Private DNS Zones (option only available for Private DNS zones associated to Private Link resources.
+Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).
 
 - Default value: `False`
 
