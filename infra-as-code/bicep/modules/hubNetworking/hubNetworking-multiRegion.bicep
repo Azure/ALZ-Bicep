@@ -1,5 +1,5 @@
-metadata name = 'ALZ Bicep - Hub Networking Module'
-metadata description = 'ALZ Bicep Module used to set up Hub Networking'
+metadata name = 'ALZ Bicep - Hub Networking Multi-Region Module'
+metadata description = 'ALZ Bicep Module used to set up Hub Networking in two regions.'
 
 type subnetOptionsType = ({
   @description('Name of subnet.')
@@ -17,6 +17,61 @@ type subnetOptionsType = ({
   @description('Name of the delegation to create for the subnet.')
   delegation: string?
 })[]
+
+type virtualNetworkGatewayOptionsType = {
+  @description('Name of the gateway.')
+  name: string
+
+  @description('Type of gateway.')
+  gatewayType: ('Vpn' | 'ExpressRoute')
+
+  @description('SKU of the gateway.')
+  sku: ('Basic' | 'VpnGw1Az' | 'VpnGw2AZ' | 'VpnGw3AZ' | 'VpnGw4AZ' | 'VpnGw5AZ' | 'ErGw1Az' | 'ErGw2AZ' | 'ErGw3AZ' | 'ErGwScale' | 'HighPerformance' | 'Standard' | 'UltraPerformance')
+
+  @description('Type of VPN.')
+  vpnType: string
+
+  @description('Generation of the VPN Gateway.')
+  vpnGatewayGeneration: ('Generation1' | 'Generation2' | 'None' )
+
+  @description('Enable BGP on the gateway.')
+  enableBgp: bool
+
+  @description('Enable Active-Active on the gateway.')
+  activeActive: bool
+
+  @description('Enable BGP Route Translation for NAT on the gateway.')
+  enableBgpRouteTranslationForNat: bool
+
+  @description('Enable DNS Forwarding on the gateway.')
+  enableDnsForwarding: bool
+
+  @description('BGP Peering Address for the gateway.')
+  bgpPeeringAddress: string?
+
+  @description('BGP Settings for the gateway.')
+  bgpSettings: {
+    @minValue(0)
+    @maxValue(4294967295)
+    @description('ASN for the gateway.')
+    asn: int
+
+    @description('BGP Peering Address for the gateway.')
+    bgpPeeringAddress: string?
+
+    @description('Peer Weight for the gateway.')
+    peerWeight: int
+  }
+
+  @description('VPN Client Configuration for the gateway.')
+  vpnClientConfiguration: object?
+
+  @description('Name of the IP Configuration for the gateway.')
+  ipConfigurationName: string
+
+  @description('Name of the Active-Active IP Configuration for the gateway.')
+  ipConfigurationActiveActiveName: string
+}
 
 type lockType = {
   @description('Optional. Specify the name of lock.')
@@ -440,18 +495,18 @@ param parVpnGatewayEnabledSecondaryLocation bool = true
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
 @sys.description('Configuration for VPN virtual network gateway to be deployed.')
-param parVpnGatewayConfig object = {
+param parVpnGatewayConfig virtualNetworkGatewayOptionsType = {
   name: '${parCompanyPrefix}-Vpn-Gateway-${parLocation}'
   gatewayType: 'Vpn'
-  sku: 'VpnGw1'
+  sku: 'VpnGw1Az'
   vpnType: 'RouteBased'
-  generation: 'Generation1'
+  vpnGatewayGeneration: 'Generation1'
   enableBgp: false
   activeActive: false
   enableBgpRouteTranslationForNat: false
   enableDnsForwarding: false
   bgpPeeringAddress: ''
-  bgpsettings: {
+  bgpSettings: {
     asn: 65515
     bgpPeeringAddress: ''
     peerWeight: 5
@@ -463,18 +518,18 @@ param parVpnGatewayConfig object = {
 
 //ASN must be 65515 if deploying VPN & ER for co-existence to work: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#limits-and-limitations
 @sys.description('Configuration for VPN virtual network gateway to be deployed in secondary location.')
-param parVpnGatewayConfigSecondaryLocation object = {
+param parVpnGatewayConfigSecondaryLocation virtualNetworkGatewayOptionsType = {
   name: '${parCompanyPrefix}-Vpn-Gateway-${parSecondaryLocation}'
   gatewayType: 'Vpn'
-  sku: 'VpnGw1'
+  sku: 'VpnGw1Az'
   vpnType: 'RouteBased'
-  generation: 'Generation1'
+  vpnGatewayGeneration: 'Generation1'
   enableBgp: false
   activeActive: false
   enableBgpRouteTranslationForNat: false
   enableDnsForwarding: false
   bgpPeeringAddress: ''
-  bgpsettings: {
+  bgpSettings: {
     asn: 65515
     bgpPeeringAddress: ''
     peerWeight: 5
@@ -491,10 +546,10 @@ param parExpressRouteGatewayEnabled bool = true
 param parExpressRouteGatewayEnabledSecondaryLocation bool = true
 
 @sys.description('Configuration for ExpressRoute virtual network gateway to be deployed.')
-param parExpressRouteGatewayConfig object = {
+param parExpressRouteGatewayConfig virtualNetworkGatewayOptionsType = {
   name: '${parCompanyPrefix}-ExpressRoute-Gateway'
   gatewayType: 'ExpressRoute'
-  sku: 'ErGw1AZ'
+  sku: 'ErGw1Az'
   vpnType: 'RouteBased'
   vpnGatewayGeneration: 'None'
   enableBgp: false
@@ -502,20 +557,20 @@ param parExpressRouteGatewayConfig object = {
   enableBgpRouteTranslationForNat: false
   enableDnsForwarding: false
   bgpPeeringAddress: ''
-  bgpsettings: {
-    asn: '65515'
+  bgpSettings: {
+    asn: 65515
     bgpPeeringAddress: ''
-    peerWeight: '5'
+    peerWeight: 5
   }
   ipConfigurationName: 'vnetGatewayConfig'
   ipConfigurationActiveActiveName: 'vnetGatewayConfig2'
 }
 
 @sys.description('Configuration for ExpressRoute virtual network gateway to be deployed in secondary location.')
-param parExpressRouteGatewayConfigSecondaryLocation object = {
+param parExpressRouteGatewayConfigSecondaryLocation virtualNetworkGatewayOptionsType = {
   name: '${parCompanyPrefix}-ExpressRoute-Gateway'
   gatewayType: 'ExpressRoute'
-  sku: 'ErGw1AZ'
+  sku: 'ErGw1Az'
   vpnType: 'RouteBased'
   vpnGatewayGeneration: 'None'
   enableBgp: false
@@ -523,10 +578,10 @@ param parExpressRouteGatewayConfigSecondaryLocation object = {
   enableBgpRouteTranslationForNat: false
   enableDnsForwarding: false
   bgpPeeringAddress: ''
-  bgpsettings: {
-    asn: '65515'
+  bgpSettings: {
+    asn: 65515
     bgpPeeringAddress: ''
-    peerWeight: '5'
+    peerWeight: 5
   }
   ipConfigurationName: 'vnetGatewayConfig'
   ipConfigurationActiveActiveName: 'vnetGatewayConfig2'
@@ -1409,7 +1464,7 @@ resource resGateway 'Microsoft.Network/virtualNetworkGateways@2024-05-01' = [
       enableDnsForwarding: gateway.enableDnsForwarding
       bgpSettings: (gateway.enableBgp) ? gateway.bgpSettings : null
       gatewayType: gateway.gatewayType
-      vpnGatewayGeneration: (toLower(gateway.gatewayType) == 'vpn') ? gateway.generation : 'None'
+      vpnGatewayGeneration: (toLower(gateway.gatewayType) == 'vpn') ? gateway.vpnGatewayGeneration : 'None'
       vpnType: gateway.vpnType
       sku: {
         name: gateway.sku
@@ -1479,7 +1534,7 @@ resource resGatewaySecondaryLocation 'Microsoft.Network/virtualNetworkGateways@2
       enableDnsForwarding: gateway.enableDnsForwarding
       bgpSettings: (gateway.enableBgp) ? gateway.bgpSettings : null
       gatewayType: gateway.gatewayType
-      vpnGatewayGeneration: (toLower(gateway.gatewayType) == 'vpn') ? gateway.generation : 'None'
+      vpnGatewayGeneration: (toLower(gateway.gatewayType) == 'vpn') ? gateway.vpnGatewayGeneration : 'None'
       vpnType: gateway.vpnType
       sku: {
         name: gateway.sku
@@ -1755,100 +1810,60 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-05-01' = if (pa
   name: parAzFirewallName
   location: parLocation
   tags: parTags
-  zones: (!empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : [])
-  properties: parAzFirewallTier == 'Basic'
-    ? {
-        ipConfigurations: varAzFirewallUseCustomPublicIps
-          ? map(parAzFirewallCustomPublicIps, ip => {
-              name: 'ipconfig${uniqueString(ip)}'
-              properties: ip == parAzFirewallCustomPublicIps[0]
-                ? {
-                    subnet: {
-                      id: resAzureFirewallSubnetRef.id
-                    }
-                    publicIPAddress: {
-                      id: parAzFirewallEnabled ? ip : ''
-                    }
-                  }
-                : {
-                    publicIPAddress: {
-                      id: parAzFirewallEnabled ? ip : ''
-                    }
-                  }
-            })
-          : [
-              {
-                name: 'ipconfig1'
-                properties: {
-                  subnet: {
-                    id: resAzureFirewallSubnetRef.id
-                  }
-                  publicIPAddress: {
-                    id: parAzFirewallEnabled ? modAzureFirewallPublicIp.outputs.outPublicIpId : ''
-                  }
+  zones: !empty(parAzFirewallAvailabilityZones) ? parAzFirewallAvailabilityZones : []
+  properties: {
+    ipConfigurations: varAzFirewallUseCustomPublicIps
+      ? map(parAzFirewallCustomPublicIps, ip => {
+          name: 'ipconfig${uniqueString(ip)}'
+          properties: ip == parAzFirewallCustomPublicIps[0]
+            ? {
+                subnet: {
+                  id: resAzureFirewallSubnetRef.id
+                }
+                publicIPAddress: {
+                  id: parAzFirewallEnabled ? ip : ''
                 }
               }
-            ]
-        managementIpConfiguration: {
-          name: 'mgmtIpConfig'
-          properties: {
-            publicIPAddress: {
-              id: parAzFirewallEnabled ? modAzureFirewallMgmtPublicIp.outputs.outPublicIpId : ''
-            }
-            subnet: {
-              id: resAzureFirewallMgmtSubnetRef.id
+            : {
+                publicIPAddress: {
+                  id: parAzFirewallEnabled ? ip : ''
+                }
+              }
+        })
+      : [
+          {
+            name: 'ipconfig1'
+            properties: {
+              subnet: {
+                id: resAzureFirewallSubnetRef.id
+              }
+              publicIPAddress: {
+                id: parAzFirewallEnabled ? modAzureFirewallPublicIp.?outputs.outPublicIpId : ''
+              }
             }
           }
+        ]
+    managementIpConfiguration: {
+      name: 'mgmtIpConfig'
+      properties: {
+        subnet: {
+          id: resAzureFirewallMgmtSubnetRef.id
         }
-        sku: {
-          name: 'AZFW_VNet'
-          tier: parAzFirewallTier
-        }
-        firewallPolicy: {
-          id: resFirewallPolicies.id
-        }
-      }
-    : {
-        ipConfigurations: varAzFirewallUseCustomPublicIps
-          ? map(parAzFirewallCustomPublicIps, ip => {
-              name: 'ipconfig${uniqueString(ip)}'
-              properties: ip == parAzFirewallCustomPublicIps[0]
-                ? {
-                    subnet: {
-                      id: resAzureFirewallSubnetRef.id
-                    }
-                    publicIPAddress: {
-                      id: parAzFirewallEnabled ? ip : ''
-                    }
-                  }
-                : {
-                    publicIPAddress: {
-                      id: parAzFirewallEnabled ? ip : ''
-                    }
-                  }
-            })
-          : [
-              {
-                name: 'ipconfig1'
-                properties: {
-                  subnet: {
-                    id: resAzureFirewallSubnetRef.id
-                  }
-                  publicIPAddress: {
-                    id: parAzFirewallEnabled ? modAzureFirewallPublicIp.outputs.outPublicIpId : ''
-                  }
-                }
-              }
-            ]
-        sku: {
-          name: 'AZFW_VNet'
-          tier: parAzFirewallTier
-        }
-        firewallPolicy: {
-          id: resFirewallPolicies.id
+        publicIPAddress: {
+          id: parAzFirewallEnabled ? modAzureFirewallMgmtPublicIp.?outputs.outPublicIpId : ''
         }
       }
+    }
+    sku: {
+      name: 'AZFW_VNet'
+      tier: parAzFirewallTier
+    }
+    firewallPolicy: {
+      id: resFirewallPolicies.id
+    }
+  }
 }
+
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.
@@ -1859,106 +1874,64 @@ resource resAzureFirewallSecondaryLocation 'Microsoft.Network/azureFirewalls@202
   name: parAzFirewallNameSecondaryLocation
   location: parSecondaryLocation
   tags: parTags
-  zones: (!empty(parAzFirewallAvailabilityZonesSecondaryLocation) ? parAzFirewallAvailabilityZonesSecondaryLocation : [])
-  properties: parAzFirewallTierSecondaryLocation == 'Basic'
-    ? {
-        ipConfigurations: varAzFirewallUseCustomPublicIpsSecondaryLocation
-          ? map(parAzFirewallCustomPublicIpsSecondaryLocation, ip => {
-              name: 'ipconfig${uniqueString(ip)}'
-              properties: ip == parAzFirewallCustomPublicIpsSecondaryLocation[0]
-                ? {
-                    subnet: {
-                      id: resAzureFirewallSubnetRefSecondaryLocation.id
-                    }
-                    publicIPAddress: {
-                      id: parAzFirewallEnabledSecondaryLocation ? ip : ''
-                    }
-                  }
-                : {
-                    publicIPAddress: {
-                      id: parAzFirewallEnabledSecondaryLocation ? ip : ''
-                    }
-                  }
-            })
-          : [
-              {
-                name: 'ipconfig1'
-                properties: {
-                  subnet: {
-                    id: resAzureFirewallSubnetRefSecondaryLocation.id
-                  }
-                  publicIPAddress: {
-                    id: parAzFirewallEnabledSecondaryLocation
-                      ? modAzureFirewallPublicIpSecondaryLocation.outputs.outPublicIpId
-                      : ''
-                  }
+  zones: !empty(parAzFirewallAvailabilityZonesSecondaryLocation) ? parAzFirewallAvailabilityZonesSecondaryLocation : []
+  properties: {
+    ipConfigurations: varAzFirewallUseCustomPublicIpsSecondaryLocation
+      ? map(parAzFirewallCustomPublicIpsSecondaryLocation, ip => {
+          name: 'ipconfig${uniqueString(ip)}'
+          properties: ip == parAzFirewallCustomPublicIpsSecondaryLocation[0]
+            ? {
+                subnet: {
+                  id: resAzureFirewallSubnetRefSecondaryLocation.id
+                }
+                publicIPAddress: {
+                  id: parAzFirewallEnabledSecondaryLocation ? ip : ''
                 }
               }
-            ]
-        managementIpConfiguration: {
-          name: 'mgmtIpConfig'
-          properties: {
-            publicIPAddress: {
-              id: parAzFirewallEnabledSecondaryLocation
-                ? modAzureFirewallMgmtPublicIpSecondaryLocation.outputs.outPublicIpId
-                : ''
-            }
-            subnet: {
-              id: resAzureFirewallMgmtSubnetRefSecondaryLocation.id
+            : {
+                publicIPAddress: {
+                  id: parAzFirewallEnabledSecondaryLocation ? ip : ''
+                }
+              }
+        })
+      : [
+          {
+            name: 'ipconfig1'
+            properties: {
+              subnet: {
+                id: resAzureFirewallSubnetRefSecondaryLocation.id
+              }
+              publicIPAddress: {
+                id: parAzFirewallEnabledSecondaryLocation
+                  ? modAzureFirewallPublicIpSecondaryLocation.?outputs.outPublicIpId
+                  : ''
+              }
             }
           }
+        ]
+    managementIpConfiguration: {
+      name: 'mgmtIpConfig'
+      properties: {
+        subnet: {
+          id: resAzureFirewallMgmtSubnetRefSecondaryLocation.id
         }
-        sku: {
-          name: 'AZFW_VNet'
-          tier: parAzFirewallTierSecondaryLocation
-        }
-        firewallPolicy: {
-          id: resFirewallPoliciesSecondaryLocation.id
-        }
-      }
-    : {
-        ipConfigurations: varAzFirewallUseCustomPublicIpsSecondaryLocation
-          ? map(parAzFirewallCustomPublicIpsSecondaryLocation, ip => {
-              name: 'ipconfig${uniqueString(ip)}'
-              properties: ip == parAzFirewallCustomPublicIpsSecondaryLocation[0]
-                ? {
-                    subnet: {
-                      id: resAzureFirewallSubnetRefSecondaryLocation.id
-                    }
-                    publicIPAddress: {
-                      id: parAzFirewallEnabledSecondaryLocation ? ip : ''
-                    }
-                  }
-                : {
-                    publicIPAddress: {
-                      id: parAzFirewallEnabledSecondaryLocation ? ip : ''
-                    }
-                  }
-            })
-          : [
-              {
-                name: 'ipconfig1'
-                properties: {
-                  subnet: {
-                    id: resAzureFirewallSubnetRefSecondaryLocation.id
-                  }
-                  publicIPAddress: {
-                    id: parAzFirewallEnabledSecondaryLocation
-                      ? modAzureFirewallPublicIpSecondaryLocation.outputs.outPublicIpId
-                      : ''
-                  }
-                }
-              }
-            ]
-        sku: {
-          name: 'AZFW_VNet'
-          tier: parAzFirewallTierSecondaryLocation
-        }
-        firewallPolicy: {
-          id: resFirewallPoliciesSecondaryLocation.id
+        publicIPAddress: {
+          id: parAzFirewallEnabledSecondaryLocation
+            ? modAzureFirewallMgmtPublicIpSecondaryLocation.?outputs.outPublicIpId
+            : ''
         }
       }
+    }
+    sku: {
+      name: 'AZFW_VNet'
+      tier: parAzFirewallTierSecondaryLocation
+    }
+    firewallPolicy: {
+      id: resFirewallPoliciesSecondaryLocation.id
+    }
+  }
 }
+
 
 // Create Azure Firewall resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
 resource resAzureFirewallLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallEnabled && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {

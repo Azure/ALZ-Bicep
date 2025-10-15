@@ -67,17 +67,17 @@ Log Analytics region name - Ensure the regions selected is a supported mapping a
 
 - Default value: `[resourceGroup().location]`
 
-### parDataCollectionRuleVMInsightsName
+### parDataCollectionRuleVMInsightsExperience
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 VM Insights Experience - For details see: https://learn.microsoft.com/en-us/azure/azure-monitor/vm/vminsights-enable.
 
-- Default value: `PerfAndMap` 
+- Default value: `PerfAndMap`
 
 - Allowed values: `PerfAndMap`, `PerfOnly`
 
-### parDataCollectionRuleVMInsightsExperience
+### parDataCollectionRuleVMInsightsName
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 

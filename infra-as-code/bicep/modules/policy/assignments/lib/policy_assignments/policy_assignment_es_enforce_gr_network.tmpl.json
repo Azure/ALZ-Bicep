@@ -7,7 +7,7 @@
     "displayName": "Enforce recommended guardrails for Network and Networking services",
     "notScopes": [],
     "parameters": {},
-    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Network",
+    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Network_20250326",
     "scope": null,
     "enforcementMode": "Default"
   },

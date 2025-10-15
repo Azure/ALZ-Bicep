@@ -1,6 +1,6 @@
-# ALZ Bicep - Hub Networking Module
+# ALZ Bicep - Hub Networking Multi-Region Module
 
-ALZ Bicep Module used to set up Hub Networking
+ALZ Bicep Module used to set up Hub Networking in two regions.
 
 ## Parameters
 
@@ -744,7 +744,7 @@ Switch to enable/disable VPN virtual network gateway deployment in secondary loc
 
 Configuration for VPN virtual network gateway to be deployed.
 
-- Default value: `@{name=[format('{0}-Vpn-Gateway-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; vpnClientConfiguration=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
+- Default value: `@{name=[format('{0}-Vpn-Gateway-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]; gatewayType=Vpn; sku=VpnGw1Az; vpnType=RouteBased; vpnGatewayGeneration=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpSettings=; vpnClientConfiguration=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
 
 ### parVpnGatewayConfigSecondaryLocation
 
@@ -752,7 +752,7 @@ Configuration for VPN virtual network gateway to be deployed.
 
 Configuration for VPN virtual network gateway to be deployed in secondary location.
 
-- Default value: `@{name=[format('{0}-Vpn-Gateway-{1}', parameters('parCompanyPrefix'), parameters('parSecondaryLocation'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; vpnClientConfiguration=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
+- Default value: `@{name=[format('{0}-Vpn-Gateway-{1}', parameters('parCompanyPrefix'), parameters('parSecondaryLocation'))]; gatewayType=Vpn; sku=VpnGw1Az; vpnType=RouteBased; vpnGatewayGeneration=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpSettings=; vpnClientConfiguration=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
 
 ### parExpressRouteGatewayEnabled
 
@@ -776,7 +776,7 @@ Switch to enable/disable ExpressRoute virtual network gateway deployment in seco
 
 Configuration for ExpressRoute virtual network gateway to be deployed.
 
-- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
+- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1Az; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpSettings=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
 
 ### parExpressRouteGatewayConfigSecondaryLocation
 
@@ -784,7 +784,7 @@ Configuration for ExpressRoute virtual network gateway to be deployed.
 
 Configuration for ExpressRoute virtual network gateway to be deployed in secondary location.
 
-- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
+- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1Az; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpSettings=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
 
 ### parVirtualNetworkGatewayLock
 
@@ -1172,15 +1172,15 @@ outBastionNsgNameSecondaryLocation | string |
             "value": {
                 "name": "[format('{0}-Vpn-Gateway-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]",
                 "gatewayType": "Vpn",
-                "sku": "VpnGw1",
+                "sku": "VpnGw1Az",
                 "vpnType": "RouteBased",
-                "generation": "Generation1",
+                "vpnGatewayGeneration": "Generation1",
                 "enableBgp": false,
                 "activeActive": false,
                 "enableBgpRouteTranslationForNat": false,
                 "enableDnsForwarding": false,
                 "bgpPeeringAddress": "",
-                "bgpsettings": {
+                "bgpSettings": {
                     "asn": 65515,
                     "bgpPeeringAddress": "",
                     "peerWeight": 5
@@ -1194,15 +1194,15 @@ outBastionNsgNameSecondaryLocation | string |
             "value": {
                 "name": "[format('{0}-Vpn-Gateway-{1}', parameters('parCompanyPrefix'), parameters('parSecondaryLocation'))]",
                 "gatewayType": "Vpn",
-                "sku": "VpnGw1",
+                "sku": "VpnGw1Az",
                 "vpnType": "RouteBased",
-                "generation": "Generation1",
+                "vpnGatewayGeneration": "Generation1",
                 "enableBgp": false,
                 "activeActive": false,
                 "enableBgpRouteTranslationForNat": false,
                 "enableDnsForwarding": false,
                 "bgpPeeringAddress": "",
-                "bgpsettings": {
+                "bgpSettings": {
                     "asn": 65515,
                     "bgpPeeringAddress": "",
                     "peerWeight": 5
@@ -1222,7 +1222,7 @@ outBastionNsgNameSecondaryLocation | string |
             "value": {
                 "name": "[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]",
                 "gatewayType": "ExpressRoute",
-                "sku": "ErGw1AZ",
+                "sku": "ErGw1Az",
                 "vpnType": "RouteBased",
                 "vpnGatewayGeneration": "None",
                 "enableBgp": false,
@@ -1230,10 +1230,10 @@ outBastionNsgNameSecondaryLocation | string |
                 "enableBgpRouteTranslationForNat": false,
                 "enableDnsForwarding": false,
                 "bgpPeeringAddress": "",
-                "bgpsettings": {
-                    "asn": "65515",
+                "bgpSettings": {
+                    "asn": 65515,
                     "bgpPeeringAddress": "",
-                    "peerWeight": "5"
+                    "peerWeight": 5
                 },
                 "ipConfigurationName": "vnetGatewayConfig",
                 "ipConfigurationActiveActiveName": "vnetGatewayConfig2"
@@ -1243,7 +1243,7 @@ outBastionNsgNameSecondaryLocation | string |
             "value": {
                 "name": "[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]",
                 "gatewayType": "ExpressRoute",
-                "sku": "ErGw1AZ",
+                "sku": "ErGw1Az",
                 "vpnType": "RouteBased",
                 "vpnGatewayGeneration": "None",
                 "enableBgp": false,
@@ -1251,10 +1251,10 @@ outBastionNsgNameSecondaryLocation | string |
                 "enableBgpRouteTranslationForNat": false,
                 "enableDnsForwarding": false,
                 "bgpPeeringAddress": "",
-                "bgpsettings": {
-                    "asn": "65515",
+                "bgpSettings": {
+                    "asn": 65515,
                     "bgpPeeringAddress": "",
-                    "peerWeight": "5"
+                    "peerWeight": 5
                 },
                 "ipConfigurationName": "vnetGatewayConfig",
                 "ipConfigurationActiveActiveName": "vnetGatewayConfig2"
