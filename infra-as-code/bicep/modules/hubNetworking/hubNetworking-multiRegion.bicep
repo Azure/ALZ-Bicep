@@ -467,6 +467,9 @@ param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 @sys.description('Array of DNS Zones to provision and link to Hub Virtual Networks. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones')
 param parPrivateDnsZones array = []
 
+@sys.description('Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).')
+param parPrivateDnsZonesFallbackToInternet bool = false
+
 @sys.description('Resource ID of Failover VNet for Private DNS Zone VNet Failover Links')
 param parVirtualNetworkIdToLinkFailover string = ''
 
@@ -2014,17 +2017,23 @@ resource resHubRouteTableLockSecondaryLocation 'Microsoft.Authorization/locks@20
   }
 }
 
-module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-private-dns-zones:0.3.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-${parLocation}'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
     location: parLocation
     privateLinkPrivateDnsZones: empty(parPrivateDnsZones) ? null : parPrivateDnsZones
-    virtualNetworkResourceIdsToLinkTo: union(
-      [resHubVnet.id, resHubVnetSecondaryLocation.id],
-      !empty(parVirtualNetworkIdToLinkFailover) ? [parVirtualNetworkIdToLinkFailover] : [],
-      parVirtualNetworkResourceIdsToLinkTo
-    )
+    virtualNetworkLinks: [
+      for vnetId in union(
+        [resHubVnet.id, resHubVnetSecondaryLocation.id],
+        !empty(parVirtualNetworkIdToLinkFailover) ? [parVirtualNetworkIdToLinkFailover] : [],
+        parVirtualNetworkResourceIdsToLinkTo
+      ): {
+        virtualNetworkResourceId: vnetId
+        registrationEnabled: false
+        resolutionPolicy: parPrivateDnsZonesFallbackToInternet ? 'NxDomainRedirect' : 'Default'
+      }
+    ]
     enableTelemetry: parTelemetryOptOut ? false : true
     tags: parTags
     lock: {
@@ -2034,17 +2043,23 @@ module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-priv
   }
 }
 
-module modPrivateDnsZonesAVMRegion2 'br/public:avm/ptn/network/private-link-private-dns-zones:0.3.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVMRegion2 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-Multi-${parSecondaryLocation}'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
     location: parSecondaryLocation
     privateLinkPrivateDnsZones: empty(parPrivateDnsZones) ? null : parPrivateDnsZones
-    virtualNetworkResourceIdsToLinkTo: union(
-      [resHubVnet.id, resHubVnetSecondaryLocation.id],
-      !empty(parVirtualNetworkIdToLinkFailover) ? [parVirtualNetworkIdToLinkFailover] : [],
-      parVirtualNetworkResourceIdsToLinkTo
-    )
+    virtualNetworkLinks: [
+      for vnetId in union(
+        [resHubVnet.id, resHubVnetSecondaryLocation.id],
+        !empty(parVirtualNetworkIdToLinkFailover) ? [parVirtualNetworkIdToLinkFailover] : [],
+        parVirtualNetworkResourceIdsToLinkTo
+      ): {
+        virtualNetworkResourceId: vnetId
+        registrationEnabled: false
+        resolutionPolicy: parPrivateDnsZonesFallbackToInternet ? 'NxDomainRedirect' : 'Default'
+      }
+    ]
     enableTelemetry: parTelemetryOptOut ? false : true
     tags: parTags
     lock: {
