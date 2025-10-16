@@ -21,6 +21,9 @@ param parPlatformMgSubs array = []
 @sys.description('An array of Subscription IDs to place in the (Platform) Management Management Group. Default: Empty Array')
 param parPlatformManagementMgSubs array = []
 
+@sys.description('An array of Subscription IDs to place in the (Platform) Security Management Group. Default: Empty Array')
+param parPlatformSecurityMgSubs array = []
+
 @sys.description('An array of Subscription IDs to place in the (Platform) Connectivity Management Group. Default: Empty Array')
 param parPlatformConnectivityMgSubs array = []
 
@@ -61,6 +64,7 @@ var varMgIds = {
   intRoot: '${parTopLevelManagementGroupPrefix}${parTopLevelManagementGroupSuffix}'
   platform: '${parTopLevelManagementGroupPrefix}-platform${parTopLevelManagementGroupSuffix}'
   platformManagement: '${parTopLevelManagementGroupPrefix}-platform-management${parTopLevelManagementGroupSuffix}'
+  platformSecurity: '${parTopLevelManagementGroupPrefix}-platform-security${parTopLevelManagementGroupSuffix}'
   platformConnectivity: '${parTopLevelManagementGroupPrefix}-platform-connectivity${parTopLevelManagementGroupSuffix}'
   platformIdentity: '${parTopLevelManagementGroupPrefix}-platform-identity${parTopLevelManagementGroupSuffix}'
   landingZones: '${parTopLevelManagementGroupPrefix}-landingzones${parTopLevelManagementGroupSuffix}'
@@ -76,6 +80,7 @@ var varDeploymentNames = {
   modIntRootMgSubPlacement: take('modIntRootMgSubPlacement-${uniqueString(varMgIds.intRoot, string(length(parIntRootMgSubs)), deployment().name)}', 64)
   modPlatformMgSubPlacement: take('modPlatformMgSubPlacement-${uniqueString(varMgIds.platform, string(length(parPlatformMgSubs)), deployment().name)}', 64)
   modPlatformManagementMgSubPlacement: take('modPlatformManagementMgSubPlacement-${uniqueString(varMgIds.platformManagement, string(length(parPlatformManagementMgSubs)), deployment().name)}', 64)
+  modPlatformSecurityMgSubPlacement: take('modPlatformSecurityMgSubPlacement-${uniqueString(varMgIds.platformSecurity, string(length(parPlatformSecurityMgSubs)), deployment().name)}', 64)
   modPlatformConnectivityMgSubPlacement: take('modPlatformConnectivityMgSubPlacement-${uniqueString(varMgIds.platformConnectivity, string(length(parPlatformConnectivityMgSubs)), deployment().name)}', 64)
   modPlatformIdentityMgSubPlacement: take('modPlatformIdentityMgSubPlacement-${uniqueString(varMgIds.platformIdentity, string(length(parPlatformIdentityMgSubs)), deployment().name)}', 64)
   modLandingZonesMgSubPlacement: take('modLandingZonesMgSubPlacement-${uniqueString(varMgIds.landingZones, string(length(parLandingZonesMgSubs)), deployment().name)}', 64)
@@ -121,7 +126,17 @@ module modPlatformManagementMgSubPlacement '../../modules/subscriptionPlacement/
   }
 }
 
-module modplatformConnectivityMgSubPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = if (!empty(parPlatformConnectivityMgSubs)) {
+module modPlatformSecurityMgSubPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = if (!empty(parPlatformSecurityMgSubs)) {
+  name: varDeploymentNames.modPlatformSecurityMgSubPlacement
+  scope: managementGroup(varMgIds.platformSecurity)
+  params: {
+    parTargetManagementGroupId: varMgIds.platformSecurity
+    parSubscriptionIds: parPlatformSecurityMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+module modPlatformConnectivityMgSubPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = if (!empty(parPlatformConnectivityMgSubs)) {
   name: varDeploymentNames.modPlatformConnectivityMgSubPlacement
   scope: managementGroup(varMgIds.platformConnectivity)
   params: {

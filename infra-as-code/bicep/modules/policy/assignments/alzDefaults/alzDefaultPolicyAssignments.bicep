@@ -121,6 +121,8 @@ var varModDepNames = {
   modPolAssiIntRootAuditTrustedLaunch: take('${varDeploymentNameWrappers.basePrefix}-auditTrustLaunch-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiIntRootDenyClassicRes: take('${varDeploymentNameWrappers.basePrefix}-denyClassicRes-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiIntRootDenyUnmanagedDisks: take('${varDeploymentNameWrappers.basePrefix}-denyUnmgdDisks-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiIntRootDeploySvcHealthBuiltIn: take('${varDeploymentNameWrappers.basePrefix}-deploySvcHealthBi-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformDeployGuestAttest: take('${varDeploymentNameWrappers.basePrefix}-deployGuestAttest-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiPlatformDeployVmArcTrack: take('${varDeploymentNameWrappers.basePrefix}-deployVmArcTrack-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiPlatformDeployVmChangeTrack: take('${varDeploymentNameWrappers.basePrefix}-deployVmChgTrack-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiPlatformDeployVmssChangeTrack: take('${varDeploymentNameWrappers.basePrefix}-deployVmssChgTrack-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -139,6 +141,7 @@ var varModDepNames = {
   modPolAssiIdentDenySubnetWithoutNsg: take('${varDeploymentNameWrappers.basePrefix}-denySubnetNoNsg-ident-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiIdentDeployVmBackup: take('${varDeploymentNameWrappers.basePrefix}-deployVmBackup-ident-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiMgmtDeployLogAnalytics: take('${varDeploymentNameWrappers.basePrefix}-deployLogAnalytics-mgmt-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsDeployGuestAttest: take('${varDeploymentNameWrappers.basePrefix}-deployGuestAttest-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiLzsDenyIpForwarding: take('${varDeploymentNameWrappers.basePrefix}-denyIpForward-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiLzsDenyMgmtPortsFromInternet: take('${varDeploymentNameWrappers.basePrefix}-denyMgmtPortsInet-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiLzsDenySubnetWithoutNsg: take('${varDeploymentNameWrappers.basePrefix}-denySubnetNoNsg-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -295,6 +298,11 @@ var varPolicyAssignmentDeployAzSqlDbAuditing = {
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_azsql_db_auditing.tmpl.json')
 }
 
+var varPolicyAssignmentDeployGuestattest = {
+	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/281d9e47-d14d-4f05-b8eb-18f2c4a034ff'
+	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_guestattest.tmpl.json')
+}
+
 var varPolicyAssignmentDeployLogAnalytics = {
   definitionId: '/providers/Microsoft.Authorization/policyDefinitions/8e3e61b3-0b32-22d5-4edf-55f87fdb5955'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_log_analytics.tmpl.json')
@@ -344,6 +352,11 @@ var varPolicyAssignmentDeploySQLTDE = {
 var varPolicyAssignmentDeploySQLThreat = {
   definitionId: '/providers/Microsoft.Authorization/policyDefinitions/36d49e87-48c4-4f2e-beed-ba4ed02b71f5'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_sql_threat.tmpl.json')
+}
+
+var varPolicyAssignmentDeploySvchealthBuiltin = {
+	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/98903777-a9f6-47f5-90a9-acaf62ab01a8'
+	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_svchealth_builtin.tmpl.json')
 }
 
 var varPolicyAssignmentDeployVMBackup = {
@@ -447,7 +460,9 @@ var varRbacRoleDefinitionIds = {
   rbacSecurityAdmin: 'fb1c8493-542b-48eb-b624-b4c8fea62acd'
   reader: 'acdd72a7-3385-48ef-bd42-f606fba81ae7'
   managedIdentityOperator: 'f1a07417-d97a-45cb-824c-7a7467783830'
+  managedIdentityContributor: 'e40ec5ca-96e0-45a2-b4ff-59039f2c2b59'
   connectedMachineResourceAdministrator: 'cd570a14-e51a-42ad-bac8-bafd67325302'
+  monitoringPolicyContributor: '47be4a87-7950-4631-9daf-b664a405f074'
 }
 
 // Management Groups Variables - Used For Policy Assignments
@@ -951,7 +966,50 @@ module modPolAssiIntRootDenyClassicRes '../../../policy/assignments/policyAssign
   }
 }
 
+// Module - Policy Assignment - Deploy-SvcHealth-BuiltIn
+module modPolAssiIntRootDeploySvcHealthBuiltIn '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeploySvchealthBuiltin.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
+  name: varModDepNames.modPolAssiIntRootDeploySvcHealthBuiltIn
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeploySvchealthBuiltin.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeploySvchealthBuiltin.libDefinition.properties.definitionVersion
+    parPolicyAssignmentName: varPolicyAssignmentDeploySvchealthBuiltin.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeploySvchealthBuiltin.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeploySvchealthBuiltin.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeploySvchealthBuiltin.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeploySvchealthBuiltin.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.monitoringPolicyContributor
+    ]
+    parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeploySvchealthBuiltin.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeploySvchealthBuiltin.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
 // Modules - Policy Assignments - Platform Management Group
+// Module - Policy Assignment - Deploy-GuestAttest
+module modPolAssiPlatformDeployGuestAttest '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployGuestattest.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
+  name: varModDepNames.modPolAssiPlatformDeployGuestAttest
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployGuestattest.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployGuestattest.libDefinition.properties.definitionVersion
+    parPolicyAssignmentName: varPolicyAssignmentDeployGuestattest.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployGuestattest.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployGuestattest.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployGuestattest.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployGuestattest.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.reader
+      varRbacRoleDefinitionIds.vmContributor
+      varRbacRoleDefinitionIds.managedIdentityOperator
+      varRbacRoleDefinitionIds.managedIdentityContributor
+    ]
+    parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployGuestattest.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployGuestattest.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
 // Module - Policy Assignment - Deploy-vmArc-ChangeTrack
 module modPolAssiPlatformDeployVmArcChangeTrack '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployVmArcChangeTrack.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIdsUnioned.platform)
@@ -1409,6 +1467,29 @@ module modPolAssiMgmtDeployLogAnalytics '../../../policy/assignments/policyAssig
 }
 
 // Modules - Policy Assignments - Landing Zones Management Group
+// Module - Policy Assignment - Deploy-GuestAttest
+module modPolAssiLzsDeployGuestAttest '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployGuestattest.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
+  name: varModDepNames.modPolAssiLzsDeployGuestAttest
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployGuestattest.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployGuestattest.libDefinition.properties.definitionVersion
+    parPolicyAssignmentName: varPolicyAssignmentDeployGuestattest.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployGuestattest.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployGuestattest.libDefinition.properties.description
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployGuestattest.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployGuestattest.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.reader
+      varRbacRoleDefinitionIds.vmContributor
+      varRbacRoleDefinitionIds.managedIdentityOperator
+      varRbacRoleDefinitionIds.managedIdentityContributor
+    ]
+    parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployGuestattest.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployGuestattest.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
 // Module - Policy Assignment - Deny-IP-Forwarding
 module modPolAssiLzsDenyIpForwarding '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDenyIPForwarding.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
