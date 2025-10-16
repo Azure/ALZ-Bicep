@@ -35,6 +35,7 @@ parDdosLock    | No       | Resource Lock Configuration for DDoS Plan.  - `kind`
 parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment.
 parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones.
 parPrivateDnsZones | No       | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
+parPrivateDnsZonesFallbackToInternet | No       | Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).
 parVirtualNetworkResourceIdsToLinkTo | No       | Array of Resource IDs of VNets to link to Private DNS Zones.
 parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS Zone(s).  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parTags        | No       | Tags you would like to be applied to all resources in this module.
@@ -314,6 +315,14 @@ Resource Group Name for Private DNS Zones.
 
 Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
 
+### parPrivateDnsZonesFallbackToInternet
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).
+
+- Default value: `False`
+
 ### parVirtualNetworkResourceIdsToLinkTo
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -501,6 +510,9 @@ outAzFwPrivateIps | array |
         },
         "parPrivateDnsZones": {
             "value": []
+        },
+        "parPrivateDnsZonesFallbackToInternet": {
+            "value": false
         },
         "parVirtualNetworkResourceIdsToLinkTo": {
             "value": []
