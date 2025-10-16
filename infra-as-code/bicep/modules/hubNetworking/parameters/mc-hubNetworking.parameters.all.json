@@ -150,9 +150,6 @@
     "parPrivateDnsZonesFallbackToInternet": {
       "value": false
     },
-    "parPrivateDnsZoneAutoMergeAzureBackupZone": {
-      "value": true
-    },
     "parVpnGatewayEnabled": {
       "value": true
     },
