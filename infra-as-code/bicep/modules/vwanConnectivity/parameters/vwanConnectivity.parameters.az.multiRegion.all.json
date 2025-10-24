@@ -110,6 +110,9 @@
     "parPrivateDnsZones": {
       "value": []
     },
+    "parPrivateDnsZonesFallbackToInternet": {
+      "value": false
+    },
     "parVirtualNetworkResourceIdsToLinkTo": {
       "value": []
     },
