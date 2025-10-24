@@ -319,6 +319,12 @@ param parPrivateDnsZones array = []
 @sys.description('Array of Resource IDs of VNets to link to Private DNS Zones.')
 param parVirtualNetworkResourceIdsToLinkTo array = []
 
+@sys.description('Array of additional Private Link Private DNS Zones to include in addition to those specified in `parPrivateDnsZones`.')
+param additionalPrivateLinkPrivateDnsZonesToInclude array = []
+
+@sys.description('Array of Private Link Private DNS Zones to exclude from those specified in `parPrivateDnsZones`.')
+param privateLinkPrivateDnsZonesToExclude array = []
+
 @sys.description('''Resource Lock Configuration for Private DNS Zone(s).
 
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
@@ -488,7 +494,7 @@ module modVnetPeeringVwan '../vnetPeeringVwan/vnetPeeringVwan.bicep' = [
     scope: subscription()
     params: {
       parRemoteVirtualNetworkResourceId: modSidecarVirtualNetwork[i].outputs.resourceId
-      parVirtualWanHubResourceId: resVhub[0].id
+      parVirtualWanHubResourceId: resVhub[i].id
     }
   }
 ]
@@ -698,13 +704,15 @@ resource resDDoSProtectionPlanLock 'Microsoft.Authorization/locks@2020-05-01' = 
 }
 
 // Private DNS Zones cannot be linked to the Virtual WAN Hub today however, they can be linked to spokes as they are normal VNets as per https://docs.microsoft.com/azure/virtual-wan/howto-private-link
-module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.3.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-Single'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
     location: parLocation
     privateLinkPrivateDnsZones: empty(parPrivateDnsZones) ? null : parPrivateDnsZones
     virtualNetworkResourceIdsToLinkTo: parVirtualNetworkResourceIdsToLinkTo
+    additionalPrivateLinkPrivateDnsZonesToInclude: additionalPrivateLinkPrivateDnsZonesToInclude
+    privateLinkPrivateDnsZonesToExclude: privateLinkPrivateDnsZonesToExclude
     enableTelemetry: parTelemetryOptOut ? false : true
     tags: parTags
     lock: {

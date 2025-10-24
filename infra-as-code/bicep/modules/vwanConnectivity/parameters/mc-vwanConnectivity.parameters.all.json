@@ -114,11 +114,16 @@
         "privatelink.redis.cache.chinacloudapi.cn"
       ]
     },
-    "parPrivateDnsZoneAutoMergeAzureBackupZone": {
-      "value": true
+    "parVirtualNetworkResourceIdsToLinkTo": {
+      "value": [
+        "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
+      ]
     },
-    "parVirtualNetworkIdToLink": {
-      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
+    "additionalPrivateLinkPrivateDnsZonesToInclude": {
+      "value": []
+    },
+    "privateLinkPrivateDnsZonesToExclude": {
+      "value": []
     },
     "parTags": {
       "value": {

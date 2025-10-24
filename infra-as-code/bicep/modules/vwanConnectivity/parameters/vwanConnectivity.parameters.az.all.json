@@ -85,6 +85,12 @@
     "parVirtualNetworkResourceIdsToLinkTo": {
       "value": []
     },
+    "additionalPrivateLinkPrivateDnsZonesToInclude": {
+      "value": []
+    },
+    "privateLinkPrivateDnsZonesToExclude": {
+      "value": []
+    },
     "parTags": {
       "value": {
         "Environment": "Live"
