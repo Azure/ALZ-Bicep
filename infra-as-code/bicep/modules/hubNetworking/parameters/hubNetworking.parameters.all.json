@@ -117,8 +117,14 @@
     "parPrivateDnsZones": {
       "value": []
     },
-    "parPrivateDnsZonesFallbackToInternet": {
-      "value": false
+    "parVirtualNetworkResourceIdsToLinkTo": {
+      "value": []
+    },
+    "additionalPrivateLinkPrivateDnsZonesToInclude": {
+      "value": []
+    },
+    "privateLinkPrivateDnsZonesToExclude": {
+      "value": []
     },
     "parVpnGatewayEnabled": {
       "value": true

@@ -80,6 +80,8 @@ parPrivateDnsZones | No       | Array of DNS Zones to provision and link to Hub 
 parPrivateDnsZonesFallbackToInternet | No       | Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).
 parVirtualNetworkIdToLinkFailover | No       | Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 parVirtualNetworkResourceIdsToLinkTo | No       | Array of Resource IDs of VNets to link to Private DNS Zones. Hub VNets are automatically included by module.
+additionalPrivateLinkPrivateDnsZonesToInclude | No       | Array of additional Private Link Private DNS Zones to include in addition to those specified in `parPrivateDnsZones`.
+privateLinkPrivateDnsZonesToExclude | No       | Array of Private Link Private DNS Zones to exclude from those specified in `parPrivateDnsZones`.
 parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS Zone(s).  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVpnGatewayEnabled | No       | Switch to enable/disable VPN virtual network gateway deployment.
 parVpnGatewayEnabledSecondaryLocation | No       | Switch to enable/disable VPN virtual network gateway deployment in secondary location.
@@ -709,6 +711,18 @@ Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 
 Array of Resource IDs of VNets to link to Private DNS Zones. Hub VNets are automatically included by module.
 
+### additionalPrivateLinkPrivateDnsZonesToInclude
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Array of additional Private Link Private DNS Zones to include in addition to those specified in `parPrivateDnsZones`.
+
+### privateLinkPrivateDnsZonesToExclude
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Array of Private Link Private DNS Zones to exclude from those specified in `parPrivateDnsZones`.
+
 ### parPrivateDNSZonesLock
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -1154,6 +1168,12 @@ outBastionNsgNameSecondaryLocation | string |
             "value": ""
         },
         "parVirtualNetworkResourceIdsToLinkTo": {
+            "value": []
+        },
+        "additionalPrivateLinkPrivateDnsZonesToInclude": {
+            "value": []
+        },
+        "privateLinkPrivateDnsZonesToExclude": {
             "value": []
         },
         "parPrivateDNSZonesLock": {
