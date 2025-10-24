@@ -473,6 +473,12 @@ param parVirtualNetworkIdToLinkFailover string = ''
 @sys.description('Array of Resource IDs of VNets to link to Private DNS Zones. Hub VNets are automatically included by module.')
 param parVirtualNetworkResourceIdsToLinkTo array = []
 
+@sys.description('Array of additional Private Link Private DNS Zones to include in addition to those specified in `parPrivateDnsZones`.')
+param additionalPrivateLinkPrivateDnsZonesToInclude array = []
+
+@sys.description('Array of Private Link Private DNS Zones to exclude from those specified in `parPrivateDnsZones`.')
+param privateLinkPrivateDnsZonesToExclude array = []
+
 @sys.description('''Resource Lock Configuration for Private DNS Zone(s).
 
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
@@ -2014,7 +2020,7 @@ resource resHubRouteTableLockSecondaryLocation 'Microsoft.Authorization/locks@20
   }
 }
 
-module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-private-dns-zones:0.3.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-${parLocation}'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
@@ -2025,6 +2031,8 @@ module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-priv
       !empty(parVirtualNetworkIdToLinkFailover) ? [parVirtualNetworkIdToLinkFailover] : [],
       parVirtualNetworkResourceIdsToLinkTo
     )
+    additionalPrivateLinkPrivateDnsZonesToInclude: additionalPrivateLinkPrivateDnsZonesToInclude
+    privateLinkPrivateDnsZonesToExclude: privateLinkPrivateDnsZonesToExclude
     enableTelemetry: parTelemetryOptOut ? false : true
     tags: parTags
     lock: {
@@ -2034,7 +2042,7 @@ module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-priv
   }
 }
 
-module modPrivateDnsZonesAVMRegion2 'br/public:avm/ptn/network/private-link-private-dns-zones:0.3.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVMRegion2 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-Multi-${parSecondaryLocation}'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
@@ -2045,6 +2053,8 @@ module modPrivateDnsZonesAVMRegion2 'br/public:avm/ptn/network/private-link-priv
       !empty(parVirtualNetworkIdToLinkFailover) ? [parVirtualNetworkIdToLinkFailover] : [],
       parVirtualNetworkResourceIdsToLinkTo
     )
+    additionalPrivateLinkPrivateDnsZonesToInclude: additionalPrivateLinkPrivateDnsZonesToInclude
+    privateLinkPrivateDnsZonesToExclude: privateLinkPrivateDnsZonesToExclude
     enableTelemetry: parTelemetryOptOut ? false : true
     tags: parTags
     lock: {
