@@ -37,6 +37,8 @@ parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS
 parPrivateDnsZones | No       | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
 parPrivateDnsZonesFallbackToInternet | No       | Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).
 parVirtualNetworkResourceIdsToLinkTo | No       | Array of Resource IDs of VNets to link to Private DNS Zones.
+additionalPrivateLinkPrivateDnsZonesToInclude | No       | Array of additional Private Link Private DNS Zones to include in addition to those specified in `parPrivateDnsZones`.
+privateLinkPrivateDnsZonesToExclude | No       | Array of Private Link Private DNS Zones to exclude from those specified in `parPrivateDnsZones`.
 parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS Zone(s).  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
@@ -329,6 +331,18 @@ Switch to enable/disable fallback to internet for Private DNS Zones (option only
 
 Array of Resource IDs of VNets to link to Private DNS Zones.
 
+### additionalPrivateLinkPrivateDnsZonesToInclude
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Array of additional Private Link Private DNS Zones to include in addition to those specified in `parPrivateDnsZones`.
+
+### privateLinkPrivateDnsZonesToExclude
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Array of Private Link Private DNS Zones to exclude from those specified in `parPrivateDnsZones`.
+
 ### parPrivateDNSZonesLock
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -515,6 +529,12 @@ outAzFwPrivateIps | array |
             "value": false
         },
         "parVirtualNetworkResourceIdsToLinkTo": {
+            "value": []
+        },
+        "additionalPrivateLinkPrivateDnsZonesToInclude": {
+            "value": []
+        },
+        "privateLinkPrivateDnsZonesToExclude": {
             "value": []
         },
         "parPrivateDNSZonesLock": {

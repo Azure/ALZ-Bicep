@@ -326,6 +326,12 @@ param parVirtualNetworkIdToLinkFailover string = ''
 @sys.description('Array of Resource IDs of VNets to link to Private DNS Zones. Hub VNet is automatically included by module.')
 param parVirtualNetworkResourceIdsToLinkTo array = []
 
+@sys.description('Array of additional Private Link Private DNS Zones to include in addition to those specified in `parPrivateDnsZones`.')
+param additionalPrivateLinkPrivateDnsZonesToInclude array = []
+
+@sys.description('Array of Private Link Private DNS Zones to exclude from those specified in `parPrivateDnsZones`.')
+param privateLinkPrivateDnsZonesToExclude array = []
+
 @sys.description('''Resource Lock Configuration for Private DNS Zone(s).
 
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
@@ -1103,6 +1109,8 @@ module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns
   params: {
     location: parLocation
     privateLinkPrivateDnsZones: empty(parPrivateDnsZones) ? null : parPrivateDnsZones
+    additionalPrivateLinkPrivateDnsZonesToInclude: additionalPrivateLinkPrivateDnsZonesToInclude
+    privateLinkPrivateDnsZonesToExclude: privateLinkPrivateDnsZonesToExclude
     virtualNetworkLinks: [
       for vnetId in union(
         [resHubVnet.id],
