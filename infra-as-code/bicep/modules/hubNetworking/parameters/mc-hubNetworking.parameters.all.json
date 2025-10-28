@@ -147,8 +147,14 @@
         "privatelink.redis.cache.chinacloudapi.cn"
       ]
     },
-    "parPrivateDnsZonesFallbackToInternet": {
-      "value": false
+    "parVirtualNetworkResourceIdsToLinkTo": {
+      "value": []
+    },
+    "additionalPrivateLinkPrivateDnsZonesToInclude": {
+      "value": []
+    },
+    "privateLinkPrivateDnsZonesToExclude": {
+      "value": []
     },
     "parVpnGatewayEnabled": {
       "value": true
