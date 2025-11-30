@@ -3,7 +3,7 @@
 # https://github.com/Azure/ALZ-PowerShell-Module/wiki/%5BUser-Guide%5D-Quick-Start-Phase-2-Azure-DevOps#2211-azure-devops-with-bicep
 
 # Basic Inputs
-iac_type: "bicep"
+iac_type: "bicep-classic"
 bootstrap_module_name: "alz_azuredevops"
 starter_module_name: "complete"
 
