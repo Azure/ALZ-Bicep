@@ -154,6 +154,12 @@
     "parAzFirewallIntelMode": {
       "value": "Alert"
     },
+    "parAzFirewallCustomPublicIps": {
+      "value": []
+    },
+    "parAzFirewallCustomManagementIp": {
+      "value": ""
+    },
     "parAzFirewallAvailabilityZones": {
       "value": [
         "1",
@@ -175,6 +181,12 @@
     },
     "parAzFirewallIntelModeSecondaryLocation": {
       "value": "Alert"
+    },
+    "parAzFirewallCustomPublicIpsSecondaryLocation": {
+      "value": []
+    },
+    "parAzFirewallCustomManagementIpSecondaryLocation": {
+      "value": ""
     },
     "parAzFirewallAvailabilityZonesSecondaryLocation": {
       "value": [

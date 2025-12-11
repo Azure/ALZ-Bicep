@@ -250,6 +250,9 @@ param parAzFirewallIntelMode string = 'Alert'
 @sys.description('Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.')
 param parAzFirewallCustomPublicIps array = []
 
+@sys.description('Optional Custom Management Public IP resource ID, which is assigned to Azure Firewall managementIpConfiguration. Requires AzureFirewallManagementSubnet to be configured in parSubnets.')
+param parAzFirewallCustomManagementIp string?
+
 @allowed([
   '1'
   '2'
@@ -478,6 +481,7 @@ var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
 var varZtnP1Trigger = (parDdosEnabled && parAzFirewallEnabled && (parAzFirewallTier == 'Premium'))
 
 var varAzFirewallUseCustomPublicIps = length(parAzFirewallCustomPublicIps) > 0
+var varAzFirewallUseCustomManagementIp = !empty(parAzFirewallCustomManagementIp)
 
 //DDos Protection plan will only be enabled if parDdosEnabled is true.
 resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01' = if (parDdosEnabled) {
@@ -936,7 +940,7 @@ module modAzureFirewallPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewall
   }
 }
 
-module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewallEnabled && (contains(
+module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewallEnabled && !varAzFirewallUseCustomManagementIp && (contains(
   map(parSubnets, subnets => subnets.name),
   'AzureFirewallManagementSubnet'
 ))) {
@@ -1039,17 +1043,21 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-05-01' = if (pa
             }
           }
         ]
-    managementIpConfiguration: {
-      name: 'mgmtIpConfig'
-      properties: {
-        subnet: {
-          id: resAzureFirewallMgmtSubnetRef.id
+    managementIpConfiguration: (contains(map(parSubnets, subnets => subnets.name), 'AzureFirewallManagementSubnet'))
+      ? {
+          name: 'mgmtIpConfig'
+          properties: {
+            subnet: {
+              id: resAzureFirewallMgmtSubnetRef.id
+            }
+            publicIPAddress: {
+              id: parAzFirewallEnabled
+                ? (parAzFirewallCustomManagementIp ?? modAzureFirewallMgmtPublicIp.?outputs.outPublicIpId)
+                : ''
+            }
+          }
         }
-        publicIPAddress: {
-          id: parAzFirewallEnabled ? modAzureFirewallMgmtPublicIp.?outputs.outPublicIpId : ''
-        }
-      }
-    }
+      : null
     sku: {
       name: 'AZFW_VNet'
       tier: parAzFirewallTier

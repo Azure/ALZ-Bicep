@@ -90,6 +90,12 @@
     "parAzFirewallIntelMode": {
       "value": "Alert"
     },
+    "parAzFirewallCustomPublicIps": {
+      "value": []
+    },
+    "parAzFirewallCustomManagementIp": {
+      "value": ""
+    },
     "parAzFirewallAvailabilityZones": {
       "value": []
     },
