@@ -294,6 +294,17 @@ param parAzureFirewallLock lockType = {
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
 
+@sys.description(''' Resource Lock Configuration for Azure Firewall Policy.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
+param parAzureFirewallPolicyLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+}
+
 @sys.description('Name of Route table to create for the default route of Hub.')
 param parHubRouteTableName string = '${parCompanyPrefix}-hub-routetable'
 
@@ -991,13 +1002,13 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-05-01' = i
       }
 }
 
-// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
-resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallEnabled && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+// Create Azure Firewall Policy resource lock if parAzFirewallPoliciesEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallPolicyLock.kind != 'None'
+resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallPoliciesEnabled && (parAzureFirewallPolicyLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
   scope: resFirewallPolicies
-  name: parAzureFirewallLock.?name ?? '${resFirewallPolicies.name}-lock'
+  name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPolicies.name}-lock'
   properties: {
-    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallLock.kind
-    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallLock.?notes
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallPolicyLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallPolicyLock.?notes
   }
 }
 
@@ -1062,9 +1073,11 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-05-01' = if (pa
       name: 'AZFW_VNet'
       tier: parAzFirewallTier
     }
-    firewallPolicy: {
-      id: resFirewallPolicies.id
-    }
+    firewallPolicy: (parAzFirewallPoliciesEnabled)
+      ? {
+          id: resFirewallPolicies.id
+        }
+      : null
   }
 }
 
