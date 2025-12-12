@@ -107,12 +107,6 @@
         "notes": "This lock was created by the ALZ Bicep Logging Module."
       }
     },
-    "parSecurityInsightsOnboardingLock": {
-      "value": {
-        "kind": "None",
-        "notes": "This lock was created by the ALZ Bicep Logging Module."
-      }
-    },
     "parChangeTrackingSolutionLock": {
       "value": {
         "kind": "None",

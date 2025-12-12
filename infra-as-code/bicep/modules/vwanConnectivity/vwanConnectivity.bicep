@@ -284,6 +284,17 @@ param parAzureFirewallLock lockType = {
   notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
 }
 
+@sys.description(''' Resource Lock Configuration for Azure Firewall Policy.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
+param parAzureFirewallPolicyLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
+}
+
 @sys.description('The scale unit for this VPN Gateway.')
 param parVpnGatewayScaleUnit int = 1
 
@@ -597,14 +608,14 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-05-01' = [
   }
 ]
 
-// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
+// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallPolicyLock.kind != 'None'
 resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = [
-  for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled && parVirtualWanHubs[i].parAzFirewallEnabled) && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled && parVirtualWanHubs[i].parAzFirewallEnabled) && (parAzureFirewallPolicyLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
     scope: resFirewallPolicies[i]
-    name: parAzureFirewallLock.?name ?? '${resFirewallPolicies[i].name}-lock'
+    name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPolicies[i].name}-lock'
     properties: {
-      level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallLock.kind
-      notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallLock.?notes
+      level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallPolicyLock.kind
+      notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallPolicyLock.?notes
     }
   }
 ]
@@ -639,13 +650,13 @@ resource resFirewallPoliciesSharedGlobal 'Microsoft.Network/firewallPolicies@202
       }
 }
 
-// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
-resource resFirewallPoliciesLockSharedGlobal 'Microsoft.Authorization/locks@2020-05-01' = if ((parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled && parAzFirewallPolicyDeploymentStyle == 'SharedGlobal') && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallPolicyLock.kind != 'None'
+resource resFirewallPoliciesLockSharedGlobal 'Microsoft.Authorization/locks@2020-05-01' = if ((parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled && parAzFirewallPolicyDeploymentStyle == 'SharedGlobal') && (parAzureFirewallPolicyLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
   scope: resFirewallPoliciesSharedGlobal
-  name: parAzureFirewallLock.?name ?? '${resFirewallPoliciesSharedGlobal.name}-lock'
+  name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPoliciesSharedGlobal.name}-lock'
   properties: {
-    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallLock.kind
-    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallLock.?notes
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallPolicyLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallPolicyLock.?notes
   }
 }
 
@@ -668,11 +679,13 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-05-01' = [
       virtualHub: {
         id: parVirtualHubEnabled ? resVhub[i].id : ''
       }
-      firewallPolicy: {
-        id: (parVirtualHubEnabled && hub.parAzFirewallEnabled && parAzFirewallPolicyDeploymentStyle == 'SharedGlobal')
-          ? resFirewallPoliciesSharedGlobal.id
-          : resFirewallPolicies[i].id
-      }
+      firewallPolicy: (parVirtualHubEnabled && hub.parAzFirewallEnabled)
+        ? {
+            id: (parAzFirewallPolicyDeploymentStyle == 'SharedGlobal')
+              ? resFirewallPoliciesSharedGlobal.id
+              : resFirewallPolicies[i].id
+          }
+        : null
     }
   }
 ]

@@ -35,12 +35,14 @@ parAzFirewallPoliciesPrivateRanges | No       | Private IP addresses/IP ranges t
 parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
 parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.
 parAzFirewallCustomPublicIps | No       | Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.
+parAzFirewallCustomManagementIp | Yes      | Optional Custom Management Public IP resource ID, which is assigned to Azure Firewall managementIpConfiguration. Requires AzureFirewallManagementSubnet to be configured in parSubnets.
 parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
 parAzErGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
 parAzVpnGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
 parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
 parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall
 parAzureFirewallLock | No       |  Resource Lock Configuration for Azure Firewall.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parAzureFirewallPolicyLock | No       |  Resource Lock Configuration for Azure Firewall Policy.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parHubRouteTableName | No       | Name of Route table to create for the default route of Hub.
 parDisableBgpRoutePropagation | No       | Switch to enable/disable BGP Propagation on route table.
 parHubRouteTableLock | No       | Resource Lock Configuration for Hub Route Table.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
@@ -316,6 +318,12 @@ The Azure Firewall Threat Intelligence Mode. If not set, the default value is Al
 
 Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.
 
+### parAzFirewallCustomManagementIp
+
+![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
+
+Optional Custom Management Public IP resource ID, which is assigned to Azure Firewall managementIpConfiguration. Requires AzureFirewallManagementSubnet to be configured in parSubnets.
+
 ### parAzFirewallAvailabilityZones
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -359,6 +367,19 @@ Array of custom DNS servers used by Azure Firewall
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
  Resource Lock Configuration for Azure Firewall.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Networking Module.}`
+
+### parAzureFirewallPolicyLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+ Resource Lock Configuration for Azure Firewall Policy.
 
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
 - `notes` - Notes about this lock.
@@ -682,6 +703,9 @@ outBastionNsgName | string |
         "parAzFirewallCustomPublicIps": {
             "value": []
         },
+        "parAzFirewallCustomManagementIp": {
+            "value": ""
+        },
         "parAzFirewallAvailabilityZones": {
             "value": []
         },
@@ -698,6 +722,12 @@ outBastionNsgName | string |
             "value": []
         },
         "parAzureFirewallLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+            }
+        },
+        "parAzureFirewallPolicyLock": {
             "value": {
                 "kind": "None",
                 "notes": "This lock was created by the ALZ Bicep Hub Networking Module."

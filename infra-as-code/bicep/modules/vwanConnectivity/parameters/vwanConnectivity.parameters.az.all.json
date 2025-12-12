@@ -132,6 +132,12 @@
         "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
       }
     },
+    "parAzureFirewallPolicyLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+      }
+    },
     "parVpnGatewayLock": {
       "value": {
         "kind": "None",

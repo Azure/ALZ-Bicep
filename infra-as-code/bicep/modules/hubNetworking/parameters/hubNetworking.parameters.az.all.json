@@ -90,6 +90,12 @@
     "parAzFirewallIntelMode": {
       "value": "Alert"
     },
+    "parAzFirewallCustomPublicIps": {
+      "value": []
+    },
+    "parAzFirewallCustomManagementIp": {
+      "value": ""
+    },
     "parAzFirewallAvailabilityZones": {
       "value": [
         "1",
@@ -226,6 +232,12 @@
       }
     },
     "parAzureFirewallLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parAzureFirewallPolicyLock": {
       "value": {
         "kind": "None",
         "notes": "This lock was created by the ALZ Bicep Hub Networking Module."

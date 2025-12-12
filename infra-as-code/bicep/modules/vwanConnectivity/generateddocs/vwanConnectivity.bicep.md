@@ -27,6 +27,7 @@ parAzFirewallPoliciesName | No       | Azure Firewall Policies Name. This is use
 parAzFirewallPoliciesAutoLearn | No       | The operation mode for automatically learning private ranges to not be SNAT.
 parAzFirewallPoliciesPrivateRanges | No       | Private IP addresses/IP ranges to which traffic will not be SNAT.
 parAzureFirewallLock | No       | Resource Lock Configuration for Azure Firewall.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parAzureFirewallPolicyLock | No       |  Resource Lock Configuration for Azure Firewall Policy.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVpnGatewayScaleUnit | No       | The scale unit for this VPN Gateway.
 parExpressRouteGatewayScaleUnit | No       | The scale unit for this ExpressRoute Gateway.
 parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment.
@@ -242,6 +243,19 @@ Private IP addresses/IP ranges to which traffic will not be SNAT.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Resource Lock Configuration for Azure Firewall.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
+
+### parAzureFirewallPolicyLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+ Resource Lock Configuration for Azure Firewall Policy.
 
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
 - `notes` - Notes about this lock.
@@ -493,6 +507,12 @@ outAzFwPrivateIps | array |
             "value": []
         },
         "parAzureFirewallLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+            }
+        },
+        "parAzureFirewallPolicyLock": {
             "value": {
                 "kind": "None",
                 "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."

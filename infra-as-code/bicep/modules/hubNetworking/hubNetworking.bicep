@@ -250,6 +250,9 @@ param parAzFirewallIntelMode string = 'Alert'
 @sys.description('Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.')
 param parAzFirewallCustomPublicIps array = []
 
+@sys.description('Optional Custom Management Public IP resource ID, which is assigned to Azure Firewall managementIpConfiguration. Requires AzureFirewallManagementSubnet to be configured in parSubnets.')
+param parAzFirewallCustomManagementIp string?
+
 @allowed([
   '1'
   '2'
@@ -287,6 +290,17 @@ param parAzFirewallDnsServers array = []
 
 ''')
 param parAzureFirewallLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
+}
+
+@sys.description(''' Resource Lock Configuration for Azure Firewall Policy.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
+param parAzureFirewallPolicyLock lockType = {
   kind: 'None'
   notes: 'This lock was created by the ALZ Bicep Hub Networking Module.'
 }
@@ -478,6 +492,7 @@ var varZtnP1CuaId = '3ab23b1e-c5c5-42d4-b163-1402384ba2db'
 var varZtnP1Trigger = (parDdosEnabled && parAzFirewallEnabled && (parAzFirewallTier == 'Premium'))
 
 var varAzFirewallUseCustomPublicIps = length(parAzFirewallCustomPublicIps) > 0
+var varAzFirewallUseCustomManagementIp = !empty(parAzFirewallCustomManagementIp)
 
 //DDos Protection plan will only be enabled if parDdosEnabled is true.
 resource resDdosProtectionPlan 'Microsoft.Network/ddosProtectionPlans@2023-02-01' = if (parDdosEnabled) {
@@ -936,7 +951,7 @@ module modAzureFirewallPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewall
   }
 }
 
-module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewallEnabled && (contains(
+module modAzureFirewallMgmtPublicIp '../publicIp/publicIp.bicep' = if (parAzFirewallEnabled && !varAzFirewallUseCustomManagementIp && (contains(
   map(parSubnets, subnets => subnets.name),
   'AzureFirewallManagementSubnet'
 ))) {
@@ -987,13 +1002,13 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-05-01' = i
       }
 }
 
-// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
-resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallEnabled && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+// Create Azure Firewall Policy resource lock if parAzFirewallPoliciesEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallPolicyLock.kind != 'None'
+resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallPoliciesEnabled && (parAzureFirewallPolicyLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
   scope: resFirewallPolicies
-  name: parAzureFirewallLock.?name ?? '${resFirewallPolicies.name}-lock'
+  name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPolicies.name}-lock'
   properties: {
-    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallLock.kind
-    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallLock.?notes
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallPolicyLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallPolicyLock.?notes
   }
 }
 
@@ -1039,24 +1054,30 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-05-01' = if (pa
             }
           }
         ]
-    managementIpConfiguration: {
-      name: 'mgmtIpConfig'
-      properties: {
-        subnet: {
-          id: resAzureFirewallMgmtSubnetRef.id
+    managementIpConfiguration: (contains(map(parSubnets, subnets => subnets.name), 'AzureFirewallManagementSubnet'))
+      ? {
+          name: 'mgmtIpConfig'
+          properties: {
+            subnet: {
+              id: resAzureFirewallMgmtSubnetRef.id
+            }
+            publicIPAddress: {
+              id: parAzFirewallEnabled
+                ? (parAzFirewallCustomManagementIp ?? modAzureFirewallMgmtPublicIp.?outputs.outPublicIpId)
+                : ''
+            }
+          }
         }
-        publicIPAddress: {
-          id: parAzFirewallEnabled ? modAzureFirewallMgmtPublicIp.?outputs.outPublicIpId : ''
-        }
-      }
-    }
+      : null
     sku: {
       name: 'AZFW_VNet'
       tier: parAzFirewallTier
     }
-    firewallPolicy: {
-      id: resFirewallPolicies.id
-    }
+    firewallPolicy: (parAzFirewallPoliciesEnabled)
+      ? {
+          id: resFirewallPolicies.id
+        }
+      : null
   }
 }
 

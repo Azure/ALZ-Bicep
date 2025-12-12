@@ -57,7 +57,9 @@ parAzFirewallTierSecondaryLocation | No       | Azure Firewall Tier associated w
 parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.
 parAzFirewallIntelModeSecondaryLocation | No       | The Azure Firewall Threat Intelligence Mode in the secondary location. If not set, the default value is Alert.
 parAzFirewallCustomPublicIps | No       | Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.
+parAzFirewallCustomManagementIp | No       | Optional Custom Management Public IP resource ID, which is assigned to Azure Firewall managementIpConfiguration. Requires AzureFirewallManagementSubnet to be configured in parSubnets.
 parAzFirewallCustomPublicIpsSecondaryLocation | No       | Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations in the secondary location.
+parAzFirewallCustomManagementIpSecondaryLocation | No       | Optional Custom Management Public IP resource ID, which is assigned to Azure Firewall managementIpConfiguration in the secondary location. Requires AzureFirewallManagementSubnet to be configured in parSubnetsSecondaryLocation.
 parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
 parAzFirewallAvailabilityZonesSecondaryLocation | No       | Availability Zones to deploy the Azure Firewall across in the secondary location. Region must support Availability Zones to use. If it does not then leave empty.
 parAzErGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
@@ -69,6 +71,7 @@ parAzFirewallDnsProxyEnabledSecondaryLocation | No       | Switch to enable/disa
 parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall.
 parAzFirewallDnsServersSecondaryLocation | No       | Array of custom DNS servers used by Azure Firewall in the secondary location.
 parAzureFirewallLock | No       |  Resource Lock Configuration for Azure Firewall.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parAzureFirewallPolicyLock | No       |  Resource Lock Configuration for Azure Firewall Policy.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parHubRouteTableName | No       | Name of Route table to create for the default route of Hub.
 parHubRouteTableNameSecondaryLocation | No       | Name of Route table to create for the default route of Hub in the secondary location.
 parDisableBgpRoutePropagation | No       | Switch to enable/disable BGP Propagation on route table.
@@ -529,11 +532,23 @@ The Azure Firewall Threat Intelligence Mode in the secondary location. If not se
 
 Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.
 
+### parAzFirewallCustomManagementIp
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional Custom Management Public IP resource ID, which is assigned to Azure Firewall managementIpConfiguration. Requires AzureFirewallManagementSubnet to be configured in parSubnets.
+
 ### parAzFirewallCustomPublicIpsSecondaryLocation
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations in the secondary location.
+
+### parAzFirewallCustomManagementIpSecondaryLocation
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional Custom Management Public IP resource ID, which is assigned to Azure Firewall managementIpConfiguration in the secondary location. Requires AzureFirewallManagementSubnet to be configured in parSubnetsSecondaryLocation.
 
 ### parAzFirewallAvailabilityZones
 
@@ -616,6 +631,19 @@ Array of custom DNS servers used by Azure Firewall in the secondary location.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
  Resource Lock Configuration for Azure Firewall.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Networking Module.}`
+
+### parAzureFirewallPolicyLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+ Resource Lock Configuration for Azure Firewall Policy.
 
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
 - `notes` - Notes about this lock.
@@ -1095,8 +1123,14 @@ outBastionNsgNameSecondaryLocation | string |
         "parAzFirewallCustomPublicIps": {
             "value": []
         },
+        "parAzFirewallCustomManagementIp": {
+            "value": ""
+        },
         "parAzFirewallCustomPublicIpsSecondaryLocation": {
             "value": []
+        },
+        "parAzFirewallCustomManagementIpSecondaryLocation": {
+            "value": ""
         },
         "parAzFirewallAvailabilityZones": {
             "value": []
@@ -1129,6 +1163,12 @@ outBastionNsgNameSecondaryLocation | string |
             "value": []
         },
         "parAzureFirewallLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+            }
+        },
+        "parAzureFirewallPolicyLock": {
             "value": {
                 "kind": "None",
                 "notes": "This lock was created by the ALZ Bicep Hub Networking Module."

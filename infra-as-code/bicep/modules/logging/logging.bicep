@@ -130,17 +130,6 @@ param parLogAnalyticsWorkspaceSolutions array = [
   'ChangeTracking'
 ]
 
-@sys.description('''Resource Lock Configuration for Security Insights solution.
-
-- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
-- `notes` - Notes about this lock.
-
-''')
-param parSecurityInsightsOnboardingLock lockType = {
-  kind: 'None'
-  notes: 'This lock was created by the ALZ Bicep Logging Module.'
-}
-
 @sys.description('''Resource Lock Configuration for Change Tracking solution.
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
 - `notes` - Notes about this lock.
@@ -211,7 +200,7 @@ resource resUserAssignedManagedIdentity 'Microsoft.ManagedIdentity/userAssignedI
   tags: parTags
 }
 
-resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2023-11-01' = if (parAutomationAccountEnabled) {
+resource resAutomationAccount 'Microsoft.Automation/automationAccounts@2024-10-23' = if (parAutomationAccountEnabled) {
   name: parAutomationAccountName
   location: parAutomationAccountLocation
   tags: parAutomationAccountTags
@@ -239,7 +228,7 @@ resource resAutomationAccountLock 'Microsoft.Authorization/locks@2020-05-01' = i
   }
 }
 
-resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
+resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2025-07-01' = {
   name: parLogAnalyticsWorkspaceName
   location: parLogAnalyticsWorkspaceLocation
   tags: parLogAnalyticsWorkspaceTags
@@ -262,6 +251,7 @@ resource resLogAnalyticsWorkspaceLock 'Microsoft.Authorization/locks@2020-05-01'
   }
 }
 
+#disable-next-line use-recent-api-versions
 resource resDataCollectionRuleVMInsightsPerfAndMap 'Microsoft.Insights/dataCollectionRules@2021-04-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfAndMap') {
   name: parDataCollectionRuleVMInsightsName
   location: parLogAnalyticsWorkspaceLocation
@@ -321,6 +311,7 @@ resource resDataCollectionRuleVMInsightsPerfAndMap 'Microsoft.Insights/dataColle
   }
 }
 
+#disable-next-line use-recent-api-versions
 resource resDataCollectionRuleVMInsightsPerfOnly 'Microsoft.Insights/dataCollectionRules@2021-04-01' = if (parDataCollectionRuleVMInsightsExperience == 'PerfOnly') {
   name: parDataCollectionRuleVMInsightsName
   location: parLogAnalyticsWorkspaceLocation
@@ -382,6 +373,7 @@ resource resDataCollectionRuleVMInsightsPerfOnlyLock 'Microsoft.Authorization/lo
   }
 }
 
+#disable-next-line use-recent-api-versions
 resource resDataCollectionRuleChangeTracking 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
   name: parDataCollectionRuleChangeTrackingName
   location: parLogAnalyticsWorkspaceLocation
@@ -654,6 +646,7 @@ resource resDataCollectionRuleChangeTrackingLock 'Microsoft.Authorization/locks@
   }
 }
 
+#disable-next-line use-recent-api-versions
 resource resDataCollectionRuleMDFCSQL'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
   name: parDataCollectionRuleMDFCSQLName
   location: parLogAnalyticsWorkspaceLocation
@@ -716,7 +709,7 @@ resource resDataCollectionRuleMDFCSQLLock 'Microsoft.Authorization/locks@2020-05
 }
 
 // Onboard the Log Analytics Workspace to Sentinel if SecurityInsights is in parLogAnalyticsWorkspaceSolutions
-resource resSentinelOnboarding 'Microsoft.SecurityInsights/onboardingStates@2024-03-01' = if (contains(parLogAnalyticsWorkspaceSolutions, 'SecurityInsights')) {
+resource resSentinelOnboarding 'Microsoft.SecurityInsights/onboardingStates@2025-09-01' = if (contains(parLogAnalyticsWorkspaceSolutions, 'SecurityInsights')) {
   name: 'default'
   scope: resLogAnalyticsWorkspace
   properties: {}
@@ -736,19 +729,8 @@ resource resChangeTrackingSolution 'Microsoft.OperationsManagement/solutions@201
   }
 }
 
-
-// Add resource lock for SecurityInsights solution
-resource resSecurityInsightsSolutionLock 'Microsoft.Authorization/locks@2020-05-01' = if (parSecurityInsightsOnboardingLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
-  scope: resSentinelOnboarding
-  name: parSecurityInsightsOnboardingLock.?name ?? '${resSentinelOnboarding.name}-lock'
-  properties: {
-    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parSecurityInsightsOnboardingLock.kind
-    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parSecurityInsightsOnboardingLock.?notes
-  }
-}
-
 // Add resource lock for ChangeTracking solution
-resource resChangeTrackingSolutionLock 'Microsoft.Authorization/locks@2020-05-01' = if (parChangeTrackingSolutionLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
+resource resChangeTrackingSolutionLock 'Microsoft.Authorization/locks@2020-05-01' = if (contains(parLogAnalyticsWorkspaceSolutions, 'ChangeTracking') && (parChangeTrackingSolutionLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
   scope: resChangeTrackingSolution
   name: parChangeTrackingSolutionLock.?name ?? '${resChangeTrackingSolution.name}-lock'
   properties: {
@@ -757,7 +739,7 @@ resource resChangeTrackingSolutionLock 'Microsoft.Authorization/locks@2020-05-01
   }
 }
 
-resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2023-09-01' = if (parLogAnalyticsWorkspaceLinkAutomationAccount) {
+resource resLogAnalyticsLinkedServiceForAutomationAccount 'Microsoft.OperationalInsights/workspaces/linkedServices@2025-07-01' = if (parLogAnalyticsWorkspaceLinkAutomationAccount) {
   parent: resLogAnalyticsWorkspace
   name: parLogAnalyticsLinkedServiceAutomationAccountName
   properties: {
