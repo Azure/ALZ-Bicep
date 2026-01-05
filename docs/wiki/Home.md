@@ -4,7 +4,7 @@
 
 <!-- markdownlint-restore -->
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Please note that this repository contains the **Classic** version of Azure Landing Zones Bicep. You should consider using the latest version of ALZ Bicep which is now based off of Azure Verified Modules (AVM). The latest version can be found here: [Azure Landing Zones Bicep (AVM)](http://aka.ms/alz/acc/bicep)
 
 ![Bicep Logo](media/bicep-logo.png)
