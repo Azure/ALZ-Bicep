@@ -1,4 +1,7 @@
-# Azure Landing Zones (ALZ) - Bicep
+# Azure Landing Zones (ALZ) - Bicep (Classic)
+
+> [!IMPORTANT]
+> Please note that this repository contains the **Classic** version of Azure Landing Zones Bicep. You should consider using the latest version of ALZ Bicep which is now based off of Azure Verified Modules (AVM). The latest version can be found here: [Azure Landing Zones Bicep (AVM)](http://aka.ms/alz/acc/bicep)
 
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/azure/alz-bicep.svg)](http://isitmaintained.com/project/azure/alz-bicep "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/azure/alz-bicep.svg)](http://isitmaintained.com/project/azure/alz-bicep "Percentage of issues still open")

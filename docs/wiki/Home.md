@@ -4,6 +4,9 @@
 
 <!-- markdownlint-restore -->
 
+> [!IMPORTANT]  
+> Please note that this repository contains the **Classic** version of Azure Landing Zones Bicep. You should consider using the latest version of ALZ Bicep which is now based off of Azure Verified Modules (AVM). The latest version can be found here: [Azure Landing Zones Bicep (AVM)](http://aka.ms/alz/acc/bicep)
+
 ![Bicep Logo](media/bicep-logo.png)
 
 Welcome to the wiki of the Azure Landing Zones Bicep repo. This repo contains the Azure Landing Zone Bicep modules that help you create and implement the [Azure Landing Zone Conceptual Architecture](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/#azure-landing-zone-conceptual-architecture) in a modular approach.
