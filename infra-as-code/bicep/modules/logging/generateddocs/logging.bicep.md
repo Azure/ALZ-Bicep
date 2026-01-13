@@ -21,7 +21,6 @@ parLogAnalyticsWorkspaceCapacityReservationLevel | No       | Log Analytics Work
 parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days of log retention for Log Analytics Workspace.
 parLogAnalyticsWorkspaceLock | No       | Resource Lock Configuration for Log Analytics Workspace.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parLogAnalyticsWorkspaceSolutions | No       | Solutions that will be added to the Log Analytics Workspace.
-parSecurityInsightsOnboardingLock | No       | Resource Lock Configuration for Security Insights solution.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parChangeTrackingSolutionLock | No       | Resource Lock Configuration for Change Tracking solution. - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parUserAssignedManagedIdentityName | No       | Name of the User Assigned Managed Identity required for authenticating Azure Monitoring Agent to Azure.
 parUserAssignedManagedIdentityLocation | No       | User Assigned Managed Identity location.
@@ -190,19 +189,6 @@ Solutions that will be added to the Log Analytics Workspace.
 - Default value: `SecurityInsights ChangeTracking`
 
 - Allowed values: `SecurityInsights`, `ChangeTracking`
-
-### parSecurityInsightsOnboardingLock
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Resource Lock Configuration for Security Insights solution.
-
-- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
-- `notes` - Notes about this lock.
-
-
-
-- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Logging Module.}`
 
 ### parChangeTrackingSolutionLock
 
@@ -424,12 +410,6 @@ outAutomationAccountId | string |
                 "SecurityInsights",
                 "ChangeTracking"
             ]
-        },
-        "parSecurityInsightsOnboardingLock": {
-            "value": {
-                "kind": "None",
-                "notes": "This lock was created by the ALZ Bicep Logging Module."
-            }
         },
         "parChangeTrackingSolutionLock": {
             "value": {
