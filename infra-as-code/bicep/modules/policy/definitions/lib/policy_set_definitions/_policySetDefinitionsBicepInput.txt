@@ -3804,23 +3804,16 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionVersion: '2.*.*'
 			}
 			{
-				definitionReferenceId: 'Deny-KV-Hms-Key-Expire'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1d478a74-21ba-4b9f-9d8f-8e6fced0eec5'
-				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-KV-Hms-Key-Expire'].parameters
+				definitionReferenceId: 'Deny-Kv-Hsm-Curve-Names'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e58fd0c1-feac-4d12-92db-0a7e9421f53e'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-Kv-Hsm-Curve-Names'].parameters
 				definitionGroups: []
 				definitionVersion: '1.*.*-preview'
 			}
 			{
-				definitionReferenceId: 'Deny-KV-Hms-PurgeProtection'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/c39ba22d-4428-4149-b981-70acb31fc383'
-				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-KV-Hms-PurgeProtection'].parameters
-				definitionGroups: []
-				definitionVersion: '1.*.*'
-			}
-			{
-				definitionReferenceId: 'Deny-Kv-Hsm-Curve-Names'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e58fd0c1-feac-4d12-92db-0a7e9421f53e'
-				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-Kv-Hsm-Curve-Names'].parameters
+				definitionReferenceId: 'Deny-KV-Hsm-Key-Expire'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1d478a74-21ba-4b9f-9d8f-8e6fced0eec5'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-KV-Hsm-Key-Expire'].parameters
 				definitionGroups: []
 				definitionVersion: '1.*.*-preview'
 			}
@@ -3830,6 +3823,13 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-Kv-Hsm-MinimumDays-Before-Expiration'].parameters
 				definitionGroups: []
 				definitionVersion: '1.*.*-preview'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-Hsm-PurgeProtection'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/c39ba22d-4428-4149-b981-70acb31fc383'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-KV-Hsm-PurgeProtection'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
 			}
 			{
 				definitionReferenceId: 'Deny-Kv-Integrated-Ca'
@@ -3970,6 +3970,13 @@ var varCustomPolicySetDefinitionsArray = [
 		name: 'Enforce-Guardrails-Kubernetes'
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Kubernetes.json')
 		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'Audit-AKS-Kubenet'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Audit-AKS-kubenet'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKubernetesParameters['Audit-AKS-Kubenet'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
 			{
 				definitionReferenceId: 'Deny-Aks-Allowed-Capabilities'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/c26596ff-4d70-4e6a-9a30-c2506bd2f80c'
@@ -4635,9 +4642,23 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionVersion: '1.*.*'
 			}
 			{
+				definitionReferenceId: 'Deny-Sql-Entra-Required'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b3a22bc9-66de-45fb-98fa-00f5df42f41a'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsSQLParameters['Deny-Sql-Entra-Required'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
 				definitionReferenceId: 'Deny-Sql-Managed-Aad-Only'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/78215662-041e-49ed-a9dd-5385911b3a1f'
 				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsSQLParameters['Deny-Sql-Managed-Aad-Only'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Sql-Managed-Entra-Required'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/0c28c3fb-c244-42d5-a9bf-f35f2999577b'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsSQLParameters['Deny-Sql-Managed-Entra-Required'].parameters
 				definitionGroups: []
 				definitionVersion: '1.*.*'
 			}
