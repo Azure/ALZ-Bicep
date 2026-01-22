@@ -6,7 +6,21 @@
       }
     }
   },
+  "Deny-Sql-Entra-Required": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('sqlAadOnly')]"
+      }
+    }
+  },
   "Deny-Sql-Managed-Aad-Only": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('sqlManagedAadOnly')]"
+      }
+    }
+  },
+  "Deny-Sql-Managed-Entra-Required": {
     "parameters": {
       "effect": {
         "value": "[[parameters('sqlManagedAadOnly')]"

@@ -50,27 +50,20 @@
       }
     }
   },
-  "Deny-KV-Hms-Key-Expire": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('keyVaultHmsKeysExpiration')]"
-      }
-    }
-  },
-  "Deny-KV-Hms-PurgeProtection": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('keyVaultHmsPurgeProtection')]"
-      }
-    }
-  },
   "Deny-Kv-Hsm-Curve-Names": {
     "parameters": {
       "effect": {
-        "value": "[[parameters('keyVaultHmsCurveNames')]"
+        "value": "[[parameters('keyVaultHsmCurveNames')]"
       },
       "allowedECNames": {
-        "value": "[[parameters('keyVaultHmsCurveNamesValue')]"
+        "value": "[[parameters('keyVaultHsmCurveNamesValue')]"
+      }
+    }
+  },
+  "Deny-KV-Hsm-Key-Expire": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultHsmKeysExpiration')]"
       }
     }
   },
@@ -81,6 +74,13 @@
       },
       "minimumDaysBeforeExpiration": {
         "value": "[[parameters('keyVaultHsmMinimumDaysBeforeExpirationValue')]"
+      }
+    }
+  },
+  "Deny-KV-Hsm-PurgeProtection": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultHsmPurgeProtection')]"
       }
     }
   },
