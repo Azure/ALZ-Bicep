@@ -3738,6 +3738,215 @@ var varCustomPolicySetDefinitionsArray = [
 		]
 	}
 	{
+		name: 'Enforce-Guardrails-KeyVault_20260203'
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-KeyVault_20260203.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'Deny-keyVaultManagedHsm-RSA-Keys-without-MinKeySize'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/86810a98-8e91-4a44-8386-ec66d0de5d57'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-keyVaultManagedHsm-RSA-Keys-without-MinKeySize'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*-preview'
+			}
+			{
+				definitionReferenceId: 'Deny-Kv-Cert-Expiration-Within-Specific-Number-Days'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/f772fb64-8e40-40ad-87bc-7706e1949427'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-Kv-Cert-Expiration-Within-Specific-Number-Days'].parameters
+				definitionGroups: []
+				definitionVersion: '2.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-Cert-Period'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/0a075868-4c26-42ef-914c-5bc007359560'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-Cert-Period'].parameters
+				definitionGroups: []
+				definitionVersion: '2.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-Cryptographic-Type'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/75c4f823-d65c-4f29-a733-01d0077fdbcb'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-Cryptographic-Type'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-Curve-Names'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/ff25f3c8-b739-4538-9d07-3d6d25cfb255'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-Curve-Names'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-Elliptic-Curve'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/bd78111f-4953-4367-9fd5-7e08808b54bf'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-Elliptic-Curve'].parameters
+				definitionGroups: []
+				definitionVersion: '2.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Kv-Hsm-Curve-Names'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e58fd0c1-feac-4d12-92db-0a7e9421f53e'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-Kv-Hsm-Curve-Names'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*-preview'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-Hsm-Key-Expire'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1d478a74-21ba-4b9f-9d8f-8e6fced0eec5'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-Hsm-Key-Expire'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*-preview'
+			}
+			{
+				definitionReferenceId: 'Deny-Kv-Hsm-MinimumDays-Before-Expiration'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/ad27588c-0198-4c84-81ef-08efd0274653'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-Kv-Hsm-MinimumDays-Before-Expiration'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*-preview'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-Hsm-PurgeProtection'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/c39ba22d-4428-4149-b981-70acb31fc383'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-Hsm-PurgeProtection'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Kv-Integrated-Ca'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/8e826246-c976-48f6-b03e-619bb92b3d82'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-Kv-Integrated-Ca'].parameters
+				definitionGroups: []
+				definitionVersion: '2.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-Key-Active'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/c26e4b24-cf98-4c67-b48b-5a25c4c69eb9'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-Key-Active'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-Key-Types'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1151cede-290b-4ba0-8b38-0ad145ac888f'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-Key-Types'].parameters
+				definitionGroups: []
+				definitionVersion: '2.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-Keys-Expire'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/49a22571-d204-4c91-a7b6-09b1a586fbc9'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-Keys-Expire'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Kv-Non-Integrated-Ca'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/a22f4a40-01d3-4c7d-8071-da157eeff341'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-Kv-Non-Integrated-Ca'].parameters
+				definitionGroups: []
+				definitionVersion: '2.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-RSA-Keys-without-MinCertSize'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/cee51871-e572-4576-855c-047c820360f0'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-RSA-Keys-without-MinCertSize'].parameters
+				definitionGroups: []
+				definitionVersion: '2.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-RSA-Keys-without-MinKeySize'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/82067dbb-e53b-4e06-b631-546d197452d9'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-RSA-Keys-without-MinKeySize'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-Secret-ActiveDays'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e8d99835-8a06-45ae-a8e0-87a91941ccfe'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-Secret-ActiveDays'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Kv-Secret-Content-Type'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/75262d3e-ba4a-4f43-85f8-9f72c090e5e3'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-Kv-Secret-Content-Type'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-Secrets-ValidityDays'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/342e8053-e12e-4c44-be01-c3c2f318400f'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-Secrets-ValidityDays'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-KV-without-ArmRbac'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/12d4fa5e-1f9f-4c21-97a9-b99b3c6611b5'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters['Deny-KV-without-ArmRbac'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'KvCertLifetime'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/12ef42cb-9903-4e39-9c26-422d29570417'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters.KvCertLifetime.parameters
+				definitionGroups: []
+				definitionVersion: '2.*.*'
+			}
+			{
+				definitionReferenceId: 'KvFirewallEnabled'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/55615ac9-af46-4a59-874e-391cc3dfb490'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters.KvFirewallEnabled.parameters
+				definitionGroups: []
+				definitionVersion: '3.*.*'
+			}
+			{
+				definitionReferenceId: 'KvKeysExpire'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/152b15f7-8e1f-4c1f-ab71-8c010ba5dbc0'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters.KvKeysExpire.parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'KvKeysLifetime'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/5ff38825-c5d8-47c5-b70e-069a21955146'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters.KvKeysLifetime.parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'KvPurgeProtection'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/0b60c0b2-2dc2-4e1c-b5c9-abbed971de53'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters.KvPurgeProtection.parameters
+				definitionGroups: []
+				definitionVersion: '2.*.*'
+			}
+			{
+				definitionReferenceId: 'KvSecretsExpire'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/98728c90-32c7-4049-8429-847dc0f4fe37'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters.KvSecretsExpire.parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'KvSecretsLifetime'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/b0eb591a-5e70-4534-a8bf-04b9c489584a'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters.KvSecretsLifetime.parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'KvSoftDelete'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1e66c121-a66a-4b1f-9b83-0fd99bf0fc2d'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters.KvSoftDelete.parameters
+				definitionGroups: []
+				definitionVersion: '3.*.*'
+			}
+		]
+	}
+	{
 		name: 'Enforce-Guardrails-KeyVault-Sup'
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-KeyVault-Sup.json')
 		libSetChildDefinitions: [
@@ -3804,16 +4013,23 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionVersion: '2.*.*'
 			}
 			{
-				definitionReferenceId: 'Deny-Kv-Hsm-Curve-Names'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e58fd0c1-feac-4d12-92db-0a7e9421f53e'
-				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-Kv-Hsm-Curve-Names'].parameters
+				definitionReferenceId: 'Deny-KV-Hms-Key-Expire'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1d478a74-21ba-4b9f-9d8f-8e6fced0eec5'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-KV-Hms-Key-Expire'].parameters
 				definitionGroups: []
 				definitionVersion: '1.*.*-preview'
 			}
 			{
-				definitionReferenceId: 'Deny-KV-Hsm-Key-Expire'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1d478a74-21ba-4b9f-9d8f-8e6fced0eec5'
-				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-KV-Hsm-Key-Expire'].parameters
+				definitionReferenceId: 'Deny-KV-Hms-PurgeProtection'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/c39ba22d-4428-4149-b981-70acb31fc383'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-KV-Hms-PurgeProtection'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Kv-Hsm-Curve-Names'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/e58fd0c1-feac-4d12-92db-0a7e9421f53e'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-Kv-Hsm-Curve-Names'].parameters
 				definitionGroups: []
 				definitionVersion: '1.*.*-preview'
 			}
@@ -3823,13 +4039,6 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-Kv-Hsm-MinimumDays-Before-Expiration'].parameters
 				definitionGroups: []
 				definitionVersion: '1.*.*-preview'
-			}
-			{
-				definitionReferenceId: 'Deny-KV-Hsm-PurgeProtection'
-				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/c39ba22d-4428-4149-b981-70acb31fc383'
-				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsKeyVaultParameters['Deny-KV-Hsm-PurgeProtection'].parameters
-				definitionGroups: []
-				definitionVersion: '1.*.*'
 			}
 			{
 				definitionReferenceId: 'Deny-Kv-Integrated-Ca'
@@ -5008,6 +5217,8 @@ var varPolicySetDefinitionEsEnforceGuardrailsDataFactoryParameters = loadJsonCon
 var varPolicySetDefinitionEsEnforceGuardrailsEventGridParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-EventGrid.parameters.json')
 
 var varPolicySetDefinitionEsEnforceGuardrailsEventHubParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-EventHub.parameters.json')
+
+var varPolicySetDefinitionEsEnforceGuardrailsKeyVault_20260203Parameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-KeyVault_20260203.parameters.json')
 
 var varPolicySetDefinitionEsEnforceGuardrailsKeyVaultSupParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-KeyVault-Sup.parameters.json')
 
