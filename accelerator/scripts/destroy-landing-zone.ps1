@@ -130,8 +130,13 @@ ForEach ($subscription in $subscriptionsToClean) {
         $currentMdfcForSubUnfiltered = Get-AzSecurityPricing
         $currentMdfcForSub = $currentMdfcForSubUnfiltered | Where-Object { $_.PricingTier -ne "Free" }
 
+        $standardOnlyPlans = @(
+            "Discovery",
+            "FoundationalCspm"
+        )
+
         ForEach ($mdfcPricingTier in $currentMdfcForSub) {
-            if ("Discovery" -eq $mdfcPricingTier.Name) {
+            if ($standardOnlyPlans -contains $mdfcPricingTier.Name) {
                 Write-Output "Resetting $($mdfcPricingTier.Name) to Standard MDFC Pricing Tier, as only tier available, for Subscription: $($subscription.name)"
 
                 Set-AzSecurityPricing -Name $mdfcPricingTier.Name -PricingTier 'Standard' | Out-Null

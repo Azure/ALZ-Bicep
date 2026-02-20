@@ -284,6 +284,17 @@ param parAzureFirewallLock lockType = {
   notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
 }
 
+@sys.description(''' Resource Lock Configuration for Azure Firewall Policy.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+''')
+param parAzureFirewallPolicyLock lockType = {
+  kind: 'None'
+  notes: 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
+}
+
 @sys.description('The scale unit for this VPN Gateway.')
 param parVpnGatewayScaleUnit int = 1
 
@@ -316,8 +327,17 @@ param parPrivateDnsZonesResourceGroup string = resourceGroup().name
 @sys.description('Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones')
 param parPrivateDnsZones array = []
 
+@sys.description('Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).')
+param parPrivateDnsZonesFallbackToInternet bool = false
+
 @sys.description('Array of Resource IDs of VNets to link to Private DNS Zones.')
 param parVirtualNetworkResourceIdsToLinkTo array = []
+
+@sys.description('Array of additional Private Link Private DNS Zones to include in addition to those specified in `parPrivateDnsZones`.')
+param additionalPrivateLinkPrivateDnsZonesToInclude array = []
+
+@sys.description('Array of Private Link Private DNS Zones to exclude from those specified in `parPrivateDnsZones`.')
+param privateLinkPrivateDnsZonesToExclude array = []
 
 @sys.description('''Resource Lock Configuration for Private DNS Zone(s).
 
@@ -488,7 +508,7 @@ module modVnetPeeringVwan '../vnetPeeringVwan/vnetPeeringVwan.bicep' = [
     scope: subscription()
     params: {
       parRemoteVirtualNetworkResourceId: modSidecarVirtualNetwork[i].outputs.resourceId
-      parVirtualWanHubResourceId: resVhub[0].id
+      parVirtualWanHubResourceId: resVhub[i].id
     }
   }
 ]
@@ -588,14 +608,14 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-05-01' = [
   }
 ]
 
-// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
+// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallPolicyLock.kind != 'None'
 resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = [
-  for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled && parVirtualWanHubs[i].parAzFirewallEnabled) && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled && parVirtualWanHubs[i].parAzFirewallEnabled) && (parAzureFirewallPolicyLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
     scope: resFirewallPolicies[i]
-    name: parAzureFirewallLock.?name ?? '${resFirewallPolicies[i].name}-lock'
+    name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPolicies[i].name}-lock'
     properties: {
-      level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallLock.kind
-      notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallLock.?notes
+      level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallPolicyLock.kind
+      notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallPolicyLock.?notes
     }
   }
 ]
@@ -630,13 +650,13 @@ resource resFirewallPoliciesSharedGlobal 'Microsoft.Network/firewallPolicies@202
       }
 }
 
-// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
-resource resFirewallPoliciesLockSharedGlobal 'Microsoft.Authorization/locks@2020-05-01' = if ((parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled && parAzFirewallPolicyDeploymentStyle == 'SharedGlobal') && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+// Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallPolicyLock.kind != 'None'
+resource resFirewallPoliciesLockSharedGlobal 'Microsoft.Authorization/locks@2020-05-01' = if ((parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled && parAzFirewallPolicyDeploymentStyle == 'SharedGlobal') && (parAzureFirewallPolicyLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
   scope: resFirewallPoliciesSharedGlobal
-  name: parAzureFirewallLock.?name ?? '${resFirewallPoliciesSharedGlobal.name}-lock'
+  name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPoliciesSharedGlobal.name}-lock'
   properties: {
-    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallLock.kind
-    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallLock.?notes
+    level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallPolicyLock.kind
+    notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallPolicyLock.?notes
   }
 }
 
@@ -659,11 +679,13 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-05-01' = [
       virtualHub: {
         id: parVirtualHubEnabled ? resVhub[i].id : ''
       }
-      firewallPolicy: {
-        id: (parVirtualHubEnabled && hub.parAzFirewallEnabled && parAzFirewallPolicyDeploymentStyle == 'SharedGlobal')
-          ? resFirewallPoliciesSharedGlobal.id
-          : resFirewallPolicies[i].id
-      }
+      firewallPolicy: (parVirtualHubEnabled && hub.parAzFirewallEnabled)
+        ? {
+            id: (parAzFirewallPolicyDeploymentStyle == 'SharedGlobal')
+              ? resFirewallPoliciesSharedGlobal.id
+              : resFirewallPolicies[i].id
+          }
+        : null
     }
   }
 ]
@@ -698,13 +720,21 @@ resource resDDoSProtectionPlanLock 'Microsoft.Authorization/locks@2020-05-01' = 
 }
 
 // Private DNS Zones cannot be linked to the Virtual WAN Hub today however, they can be linked to spokes as they are normal VNets as per https://docs.microsoft.com/azure/virtual-wan/howto-private-link
-module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.3.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-Single'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
     location: parLocation
     privateLinkPrivateDnsZones: empty(parPrivateDnsZones) ? null : parPrivateDnsZones
-    virtualNetworkResourceIdsToLinkTo: parVirtualNetworkResourceIdsToLinkTo
+    additionalPrivateLinkPrivateDnsZonesToInclude: additionalPrivateLinkPrivateDnsZonesToInclude
+    privateLinkPrivateDnsZonesToExclude: privateLinkPrivateDnsZonesToExclude
+    virtualNetworkLinks: [
+      for vnetId in parVirtualNetworkResourceIdsToLinkTo: {
+        virtualNetworkResourceId: vnetId
+        registrationEnabled: false
+        resolutionPolicy: parPrivateDnsZonesFallbackToInternet ? 'NxDomainRedirect' : 'Default'
+      }
+    ]
     enableTelemetry: parTelemetryOptOut ? false : true
     tags: parTags
     lock: {

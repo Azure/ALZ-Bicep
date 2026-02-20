@@ -32,9 +32,6 @@
     "parAzFirewallName": {
       "value": "alz-fw"
     },
-    "parAzFirewallAvailabilityZones": {
-      "value": []
-    },
     "parAzFirewallPoliciesName": {
       "value": "alz-azfwpolicy"
     },
@@ -114,11 +111,16 @@
         "privatelink.redis.cache.chinacloudapi.cn"
       ]
     },
-    "parPrivateDnsZoneAutoMergeAzureBackupZone": {
-      "value": true
+    "parVirtualNetworkResourceIdsToLinkTo": {
+      "value": [
+        "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
+      ]
     },
-    "parVirtualNetworkIdToLink": {
-      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
+    "additionalPrivateLinkPrivateDnsZonesToInclude": {
+      "value": []
+    },
+    "privateLinkPrivateDnsZonesToExclude": {
+      "value": []
     },
     "parTags": {
       "value": {
@@ -153,6 +155,12 @@
       }
     },
     "parAzureFirewallLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+      }
+    },
+    "parAzureFirewallPolicyLock": {
       "value": {
         "kind": "None",
         "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."

@@ -90,6 +90,12 @@
     "parAzFirewallIntelMode": {
       "value": "Alert"
     },
+    "parAzFirewallCustomPublicIps": {
+      "value": []
+    },
+    "parAzFirewallCustomManagementIp": {
+      "value": ""
+    },
     "parAzFirewallAvailabilityZones": {
       "value": [
         "1",
@@ -129,6 +135,15 @@
     "parPrivateDnsZones": {
       "value": []
     },
+    "parVirtualNetworkResourceIdsToLinkTo": {
+      "value": []
+    },
+    "additionalPrivateLinkPrivateDnsZonesToInclude": {
+      "value": []
+    },
+    "privateLinkPrivateDnsZonesToExclude": {
+      "value": []
+    },
     "parVpnGatewayEnabled": {
       "value": true
     },
@@ -136,18 +151,18 @@
       "value": {
         "name": "alz-Vpn-Gateway",
         "gatewayType": "Vpn",
-        "sku": "VpnGw1AZ",
+        "sku": "VpnGw1Az",
         "vpnType": "RouteBased",
-        "generation": "Generation1",
+        "vpnGatewayGeneration": "Generation1",
         "enableBgp": false,
         "activeActive": false,
         "enableBgpRouteTranslationForNat": false,
         "enableDnsForwarding": false,
         "bgpPeeringAddress": "",
-        "bgpsettings": {
-          "asn": "65515",
+        "bgpSettings": {
+          "asn": 65515,
           "bgpPeeringAddress": "",
-          "peerWeight": "5"
+          "peerWeight": 5
         },
         "vpnClientConfiguration": {},
         "ipConfigurationName": "vnetGatewayConfig",
@@ -163,16 +178,16 @@
         "gatewayType": "ExpressRoute",
         "sku": "ErGw1Az",
         "vpnType": "RouteBased",
-        "generation": "None",
+        "vpnGatewayGeneration": "None",
         "enableBgp": false,
         "activeActive": false,
         "enableBgpRouteTranslationForNat": false,
         "enableDnsForwarding": false,
         "bgpPeeringAddress": "",
-        "bgpsettings": {
-          "asn": "65515",
+        "bgpSettings": {
+          "asn": 65515,
           "bgpPeeringAddress": "",
-          "peerWeight": "5"
+          "peerWeight": 5
         },
         "ipConfigurationName": "vnetGatewayConfig",
         "ipConfigurationActiveActiveName": "vnetGatewayConfig2"
@@ -217,6 +232,12 @@
       }
     },
     "parAzureFirewallLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+      }
+    },
+    "parAzureFirewallPolicyLock": {
       "value": {
         "kind": "None",
         "notes": "This lock was created by the ALZ Bicep Hub Networking Module."

@@ -110,7 +110,16 @@
     "parPrivateDnsZones": {
       "value": []
     },
+    "parPrivateDnsZonesFallbackToInternet": {
+      "value": false
+    },
     "parVirtualNetworkResourceIdsToLinkTo": {
+      "value": []
+    },
+    "additionalPrivateLinkPrivateDnsZonesToInclude": {
+      "value": []
+    },
+    "privateLinkPrivateDnsZonesToExclude": {
       "value": []
     },
     "parTags": {
@@ -146,6 +155,12 @@
       }
     },
     "parAzureFirewallLock": {
+      "value": {
+        "kind": "None",
+        "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+      }
+    },
+    "parAzureFirewallPolicyLock": {
       "value": {
         "kind": "None",
         "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."

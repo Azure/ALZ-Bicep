@@ -35,20 +35,25 @@ parAzFirewallPoliciesPrivateRanges | No       | Private IP addresses/IP ranges t
 parAzFirewallTier | No       | Azure Firewall Tier associated with the Firewall to deploy.
 parAzFirewallIntelMode | No       | The Azure Firewall Threat Intelligence Mode. If not set, the default value is Alert.
 parAzFirewallCustomPublicIps | No       | Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.
+parAzFirewallCustomManagementIp | Yes      | Optional Custom Management Public IP resource ID, which is assigned to Azure Firewall managementIpConfiguration. Requires AzureFirewallManagementSubnet to be configured in parSubnets.
 parAzFirewallAvailabilityZones | No       | Availability Zones to deploy the Azure Firewall across. Region must support Availability Zones to use. If it does not then leave empty.
 parAzErGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
 parAzVpnGatewayAvailabilityZones | No       | Availability Zones to deploy the VPN/ER PIP across. Region must support Availability Zones to use. If it does not then leave empty. Ensure that you select a zonal SKU for the ER/VPN Gateway if using Availability Zones for the PIP.
 parAzFirewallDnsProxyEnabled | No       | Switch to enable/disable Azure Firewall DNS Proxy.
 parAzFirewallDnsServers | No       | Array of custom DNS servers used by Azure Firewall
 parAzureFirewallLock | No       |  Resource Lock Configuration for Azure Firewall.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parAzureFirewallPolicyLock | No       |  Resource Lock Configuration for Azure Firewall Policy.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parHubRouteTableName | No       | Name of Route table to create for the default route of Hub.
 parDisableBgpRoutePropagation | No       | Switch to enable/disable BGP Propagation on route table.
 parHubRouteTableLock | No       | Resource Lock Configuration for Hub Route Table.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment.
 parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones.
 parPrivateDnsZones | No       | Array of DNS Zones to provision and link to  Hub Virtual Network. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
+parPrivateDnsZonesFallbackToInternet | No       | Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).
 parVirtualNetworkIdToLinkFailover | No       | Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 parVirtualNetworkResourceIdsToLinkTo | No       | Array of Resource IDs of VNets to link to Private DNS Zones. Hub VNet is automatically included by module.
+additionalPrivateLinkPrivateDnsZonesToInclude | No       | Array of additional Private Link Private DNS Zones to include in addition to those specified in `parPrivateDnsZones`.
+privateLinkPrivateDnsZonesToExclude | No       | Array of Private Link Private DNS Zones to exclude from those specified in `parPrivateDnsZones`.
 parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS Zone(s).  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVpnGatewayEnabled | No       | Switch to enable/disable VPN virtual network gateway deployment.
 parVpnGatewayConfig | No       | Configuration for VPN virtual network gateway to be deployed.
@@ -313,6 +318,12 @@ The Azure Firewall Threat Intelligence Mode. If not set, the default value is Al
 
 Optional List of Custom Public IPs, which are assigned to firewalls ipConfigurations.
 
+### parAzFirewallCustomManagementIp
+
+![Parameter Setting](https://img.shields.io/badge/parameter-required-orange?style=flat-square)
+
+Optional Custom Management Public IP resource ID, which is assigned to Azure Firewall managementIpConfiguration. Requires AzureFirewallManagementSubnet to be configured in parSubnets.
+
 ### parAzFirewallAvailabilityZones
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -356,6 +367,19 @@ Array of custom DNS servers used by Azure Firewall
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
  Resource Lock Configuration for Azure Firewall.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep Hub Networking Module.}`
+
+### parAzureFirewallPolicyLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+ Resource Lock Configuration for Azure Firewall Policy.
 
 - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
 - `notes` - Notes about this lock.
@@ -415,6 +439,14 @@ Resource Group Name for Private DNS Zones.
 
 Array of DNS Zones to provision and link to  Hub Virtual Network. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
 
+### parPrivateDnsZonesFallbackToInternet
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).
+
+- Default value: `False`
+
 ### parVirtualNetworkIdToLinkFailover
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -426,6 +458,18 @@ Resource ID of Failover VNet for Private DNS Zone VNet Failover Links
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Array of Resource IDs of VNets to link to Private DNS Zones. Hub VNet is automatically included by module.
+
+### additionalPrivateLinkPrivateDnsZonesToInclude
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Array of additional Private Link Private DNS Zones to include in addition to those specified in `parPrivateDnsZones`.
+
+### privateLinkPrivateDnsZonesToExclude
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Array of Private Link Private DNS Zones to exclude from those specified in `parPrivateDnsZones`.
 
 ### parPrivateDNSZonesLock
 
@@ -454,7 +498,7 @@ Switch to enable/disable VPN virtual network gateway deployment.
 
 Configuration for VPN virtual network gateway to be deployed.
 
-- Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; vpnClientConfiguration=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
+- Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1Az; vpnType=RouteBased; vpnGatewayGeneration=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpSettings=; vpnClientConfiguration=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
 
 ### parExpressRouteGatewayEnabled
 
@@ -470,7 +514,7 @@ Switch to enable/disable ExpressRoute virtual network gateway deployment.
 
 Configuration for ExpressRoute virtual network gateway to be deployed.
 
-- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
+- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1Az; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpSettings=; ipConfigurationName=vnetGatewayConfig; ipConfigurationActiveActiveName=vnetGatewayConfig2}`
 
 ### parVirtualNetworkGatewayLock
 
@@ -659,6 +703,9 @@ outBastionNsgName | string |
         "parAzFirewallCustomPublicIps": {
             "value": []
         },
+        "parAzFirewallCustomManagementIp": {
+            "value": ""
+        },
         "parAzFirewallAvailabilityZones": {
             "value": []
         },
@@ -675,6 +722,12 @@ outBastionNsgName | string |
             "value": []
         },
         "parAzureFirewallLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
+            }
+        },
+        "parAzureFirewallPolicyLock": {
             "value": {
                 "kind": "None",
                 "notes": "This lock was created by the ALZ Bicep Hub Networking Module."
@@ -701,10 +754,19 @@ outBastionNsgName | string |
         "parPrivateDnsZones": {
             "value": []
         },
+        "parPrivateDnsZonesFallbackToInternet": {
+            "value": false
+        },
         "parVirtualNetworkIdToLinkFailover": {
             "value": ""
         },
         "parVirtualNetworkResourceIdsToLinkTo": {
+            "value": []
+        },
+        "additionalPrivateLinkPrivateDnsZonesToInclude": {
+            "value": []
+        },
+        "privateLinkPrivateDnsZonesToExclude": {
             "value": []
         },
         "parPrivateDNSZonesLock": {
@@ -720,15 +782,15 @@ outBastionNsgName | string |
             "value": {
                 "name": "[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]",
                 "gatewayType": "Vpn",
-                "sku": "VpnGw1",
+                "sku": "VpnGw1Az",
                 "vpnType": "RouteBased",
-                "generation": "Generation1",
+                "vpnGatewayGeneration": "Generation1",
                 "enableBgp": false,
                 "activeActive": false,
                 "enableBgpRouteTranslationForNat": false,
                 "enableDnsForwarding": false,
                 "bgpPeeringAddress": "",
-                "bgpsettings": {
+                "bgpSettings": {
                     "asn": 65515,
                     "bgpPeeringAddress": "",
                     "peerWeight": 5
@@ -745,7 +807,7 @@ outBastionNsgName | string |
             "value": {
                 "name": "[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]",
                 "gatewayType": "ExpressRoute",
-                "sku": "ErGw1AZ",
+                "sku": "ErGw1Az",
                 "vpnType": "RouteBased",
                 "vpnGatewayGeneration": "None",
                 "enableBgp": false,
@@ -753,10 +815,10 @@ outBastionNsgName | string |
                 "enableBgpRouteTranslationForNat": false,
                 "enableDnsForwarding": false,
                 "bgpPeeringAddress": "",
-                "bgpsettings": {
-                    "asn": "65515",
+                "bgpSettings": {
+                    "asn": 65515,
                     "bgpPeeringAddress": "",
-                    "peerWeight": "5"
+                    "peerWeight": 5
                 },
                 "ipConfigurationName": "vnetGatewayConfig",
                 "ipConfigurationActiveActiveName": "vnetGatewayConfig2"

@@ -27,6 +27,7 @@ parAzFirewallPoliciesName | No       | Azure Firewall Policies Name. This is use
 parAzFirewallPoliciesAutoLearn | No       | The operation mode for automatically learning private ranges to not be SNAT.
 parAzFirewallPoliciesPrivateRanges | No       | Private IP addresses/IP ranges to which traffic will not be SNAT.
 parAzureFirewallLock | No       | Resource Lock Configuration for Azure Firewall.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
+parAzureFirewallPolicyLock | No       |  Resource Lock Configuration for Azure Firewall Policy.  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parVpnGatewayScaleUnit | No       | The scale unit for this VPN Gateway.
 parExpressRouteGatewayScaleUnit | No       | The scale unit for this ExpressRoute Gateway.
 parDdosEnabled | No       | Switch to enable/disable DDoS Network Protection deployment.
@@ -35,7 +36,10 @@ parDdosLock    | No       | Resource Lock Configuration for DDoS Plan.  - `kind`
 parPrivateDnsZonesEnabled | No       | Switch to enable/disable Private DNS Zones deployment.
 parPrivateDnsZonesResourceGroup | No       | Resource Group Name for Private DNS Zones.
 parPrivateDnsZones | No       | Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
+parPrivateDnsZonesFallbackToInternet | No       | Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).
 parVirtualNetworkResourceIdsToLinkTo | No       | Array of Resource IDs of VNets to link to Private DNS Zones.
+additionalPrivateLinkPrivateDnsZonesToInclude | No       | Array of additional Private Link Private DNS Zones to include in addition to those specified in `parPrivateDnsZones`.
+privateLinkPrivateDnsZonesToExclude | No       | Array of Private Link Private DNS Zones to exclude from those specified in `parPrivateDnsZones`.
 parPrivateDNSZonesLock | No       | Resource Lock Configuration for Private DNS Zone(s).  - `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None. - `notes` - Notes about this lock.  
 parTags        | No       | Tags you would like to be applied to all resources in this module.
 parTelemetryOptOut | No       | Set Parameter to true to Opt-out of deployment telemetry
@@ -247,6 +251,19 @@ Resource Lock Configuration for Azure Firewall.
 
 - Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
 
+### parAzureFirewallPolicyLock
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+ Resource Lock Configuration for Azure Firewall Policy.
+
+- `kind` - The lock settings of the service which can be CanNotDelete, ReadOnly, or None.
+- `notes` - Notes about this lock.
+
+
+
+- Default value: `@{kind=None; notes=This lock was created by the ALZ Bicep vWAN Connectivity Module.}`
+
 ### parVpnGatewayScaleUnit
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -314,11 +331,31 @@ Resource Group Name for Private DNS Zones.
 
 Array of DNS Zones to provision in Hub Virtual Network. Default: All known Azure Private DNS Zones, baked into underlying AVM module see: https://github.com/Azure/bicep-registry-modules/tree/main/avm/ptn/network/private-link-private-dns-zones#parameter-privatelinkprivatednszones
 
+### parPrivateDnsZonesFallbackToInternet
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Switch to enable/disable fallback to internet for Private DNS Zones (option only available for Private DNS zones associated to Private Link resources).
+
+- Default value: `False`
+
 ### parVirtualNetworkResourceIdsToLinkTo
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Array of Resource IDs of VNets to link to Private DNS Zones.
+
+### additionalPrivateLinkPrivateDnsZonesToInclude
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Array of additional Private Link Private DNS Zones to include in addition to those specified in `parPrivateDnsZones`.
+
+### privateLinkPrivateDnsZonesToExclude
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Array of Private Link Private DNS Zones to exclude from those specified in `parPrivateDnsZones`.
 
 ### parPrivateDNSZonesLock
 
@@ -475,6 +512,12 @@ outAzFwPrivateIps | array |
                 "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
             }
         },
+        "parAzureFirewallPolicyLock": {
+            "value": {
+                "kind": "None",
+                "notes": "This lock was created by the ALZ Bicep vWAN Connectivity Module."
+            }
+        },
         "parVpnGatewayScaleUnit": {
             "value": 1
         },
@@ -502,7 +545,16 @@ outAzFwPrivateIps | array |
         "parPrivateDnsZones": {
             "value": []
         },
+        "parPrivateDnsZonesFallbackToInternet": {
+            "value": false
+        },
         "parVirtualNetworkResourceIdsToLinkTo": {
+            "value": []
+        },
+        "additionalPrivateLinkPrivateDnsZonesToInclude": {
+            "value": []
+        },
+        "privateLinkPrivateDnsZonesToExclude": {
             "value": []
         },
         "parPrivateDNSZonesLock": {
