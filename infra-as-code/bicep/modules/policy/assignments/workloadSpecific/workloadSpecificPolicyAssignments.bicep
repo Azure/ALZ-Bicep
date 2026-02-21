@@ -144,6 +144,7 @@ var varPolicyAssignmentEnforceSovereignConf = {
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_sovereignty_baseline_conf.tmpl.json')
 }
 
+
 var varPolicyAssignmentEnforceSovereignGlobal = {
   definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/c1cbff38-87c0-4b9f-9f70-035c7a3b5523'
   libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_sovereignty_baseline_global.tmpl.json')
@@ -155,23 +156,23 @@ var varPolicyAssignmentEnforceEncryptionCMK = {
 }
 
 var varPolicyAssignmentEnforceGRAPIM = {
-  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-APIM'
-  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_apim.tmpl.json')
+	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-APIM'
+	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_apim.tmpl.json')
 }
 
 var varPolicyAssignmentEnforceGRAutomation = {
-  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Automation'
-  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_automation.tmpl.json')
+	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-Automation'
+	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_automation.tmpl.json')
 }
 
 var varPolicyAssignmentEnforceGRAppServices = {
-  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-AppServices'
-  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_appservices.tmpl.json')
+	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-AppServices'
+	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_appservices.tmpl.json')
 }
 
 var varPolicyAssignmentEnforceGRBotService = {
-  definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-BotService'
-  libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_botservice.tmpl.json')
+	definitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-BotService'
+	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_enforce_gr_botservice.tmpl.json')
 }
 
 var varPolicyAssignmentEnforceGRCognitiveServices = {
@@ -1083,7 +1084,7 @@ module modPolAssiLzsEnforceGRContainerRegistry '../../../policy/assignments/poli
 }
 
 // Module - Policy Assignment - Enforce-GR-CosmosDB
-module varPolAssiLzsEnforceGRCosmosDb '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRCosmosDb.libDefinition.name)) {
+module modPolAssiLzsEnforceGRCosmosDb '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentEnforceGRCosmosDb.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
   name: varModDepNames.modPolAssiLzsEnforceGRCosmosDb
   params: {

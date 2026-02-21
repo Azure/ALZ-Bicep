@@ -7,7 +7,7 @@
     "displayName": "Enforce recommended guardrails for Azure Key Vault",
     "notScopes": [],
     "parameters": {},
-    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-KeyVault",
+    "policyDefinitionId": "${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Guardrails-KeyVault_20260203",
     "scope": null,
     "enforcementMode": "Default"
   },

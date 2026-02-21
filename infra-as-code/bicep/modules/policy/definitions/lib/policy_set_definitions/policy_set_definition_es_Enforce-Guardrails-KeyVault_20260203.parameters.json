@@ -1,0 +1,256 @@
+{
+  "Deny-keyVaultManagedHsm-RSA-Keys-without-MinKeySize": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultManagedHsmCheckMinimumRSAKeySize')]"
+      },
+      "minimumRSAKeySize": {
+        "value": "[[parameters('keyVaultManagedHsmMinimumRSAKeySizeValue')]"
+      }
+    }
+  },
+  "Deny-Kv-Cert-Expiration-Within-Specific-Number-Days": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultCertificateNotExpireWithinSpecifiedNumberOfDays')]"
+      },
+      "daysToExpire": {
+        "value": "[[parameters('keyVaultCertificateNotExpireWithinSpecifiedNumberOfDaysValue')]"
+      }
+    }
+  },
+  "Deny-KV-Cert-Period": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultCertificatesPeriod')]"
+      },
+      "maximumValidityInMonths": {
+        "value": "[[parameters('keyVaultCertValidPeriod')]"
+      }
+    }
+  },
+  "Deny-KV-Cryptographic-Type": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultCryptographicType')]"
+      }
+    }
+  },
+  "Deny-KV-Curve-Names": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keysCurveNames')]"
+      }
+    }
+  },
+  "Deny-KV-Elliptic-Curve": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultEllipticCurve')]"
+      }
+    }
+  },
+  "Deny-Kv-Hsm-Curve-Names": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultHsmCurveNames')]"
+      },
+      "allowedECNames": {
+        "value": "[[parameters('keyVaultHsmCurveNamesValue')]"
+      }
+    }
+  },
+  "Deny-KV-Hsm-Key-Expire": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultHsmKeysExpiration')]"
+      }
+    }
+  },
+  "Deny-Kv-Hsm-MinimumDays-Before-Expiration": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultHsmMinimumDaysBeforeExpiration')]"
+      },
+      "minimumDaysBeforeExpiration": {
+        "value": "[[parameters('keyVaultHsmMinimumDaysBeforeExpirationValue')]"
+      }
+    }
+  },
+  "Deny-KV-Hsm-PurgeProtection": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultHsmPurgeProtection')]"
+      }
+    }
+  },
+  "Deny-Kv-Integrated-Ca": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultIntegratedCa')]"
+      },
+      "allowedCAs": {
+        "value": "[[parameters('keyVaultIntegratedCaValue')]"
+      }
+    }
+  },
+  "Deny-KV-Key-Active": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keysActive')]"
+      },
+      "maximumValidityInDays": {
+        "value": "[[parameters('keysActiveInDays')]"
+      }
+    }
+  },
+  "Deny-KV-Key-Types": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultCertKeyTypes')]"
+      }
+    }
+  },
+  "Deny-KV-Keys-Expire": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keysValidPeriod')]"
+      },
+      "maximumValidityInDays": {
+        "value": "[[parameters('keysValidityInDays')]"
+      }
+    }
+  },
+  "Deny-Kv-Non-Integrated-Ca": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultNonIntegratedCa')]"
+      },
+      "caCommonName": {
+        "value": "[[parameters('keyVaultNonIntegratedCaValue')]"
+      }
+    }
+  },
+  "Deny-KV-RSA-Keys-without-MinCertSize": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultCheckMinimumRSACertificateSize')]"
+      },
+      "minimumRSAKeySize": {
+        "value": "[[parameters('keyVaultMinimumRSACertificateSizeValue')]"
+      }
+    }
+  },
+  "Deny-KV-RSA-Keys-without-MinKeySize": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultCheckMinimumRSAKeySize')]"
+      },
+      "minimumRSAKeySize": {
+        "value": "[[parameters('keyVaultMinimumRSAKeySizeValue')]"
+      }
+    }
+  },
+  "Deny-KV-Secret-ActiveDays": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('secretsActive')]"
+      },
+      "maximumValidityInDays": {
+        "value": "[[parameters('secretsActiveInDays')]"
+      }
+    }
+  },
+  "Deny-Kv-Secret-Content-Type": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultSecretContentType')]"
+      }
+    }
+  },
+  "Deny-KV-Secrets-ValidityDays": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('secretsValidPeriod')]"
+      },
+      "maximumValidityInDays": {
+        "value": "[[parameters('secretsValidityInDays')]"
+      }
+    }
+  },
+  "Deny-KV-without-ArmRbac": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('keyVaultArmRbac')]"
+      }
+    }
+  },
+  "KvCertLifetime": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvCertLifetime')]"
+      },
+      "maximumPercentageLife": {
+        "value": "[[parameters('maximumCertLifePercentageLife')]"
+      },
+      "minimumDaysBeforeExpiry": {
+        "value": "[[parameters('minimumCertLifeDaysBeforeExpiry')]"
+      }
+    }
+  },
+  "KvFirewallEnabled": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvFirewallEnabled')]"
+      }
+    }
+  },
+  "KvKeysExpire": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvKeysExpire')]"
+      }
+    }
+  },
+  "KvKeysLifetime": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvKeysLifetime')]"
+      },
+      "minimumDaysBeforeExpiration": {
+        "value": "[[parameters('minimumKeysLifeDaysBeforeExpiry')]"
+      }
+    }
+  },
+  "KvPurgeProtection": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvPurgeProtection')]"
+      }
+    }
+  },
+  "KvSecretsExpire": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvSecretsExpire')]"
+      }
+    }
+  },
+  "KvSecretsLifetime": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvSecretsLifetime')]"
+      },
+      "minimumDaysBeforeExpiration": {
+        "value": "[[parameters('minimumSecretsLifeDaysBeforeExpiry')]"
+      }
+    }
+  },
+  "KvSoftDelete": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('effectKvSoftDelete')]"
+      }
+    }
+  }
+}
