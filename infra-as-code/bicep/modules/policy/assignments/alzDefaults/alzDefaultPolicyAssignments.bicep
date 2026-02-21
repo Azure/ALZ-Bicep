@@ -756,6 +756,7 @@ module modPolAssiIntRootDeployAscMonitoring '../../../policy/assignments/policyA
   name: varModDepNames.modPolAssiIntRootDeployAscMonitoring
   params: {
     parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployASCMonitoring.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployASCMonitoring.libDefinition.properties.definitionVersion
     parPolicyAssignmentName: varPolicyAssignmentDeployASCMonitoring.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployASCMonitoring.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployASCMonitoring.libDefinition.properties.description
