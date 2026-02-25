@@ -1,4 +1,11 @@
 {
+  "Audit-AKS-Kubenet": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('aksKubenetEffect')]"
+      }
+    }
+  },
   "Deny-Aks-Allowed-Capabilities": {
     "parameters": {
       "effect": {

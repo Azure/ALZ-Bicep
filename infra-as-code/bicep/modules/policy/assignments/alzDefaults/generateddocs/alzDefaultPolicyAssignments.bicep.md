@@ -18,8 +18,6 @@ parDataCollectionRuleVMInsightsResourceId | No       | Resource ID for VM Insigh
 parDataCollectionRuleChangeTrackingResourceId | No       | Resource ID for Change Tracking Data Collection Rule.
 parDataCollectionRuleMDFCSQLResourceId | No       | Resource ID for MDFC SQL Data Collection Rule.
 parUserAssignedManagedIdentityResourceId | No       | Resource ID for User Assigned Managed Identity.
-parLogAnalyticsWorkspaceLogRetentionInDays | No       | Number of days to retain logs in Log Analytics Workspace.
-parAutomationAccountName | No       | Name of the Automation Account.
 parMsDefenderForCloudEmailSecurityContact | No       | Email address for Microsoft Defender for Cloud alerts.
 parDdosEnabled | No       | Enable/disable DDoS Network Protection.
 parDdosProtectionPlanId | No       | Resource ID of the DDoS Protection Plan for Virtual Networks.
@@ -117,22 +115,6 @@ Resource ID for MDFC SQL Data Collection Rule.
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
 Resource ID for User Assigned Managed Identity.
-
-### parLogAnalyticsWorkspaceLogRetentionInDays
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Number of days to retain logs in Log Analytics Workspace.
-
-- Default value: `365`
-
-### parAutomationAccountName
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Name of the Automation Account.
-
-- Default value: `alz-automation-account`
 
 ### parMsDefenderForCloudEmailSecurityContact
 
@@ -265,12 +247,6 @@ Specify the ALZ Default Management Group IDs to override as specified in `varMan
         },
         "parUserAssignedManagedIdentityResourceId": {
             "value": ""
-        },
-        "parLogAnalyticsWorkspaceLogRetentionInDays": {
-            "value": "365"
-        },
-        "parAutomationAccountName": {
-            "value": "alz-automation-account"
         },
         "parMsDefenderForCloudEmailSecurityContact": {
             "value": ""
