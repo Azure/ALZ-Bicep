@@ -29,9 +29,6 @@
     "parLogAnalyticsWorkspaceResourceId": {
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-logging/providers/Microsoft.OperationalInsights/workspaces/alz-log-analytics"
     },
-    "parLogAnalyticsWorkspaceLogRetentionInDays": {
-      "value": "365"
-    },
     "parLogAnalyticsWorkspaceResourceCategory": {
       "value": "allLogs"
     },
@@ -46,9 +43,6 @@
     },
     "parUserAssignedManagedIdentityResourceId": {
       "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/alz-logging/providers/Microsoft.ManagedIdentity/userAssignedIdentities/alz-umi-identity"
-    },
-    "parAutomationAccountName": {
-      "value": "alz-automation-account"
     },
     "parMsDefenderForCloudEmailSecurityContact": {
       "value": "security_contact@replace_me.com"
