@@ -362,6 +362,7 @@ module modPolAssiIntRootEnforceSovereigntyGlobal '../../../policy/assignments/po
     parPolicyAssignmentName: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereignGlobal.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       listOfAllowedLocations: {
@@ -388,6 +389,7 @@ module modPolAssiPlatformEnforceEncryptionCMK '../../../policy/assignments/polic
     parPolicyAssignmentName: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -407,6 +409,7 @@ module modPolAssiPlatformEnforceGRAPIM '../../../policy/assignments/policyAssign
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRAPIM.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRAPIM.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -426,6 +429,7 @@ module modPolAssiPlatformEnforceGRAppServices '../../../policy/assignments/polic
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRAppServices.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRAppServices.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -445,6 +449,7 @@ module modPolAssiPlatformEnforceGRAutomation '../../../policy/assignments/policy
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRAutomation.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRAutomation.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -464,6 +469,7 @@ module modPolAssiPlatformEnforceGRBotService '../../../policy/assignments/policy
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRBotService.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRBotService.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -483,6 +489,7 @@ module modPolAssiPlatformEnforceGRCognitiveServices '../../../policy/assignments
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -502,6 +509,7 @@ module modPolAssiPlatformEnforceGRCompute '../../../policy/assignments/policyAss
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRCompute.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRCompute.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -521,6 +529,7 @@ module modPolAssiPlatformEnforceGRContainerApps '../../../policy/assignments/pol
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRContainerApps.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRContainerApps.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -540,6 +549,7 @@ module modPolAssiPlatformEnforceGRContainerInstance '../../../policy/assignments
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -559,6 +569,7 @@ module modPolAssiPlatformEnforceGRContainerRegistry '../../../policy/assignments
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -578,6 +589,7 @@ module modPolAssiPlatformEnforceGRCosmosDb '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -597,6 +609,7 @@ module modPolAssiPlatformEnforceGRDataExplorer '../../../policy/assignments/poli
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -616,6 +629,7 @@ module modPolAssiPlatformEnforceGRDataFactory '../../../policy/assignments/polic
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRDataFactory.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRDataFactory.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -635,6 +649,7 @@ module modPolAssiPlatformEnforceGREventGrid '../../../policy/assignments/policyA
     parPolicyAssignmentName: varPolicyAssignmentEnforceGREventGrid.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGREventGrid.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -654,6 +669,7 @@ module modPolAssiPlatformEnforceGREventHub '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentEnforceGREventHub.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGREventHub.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -673,6 +689,7 @@ module modPolAssiPlatformEnforceGRKeyVaultSup '../../../policy/assignments/polic
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -692,6 +709,7 @@ module modPolAssiPlatformEnforceGRKubernetes '../../../policy/assignments/policy
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRKubernetes.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRKubernetes.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -711,6 +729,7 @@ module modPolAssiPlatformEnforceGRMachineLearning '../../../policy/assignments/p
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -730,6 +749,7 @@ module modPolAssiPlatformEnforceGRMySQL '../../../policy/assignments/policyAssig
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRMySQL.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRMySQL.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -749,6 +769,7 @@ module modPolAssiPlatformEnforceGRNetwork '../../../policy/assignments/policyAss
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRNetwork.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRNetwork.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -768,6 +789,7 @@ module modPolAssiPlatformEnforceGROpenAI '../../../policy/assignments/policyAssi
     parPolicyAssignmentName: varPolicyAssignmentEnforceGROpenAI.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGROpenAI.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -787,6 +809,7 @@ module modPolAssiPlatformEnforceGRPostgreSQL '../../../policy/assignments/policy
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -806,6 +829,7 @@ module modPolAssiPlatformEnforceGRServiceBus '../../../policy/assignments/policy
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRServiceBus.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRServiceBus.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -825,6 +849,7 @@ module modPolAssiPlatformEnforceGRSQL '../../../policy/assignments/policyAssignm
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRSQL.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRSQL.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -844,6 +869,7 @@ module modPolAssiPlatformEnforceGRStorage '../../../policy/assignments/policyAss
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRStorage.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRStorage.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -863,6 +889,7 @@ module modPolAssiPlatformEnforceGRSynapse '../../../policy/assignments/policyAss
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRSynapse.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRSynapse.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -882,6 +909,7 @@ module modPolAssiPlatformEnforceGRVirtualDesktop '../../../policy/assignments/po
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -902,6 +930,7 @@ module modPolAssiLzsEnforceEncryptionCMK '../../../policy/assignments/policyAssi
     parPolicyAssignmentName: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceEncryptionCMK.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -921,6 +950,7 @@ module modPolAssiLzsEnforceGRAPIM '../../../policy/assignments/policyAssignmentM
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRAPIM.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRAPIM.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRAPIM.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -940,6 +970,7 @@ module modPolAssiLzsEnforceGRAppServices '../../../policy/assignments/policyAssi
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRAppServices.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRAppServices.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRAppServices.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -959,6 +990,7 @@ module modPolAssiLzsEnforceGRAutomation '../../../policy/assignments/policyAssig
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRAutomation.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRAutomation.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRAutomation.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -978,6 +1010,7 @@ module modPolAssiLzsEnforceGRBotService '../../../policy/assignments/policyAssig
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRBotService.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRBotService.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRBotService.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -997,6 +1030,7 @@ module modPolAssiLzsEnforceGRCognitiveServices '../../../policy/assignments/poli
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRCognitiveServices.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1016,6 +1050,7 @@ module modPolAssiLzsEnforceGRCompute '../../../policy/assignments/policyAssignme
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRCompute.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRCompute.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRCompute.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1035,6 +1070,7 @@ module modPolAssiLzsEnforceGRContainerApps '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRContainerApps.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRContainerApps.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRContainerApps.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1054,6 +1090,7 @@ module modPolAssiLzsEnforceGRContainerInstance '../../../policy/assignments/poli
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRContainerInstance.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1073,6 +1110,7 @@ module modPolAssiLzsEnforceGRContainerRegistry '../../../policy/assignments/poli
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRContainerRegistry.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1092,6 +1130,7 @@ module modPolAssiLzsEnforceGRCosmosDb '../../../policy/assignments/policyAssignm
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRCosmosDb.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1111,6 +1150,7 @@ module modPolAssiLzsEnforceGRDataExplorer '../../../policy/assignments/policyAss
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRDataExplorer.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1130,6 +1170,7 @@ module modPolAssiLzsEnforceGRDataFactory '../../../policy/assignments/policyAssi
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRDataFactory.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRDataFactory.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRDataFactory.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1149,6 +1190,7 @@ module modPolAssiLzsEnforceGREventGrid '../../../policy/assignments/policyAssign
     parPolicyAssignmentName: varPolicyAssignmentEnforceGREventGrid.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGREventGrid.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGREventGrid.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1168,6 +1210,7 @@ module modPolAssiLzsEnforceGREventHub '../../../policy/assignments/policyAssignm
     parPolicyAssignmentName: varPolicyAssignmentEnforceGREventHub.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGREventHub.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGREventHub.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1187,6 +1230,7 @@ module modPolAssiLzsEnforceGRKeyVaultSup '../../../policy/assignments/policyAssi
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRKeyVaultSup.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1206,6 +1250,7 @@ module modPolAssiLzsEnforceGRKubernetes '../../../policy/assignments/policyAssig
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRKubernetes.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRKubernetes.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRKubernetes.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1225,6 +1270,7 @@ module modPolAssiLzsEnforceGRMachineLearning '../../../policy/assignments/policy
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRMachineLearning.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1244,6 +1290,7 @@ module modPolAssiLzsEnforceGRMySQL '../../../policy/assignments/policyAssignment
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRMySQL.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRMySQL.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRMySQL.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1263,6 +1310,7 @@ module modPolAssiLzsEnforceGRNetwork '../../../policy/assignments/policyAssignme
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRNetwork.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRNetwork.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRNetwork.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1282,6 +1330,7 @@ module modPolAssiLzsEnforceGROpenAI '../../../policy/assignments/policyAssignmen
     parPolicyAssignmentName: varPolicyAssignmentEnforceGROpenAI.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGROpenAI.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGROpenAI.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1301,6 +1350,7 @@ module modPolAssiLzsEnforceGRPostgreSQL '../../../policy/assignments/policyAssig
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRPostgreSQL.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1320,6 +1370,7 @@ module modPolAssiLzsEnforceGRServiceBus '../../../policy/assignments/policyAssig
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRServiceBus.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRServiceBus.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRServiceBus.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1339,6 +1390,7 @@ module modPolAssiLzsEnforceGRSQL '../../../policy/assignments/policyAssignmentMa
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRSQL.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRSQL.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRSQL.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1358,6 +1410,7 @@ module modPolAssiLzsEnforceGRStorage '../../../policy/assignments/policyAssignme
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRStorage.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRStorage.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRStorage.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1377,6 +1430,7 @@ module modPolAssiLzsEnforceGRSynapse '../../../policy/assignments/policyAssignme
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRSynapse.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRSynapse.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRSynapse.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1396,6 +1450,7 @@ module modPolAssiLzsEnforceGRVirtualDesktop '../../../policy/assignments/policyA
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRVirtualDesktop.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1416,6 +1471,7 @@ module modPolAssiLzsConfidentialOnlineEnforceSovereigntyConf '../../../policy/as
     parPolicyAssignmentName: varPolicyAssignmentEnforceSovereignConf.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       allowedResourceTypes: {
@@ -1448,6 +1504,7 @@ module modPolAssiLzsConfidentialCorpEnforceSovereigntyConf '../../../policy/assi
     parPolicyAssignmentName: varPolicyAssignmentEnforceSovereignConf.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceSovereignConf.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       allowedResourceTypes: {

@@ -1,7 +1,26 @@
 # Azure Landing Zones (ALZ) - Bicep (Classic)
 
 > [!IMPORTANT]
-> Please note that this repository contains the **Classic** version of Azure Landing Zones Bicep. You should consider using the latest version of ALZ Bicep which is now based off of Azure Verified Modules (AVM). The latest version can be found here: [Azure Landing Zones Bicep (AVM)](http://aka.ms/alz/acc/bicep)
+> **The Future of ALZ-Bicep Classic**
+>
+> With Bicep AVM now generally available and set as the default in the ALZ Accelerator for Bicep, we're beginning the deprecation process for classic ALZ-Bicep.
+>
+> | Date | Action |
+> |---|---|
+> | Now | [Bicep - Azure Verified Modules for Platform Landing Zone (ALZ)](http://aka.ms/alz/acc/bicep) is the default starter module |
+> | February 16th, 2026 | Bicep (Classic) starter module removed from Accelerator |
+> | February 16th, 2027 | ALZ-Bicep repository archived |
+>
+> Currently, ALZ-Bicep is still supported in the Accelerator as "Bicep Classic - Complete" ([documentation](https://aka.ms/alz/accelerator/)), but this was removed in its entirety on February 16th, 2026.
+>
+> Although it has been removed from the Accelerator, the ALZ-Bicep repository is still supported in terms of:
+> - Bug fixes
+> - Security patches
+> - Policy refreshes
+>
+> ...for a period of 12 months after that date. After February 16th, 2027, the ALZ-Bicep repository will be archived and no longer supported.
+>
+> **Migration Support:** For guidance on migrating to Bicep AVM, please visit [aka.ms/alz/acc/bicep](http://aka.ms/alz/acc/bicep).
 
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/azure/alz-bicep.svg)](http://isitmaintained.com/project/azure/alz-bicep "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/azure/alz-bicep.svg)](http://isitmaintained.com/project/azure/alz-bicep "Percentage of issues still open")
