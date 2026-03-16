@@ -2,6 +2,13 @@
 ## How to Consume `ALZ-Bicep`
 <!-- markdownlint-restore -->
 
+> [!IMPORTANT]
+> **The Future of ALZ-Bicep Classic**
+>
+> With Bicep AVM now generally available and set as the default in the ALZ Accelerator for Bicep, we're beginning the deprecation process for classic ALZ-Bicep. The Bicep (Classic) starter module was removed from the Accelerator on February 16th, 2026, and this repository will be archived on February 16th, 2027.
+>
+> For the recommended approach, please use [Bicep - Azure Verified Modules for Platform Landing Zone (ALZ)](http://aka.ms/alz/acc/bicep).
+
 ## Background
 
 > This guidance supports the [Deployment Flow](https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlow) guidance, it is not a replacement
