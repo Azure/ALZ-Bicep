@@ -103,6 +103,11 @@ var varPolicyAssignmentDeployASCMonitoring = {
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_asc_monitoring.tmpl.json')
 }
 
+var varPolicyAssignmentDeployMCSB2Monitoring = {
+	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/e3ec7e09-768c-4b64-882c-fcada3772047'
+	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_mcsb2_monitoring.tmpl.json')
+}
+
 var varPolicyAssignmentDeployAzActivityLog = {
 	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/2465583e-4e78-4c15-b6be-a36cbc7c8b0f'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_azactivity_log.tmpl.json')

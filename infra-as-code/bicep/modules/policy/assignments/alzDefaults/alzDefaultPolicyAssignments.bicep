@@ -99,6 +99,7 @@ var varModDepNames = {
   modPolAssiIntRootDeployMdfcConfig: take('${varDeploymentNameWrappers.basePrefix}-deployMDFCConfig-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiIntRootDeployAzActivityLog: take('${varDeploymentNameWrappers.basePrefix}-deployAzActLog-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiIntRootDeployAscMonitoring: take('${varDeploymentNameWrappers.basePrefix}-deployASCMon-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiIntRootDeployMcsb2Monitoring: take('${varDeploymentNameWrappers.basePrefix}-deployMCSB2Mon-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiIntRootDeployResourceDiag: take('${varDeploymentNameWrappers.basePrefix}-deployResDiag-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiIntRootDeployMDEnpoints: take('${varDeploymentNameWrappers.basePrefix}-deployMDEnd-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiIntRootDeployMDEnpointsAma: take('${varDeploymentNameWrappers.basePrefix}-deployMDEndAma-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -277,6 +278,11 @@ var varPolicyAssignmentDeployASCMonitoring = {
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_asc_monitoring.tmpl.json')
 }
 
+var varPolicyAssignmentDeployMCSB2Monitoring = {
+	definitionId: '/providers/Microsoft.Authorization/policySetDefinitions/e3ec7e09-768c-4b64-882c-fcada3772047'
+	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_mcsb2_monitoring.tmpl.json')
+}
+
 var varPolicyAssignmentDeployAzActivityLog = {
 	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/2465583e-4e78-4c15-b6be-a36cbc7c8b0f'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deploy_azactivity_log.tmpl.json')
@@ -449,6 +455,8 @@ var varRbacRoleDefinitionIds = {
   managedIdentityContributor: 'e40ec5ca-96e0-45a2-b4ff-59039f2c2b59'
   connectedMachineResourceAdministrator: 'cd570a14-e51a-42ad-bac8-bafd67325302'
   monitoringPolicyContributor: '47be4a87-7950-4631-9daf-b664a405f074'
+  cognitiveServicesOpenAIContributor: 'a001fd3d-188f-4b5d-821b-7da978bf7442'
+  cognitiveServicesContributor: '25fbc0a9-bd7c-42a3-aa1a-3b75d497ee68'
 }
 
 // Management Groups Variables - Used For Policy Assignments
@@ -663,6 +671,7 @@ module modPolAssiIntRootDeployMdfcConfig '../../../policy/assignments/policyAssi
     parPolicyAssignmentName: varPolicyAssignmentDeployMDFCConfigH224.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDFCConfigH224.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMDFCConfigH224.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployMDFCConfigH224.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployMDFCConfigH224.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       emailSecurityContact: {
@@ -694,6 +703,7 @@ module modPolAssiIntRootDeployMDEndpoints '../../../policy/assignments/policyAss
     parPolicyAssignmentName: varPolicyAssignmentDeployMDEndpoints.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDEndpoints.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMDEndpoints.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployMDEndpoints.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployMDEndpoints.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployMDEndpoints.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -714,6 +724,7 @@ module modPolAssiIntRootDeployMDEndpointsAMA '../../../policy/assignments/policy
     parPolicyAssignmentName: varPolicyAssignmentDeployMDEndpointsAMA.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDEndpointsAMA.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMDEndpointsAMA.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployMDEndpointsAMA.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployMDEndpointsAMA.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployMDEndpointsAMA.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -734,6 +745,7 @@ module modPolAssiIntRootDeployAzActivityLog '../../../policy/assignments/policyA
     parPolicyAssignmentName: varPolicyAssignmentDeployAzActivityLog.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployAzActivityLog.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployAzActivityLog.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployAzActivityLog.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployAzActivityLog.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       logAnalytics: {
@@ -760,9 +772,33 @@ module modPolAssiIntRootDeployAscMonitoring '../../../policy/assignments/policyA
     parPolicyAssignmentName: varPolicyAssignmentDeployASCMonitoring.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployASCMonitoring.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployASCMonitoring.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployASCMonitoring.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployASCMonitoring.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployASCMonitoring.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployASCMonitoring.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployASCMonitoring.libDefinition.properties.enforcementMode
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+// Module - Policy Assignment - Deploy-MCSB2-Monitoring
+module modPolAssiIntRootDeployMcsb2Monitoring '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployMCSB2Monitoring.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIdsUnioned.intRoot)
+  name: varModDepNames.modPolAssiIntRootDeployMcsb2Monitoring
+  params: {
+    parPolicyAssignmentDefinitionId: varPolicyAssignmentDeployMCSB2Monitoring.definitionId
+    parPolicyAssignmentDefinitionVersion: varPolicyAssignmentDeployMCSB2Monitoring.libDefinition.properties.definitionVersion
+    parPolicyAssignmentName: varPolicyAssignmentDeployMCSB2Monitoring.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMCSB2Monitoring.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployMCSB2Monitoring.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployMCSB2Monitoring.libDefinition.properties.notScopes
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployMCSB2Monitoring.libDefinition.properties.parameters
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployMCSB2Monitoring.libDefinition.identity.type
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.cognitiveServicesOpenAIContributor
+      varRbacRoleDefinitionIds.networkContributor
+      varRbacRoleDefinitionIds.cognitiveServicesContributor
+    ]
+    parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployMCSB2Monitoring.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployMCSB2Monitoring.libDefinition.properties.enforcementMode
     parTelemetryOptOut: parTelemetryOptOut
   }
 }
@@ -777,6 +813,7 @@ module modPolAssiIntRootDeployResourceDiag '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentDeployDiagLogs.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployDiagLogs.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployDiagLogs.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployDiagLogs.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployDiagLogs.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       logAnalytics: {
@@ -802,6 +839,7 @@ module modPolAssiIntRootEnforceAcsb '../../../policy/assignments/policyAssignmen
     parPolicyAssignmentName: varPolicyAssignmentEnforceACSB.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceACSB.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceACSB.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceACSB.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceACSB.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceACSB.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnforceACSB.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnforceACSB.libDefinition.properties.enforcementMode
@@ -822,6 +860,7 @@ module modPolAssiIntRootDeployMdfcOssDb '../../../policy/assignments/policyAssig
     parPolicyAssignmentName: varPolicyAssignmentDeployMDFCOssDb.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDFCOssDb.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMDFCOssDb.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployMDFCOssDb.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployMDFCOssDb.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployMDFCOssDb.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployMDFCOssDb.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployMDFCOssDb.libDefinition.properties.enforcementMode
@@ -842,6 +881,7 @@ module modPolAssiIntRootDeployMdfcSqlAtp '../../../policy/assignments/policyAssi
     parPolicyAssignmentName: varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployMDFCSqlAtp.libDefinition.properties.enforcementMode
@@ -862,6 +902,7 @@ module modPolAssiIntRootAuditLocationMatch '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentAuditLocationMatch.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentAuditLocationMatch.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentAuditLocationMatch.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentAuditLocationMatch.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentAuditLocationMatch.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentAuditLocationMatch.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentAuditLocationMatch.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentAuditLocationMatch.libDefinition.properties.enforcementMode
@@ -879,6 +920,7 @@ module modPolAssiIntRootAuditZoneResiliency '../../../policy/assignments/policyA
     parPolicyAssignmentName: varPolicyAssignmentAuditZoneResiliency.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentAuditZoneResiliency.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentAuditZoneResiliency.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentAuditZoneResiliency.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentAuditZoneResiliency.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentAuditZoneResiliency.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentAuditZoneResiliency.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentAuditZoneResiliency.libDefinition.properties.enforcementMode
@@ -895,6 +937,7 @@ module modPolAssiIntRootAuditUnusedRes '../../../policy/assignments/policyAssign
     parPolicyAssignmentName: varPolicyAssignmentAuditUnusedResources.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentAuditUnusedResources.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentAuditUnusedResources.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentAuditUnusedResources.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentAuditUnusedResources.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentAuditUnusedResources.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentAuditUnusedResources.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentAuditUnusedResources.libDefinition.properties.enforcementMode
@@ -911,6 +954,7 @@ module modPolAssiIntRootAuditTrustedLaunch '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentAuditTrustedLaunch.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentAuditTrustedLaunch.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentAuditTrustedLaunch.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentAuditTrustedLaunch.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentAuditTrustedLaunch.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentAuditTrustedLaunch.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentAuditTrustedLaunch.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentAuditTrustedLaunch.libDefinition.properties.enforcementMode
@@ -928,6 +972,7 @@ module modPolAssiIntRootDenyUnmanagedDisks '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentDenyUnmanagedDisk.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyUnmanagedDisk.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyUnmanagedDisk.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyUnmanagedDisk.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyUnmanagedDisk.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyUnmanagedDisk.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyUnmanagedDisk.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyUnmanagedDisk.libDefinition.properties.enforcementMode
@@ -946,6 +991,7 @@ module modPolAssiIntRootDenyClassicRes '../../../policy/assignments/policyAssign
     parPolicyAssignmentName: varPolicyAssignmentDenyClassicResources.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyClassicResources.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyClassicResources.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyClassicResources.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyClassicResources.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyClassicResources.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyClassicResources.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyClassicResources.libDefinition.properties.enforcementMode
@@ -963,6 +1009,7 @@ module modPolAssiIntRootDeploySvcHealthBuiltIn '../../../policy/assignments/poli
     parPolicyAssignmentName: varPolicyAssignmentDeploySvcHealthBuiltIn.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeploySvcHealthBuiltIn.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeploySvcHealthBuiltIn.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeploySvcHealthBuiltIn.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeploySvcHealthBuiltIn.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeploySvcHealthBuiltIn.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -984,6 +1031,7 @@ module modPolAssiPlatformDeployGuestAttest '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentDeployGuestAttest.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployGuestAttest.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployGuestAttest.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployGuestAttest.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployGuestAttest.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployGuestAttest.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1007,6 +1055,7 @@ module modPolAssiPlatformDeployVmArcChangeTrack '../../../policy/assignments/pol
     parPolicyAssignmentName: varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.properties.enforcementMode
@@ -1034,6 +1083,7 @@ module modPolAssiPlatformDeployVmChangeTrack '../../../policy/assignments/policy
     parPolicyAssignmentName: varPolicyAssignmentDeployVMChangeTrack.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMChangeTrack.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMChangeTrack.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployVMChangeTrack.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployVMChangeTrack.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMChangeTrack.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployVMChangeTrack.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployVMChangeTrack.libDefinition.properties.enforcementMode
@@ -1066,6 +1116,7 @@ module modPolAssiPlatformDeployVmssChangeTrack '../../../policy/assignments/poli
     parPolicyAssignmentName: varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.properties.enforcementMode
@@ -1098,6 +1149,7 @@ module modPolAssiPlatformDeployVmArcMonitor '../../../policy/assignments/policyA
     parPolicyAssignmentName: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.enforcementMode
@@ -1126,6 +1178,7 @@ module modPolAssiPlatformDeployVmMonitor '../../../policy/assignments/policyAssi
     parPolicyAssignmentName: varPolicyAssignmentDeployVMMonitor24.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMMonitor24.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployVMMonitor24.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.enforcementMode
@@ -1158,6 +1211,7 @@ module modPolAssiPlatformDeployMdfcDefSqlAma '../../../policy/assignments/policy
     parPolicyAssignmentName: varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.properties.enforcementMode
@@ -1191,6 +1245,7 @@ module modPolAssiPlatformDenyDeleteUAMIAMA '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyActionDeleteUAMIAMA.libDefinition.properties.enforcementMode
@@ -1213,6 +1268,7 @@ module modPolAssiPlatformDeployVmssMonitor '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployVMSSMonitor24.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.enforcementMode
@@ -1244,6 +1300,7 @@ module modPolAssiPlatformEnforceSubnetPrivate '../../../policy/assignments/polic
     parPolicyAssignmentName: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnforceSubnetPrivate.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.enforcementMode
@@ -1260,6 +1317,7 @@ module modPolAssiPlatformEnforceGrKeyVault '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRKeyVault.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRKeyVault.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnforceGRKeyVault.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.enforcementMode
@@ -1276,6 +1334,7 @@ module modPolAssiPlatformEnforceAsr '../../../policy/assignments/policyAssignmen
     parPolicyAssignmentName: varPolicyAssignmentEnforceASR.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceASR.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceASR.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceASR.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceASR.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceASR.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnforceASR.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnforceASR.libDefinition.properties.enforcementMode
@@ -1295,6 +1354,7 @@ module modPolAssiPlatformEnforceAumCheckUpdates '../../../policy/assignments/pol
     parPolicyAssignmentName: varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.properties.enforcementMode
@@ -1318,6 +1378,7 @@ module modPolAssiConnEnableDdosVnet '../../../policy/assignments/policyAssignmen
     parPolicyAssignmentName: varPolicyAssignmentEnableDDoSVNET.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       ddosPlan: {
@@ -1344,6 +1405,7 @@ module modPolAssiIdentDenyPublicIp '../../../policy/assignments/policyAssignment
     parPolicyAssignmentName: varPolicyAssignmentDenyPublicIP.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPublicIP.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyPublicIP.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyPublicIP.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyPublicIP.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPublicIP.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyPublicIP.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyPublicIP.libDefinition.properties.enforcementMode
@@ -1360,6 +1422,7 @@ module modPolAssiIdentDenyMgmtFromInternet '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.properties.enforcementMode
@@ -1376,6 +1439,7 @@ module modPolAssiIdentDenySubnetWithoutNsg '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.properties.enforcementMode
@@ -1393,6 +1457,7 @@ module modPolAssiIdentDeployVmBackup '../../../policy/assignments/policyAssignme
     parPolicyAssignmentName: varPolicyAssignmentDeployVMBackup.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMBackup.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMBackup.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployVMBackup.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployVMBackup.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       exclusionTagName: {
@@ -1423,6 +1488,7 @@ module modPolAssiLzsDeployGuestAttest '../../../policy/assignments/policyAssignm
     parPolicyAssignmentName: varPolicyAssignmentDeployGuestAttest.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployGuestAttest.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployGuestAttest.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployGuestAttest.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployGuestAttest.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployGuestAttest.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
@@ -1446,6 +1512,7 @@ module modPolAssiLzsDenyIpForwarding '../../../policy/assignments/policyAssignme
     parPolicyAssignmentName: varPolicyAssignmentDenyIPForwarding.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyIPForwarding.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyIPForwarding.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyIPForwarding.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyIPForwarding.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyIPForwarding.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyIPForwarding.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyIPForwarding.libDefinition.properties.enforcementMode
@@ -1462,6 +1529,7 @@ module modPolAssiLzsDenyMgmtFromInternet '../../../policy/assignments/policyAssi
     parPolicyAssignmentName: varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyMgmtPortsInternet.libDefinition.properties.enforcementMode
@@ -1478,6 +1546,7 @@ module modPolAssiLzsDenySubnetWithoutNsg '../../../policy/assignments/policyAssi
     parPolicyAssignmentName: varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenySubnetWithoutNsg.libDefinition.properties.enforcementMode
@@ -1495,6 +1564,7 @@ module modPolAssiLzsDeployVmBackup '../../../policy/assignments/policyAssignment
     parPolicyAssignmentName: varPolicyAssignmentDeployVMBackup.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMBackup.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMBackup.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployVMBackup.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployVMBackup.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       exclusionTagName: {
@@ -1523,6 +1593,7 @@ module modPolAssiLzsEnableDdosVnet '../../../policy/assignments/policyAssignment
     parPolicyAssignmentName: varPolicyAssignmentEnableDDoSVNET.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnableDDoSVNET.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       ddosPlan: {
@@ -1548,6 +1619,7 @@ module modPolAssiLzsDenyStorageHttp '../../../policy/assignments/policyAssignmen
     parPolicyAssignmentName: varPolicyAssignmentDenyStoragehttp.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyStoragehttp.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyStoragehttp.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyStoragehttp.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyStoragehttp.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyStoragehttp.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyStoragehttp.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyStoragehttp.libDefinition.properties.enforcementMode
@@ -1565,6 +1637,7 @@ module modPolAssiLzsDenyPrivEscalationAks '../../../policy/assignments/policyAss
     parPolicyAssignmentName: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyPrivEscalationAKS.libDefinition.properties.enforcementMode
@@ -1582,6 +1655,7 @@ module modPolAssiLzsDenyPrivContainersAks '../../../policy/assignments/policyAss
     parPolicyAssignmentName: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPrivContainersAKS.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyPrivContainersAKS.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyPrivContainersAKS.libDefinition.properties.enforcementMode
@@ -1599,6 +1673,7 @@ module modPolAssiLzsEnforceAksHttps '../../../policy/assignments/policyAssignmen
     parPolicyAssignmentName: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceAKSHTTPS.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnforceAKSHTTPS.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnforceAKSHTTPS.libDefinition.properties.enforcementMode
@@ -1615,6 +1690,7 @@ module modPolAssiLzsEnforceTlsSsl '../../../policy/assignments/policyAssignmentM
     parPolicyAssignmentName: varPolicyAssignmentEnforceTLSSSLQ225.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceTLSSSLQ225.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceTLSSSLQ225.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceTLSSSLQ225.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceTLSSSLQ225.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceTLSSSLQ225.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnforceTLSSSLQ225.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnforceTLSSSLQ225.libDefinition.properties.enforcementMode
@@ -1635,6 +1711,7 @@ module modPolAssiLzsDeployAzSqlDbAuditing '../../../policy/assignments/policyAss
     parPolicyAssignmentName: varPolicyAssignmentDeployAzSqlDbAuditing.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployAzSqlDbAuditing.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployAzSqlDbAuditing.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployAzSqlDbAuditing.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployAzSqlDbAuditing.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       logAnalyticsWorkspaceId: {
@@ -1664,6 +1741,7 @@ module modPolAssiLzsDeploySqlThreat '../../../policy/assignments/policyAssignmen
     parPolicyAssignmentName: varPolicyAssignmentDeploySQLThreat.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeploySQLThreat.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeploySQLThreat.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeploySQLThreat.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeploySQLThreat.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeploySQLThreat.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeploySQLThreat.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeploySQLThreat.libDefinition.properties.enforcementMode
@@ -1684,6 +1762,7 @@ module modPolAssiLzsDeploySqlTde '../../../policy/assignments/policyAssignmentMa
     parPolicyAssignmentName: varPolicyAssignmentDeploySQLTDE.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeploySQLTDE.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeploySQLTDE.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeploySQLTDE.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeploySQLTDE.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeploySQLTDE.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeploySQLTDE.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeploySQLTDE.libDefinition.properties.enforcementMode
@@ -1704,6 +1783,7 @@ module modPolAssiLzsDeployVmArcTrack '../../../policy/assignments/policyAssignme
     parPolicyAssignmentName: varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployvmArcChangeTrack.libDefinition.properties.enforcementMode
@@ -1734,6 +1814,7 @@ module modPolAssiLzsDeployVmChangeTrack '../../../policy/assignments/policyAssig
     parPolicyAssignmentName: varPolicyAssignmentDeployVMChangeTrack.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMChangeTrack.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMChangeTrack.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployVMChangeTrack.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployVMChangeTrack.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMChangeTrack.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployVMChangeTrack.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployVMChangeTrack.libDefinition.properties.enforcementMode
@@ -1769,6 +1850,7 @@ module modPolAssiLzsDeployVmssChangeTrack '../../../policy/assignments/policyAss
     parPolicyAssignmentName: varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployVMSSChangeTrack.libDefinition.properties.enforcementMode
@@ -1804,6 +1886,7 @@ module modPolAssiLzsDeployVmArcMonitor '../../../policy/assignments/policyAssign
     parPolicyAssignmentName: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployvmHybrMonitoring.libDefinition.properties.enforcementMode
@@ -1835,6 +1918,7 @@ module modPolAssiLzsDeployVmMonitor '../../../policy/assignments/policyAssignmen
     parPolicyAssignmentName: varPolicyAssignmentDeployVMMonitor24.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMMonitor24.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployVMMonitor24.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployVMMonitor24.libDefinition.properties.enforcementMode
@@ -1870,6 +1954,7 @@ module modPolAssiLzsDeployVmssMonitor '../../../policy/assignments/policyAssignm
     parPolicyAssignmentName: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployVMSSMonitor24.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployVMSSMonitor24.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployVMSSMonitor24.libDefinition.properties.enforcementMode
@@ -1905,6 +1990,7 @@ module modPolAssiLzsmDeployMdfcDefSqlAma '../../../policy/assignments/policyAssi
     parPolicyAssignmentName: varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployMDFCDefSQLAMA.libDefinition.properties.enforcementMode
@@ -1943,6 +2029,7 @@ module modPolAssiLzsEnforceSubnetPrivate '../../../policy/assignments/policyAssi
     parPolicyAssignmentName: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceSubnetPrivate.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnforceSubnetPrivate.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnforceSubnetPrivate.libDefinition.properties.enforcementMode
@@ -1959,6 +2046,7 @@ module modPolAssiLzsEnforceGrKeyVault '../../../policy/assignments/policyAssignm
     parPolicyAssignmentName: varPolicyAssignmentEnforceGRKeyVault.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceGRKeyVault.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnforceGRKeyVault.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnforceGRKeyVault.libDefinition.properties.enforcementMode
@@ -1975,6 +2063,7 @@ module modPolAssiLzsEnforceAsr '../../../policy/assignments/policyAssignmentMana
     parPolicyAssignmentName: varPolicyAssignmentEnforceASR.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceASR.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceASR.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceASR.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceASR.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceASR.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnforceASR.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnforceASR.libDefinition.properties.enforcementMode
@@ -1994,6 +2083,7 @@ module modPolAssiLzsAumCheckUpdates '../../../policy/assignments/policyAssignmen
     parPolicyAssignmentName: varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnableAUMCheckUpdates.libDefinition.properties.enforcementMode
@@ -2016,6 +2106,7 @@ module modPolAssiLzsAuditAppGwWaf '../../../policy/assignments/policyAssignmentM
     parPolicyAssignmentName: varPolicyAssignmentAuditAppGWWAF.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentAuditAppGWWAF.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentAuditAppGWWAF.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentAuditAppGWWAF.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentAuditAppGWWAF.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentAuditAppGWWAF.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentAuditAppGWWAF.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentAuditAppGWWAF.libDefinition.properties.enforcementMode
@@ -2033,6 +2124,7 @@ module modPolAssiLzsDenyPublicEndpoints '../../../policy/assignments/policyAssig
     parPolicyAssignmentName: varPolicyAssignmentDenyPublicEndpoints.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPublicEndpoints.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyPublicEndpoints.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyPublicEndpoints.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyPublicEndpoints.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPublicEndpoints.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyPublicEndpoints.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyPublicEndpoints.libDefinition.properties.enforcementMode
@@ -2049,6 +2141,7 @@ module modPolAssiConnDeployPrivateDnsZones '../../../policy/assignments/policyAs
     parPolicyAssignmentName: varPolicyAssignmentDeployPrivateDNSZones.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDeployPrivateDNSZones.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDeployPrivateDNSZones.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployPrivateDNSZones.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeployPrivateDNSZones.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: {
       azureAcrPrivateDnsZoneId: {
@@ -2275,6 +2368,7 @@ module modPolAssiLzsCorpDenyPipOnNic '../../../policy/assignments/policyAssignme
     parPolicyAssignmentName: varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyPublicIPOnNIC.libDefinition.properties.enforcementMode
@@ -2292,6 +2386,7 @@ module modPolAssiLzsCorpDenyHybridNet '../../../policy/assignments/policyAssignm
     parPolicyAssignmentName: varPolicyAssignmentDenyHybridNetworking.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentDenyHybridNetworking.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentDenyHybridNetworking.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDenyHybridNetworking.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDenyHybridNetworking.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentDenyHybridNetworking.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDenyHybridNetworking.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDenyHybridNetworking.libDefinition.properties.enforcementMode
@@ -2308,6 +2403,7 @@ module modPolAssiLzsCorpAuditPeDnsZones '../../../policy/assignments/policyAssig
     parPolicyAssignmentName: varPolicyAssignmentAuditPeDnsZones.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentAuditPeDnsZones.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentAuditPeDnsZones.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentAuditPeDnsZones.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentAuditPeDnsZones.libDefinition.properties.parameters
     parPolicyAssignmentParameterOverrides: empty(parPrivateDnsZonesNamesToAuditInCorp) ? {} : {
       privateLinkDnsZones: {
@@ -2330,6 +2426,7 @@ module modPolAssiDecommEnforceAlz '../../../policy/assignments/policyAssignmentM
     parPolicyAssignmentName: varPolicyAssignmentEnforceALZDecomm.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceALZDecomm.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceALZDecomm.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceALZDecomm.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceALZDecomm.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceALZDecomm.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnforceALZDecomm.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnforceALZDecomm.libDefinition.properties.enforcementMode
@@ -2350,6 +2447,7 @@ module modPolAssiSandboxEnforceAlz '../../../policy/assignments/policyAssignment
     parPolicyAssignmentName: varPolicyAssignmentEnforceALZSandbox.libDefinition.name
     parPolicyAssignmentDisplayName: varPolicyAssignmentEnforceALZSandbox.libDefinition.properties.displayName
     parPolicyAssignmentDescription: varPolicyAssignmentEnforceALZSandbox.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentEnforceALZSandbox.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentEnforceALZSandbox.libDefinition.properties.parameters
     parPolicyAssignmentIdentityType: varPolicyAssignmentEnforceALZSandbox.libDefinition.identity.type
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnforceALZSandbox.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnforceALZSandbox.libDefinition.properties.enforcementMode
