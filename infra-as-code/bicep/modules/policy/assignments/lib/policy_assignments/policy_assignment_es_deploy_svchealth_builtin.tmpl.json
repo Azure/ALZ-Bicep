@@ -6,7 +6,28 @@
     "description": "Assignable at the subscription or management group level, this policy ensures that each subscription has a service health alert rule configured with alert conditions and mapping to action groups as specified in the policy parameters. By default creates a resource group, alert rule and action group configured to send emails to subscription owners for all service health events.",
     "displayName": "Configure subscriptions to enable service health alert monitoring rule",
     "notScopes": [],
-    "parameters": {},
+    "parameters": {
+      "resourceGroupLocation": {
+        "value": "placeholder"
+      },
+      "resourceGroupName": {
+        "value": "rg-serviceHealthAlert"
+      },
+      "actionGroupResources": {
+        "value": {
+          "actionGroupEmail": [],
+          "webhookServiceUri": [],
+          "logicappResourceId": "",
+          "logicappCallbackUrl": "",
+          "eventHubResourceId": [],
+          "functionResourceId": "",
+          "functionTriggerUrl": ""
+        }
+      },
+      "actionGroupRoleIds": {
+        "value": ["Owner"]
+      }
+    },
     "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/98903777-a9f6-47f5-90a9-acaf62ab01a8",
     "definitionVersion": "1.*.*-preview",
     "scope": null,

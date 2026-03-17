@@ -70,6 +70,20 @@ param parVmBackupExclusionTagName string = ''
 @description('Tag value for excluding VMs from this policy scope.')
 param parVmBackupExclusionTagValue array = []
 
+@description('Resource group name for the service health alert rule. Used by the Deploy-SvcHealth-BuiltIn policy assignment.')
+param parServiceHealthAlertResourceGroupName string = 'rg-serviceHealthAlert'
+
+@description('Action group resources configuration for the service health alert rule. Used by the Deploy-SvcHealth-BuiltIn policy assignment.')
+param parServiceHealthAlertActionGroupResources object = {
+  actionGroupEmail: []
+  webhookServiceUri: []
+  logicappResourceId: ''
+  logicappCallbackUrl: ''
+  eventHubResourceId: []
+  functionResourceId: ''
+  functionTriggerUrl: ''
+}
+
 @description('Names of policy assignments to exclude from the deployment entirely.')
 param parExcludedPolicyAssignments array = []
 
@@ -1011,6 +1025,17 @@ module modPolAssiIntRootDeploySvcHealthBuiltIn '../../../policy/assignments/poli
     parPolicyAssignmentDescription: varPolicyAssignmentDeploySvcHealthBuiltIn.libDefinition.properties.description
     parPolicyAssignmentNotScopes: varPolicyAssignmentDeploySvcHealthBuiltIn.libDefinition.properties.notScopes
     parPolicyAssignmentParameters: varPolicyAssignmentDeploySvcHealthBuiltIn.libDefinition.properties.parameters
+    parPolicyAssignmentParameterOverrides: {
+      resourceGroupLocation: {
+        value: parLogAnalyticsWorkSpaceAndAutomationAccountLocation
+      }
+      resourceGroupName: {
+        value: parServiceHealthAlertResourceGroupName
+      }
+      actionGroupResources: {
+        value: parServiceHealthAlertActionGroupResources
+      }
+    }
     parPolicyAssignmentIdentityType: varPolicyAssignmentDeploySvcHealthBuiltIn.libDefinition.identity.type
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.monitoringPolicyContributor
