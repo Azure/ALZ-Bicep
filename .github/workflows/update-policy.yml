@@ -73,7 +73,7 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
 
       - name: Update Policy Library
-        uses: azure/powershell@53dd145408794f7e80f97cfcca04155c85234709 # v2.0.0
+        uses: azure/powershell@f5b8adcfff1904872c7b98d4012d4914d74b1a82 # v3.0.0
         with:
           inlineScript: |
             Write-Information "==> Running script..." -InformationAction Continue
@@ -90,7 +90,7 @@ jobs:
           Install-Module -Name 'ALZ' -Force -RequiredVersion '4.1.5'
 
       - name: Update Policy Definition Bicep Input Files
-        uses: azure/powershell@53dd145408794f7e80f97cfcca04155c85234709 # v2.0.0
+        uses: azure/powershell@f5b8adcfff1904872c7b98d4012d4914d74b1a82 # v3.0.0
         with:
           inlineScript: |
             cd ${{ github.workspace }}/${{ github.repository }}
