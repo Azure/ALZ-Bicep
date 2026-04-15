@@ -1045,7 +1045,7 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/766e621d-ba95-4e43-a6f2-e945db3d7888'
 				definitionParameters: varPolicySetDefinitionEsDeployMDFCConfig_20240319Parameters.migrateToMdeTvm.parameters
 				definitionGroups: []
-				definitionVersion: ''
+				definitionVersion: '1.*.*-preview'
 			}
 			{
 				definitionReferenceId: 'securityEmailContact'
