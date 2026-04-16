@@ -175,10 +175,6 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-PublicAccessWhenBehindVnet.json')
 }
 {
-	name: 'Deny-MachineLearning-PublicNetworkAccess'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MachineLearning-PublicNetworkAccess.json')
-}
-{
 	name: 'Deny-MgmtPorts-From-Internet'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-MgmtPorts-From-Internet.json')
 }
@@ -193,18 +189,6 @@
 {
 	name: 'Deny-Private-DNS-Zones'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Private-DNS-Zones.json')
-}
-{
-	name: 'Deny-PublicEndpoint-MariaDB'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-PublicEndpoint-MariaDB.json')
-}
-{
-	name: 'Deny-PublicIP'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-PublicIP.json')
-}
-{
-	name: 'Deny-RDP-From-Internet'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-RDP-From-Internet.json')
 }
 {
 	name: 'Deny-Redis-http'
@@ -237,10 +221,6 @@
 {
 	name: 'Deny-Storage-LocalUser'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-LocalUser.json')
-}
-{
-	name: 'Deny-Storage-minTLS'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deny-Storage-minTLS.json')
 }
 {
 	name: 'Deny-Storage-NetworkAclsBypass'
@@ -547,36 +527,8 @@
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-LogicApp-TLS.json')
 }
 {
-	name: 'Deploy-MDFC-Arc-SQL-DCR-Association'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-Arc-SQL-DCR-Association.json')
-}
-{
-	name: 'Deploy-MDFC-Arc-Sql-DefenderSQL-DCR'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-Arc-Sql-DefenderSQL-DCR.json')
-}
-{
-	name: 'Deploy-MDFC-SQL-AMA'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-SQL-AMA.json')
-}
-{
-	name: 'Deploy-MDFC-SQL-DefenderSQL-DCR'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-SQL-DefenderSQL-DCR.json')
-}
-{
-	name: 'Deploy-MDFC-SQL-DefenderSQL'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MDFC-SQL-DefenderSQL.json')
-}
-{
 	name: 'Deploy-MySQL-sslEnforcement'
 	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-MySQL-sslEnforcement.json')
-}
-{
-	name: 'Deploy-Nsg-FlowLogs-to-LA'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Nsg-FlowLogs-to-LA.json')
-}
-{
-	name: 'Deploy-Nsg-FlowLogs'
-	libDefinition: loadJsonContent('lib/policy_definitions/policy_definition_es_Deploy-Nsg-FlowLogs.json')
 }
 {
 	name: 'Deploy-PostgreSQL-sslEnforcement'
