@@ -321,14 +321,6 @@ Set Parameter to true to Opt-out of deployment telemetry
 
 Name | Type | Description
 ---- | ---- | -----------
-outUserAssignedManagedIdentityId | string |
-outUserAssignedManagedIdentityPrincipalId | string |
-outDataCollectionRuleVMInsightsName | string |
-outDataCollectionRuleVMInsightsId | string |
-outDataCollectionRuleChangeTrackingName | string |
-outDataCollectionRuleChangeTrackingId | string |
-outDataCollectionRuleMDFCSQLName | string |
-outDataCollectionRuleMDFCSQLId | string |
 outLogAnalyticsWorkspaceName | string |
 outLogAnalyticsWorkspaceId | string |
 outLogAnalyticsCustomerId | string |
