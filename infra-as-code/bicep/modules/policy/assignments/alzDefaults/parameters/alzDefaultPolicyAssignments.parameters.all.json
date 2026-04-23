@@ -71,6 +71,20 @@
     "parVmBackupExclusionTagValue": {
       "value": []
     },
+    "parServiceHealthAlertResourceGroupName": {
+      "value": "rg-serviceHealthAlert"
+    },
+    "parServiceHealthAlertActionGroupResources": {
+      "value": {
+        "actionGroupEmail": [],
+        "webhookServiceUri": [],
+        "logicappResourceId": "",
+        "logicappCallbackUrl": "",
+        "eventHubResourceId": [],
+        "functionResourceId": "",
+        "functionTriggerUrl": ""
+      }
+    },
     "parExcludedPolicyAssignments": {
       "value": []
     },

@@ -28,6 +28,8 @@ parPolicyAssignmentsToDisableEnforcement | No       | Set the enforcement mode t
 parDisableAlzDefaultPolicies | No       | Set the enforcement mode to DoNotEnforce for all default ALZ policies.
 parVmBackupExclusionTagName | No       | Tag name for excluding VMs from this policy scope.
 parVmBackupExclusionTagValue | No       | Tag value for excluding VMs from this policy scope.
+parServiceHealthAlertResourceGroupName | No       | Resource group name for the service health alert rule. Used by the Deploy-SvcHealth-BuiltIn policy assignment.
+parServiceHealthAlertActionGroupResources | No       | Action group resources configuration for the service health alert rule. Used by the Deploy-SvcHealth-BuiltIn policy assignment.
 parExcludedPolicyAssignments | No       | Names of policy assignments to exclude from the deployment entirely.
 parTelemetryOptOut | No       | Opt out of deployment telemetry.
 parManagementGroupIdOverrides | Yes      | Specify the ALZ Default Management Group IDs to override as specified in `varManagementGroupIds`. Useful for scenarios when renaming ALZ default management groups names and IDs but not their intent or hierarchy structure.
@@ -180,6 +182,22 @@ Tag name for excluding VMs from this policy scope.
 
 Tag value for excluding VMs from this policy scope.
 
+### parServiceHealthAlertResourceGroupName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource group name for the service health alert rule. Used by the Deploy-SvcHealth-BuiltIn policy assignment.
+
+- Default value: `rg-serviceHealthAlert`
+
+### parServiceHealthAlertActionGroupResources
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Action group resources configuration for the service health alert rule. Used by the Deploy-SvcHealth-BuiltIn policy assignment.
+
+- Default value: `@{actionGroupEmail=System.Object[]; webhookServiceUri=System.Object[]; logicappResourceId=; logicappCallbackUrl=; eventHubResourceId=System.Object[]; functionResourceId=; functionTriggerUrl=}`
+
 ### parExcludedPolicyAssignments
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -277,6 +295,20 @@ Specify the ALZ Default Management Group IDs to override as specified in `varMan
         },
         "parVmBackupExclusionTagValue": {
             "value": []
+        },
+        "parServiceHealthAlertResourceGroupName": {
+            "value": "rg-serviceHealthAlert"
+        },
+        "parServiceHealthAlertActionGroupResources": {
+            "value": {
+                "actionGroupEmail": [],
+                "webhookServiceUri": [],
+                "logicappResourceId": "",
+                "logicappCallbackUrl": "",
+                "eventHubResourceId": [],
+                "functionResourceId": "",
+                "functionTriggerUrl": ""
+            }
         },
         "parExcludedPolicyAssignments": {
             "value": []
