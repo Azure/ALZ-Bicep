@@ -610,9 +610,9 @@ resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-05-01' = [
 
 // Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallPolicyLock.kind != 'None'
 resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = [
-  for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled && parVirtualWanHubs[i].parAzFirewallEnabled) && (parAzureFirewallPolicyLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
+  for (hub, i) in parVirtualWanHubs: if ((parVirtualHubEnabled && parVirtualWanHubs[i].parAzFirewallEnabled && parAzFirewallPolicyDeploymentStyle == 'PerRegion') && (parAzureFirewallPolicyLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
     scope: resFirewallPolicies[i]
-    name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPolicies[i].name}-lock'
+    name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPolicies[i].name}-perregion-lock'
     properties: {
       level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallPolicyLock.kind
       notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallPolicyLock.?notes
@@ -653,7 +653,7 @@ resource resFirewallPoliciesSharedGlobal 'Microsoft.Network/firewallPolicies@202
 // Create Azure Firewall Policy resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallPolicyLock.kind != 'None'
 resource resFirewallPoliciesLockSharedGlobal 'Microsoft.Authorization/locks@2020-05-01' = if ((parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled && parAzFirewallPolicyDeploymentStyle == 'SharedGlobal') && (parAzureFirewallPolicyLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
   scope: resFirewallPoliciesSharedGlobal
-  name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPoliciesSharedGlobal.name}-lock'
+  name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPoliciesSharedGlobal.name}-sharedglobal-lock'
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallPolicyLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallPolicyLock.?notes
