@@ -261,7 +261,7 @@ param parAzFirewallName string = '${parCompanyPrefix}-fw'
 @sys.description('The deployment style of the Azure Firewall Policy. Either one shared firewall policy (`SharedGlobal`) or one policy per region (`PerRegion`), defaults to `SharedGlobal`.')
 param parAzFirewallPolicyDeploymentStyle azFirewallPolicyDeploymentStyleType = 'SharedGlobal'
 
-@sys.description('Azure Firewall Policies Name. This is used to automatically generate a name for the Azure Firewall Policy following concat of the pattern `parAzFirewallPoliciesName-hub.parHubLocation` if you want to provide a true custom name then specify a value in each object in the array of `parVirtualWanHubs.parAzFirewallPolicyCustomName`.')
+@sys.description('Azure Firewall Policies Name. The hub location is appended automatically (`<name>-<hub.parHubLocation>`), unless the name already ends with `-<hub.parHubLocation>`. For a fully custom name, set `parVirtualWanHubs.parAzFirewallPolicyCustomName`.')
 param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy'
 
 @description('The operation mode for automatically learning private ranges to not be SNAT.')
@@ -579,7 +579,7 @@ resource resErGatewayLock 'Microsoft.Authorization/locks@2020-05-01' = [
 // Create Azure Firewall Policy (per region) resources if parAzFirewallEnabled is true and parAzFirewallPolicyDeploymentStyle is set to PerRegion
 resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-05-01' = [
   for (hub, i) in parVirtualWanHubs: if (parVirtualHubEnabled && parVirtualWanHubs[i].parAzFirewallEnabled && parAzFirewallPolicyDeploymentStyle == 'PerRegion') {
-    name: hub.?parAzFirewallPolicyCustomName ?? '${parAzFirewallPoliciesName}-${hub.parHubLocation}'
+    name: hub.?parAzFirewallPolicyCustomName ?? (endsWith(parAzFirewallPoliciesName, '-${hub.parHubLocation}') ? parAzFirewallPoliciesName : '${parAzFirewallPoliciesName}-${hub.parHubLocation}')
     location: hub.parHubLocation
     tags: parTags
     properties: (hub.?parAzFirewallTier == 'Basic')
@@ -622,7 +622,7 @@ resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = [
 
 // Shared Global Azure Firewall Policy
 resource resFirewallPoliciesSharedGlobal 'Microsoft.Network/firewallPolicies@2024-05-01' = if (parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled && parAzFirewallPolicyDeploymentStyle == 'SharedGlobal') {
-  name: parVirtualWanHubs[0].?parAzFirewallPolicyCustomName ?? '${parAzFirewallPoliciesName}-${parVirtualWanHubs[0].parHubLocation}'
+  name: parVirtualWanHubs[0].?parAzFirewallPolicyCustomName ?? (endsWith(parAzFirewallPoliciesName, '-${parVirtualWanHubs[0].parHubLocation}') ? parAzFirewallPoliciesName : '${parAzFirewallPoliciesName}-${parVirtualWanHubs[0].parHubLocation}')
   location: parVirtualWanHubs[0].parHubLocation
   tags: parTags
   properties: (parVirtualWanHubs[0].?parAzFirewallTier == 'Basic')
