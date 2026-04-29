@@ -420,7 +420,7 @@ Azure Firewall Name.
 
 Azure Firewall Name in the secondary location.
 
-- Default value: `[format('{0}-azfw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
+- Default value: `[format('{0}-azfw-{1}', parameters('parCompanyPrefix'), parameters('parSecondaryLocation'))]`
 
 ### parAzFirewallPoliciesEnabled
 
@@ -452,7 +452,7 @@ Azure Firewall Policies Name.
 
 Azure Firewall Policies Name in the secondary location.
 
-- Default value: `[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]`
+- Default value: `[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parSecondaryLocation'))]`
 
 ### parAzFirewallPoliciesAutoLearn
 
@@ -1082,7 +1082,7 @@ outBastionNsgNameSecondaryLocation | string |
             "value": "[format('{0}-azfw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
         },
         "parAzFirewallNameSecondaryLocation": {
-            "value": "[format('{0}-azfw-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
+            "value": "[format('{0}-azfw-{1}', parameters('parCompanyPrefix'), parameters('parSecondaryLocation'))]"
         },
         "parAzFirewallPoliciesEnabled": {
             "value": true
@@ -1094,7 +1094,7 @@ outBastionNsgNameSecondaryLocation | string |
             "value": "[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
         },
         "parAzFirewallPoliciesNameSecondaryLocation": {
-            "value": "[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parLocation'))]"
+            "value": "[format('{0}-azfwpolicy-{1}', parameters('parCompanyPrefix'), parameters('parSecondaryLocation'))]"
         },
         "parAzFirewallPoliciesAutoLearn": {
             "value": "Disabled"

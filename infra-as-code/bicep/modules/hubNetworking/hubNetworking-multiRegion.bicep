@@ -294,7 +294,7 @@ param parAzFirewallEnabledSecondaryLocation bool = true
 param parAzFirewallName string = '${parCompanyPrefix}-azfw-${parLocation}'
 
 @sys.description('Azure Firewall Name in the secondary location.')
-param parAzFirewallNameSecondaryLocation string = '${parCompanyPrefix}-azfw-${parLocation}'
+param parAzFirewallNameSecondaryLocation string = '${parCompanyPrefix}-azfw-${parSecondaryLocation}'
 
 @sys.description('Set this to true for the initial deployment as one firewall policy is required. Set this to false in subsequent deployments if using custom policies.')
 param parAzFirewallPoliciesEnabled bool = true
@@ -306,7 +306,7 @@ param parAzFirewallPoliciesEnabledSecondaryLocation bool = true
 param parAzFirewallPoliciesName string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
 
 @sys.description('Azure Firewall Policies Name in the secondary location.')
-param parAzFirewallPoliciesNameSecondaryLocation string = '${parCompanyPrefix}-azfwpolicy-${parLocation}'
+param parAzFirewallPoliciesNameSecondaryLocation string = '${parCompanyPrefix}-azfwpolicy-${parSecondaryLocation}'
 
 @description('The operation mode for automatically learning private ranges to not be SNAT.')
 param parAzFirewallPoliciesAutoLearn string = 'Disabled'
@@ -863,7 +863,7 @@ resource resVirtualNetworkLock 'Microsoft.Authorization/locks@2020-05-01' = if (
 // Create a virtual network resource lock if parGlobalResourceLock.kind != 'None' or if parVirtualNetworkLock.kind != 'None'
 resource resVirtualNetworkLockSecondaryLocation 'Microsoft.Authorization/locks@2020-05-01' = if (parVirtualNetworkLock.kind != 'None' || parGlobalResourceLock.kind != 'None') {
   scope: resHubVnetSecondaryLocation
-  name: parVirtualNetworkLock.?name ?? '${resHubVnet.name}-lock'
+  name: parVirtualNetworkLock.?name ?? '${resHubVnetSecondaryLocation.name}-lock'
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parVirtualNetworkLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parVirtualNetworkLock.?notes
@@ -1809,7 +1809,7 @@ resource resFirewallPoliciesSecondaryLocation 'Microsoft.Network/firewallPolicie
 // Create Azure Firewall Policy resource lock if parAzFirewallPoliciesEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallPolicyLock.kind != 'None'
 resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallPoliciesEnabled && (parAzureFirewallPolicyLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
   scope: resFirewallPolicies
-  name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPolicies.name}-lock'
+  name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPolicies.name}-primary-lock'
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallPolicyLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallPolicyLock.?notes
@@ -1819,7 +1819,7 @@ resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = if
 // Create Azure Firewall Policy resource lock if parAzFirewallPoliciesEnabledSecondaryLocation is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallPolicyLock.kind != 'None'
 resource resFirewallPoliciesLockSecondaryLocation 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallPoliciesEnabledSecondaryLocation && (parAzureFirewallPolicyLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
   scope: resFirewallPoliciesSecondaryLocation
-  name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPoliciesSecondaryLocation.name}-lock'
+  name: parAzureFirewallPolicyLock.?name ?? '${resFirewallPoliciesSecondaryLocation.name}-secondary-lock'
   properties: {
     level: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : parAzureFirewallPolicyLock.kind
     notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : parAzureFirewallPolicyLock.?notes
