@@ -5,11 +5,11 @@
   "scope": null,
   "properties": {
     "policyType": "Custom",
-    "mode": "All",
+    "mode": "Indexed",
     "displayName": "Audit for mandatory tags on resources",
     "description": "Audits resources to ensure they have required tags based on tag array. Does not apply to resource groups.",
     "metadata": {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "category": "Tags",
       "source": "https://github.com/Azure/Enterprise-Scale/",
       "alzCloudEnvironments": [
