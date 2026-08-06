@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "parLocation": {
-      "value": "uksouth"
+      "value": "swedencentral"
     },
     "parTargetResourceGroupName": {
       "value": "rg-alz-healthmodels"
@@ -22,6 +22,9 @@
     },
     "parDeployHealthModel": {
       "value": true
+    },
+    "parTelemetryOptOut": {
+      "value": false
     },
     "parEnforcementMode": {
       "value": "Default"

@@ -1,10 +1,14 @@
-# Module: CloudHealth Platform Health Model Policy (Preview)
+# Module: CloudHealth Platform and Application Health Model Policies (Preview, experimental)
 
-This subscription-scope module deploys a custom policy for a Microsoft CloudHealth
-platform health model. `parDeployHealthModel` maps `true` (the default) to
+These subscription-scope modules are preview (experimental), but deployable. They
+provide custom policies for Microsoft CloudHealth platform and application health
+models. `parDeployHealthModel` maps `true` (the default) to
 `DeployIfNotExists` and `false` to `Disabled`. The policy definition, assignment,
-identities, and RBAC remain deployed in both states. This is a preview
+identities, and RBAC remain deployed in both states. Setting it to `false` is an
+operational pause, not the experimental marker. This is a preview
 implementation for [Azure/ahm-planning#3553](https://github.com/Azure/ahm-planning/issues/3553).
+
+[ALZ alerting landscape and AMBA catalog](ALZ-Alerting-Landscape.md)
 
 The module deploys:
 
@@ -17,10 +21,32 @@ The module deploys:
 The target resource group is caller-owned and must already exist. The module does
 not create or delete it.
 
+`parLocation` defaults to `swedencentral`, a currently advertised
+Microsoft.CloudHealth health-model location. Before deployment, query the current
+provider locations:
+
+```bash
+az provider show --namespace Microsoft.CloudHealth \
+  --query "resourceTypes[?resourceType=='healthmodels'].locations[]" \
+  --output table
+```
+
+If `Sweden Central` is unavailable, set `parLocation` in the selected parameter
+file to another returned location. The subscription deployment `--location` does
+not override `parLocation`; a resource group's region is not a safe fallback.
+
 ## Parameters
 
 - [Health model policy parameters](generateddocs/healthModelPolicy.bicep.md)
+- [Application health model policy parameters](generateddocs/applicationHealthModelPolicy.bicep.md)
 - [Discovery identity parameters](generateddocs/healthModelDiscoveryIdentity.bicep.md)
+
+### Telemetry
+
+Each policy entrypoint deploys its own customer-usage attribution by default and
+passes the same setting to every nested subscription Reader role assignment. Set
+`parTelemetryOptOut` to `true` to disable both the entrypoint and nested
+attribution deployments.
 
 Each domain query has this shape:
 
@@ -63,7 +89,7 @@ Deploy with the minimum parameter sample:
 ```bash
 az deployment sub create \
   --name alz-cloudhealth \
-  --location uksouth \
+  --location swedencentral \
   --template-file infra-as-code/bicep/modules/policy/healthModel/healthModelPolicy.bicep \
   --parameters @infra-as-code/bicep/modules/policy/healthModel/parameters/healthModelPolicy.parameters.min.json
 ```
@@ -368,14 +394,65 @@ Confirm the remediation and per-subscription discovery role-assignment queries
 return no rows, then repeat the deployment and remediation commands. The target
 resource group remains caller-owned.
 
-## Bicep Visualizer
+## Bicep visualizers (Preview, experimental)
 
-![Bicep Visualizer](media/bicepVisualizer.png "Bicep Visualizer")
+### Platform policy
 
-## Preview limitations
+![Preview experimental platform policy Bicep visualizer](media/bicepVisualizer.png "Preview experimental platform policy Bicep visualizer")
+
+### Application policy
+
+![Preview experimental application policy Bicep visualizer](media/applicationBicepVisualizer.png "Preview experimental application policy Bicep visualizer")
+
+## Preview (experimental) limitations
 
 - `Microsoft.CloudHealth/*@2026-05-01-preview` types are permissive in Bicep.
   Compilation and subscription deployment validation do not prove remediation
   behavior; a live policy scan and remediation are the runtime oracle.
+- Runtime deployment is unproven. Subscription validation checks the ARM request
+  shape without creating the resources.
+- A live policy scan and remediation are unproven.
+- Cross-subscription RBAC behavior is unproven.
+- Teardown is unproven, and redeploy after teardown is unproven.
 - Changing the custom policy parameter set is not an in-place update. Remove the
   assignment and definition before redeploying that kind of change.
+
+## Application landing zone example (Preview, experimental)
+
+`applicationHealthModelPolicy.bicep` is an additive preview example for an
+application landing zone. It preserves the platform policy above and creates five
+top-level discovery rules: Compute, Data, Routing, AI, and Config.
+
+The target resource group is caller-owned and must already exist. The policy does
+not create or delete it. Discovery queries are built internally from each
+domain's subscription, resource types, and optional tag filters; there is no raw
+query override. The discovery identity receives Reader once per unique configured
+subscription, while the policy-assignment identity receives Contributor and
+Managed Identity Operator.
+
+Build the targeted example:
+
+```bash
+az bicep build \
+  --file infra-as-code/bicep/modules/policy/healthModel/applicationHealthModelPolicy.bicep \
+  --stdout
+```
+
+Deploy with the minimum sample after confirming the resource group exists:
+
+```bash
+az deployment sub create \
+  --name alz-application-cloudhealth \
+  --location swedencentral \
+  --template-file infra-as-code/bicep/modules/policy/healthModel/applicationHealthModelPolicy.bicep \
+  --parameters @infra-as-code/bicep/modules/policy/healthModel/parameters/applicationHealthModelPolicy.parameters.min.json
+```
+
+Use the [all-parameters sample](parameters/applicationHealthModelPolicy.parameters.all.json)
+for a complete configuration. Parameter defaults and constraints are documented
+in the [generated reference](generateddocs/applicationHealthModelPolicy.bicep.md).
+
+This example is preview-only and is not a production rollout or enforcement
+recommendation. Compilation, JSON parsing, and the generated documentation are
+the verification boundary here. They do not prove live application discovery or
+remediation; a real policy scan and remediation remain the runtime oracle.

@@ -1,6 +1,6 @@
 # ALZ Bicep - CloudHealth Discovery Identity
 
-Creates the user-assigned managed identity used by CloudHealth discovery rules.
+Preview (experimental): creates the user-assigned managed identity used by CloudHealth discovery rules.
 
 ## Parameters
 

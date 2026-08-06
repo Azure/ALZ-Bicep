@@ -1,7 +1,7 @@
 targetScope = 'subscription'
 
 metadata name = 'ALZ Bicep - CloudHealth Platform Health Model Policy'
-metadata description = 'Deploys a preview Microsoft CloudHealth platform health model through Azure Policy.'
+metadata description = 'Preview (experimental): deploys a Microsoft CloudHealth platform health model through Azure Policy.'
 
 type typTagFilter = {
   key: string
@@ -9,7 +9,7 @@ type typTagFilter = {
 }
 
 @sys.description('Location for the discovery identity, policy assignment identity, and remediation deployments. Must support Microsoft.CloudHealth.')
-param parLocation string = 'uksouth'
+param parLocation string = 'swedencentral'
 
 @sys.description('Name of the existing resource group into which the platform health model is deployed.')
 param parTargetResourceGroupName string = 'rg-alz-healthmodels'
@@ -27,8 +27,11 @@ param parPolicyName string = 'Deploy-ALZ-CloudHealth-PlatformModel'
 @maxLength(24)
 param parAssignmentName string = 'Deploy-ALZ-CloudHealth'
 
-@sys.description('Deploy the health model through policy remediation. Set to false to keep the policy, identities, and RBAC deployed with a Disabled effect.')
+@sys.description('Preview (experimental). Deploy the health model through policy remediation. Defaults to true. Set to false only to pause remediation while keeping the policy, identities, and RBAC deployed with a Disabled effect.')
 param parDeployHealthModel bool = true
+
+@sys.description('Opt out of deployment telemetry.')
+param parTelemetryOptOut bool = false
 
 @allowed([
   'Default'
@@ -125,12 +128,16 @@ var varRemediationRoleIds = {
 
 var varAuthenticationSettingName = 'managed-identity'
 var varPolicyEffect = parDeployHealthModel ? 'DeployIfNotExists' : 'Disabled'
-var varDiscoverySubscriptionIds = union([
-  parSecuritySubscriptionId
-  parConnectivitySubscriptionId
-  parManagementSubscriptionId
-  parIdentitySubscriptionId
-], [])
+var varCuaid = 'f44ef035-5331-4413-b707-325f42725e15'
+var varDiscoverySubscriptionIds = union(
+  [
+    parSecuritySubscriptionId
+    parConnectivitySubscriptionId
+    parManagementSubscriptionId
+    parIdentitySubscriptionId
+  ],
+  []
+)
 
 resource resTargetResourceGroup 'Microsoft.Resources/resourceGroups@2025-04-01' existing = {
   name: parTargetResourceGroupName
@@ -138,7 +145,7 @@ resource resTargetResourceGroup 'Microsoft.Resources/resourceGroups@2025-04-01' 
 
 module modDiscoveryIdentity 'healthModelDiscoveryIdentity.bicep' = {
   scope: resTargetResourceGroup
-  name: 'alz-healthmodel-identity'
+  name: 'hm-platform-identity-${uniqueString(subscription().subscriptionId, parTargetResourceGroupName, parIdentityName)}'
   params: {
     parIdentityName: parIdentityName
     parLocation: parLocation
@@ -150,15 +157,26 @@ module modDiscoverySubscriptionReader '../../roleAssignments/roleAssignmentSubsc
     scope: subscription(discoverySubscriptionId)
     name: 'health-model-reader-${uniqueString(discoverySubscriptionId, parIdentityName)}'
     params: {
-      parRoleAssignmentNameGuid: guid(discoverySubscriptionId, varBuiltInRoleIds.Reader, modDiscoveryIdentity.outputs.outPrincipalId)
+      parRoleAssignmentNameGuid: guid(
+        discoverySubscriptionId,
+        varBuiltInRoleIds.Reader,
+        modDiscoveryIdentity.outputs.outPrincipalId
+      )
       parRoleDefinitionId: varBuiltInRoleIds.Reader
       parAssigneePrincipalType: 'ServicePrincipal'
       parAssigneeObjectId: modDiscoveryIdentity.outputs.outPrincipalId
+      parTelemetryOptOut: parTelemetryOptOut
     }
   }
 ]
 
-resource resPolicyDefinition 'Microsoft.Authorization/policyDefinitions@2025-01-01' = {
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../CRML/customerUsageAttribution/cuaIdSubscription.bicep' = if (!parTelemetryOptOut) {
+  name: 'pid-${varCuaid}-${uniqueString(subscription().subscriptionId, parPolicyName)}'
+  params: {}
+}
+
+resource resPolicyDefinition 'Microsoft.Authorization/policyDefinitions@2026-06-01' = {
   name: parPolicyName
   properties: {
     displayName: 'Deploy a Microsoft CloudHealth platform health model with per-domain discovery rules'
@@ -639,7 +657,7 @@ resource resPolicyDefinition 'Microsoft.Authorization/policyDefinitions@2025-01-
   }
 }
 
-resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2025-01-01' = {
+resource resPolicyAssignment 'Microsoft.Authorization/policyAssignments@2026-06-01' = {
   name: parAssignmentName
   location: parLocation
   identity: {

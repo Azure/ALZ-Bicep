@@ -1,7 +1,7 @@
 targetScope = 'resourceGroup'
 
 metadata name = 'ALZ Bicep - CloudHealth Discovery Identity'
-metadata description = 'Creates the user-assigned managed identity used by CloudHealth discovery rules.'
+metadata description = 'Preview (experimental): creates the user-assigned managed identity used by CloudHealth discovery rules.'
 
 @sys.description('Name of the user-assigned managed identity used by the discovery rules.')
 param parIdentityName string = 'id-ahm-discovery'

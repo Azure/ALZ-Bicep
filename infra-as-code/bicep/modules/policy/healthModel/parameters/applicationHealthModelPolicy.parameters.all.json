@@ -1,0 +1,149 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parLocation": {
+      "value": "swedencentral"
+    },
+    "parTargetResourceGroupName": {
+      "value": "rg-application-healthmodels"
+    },
+    "parHealthModelName": {
+      "value": "alz-application-healthmodel"
+    },
+    "parIdentityName": {
+      "value": "alz-application-healthmodel-mi"
+    },
+    "parPolicyName": {
+      "value": "Deploy-App-CloudHealth-ApplicationModel"
+    },
+    "parAssignmentName": {
+      "value": "Deploy-App-CloudHealth"
+    },
+    "parDeployHealthModel": {
+      "value": true
+    },
+    "parTelemetryOptOut": {
+      "value": false
+    },
+    "parEnforcementMode": {
+      "value": "Default"
+    },
+    "parIncludedResourceTypesGlobal": {
+      "value": [
+        "Microsoft.Insights/components",
+        "Microsoft.KeyVault/vaults"
+      ]
+    },
+    "parComputeResourceTypes": {
+      "value": [
+        "Microsoft.Web/sites",
+        "Microsoft.Insights/components"
+      ]
+    },
+    "parDataResourceTypes": {
+      "value": [
+        "Microsoft.Storage/storageAccounts",
+        "Microsoft.DocumentDB/databaseAccounts",
+        "Microsoft.DBforPostgreSQL/flexibleServers"
+      ]
+    },
+    "parRoutingResourceTypes": {
+      "value": [
+        "Microsoft.Cdn/profiles",
+        "Microsoft.Network/applicationGateways",
+        "Microsoft.Network/trafficManagerProfiles",
+        "Microsoft.ApiManagement/service"
+      ]
+    },
+    "parAiResourceTypes": {
+      "value": [
+        "Microsoft.CognitiveServices/accounts"
+      ]
+    },
+    "parConfigResourceTypes": {
+      "value": [
+        "Microsoft.AppConfiguration/configurationStores",
+        "Microsoft.KeyVault/vaults"
+      ]
+    },
+    "parComputeSubscriptionId": {
+      "value": "00000000-0000-0000-0000-000000000001"
+    },
+    "parDataSubscriptionId": {
+      "value": "00000000-0000-0000-0000-000000000001"
+    },
+    "parRoutingSubscriptionId": {
+      "value": "00000000-0000-0000-0000-000000000002"
+    },
+    "parAiSubscriptionId": {
+      "value": "00000000-0000-0000-0000-000000000003"
+    },
+    "parConfigSubscriptionId": {
+      "value": "00000000-0000-0000-0000-000000000003"
+    },
+    "parComputeTagFilter": {
+      "value": []
+    },
+    "parDataTagFilter": {
+      "value": [
+        {
+          "key": "dataClassification",
+          "value": "confidential"
+        }
+      ]
+    },
+    "parRoutingTagFilter": {
+      "value": [
+        {
+          "key": "environment",
+          "value": "production"
+        },
+        {
+          "key": "exposure",
+          "value": "external"
+        }
+      ]
+    },
+    "parAiTagFilter": {
+      "value": [
+        {
+          "key": "environment",
+          "value": "production"
+        },
+        {
+          "key": "workload",
+          "value": "recommendations"
+        },
+        {
+          "key": "criticality",
+          "value": "high"
+        }
+      ]
+    },
+    "parConfigTagFilter": {
+      "value": [
+        {
+          "key": "environment",
+          "value": "production"
+        },
+        {
+          "key": "workload",
+          "value": "checkout"
+        },
+        {
+          "key": "criticality",
+          "value": "high"
+        },
+        {
+          "key": "managedBy",
+          "value": "application-team"
+        },
+        {
+          "key": "costCenter",
+          "value": "retail"
+        }
+      ]
+    }
+  }
+}

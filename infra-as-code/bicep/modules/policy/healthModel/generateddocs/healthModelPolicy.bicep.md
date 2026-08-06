@@ -1,6 +1,6 @@
 # ALZ Bicep - CloudHealth Platform Health Model Policy
 
-Deploys a preview Microsoft CloudHealth platform health model through Azure Policy.
+Preview (experimental): deploys a Microsoft CloudHealth platform health model through Azure Policy.
 
 ## Parameters
 
@@ -12,7 +12,8 @@ parHealthModelName | No       | Name of the platform health model. One model con
 parIdentityName | No       | Name of the user-assigned managed identity used by the discovery rules.
 parPolicyName  | No       | Name of the custom policy definition.
 parAssignmentName | No       | Name of the policy assignment.
-parDeployHealthModel | No       | Deploy the health model through policy remediation. Set to false to keep the policy, identities, and RBAC deployed with a Disabled effect.
+parDeployHealthModel | No       | Preview (experimental). Deploy the health model through policy remediation. Defaults to true. Set to false only to pause remediation while keeping the policy, identities, and RBAC deployed with a Disabled effect.
+parTelemetryOptOut | No       | Opt out of deployment telemetry.
 parEnforcementMode | No       | Enforcement mode for the policy assignment.
 parIncludedResourceTypesGlobal | No       | Resource types added to every domain discovery query and unioned with each per-domain list.
 parSecurityResourceTypes | No       | Resource types discovered for the Security platform domain, unioned with the global list.
@@ -34,7 +35,7 @@ parIdentityTagFilter | No       | Optional list of up to five { key, value } tag
 
 Location for the discovery identity, policy assignment identity, and remediation deployments. Must support Microsoft.CloudHealth.
 
-- Default value: `uksouth`
+- Default value: `swedencentral`
 
 ### parTargetResourceGroupName
 
@@ -80,9 +81,17 @@ Name of the policy assignment.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Deploy the health model through policy remediation. Set to false to keep the policy, identities, and RBAC deployed with a Disabled effect.
+Preview (experimental). Deploy the health model through policy remediation. Defaults to true. Set to false only to pause remediation while keeping the policy, identities, and RBAC deployed with a Disabled effect.
 
 - Default value: `True`
+
+### parTelemetryOptOut
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Opt out of deployment telemetry.
+
+- Default value: `False`
 
 ### parEnforcementMode
 
@@ -209,7 +218,7 @@ outDiscoveryIdentityId | string | Resource ID of the discovery user-assigned man
     },
     "parameters": {
         "parLocation": {
-            "value": "uksouth"
+            "value": "swedencentral"
         },
         "parTargetResourceGroupName": {
             "value": "rg-alz-healthmodels"
@@ -228,6 +237,9 @@ outDiscoveryIdentityId | string | Resource ID of the discovery user-assigned man
         },
         "parDeployHealthModel": {
             "value": true
+        },
+        "parTelemetryOptOut": {
+            "value": false
         },
         "parEnforcementMode": {
             "value": "Default"
