@@ -20,7 +20,7 @@ Microsoft does not prescribe one universal alert list. Alert selection and thres
 | Hierarchy and scope | Assign platform initiatives to the management groups that own the resources, and put cross-estate Service Health and notification assets high enough to reach the intended subscriptions. | [Monitor platform landing zones](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/design-area/management-monitor) |
 
 > “Monitoring service health is the bare minimum for monitoring your cloud estate.”
-
+>
 > “Determine which critical events must trigger alerts, such as resource outages, performance threshold breaches, or security anomalies.”
 
 Both quotations are from [CAF monitoring](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/manage/monitor).
@@ -68,7 +68,7 @@ The current Well-Architected Framework identifiers are:
 RE:02 through RE:04 are inputs, not substitutes for the RE:10 monitoring recommendation. See the [reliability checklist](https://learn.microsoft.com/en-us/azure/well-architected/reliability/checklist), [RE:10 monitoring guidance](https://learn.microsoft.com/en-us/azure/well-architected/reliability/monitoring), and [OE:07 observability guidance](https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/observability).
 
 > “Design alerts so they clearly point to something worth acting on, and ground them in a health model that represents the system using simple states like healthy, degraded, and unhealthy.”
-
+>
 > “Use a health model that aggregates multiple correlated signals into health states, then alert on state transitions, not isolated metric thresholds.”
 
 ## Main concerns of someone managing an org's ALZ
