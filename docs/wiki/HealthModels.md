@@ -103,7 +103,7 @@ So the practical model is one contract with two entrypoints:
 - **Default ALZ contract:** policy definitions plus assignments.
 - **Direct operator path:** standalone topology or policy module deployment.
 
-## Live deployment and visualization proof (2026-08-14)
+## Live deployment and visualization proof (2026-08-16 correction run)
 
 Live run scope:
 
@@ -113,11 +113,11 @@ Live run scope:
 | Resource group | `rg-hm-docs-20260814172505` |
 | Region | `swedencentral` |
 | Platform model | `alz-platform-docs-20260814172505` (`provisioningState: Succeeded`) |
-| Application model | `alz-application-docs-20260814172505` (`provisioningState: Succeeded`) |
+| Application model | `alz-application-c1fix-20260816135244` (`provisioningState: Succeeded`) |
 | Platform topology counts | `22` entities, `21` relationships |
-| Application topology counts | `21` entities, `17` relationships |
+| Application topology counts | `22` entities, `21` relationships |
 
-Application note: the model resource is live (`show` returns `Succeeded`) while the outer deployment operation did not converge to clean terminal success during this run (`Running` for extended periods, then `Failed` with `EntityCreationError` on nested entity creation in one retry). Treat the application topology snapshot as best-effort live evidence for preview RP behavior, not as full convergence proof.
+Application correction note: this run reached terminal `Succeeded` for both the resource-group deployment and the health model resource, with complete topology shape. The correction uses a non-conflicting internal domain key (`appconfig`, display name remains `Config`) and a unique nested deployment name per run. In prior attempts, the `config` entity operation remained `Running` in the preview RP and left the model in an incomplete `21/17` shape; repeated runs then also hit `DeploymentActive` conflicts on the static nested deployment name.
 
 Reproduction commands used in this run:
 

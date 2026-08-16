@@ -105,16 +105,16 @@ Both models are intentionally policy-assigned in the native ALZ flow:
 
 Keep that split for the default contract and use standalone deployments for direct operator workflows, testing, and rapid iteration. Treating one model as policy-driven and the other as deployment-only creates an uneven operating model and drops automatic policy remediation from one side.
 
-## Live deployment and visualization proof (2026-08-14)
+## Live deployment and visualization proof (2026-08-16 correction run)
 
 This run deployed both topologies to `rg-hm-docs-20260814172505` in `swedencentral`:
 
 - Platform model: `alz-platform-docs-20260814172505` (`Succeeded`, 22 entities, 21 relationships)
-- Application model: `alz-application-docs-20260814172505` (`Succeeded`, 21 entities, 17 relationships)
+- Application model: `alz-application-c1fix-20260816135244` (`Succeeded`, 22 entities, 21 relationships)
 
 The application topology uses an internal domain entity name `aiml` (display name `AI`) to satisfy the current RP entity-name pattern requirement.
 
-Known preview limitation from this run: the outer application deployment operation did not consistently converge to clean terminal success. One retry failed at nested deployment with `EntityCreationError` (`Internal server error on entity creation. Please try again later.`), while the model resource itself was created and queryable. Use model/resource reads plus entity/relationship reads as the practical evidence boundary until RP convergence behavior stabilizes.
+Correction outcome for this run: the application deployment reached terminal `Succeeded` with complete topology shape after using a non-conflicting internal domain key (`appconfig`, display name remains `Config`) and a unique nested deployment name per run. In prior attempts, the `config` entity operation remained `Running` in the preview RP and left an incomplete `21/17` graph; repeated runs then also hit `DeploymentActive` conflicts on the static nested deployment name.
 
 Reproduction commands:
 

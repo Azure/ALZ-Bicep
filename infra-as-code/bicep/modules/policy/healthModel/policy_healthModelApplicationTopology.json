@@ -6,7 +6,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.46.1.21595",
-      "templateHash": "4804833574339733298"
+      "templateHash": "8475274197493586890"
     },
     "name": "ALZ Bicep - CloudHealth Application Health Model Topology",
     "description": "Preview (experimental): assembles the application domain and subdomain taxonomy and deploys it through the generic health model topology module. Deployable directly for fast testing, and compiled for embedding in the application policy."
@@ -365,7 +365,7 @@
         "subdomains": "[coalesce(tryGet(tryGet(parameters('parDomainOverrides'), 'ai'), 'subdomains'), variables('varDefaultSubdomains').ai)]"
       },
       {
-        "name": "config",
+        "name": "appconfig",
         "displayName": "Config",
         "subscriptionId": "[parameters('parConfigSubscriptionId')]",
         "extraResourceTypes": "[parameters('parConfigResourceTypes')]",
@@ -378,7 +378,7 @@
     "modTopology": {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2025-04-01",
-      "name": "hm-application-topology",
+      "name": "[take(format('hm-application-topology-{0}', uniqueString(parameters('parHealthModelName'), deployment().name)), 64)]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"

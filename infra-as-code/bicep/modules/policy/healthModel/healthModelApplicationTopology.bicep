@@ -217,7 +217,7 @@ var varDomains typDomain[] = [
     subdomains: parDomainOverrides.?ai.?subdomains ?? varDefaultSubdomains.ai
   }
   {
-    name: 'config'
+    name: 'appconfig'
     displayName: 'Config'
     subscriptionId: parConfigSubscriptionId
     extraResourceTypes: parConfigResourceTypes
@@ -227,7 +227,7 @@ var varDomains typDomain[] = [
 ]
 
 module modTopology 'healthModelTopology.bicep' = {
-  name: 'hm-application-topology'
+  name: take('hm-application-topology-${uniqueString(parHealthModelName, deployment().name)}', 64)
   params: {
     parHealthModelName: parHealthModelName
     parLocation: parLocation
