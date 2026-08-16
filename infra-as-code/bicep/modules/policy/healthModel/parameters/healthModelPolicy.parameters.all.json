@@ -11,9 +11,6 @@
     "parHealthModelName": {
       "value": "alz-platform-healthmodel"
     },
-    "parIdentityName": {
-      "value": "alz-healthmodel-mi"
-    },
     "parPolicyName": {
       "value": "Deploy-ALZ-CloudHealth-PlatformModel"
     },
@@ -60,64 +57,53 @@
         "Microsoft.Compute/virtualMachines"
       ]
     },
-    "parSecuritySubscriptionId": {
-      "value": "00000000-0000-0000-0000-000000000001"
-    },
-    "parConnectivitySubscriptionId": {
-      "value": "00000000-0000-0000-0000-000000000002"
-    },
-    "parManagementSubscriptionId": {
-      "value": "00000000-0000-0000-0000-000000000002"
-    },
-    "parIdentitySubscriptionId": {
-      "value": "00000000-0000-0000-0000-000000000003"
-    },
-    "parSecurityTagFilter": {
-      "value": []
-    },
-    "parConnectivityTagFilter": {
-      "value": [
-        {
-          "key": "environment",
-          "value": "production"
+    "parDomainOverrides": {
+      "value": {
+        "connectivity": {
+          "tagFilters": [
+            {
+              "key": "environment",
+              "value": "production"
+            }
+          ]
+        },
+        "management": {
+          "tagFilters": [
+            {
+              "key": "environment",
+              "value": "production"
+            },
+            {
+              "key": "platform",
+              "value": "alz"
+            },
+            {
+              "key": "criticality",
+              "value": "high"
+            },
+            {
+              "key": "managedBy",
+              "value": "platform"
+            },
+            {
+              "key": "dataClassification",
+              "value": "internal"
+            }
+          ]
+        },
+        "identity": {
+          "tagFilters": [
+            {
+              "key": "environment",
+              "value": "production"
+            },
+            {
+              "key": "domain",
+              "value": "identity"
+            }
+          ]
         }
-      ]
-    },
-    "parManagementTagFilter": {
-      "value": [
-        {
-          "key": "environment",
-          "value": "production"
-        },
-        {
-          "key": "platform",
-          "value": "alz"
-        },
-        {
-          "key": "criticality",
-          "value": "high"
-        },
-        {
-          "key": "managedBy",
-          "value": "platform"
-        },
-        {
-          "key": "dataClassification",
-          "value": "internal"
-        }
-      ]
-    },
-    "parIdentityTagFilter": {
-      "value": [
-        {
-          "key": "environment",
-          "value": "production"
-        },
-        {
-          "key": "domain",
-          "value": "identity"
-        }
-      ]
+      }
     }
   }
 }

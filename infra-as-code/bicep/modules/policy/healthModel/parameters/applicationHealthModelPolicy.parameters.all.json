@@ -11,9 +11,6 @@
     "parHealthModelName": {
       "value": "alz-application-healthmodel"
     },
-    "parIdentityName": {
-      "value": "alz-application-healthmodel-mi"
-    },
     "parPolicyName": {
       "value": "Deploy-App-CloudHealth-ApplicationModel"
     },
@@ -67,83 +64,69 @@
         "Microsoft.KeyVault/vaults"
       ]
     },
-    "parComputeSubscriptionId": {
-      "value": "00000000-0000-0000-0000-000000000001"
-    },
-    "parDataSubscriptionId": {
-      "value": "00000000-0000-0000-0000-000000000001"
-    },
-    "parRoutingSubscriptionId": {
-      "value": "00000000-0000-0000-0000-000000000002"
-    },
-    "parAiSubscriptionId": {
-      "value": "00000000-0000-0000-0000-000000000003"
-    },
-    "parConfigSubscriptionId": {
-      "value": "00000000-0000-0000-0000-000000000003"
-    },
-    "parComputeTagFilter": {
-      "value": []
-    },
-    "parDataTagFilter": {
-      "value": [
-        {
-          "key": "dataClassification",
-          "value": "confidential"
+    "parDomainOverrides": {
+      "value": {
+        "data": {
+          "tagFilters": [
+            {
+              "key": "dataClassification",
+              "value": "confidential"
+            }
+          ]
+        },
+        "routing": {
+          "tagFilters": [
+            {
+              "key": "environment",
+              "value": "production"
+            },
+            {
+              "key": "exposure",
+              "value": "external"
+            }
+          ]
+        },
+        "ai": {
+          "tagFilters": [
+            {
+              "key": "environment",
+              "value": "production"
+            },
+            {
+              "key": "workload",
+              "value": "recommendations"
+            },
+            {
+              "key": "criticality",
+              "value": "high"
+            }
+          ]
+        },
+        "config": {
+          "tagFilters": [
+            {
+              "key": "environment",
+              "value": "production"
+            },
+            {
+              "key": "workload",
+              "value": "checkout"
+            },
+            {
+              "key": "criticality",
+              "value": "high"
+            },
+            {
+              "key": "managedBy",
+              "value": "application-team"
+            },
+            {
+              "key": "costCenter",
+              "value": "retail"
+            }
+          ]
         }
-      ]
-    },
-    "parRoutingTagFilter": {
-      "value": [
-        {
-          "key": "environment",
-          "value": "production"
-        },
-        {
-          "key": "exposure",
-          "value": "external"
-        }
-      ]
-    },
-    "parAiTagFilter": {
-      "value": [
-        {
-          "key": "environment",
-          "value": "production"
-        },
-        {
-          "key": "workload",
-          "value": "recommendations"
-        },
-        {
-          "key": "criticality",
-          "value": "high"
-        }
-      ]
-    },
-    "parConfigTagFilter": {
-      "value": [
-        {
-          "key": "environment",
-          "value": "production"
-        },
-        {
-          "key": "workload",
-          "value": "checkout"
-        },
-        {
-          "key": "criticality",
-          "value": "high"
-        },
-        {
-          "key": "managedBy",
-          "value": "application-team"
-        },
-        {
-          "key": "costCenter",
-          "value": "retail"
-        }
-      ]
+      }
     }
   }
 }

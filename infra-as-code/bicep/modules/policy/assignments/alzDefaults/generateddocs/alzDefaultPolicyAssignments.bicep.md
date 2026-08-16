@@ -11,6 +11,8 @@ parTopLevelManagementGroupSuffix | No       | Optional suffix for management gro
 parPlatformMgAlzDefaultsEnable | No       | Apply platform policies to Platform group or child groups.
 parLandingZoneChildrenMgAlzDefaultsEnable | No       | Assign policies to Corp & Online Management Groups under Landing Zones.
 parLandingZoneMgConfidentialEnable | No       | Assign policies to Confidential Corp and Online groups under Landing Zones.
+parPlatformHealthModelPolicyAssignmentEnable | No       | Preview (experimental). Assign the CloudHealth platform health-model policy at the Platform management group. Defaults to true. Set to false to opt out.
+parApplicationHealthModelPolicyAssignmentEnable | No       | Preview (experimental). Assign the CloudHealth application landing zone health-model policy at the Landing Zones management group. Defaults to true. Set to false to opt out.
 parLogAnalyticsWorkSpaceAndAutomationAccountLocation | No       | Location of Log Analytics Workspace & Automation Account.
 parLogAnalyticsWorkspaceResourceId | No       | Resource ID of Log Analytics Workspace.
 parLogAnalyticsWorkspaceResourceCategory | No       | Category of logs for supported resource logging for Log Analytics Workspace.
@@ -30,6 +32,25 @@ parVmBackupExclusionTagName | No       | Tag name for excluding VMs from this po
 parVmBackupExclusionTagValue | No       | Tag value for excluding VMs from this policy scope.
 parServiceHealthAlertResourceGroupName | No       | Resource group name for the service health alert rule. Used by the Deploy-SvcHealth-BuiltIn policy assignment.
 parServiceHealthAlertActionGroupResources | No       | Action group resources configuration for the service health alert rule. Used by the Deploy-SvcHealth-BuiltIn policy assignment.
+parPlatformHealthModelLocation | No       | Azure region for the platform health model and remediation deployment. Must support Microsoft.CloudHealth.
+parPlatformHealthModelTargetResourceGroupName | No       | Name of the resource group the remediation creates when needed and deploys the platform health model into.
+parPlatformHealthModelName | No       | Name of the platform health model.
+parPlatformHealthModelIncludedResourceTypesGlobal | No       | Resource types added to every platform domain discovery query and unioned with each per-domain list.
+parPlatformHealthModelSecurityResourceTypes | No       | Resource types added to every Security subdomain discovery query.
+parPlatformHealthModelConnectivityResourceTypes | No       | Resource types added to every Connectivity subdomain discovery query.
+parPlatformHealthModelManagementResourceTypes | No       | Resource types added to every Management subdomain discovery query.
+parPlatformHealthModelIdentityResourceTypes | No       | Resource types added to every Identity subdomain discovery query.
+parPlatformHealthModelDomainOverrides | No       | Per-domain advanced overrides for the platform health model. Each domain key may set tagFilters (max five) and replace the built-in subdomain split.
+parApplicationHealthModelLocation | No       | Azure region for the application landing zone health model and remediation deployment. Must support Microsoft.CloudHealth.
+parApplicationHealthModelTargetResourceGroupName | No       | Name of the resource group the remediation creates when needed and deploys the application landing zone health model into.
+parApplicationHealthModelName | No       | Name of the application landing zone health model.
+parApplicationHealthModelIncludedResourceTypesGlobal | No       | Resource types added to every application landing zone domain discovery query and unioned with each per-domain list.
+parApplicationHealthModelComputeResourceTypes | No       | Resource types added to every Compute subdomain discovery query.
+parApplicationHealthModelDataResourceTypes | No       | Resource types added to every Data subdomain discovery query.
+parApplicationHealthModelRoutingResourceTypes | No       | Resource types added to every Routing subdomain discovery query.
+parApplicationHealthModelAiResourceTypes | No       | Resource types added to every AI subdomain discovery query.
+parApplicationHealthModelConfigResourceTypes | No       | Resource types added to every Config subdomain discovery query.
+parApplicationHealthModelDomainOverrides | No       | Per-domain advanced overrides for the application landing zone health model. Each domain key may set tagFilters (max five) and replace the built-in subdomain split.
 parExcludedPolicyAssignments | No       | Names of policy assignments to exclude from the deployment entirely.
 parTelemetryOptOut | No       | Opt out of deployment telemetry.
 parManagementGroupIdOverrides | Yes      | Specify the ALZ Default Management Group IDs to override as specified in `varManagementGroupIds`. Useful for scenarios when renaming ALZ default management groups names and IDs but not their intent or hierarchy structure.
@@ -71,6 +92,22 @@ Assign policies to Corp & Online Management Groups under Landing Zones.
 Assign policies to Confidential Corp and Online groups under Landing Zones.
 
 - Default value: `False`
+
+### parPlatformHealthModelPolicyAssignmentEnable
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Preview (experimental). Assign the CloudHealth platform health-model policy at the Platform management group. Defaults to true. Set to false to opt out.
+
+- Default value: `True`
+
+### parApplicationHealthModelPolicyAssignmentEnable
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Preview (experimental). Assign the CloudHealth application landing zone health-model policy at the Landing Zones management group. Defaults to true. Set to false to opt out.
+
+- Default value: `True`
 
 ### parLogAnalyticsWorkSpaceAndAutomationAccountLocation
 
@@ -198,6 +235,132 @@ Action group resources configuration for the service health alert rule. Used by 
 
 - Default value: `@{actionGroupEmail=System.Object[]; webhookServiceUri=System.Object[]; logicappResourceId=; logicappCallbackUrl=; eventHubResourceId=System.Object[]; functionResourceId=; functionTriggerUrl=}`
 
+### parPlatformHealthModelLocation
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Azure region for the platform health model and remediation deployment. Must support Microsoft.CloudHealth.
+
+- Default value: `swedencentral`
+
+### parPlatformHealthModelTargetResourceGroupName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Name of the resource group the remediation creates when needed and deploys the platform health model into.
+
+- Default value: `rg-alz-healthmodels`
+
+### parPlatformHealthModelName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Name of the platform health model.
+
+- Default value: `alz-platform-healthmodel`
+
+### parPlatformHealthModelIncludedResourceTypesGlobal
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource types added to every platform domain discovery query and unioned with each per-domain list.
+
+### parPlatformHealthModelSecurityResourceTypes
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource types added to every Security subdomain discovery query.
+
+### parPlatformHealthModelConnectivityResourceTypes
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource types added to every Connectivity subdomain discovery query.
+
+### parPlatformHealthModelManagementResourceTypes
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource types added to every Management subdomain discovery query.
+
+### parPlatformHealthModelIdentityResourceTypes
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource types added to every Identity subdomain discovery query.
+
+### parPlatformHealthModelDomainOverrides
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Per-domain advanced overrides for the platform health model. Each domain key may set tagFilters (max five) and replace the built-in subdomain split.
+
+### parApplicationHealthModelLocation
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Azure region for the application landing zone health model and remediation deployment. Must support Microsoft.CloudHealth.
+
+- Default value: `swedencentral`
+
+### parApplicationHealthModelTargetResourceGroupName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Name of the resource group the remediation creates when needed and deploys the application landing zone health model into.
+
+- Default value: `rg-application-healthmodels`
+
+### parApplicationHealthModelName
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Name of the application landing zone health model.
+
+- Default value: `alz-application-healthmodel`
+
+### parApplicationHealthModelIncludedResourceTypesGlobal
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource types added to every application landing zone domain discovery query and unioned with each per-domain list.
+
+### parApplicationHealthModelComputeResourceTypes
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource types added to every Compute subdomain discovery query.
+
+### parApplicationHealthModelDataResourceTypes
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource types added to every Data subdomain discovery query.
+
+### parApplicationHealthModelRoutingResourceTypes
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource types added to every Routing subdomain discovery query.
+
+### parApplicationHealthModelAiResourceTypes
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource types added to every AI subdomain discovery query.
+
+### parApplicationHealthModelConfigResourceTypes
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Resource types added to every Config subdomain discovery query.
+
+### parApplicationHealthModelDomainOverrides
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Per-domain advanced overrides for the application landing zone health model. Each domain key may set tagFilters (max five) and replace the built-in subdomain split.
+
 ### parExcludedPolicyAssignments
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
@@ -244,6 +407,12 @@ Specify the ALZ Default Management Group IDs to override as specified in `varMan
         },
         "parLandingZoneMgConfidentialEnable": {
             "value": false
+        },
+        "parPlatformHealthModelPolicyAssignmentEnable": {
+            "value": true
+        },
+        "parApplicationHealthModelPolicyAssignmentEnable": {
+            "value": true
         },
         "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
             "value": "eastus"
@@ -309,6 +478,63 @@ Specify the ALZ Default Management Group IDs to override as specified in `varMan
                 "functionResourceId": "",
                 "functionTriggerUrl": ""
             }
+        },
+        "parPlatformHealthModelLocation": {
+            "value": "swedencentral"
+        },
+        "parPlatformHealthModelTargetResourceGroupName": {
+            "value": "rg-alz-healthmodels"
+        },
+        "parPlatformHealthModelName": {
+            "value": "alz-platform-healthmodel"
+        },
+        "parPlatformHealthModelIncludedResourceTypesGlobal": {
+            "value": []
+        },
+        "parPlatformHealthModelSecurityResourceTypes": {
+            "value": []
+        },
+        "parPlatformHealthModelConnectivityResourceTypes": {
+            "value": []
+        },
+        "parPlatformHealthModelManagementResourceTypes": {
+            "value": []
+        },
+        "parPlatformHealthModelIdentityResourceTypes": {
+            "value": []
+        },
+        "parPlatformHealthModelDomainOverrides": {
+            "value": {}
+        },
+        "parApplicationHealthModelLocation": {
+            "value": "swedencentral"
+        },
+        "parApplicationHealthModelTargetResourceGroupName": {
+            "value": "rg-application-healthmodels"
+        },
+        "parApplicationHealthModelName": {
+            "value": "alz-application-healthmodel"
+        },
+        "parApplicationHealthModelIncludedResourceTypesGlobal": {
+            "value": []
+        },
+        "parApplicationHealthModelComputeResourceTypes": {
+            "value": []
+        },
+        "parApplicationHealthModelDataResourceTypes": {
+            "value": []
+        },
+        "parApplicationHealthModelRoutingResourceTypes": {
+            "value": []
+        },
+        "parApplicationHealthModelAiResourceTypes": {
+            "value": []
+        },
+        "parApplicationHealthModelConfigResourceTypes": {
+            "value": []
+        },
+        "parApplicationHealthModelDomainOverrides": {
+            "value": {}
         },
         "parExcludedPolicyAssignments": {
             "value": []

@@ -6,10 +6,9 @@ Preview (experimental): deploys a Microsoft CloudHealth platform health model th
 
 Parameter name | Required | Description
 -------------- | -------- | -----------
-parLocation    | No       | Location for the discovery identity, policy assignment identity, and remediation deployments. Must support Microsoft.CloudHealth.
-parTargetResourceGroupName | No       | Name of the existing resource group into which the platform health model is deployed.
+parLocation    | No       | Location for the policy assignment identity, remediation deployment, target resource group, and health model. Must support Microsoft.CloudHealth.
+parTargetResourceGroupName | No       | Name of the resource group the remediation creates when needed and deploys the platform health model into.
 parHealthModelName | No       | Name of the platform health model. One model contains all four domain discovery rules.
-parIdentityName | No       | Name of the user-assigned managed identity used by the discovery rules.
 parPolicyName  | No       | Name of the custom policy definition.
 parAssignmentName | No       | Name of the policy assignment.
 parDeployHealthModel | No       | Preview (experimental). Deploy the health model through policy remediation. Defaults to true. Set to false only to pause remediation while keeping the policy, identities, and RBAC deployed with a Disabled effect.
@@ -20,20 +19,13 @@ parSecurityResourceTypes | No       | Resource types discovered for the Security
 parConnectivityResourceTypes | No       | Resource types discovered for the Connectivity platform domain, unioned with the global list.
 parManagementResourceTypes | No       | Resource types discovered for the Management platform domain, unioned with the global list.
 parIdentityResourceTypes | No       | Resource types discovered for the Identity platform domain, unioned with the global list.
-parSecuritySubscriptionId | No       | Subscription ID whose resources the Security domain discovery queries.
-parConnectivitySubscriptionId | No       | Subscription ID whose resources the Connectivity domain discovery queries.
-parManagementSubscriptionId | No       | Subscription ID whose resources the Management domain discovery queries.
-parIdentitySubscriptionId | No       | Subscription ID whose resources the Identity domain discovery queries.
-parSecurityTagFilter | No       | Optional list of up to five { key, value } tag pairs that must all match for Security resources.
-parConnectivityTagFilter | No       | Optional list of up to five { key, value } tag pairs that must all match for Connectivity resources.
-parManagementTagFilter | No       | Optional list of up to five { key, value } tag pairs that must all match for Management resources.
-parIdentityTagFilter | No       | Optional list of up to five { key, value } tag pairs that must all match for Identity resources.
+parDomainOverrides | No       | Advanced per-domain overrides. Each domain key may set tagFilters (up to five { key, value } pairs, ANDed) and subdomains to replace the built-in subdomain split. Leave empty to use the built-in taxonomy with no tag filtering.
 
 ### parLocation
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Location for the discovery identity, policy assignment identity, and remediation deployments. Must support Microsoft.CloudHealth.
+Location for the policy assignment identity, remediation deployment, target resource group, and health model. Must support Microsoft.CloudHealth.
 
 - Default value: `swedencentral`
 
@@ -41,7 +33,7 @@ Location for the discovery identity, policy assignment identity, and remediation
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Name of the existing resource group into which the platform health model is deployed.
+Name of the resource group the remediation creates when needed and deploys the platform health model into.
 
 - Default value: `rg-alz-healthmodels`
 
@@ -52,14 +44,6 @@ Name of the existing resource group into which the platform health model is depl
 Name of the platform health model. One model contains all four domain discovery rules.
 
 - Default value: `alz-platform-healthmodel`
-
-### parIdentityName
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Name of the user-assigned managed identity used by the discovery rules.
-
-- Default value: `alz-healthmodel-mi`
 
 ### parPolicyName
 
@@ -141,61 +125,11 @@ Resource types discovered for the Identity platform domain, unioned with the glo
 
 - Default value: `Microsoft.ManagedIdentity/userAssignedIdentities Microsoft.Compute/virtualMachines Microsoft.KeyVault/vaults Microsoft.Network/privateDnsZones`
 
-### parSecuritySubscriptionId
+### parDomainOverrides
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-Subscription ID whose resources the Security domain discovery queries.
-
-- Default value: `[subscription().subscriptionId]`
-
-### parConnectivitySubscriptionId
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Subscription ID whose resources the Connectivity domain discovery queries.
-
-- Default value: `[subscription().subscriptionId]`
-
-### parManagementSubscriptionId
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Subscription ID whose resources the Management domain discovery queries.
-
-- Default value: `[subscription().subscriptionId]`
-
-### parIdentitySubscriptionId
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Subscription ID whose resources the Identity domain discovery queries.
-
-- Default value: `[subscription().subscriptionId]`
-
-### parSecurityTagFilter
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Optional list of up to five { key, value } tag pairs that must all match for Security resources.
-
-### parConnectivityTagFilter
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Optional list of up to five { key, value } tag pairs that must all match for Connectivity resources.
-
-### parManagementTagFilter
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Optional list of up to five { key, value } tag pairs that must all match for Management resources.
-
-### parIdentityTagFilter
-
-![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
-
-Optional list of up to five { key, value } tag pairs that must all match for Identity resources.
+Advanced per-domain overrides. Each domain key may set tagFilters (up to five { key, value } pairs, ANDed) and subdomains to replace the built-in subdomain split. Leave empty to use the built-in taxonomy with no tag filtering.
 
 ## Outputs
 
@@ -203,7 +137,6 @@ Name | Type | Description
 ---- | ---- | -----------
 outPolicyDefinitionId | string | Resource ID of the custom policy definition.
 outPolicyAssignmentId | string | Resource ID of the policy assignment.
-outDiscoveryIdentityId | string | Resource ID of the discovery user-assigned managed identity.
 
 ## Snippets
 
@@ -225,9 +158,6 @@ outDiscoveryIdentityId | string | Resource ID of the discovery user-assigned man
         },
         "parHealthModelName": {
             "value": "alz-platform-healthmodel"
-        },
-        "parIdentityName": {
-            "value": "alz-healthmodel-mi"
         },
         "parPolicyName": {
             "value": "Deploy-ALZ-CloudHealth-PlatformModel"
@@ -287,29 +217,8 @@ outDiscoveryIdentityId | string | Resource ID of the discovery user-assigned man
                 "Microsoft.Network/privateDnsZones"
             ]
         },
-        "parSecuritySubscriptionId": {
-            "value": "[subscription().subscriptionId]"
-        },
-        "parConnectivitySubscriptionId": {
-            "value": "[subscription().subscriptionId]"
-        },
-        "parManagementSubscriptionId": {
-            "value": "[subscription().subscriptionId]"
-        },
-        "parIdentitySubscriptionId": {
-            "value": "[subscription().subscriptionId]"
-        },
-        "parSecurityTagFilter": {
-            "value": []
-        },
-        "parConnectivityTagFilter": {
-            "value": []
-        },
-        "parManagementTagFilter": {
-            "value": []
-        },
-        "parIdentityTagFilter": {
-            "value": []
+        "parDomainOverrides": {
+            "value": {}
         }
     }
 }
