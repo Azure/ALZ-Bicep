@@ -3334,6 +3334,13 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionGroups: []
 				definitionVersion: '1.*.*'
 			}
+			{
+				definitionReferenceId: 'Dine-PostgreSql-Flexible-Adv-Threat-Protection'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/2a6ae02f-7590-40d7-88ba-b18e205a32fd'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsPostgreSQLParameters['Dine-PostgreSql-Flexible-Adv-Threat-Protection'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
 		]
 	}
 	{
