@@ -5,5 +5,12 @@
         "value": "[[parameters('postgreSqlAdvThreatProtection')]"
       }
     }
+  },
+  "Dine-PostgreSql-Flexible-Adv-Threat-Protection": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('postgreSqlAdvThreatProtection')]"
+      }
+    }
   }
 }
