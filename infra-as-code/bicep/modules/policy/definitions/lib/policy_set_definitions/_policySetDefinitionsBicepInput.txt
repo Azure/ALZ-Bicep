@@ -3241,6 +3241,124 @@ var varCustomPolicySetDefinitionsArray = [
 		]
 	}
 	{
+		name: 'Enforce-Guardrails-Network_20260714'
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Network_20260714.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'Deny-AppGw-Without-Tls'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGw-Without-Tls'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-AppGw-Without-Tls'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Ip-Forwarding'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/88c0b9da-ce96-4b03-9635-f29a937e2900'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-Ip-Forwarding'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Mgmt-From-Internet'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-MgmtPorts-From-Internet'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-Mgmt-From-Internet'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Nsg-GW-subnet'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/35f9c03a-cc27-418e-9c0c-539ff999d010'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-Nsg-GW-subnet'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Subnet-with-Service-Endpoints'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Service-Endpoints'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-Subnet-with-Service-Endpoints'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Subnet-Without-NSG'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-Subnet-Without-NSG'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Subnet-Without-Udr'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Udr'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-Subnet-Without-Udr'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-vNic-Pip'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/83a86a26-fd1f-447c-b59d-e51f44264114'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-vNic-Pip'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-VPN-AzureAD'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/21a6bc25-125e-4d13-b82d-2e19b7208ab7'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-VPN-AzureAD'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Waf-Afd-Enabled'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/055aa869-bc98-4af8-bafc-23f1ab6ffe2c'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-Waf-Afd-Enabled'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Waf-AppGw-mode'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/12430be1-6cc8-4527-a9a8-e3d38f250096'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-Waf-AppGw-mode'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Waf-Fw-rules'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/564feb30-bf6a-4854-b4bb-0d2d2d1e6c66'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-Waf-Fw-rules'].parameters
+				definitionGroups: []
+				definitionVersion: '2.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Waf-mode'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/425bea59-a659-4cbb-8d31-34499bd030b8'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Deny-Waf-mode'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Modify-Nsg'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Modify-NSG'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Modify-Nsg'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Modify-Udr'
+				definitionId: '${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Modify-UDR'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Modify-Udr'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Modify-vNet-DDoS'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters['Modify-vNet-DDoS'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+		]
+	}
+	{
 		name: 'Enforce-Guardrails-OpenAI'
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-OpenAI.json')
 		libSetChildDefinitions: [
@@ -3755,6 +3873,8 @@ var varPolicySetDefinitionEsEnforceGuardrailsMachineLearningParameters = loadJso
 var varPolicySetDefinitionEsEnforceGuardrailsMySQLParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-MySQL.parameters.json')
 
 var varPolicySetDefinitionEsEnforceGuardrailsNetwork_20250326Parameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Network_20250326.parameters.json')
+
+var varPolicySetDefinitionEsEnforceGuardrailsNetwork_20260714Parameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Network_20260714.parameters.json')
 
 var varPolicySetDefinitionEsEnforceGuardrailsOpenAIParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-OpenAI.parameters.json')
 
