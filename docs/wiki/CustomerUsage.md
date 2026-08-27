@@ -31,10 +31,8 @@ The following are the unique ID's (also known as PIDs) used in each of the modul
 
 | Module Name                       | PID                                  |
 | --------------------------------- | ------------------------------------ |
-| applicationHealthModelPolicy      | 84c647e7-3b04-458d-b0e9-eccef38de3ec |
 | customRoleDefinitions             | 032d0904-3d50-45ef-a6c1-baa9d82e23ff |
 | getManagementGroupName            | cff0ca56-5d8c-4594-bf79-5c046809b017 |
-| healthModelPolicy                 | f44ef035-5331-4413-b707-325f42725e15 |
 | hubNetworking                     | 2686e846-5fdc-4d4f-b533-16dcb09d6e6c |
 | logging                           | f8087c67-cc41-46b2-994d-66e4b661860d |
 | managementGroups                  | 9b7965a0-d77c-41d6-85ef-ec3dfea4845b |

@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "**.bicep"
+      - "**/policy_*.json"
       - "ps-rule.yaml"
       - ".ps-rule/*"
       - "**/bicepconfig.json"
@@ -116,9 +117,13 @@ jobs:
                 Write-Information "==> Rebuilding embedded template for: $source" -InformationAction Continue
                 bicep build $source --outfile $scratch
                 if ($LastExitCode -ne 0) { throw "Bicep build failed for $source" }
-                $expected = Get-Content -Raw -Path $artifact
-                $actual = Get-Content -Raw -Path $scratch
-                if ($expected -ne $actual) {
+                $expectedObject = Get-Content -Raw -Path $artifact | ConvertFrom-Json -Depth 100
+                $actualObject = Get-Content -Raw -Path $scratch | ConvertFrom-Json -Depth 100
+                $expectedObject.metadata.PSObject.Properties.Remove('_generator')
+                $actualObject.metadata.PSObject.Properties.Remove('_generator')
+                $expected = $expectedObject | ConvertTo-Json -Depth 100 -Compress
+                $actual = $actualObject | ConvertTo-Json -Depth 100 -Compress
+                if ($expected -cne $actual) {
                   throw "Embedded policy template artifact is out of date: $artifact"
                 }
               }
@@ -135,26 +140,11 @@ jobs:
                 throw "Embedded policy template copy blocks were escaped in $definitionModule"
               }
 
-              $standalonePolicyModules = @{
-                'varPlatformPolicyDefinitionProperties'     = 'infra-as-code/bicep/modules/policy/healthModel/healthModelPolicy.bicep'
-                'varApplicationPolicyDefinitionProperties'  = 'infra-as-code/bicep/modules/policy/healthModel/applicationHealthModelPolicy.bicep'
-              }
               foreach ($artifact in $embedded.Values) {
                 $topologyTemplate = Get-Content -Raw -Path $artifact | ConvertFrom-Json -Depth 100
                 $copyCount = Get-CopyBlockCount -Node $topologyTemplate
                 if ($copyCount -ne 4) {
                   throw "Expected exactly four copy blocks in $artifact, found $copyCount"
-                }
-              }
-              foreach ($policyVarName in $standalonePolicyModules.Keys) {
-                $standaloneModule = $standalonePolicyModules[$policyVarName]
-                Write-Information "==> Verifying policy rule drift for: $standaloneModule" -InformationAction Continue
-                $compiledStandalone = bicep build $standaloneModule --stdout | ConvertFrom-Json -Depth 100
-                if ($LastExitCode -ne 0) { throw "Bicep build failed for $standaloneModule" }
-                $definitionRule = $compiledDefinitions.variables.$policyVarName.policyRule | ConvertTo-Json -Depth 100
-                $standaloneRule = $compiledStandalone.variables.$policyVarName.policyRule | ConvertTo-Json -Depth 100
-                if ($definitionRule -ne $standaloneRule) {
-                  throw "Policy rule drift detected between $definitionModule and $standaloneModule"
                 }
               }
               Write-Information '==> Embedded policy templates are in sync.' -InformationAction Continue

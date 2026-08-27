@@ -240,7 +240,7 @@ var varApplicationSubscriptionDeploymentTemplate = {
 
 var varPlatformPolicyDefinitionProperties = {
   displayName: 'Deploy a Microsoft CloudHealth platform health model with per-domain discovery rules'
-  description: 'Deploys a Microsoft.CloudHealth platform health model with one discovery rule per platform domain (Security, Connectivity, Management, Identity), each discovering resources by type, when missing.'
+  description: 'Deploys a Microsoft.CloudHealth platform health model when one is missing. Each platform domain (Security, Connectivity, Management, Identity) has a resource-type discovery rule.'
   policyType: 'Custom'
   mode: 'All'
   metadata: {
@@ -618,7 +618,7 @@ var varPlatformPolicyDefinitionProperties = {
 
 var varApplicationPolicyDefinitionProperties = {
   displayName: 'Deploy a Microsoft CloudHealth application landing zone health model with per-domain discovery rules'
-  description: 'Deploys a Microsoft.CloudHealth application landing zone health model with one discovery rule per application domain (Compute, Data, Routing, AI, Config), each discovering resources by type, when missing.'
+  description: 'Deploys a Microsoft.CloudHealth application landing zone health model when one is missing. Each application domain (Compute, Data, Routing, AI, Config) has a resource-type discovery rule.'
   policyType: 'Custom'
   mode: 'All'
   metadata: {
