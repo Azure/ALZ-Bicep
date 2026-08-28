@@ -1646,7 +1646,7 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d'
 				definitionParameters: varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters.AKSIngressHttpsOnlyEffect.parameters
 				definitionGroups: []
-				definitionVersion: '8.*.*'
+				definitionVersion: '9.*.*'
 			}
 			{
 				definitionReferenceId: 'APIAppServiceHttpsEffect'
