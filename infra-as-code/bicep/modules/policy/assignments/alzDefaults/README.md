@@ -6,6 +6,21 @@ Exclusion of specific ALZ default policies which does not fit your organization 
 
 If you wish to add your own additional Azure Policy Assignments please review [How Does ALZ-Bicep Implement Azure Policies?](https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive) and more specifically [Adding Custom Azure Policy Definitions](https://github.com/Azure/ALZ-Bicep/wiki/AddingPolicyDefs)
 
+AzureCloud defaults enable the preview CloudHealth health-model assignments.
+`parPlatformHealthModelPolicyAssignmentEnable` assigns the platform model at the Platform
+management group. `parApplicationHealthModelPolicyAssignmentEnable` assigns the application
+model at the Landing Zones management group. Set either parameter to `false`, or add the
+assignment name to `parExcludedPolicyAssignments`, to opt out.
+
+The custom policy-definition step deploys the CloudHealth definitions from
+`modules/policy/healthModel/healthModelPolicyDefinitions.bicep`. This assignment module only
+assigns them.
+
+For each evaluated subscription, remediation creates the target resource group when needed,
+deploys the health model with a system-assigned identity, and grants that identity Reader. The
+policy-assignment identity receives Contributor and Role Based Access Control Administrator,
+which can write and delete role assignments under the assignment scope.
+
 ## Parameters
 
 - [Parameters for Azure Commercial Cloud](generateddocs/alzDefaultPolicyAssignments.bicep.md)

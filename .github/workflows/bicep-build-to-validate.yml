@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "**.bicep"
+      - "**/policy_*.json"
       - "ps-rule.yaml"
       - ".ps-rule/*"
       - "**/bicepconfig.json"
@@ -58,6 +59,103 @@ jobs:
       - name: Bicep Build & Lint All Modules
         shell: pwsh
         run: |
+          function Assert-HealthModelEmbeddedPolicyTemplates {
+            function Get-CopyBlockCount {
+              param (
+                [Parameter(Mandatory = $false)]
+                [object] $Node
+              )
+
+              if ($null -eq $Node) {
+                return 0
+              }
+
+              if ($Node -is [System.Collections.IDictionary]) {
+                $count = 0
+                foreach ($key in $Node.Keys) {
+                  if ($key -eq 'copy') {
+                    $count++
+                  }
+                  $count += Get-CopyBlockCount -Node $Node[$key]
+                }
+                return $count
+              }
+
+              if ($Node -is [psobject] -and $Node -isnot [string]) {
+                $count = 0
+                foreach ($property in $Node.PSObject.Properties) {
+                  if ($property.Name -eq 'copy') {
+                    $count++
+                  }
+                  $count += Get-CopyBlockCount -Node $property.Value
+                }
+                return $count
+              }
+
+              if ($Node -is [System.Collections.IEnumerable] -and $Node -isnot [string]) {
+                $count = 0
+                foreach ($item in $Node) {
+                  $count += Get-CopyBlockCount -Node $item
+                }
+                return $count
+              }
+
+              return 0
+            }
+
+            $scratchRoot = Join-Path (Get-Location) '.bicep-build-output/healthModel'
+            if (Test-Path $scratchRoot) { Remove-Item -Recurse -Force $scratchRoot }
+            New-Item -ItemType Directory -Force -Path $scratchRoot | Out-Null
+            try {
+              $embedded = @{
+                'infra-as-code/bicep/modules/policy/healthModel/healthModelPlatformTopology.bicep'    = 'infra-as-code/bicep/modules/policy/healthModel/policy_healthModelPlatformTopology.json'
+                'infra-as-code/bicep/modules/policy/healthModel/healthModelApplicationTopology.bicep' = 'infra-as-code/bicep/modules/policy/healthModel/policy_healthModelApplicationTopology.json'
+              }
+              foreach ($source in $embedded.Keys) {
+                $artifact = $embedded[$source]
+                $scratch = Join-Path $scratchRoot ([System.IO.Path]::GetFileName($artifact))
+                Write-Information "==> Rebuilding embedded template for: $source" -InformationAction Continue
+                bicep build $source --outfile $scratch
+                if ($LastExitCode -ne 0) { throw "Bicep build failed for $source" }
+                $expectedObject = Get-Content -Raw -Path $artifact | ConvertFrom-Json -Depth 100
+                $actualObject = Get-Content -Raw -Path $scratch | ConvertFrom-Json -Depth 100
+                $expectedObject.metadata.PSObject.Properties.Remove('_generator')
+                $actualObject.metadata.PSObject.Properties.Remove('_generator')
+                $expected = $expectedObject | ConvertTo-Json -Depth 100 -Compress
+                $actual = $actualObject | ConvertTo-Json -Depth 100 -Compress
+                if ($expected -cne $actual) {
+                  throw "Embedded policy template artifact is out of date: $artifact"
+                }
+              }
+
+              $definitionModule = 'infra-as-code/bicep/modules/policy/healthModel/healthModelPolicyDefinitions.bicep'
+              Write-Information "==> Verifying embedded templates in: $definitionModule" -InformationAction Continue
+              $compiledDefinitions = bicep build $definitionModule --stdout | ConvertFrom-Json -Depth 100
+              if ($LastExitCode -ne 0) { throw "Bicep build failed for $definitionModule" }
+              $compiledDefinitionsText = $compiledDefinitions | ConvertTo-Json -Depth 100
+              if ($compiledDefinitionsText -match "\[\[\[") {
+                throw "Embedded policy template ARM parameter references were over-escaped in $definitionModule"
+              }
+              if ($compiledDefinitionsText -match "\[string\('copy'\)\]") {
+                throw "Embedded policy template copy blocks were escaped in $definitionModule"
+              }
+
+              foreach ($artifact in $embedded.Values) {
+                $topologyTemplate = Get-Content -Raw -Path $artifact | ConvertFrom-Json -Depth 100
+                $copyCount = Get-CopyBlockCount -Node $topologyTemplate
+                if ($copyCount -ne 4) {
+                  throw "Expected exactly four copy blocks in $artifact, found $copyCount"
+                }
+              }
+              Write-Information '==> Embedded policy templates are in sync.' -InformationAction Continue
+            }
+            finally {
+              if (Test-Path $scratchRoot) { Remove-Item -Recurse -Force $scratchRoot }
+            }
+          }
+
+          Assert-HealthModelEmbeddedPolicyTemplates
+
           $output = @()
           Get-ChildItem -Recurse -Filter '*.bicep' -Exclude 'callModuleFromACR.example.bicep','orchHubSpoke.bicep' | ForEach-Object {
               Write-Information "==> Attempting Bicep Build For File: $_" -InformationAction Continue
