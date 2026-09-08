@@ -23,6 +23,12 @@
     "parLandingZoneMgConfidentialEnable": {
       "value": false
     },
+    "parPlatformHealthModelPolicyAssignmentEnable": {
+      "value": true
+    },
+    "parApplicationHealthModelPolicyAssignmentEnable": {
+      "value": true
+    },
     "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
       "value": "eastus"
     },
@@ -83,6 +89,104 @@
         "eventHubResourceId": [],
         "functionResourceId": "",
         "functionTriggerUrl": ""
+      }
+    },
+    "parPlatformHealthModelLocation": {
+      "value": "swedencentral"
+    },
+    "parPlatformHealthModelTargetResourceGroupName": {
+      "value": "rg-alz-healthmodels"
+    },
+    "parPlatformHealthModelName": {
+      "value": "alz-platform-healthmodel"
+    },
+    "parPlatformHealthModelIncludedResourceTypesGlobal": {
+      "value": [
+        "Microsoft.Resources/resourceGroups"
+      ]
+    },
+    "parPlatformHealthModelSecurityResourceTypes": {
+      "value": [
+        "Microsoft.KeyVault/vaults"
+      ]
+    },
+    "parPlatformHealthModelConnectivityResourceTypes": {
+      "value": [
+        "Microsoft.Network/virtualNetworks",
+        "Microsoft.Network/virtualNetworkGateways"
+      ]
+    },
+    "parPlatformHealthModelManagementResourceTypes": {
+      "value": [
+        "Microsoft.OperationalInsights/workspaces",
+        "Microsoft.Automation/automationAccounts"
+      ]
+    },
+    "parPlatformHealthModelIdentityResourceTypes": {
+      "value": [
+        "Microsoft.ManagedIdentity/userAssignedIdentities"
+      ]
+    },
+    "parPlatformHealthModelDomainOverrides": {
+      "value": {
+        "security": {
+          "tagFilters": [
+            {
+              "key": "environment",
+              "value": "production"
+            }
+          ]
+        }
+      }
+    },
+    "parApplicationHealthModelLocation": {
+      "value": "swedencentral"
+    },
+    "parApplicationHealthModelTargetResourceGroupName": {
+      "value": "rg-application-healthmodels"
+    },
+    "parApplicationHealthModelName": {
+      "value": "alz-application-healthmodel"
+    },
+    "parApplicationHealthModelIncludedResourceTypesGlobal": {
+      "value": []
+    },
+    "parApplicationHealthModelComputeResourceTypes": {
+      "value": [
+        "Microsoft.Compute/virtualMachines"
+      ]
+    },
+    "parApplicationHealthModelDataResourceTypes": {
+      "value": [
+        "Microsoft.Sql/servers/databases",
+        "Microsoft.Storage/storageAccounts"
+      ]
+    },
+    "parApplicationHealthModelRoutingResourceTypes": {
+      "value": [
+        "Microsoft.Network/applicationGateways"
+      ]
+    },
+    "parApplicationHealthModelAiResourceTypes": {
+      "value": [
+        "Microsoft.CognitiveServices/accounts"
+      ]
+    },
+    "parApplicationHealthModelConfigResourceTypes": {
+      "value": [
+        "Microsoft.AppConfiguration/configurationStores"
+      ]
+    },
+    "parApplicationHealthModelDomainOverrides": {
+      "value": {
+        "compute": {
+          "tagFilters": [
+            {
+              "key": "workload",
+              "value": "payments"
+            }
+          ]
+        }
       }
     },
     "parExcludedPolicyAssignments": {

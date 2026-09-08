@@ -87,7 +87,9 @@ jobs:
           Install-Module -Name 'PSDocs.Azure' -Repository PSGallery -force; Import-Module PSDocs.Azure -Force
           # Scan for Azure template file recursively in the infra-as-code/bicep/ directory and generate markdown in parallel
           Write-Host "==> Starting markdown generation (parallel capable)"
-          $templates = Get-AzDocTemplateFile -Path infra-as-code/bicep/
+          $templates = Get-AzDocTemplateFile -Path infra-as-code/bicep/ | Where-Object {
+            [System.IO.Path]::GetFileName($_.TemplateFile) -notlike 'policy_*'
+          }
           $mdThrottle = if ($env:MD_GEN_PARALLEL_LIMIT) { [int]$env:MD_GEN_PARALLEL_LIMIT } else { 8 }
           $mdErrors = [System.Collections.Concurrent.ConcurrentBag[string]]::new()
           if ($PSVersionTable.PSVersion.Major -lt 7) {
@@ -183,4 +185,3 @@ jobs:
           else {
             Write-Host 'No markdown documentation changes detected.'
           }
-

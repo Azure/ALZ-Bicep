@@ -1,0 +1,666 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "languageVersion": "2.0",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.46.1.21595",
+      "templateHash": "13254488363238881418"
+    },
+    "name": "ALZ Bicep - CloudHealth Platform Health Model Topology",
+    "description": "Preview (experimental): assembles the platform domain and subdomain taxonomy and deploys it through the generic health model topology module. Deployable directly for fast testing, and compiled for embedding in the platform policy."
+  },
+  "definitions": {
+    "_1.typSubdomain": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "resourceTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "metadata": {
+        "description": "A subdomain discovered by its own discovery rule and grouped under its parent domain.",
+        "__bicep_imported_from!": {
+          "sourceTemplate": "healthModelTopology.bicep"
+        }
+      }
+    },
+    "_1.typTagFilter": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "metadata": {
+        "description": "A { key, value } tag pair that a discovered resource must match.",
+        "__bicep_imported_from!": {
+          "sourceTemplate": "healthModelTopology.bicep"
+        }
+      }
+    },
+    "typDomain": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "subscriptionId": {
+          "type": "string"
+        },
+        "tagFilters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/_1.typTagFilter"
+          }
+        },
+        "extraResourceTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "subdomains": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/_1.typSubdomain"
+          }
+        }
+      },
+      "metadata": {
+        "description": "A domain grouping entity, its discovery scope, and its subdomains.",
+        "__bicep_imported_from!": {
+          "sourceTemplate": "healthModelTopology.bicep"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "parHealthModelName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the platform health model."
+      }
+    },
+    "parLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Location for the health model. Must support Microsoft.CloudHealth."
+      }
+    },
+    "parAuthenticationSettingName": {
+      "type": "string",
+      "defaultValue": "managed-identity",
+      "metadata": {
+        "description": "Name of the managed-identity authentication setting."
+      }
+    },
+    "parIncludedResourceTypesGlobal": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Resource types added to every subdomain discovery query across all domains."
+      }
+    },
+    "parSecurityResourceTypes": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Resource types added to every Security subdomain discovery query."
+      }
+    },
+    "parConnectivityResourceTypes": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Resource types added to every Connectivity subdomain discovery query."
+      }
+    },
+    "parManagementResourceTypes": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Resource types added to every Management subdomain discovery query."
+      }
+    },
+    "parIdentityResourceTypes": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Resource types added to every Identity subdomain discovery query."
+      }
+    },
+    "parSecuritySubscriptionId": {
+      "type": "string",
+      "defaultValue": "[subscription().subscriptionId]",
+      "minLength": 36,
+      "metadata": {
+        "description": "Subscription ID whose resources the Security domain discovery queries."
+      }
+    },
+    "parConnectivitySubscriptionId": {
+      "type": "string",
+      "defaultValue": "[subscription().subscriptionId]",
+      "minLength": 36,
+      "metadata": {
+        "description": "Subscription ID whose resources the Connectivity domain discovery queries."
+      }
+    },
+    "parManagementSubscriptionId": {
+      "type": "string",
+      "defaultValue": "[subscription().subscriptionId]",
+      "minLength": 36,
+      "metadata": {
+        "description": "Subscription ID whose resources the Management domain discovery queries."
+      }
+    },
+    "parIdentitySubscriptionId": {
+      "type": "string",
+      "defaultValue": "[subscription().subscriptionId]",
+      "minLength": 36,
+      "metadata": {
+        "description": "Subscription ID whose resources the Identity domain discovery queries."
+      }
+    },
+    "parDomainOverrides": {
+      "type": "object",
+      "defaultValue": {},
+      "metadata": {
+        "description": "Per-domain advanced overrides. Each key may set tagFilters and replace the built-in subdomain split."
+      }
+    }
+  },
+  "variables": {
+    "varDefaultSubdomains": {
+      "security": [
+        {
+          "name": "secrets",
+          "displayName": "Secrets and keys",
+          "resourceTypes": [
+            "Microsoft.KeyVault/vaults"
+          ]
+        },
+        {
+          "name": "perimeter",
+          "displayName": "Perimeter filtering",
+          "resourceTypes": [
+            "Microsoft.Network/azureFirewalls",
+            "Microsoft.Network/firewallPolicies"
+          ]
+        },
+        {
+          "name": "ddos",
+          "displayName": "DDoS protection",
+          "resourceTypes": [
+            "Microsoft.Network/ddosProtectionPlans"
+          ]
+        }
+      ],
+      "connectivity": [
+        {
+          "name": "core",
+          "displayName": "Core network",
+          "resourceTypes": [
+            "Microsoft.Network/virtualNetworks"
+          ]
+        },
+        {
+          "name": "hybrid",
+          "displayName": "Hybrid connectivity",
+          "resourceTypes": [
+            "Microsoft.Network/virtualNetworkGateways",
+            "Microsoft.Network/expressRouteCircuits",
+            "Microsoft.Network/connections"
+          ]
+        },
+        {
+          "name": "edge",
+          "displayName": "Ingress and egress",
+          "resourceTypes": [
+            "Microsoft.Network/applicationGateways",
+            "Microsoft.Network/loadBalancers",
+            "Microsoft.Network/publicIPAddresses",
+            "Microsoft.Network/natGateways"
+          ]
+        },
+        {
+          "name": "dns",
+          "displayName": "Name resolution",
+          "resourceTypes": [
+            "Microsoft.Network/privateDnsZones"
+          ]
+        },
+        {
+          "name": "remote-access",
+          "displayName": "Remote access",
+          "resourceTypes": [
+            "Microsoft.Network/bastionHosts"
+          ]
+        }
+      ],
+      "management": [
+        {
+          "name": "observability",
+          "displayName": "Observability",
+          "resourceTypes": [
+            "Microsoft.OperationalInsights/workspaces",
+            "Microsoft.Insights/components"
+          ]
+        },
+        {
+          "name": "alerting",
+          "displayName": "Alerting and response",
+          "resourceTypes": [
+            "Microsoft.Insights/actionGroups"
+          ]
+        },
+        {
+          "name": "backup",
+          "displayName": "Backup and recovery",
+          "resourceTypes": [
+            "Microsoft.RecoveryServices/vaults"
+          ]
+        },
+        {
+          "name": "automation",
+          "displayName": "Automation and patching",
+          "resourceTypes": [
+            "Microsoft.Automation/automationAccounts"
+          ]
+        },
+        {
+          "name": "storage",
+          "displayName": "Platform storage",
+          "resourceTypes": [
+            "Microsoft.Storage/storageAccounts"
+          ]
+        }
+      ],
+      "identity": [
+        {
+          "name": "domain-services",
+          "displayName": "Domain services",
+          "resourceTypes": [
+            "Microsoft.Compute/virtualMachines"
+          ]
+        },
+        {
+          "name": "workload-identity",
+          "displayName": "Workload identity",
+          "resourceTypes": [
+            "Microsoft.ManagedIdentity/userAssignedIdentities"
+          ]
+        },
+        {
+          "name": "secrets",
+          "displayName": "Identity secrets",
+          "resourceTypes": [
+            "Microsoft.KeyVault/vaults"
+          ]
+        },
+        {
+          "name": "dns",
+          "displayName": "Identity DNS",
+          "resourceTypes": [
+            "Microsoft.Network/privateDnsZones"
+          ]
+        }
+      ]
+    },
+    "varDomains": [
+      {
+        "name": "security",
+        "displayName": "Security",
+        "subscriptionId": "[parameters('parSecuritySubscriptionId')]",
+        "extraResourceTypes": "[parameters('parSecurityResourceTypes')]",
+        "tagFilters": "[coalesce(tryGet(tryGet(parameters('parDomainOverrides'), 'security'), 'tagFilters'), createArray())]",
+        "subdomains": "[coalesce(tryGet(tryGet(parameters('parDomainOverrides'), 'security'), 'subdomains'), variables('varDefaultSubdomains').security)]"
+      },
+      {
+        "name": "connectivity",
+        "displayName": "Connectivity",
+        "subscriptionId": "[parameters('parConnectivitySubscriptionId')]",
+        "extraResourceTypes": "[parameters('parConnectivityResourceTypes')]",
+        "tagFilters": "[coalesce(tryGet(tryGet(parameters('parDomainOverrides'), 'connectivity'), 'tagFilters'), createArray())]",
+        "subdomains": "[coalesce(tryGet(tryGet(parameters('parDomainOverrides'), 'connectivity'), 'subdomains'), variables('varDefaultSubdomains').connectivity)]"
+      },
+      {
+        "name": "management",
+        "displayName": "Management",
+        "subscriptionId": "[parameters('parManagementSubscriptionId')]",
+        "extraResourceTypes": "[parameters('parManagementResourceTypes')]",
+        "tagFilters": "[coalesce(tryGet(tryGet(parameters('parDomainOverrides'), 'management'), 'tagFilters'), createArray())]",
+        "subdomains": "[coalesce(tryGet(tryGet(parameters('parDomainOverrides'), 'management'), 'subdomains'), variables('varDefaultSubdomains').management)]"
+      },
+      {
+        "name": "identity",
+        "displayName": "Identity",
+        "subscriptionId": "[parameters('parIdentitySubscriptionId')]",
+        "extraResourceTypes": "[parameters('parIdentityResourceTypes')]",
+        "tagFilters": "[coalesce(tryGet(tryGet(parameters('parDomainOverrides'), 'identity'), 'tagFilters'), createArray())]",
+        "subdomains": "[coalesce(tryGet(tryGet(parameters('parDomainOverrides'), 'identity'), 'subdomains'), variables('varDefaultSubdomains').identity)]"
+      }
+    ]
+  },
+  "resources": {
+    "modTopology": {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2025-04-01",
+      "name": "hm-platform-topology",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "parHealthModelName": {
+            "value": "[parameters('parHealthModelName')]"
+          },
+          "parLocation": {
+            "value": "[parameters('parLocation')]"
+          },
+          "parAuthenticationSettingName": {
+            "value": "[parameters('parAuthenticationSettingName')]"
+          },
+          "parIncludedResourceTypesGlobal": {
+            "value": "[parameters('parIncludedResourceTypesGlobal')]"
+          },
+          "parDomains": {
+            "value": "[variables('varDomains')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "languageVersion": "2.0",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.46.1.21595",
+              "templateHash": "11583021171493768045"
+            },
+            "name": "ALZ Bicep - CloudHealth Health Model Topology",
+            "description": "Preview (experimental): deploys a Microsoft CloudHealth health model with domain grouping entities and one discovery rule per subdomain."
+          },
+          "definitions": {
+            "typTagFilter": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "metadata": {
+                "__bicep_export!": true,
+                "description": "A { key, value } tag pair that a discovered resource must match."
+              }
+            },
+            "typSubdomain": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "resourceTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "metadata": {
+                "__bicep_export!": true,
+                "description": "A subdomain discovered by its own discovery rule and grouped under its parent domain."
+              }
+            },
+            "typDomain": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "subscriptionId": {
+                  "type": "string"
+                },
+                "tagFilters": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/typTagFilter"
+                  }
+                },
+                "extraResourceTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "subdomains": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/typSubdomain"
+                  }
+                }
+              },
+              "metadata": {
+                "__bicep_export!": true,
+                "description": "A domain grouping entity, its discovery scope, and its subdomains."
+              }
+            }
+          },
+          "parameters": {
+            "parHealthModelName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the health model. The root entity is declared with this exact name so the definition manages the provider built-in root."
+              }
+            },
+            "parLocation": {
+              "type": "string",
+              "metadata": {
+                "description": "Location for the health model. Must support Microsoft.CloudHealth."
+              }
+            },
+            "parAuthenticationSettingName": {
+              "type": "string",
+              "defaultValue": "managed-identity",
+              "metadata": {
+                "description": "Name of the managed-identity authentication setting."
+              }
+            },
+            "parIncludedResourceTypesGlobal": {
+              "type": "array",
+              "defaultValue": [],
+              "metadata": {
+                "description": "Resource types added to every subdomain discovery query and unioned with each subdomain list."
+              }
+            },
+            "parDomains": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/typDomain"
+              },
+              "metadata": {
+                "description": "Domains, each with its discovery scope and subdomains."
+              }
+            }
+          },
+          "variables": {
+            "varSubdomains": "[flatten(map(parameters('parDomains'), lambda('domain', map(lambdaVariables('domain').subdomains, lambda('subdomain', createObject('name', format('{0}-{1}', lambdaVariables('domain').name, lambdaVariables('subdomain').name), 'displayName', lambdaVariables('subdomain').displayName, 'domainName', lambdaVariables('domain').name, 'query', format('resources | where subscriptionId =~ ''{0}'' | {1}where type in~ (''{2}'') | project id', lambdaVariables('domain').subscriptionId, join(map(lambdaVariables('domain').tagFilters, lambda('tagFilter', format('where tags[''{0}''] =~ ''{1}'' | ', lambdaVariables('tagFilter').key, lambdaVariables('tagFilter').value))), ''), join(union(union(parameters('parIncludedResourceTypesGlobal'), lambdaVariables('domain').extraResourceTypes), lambdaVariables('subdomain').resourceTypes), ''','''))))))))]",
+            "varDomainNames": "[map(parameters('parDomains'), lambda('domain', lambdaVariables('domain').name))]"
+          },
+          "resources": {
+            "resHealthModel": {
+              "type": "Microsoft.CloudHealth/healthmodels",
+              "apiVersion": "2026-05-01-preview",
+              "name": "[parameters('parHealthModelName')]",
+              "location": "[parameters('parLocation')]",
+              "identity": {
+                "type": "SystemAssigned"
+              },
+              "properties": {}
+            },
+            "resAuthenticationSetting": {
+              "type": "Microsoft.CloudHealth/healthmodels/authenticationsettings",
+              "apiVersion": "2026-05-01-preview",
+              "name": "[format('{0}/{1}', parameters('parHealthModelName'), parameters('parAuthenticationSettingName'))]",
+              "properties": {
+                "displayName": "Managed identity",
+                "authenticationKind": "ManagedIdentity",
+                "managedIdentityName": "SystemAssigned"
+              },
+              "dependsOn": [
+                "resHealthModel"
+              ]
+            },
+            "resRootEntity": {
+              "type": "Microsoft.CloudHealth/healthmodels/entities",
+              "apiVersion": "2026-05-01-preview",
+              "name": "[format('{0}/{1}', parameters('parHealthModelName'), parameters('parHealthModelName'))]",
+              "properties": {
+                "displayName": "[parameters('parHealthModelName')]",
+                "signalGroups": {
+                  "dependencies": {
+                    "aggregationType": "WorstOf"
+                  }
+                }
+              },
+              "dependsOn": [
+                "resHealthModel"
+              ]
+            },
+            "resDomainEntities": {
+              "copy": {
+                "name": "resDomainEntities",
+                "count": "[length(parameters('parDomains'))]"
+              },
+              "type": "Microsoft.CloudHealth/healthmodels/entities",
+              "apiVersion": "2026-05-01-preview",
+              "name": "[format('{0}/{1}', parameters('parHealthModelName'), parameters('parDomains')[copyIndex()].name)]",
+              "properties": {
+                "displayName": "[parameters('parDomains')[copyIndex()].displayName]",
+                "signalGroups": {
+                  "dependencies": {
+                    "aggregationType": "WorstOf"
+                  }
+                }
+              },
+              "dependsOn": [
+                "resHealthModel"
+              ]
+            },
+            "resSubdomainDiscoveryRules": {
+              "copy": {
+                "name": "resSubdomainDiscoveryRules",
+                "count": "[length(variables('varSubdomains'))]"
+              },
+              "type": "Microsoft.CloudHealth/healthmodels/discoveryrules",
+              "apiVersion": "2026-05-01-preview",
+              "name": "[format('{0}/{1}', parameters('parHealthModelName'), variables('varSubdomains')[copyIndex()].name)]",
+              "properties": {
+                "displayName": "[variables('varSubdomains')[copyIndex()].displayName]",
+                "authenticationSetting": "[parameters('parAuthenticationSettingName')]",
+                "addRecommendedSignals": "Enabled",
+                "addResourceHealthSignal": "Enabled",
+                "discoverRelationships": "Enabled",
+                "specification": {
+                  "kind": "ResourceGraphQuery",
+                  "resourceGraphQuery": "[variables('varSubdomains')[copyIndex()].query]"
+                }
+              },
+              "dependsOn": [
+                "resAuthenticationSetting",
+                "resHealthModel"
+              ]
+            },
+            "resRootToDomain": {
+              "copy": {
+                "name": "resRootToDomain",
+                "count": "[length(parameters('parDomains'))]"
+              },
+              "type": "Microsoft.CloudHealth/healthmodels/relationships",
+              "apiVersion": "2026-05-01-preview",
+              "name": "[format('{0}/{1}', parameters('parHealthModelName'), format('r-{0}-{1}', parameters('parHealthModelName'), parameters('parDomains')[copyIndex()].name))]",
+              "properties": {
+                "parentEntityName": "[parameters('parHealthModelName')]",
+                "childEntityName": "[parameters('parDomains')[copyIndex()].name]"
+              },
+              "dependsOn": [
+                "[format('resDomainEntities[{0}]', copyIndex())]",
+                "resHealthModel",
+                "resRootEntity"
+              ]
+            },
+            "resDomainToSubdomain": {
+              "copy": {
+                "name": "resDomainToSubdomain",
+                "count": "[length(variables('varSubdomains'))]"
+              },
+              "type": "Microsoft.CloudHealth/healthmodels/relationships",
+              "apiVersion": "2026-05-01-preview",
+              "name": "[format('{0}/{1}', parameters('parHealthModelName'), format('r-{0}-{1}', variables('varSubdomains')[copyIndex()].domainName, variables('varSubdomains')[copyIndex()].name))]",
+              "properties": {
+                "parentEntityName": "[parameters('parDomains')[indexOf(variables('varDomainNames'), variables('varSubdomains')[copyIndex()].domainName)].name]",
+                "childEntityName": "[variables('varSubdomains')[copyIndex()].name]"
+              },
+              "dependsOn": [
+                "[format('resDomainEntities[{0}]', indexOf(variables('varDomainNames'), variables('varSubdomains')[copyIndex()].domainName))]",
+                "resHealthModel",
+                "[format('resSubdomainDiscoveryRules[{0}]', copyIndex())]"
+              ]
+            }
+          },
+          "outputs": {
+            "outHealthModelName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the deployed health model."
+              },
+              "value": "[parameters('parHealthModelName')]"
+            },
+            "outSubdomainQueries": {
+              "type": "array",
+              "metadata": {
+                "description": "Assembled discovery queries, one per subdomain, for verification."
+              },
+              "value": "[map(variables('varSubdomains'), lambda('subdomain', createObject('name', lambdaVariables('subdomain').name, 'query', lambdaVariables('subdomain').query)))]"
+            }
+          }
+        }
+      }
+    }
+  },
+  "outputs": {
+    "outSubdomainQueries": {
+      "type": "array",
+      "metadata": {
+        "description": "Assembled discovery queries, one per subdomain, for verification."
+      },
+      "value": "[reference('modTopology').outputs.outSubdomainQueries.value]"
+    }
+  }
+}
