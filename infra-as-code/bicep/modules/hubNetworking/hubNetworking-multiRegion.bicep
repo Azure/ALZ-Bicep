@@ -26,13 +26,26 @@ type virtualNetworkGatewayOptionsType = {
   gatewayType: ('Vpn' | 'ExpressRoute')
 
   @description('SKU of the gateway.')
-  sku: ('Basic' | 'VpnGw1Az' | 'VpnGw2AZ' | 'VpnGw3AZ' | 'VpnGw4AZ' | 'VpnGw5AZ' | 'ErGw1Az' | 'ErGw2AZ' | 'ErGw3AZ' | 'ErGwScale' | 'HighPerformance' | 'Standard' | 'UltraPerformance')
+  sku: (
+    | 'Basic'
+    | 'VpnGw1Az'
+    | 'VpnGw2AZ'
+    | 'VpnGw3AZ'
+    | 'VpnGw4AZ'
+    | 'VpnGw5AZ'
+    | 'ErGw1Az'
+    | 'ErGw2AZ'
+    | 'ErGw3AZ'
+    | 'ErGwScale'
+    | 'HighPerformance'
+    | 'Standard'
+    | 'UltraPerformance')
 
   @description('Type of VPN.')
   vpnType: string
 
   @description('Generation of the VPN Gateway.')
-  vpnGatewayGeneration: ('Generation1' | 'Generation2' | 'None' )
+  vpnGatewayGeneration: ('Generation1' | 'Generation2' | 'None')
 
   @description('Enable BGP on the gateway.')
   enableBgp: bool
@@ -1356,14 +1369,14 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [
     params: {
       parLocation: parLocation
       parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
-      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
-          ? ['1', '2']
-          : parAzErGatewayAvailabilityZones)
-      : (toLower(gateway.gatewayType) == 'vpn'
-          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
-              ? ['1', '2']
-              : parAzVpnGatewayAvailabilityZones)
-          : [])
+        ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
+            ? ['1', '2']
+            : parAzErGatewayAvailabilityZones)
+        : (toLower(gateway.gatewayType) == 'vpn'
+            ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
+                ? ['1', '2']
+                : parAzVpnGatewayAvailabilityZones)
+            : [])
       parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}'
       parPublicIpProperties: {
         publicIpAddressVersion: 'IPv4'
@@ -1388,14 +1401,14 @@ module modGatewayPublicIpActiveActive '../publicIp/publicIp.bicep' = [
     params: {
       parLocation: parLocation
       parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
-      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
-          ? ['1', '2']
-          : parAzErGatewayAvailabilityZones)
-      : (toLower(gateway.gatewayType) == 'vpn'
-          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
-              ? ['1', '2']
-              : parAzVpnGatewayAvailabilityZones)
-          : [])
+        ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
+            ? ['1', '2']
+            : parAzErGatewayAvailabilityZones)
+        : (toLower(gateway.gatewayType) == 'vpn'
+            ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
+                ? ['1', '2']
+                : parAzVpnGatewayAvailabilityZones)
+            : [])
       parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}-aa'
       parPublicIpProperties: {
         publicIpAddressVersion: 'IPv4'
@@ -1419,14 +1432,14 @@ module modGatewayPublicIpSecondaryLocation '../publicIp/publicIp.bicep' = [
     params: {
       parLocation: parSecondaryLocation
       parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
-      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZonesSecondaryLocation)
-          ? ['1', '2']
-          : parAzErGatewayAvailabilityZones)
-      : (toLower(gateway.gatewayType) == 'vpn'
-          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZonesSecondaryLocation)
-              ? ['1', '2']
-              : parAzVpnGatewayAvailabilityZonesSecondaryLocation)
-          : [])
+        ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZonesSecondaryLocation)
+            ? ['1', '2']
+            : parAzErGatewayAvailabilityZones)
+        : (toLower(gateway.gatewayType) == 'vpn'
+            ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZonesSecondaryLocation)
+                ? ['1', '2']
+                : parAzVpnGatewayAvailabilityZonesSecondaryLocation)
+            : [])
       parPublicIpName: '${parPublicIpPrefixSecondaryLocation}${gateway.name}${parPublicIpSuffix}'
       parPublicIpProperties: {
         publicIpAddressVersion: 'IPv4'
@@ -1451,14 +1464,14 @@ module modGatewayPublicIpActiveActiveSecondaryLocation '../publicIp/publicIp.bic
     params: {
       parLocation: parLocation
       parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
-      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZonesSecondaryLocation)
-          ? ['1', '2']
-          : parAzErGatewayAvailabilityZones)
-      : (toLower(gateway.gatewayType) == 'vpn'
-          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZonesSecondaryLocation)
-              ? ['1', '2']
-              : parAzVpnGatewayAvailabilityZonesSecondaryLocation)
-          : [])
+        ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZonesSecondaryLocation)
+            ? ['1', '2']
+            : parAzErGatewayAvailabilityZones)
+        : (toLower(gateway.gatewayType) == 'vpn'
+            ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZonesSecondaryLocation)
+                ? ['1', '2']
+                : parAzVpnGatewayAvailabilityZonesSecondaryLocation)
+            : [])
       parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}-aa'
       parPublicIpProperties: {
         publicIpAddressVersion: 'IPv4'
@@ -1877,7 +1890,9 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-05-01' = if (pa
             }
             publicIPAddress: {
               id: parAzFirewallEnabled
-                ? (varAzFirewallUseCustomManagementIp ? parAzFirewallCustomManagementIp : modAzureFirewallMgmtPublicIp.?outputs.outPublicIpId)
+                ? (varAzFirewallUseCustomManagementIp
+                    ? parAzFirewallCustomManagementIp
+                    : modAzureFirewallMgmtPublicIp.?outputs.outPublicIpId)
                 : ''
             }
           }
@@ -1894,7 +1909,6 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-05-01' = if (pa
       : null
   }
 }
-
 
 // AzureFirewallSubnet is required to deploy Azure Firewall . This subnet must exist in the parsubnets array if you deploy.
 // There is a minimum subnet requirement of /26 prefix.
@@ -1940,7 +1954,10 @@ resource resAzureFirewallSecondaryLocation 'Microsoft.Network/azureFirewalls@202
             }
           }
         ]
-    managementIpConfiguration: (contains(map(parSubnetsSecondaryLocation, subnets => subnets.name), 'AzureFirewallManagementSubnet'))
+    managementIpConfiguration: (contains(
+        map(parSubnetsSecondaryLocation, subnets => subnets.name),
+        'AzureFirewallManagementSubnet'
+      ))
       ? {
           name: 'mgmtIpConfig'
           properties: {
@@ -1949,7 +1966,9 @@ resource resAzureFirewallSecondaryLocation 'Microsoft.Network/azureFirewalls@202
             }
             publicIPAddress: {
               id: parAzFirewallEnabledSecondaryLocation
-                ? (varAzFirewallUseCustomManagementIpSecondaryLocation ? parAzFirewallCustomManagementIpSecondaryLocation : modAzureFirewallMgmtPublicIpSecondaryLocation.?outputs.outPublicIpId)
+                ? (varAzFirewallUseCustomManagementIpSecondaryLocation
+                    ? parAzFirewallCustomManagementIpSecondaryLocation
+                    : modAzureFirewallMgmtPublicIpSecondaryLocation.?outputs.outPublicIpId)
                 : ''
             }
           }
@@ -1966,7 +1985,6 @@ resource resAzureFirewallSecondaryLocation 'Microsoft.Network/azureFirewalls@202
       : null
   }
 }
-
 
 // Create Azure Firewall resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
 resource resAzureFirewallLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallEnabled && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
@@ -2052,7 +2070,7 @@ resource resHubRouteTableLockSecondaryLocation 'Microsoft.Authorization/locks@20
   }
 }
 
-module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.3' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-${parLocation}'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
@@ -2080,7 +2098,7 @@ module modPrivateDnsZonesAVMRegion1 'br/public:avm/ptn/network/private-link-priv
   }
 }
 
-module modPrivateDnsZonesAVMRegion2 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVMRegion2 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.3' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-Multi-${parSecondaryLocation}'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {

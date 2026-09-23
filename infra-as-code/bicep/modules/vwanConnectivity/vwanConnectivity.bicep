@@ -478,24 +478,46 @@ module modSidecarVirtualNetwork 'br/public:avm/res/network/virtual-network:0.7.0
     params: {
       name: hub.parSidecarVirtualNetwork.?name ?? '${parCompanyPrefix}-sidecar-vnet-${hub.parHubLocation}'
       addressPrefixes: hub.parSidecarVirtualNetwork.addressPrefixes
-      location: hub.parSidecarVirtualNetwork.?location != null ? hub.parSidecarVirtualNetwork.?location : hub.parHubLocation
-      flowTimeoutInMinutes: hub.parSidecarVirtualNetwork.?flowTimeoutInMinutes != null ? hub.parSidecarVirtualNetwork.?flowTimeoutInMinutes : 0
-      ipamPoolNumberOfIpAddresses: hub.parSidecarVirtualNetwork.?ipamPoolNumberOfIpAddresses != null ? hub.parSidecarVirtualNetwork.?ipamPoolNumberOfIpAddresses : null
-      lock: (parGlobalResourceLock.kind != 'None' || (hub.parSidecarVirtualNetwork.?lock != null && hub.parSidecarVirtualNetwork.?lock.?kind != 'None')) ? {
-        name: hub.parSidecarVirtualNetwork.?lock.?name ?? 'pl-sidecar-vnet-lock'
-        kind: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.kind : hub.parSidecarVirtualNetwork.?lock.?kind
-        notes: (parGlobalResourceLock.kind != 'None') ? parGlobalResourceLock.?notes : hub.parSidecarVirtualNetwork.?lock.?notes ?? 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
-      } : null
+      location: hub.parSidecarVirtualNetwork.?location != null
+        ? hub.parSidecarVirtualNetwork.?location
+        : hub.parHubLocation
+      flowTimeoutInMinutes: hub.parSidecarVirtualNetwork.?flowTimeoutInMinutes != null
+        ? hub.parSidecarVirtualNetwork.?flowTimeoutInMinutes
+        : 0
+      ipamPoolNumberOfIpAddresses: hub.parSidecarVirtualNetwork.?ipamPoolNumberOfIpAddresses != null
+        ? hub.parSidecarVirtualNetwork.?ipamPoolNumberOfIpAddresses
+        : null
+      lock: (parGlobalResourceLock.kind != 'None' || (hub.parSidecarVirtualNetwork.?lock != null && hub.parSidecarVirtualNetwork.?lock.?kind != 'None'))
+        ? {
+            name: hub.parSidecarVirtualNetwork.?lock.?name ?? 'pl-sidecar-vnet-lock'
+            kind: (parGlobalResourceLock.kind != 'None')
+              ? parGlobalResourceLock.kind
+              : hub.parSidecarVirtualNetwork.?lock.?kind
+            notes: (parGlobalResourceLock.kind != 'None')
+              ? parGlobalResourceLock.?notes
+              : hub.parSidecarVirtualNetwork.?lock.?notes ?? 'This lock was created by the ALZ Bicep vWAN Connectivity Module.'
+          }
+        : null
       peerings: hub.parSidecarVirtualNetwork.?vnetPeerings != null ? hub.parSidecarVirtualNetwork.?vnetPeerings : []
       subnets: hub.parSidecarVirtualNetwork.?subnets != null ? hub.parSidecarVirtualNetwork.?subnets : []
-      vnetEncryption: hub.parSidecarVirtualNetwork.?vnetEncryption != null ? hub.parSidecarVirtualNetwork.?vnetEncryption : null
-      vnetEncryptionEnforcement: hub.parSidecarVirtualNetwork.?vnetEncryptionEnforcement != null ? hub.parSidecarVirtualNetwork.?vnetEncryptionEnforcement : null
+      vnetEncryption: hub.parSidecarVirtualNetwork.?vnetEncryption != null
+        ? hub.parSidecarVirtualNetwork.?vnetEncryption
+        : null
+      vnetEncryptionEnforcement: hub.parSidecarVirtualNetwork.?vnetEncryptionEnforcement != null
+        ? hub.parSidecarVirtualNetwork.?vnetEncryptionEnforcement
+        : null
       roleAssignments: hub.parSidecarVirtualNetwork.?roleAssignments
-      virtualNetworkBgpCommunity: hub.parSidecarVirtualNetwork.?virtualNetworkBgpCommunity != null ? hub.parSidecarVirtualNetwork.?virtualNetworkBgpCommunity : null
+      virtualNetworkBgpCommunity: hub.parSidecarVirtualNetwork.?virtualNetworkBgpCommunity != null
+        ? hub.parSidecarVirtualNetwork.?virtualNetworkBgpCommunity
+        : null
       tags: parTags
-      diagnosticSettings: hub.parSidecarVirtualNetwork.?diagnosticSettings != null ? hub.parSidecarVirtualNetwork.?diagnosticSettings : []
+      diagnosticSettings: hub.parSidecarVirtualNetwork.?diagnosticSettings != null
+        ? hub.parSidecarVirtualNetwork.?diagnosticSettings
+        : []
       dnsServers: hub.parSidecarVirtualNetwork.?dnsServers != null ? hub.parSidecarVirtualNetwork.?dnsServers : []
-      enableVmProtection: hub.parSidecarVirtualNetwork.?enableVmProtection != null ? hub.parSidecarVirtualNetwork.?enableVmProtection : null
+      enableVmProtection: hub.parSidecarVirtualNetwork.?enableVmProtection != null
+        ? hub.parSidecarVirtualNetwork.?enableVmProtection
+        : null
       ddosProtectionPlanResourceId: parDdosEnabled ? resDdosProtectionPlan.id : null
       enableTelemetry: parTelemetryOptOut ? false : true
     }
@@ -579,7 +601,9 @@ resource resErGatewayLock 'Microsoft.Authorization/locks@2020-05-01' = [
 // Create Azure Firewall Policy (per region) resources if parAzFirewallEnabled is true and parAzFirewallPolicyDeploymentStyle is set to PerRegion
 resource resFirewallPolicies 'Microsoft.Network/firewallPolicies@2024-05-01' = [
   for (hub, i) in parVirtualWanHubs: if (parVirtualHubEnabled && parVirtualWanHubs[i].parAzFirewallEnabled && parAzFirewallPolicyDeploymentStyle == 'PerRegion') {
-    name: hub.?parAzFirewallPolicyCustomName ?? (endsWith(parAzFirewallPoliciesName, '-${hub.parHubLocation}') ? parAzFirewallPoliciesName : '${parAzFirewallPoliciesName}-${hub.parHubLocation}')
+    name: hub.?parAzFirewallPolicyCustomName ?? (endsWith(parAzFirewallPoliciesName, '-${hub.parHubLocation}')
+      ? parAzFirewallPoliciesName
+      : '${parAzFirewallPoliciesName}-${hub.parHubLocation}')
     location: hub.parHubLocation
     tags: parTags
     properties: (hub.?parAzFirewallTier == 'Basic')
@@ -622,7 +646,12 @@ resource resFirewallPoliciesLock 'Microsoft.Authorization/locks@2020-05-01' = [
 
 // Shared Global Azure Firewall Policy
 resource resFirewallPoliciesSharedGlobal 'Microsoft.Network/firewallPolicies@2024-05-01' = if (parVirtualHubEnabled && parVirtualWanHubs[0].parAzFirewallEnabled && parAzFirewallPolicyDeploymentStyle == 'SharedGlobal') {
-  name: parVirtualWanHubs[0].?parAzFirewallPolicyCustomName ?? (endsWith(parAzFirewallPoliciesName, '-${parVirtualWanHubs[0].parHubLocation}') ? parAzFirewallPoliciesName : '${parAzFirewallPoliciesName}-${parVirtualWanHubs[0].parHubLocation}')
+  name: parVirtualWanHubs[0].?parAzFirewallPolicyCustomName ?? (endsWith(
+      parAzFirewallPoliciesName,
+      '-${parVirtualWanHubs[0].parHubLocation}'
+    )
+    ? parAzFirewallPoliciesName
+    : '${parAzFirewallPoliciesName}-${parVirtualWanHubs[0].parHubLocation}')
   location: parVirtualWanHubs[0].parHubLocation
   tags: parTags
   properties: (parVirtualWanHubs[0].?parAzFirewallTier == 'Basic')
@@ -720,7 +749,7 @@ resource resDDoSProtectionPlanLock 'Microsoft.Authorization/locks@2020-05-01' = 
 }
 
 // Private DNS Zones cannot be linked to the Virtual WAN Hub today however, they can be linked to spokes as they are normal VNets as per https://docs.microsoft.com/azure/virtual-wan/howto-private-link
-module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.3' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-Single'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {

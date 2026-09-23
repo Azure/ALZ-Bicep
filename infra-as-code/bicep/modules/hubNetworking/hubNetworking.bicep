@@ -26,13 +26,26 @@ type virtualNetworkGatewayOptionsType = {
   gatewayType: ('Vpn' | 'ExpressRoute')
 
   @description('SKU of the gateway.')
-  sku: ('Basic' | 'VpnGw1Az' | 'VpnGw2AZ' | 'VpnGw3AZ' | 'VpnGw4AZ' | 'VpnGw5AZ' | 'ErGw1Az' | 'ErGw2AZ' | 'ErGw3AZ' | 'ErGwScale' | 'HighPerformance' | 'Standard' | 'UltraPerformance')
+  sku: (
+    | 'Basic'
+    | 'VpnGw1Az'
+    | 'VpnGw2AZ'
+    | 'VpnGw3AZ'
+    | 'VpnGw4AZ'
+    | 'VpnGw5AZ'
+    | 'ErGw1Az'
+    | 'ErGw2AZ'
+    | 'ErGw3AZ'
+    | 'ErGwScale'
+    | 'HighPerformance'
+    | 'Standard'
+    | 'UltraPerformance')
 
   @description('Type of VPN.')
   vpnType: string
 
   @description('Generation of the VPN Gateway.')
-  vpnGatewayGeneration: ('Generation1' | 'Generation2' | 'None' )
+  vpnGatewayGeneration: ('Generation1' | 'Generation2' | 'None')
 
   @description('Enable BGP on the gateway.')
   enableBgp: bool
@@ -779,14 +792,14 @@ module modGatewayPublicIp '../publicIp/publicIp.bicep' = [
     params: {
       parLocation: parLocation
       parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
-      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
-          ? ['1', '2']
-          : parAzErGatewayAvailabilityZones)
-      : (toLower(gateway.gatewayType) == 'vpn'
-          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
-              ? ['1', '2']
-              : parAzVpnGatewayAvailabilityZones)
-          : [])
+        ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
+            ? ['1', '2']
+            : parAzErGatewayAvailabilityZones)
+        : (toLower(gateway.gatewayType) == 'vpn'
+            ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
+                ? ['1', '2']
+                : parAzVpnGatewayAvailabilityZones)
+            : [])
       parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}'
       parPublicIpProperties: {
         publicIpAddressVersion: 'IPv4'
@@ -811,14 +824,14 @@ module modGatewayPublicIpActiveActive '../publicIp/publicIp.bicep' = [
     params: {
       parLocation: parLocation
       parAvailabilityZones: toLower(gateway.gatewayType) == 'expressroute'
-      ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
-          ? ['1', '2']
-          : parAzErGatewayAvailabilityZones)
-      : (toLower(gateway.gatewayType) == 'vpn'
-          ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
-              ? ['1', '2']
-              : parAzVpnGatewayAvailabilityZones)
-          : [])
+        ? (contains(toLower(gateway.sku), 'az') && empty(parAzErGatewayAvailabilityZones)
+            ? ['1', '2']
+            : parAzErGatewayAvailabilityZones)
+        : (toLower(gateway.gatewayType) == 'vpn'
+            ? (contains(toLower(gateway.sku), 'az') && empty(parAzVpnGatewayAvailabilityZones)
+                ? ['1', '2']
+                : parAzVpnGatewayAvailabilityZones)
+            : [])
       parPublicIpName: '${parPublicIpPrefix}${gateway.name}${parPublicIpSuffix}-aa'
       parPublicIpProperties: {
         publicIpAddressVersion: 'IPv4'
@@ -1081,7 +1094,6 @@ resource resAzureFirewall 'Microsoft.Network/azureFirewalls@2024-05-01' = if (pa
   }
 }
 
-
 // Create Azure Firewall resource lock if parAzFirewallEnabled is true and parGlobalResourceLock.kind != 'None' or if parAzureFirewallLock.kind != 'None'
 resource resAzureFirewallLock 'Microsoft.Authorization/locks@2020-05-01' = if (parAzFirewallEnabled && (parAzureFirewallLock.kind != 'None' || parGlobalResourceLock.kind != 'None')) {
   scope: resAzureFirewall
@@ -1124,7 +1136,7 @@ resource resHubRouteTableLock 'Microsoft.Authorization/locks@2020-05-01' = if (p
   }
 }
 
-module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.0' = if (parPrivateDnsZonesEnabled) {
+module modPrivateDnsZonesAVM 'br/public:avm/ptn/network/private-link-private-dns-zones:0.7.3' = if (parPrivateDnsZonesEnabled) {
   name: 'deploy-Private-DNS-Zones-AVM-Single'
   scope: resourceGroup(parPrivateDnsZonesResourceGroup)
   params: {
