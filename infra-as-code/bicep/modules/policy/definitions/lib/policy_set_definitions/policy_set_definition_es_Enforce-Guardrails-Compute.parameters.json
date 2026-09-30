@@ -12,5 +12,12 @@
         "value": "[[parameters('vmAndVmssEncryptionHost')]"
       }
     }
+  },
+  "Deny-Windows-Vm-HotPatch": {
+    "parameters": {
+      "effect": {
+        "value": "[[parameters('autoHotPatch')]"
+      }
+    }
   }
 }
