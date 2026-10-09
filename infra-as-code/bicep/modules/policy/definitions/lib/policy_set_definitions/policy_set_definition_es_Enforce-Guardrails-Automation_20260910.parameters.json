@@ -20,13 +20,6 @@
       }
     }
   },
-  "Deny-Windows-Vm-HotPatch": {
-    "parameters": {
-      "effect": {
-        "value": "[[parameters('autoHotPatch')]"
-      }
-    }
-  },
   "Modify-Aa-Local-Auth": {
     "parameters": {
       "effect": {

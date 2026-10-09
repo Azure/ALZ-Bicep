@@ -2125,6 +2125,47 @@ var varCustomPolicySetDefinitionsArray = [
 		]
 	}
 	{
+		name: 'Enforce-Guardrails-Automation_20260910'
+		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Automation_20260910.json')
+		libSetChildDefinitions: [
+			{
+				definitionReferenceId: 'Deny-Aa-Local-Auth'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/48c5f1cb-14ad-4797-8e3b-f78ab3f8d700'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsAutomation_20260910Parameters['Deny-Aa-Local-Auth'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Aa-Managed-Identity'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/dea83a72-443c-4292-83d5-54a2f98749c0'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsAutomation_20260910Parameters['Deny-Aa-Managed-Identity'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Aa-Variables-Encrypt'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/3657f5a0-770e-44a3-b44e-9431ba1e9735'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsAutomation_20260910Parameters['Deny-Aa-Variables-Encrypt'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Modify-Aa-Local-Auth'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/30d1d58e-8f96-47a5-8564-499a3f3cca81'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsAutomation_20260910Parameters['Modify-Aa-Local-Auth'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Modify-Aa-Public-Network-Access'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/23b36a7c-9d26-4288-a8fd-c1d2fa284d8c'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsAutomation_20260910Parameters['Modify-Aa-Public-Network-Access'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+		]
+	}
+	{
 		name: 'Enforce-Guardrails-Automation'
 		libSetDefinition: loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Automation.json')
 		libSetChildDefinitions: [
@@ -2290,6 +2331,13 @@ var varCustomPolicySetDefinitionsArray = [
 				definitionReferenceId: 'Deny-VmAndVmss-Encryption-Host'
 				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/fc4d8e41-e223-45ea-9bf5-eada37891d87'
 				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsComputeParameters['Deny-VmAndVmss-Encryption-Host'].parameters
+				definitionGroups: []
+				definitionVersion: '1.*.*'
+			}
+			{
+				definitionReferenceId: 'Deny-Windows-Vm-HotPatch'
+				definitionId: '/providers/Microsoft.Authorization/policyDefinitions/6d02d2f7-e38b-4bdc-96f3-adc0a8726abc'
+				definitionParameters: varPolicySetDefinitionEsEnforceGuardrailsComputeParameters['Deny-Windows-Vm-HotPatch'].parameters
 				definitionGroups: []
 				definitionVersion: '1.*.*'
 			}
@@ -3837,6 +3885,8 @@ var varPolicySetDefinitionEsEnforceEncryptTransit_20241211Parameters = loadJsonC
 var varPolicySetDefinitionEsEnforceGuardrailsAPIMParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-APIM.parameters.json')
 
 var varPolicySetDefinitionEsEnforceGuardrailsAppServicesParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-AppServices.parameters.json')
+
+var varPolicySetDefinitionEsEnforceGuardrailsAutomation_20260910Parameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Automation_20260910.parameters.json')
 
 var varPolicySetDefinitionEsEnforceGuardrailsAutomationParameters = loadJsonContent('lib/policy_set_definitions/policy_set_definition_es_Enforce-Guardrails-Automation.parameters.json')
 
