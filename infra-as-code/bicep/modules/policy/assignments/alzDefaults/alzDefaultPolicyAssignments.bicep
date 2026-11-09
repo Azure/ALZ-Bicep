@@ -19,6 +19,13 @@ param parLandingZoneChildrenMgAlzDefaultsEnable bool = true
 @description('Assign policies to Confidential Corp and Online groups under Landing Zones.')
 param parLandingZoneMgConfidentialEnable bool = false
 
+
+@description('Preview (experimental). Assign the CloudHealth platform health-model policy at the Platform management group. Defaults to true. Set to false to opt out.')
+param parPlatformHealthModelPolicyAssignmentEnable bool = true
+
+@description('Preview (experimental). Assign the CloudHealth application landing zone health-model policy at the Landing Zones management group. Defaults to true. Set to false to opt out.')
+param parApplicationHealthModelPolicyAssignmentEnable bool = true
+
 @description('Location of Log Analytics Workspace & Automation Account.')
 param parLogAnalyticsWorkSpaceAndAutomationAccountLocation string = 'eastus'
 
@@ -84,6 +91,64 @@ param parServiceHealthAlertActionGroupResources object = {
   functionTriggerUrl: ''
 }
 
+
+@description('Azure region for the platform health model and remediation deployment. Must support Microsoft.CloudHealth.')
+param parPlatformHealthModelLocation string = 'swedencentral'
+
+@description('Name of the resource group the remediation creates when needed and deploys the platform health model into.')
+param parPlatformHealthModelTargetResourceGroupName string = 'rg-alz-healthmodels'
+
+@description('Name of the platform health model.')
+param parPlatformHealthModelName string = 'alz-platform-healthmodel'
+
+@description('Resource types added to every platform domain discovery query and unioned with each per-domain list.')
+param parPlatformHealthModelIncludedResourceTypesGlobal array = []
+
+@description('Resource types added to every Security subdomain discovery query.')
+param parPlatformHealthModelSecurityResourceTypes array = []
+
+@description('Resource types added to every Connectivity subdomain discovery query.')
+param parPlatformHealthModelConnectivityResourceTypes array = []
+
+@description('Resource types added to every Management subdomain discovery query.')
+param parPlatformHealthModelManagementResourceTypes array = []
+
+@description('Resource types added to every Identity subdomain discovery query.')
+param parPlatformHealthModelIdentityResourceTypes array = []
+
+@description('Per-domain advanced overrides for the platform health model. Each domain key may set tagFilters (max five) and replace the built-in subdomain split.')
+param parPlatformHealthModelDomainOverrides object = {}
+
+@description('Azure region for the application landing zone health model and remediation deployment. Must support Microsoft.CloudHealth.')
+param parApplicationHealthModelLocation string = 'swedencentral'
+
+@description('Name of the resource group the remediation creates when needed and deploys the application landing zone health model into.')
+param parApplicationHealthModelTargetResourceGroupName string = 'rg-application-healthmodels'
+
+@description('Name of the application landing zone health model.')
+param parApplicationHealthModelName string = 'alz-application-healthmodel'
+
+@description('Resource types added to every application landing zone domain discovery query and unioned with each per-domain list.')
+param parApplicationHealthModelIncludedResourceTypesGlobal array = []
+
+@description('Resource types added to every Compute subdomain discovery query.')
+param parApplicationHealthModelComputeResourceTypes array = []
+
+@description('Resource types added to every Data subdomain discovery query.')
+param parApplicationHealthModelDataResourceTypes array = []
+
+@description('Resource types added to every Routing subdomain discovery query.')
+param parApplicationHealthModelRoutingResourceTypes array = []
+
+@description('Resource types added to every AI subdomain discovery query.')
+param parApplicationHealthModelAiResourceTypes array = []
+
+@description('Resource types added to every Config subdomain discovery query.')
+param parApplicationHealthModelConfigResourceTypes array = []
+
+@description('Per-domain advanced overrides for the application landing zone health model. Each domain key may set tagFilters (max five) and replace the built-in subdomain split.')
+param parApplicationHealthModelDomainOverrides object = {}
+
 @description('Names of policy assignments to exclude from the deployment entirely.')
 param parExcludedPolicyAssignments array = []
 
@@ -127,6 +192,7 @@ var varModDepNames = {
   modPolAssiIntRootDenyClassicRes: take('${varDeploymentNameWrappers.basePrefix}-denyClassicRes-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiIntRootDenyUnmanagedDisks: take('${varDeploymentNameWrappers.basePrefix}-denyUnmgdDisks-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiIntRootDeploySvcHealthBuiltIn: take('${varDeploymentNameWrappers.basePrefix}-deploySvcHealthBi-intRoot-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiPlatformDeployCloudHealth: take('${varDeploymentNameWrappers.basePrefix}-deployCloudHealth-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiPlatformDeployGuestAttest: take('${varDeploymentNameWrappers.basePrefix}-deployGuestAttest-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiPlatformDeployVmArcTrack: take('${varDeploymentNameWrappers.basePrefix}-deployVmArcTrack-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiPlatformDeployVmChangeTrack: take('${varDeploymentNameWrappers.basePrefix}-deployVmChgTrack-platform-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -156,6 +222,7 @@ var varModDepNames = {
   modPolAssiLzsDenyPrivContainersAks: take('${varDeploymentNameWrappers.basePrefix}-denyPrivConAks-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiLzsEnforceAksHttps: take('${varDeploymentNameWrappers.basePrefix}-enforceAksHttps-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiLzsEnforceTlsSsl: take('${varDeploymentNameWrappers.basePrefix}-enforceTlsSsl-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
+  modPolAssiLzsDeployCloudHealthApp: take('${varDeploymentNameWrappers.basePrefix}-deployCloudHealthApp-lzs-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiLzsDeployAzSqlDbAuditing: take('${varDeploymentNameWrappers.basePrefix}-deployAzSqlDbAudit-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiLzsDeploySqlThreat: take('${varDeploymentNameWrappers.basePrefix}-deploySqlThreat-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
   modPolAssiLzsDeploySqlTde: take('${varDeploymentNameWrappers.basePrefix}-deploySqlTde-lz-${varDeploymentNameWrappers.baseSuffixTenantAndManagementGroup}', 64)
@@ -285,6 +352,53 @@ var varPolicyAssignmentDenySubnetWithoutNsg = {
 var varPolicyAssignmentDenyUnmanagedDisk = {
 	definitionId: '/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d'
 	libDefinition: loadJsonContent('../../../policy/assignments/lib/policy_assignments/policy_assignment_es_deny_unmanageddisk.tmpl.json')
+}
+
+
+var varPolicyAssignmentDeployALZCloudHealthPlatformModel = {
+  libDefinition: {
+    name: 'Deploy-ALZ-CloudHealth'
+    identity: {
+      type: 'SystemAssigned'
+    }
+    properties: {
+      description: 'Preview (experimental). Deploys the Microsoft.CloudHealth platform health model by creating the configured target resource group when needed for each evaluated Platform subscription.'
+      displayName: 'Deploy CloudHealth platform health model with per-domain discovery'
+      notScopes: []
+      parameters: {
+        effect: {
+          value: 'DeployIfNotExists'
+        }
+        authenticationSettingName: {
+          value: 'managed-identity'
+        }
+      }
+      enforcementMode: 'Default'
+    }
+  }
+}
+
+var varPolicyAssignmentDeployALZCloudHealthApplicationModel = {
+  libDefinition: {
+    name: 'Deploy-App-CloudHealth'
+    identity: {
+      type: 'SystemAssigned'
+    }
+    properties: {
+      description: 'Preview (experimental). Deploys the Microsoft.CloudHealth application landing zone health model by creating the configured target resource group when needed for each evaluated Landing Zones subscription.'
+      displayName: 'Deploy CloudHealth application landing zone health model with per-domain discovery'
+      notScopes: []
+      parameters: {
+        effect: {
+          value: 'DeployIfNotExists'
+        }
+        authenticationSettingName: {
+          value: 'managed-identity'
+        }
+      }
+      enforcementMode: 'Default'
+    }
+  }
 }
 
 var varPolicyAssignmentDeployASCMonitoring = {
@@ -464,6 +578,7 @@ var varRbacRoleDefinitionIds = {
   sqlDbContributor: '9b7fa17d-e63e-47b0-bb0a-15c516ac86ec'
   backupContributor: '5e467623-bb1f-42f4-a55d-6e525e11384b'
   rbacSecurityAdmin: 'fb1c8493-542b-48eb-b624-b4c8fea62acd'
+  roleBasedAccessControlAdministrator: 'f58310d9-a9f6-439a-9e8d-f62e7b41a168'
   reader: 'acdd72a7-3385-48ef-bd42-f606fba81ae7'
   managedIdentityOperator: 'f1a07417-d97a-45cb-824c-7a7467783830'
   managedIdentityContributor: 'e40ec5ca-96e0-45a2-b4ff-59039f2c2b59'
@@ -1046,6 +1161,57 @@ module modPolAssiIntRootDeploySvcHealthBuiltIn '../../../policy/assignments/poli
 }
 
 // Modules - Policy Assignments - Platform Management Group
+
+// Module - Policy Assignment - Deploy-ALZ-CloudHealth-PlatformModel
+module modPolAssiPlatformDeployCloudHealth '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (parPlatformHealthModelPolicyAssignmentEnable && !contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployALZCloudHealthPlatformModel.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIdsUnioned.platform)
+  name: varModDepNames.modPolAssiPlatformDeployCloudHealth
+  params: {
+    parPolicyAssignmentDefinitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-ALZ-CloudHealth-PlatformModel'
+    parPolicyAssignmentName: varPolicyAssignmentDeployALZCloudHealthPlatformModel.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployALZCloudHealthPlatformModel.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployALZCloudHealthPlatformModel.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployALZCloudHealthPlatformModel.libDefinition.properties.notScopes
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployALZCloudHealthPlatformModel.libDefinition.properties.parameters
+    parPolicyAssignmentParameterOverrides: {
+      targetResourceGroupName: {
+        value: parPlatformHealthModelTargetResourceGroupName
+      }
+      healthModelName: {
+        value: parPlatformHealthModelName
+      }
+      location: {
+        value: parPlatformHealthModelLocation
+      }
+      includedResourceTypesGlobal: {
+        value: parPlatformHealthModelIncludedResourceTypesGlobal
+      }
+      securityResourceTypes: {
+        value: parPlatformHealthModelSecurityResourceTypes
+      }
+      connectivityResourceTypes: {
+        value: parPlatformHealthModelConnectivityResourceTypes
+      }
+      managementResourceTypes: {
+        value: parPlatformHealthModelManagementResourceTypes
+      }
+      identityResourceTypes: {
+        value: parPlatformHealthModelIdentityResourceTypes
+      }
+      domainOverrides: {
+        value: parPlatformHealthModelDomainOverrides
+      }
+    }
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployALZCloudHealthPlatformModel.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployALZCloudHealthPlatformModel.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployALZCloudHealthPlatformModel.libDefinition.properties.enforcementMode
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+      varRbacRoleDefinitionIds.roleBasedAccessControlAdministrator
+    ]
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
 // Module - Policy Assignment - Deploy-GuestAttest
 module modPolAssiPlatformDeployGuestAttest '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (!contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployGuestAttest.libDefinition.name)) {
   scope: managementGroup(varManagementGroupIdsUnioned.platform)
@@ -1721,6 +1887,60 @@ module modPolAssiLzsEnforceTlsSsl '../../../policy/assignments/policyAssignmentM
     parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentEnforceTLSSSLQ225.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentEnforceTLSSSLQ225.libDefinition.properties.enforcementMode
     parPolicyAssignmentIdentityRoleDefinitionIds: [
       varRbacRoleDefinitionIds.owner
+    ]
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}
+
+
+// Module - Policy Assignment - Deploy-App-CloudHealth-ApplicationModel
+module modPolAssiLzsDeployCloudHealthApp '../../../policy/assignments/policyAssignmentManagementGroup.bicep' = if (parApplicationHealthModelPolicyAssignmentEnable && !contains(parExcludedPolicyAssignments, varPolicyAssignmentDeployALZCloudHealthApplicationModel.libDefinition.name)) {
+  scope: managementGroup(varManagementGroupIdsUnioned.landingZones)
+  name: varModDepNames.modPolAssiLzsDeployCloudHealthApp
+  params: {
+    parPolicyAssignmentDefinitionId: '${varTopLevelManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deploy-App-CloudHealth-ApplicationModel'
+    parPolicyAssignmentName: varPolicyAssignmentDeployALZCloudHealthApplicationModel.libDefinition.name
+    parPolicyAssignmentDisplayName: varPolicyAssignmentDeployALZCloudHealthApplicationModel.libDefinition.properties.displayName
+    parPolicyAssignmentDescription: varPolicyAssignmentDeployALZCloudHealthApplicationModel.libDefinition.properties.description
+    parPolicyAssignmentNotScopes: varPolicyAssignmentDeployALZCloudHealthApplicationModel.libDefinition.properties.notScopes
+    parPolicyAssignmentParameters: varPolicyAssignmentDeployALZCloudHealthApplicationModel.libDefinition.properties.parameters
+    parPolicyAssignmentParameterOverrides: {
+      targetResourceGroupName: {
+        value: parApplicationHealthModelTargetResourceGroupName
+      }
+      healthModelName: {
+        value: parApplicationHealthModelName
+      }
+      location: {
+        value: parApplicationHealthModelLocation
+      }
+      includedResourceTypesGlobal: {
+        value: parApplicationHealthModelIncludedResourceTypesGlobal
+      }
+      computeResourceTypes: {
+        value: parApplicationHealthModelComputeResourceTypes
+      }
+      dataResourceTypes: {
+        value: parApplicationHealthModelDataResourceTypes
+      }
+      routingResourceTypes: {
+        value: parApplicationHealthModelRoutingResourceTypes
+      }
+      aiResourceTypes: {
+        value: parApplicationHealthModelAiResourceTypes
+      }
+      configResourceTypes: {
+        value: parApplicationHealthModelConfigResourceTypes
+      }
+      domainOverrides: {
+        value: parApplicationHealthModelDomainOverrides
+      }
+    }
+    parPolicyAssignmentIdentityType: varPolicyAssignmentDeployALZCloudHealthApplicationModel.libDefinition.identity.type
+    parPolicyAssignmentEnforcementMode: (parDisableAlzDefaultPolicies || contains(parPolicyAssignmentsToDisableEnforcement, varPolicyAssignmentDeployALZCloudHealthApplicationModel.libDefinition.name)) ? 'DoNotEnforce' : varPolicyAssignmentDeployALZCloudHealthApplicationModel.libDefinition.properties.enforcementMode
+    parPolicyAssignmentIdentityRoleDefinitionIds: [
+      varRbacRoleDefinitionIds.contributor
+      varRbacRoleDefinitionIds.roleBasedAccessControlAdministrator
     ]
     parTelemetryOptOut: parTelemetryOptOut
   }
