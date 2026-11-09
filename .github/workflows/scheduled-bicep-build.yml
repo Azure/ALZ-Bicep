@@ -100,6 +100,26 @@ jobs:
               return 0
             }
 
+            # Bicep stamps its own version and template hash into every nested template, so these change with each Bicep release.
+            function Remove-GeneratorMetadata {
+              param (
+                [Parameter(Mandatory = $false)]
+                [object] $Node
+              )
+
+              if ($Node -is [System.Management.Automation.PSCustomObject]) {
+                $Node.PSObject.Properties.Remove('_generator')
+                foreach ($property in $Node.PSObject.Properties) {
+                  Remove-GeneratorMetadata -Node $property.Value
+                }
+              }
+              elseif ($Node -is [System.Collections.IEnumerable] -and $Node -isnot [string]) {
+                foreach ($item in $Node) {
+                  Remove-GeneratorMetadata -Node $item
+                }
+              }
+            }
+
             $scratchRoot = Join-Path (Get-Location) '.bicep-build-output/healthModel'
             if (Test-Path $scratchRoot) { Remove-Item -Recurse -Force $scratchRoot }
             New-Item -ItemType Directory -Force -Path $scratchRoot | Out-Null
@@ -116,8 +136,8 @@ jobs:
                 if ($LastExitCode -ne 0) { throw "Bicep build failed for $source" }
                 $expectedObject = Get-Content -Raw -Path $artifact | ConvertFrom-Json -Depth 100
                 $actualObject = Get-Content -Raw -Path $scratch | ConvertFrom-Json -Depth 100
-                $expectedObject.metadata.PSObject.Properties.Remove('_generator')
-                $actualObject.metadata.PSObject.Properties.Remove('_generator')
+                Remove-GeneratorMetadata -Node $expectedObject
+                Remove-GeneratorMetadata -Node $actualObject
                 $expected = $expectedObject | ConvertTo-Json -Depth 100 -Compress
                 $actual = $actualObject | ConvertTo-Json -Depth 100 -Compress
                 if ($expected -cne $actual) {
