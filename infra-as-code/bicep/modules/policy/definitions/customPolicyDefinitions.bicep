@@ -4413,6 +4413,7 @@ resource resPolicySetDefinitions 'Microsoft.Authorization/policySetDefinitions@2
       policyDefinitions: [
         for policySetDef in policySet.libSetChildDefinitions: {
           policyDefinitionReferenceId: policySetDef.definitionReferenceId
+          #disable-next-line use-resource-id-functions // Preserve generated built-in and explicitly scoped custom IDs; the linter cannot follow this loop-local property. See https://github.com/Azure/ALZ-Bicep/wiki/FAQ#why-are-some-linter-rules-disabled-via-the-disable-next-line-bicep-function
           policyDefinitionId: policySetDef.definitionId
           parameters: policySetDef.definitionParameters
           groupNames: policySetDef.definitionGroups
