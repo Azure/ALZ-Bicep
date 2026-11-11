@@ -47,6 +47,17 @@ You may also see it in some location for resources that do not require a region 
 
 It is not recommended to disable linter rules when it can be resolved by making changes to the Bicep code. However, in some scenarios, like above, this is necessary.
 
+The custom policy definition modules (`customPolicyDefinitions.bicep` and `mc-customPolicyDefinitions.bicep`) also disable the [use-resource-id-functions linter rule](https://learn.microsoft.com/azure/azure-resource-manager/bicep/linter-rule-use-resource-id-functions) on the one line that copies each generated initiative child's `definitionId` into `policyDefinitionId`. The rule is still an error everywhere else.
+
+That line has two separate problems, and fixing one doesn't fix the other:
+
+1. The generated custom policy IDs are built with string interpolation, like `'${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Deny-MgmtPorts-From-Internet'`, rather than with the resource ID functions the rule expects. The resulting IDs are correct, but they aren't in the form the rule asks for.
+2. The linter can't follow `policySetDef.definitionId` through the loop variable back to where the value was defined. Newer Bicep versions type that property as a string, which is what makes the rule check it at all. Even if the generator emitted `extensionResourceId(...)` instead, this line would still fail.
+
+Rebuilding the IDs on this line would mean telling built-in and custom IDs apart at deployment time, which adds logic without changing a single deployed value. Disabling the rule here keeps the deployed IDs, the explicit `parTargetManagementGroupId` target, and both cloud variants exactly as they were.
+
+The tradeoff is that this line no longer gets the check, including for future changes to the generated policy data. Once the linter can follow loop variables, we should switch the generator to resource ID functions and remove both exclusions.
+
 ## Why do I see an error similar to `Cannot retrieve the dynamic parameters for the cmdlet` when running `bicep build` or trying to deploy a module?
 
 This is normally due to the release version you are using of `ALZ-Bicep` was built using the latest available Bicep features from the latest [Bicep release](https://github.com/Azure/bicep/releases).
